@@ -101,7 +101,7 @@ function add_persiandate_menu()
 /*
 * fix theme editor rtl
 */
-
+add_action( 'admin_print_styles-plugin-editor.php', 'theme_editor_add_init', 11 );
 add_action( 'admin_print_styles-theme-editor.php', 'theme_editor_add_init', 11 );
 function theme_editor_add_init(){
     wp_enqueue_style("functions", plugins_url(basename(wp_parsipath)."/css/admin.css"), false, "1.0", "all");
