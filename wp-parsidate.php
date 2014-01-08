@@ -249,7 +249,8 @@ function get_pdpermalink($perma, $post,$leavename = false)
 	elseif ( in_array($post->post_type, get_post_types( array('_builtin' => false))))
 	    return get_post_permalink($post->ID);
     $permalink  = get_option('permalink_structure');
-    $rewritecode= explode('/',trim($permalink,'/'));
+    preg_match_all('/%([^\/]*)%/',$permalink,$rewritecode);
+    $rewritecode = $rewritecode[0];
 	if ( '' != $permalink && !in_array($post->post_status, array('draft', 'pending', 'auto-draft')))
     {
         if($leavename)
