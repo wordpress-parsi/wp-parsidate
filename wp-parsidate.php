@@ -263,28 +263,28 @@ function get_pdpermalink($perma, $post,$leavename = false)
             switch($rewrite)
             {
                 case'%year%':
-                    $out[]=$date[0];
+                    $out[] = $date[0];
                 break;
                 case'%monthnum%':
-                    $out[]=$date[1];
+                    $out[] = $date[1];
                 break;
                 case'%day%':
-                    $out[]=$date[2];
+                    $out[] = $date[2];
                 break;
                 case'%hour%':
-                    $out[]=$date[3];
+                    $out[] = $date[3];
                 break;
                 case'%minute%':
-                    $out[]=$date[4];
+                    $out[] = $date[4];
                 break;
                 case'%second%':
-                    $out[]=$date[5];
+                    $out[] = $date[5];
                 break;
                 case'%postname%':
-                    $out[]=$post->post_name;
+                    $out[] = $post->post_name;
                 break;
                 case'%post_id%':
-                    $out=$post->ID;
+                    $out[] = $post->ID;
                 break;
                 case'%category%':
                     $category='';
@@ -302,14 +302,14 @@ function get_pdpermalink($perma, $post,$leavename = false)
                         $default_category = get_term( get_option('default_category'),'category');
 	                    $category = is_wp_error( $default_category ) ? '' : $default_category->slug;
 	                }
-                    $out[]=$category;
+                    $out[] = $category;
                 break;
                 case'%author%':
                 	$authordata = get_userdata($post->post_author);
 	                $out[]      = $authordata->user_nicename;
                 break;
                 case'%pagename%':
-                    $out[]=$post->post_name;
+                    $out[] = $post->post_name;
                 break;
                 default:unset($rewritecode[array_search($rewrite,$rewritecode)]);
             }
