@@ -1,0 +1,14 @@
+body{
+    font-family:tahoma;
+    font-size:12px;
+}
+#tinymce{
+    font-family: tahoma;
+    text-align:right;
+    direction: rtl;
+    float: right;
+}
+.wrap #template textarea#newcontent{
+    direction: ltr;
+    text-align: left;
+}
