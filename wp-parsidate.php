@@ -56,9 +56,11 @@ if(isset($_POST['wp_parsidate_save']))
     $val['sep_commentcnt'] = (isset($_POST['sep_commentcnt'])?'checked':'');
     $val['sep_datesnum']   = (isset($_POST['sep_datesnum'])  ?'checked':'');
     $val['sep_catnum']     = (isset($_POST['sep_catnum'])    ?'checked':'');
+    $val['sep_excnum']     = (isset($_POST['sep_excnum'])    ?'checked':'');
     $val['sep_fixarabic']  = $_POST['sep_fixarabic'];
     $val['sep_fixurl']     = $_POST['sep_fixurl'];
     $val['sep_planet']     = $_POST['sep_planet'];
+    
     update_option('parsidate_option',$val);        
 }
 
@@ -79,6 +81,7 @@ if(empty($val))
     $val['sep_fixarabic']  = 'بلی';
     $val['sep_fixurl']     = 'بلی';
     $val['sep_planet']     = 0;
+    $val['sep_excnum']     = '';
 }
 
 if($val['sep_persian']=='بلی')
@@ -125,14 +128,14 @@ function wpb_mce_set_direction($input)
 
 if($val['sep_fixdate']=='بلی')
 {
-    add_filter('the_time', 'add_ptime',10,2);
-    add_filter('the_date', 'add_pdate',10,2);    
-    if(is_feed()>0)
+    if(!detect_rss())
     {
-        add_filter('get_comment_time', 'add_ctime',10,2);
-        add_filter('get_comment_date', 'add_cdate',10,2);
+        add_filter('the_time', 'add_ptime',1001,2);
+        add_filter('the_date', 'add_pdate',1001,2);
+        add_action('date_i18n', 'add_pi18n',1001,3);//revision
+        add_filter('get_comment_time', 'add_ctime',1001,2);
+        add_filter('get_comment_date', 'add_cdate',1001,2);
     }
-    add_action('date_i18n', 'add_pi18n',1,3);//revision
 }
 
 function add_ptime($time,$format='')
@@ -200,6 +203,9 @@ if(!empty($val['sep_commentcnt']))
     add_filter('comments_number', 'fixnumber');
 if(!empty($val['sep_catnum']))
     add_filter('wp_list_categories', 'fixnumber');
+if(!empty($val['sep_excnum']))
+    add_filter('the_excerpt', 'fixnumber');
+        
 /*
 * fix arabic characters
 */
@@ -209,6 +215,7 @@ if($val['sep_fixarabic']=='بلی')
     add_filter('the_title', 'fixarabic');
     add_filter('comment_text', 'fixarabic');
     add_filter('wp_list_categories', 'fixarabic');
+    add_filter('the_excerpt', 'fixarabic');
 }
 /*
 *fix archive title
@@ -387,6 +394,8 @@ function wppd_pre_get_posts( $query )
 function wppd_posts_where($where)
 {
    global $wp_query, $wpdb;
+   if(empty($wp_query->query_vars))
+   return false;
    $j_days_in_month = array('',31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
    	$m      = $wp_query->query_vars['m'];
 	$hour   = $wp_query->query_vars['hour'];

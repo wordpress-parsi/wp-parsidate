@@ -4,11 +4,5 @@ body{
 }
 #tinymce{
     font-family: tahoma;
-    text-align:right;
     direction: rtl;
-    float: right;
-}
-.wrap #template textarea#newcontent{
-    direction: ltr;
-    text-align: left;
 }

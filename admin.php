@@ -41,6 +41,7 @@ function parsi_plugin_page()
                 <fieldset>
                     <label for="sep_titlenum"><input type="checkbox" name="sep_titlenum" id="sep_titlenum" <?php echo $val['sep_titlenum']; ?>/>عنوان نوشته ها</label><br>
                     <label for="sep_postnum"><input type="checkbox" name="sep_postnum" id="sep_postnum" <?php echo $val['sep_postnum']; ?>/>متن نوشته ها</label><br>
+                    <label for="sep_excnum"><input type="checkbox" name="sep_excnum" id="sep_excnum" <?php echo $val['sep_excnum']; ?>/>توضیح کوتاه</label><br>
                     <label for="sep_commentnum"><input type="checkbox" name="sep_commentnum" id="sep_commentnum" <?php echo $val['sep_commentnum']; ?>/>متن نظرها</label><br>
                     <label for="sep_commentcnt"><input type="checkbox" name="sep_commentcnt" id="sep_commentcnt" <?php echo $val['sep_commentcnt']; ?>/>تعداد نظرها</label><br>
                     <label for="sep_datesnum"><input type="checkbox" name="sep_datesnum" id="sep_datesnum" <?php echo $val['sep_datesnum']; ?>/>تاریخ ها</label><br>
@@ -67,8 +68,8 @@ function parsi_plugin_page()
     	            <label for="sep_fixurl_yes"><input type="radio" name="sep_fixurl" id="sep_fixurl_yes" value="بلی" <?php echo (empty($val['sep_fixurl'])?'checked':checked($val['sep_fixurl'],'بلی',false)); ?>/>بلی</label>
     	            <label for="sep_fixurl_no"><input type="radio" name="sep_fixurl" id="sep_fixurl_no" value="خیر" <?php checked($val['sep_fixurl'],'خیر'); ?>/>خیر</label>
     	            <p class="description">با فعال کردن گزینه بالا تاریخ در پیوند یکتا به تاریخ شمسی برگردان می شود که شامل حالت های پیش فرض زیر هم می شود:</p>
-    	            <label for="">- روز و نام : <code>http://127.0.0.1/38/2013/12/26/نوشته-نمونه/</code></label><br>
-    	            <label for="">- ماه و نام : <code>http://127.0.0.1/38/2013/12/نوشته-نمونه/</code></label><br>
+    	            <label for="">- روز و نام : <code><?php echo get_bloginfo('url') ?>/2013/12/26/نوشته-نمونه/</code></label><br>
+    	            <label for="">- ماه و نام : <code><?php echo get_bloginfo('url') ?>/2013/12/نوشته-نمونه/</code></label><br>
     	            <label for="">- ساختار دل‌خواه</label>
     	        </fieldset>
     	    </td>

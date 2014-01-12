@@ -58,6 +58,17 @@ function fixnumber($content)
 
 function fixarabic($content)
 {
-    return str_replace(array('ي','ك','٤','٥','٦','ة','ئ'),array('ی','ک','۴','۵','۶','ه','ی'),$content);   
+    //return str_replace(array('ي','ك','٤','٥','٦','ة','ئ'),array('ی','ک','۴','۵','۶','ه','ی'),$content);
+    return str_replace(array('ي','ك','٤','٥','٦','ة'),array('ی','ک','۴','۵','۶','ه'),$content);
+}
+
+function detect_rss()
+{
+    if(is_feed())
+    return true;
+    $path = $_SERVER['REQUEST_URI'];
+    $prev = array('xsl','xml','gz');
+    $ext  = pathinfo($path,PATHINFO_EXTENSION);
+    return in_array($ext,$prev);
 }
 ?>
