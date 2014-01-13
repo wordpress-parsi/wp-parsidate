@@ -393,8 +393,8 @@ function wppd_pre_get_posts( $query )
 
 function wppd_posts_where($where)
 {
-   global $wp_query, $wpdb;
-   if(empty($wp_query->query_vars))
+   global $wp_query, $wpdb,$pagenow;
+   if($pagenow=='index.php')
    return false;
    $j_days_in_month = array('',31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
    	$m      = $wp_query->query_vars['m'];
