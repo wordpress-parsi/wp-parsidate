@@ -4,7 +4,7 @@ Donate link: http://forum.wp-parsi.com/
 Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl
 Requires at least: 3.6
 Tested up to: 3.8
-Stable tag: 1.1
+Stable tag: 1.2
 
 Persian package builder for WordPress, Full RTL and Shamsi(Jalali) date
 
@@ -38,6 +38,10 @@ List of some features:
 2. Widget of 'بایگانی تاریخ خورشیدی'
 
 == Changelog ==
+= 1.2 =
+* fix memory error
+* fix post_where hook
+
 = 1.1 =
 * Fix TinyMce text direction
 * Fix sitemaps date problems

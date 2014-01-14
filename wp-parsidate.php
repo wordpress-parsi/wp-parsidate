@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: WP-Parsidate
-Version: 1.1
+Version: 1.2
 Author: Mobin Ghasempoor
 Author URI: http://wp-parsi.com/
 Plugin URI: http://forum.wp-parsi.com/
@@ -20,6 +20,7 @@ define('wp_contentpath',dirname(dirname(wp_parsipath)));
 global $timezone,$persian_month_names;
 $persian_month_names = array('','فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند');
 
+@define('WP_MEMORY_LIMIT', '64M');
 $timezone = get_option('timezone_string');
 if(empty($timezone))
 $timezone='Asia/Tehran';
@@ -241,8 +242,8 @@ function wp_pdtitle($title, $sep,$seplocation)
 if ($val['sep_fixurl']=='بلی')
 {
     add_filter("post_link","get_pdpermalink",10,3);
-    add_action( 'pre_get_posts', 'wppd_pre_get_posts');
-    add_filter( 'posts_where' ,'wppd_posts_where');
+    add_action( 'pre_get_posts','wppd_pre_get_posts');
+    add_filter( 'posts_where' , 'wppd_posts_where');
 }
 
 function get_pdpermalink($perma, $post,$leavename = false)
@@ -393,10 +394,10 @@ function wppd_pre_get_posts( $query )
 
 function wppd_posts_where($where)
 {
-   global $wp_query, $wpdb,$pagenow;
-   if($pagenow=='index.php')
-   return false;
-   $j_days_in_month = array('',31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
+    global $wp_query, $wpdb,$pagenow;
+    if(empty($wp_query->query_vars))
+    return $where;
+    $j_days_in_month = array('',31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
    	$m      = $wp_query->query_vars['m'];
 	$hour   = $wp_query->query_vars['hour'];
 	$minute = $wp_query->query_vars['minute'];
