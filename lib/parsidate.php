@@ -64,6 +64,8 @@ class bn_parsidate
         $dayofyear=$this->g_days_sum_month[$gm]+$gd;
         $leap=self::IsLeapYear($gy-1);
         $leab=self::IsLeapYear($gy);
+        if($leap and $gm>2)
+        ++$gd;
         if($dayofyear>79)
         {
          $jd=($leab)?$dayofyear-78:$dayofyear-79;
@@ -75,14 +77,14 @@ class bn_parsidate
         {
          $jd=($leap||($leab&&$gm>2))?287+$dayofyear:286+$dayofyear;
          $jy=$gy-622;
-         if($leap && $jd==366)
+         if($jd==366)
          return array($jy,12,30);
          for($i=0;$jd>$this->j_days_in_month[$i];$i++)
              $jd-=$this->j_days_in_month[$i];  
         }
         $jm=++$i; 
         return array($jy,$jm,$jd);   
-    } 
+    }
     
     public function trim_number($num,$sp='٫')
     {
