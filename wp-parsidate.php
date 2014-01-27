@@ -515,7 +515,7 @@ function wp_admin_posts_where($where)
 	if( isset($_GET['mfa']) and $_GET['mfa'] != '0' )
 	{
 		$wp_query->query_vars['m'] = $_GET['mfa'];
-		$where = wpb_posts_where($where);
+		$where = wppd_posts_where($where);
 	}
 	return $where;
 }
