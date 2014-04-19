@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Wordpress Persian Project\n"
 "Report-Msgid-Bugs-To: http://wppolyglots.wordpress.com\n"
 "POT-Creation-Date: 2014-04-16 18:11:20+00:00\n"
-"PO-Revision-Date: 2014-04-19 09:44+0330\n"
+"PO-Revision-Date: 2014-04-19 12:15+0330\n"
 "Last-Translator: Morteza Geransayeh <man4toman@gmail.com>\n"
 "Language-Team: WP-Persian <info@wp-persian.com>\n"
 "Language: fa_IR\n"
@@ -59,13 +59,13 @@ msgstr "تجربه‌ی ابزارک‌های خوش‌دست‌تر"
 
 #: wp-admin/about.php:54
 msgid "Improved visual editing"
-msgstr ""
+msgstr "ویرایش بصری بهبود یافته"
 
 #: wp-admin/about.php:55
 msgid ""
 "The updated visual editor has improved speed, accessibility, and mobile "
 "support."
-msgstr ""
+msgstr "ویرایشگر دیداری در سرعت، دسترسی و پشتیبانی از موبایل بهبود یافته است."
 
 #: wp-admin/about.php:56
 msgid ""
@@ -73,10 +73,12 @@ msgid ""
 "wasting time to clean up messy styling. (Yeah, we&#8217;re talking about "
 "you, Microsoft Word.)"
 msgstr ""
+"شما می توانید بدون انتظار برای تمیز کردن  استایل های اضافه متن از مایکروسافت "
+"ورد به ویرایشگر دیداری کپی کنید."
 
 #: wp-admin/about.php:60
 msgid "Edit images easily"
-msgstr ""
+msgstr "ویرایش آسان تصاویر"
 
 #: wp-admin/about.php:61
 msgid ""
@@ -84,16 +86,20 @@ msgid ""
 "to edit your images while editing posts. You can also scale images directly "
 "in the editor to find just the right fit."
 msgstr ""
+"دسترسی سریع به برش و چرخش، و اکنون ویرایش آسانتر عکس های شما در هنگام ارسال "
+"پست. همچنین شما می توانید عکس ها رو مستقیم در ویرایشگر تغییر اندازه دهید."
 
 #: wp-admin/about.php:65
 msgid "Drag and drop your images"
-msgstr ""
+msgstr "تصاویر خود را بکشید و رها کنید"
 
 #: wp-admin/about.php:66
 msgid ""
 "Uploading your images is easier than ever. Just grab them from your desktop "
 "and drop them onto the editor."
 msgstr ""
+"عکس ها را ساده تر از همیشه بارگزاری کنید. فقط از کافیست از میزکار خود به "
+"ادیتور بکشید."
 
 #: wp-admin/about.php:75
 msgid "Gallery previews"
@@ -104,20 +110,24 @@ msgid ""
 "Galleries display a beautiful grid of images right in the editor, just like "
 "they do in your published post."
 msgstr ""
+"گالری ها شبکه های عکس زیبایی را در ویرایشگر نمایش می دهند. همینطور در پست "
+"های ارسال شده شما."
 
 #: wp-admin/about.php:169
 msgid "Do more with audio and video"
-msgstr ""
+msgstr "کارکرد بیشتر با صدا و تصویر"
 
 #: wp-admin/about.php:170
 msgid ""
 "Images have galleries; now we&#8217;ve added simple audio and video "
 "playlists, so you can showcase your music and clips."
 msgstr ""
+"عکس ها دارای گالری هستند، اکنون ما لیست فایل های صوتی و تصویری را اضافه "
+"نمودیم، شما می توانید ویترینی از آهنگ و کلیپ داشته باشید."
 
 #: wp-admin/about.php:190
 msgid "Live widget and header previews"
-msgstr ""
+msgstr "پیش نمایش زنده افزونه و هدر"
 
 #: wp-admin/about.php:191
 msgid ""
@@ -125,16 +135,20 @@ msgid ""
 "customizer. No &#8220;save and surprise&#8221; &mdash; preview your changes "
 "live and only save them when you&#8217;re ready."
 msgstr ""
+"افزودن، ویرایش و تنظیم مجدد ابزارک ها در سفارشی ساز پوسته. بدون نیاز به "
+"ذخیره سازی تغییرات خود را زنده مشاهده کنید و وقتی آماده بودید ذخیره کنید."
 
 #: wp-admin/about.php:192
 msgid ""
 "The improved header image tool also lets you upload, crop, and manage "
 "headers while customizing your theme."
 msgstr ""
+"ابزار عکس هدر پیشرفته که امکان بارگزاری، برش و مدیریت هدرها را در هنگام "
+"سفارشی سازی پوسته شما فراهم می کند."
 
 #: wp-admin/about.php:196
 msgid "Stunning new theme browser"
-msgstr ""
+msgstr "مرورگر پوسته خیره کننده"
 
 #: wp-admin/about.php:197
 msgid ""
@@ -142,6 +156,8 @@ msgid ""
 "boundless supply of free WordPress.org themes with the beautiful new theme "
 "browser."
 msgstr ""
+"یافتن پوسته جدید باید آسان و سرگرم کننده باشد. خود را در منبع عظیم پوسته ای "
+"رایگان وردپرس با مرورگر پوسته زیبا و جدید گم کنید."
 
 #: wp-admin/about.php:199
 msgid "Browse Themes"
@@ -149,17 +165,19 @@ msgstr "پوسته‌های خراب"
 
 #: wp-admin/about.php:208
 msgid "Under the Hood"
-msgstr ""
+msgstr "زیر سرپوش"
 
 #: wp-admin/about.php:212
 msgid "Semantic Captions and Galleries"
-msgstr ""
+msgstr "شرح تصاویر و گالری های معنایی"
 
 #: wp-admin/about.php:213
 msgid ""
 "Theme developers have new options for images and galleries that use "
 "intelligent HTML5 markup."
 msgstr ""
+"توسعه دهندگان پوسته یک انتخاب جدید برای عکس ها و گالری ها دارند که از نشانه "
+"گذاری هوشمند HTML5 بهره می برد."
 
 #: wp-admin/about.php:215
 msgid "Inline Code Documentation"
@@ -170,6 +188,8 @@ msgid ""
 "Every action and filter hook in WordPress is now documented, along with "
 "expanded documentation for the media manager and customizer APIs."
 msgstr ""
+"اکشن و هوک آسان در وردپرس اکنون مستند شده است، همراه با مستندات گسترش یافته "
+"برای مدیریت رسانه و سفارشی ساز API ها."
 
 #: wp-admin/about.php:219 wp-admin/credits.php:190
 msgid "External Libraries"
@@ -180,6 +200,8 @@ msgid ""
 "Updated libraries: TinyMCE&nbsp;4, jQuery&nbsp;1.11, Backbone&nbsp;1.1, "
 "Underscore&nbsp;1.6, Plupload&nbsp;2, MediaElement&nbsp;2.14, Masonry&nbsp;3."
 msgstr ""
+"کتابخانه های بروز شده: TinyMCE&nbsp;4, jQuery&nbsp;1.11, Backbone&nbsp;1.1, "
+"Underscore&nbsp;1.6, Plupload&nbsp;2, MediaElement&nbsp;2.14, Masonry&nbsp;3."
 
 #: wp-admin/about.php:222
 msgid "Improved Database Layer"
@@ -190,6 +212,8 @@ msgid ""
 "Database connections are now more fault-resistant and have improved "
 "compatibility with PHP 5.5 and MySQL 5.6."
 msgstr ""
+"اتصال به پایگاه داده اکنون مقاوم تر در برابر خطا و سازگار با PHP 5.5 و MySQL "
+"5.6 است."
 
 #: wp-admin/about.php:226
 msgid "New Utility Functions"
@@ -201,6 +225,9 @@ msgid ""
 "<code>doing_filter()</code>, and manipulate custom image sizes with "
 "<code>has_image_size()</code> and <code>remove_image_size()</code>."
 msgstr ""
+"شناسایی یک هوک در پیشرفت با <code>doing_action()</code> و <code>doing_filter"
+"()</code>، و تغییر دلخواه اندازه عکس با <code>has_image_size()</code> و "
+"<code>remove_image_size()</code>."
 
 #: wp-admin/about.php:228
 msgid ""
@@ -208,6 +235,8 @@ msgid ""
 "cropping points. For example, prevent heads from being cropped out of photos "
 "with a top-center crop."
 msgstr ""
+"ثبت انداره دلخواه عکس پوسته و افزونه اکنون می تواند نقطه برش پیشنهادی ثبت "
+"کند. برای مثال، از برش شدن عکس های هدر با برش بالا-وسط جلوگیری می کند."
 
 #: wp-admin/about.php:237
 msgid "Return to Updates"
@@ -1388,6 +1417,8 @@ msgid ""
 "Keyboard users: When you&#8217;re working in the visual editor, you can use "
 "<kbd>Alt + F10</kbd> to access the toolbar."
 msgstr ""
+"کاربران صفحه کلید: هنگامیکه در حال کار با ویرایشگر دیداری هستید، می توانید "
+"برای دسترسی به نوارابزار از کلیدهای ترکیبی <kbd>Alt + F10</kbd> استفاده کنید."
 
 #: wp-admin/edit-form-advanced.php:270
 msgid "Title and Post Editor"
@@ -3251,7 +3282,7 @@ msgstr "%s از حالا"
 #: wp-admin/includes/class-wp-posts-list-table.php:719
 #: wp-admin/includes/plugin-install.php:385 wp-admin/includes/revision.php:172
 msgid "%s ago"
-msgstr ""
+msgstr "%s قبل"
 
 #: wp-admin/includes/class-wp-media-list-table.php:343
 msgid "(Unattached)"
@@ -3297,7 +3328,7 @@ msgstr "دامنه"
 
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:147
 msgid "Path"
-msgstr ""
+msgstr "مسیر"
 
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:151
 msgid "Last Updated"
@@ -4532,6 +4563,8 @@ msgid ""
 "The WordPress team is willing to help you. Forward this email to %s and "
 "the team will work with you to make sure your site is working."
 msgstr ""
+"گروه وردپرس مایلند به شما کمک کنند. این ایمیل را به %s بفرستید و گروه برای "
+"اطمینان از کارکرد درست با شما همکاری می کنند."
 
 #: wp-admin/includes/class-wp-upgrader.php:2374
 msgid ""
@@ -4554,6 +4587,8 @@ msgid ""
 "If you reach out to us, we'll also ensure you'll never have this problem "
 "again."
 msgstr ""
+"اگر شما با ما ارتباط برقرار کردید، ما از اینکه شما دوباره این مشکل را پیدا "
+"نخواهید کرد مطمئن می شویم."
 
 #: wp-admin/includes/class-wp-upgrader.php:2389
 msgid ""
@@ -5405,7 +5440,7 @@ msgstr "قاب‌بُری تصویر"
 
 #: wp-admin/includes/image-edit.php:83
 msgid "To crop the image, click on it and drag to make your selection."
-msgstr ""
+msgstr "برای برش عکس، روی ان کلیک کنید و برای انتخاب اندازه روی آن بکشید."
 
 #: wp-admin/includes/image-edit.php:85
 msgid "Crop Aspect Ratio"
@@ -5418,6 +5453,9 @@ msgid ""
 "selection. Use the input box to specify the aspect ratio, e.g. 1:1 (square), "
 "4:3, 16:9, etc."
 msgstr ""
+"نسبت ابعاد رابطه بین طول و عرض است. شما می توانید نسبت ابعاد را با نگه داشتن "
+"کلید شیفت در هنگام تغییر محل انتخاب شده حفظ کنید. از جعبه ورودی برای مشخص "
+"کردن نسبت ابعاد استفاده کنید، مانند e.g. 1:1 (مربع), 4:3, 16:9, دیگر."
 
 #: wp-admin/includes/image-edit.php:88
 msgid "Crop Selection"
@@ -5450,6 +5488,8 @@ msgid ""
 "You can edit the image while preserving the thumbnail. For example, you may "
 "wish to have a square thumbnail that displays just a section of the image."
 msgstr ""
+"در هنگام ایجاد بندانگشتی می توانید عکس را ویرایش کنید. برای مثل شما می "
+"خواهید یک بندانگشتی مربعی داشته باشید که فقط بخشی از عکس را نمایش دهد."
 
 #: wp-admin/includes/image-edit.php:124
 msgid "Current thumbnail"
@@ -5707,7 +5747,7 @@ msgstr "نشانی پرونده"
 
 #: wp-admin/includes/media.php:1150 wp-admin/includes/media.php:2502
 msgid "Enter a link URL or click above for presets."
-msgstr ""
+msgstr "یک ادرس وارد کنید یا برای الگوها روی بالا کلیک کنید"
 
 #: wp-admin/includes/media.php:1161
 msgid "Location of the uploaded file."
@@ -7302,12 +7342,12 @@ msgstr "ویژگی تازه: ذخیره ابزارک‌ها"
 
 #: wp-admin/includes/template.php:1977
 msgid "Add, edit, and play around with your widgets from the theme customizer."
-msgstr ""
+msgstr "از سفارشی ساز پوسته ابزارک اضافه و ویرایش کنید."
 
 #: wp-admin/includes/template.php:1977
 msgid ""
 "Preview your changes in real-time and only save them when you&#8217;re ready."
-msgstr ""
+msgstr "تغییرات خود را بصورت زنده بینید و زمانی که آماده بودید ذخیره کنید."
 
 #: wp-admin/includes/template.php:2020
 msgid ""
@@ -7445,11 +7485,11 @@ msgstr ""
 
 #: wp-admin/includes/theme.php:178
 msgid "Black"
-msgstr ""
+msgstr "سیاه"
 
 #: wp-admin/includes/theme.php:179
 msgid "Blue"
-msgstr ""
+msgstr "آبی"
 
 #: wp-admin/includes/theme.php:180
 msgid "Brown"
@@ -7457,11 +7497,11 @@ msgstr "کاوش"
 
 #: wp-admin/includes/theme.php:181
 msgid "Gray"
-msgstr ""
+msgstr "خاکستری"
 
 #: wp-admin/includes/theme.php:182
 msgid "Green"
-msgstr ""
+msgstr "سبز"
 
 #: wp-admin/includes/theme.php:183
 msgid "Orange"
@@ -7469,11 +7509,11 @@ msgstr "تغییر دادن"
 
 #: wp-admin/includes/theme.php:184
 msgid "Pink"
-msgstr ""
+msgstr "صورتی"
 
 #: wp-admin/includes/theme.php:185
 msgid "Purple"
-msgstr ""
+msgstr "ارغوانی"
 
 #: wp-admin/includes/theme.php:186
 msgid "Red"
@@ -7481,7 +7521,7 @@ msgstr "خواندن"
 
 #: wp-admin/includes/theme.php:187
 msgid "Silver"
-msgstr ""
+msgstr "نقره ای"
 
 #: wp-admin/includes/theme.php:188
 msgid "Tan"
@@ -7489,7 +7529,7 @@ msgstr "قهوه‌ای"
 
 #: wp-admin/includes/theme.php:189
 msgid "White"
-msgstr ""
+msgstr "سفید"
 
 #: wp-admin/includes/theme.php:190
 msgid "Yellow"
@@ -11420,12 +11460,12 @@ msgstr "صافی"
 
 #: wp-admin/theme-install.php:165
 msgid "No themes found. Try a different search."
-msgstr ""
+msgstr "هیچ پوسته ای یافت نشد. جستجوی متفاوتی انجام دهید."
 
 #: wp-admin/theme-install.php:195
 msgctxt "theme"
 msgid "Details &amp; Preview"
-msgstr ""
+msgstr "جزییات &amp; پیش نمایش"
 
 #: wp-admin/theme-install.php:214
 msgid "Installed"

@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Wordpress Persian Project\n"
 "Report-Msgid-Bugs-To: http://wppolyglots.wordpress.com\n"
 "POT-Creation-Date: 2014-04-16 18:11:01+00:00\n"
-"PO-Revision-Date: 2014-04-19 09:42+0330\n"
+"PO-Revision-Date: 2014-04-19 10:59+0330\n"
 "Last-Translator: Morteza Geransayeh <man4toman@gmail.com>\n"
 "Language-Team: WP-Persian <info@wp-persian.com>\n"
 "Language: fa_IR\n"
@@ -558,7 +558,7 @@ msgstr "تصویر بارگذاری‌شده‌ی تصادفی"
 
 #: wp-includes/class-wp-customize-control.php:779
 msgid "Randomize suggested headers"
-msgstr ""
+msgstr "تصادفی کردن تصاویر پیشنهادی"
 
 #: wp-includes/class-wp-customize-control.php:792
 msgid "Set image"
@@ -570,7 +570,7 @@ msgstr "تصویر بارگذاری‌شده‌ی تصادفی"
 
 #: wp-includes/class-wp-customize-control.php:809
 msgid "Randomizing suggested headers"
-msgstr ""
+msgstr "تصادفی کردن تصاویر پیشنهادی"
 
 #: wp-includes/class-wp-customize-control.php:825
 msgid "No image set"
@@ -582,18 +582,27 @@ msgid ""
 "strong>, your theme recommends a header size of <strong>%s &times; %s</"
 "strong> pixels."
 msgstr ""
+"در حالیکه شما می توانید تصویر را بعد از کلیک <strong>افزودن</strong> برش "
+"دهید، پوسته شما اندازه عکس هدر <strong>%s &times; %s</strong>پیکسل را "
+"پیشنهاد می دهد."
 
 #: wp-includes/class-wp-customize-control.php:858
 msgid ""
 "While you can crop images to your liking after clicking <strong>Add new</"
 "strong>, your theme recommends a header width of <strong>%s</strong> pixels."
 msgstr ""
+"در حالیکه شما می توانید تصویر را بعد از کلیک <strong>افزودن</strong> برش "
+"دهید، پوسته شما اندازه عرض عکس هدر <strong>%s</strong>پیکسل را پیشنهاد می "
+"دهد."
 
 #: wp-includes/class-wp-customize-control.php:860
 msgid ""
 "While you can crop images to your liking after clicking <strong>Add new</"
 "strong>, your theme recommends a header height of <strong>%s</strong> pixels."
 msgstr ""
+"در حالیکه شما می توانید تصویر را بعد از کلیک <strong>افزودن</strong> برش "
+"دهید، پوسته شما اندازه ارتفاع عکس هدر <strong>%s</strong>پیکسل را پیشنهاد می "
+"دهد."
 
 #: wp-includes/class-wp-customize-control.php:866
 msgid "Current header"
@@ -776,7 +785,7 @@ msgstr "ابزارک‌ها "
 
 #: wp-includes/class-wp-customize-widgets.php:686
 msgid "Move to another area&hellip;"
-msgstr ""
+msgstr "انتقال به area&hellip; دیگر"
 
 #: wp-includes/class-wp-customize-widgets.php:687
 msgid "Move down"
@@ -784,16 +793,16 @@ msgstr "پیمایش به جلو"
 
 #: wp-includes/class-wp-customize-widgets.php:688
 msgid "Move up"
-msgstr ""
+msgstr "حرکت به بالا"
 
 #: wp-includes/class-wp-customize-widgets.php:694
 msgid "Select an area to move this widget into:"
-msgstr ""
+msgstr "محل موردنظر برای انتقال این ابزارک را انتخاب کنید:"
 
 #: wp-includes/class-wp-customize-widgets.php:695
 msgctxt "Move widget"
 msgid "Move"
-msgstr ""
+msgstr "انتقال"
 
 #: wp-includes/class-wp-customize-widgets.php:718
 msgid "Apply"
@@ -801,11 +810,11 @@ msgstr "اجرا"
 
 #: wp-includes/class-wp-customize-widgets.php:719
 msgid "Save and preview changes before publishing them."
-msgstr ""
+msgstr "ذخیره و مشاهده تغییرات قبل از انتشار آنها."
 
 #: wp-includes/class-wp-customize-widgets.php:721
 msgid "Trash widget by moving it to the inactive widgets sidebar."
-msgstr ""
+msgstr "برای حذف ابزارک آنرا به ابزارک های غیرفعال انتقال دهید."
 
 #: wp-includes/class-wp-customize-widgets.php:722
 #: wp-includes/script-loader.php:518
@@ -823,7 +832,7 @@ msgstr "جستجو &hellip;"
 
 #: wp-includes/class-wp-customize-widgets.php:1043
 msgid "Shift-click to edit this widget."
-msgstr ""
+msgstr "برای ویرایش این ابزارک از کیلد شیفت+کلیک استفاده کنید"
 
 #: wp-includes/class-wp-editor.php:167 wp-includes/class-wp-editor.php:1214
 msgctxt "Name for the Text editor tab (formerly HTML)"
@@ -880,7 +889,6 @@ msgstr "Heading 6"
 
 #. translators: block tags
 #: wp-includes/class-wp-editor.php:767
-#, fuzzy
 msgctxt "TinyMCE"
 msgid "Blocks"
 msgstr "نقل قول"
@@ -980,11 +988,11 @@ msgstr "تراز چین"
 
 #: wp-includes/class-wp-editor.php:791
 msgid "Increase indent"
-msgstr ""
+msgstr "افزایش تورفتگی"
 
 #: wp-includes/class-wp-editor.php:792
 msgid "Decrease indent"
-msgstr ""
+msgstr "کاهش تورفتگی"
 
 #: wp-includes/class-wp-editor.php:794
 #: wp-includes/js/tinymce/wp-mce-help.php:113
@@ -1038,7 +1046,7 @@ msgstr "دیداری"
 
 #: wp-includes/class-wp-editor.php:806
 msgid "Bulleted list"
-msgstr ""
+msgstr "لیست نقطه دار"
 
 #: wp-includes/class-wp-editor.php:807
 msgid "Numbered list"
@@ -1110,7 +1118,7 @@ msgstr "ویژگی‌های سند"
 
 #: wp-includes/class-wp-editor.php:825
 msgid "Robots"
-msgstr ""
+msgstr "روبات ها"
 
 #: wp-includes/class-wp-editor.php:826 wp-includes/class-wp-editor.php:1402
 #: wp-includes/media-template.php:343 wp-includes/media-template.php:559
@@ -1204,7 +1212,7 @@ msgstr "گذاشتن تاریخ"
 
 #: wp-includes/class-wp-editor.php:850
 msgid "Embed"
-msgstr ""
+msgstr "جاسازی"
 
 #: wp-includes/class-wp-editor.php:853
 msgid "Special character"
@@ -1262,7 +1270,7 @@ msgstr "فاصله افقی"
 
 #: wp-includes/class-wp-editor.php:866
 msgid "Restore last draft"
-msgstr ""
+msgstr "بازنشانی آخرین پیش نویس"
 
 #: wp-includes/class-wp-editor.php:867 wp-includes/class-wp-editor.php:1392
 #: wp-includes/js/tinymce/wp-mce-help.php:120
@@ -1307,7 +1315,7 @@ msgstr "یافتن/جایگزینی"
 #: wp-includes/class-wp-editor.php:878
 msgctxt "find/replace"
 msgid "Replace with"
-msgstr ""
+msgstr "جایگزینی با"
 
 #: wp-includes/class-wp-editor.php:879
 msgctxt "find/replace"
@@ -1321,7 +1329,7 @@ msgstr "پاک همه"
 
 #: wp-includes/class-wp-editor.php:881
 msgid "Match case"
-msgstr ""
+msgstr "مورد تطابق"
 
 #: wp-includes/class-wp-editor.php:882
 #: wp-includes/js/tinymce/wp-mce-help.php:126
@@ -1331,7 +1339,7 @@ msgstr "بررسی درستی نوشته"
 #: wp-includes/class-wp-editor.php:883
 msgctxt "spellcheck"
 msgid "Finish"
-msgstr ""
+msgstr "پایان"
 
 #: wp-includes/class-wp-editor.php:884
 msgctxt "spellcheck"
@@ -1369,7 +1377,7 @@ msgstr "ردیف"
 
 #: wp-includes/class-wp-editor.php:895
 msgid "Rows"
-msgstr ""
+msgstr "ردیف ها"
 
 #: wp-includes/class-wp-editor.php:896
 msgctxt "table column"
@@ -1379,7 +1387,7 @@ msgstr "ستون"
 #: wp-includes/class-wp-editor.php:897
 msgctxt "table columns"
 msgid "Cols"
-msgstr ""
+msgstr "ستون ها"
 
 #: wp-includes/class-wp-editor.php:898
 msgctxt "table cell"
@@ -1398,12 +1406,12 @@ msgstr "سربرگ"
 #: wp-includes/class-wp-editor.php:901
 msgctxt "table body"
 msgid "Body"
-msgstr ""
+msgstr "بدنه"
 
 #: wp-includes/class-wp-editor.php:902
 msgctxt "table footer"
 msgid "Footer"
-msgstr ""
+msgstr "بخش پایین"
 
 #: wp-includes/class-wp-editor.php:904
 msgid "Insert row before"
@@ -1477,7 +1485,7 @@ msgstr "هیچ کدام"
 
 #: wp-includes/class-wp-editor.php:926
 msgid "Row group"
-msgstr ""
+msgstr "گروه ریف"
 
 #: wp-includes/class-wp-editor.php:927
 msgid "Column group"
@@ -1485,7 +1493,7 @@ msgstr "ستون"
 
 #: wp-includes/class-wp-editor.php:928
 msgid "Row type"
-msgstr ""
+msgstr "نوع ردیف"
 
 #: wp-includes/class-wp-editor.php:929
 msgid "Cell type"
@@ -1493,16 +1501,16 @@ msgstr "شانه"
 
 #: wp-includes/class-wp-editor.php:930
 msgid "Cell padding"
-msgstr ""
+msgstr "فاصله گذاری"
 
 #: wp-includes/class-wp-editor.php:931
 msgid "Cell spacing"
-msgstr ""
+msgstr "فضادهی"
 
 #: wp-includes/class-wp-editor.php:932
 msgctxt "table cell scope attribute"
 msgid "Scope"
-msgstr ""
+msgstr "حوزه"
 
 #: wp-includes/class-wp-editor.php:934
 msgctxt "TinyMCE"
@@ -1525,11 +1533,11 @@ msgstr "یک رنگ برای متن برگزینید"
 #: wp-includes/class-wp-editor.php:939
 msgctxt "editor button"
 msgid "Show blocks"
-msgstr ""
+msgstr "نمایش بلوک"
 
 #: wp-includes/class-wp-editor.php:940
 msgid "Show invisible characters"
-msgstr ""
+msgstr "نمایش کاراکترهای مخفی"
 
 #. translators: word count
 #: wp-includes/class-wp-editor.php:943
@@ -1550,6 +1558,8 @@ msgid ""
 "turning this option off. The editor will clean up text pasted from Word "
 "automatically."
 msgstr ""
+"اگر می خواهید محتوا را از مایکروسافت ورد انتقال دهید، این گزینه را غیرفعال "
+"کنید. ویرایشگر محتوا رو بصورت خودکار تمیز می کند."
 
 #: wp-includes/class-wp-editor.php:945
 msgid ""
@@ -1608,7 +1618,7 @@ msgstr "ساختار"
 #: wp-includes/class-wp-editor.php:959
 #: wp-includes/js/tinymce/wp-mce-help.php:16
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "میانبرهای صفحه کلید"
 
 #: wp-includes/class-wp-editor.php:960
 msgid "Toolbar Toggle"
@@ -3181,7 +3191,7 @@ msgstr ""
 #. translators: used to join items in a list with more than 2 items
 #: wp-includes/formatting.php:3468
 msgid "%s, %s"
-msgstr ""
+msgstr "%s, %s"
 
 #. translators: used to join last two items in a list with more than 2 times
 #: wp-includes/formatting.php:3470
@@ -3965,13 +3975,13 @@ msgstr "ب.ظ"
 #. is ,
 #: wp-includes/locale.php:173
 msgid "number_format_thousands_sep"
-msgstr ""
+msgstr "number_format_thousands_sep"
 
 #. translators: $dec_point argument for http:php.net/number_format, default is
 #. .
 #: wp-includes/locale.php:177
 msgid "number_format_decimal_point"
-msgstr ""
+msgstr "number_format_decimal_point"
 
 #. translators: 'rtl' or 'ltr'. This sets the text direction for WordPress.
 #: wp-includes/locale.php:184
@@ -4044,7 +4054,7 @@ msgstr "این ویدیو را توضیح دهید&hellip;"
 
 #: wp-includes/media-template.php:279
 msgid "Describe this audio file&hellip;"
-msgstr "این پرونده صوتی را توضیح دهید&hellip;"
+msgstr "این پرونده صوتی را شرح دهید&hellip;"
 
 #: wp-includes/media-template.php:281
 msgid "Describe this media file&hellip;"
@@ -4164,15 +4174,15 @@ msgstr "تنظیمات گالری"
 
 #: wp-includes/media-template.php:534
 msgid "Show Video List"
-msgstr ""
+msgstr "نمایش فهرست فیلم"
 
 #: wp-includes/media-template.php:536
 msgid "Show Tracklist"
-msgstr ""
+msgstr "نمایش لیست آهنگ"
 
 #: wp-includes/media-template.php:545
 msgid "Show Artist Name in Tracklist"
-msgstr ""
+msgstr "نمایش نام هنرمند در لیست"
 
 #: wp-includes/media-template.php:553
 msgid "Show Images"
@@ -4228,7 +4238,7 @@ msgstr "کلاس"
 
 #: wp-includes/media-template.php:837 wp-includes/media-template.php:921
 msgid "Add alternate sources for maximum HTML5 playback:"
-msgstr ""
+msgstr "افزودن منابع جایگزین برای حداکثر پخش HTML5:"
 
 #: wp-includes/media-template.php:847 wp-includes/media-template.php:938
 msgid "Preload"
@@ -4257,7 +4267,7 @@ msgstr "گذاشتن تصویر"
 
 #: wp-includes/media-template.php:958
 msgid "Tracks (subtitles, captions, descriptions, chapters, or metadata)"
-msgstr ""
+msgstr "آهنگ ها (زیرنویس، شرح تصاویر، توصیف، فصل، و یا اطلاعات)"
 
 #: wp-includes/media-template.php:971
 msgid "There are no associated subtitles."
@@ -4270,19 +4280,19 @@ msgstr "موردی پیدا نشد."
 
 #: wp-includes/media.php:1422
 msgid "Artist"
-msgstr ""
+msgstr "هنرمند"
 
 #: wp-includes/media.php:1423
 msgid "Album"
-msgstr ""
+msgstr "آلبوم"
 
 #: wp-includes/media.php:1427
 msgid "Genre"
-msgstr ""
+msgstr "نوع"
 
 #: wp-includes/media.php:1428
 msgid "Year"
-msgstr ""
+msgstr "سال"
 
 #: wp-includes/media.php:1429
 msgctxt "video or audio"
@@ -4303,7 +4313,7 @@ msgstr "گزینش"
 
 #: wp-includes/media.php:2763
 msgid "Back"
-msgstr ""
+msgstr "عقب"
 
 #. translators: This is a would-be plural string used in the media manager.
 #. If there is not a word you can use in your language to avoid issues
@@ -4445,7 +4455,7 @@ msgstr "گزینش رنگ"
 
 #: wp-includes/media.php:2814
 msgid "Skip Cropping"
-msgstr ""
+msgstr "پرش از برش"
 
 #: wp-includes/media.php:2815
 msgid "Crop Image"
@@ -4453,7 +4463,7 @@ msgstr "بدون تصویر"
 
 #: wp-includes/media.php:2816
 msgid "Crop your image"
-msgstr ""
+msgstr "برش عکس"
 
 #: wp-includes/media.php:2817
 msgid "Cropping&hellip;"
@@ -4461,15 +4471,15 @@ msgstr "در حال متراکم کردن ... "
 
 #: wp-includes/media.php:2819
 msgid "There has been an error cropping your image."
-msgstr ""
+msgstr "برای برش تصویر خطایی وجود دارد"
 
 #: wp-includes/media.php:2822
 msgid "Audio Details"
-msgstr ""
+msgstr "جزییات صوت"
 
 #: wp-includes/media.php:2823
 msgid "Replace Audio"
-msgstr "مدیریت صداها"
+msgstr "جایگزینی صداها"
 
 #: wp-includes/media.php:2824
 msgid "Add Audio Source"
@@ -4477,7 +4487,7 @@ msgstr "افزودن صدا"
 
 #: wp-includes/media.php:2828
 msgid "Video Details"
-msgstr ""
+msgstr "جزییات ویدئو"
 
 #: wp-includes/media.php:2829
 msgid "Replace Video"
@@ -4493,7 +4503,7 @@ msgstr "پاک کردن تصویر"
 
 #: wp-includes/media.php:2833
 msgid "Add Subtitles"
-msgstr ""
+msgstr "افزودن زیرنویس ها"
 
 #: wp-includes/media.php:2836
 msgid "Drag and drop to reorder tracks."
@@ -4505,7 +4515,7 @@ msgstr "پایان زودهنگام ِ لیست"
 
 #: wp-includes/media.php:2838
 msgid "Edit Audio Playlist"
-msgstr ""
+msgstr "ویرایش لیست صداها"
 
 #: wp-includes/media.php:2839
 msgid "&#8592; Cancel Audio Playlist"
@@ -4517,11 +4527,11 @@ msgstr "گذاشتن در نوشته"
 
 #: wp-includes/media.php:2841
 msgid "Update audio playlist"
-msgstr ""
+msgstr "بروزرسانی لیست صداها"
 
 #: wp-includes/media.php:2842
 msgid "Add to audio playlist"
-msgstr ""
+msgstr "افزودن به لیست صدا"
 
 #: wp-includes/media.php:2843
 msgid "Add to Audio Playlist"
@@ -4537,7 +4547,7 @@ msgstr "پایان زودهنگام ِ لیست"
 
 #: wp-includes/media.php:2848
 msgid "Edit Video Playlist"
-msgstr ""
+msgstr "ویرایش لیست تصویری"
 
 #: wp-includes/media.php:2849
 msgid "&#8592; Cancel Video Playlist"
@@ -4549,11 +4559,11 @@ msgstr "گذاشتن در نوشته"
 
 #: wp-includes/media.php:2851
 msgid "Update video playlist"
-msgstr ""
+msgstr "بروزرسانی لیست تصویری"
 
 #: wp-includes/media.php:2852
 msgid "Add to video playlist"
-msgstr ""
+msgstr "افزودن به لیست تصویری"
 
 #: wp-includes/media.php:2853
 msgid "Add to Video Playlist"
@@ -6729,7 +6739,7 @@ msgstr ""
 
 #: wp-includes/wp-db.php:1153
 msgid "The query argument of %s must have a placeholder."
-msgstr ""
+msgstr "کوئری آرگومان %s باید یک فضای خالی داشته باشد."
 
 #: wp-includes/wp-db.php:1196
 msgid "WordPress database error %1$s for query %2$s made by %3$s"
@@ -6958,6 +6968,9 @@ msgid ""
 "help, please see <a href=\"%1$s\">this documentation</a> or try the <a href="
 "\"%2$s\">support forums</a>."
 msgstr ""
+"<strong>خطا</strong>: کوکی ها با توجه به خروجی غیر منتظره مسدود شده اند.  "
+"برای دریافت کمک به <a href=\"%1$s\">اینجا</a> یا <a href=\"%2$s\">انجمن "
+"پشتیبانی</a> مراجعه کنید."
 
 #: wp-login.php:764 wp-login.php:768
 msgid "http://codex.wordpress.org/Cookies"

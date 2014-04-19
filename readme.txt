@@ -4,7 +4,7 @@ Donate link: http://forum.wp-parsi.com/
 Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl
 Requires at least: 3.6
 Tested up to: 3.9
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 
 Persian package builder for WordPress, Full RTL and Shamsi(Jalali) date
 
@@ -38,9 +38,12 @@ List of some features:
 2. Widget of 'بایگانی تاریخ خورشیدی'
 
 == Changelog ==
+= 1.3.2 =
+* update language files
+
 = 1.3.1 =
 * tested on wordpress 3.9 
-* added new language file
+* added new language files
 
 = 1.3 =
 * core function enhanced
