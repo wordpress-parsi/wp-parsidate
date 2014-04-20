@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: WP-Parsidate
-Version: 1.3.2
+Version: 1.3.3
 Author: Mobin Ghasempoor
 Author URI: http://wp-parsi.com/
 Plugin URI: http://forum.wp-parsi.com/
@@ -11,7 +11,7 @@ Description: Persian package builder for WordPress, Full RTL and Shamsi(Jalali) 
 
 /* 
 Special thanks to :
- 	Wordpress Parsi admins and moderators (Parsa Kafi, Mohsen Ghiasi, Saeed Fard, Abdolmajed Shahbakhsh, Morteza Rocky and Mostafa Soufi)
+ 	Wordpress Parsi admins and moderators (Parsa Kafi, Mohsen Ghiasi, Saeed Fard, Abdolmajed Shahbakhsh, Morteza Rocky and Mostafa Soufi, Seyed Vahid Rezaei)
  	Wordpress Parsi forum members for great support(forum.wp-parsi.com)
 */
 
@@ -115,13 +115,13 @@ function theme_editor_add_init(){
 /*
 * fix tiny mce rtl
 */
-add_filter('tiny_mce_before_init', 'wpb_mce_set_direction',1000);
+add_filter('init', 'wpb_mce_set_font',1000);
 
-function wpb_mce_set_direction($input)
+function wpb_mce_set_font($input)
 {
-    $input['content_css']=plugins_url(basename(wp_parsipath).'/css/editor.css');
-    return $input;
+    add_editor_style( plugins_url(basename(wp_parsipath).'/css/editor.css') );
 }
+
 
 /*
 * hooks and filters for persian date
