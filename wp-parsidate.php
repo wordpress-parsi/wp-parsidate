@@ -532,7 +532,7 @@ function wppd_restrict_manage_posts()
 	$m = isset( $_GET['mfa'] ) ? (int) $_GET['mfa'] : 0;
 
 	echo '<select name="mfa">';
-	echo "<option ".selected( $m, 0 ,false)." value='0'>".__( 'Show all dates','wp-persian' )."</option>\n";
+	echo "<option ".selected( $m, 0 ,false)." value='0'>".__( 'دیدن همه تاریخ ها' )."</option>\n";
 	foreach ( $list as $date )
     {
 		$date  = parsidate('Ym',$date,'eng');
