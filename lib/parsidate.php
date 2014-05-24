@@ -64,27 +64,21 @@ class bn_parsidate
         $dayofyear=$this->g_days_sum_month[$gm]+$gd;
         $leap=self::IsLeapYear($gy-1);
         $leab=self::IsLeapYear($gy);
-        if($leap and $gm>2)
-        ++$gd;
         if($dayofyear>79)
         {
          $jd=($leab)?$dayofyear-78:$dayofyear-79;
          $jy=$gy-621;
-         for($i=0;$jd>$this->j_days_in_month[$i];$i++)
-            $jd-=$this->j_days_in_month[$i];
         }
         else
         {
          $jd=($leap||($leab&&$gm>2))?287+$dayofyear:286+$dayofyear;
-         $jy=$gy-622;
-         if($jd==366)
-         return array($jy,12,30);
-         for($i=0;$jd>$this->j_days_in_month[$i];$i++)
-             $jd-=$this->j_days_in_month[$i];  
+         $jy=$gy-622; 
         }
+        for($i=0;$i<11 and $jd>$this->j_days_in_month[$i];$i++)
+        $jd-=$this->j_days_in_month[$i];
         $jm=++$i; 
         return array($jy,$jm,$jd);   
-    }
+    } 
     
     public function trim_number($num,$sp='٫')
     {
@@ -97,11 +91,7 @@ class bn_parsidate
     public function persian_date($format,$date='now',$lang='per')
     {
       $j_days_in_month = array(31, 62, 93, 124, 155, 186, 216, 246, 276, 306, 336, 365);
-		if(strtotime($date)){
-			$timestamp=strtotime($date);
-		}else{
-			$timestamp = $date ;
-		}
+	  $timestamp = is_numeric($date) && (int)$date == $date?$date:strtotime($date);
 	  
       $date=getdate($timestamp);
       list($date['year'],$date['mon'],$date['mday'])=self::gregorian_to_persian($date['year'],$date['mon'],$date['mday']);

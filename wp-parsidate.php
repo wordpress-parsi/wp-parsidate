@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: WP-Parsidate
-Version: 1.3.3
+Version: 1.3.4
 Author: Mobin Ghasempoor
 Author URI: http://wp-parsi.com/
 Plugin URI: http://forum.wp-parsi.com/
