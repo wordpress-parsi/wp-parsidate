@@ -32,6 +32,8 @@ List of some features:
 3. To use the widget, go to 'Widgets' and choose 'بایگانی تاریخ خورشیدی'
 4. To use the widget, go to 'Widgets' and choose 'گاه‌شمار تاریخ خورشیدی'
 
+== Frequently Asked Questions ==
+
 == Screenshots ==
 
 1. Persian package builder admin page
