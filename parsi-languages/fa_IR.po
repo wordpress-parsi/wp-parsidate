@@ -1,0 +1,237 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP-Parsi additional strings\n"
+"POT-Creation-Date: 2014-12-26 02:53+0330\n"
+"PO-Revision-Date: 2014-12-26 02:59+0330\n"
+"Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
+"Language-Team: WP-Pari Team\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.1\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../includes/admin/lists-fix.php:74
+msgid "Show All Dates"
+msgstr "نمایش همه‌ی تاریخ‌ها"
+
+#: ../includes/plugins/woocommerce.php:47 ../includes/settings.php:214
+msgid "Enable"
+msgstr "فعال"
+
+#: ../includes/plugins/woocommerce.php:48 ../includes/settings.php:215
+msgid "Disable"
+msgstr "غیرفعال"
+
+#: ../includes/plugins/woocommerce.php:53
+msgid "WooCommerce"
+msgstr "ووکامرس"
+
+#: ../includes/plugins/woocommerce.php:58
+msgid "Fix prices"
+msgstr "تصحیح قیمت‌ها"
+
+#: ../includes/settings.php:24 ../includes/settings.php:25
+#: ../includes/settings.php:553
+msgid "Parsi Settings"
+msgstr "تنظیمات پارسی"
+
+#: ../includes/settings.php:45
+#, php-format
+msgid ""
+"WP-Parsidate plugin Activated, Please go to <a href=\"%s\">plugin page "
+"settings</a> and setup plugin."
+msgstr ""
+"افزونه بسته پارسی‌ساز فعال است، لطفا به <a href=\"%s\">صفحه تنظیمات افزونه</a> "
+"بروید و تنظیمات دلخواه را انجام دهید."
+
+#: ../includes/settings.php:136
+#, php-format
+msgid "%s Core"
+msgstr "%s هسته"
+
+#: ../includes/settings.php:137
+#, php-format
+msgid "%s Converts"
+msgstr "%s تبدیل"
+
+#: ../includes/settings.php:138
+#, php-format
+msgid "%s Plugins compability"
+msgstr "%s هماهنگی با افزونه‌ها"
+
+#: ../includes/settings.php:200
+msgid "Settings updated"
+msgstr "پیکربندی به‌روز شد"
+
+#: ../includes/settings.php:221
+msgid "Change Locale in admin"
+msgstr "تغییر زبان مدیریت"
+
+#: ../includes/settings.php:225
+msgid "This option change WordPress locale in Admin"
+msgstr "این گزینه باعث تغییر زبان مدیریت میشود"
+
+#: ../includes/settings.php:229
+msgid "Change Locale in theme"
+msgstr "تغییر زبان سایت"
+
+#: ../includes/settings.php:233
+msgid "This option change WordPress locale in theme"
+msgstr "این گزینه باعث تغییر زبان سایت میشود"
+
+#: ../includes/settings.php:238
+msgid "Shamsi date"
+msgstr "تاریخ خورشیدی"
+
+#: ../includes/settings.php:242
+msgid "By enabling this, Dates will convert to Shamsi (Jalali) dates"
+msgstr "با فعال‌کردن این گزینه، تاریخ‌ها به صورت تاریخ خورشیدی (جلالی) درمی‌آیند"
+
+#: ../includes/settings.php:248
+msgid "Persian digits"
+msgstr "رقم‌های پارسی"
+
+#: ../includes/settings.php:253
+msgid "Page title"
+msgstr "در عنوان صفحه"
+
+#: ../includes/settings.php:260
+msgid "Post title"
+msgstr "در عنوان نوشته‌ها"
+
+#: ../includes/settings.php:267
+msgid "Post content"
+msgstr "در محتوای نوشته‌ها"
+
+#: ../includes/settings.php:274
+msgid "Post excerpt"
+msgstr "در خلاصه‌ی نوشته‌ها"
+
+#: ../includes/settings.php:281
+msgid "Comments text"
+msgstr "در نوشته‌ی دیدگاه‌ها"
+
+#: ../includes/settings.php:288
+msgid "Comments count"
+msgstr "تعداد دیدگاه‌ها"
+
+#: ../includes/settings.php:295
+msgid "Dates"
+msgstr "تاریخ‌ها"
+
+#: ../includes/settings.php:302
+msgid "Categories"
+msgstr "دسته‌بندی‌ها"
+
+#: ../includes/settings.php:313
+msgid "Fix arabic characters"
+msgstr "تصحیح حروف عربی"
+
+#: ../includes/settings.php:317
+msgid "Fixes arabic characters caused by wrong keyboard layouts"
+msgstr ""
+"این گزینه، حروف عربی را در کل سیستم به حروف فارسی تصحیح می‌کند<br>برای مثال "
+"٤/٥/٦ به ۴ / ۵ / ۶ و ك / ي به ک / ی"
+
+#: ../includes/settings.php:321
+msgid "Fix permalinks dates"
+msgstr "تبدیل تاریخ در پیوندهای یکتا"
+
+#: ../includes/settings.php:325
+msgid "By enabling this, dates in permalinks converted to Shamsi (Jalali) date"
+msgstr ""
+"با فعال‌کردن این گزینه، تاریخ‌ها در پیوندهای یکتا به تاریخ خورشیدی (جلالی) تبدیل "
+"می‌شوند"
+
+#: ../includes/settings.php:523
+msgid "Upload File"
+msgstr "آپلود فایل"
+
+#: ../includes/widget/widget_archive.php:11
+#: ../includes/widget/widget_archive.php:20
+#: ../includes/widget/widget_archive.php:49
+msgid "Jalali Date Archives"
+msgstr "بایگانی تاریخ خورشیدی"
+
+#: ../includes/widget/widget_archive.php:22
+msgid "Yearly"
+msgstr "سالانه"
+
+#: ../includes/widget/widget_archive.php:23
+msgid "Monthly"
+msgstr "ماهانه"
+
+#: ../includes/widget/widget_archive.php:24
+msgid "Daily"
+msgstr "روزانه"
+
+#: ../includes/widget/widget_archive.php:27
+msgid "Show post counts"
+msgstr " نمايش تعداد نوشته‌ها "
+
+#: ../includes/widget/widget_archive.php:30
+msgid "Display as dropdown"
+msgstr " نمايش به صورت ليست بازشو"
+
+#: ../includes/widget/widget_calendar.php:11
+#: ../includes/widget/widget_calendar.php:19
+msgid "Jalali Date Calender"
+msgstr "گاه‌شمار تاریخ خورشیدی"
+
+#: ../includes/widget/widget_calendar.php:18
+msgid "Title:"
+msgstr "عنوان:"
+
+#: ../parsi-languages/common-strings.php:2
+msgid "WP-Parsidate"
+msgstr "بسته وردپرس پارسی"
+
+#: ../parsi-languages/common-strings.php:3
+msgid ""
+"Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: "
+"posts, comments, pages, archives, search, categories, permalinks and all admin "
+"sections and TinyMce editor, lists, quick editor. This package has Jalali "
+"archive widget."
+msgstr ""
+"بسته‌ی پارسی سازی وردپرس، اضافه‌کردن پشتیبانی کامل راست‌به‌چپ و تاریخ خورشیدی برای "
+"وردپرس. این افزونه از نوشته‌ها، دیدگاه‌ها، برگه‌ها، بایگانی‌ها، جستجو‌ها و "
+"دسته‌بندی‌ها و پیوندهای یکتا پشتیبانی می‌کند و تمام قسمت‌های مدیریت و ویرایشگر را "
+"پارسی می‌کند. این افزونه هم‌چنین یک  ابزارک بایگانی شمسی نیز دارد."
+
+#: ../parsi-languages/common-strings.php:4
+msgid "WP-Parsi Team"
+msgstr "تیم وردپرس پارسی"
+
+#: ../wp-parsidate.php:67
+msgid "settings"
+msgstr "تنظیمات"
+
+#~ msgid "Persian language"
+#~ msgstr "زبان پارسی"
+
+#~ msgid ""
+#~ "This option, makes WordPress Persian and texts right to left (Currently "
+#~ "Deactivate)"
+#~ msgstr ""
+#~ "این گزینه، زبان وردپرس را فارسی و جهت نوشته‌ها را راست‌به‌جپ می‌کند (غیرفعال است)"
+
+#~ msgid "%s Misc"
+#~ msgstr "%s متفرقه"
+
+#~ msgid "Latest news source"
+#~ msgstr "منبع آخرین اخبار"
+
+#~ msgid "Select one"
+#~ msgstr "انتخاب کنید"
+
+#~ msgid "WP-Parsi news"
+#~ msgstr "اخبار وردپرس پارسی"
+
+#~ msgid "WordPress.org News"
+#~ msgstr "اخبار WordPress.org"
