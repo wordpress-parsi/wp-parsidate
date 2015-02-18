@@ -26,8 +26,7 @@ function wpp_add_settings_menu() {
         'manage_options',
         'wp-parsi-settings',
         'wpp_render_settings',
-        'dashicons-admin-site',
-        102
+        'dashicons-admin-site'
     );
 }
 
