@@ -10,46 +10,34 @@
  */
 if ( ! defined( 'ABSPATH' ) ) exit; // No direct access allowed ;)
 
-
-
-add_action( 'admin_notices', 'wp_parsi_admin_notice' );
 add_action( 'admin_menu', 'wpp_add_settings_menu', 11 );
-
 
 /**
  * Add WP-Parsidate admin page settings
  * */
 function wpp_add_settings_menu() {
-	add_menu_page(
-        __('Parsi Settings','wp-parsidate') ,
-        __('Parsi Settings','wp-parsidate') ,
-        'manage_options',
-        'wp-parsi-settings',
-        'wpp_render_settings',
-        'dashicons-admin-site'
-    );
-}
+	global $wpp_settings;
 
-
-/**
- * Add Notice To admin for activate ParsiDate.
- * */
-function wp_parsi_admin_notice() {
-	$settings = get_option( 'wpp_settings' );
-	if ( $settings['persian_date'] == 'disable' ) {
-		?>
-		<div class="error">
-			<p>
-				<?php printf(
-					__( 'WP-Parsidate plugin Activated, Please go to <a href="%s">plugin page settings</a> and setup plugin.', 'wp-parsidate' ),
-					admin_url('admin.php?page=wp-parsi-settings')
-				); ?>
-			</p>
-		</div>
-	<?php
+	if ( $wpp_settings[ 'submenu_move' ] != 'disable' ) {
+		add_submenu_page(
+			'options-general.php',
+			__( 'Parsi Settings', 'wp-parsidate' ),
+			__( 'Parsi Settings', 'wp-parsidate' ),
+			'manage_options',
+			'wp-parsi-settings',
+			'wpp_render_settings'
+		);
+	} else {
+		add_menu_page(
+			__('Parsi Settings','wp-parsidate') ,
+			__('Parsi Settings','wp-parsidate') ,
+			'manage_options',
+			'wp-parsi-settings',
+			'wpp_render_settings',
+			'dashicons-admin-site'
+		);
 	}
 }
-
 
 /**
  * Gets saved settings from WP core
@@ -63,7 +51,10 @@ function wp_parsi_get_settings() {
 		update_option( 'wpp_settings', array(
 			'admin_lang'  		=>  'enable',
 			'user_lang'   		=>  'enable',
+			'submenu_move' 		=>	'disable',
 			'persian_date'		=>	'disable',
+			'droidsans_editor' 	=>	'enable',
+			'droidsans_admin' 	=>	'enable',
 			'conv_title'		=>	'disable',
 			'conv_contents'		=>	'disable',
 			'conv_excerpt'		=>	'disable',
@@ -231,7 +222,6 @@ function wpp_get_registered_settings() {
 				'std'           =>  'enable',
 				'desc'          =>  __( 'This option change WordPress locale in theme', 'wp-parsidate' )
 			),
-
             'persian_date'      =>  array(
                 'id'            =>  'persian_date',
                 'name'          =>  __( 'Shamsi date', 'wp-parsidate' ),
@@ -239,7 +229,15 @@ function wpp_get_registered_settings() {
                 'options'       =>  $options,
                 'std'           =>  'disable',
                 'desc'          =>  __( 'By enabling this, Dates will convert to Shamsi (Jalali) dates', 'wp-parsidate' )
-            )
+            ),
+            'submenu_move'		=>	array(
+				'id' 			=>	'submenu_move',
+				'name' 			=>	__( 'Move page to submenu?', 'wp-parsidate' ),
+				'type' 			=>	'radio',
+				'options' 		=>	$options,
+				'std' 			=>	'disable',
+				'desc' 			=>	__( 'With enabling this option, page item will be moved to Settings menu as submenu.', 'wp-parsidate' )
+			),
         ) ),
         'conv'                  =>  apply_filters( 'wpp_conv_settings', array(
             'conv_nums'         =>  array(
@@ -322,6 +320,26 @@ function wpp_get_registered_settings() {
 				'options'       =>  $options,
 				'std'			=>	'disable',
 				'desc'			=>	__( 'By enabling this, dates in permalinks converted to Shamsi (Jalali) date', 'wp-parsidate' )
+			),
+			'sep_font' 			=>	array(
+				'id' 			=>	'sep_font',
+				'type' 			=>	'header'
+			),
+			'droidsans_admin' 	=>	array(
+				'id' 			=>	'droidsans_admin',
+				'name' 			=>	__( 'Use Droid Sans font for admin side', 'wp-parsidate' ),
+				'type' 			=>	'radio',
+				'options' 		=>	$options,
+				'std' 			=>	'enable',
+				'desc' 			=>	__( 'Droid Sans Naskh and Roboto font families will be activated in admin side, if this is enabled', 'wp-parsidate' )
+			),
+			'droidsans_editor' 	=>	array(
+				'id' 			=>	'droidsans_editor',
+				'name' 			=>	__( 'Use Droid Sans font for editors', 'wp-parsidate' ),
+				'type' 			=>	'radio',
+				'options' 		=>	$options,
+				'std' 			=>	'enable',
+				'desc' 			=>	__( 'Droid Sans Naskh and Roboto font families will be activated in all rich editors in back end.', 'wp-parsidate' )
 			)
         ) ),
 		'plugins'					=>	apply_filters( 'wpp_plugins_compability_settings', array() )
