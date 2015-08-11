@@ -8,7 +8,7 @@ class parsidate_calendar extends WP_Widget
 {
     public function __construct()
     {
-       parent::WP_Widget(false,__('Jalali Date Calender','wp-parsidate'),'description='.__('Jalali Date Calender','wp-parsidate'));
+    parent::WP_Widget(false,__('Jalali Date Calender','wp-parsidate'),'description='.__('Jalali Date Calender','wp-parsidate'));
     }
     
     public function form($instance)

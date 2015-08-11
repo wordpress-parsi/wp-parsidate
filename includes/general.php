@@ -11,6 +11,8 @@ global $wpp_settings;
 
 add_filter( 'login_headerurl', 'wpp_login_headerurl', 10, 2 );
 add_filter( 'locale', 'wp_parsi_set_locale' );
+add_action( 'admin_notices', 'wpp_activation_notice' );
+add_action( 'admin_init', 'wpp_dismiss_notice_action' );
 
 /**
  * Change Locale WordPress Admin and Front-end user
@@ -118,4 +120,36 @@ function fixarabic( $content ) {
 function wpp_login_headerurl()
 {
     return 'http://wp-parsi.com';
+}
+
+/**
+ * Notice for the activation.
+ * Added dismiss feature.
+ *
+ * @author          Ehsaan
+ * @return          void
+ */
+function wpp_activation_notice() {
+    $dismissed = get_option( 'wpp_dismissed', false );
+
+    if ( ! $dismissed ) {
+        global $wpp_settings;
+
+        if ( $wpp_settings[ 'persian_date' ] != 'enable' ) {
+            $output = sprintf( __( '<div class="updated wpp-message"><p>ParsiDate activated, you may need to configure it to work properly. <a href="%s">Go to configuartion page</a> &ndash; <a href="%s">Dismiss</a></p></div>', 'wp-parsidate' ), admin_url( 'admin.php?page=wp-parsi-settings' ), add_query_arg( 'wpp-action', 'dismiss-notice' ) );
+            echo $output;
+        }
+    }
+}
+
+/**
+ * Dismiss the notice action
+ *
+ * @author          Ehsaan
+ * @return          void
+ */
+function wpp_dismiss_notice_action() {
+    if ( isset( $_GET[ 'wpp-action' ] ) && $_GET[ 'wpp-action' ] == 'dismiss-notice' ) {
+        update_option( 'wpp_dismissed', true );
+    }
 }
