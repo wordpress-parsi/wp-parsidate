@@ -4,7 +4,7 @@ Donate link: http://forum.wp-parsi.com/
 Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl
 Requires at least: 3.6
 Tested up to: 4.3
-Stable tag: 2.1.5
+Stable tag: 2.1.6
 
 Persian date & language package for WordPress
 
@@ -41,6 +41,9 @@ List of some features:
 4. 'Jalali Date Calender' in action
 
 == Changelog ==
+= 2.1.6 =
+* Fixed assets folder issue with community.
+
 = 2.1.5 =
 * Added "Droid Sans" & "Roboto" font family to back-end environment & editor by default, also an option for returning that
 * Added an option for moving menu item to submenu
