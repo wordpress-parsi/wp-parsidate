@@ -1,28 +1,29 @@
 ﻿=== wp-parsidate ===
-Contributors: lord_viper, man4toman
+Contributors: lord_viper, man4toman, iEhsan.ir
 Donate link: http://forum.wp-parsi.com/
 Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl
 Requires at least: 3.6
-Tested up to: 4.1
-Stable tag: 2.1.3
+Tested up to: 4.3
+Stable tag: 2.1.6
 
-Persian package builder for WordPress, Full RTL and Shamsi(Jalali) date
+Persian date & language package for WordPress
 
 == Description ==
 
-Persian package builder for WordPress, Full RTL and Shamsi(Jalali) date. It's easy to use and powerful and fully featured.
+This package is made by Persian developers to bring so much better experience of Persian WordPress. It includes Shamsi (Jalali) calendar, character issues fixes and Right-To-Left fix for WordPress back-end environment.
 
 List of some features:
 
-* Shamsi(Jalali) date in Posts, comments, pages, archives, search, categories
-* Shamsi(Jalali) date in Permalinks
-* Shamsi(Jalali) date in admin sections such as posts lists, comments lists, pages lists
-* Shamsi(Jalali) date in post quick edit, comment quick edit, page quick edit of admin panel
-* Shamsi(Jalali) calender widget
-* Shamsi(Jalali) archive widget
+* Shamsi (Jalali) date in Posts, comments, pages, archives, search, categories
+* Shamsi (Jalali) date in Permalinks
+* Shamsi (Jalali) date in admin sections such as posts lists, comments lists, pages lists
+* Shamsi (Jalali) date in post quick edit, comment quick edit, page quick edit of admin panel
+* Shamsi (Jalali) calender widget
+* Shamsi (Jalali) archive widget
 * RTL and fixed tinymce editor
 * Poweful and fast function for fixing Arabic (ي , ك) to Persian (ی , ک)
 * Poweful and fast function for Persian numbers
+* Low resources usage
 
 
 == Installation ==
@@ -34,12 +35,21 @@ List of some features:
 
 == Screenshots ==
 
-1. Persian package builder admin page
-2. Widget of 'Jalali Date Archives'
-3. Widget of 'Jalali Date Calender'
-4. Display widget 'Jalali Date Calender' in theme
+1. Plugin configuration page
+2. 'Jalali Date Archives' Widget
+3. 'Jalali Date Calender' Widget
+4. 'Jalali Date Calender' in action
 
 == Changelog ==
+= 2.1.6 =
+* Fixed assets folder issue with community.
+
+= 2.1.5 =
+* Added "Droid Sans" & "Roboto" font family to back-end environment & editor by default, also an option for returning that
+* Added an option for moving menu item to submenu
+* Fixed timezone bug that was set to "Asia/Tehran" by default
+* Cleaned codes and documentation
+
 = 2.1.2 =
 * Admin menu problem fixed
 

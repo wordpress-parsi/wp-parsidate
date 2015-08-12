@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP-Parsidate
- * Version: 2.1.3
+ * Version: 2.1.6
  * Plugin URI: http://forum.wp-parsi.com/
  * Description: Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: posts, comments, pages, archives, search, categories, permalinks and all admin sections and TinyMce editor, lists, quick editor. This package has Jalali archive widget.
  * Author: WP-Parsi Team
@@ -56,7 +56,7 @@ final class WP_Parsidate {
         $this->consts();
         $this->setup_vars();
         $this->include_files();
-        add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'WP_Parsidate::parsi_settings_link' );
+        add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'parsi_settings_link' ) );
     }
 
    /**
@@ -65,9 +65,9 @@ final class WP_Parsidate {
     * @param           string $links
     * @return          array
     */
-    public static function parsi_settings_link( $links ) {
-    $mylinks = array('<a href="'.menu_page_url('wp-parsi-settings',FALSE).'">'.__('settings','wp-parsidate').'</a>');
-    return array_merge( $links, $mylinks );
+   public static function parsi_settings_link( $links ) {
+    	$mylinks = array('<a href="'.menu_page_url('wp-parsi-settings',FALSE).'">'.__('settings','wp-parsidate').'</a>');
+    	return array_merge( $links, $mylinks );
     }
 
     /**
@@ -87,7 +87,7 @@ final class WP_Parsidate {
             define( 'WP_PARSI_URL', plugin_dir_url( WP_PARSI_ROOT ) );
 
         if ( ! defined( 'WP_PARSI_VER' ) )
-            define( 'WP_PARSI_VER', '2.0-alpha' );
+            define( 'WP_PARSI_VER', '2.1.5' );
     }
 
      /**
@@ -96,35 +96,36 @@ final class WP_Parsidate {
       * @since          2.0
       * @return         void
       */
-     public function include_files() {
-         require_once( WP_PARSI_DIR . 'includes/settings.php' );
-         global $wpp_settings;
-         $wpp_settings = wp_parsi_get_settings();
+	public function include_files() {
+		require_once( WP_PARSI_DIR . 'includes/settings.php' );
+		global $wpp_settings;
+		$wpp_settings = wp_parsi_get_settings();
 
-         $files = array(
-             'parsidate',
-             'general',
-             'fixes-archive',
-             'fixes-permalinks',
-             'fixes-dates',
-             'fixes-misc',
-             'admin/styles-fix',
-             'admin/lists-fix',
-             'admin/other-fix',
-             'fixes-get_calendar',
-             'fixes-get_archives',
-             'plugins/woocommerce',
-             'widget/widget_archive',
-             'widget/widget_calendar');
+        $files = array(
+			'parsidate',
+			'general',
+			'fixes-archive',
+			'fixes-permalinks',
+			'fixes-dates',
+			'fixes-misc',
+			'admin/styles-fix',
+			'admin/lists-fix',
+			'admin/other-fix',
+			'fixes-get_calendar',
+			'fixes-get_archives',
+			'plugins/woocommerce',
+			'widget/widget_archive',
+			'widget/widget_calendar' 
+		);
 
-         foreach( $files as $file )
-            require_once( WP_PARSI_DIR . 'includes/' . $file . '.php' );
+		foreach( $files as $file )
+			require_once( WP_PARSI_DIR . 'includes/' . $file . '.php' );
 
-         if ( get_locale() == 'fa_IR' )
-            load_textdomain( 'wp-parsidate', WP_PARSI_DIR . 'parsi-languages/fa_IR.mo' );
-            
-         add_action( 'widgets_init', array( $this, 'register_widget' ) );
-     }
+		if ( get_locale() == 'fa_IR' )
+			load_textdomain( 'wp-parsidate', WP_PARSI_DIR . 'parsi-languages/fa_IR.mo' );
+
+		add_action( 'widgets_init', array( $this, 'register_widget' ) );
+	}
 
      /**
       * Sets up global variables
@@ -132,25 +133,26 @@ final class WP_Parsidate {
       * @since           2.0
       * @return          void
       */
-      private function setup_vars() {
-          global $persian_month_names, $timezone;
-          $persian_month_names = array( '',
-             'فروردین',
-             'اردیبهشت',
-             'خرداد',
-             'تیر',
-             'مرداد',
-             'شهریور',
-             'مهر',
-             'آبان',
-             'آذر',
-             'دی',
-             'بهمن',
-             'اسفند');
+	private function setup_vars() {
+		global $persian_month_names, $timezone;
+		$persian_month_names = array( '',
+			'فروردین',
+			'اردیبهشت',
+			'خرداد',
+			'تیر',
+			'مرداد',
+			'شهریور',
+			'مهر',
+			'آبان',
+			'آذر',
+			'دی',
+			'بهمن',
+			'اسفند'
+		);
 
-          $timezone = 'Asia/Tehran';
-          date_default_timezone_set( $timezone );
-      }
+		$timezone = get_option( 'timezone_string' );
+		date_default_timezone_set( $timezone );
+	}
 
      /**
       * Register Plugin Widgets
@@ -158,11 +160,11 @@ final class WP_Parsidate {
       * @since           2.0
       * @return          boolean
       */  
-    public function register_widget() {
-        register_widget('parsidate_archive');
-        register_widget('parsidate_calendar');
-        return true;
-    }
+	public function register_widget() {
+		register_widget('parsidate_archive');
+		register_widget('parsidate_calendar');
+		return true;
+	}
 }
 
 return WP_Parsidate::get_instance();
