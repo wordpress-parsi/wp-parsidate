@@ -8,7 +8,13 @@ class parsidate_archive extends WP_Widget
 {
     public function __construct()
     {
-       parent::WP_Widget(false,__('Jalali Date Archives','wp-parsidate'),'description='.__('Jalali Date Archives','wp-parsidate'));
+        global $wp_version;
+
+        // backwards compability
+        if ( version_compare( $wp_version , '4.3', '>=' ) )
+            parent::__construct(false,__('Jalali Date Archives','wp-parsidate'),'description='.__('Jalali Date Archives','wp-parsidate'));
+        else
+            parent::WP_Widget(false,__('Jalali Date Archives','wp-parsidate'),'description='.__('Jalali Date Archives','wp-parsidate'));
     }
     
     public function form($instance)

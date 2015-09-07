@@ -1,12 +1,12 @@
-﻿=== wp-parsidate ===
+﻿=== Parsi Date ===
 Contributors: lord_viper, man4toman, iEhsan.ir
 Donate link: http://forum.wp-parsi.com/
 Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl
 Requires at least: 3.6
 Tested up to: 4.3
-Stable tag: 2.1.7
+Stable tag: 2.2
 
-Persian date & language package for WordPress
+Persian date support for WordPress
 
 == Description ==
 
@@ -30,8 +30,8 @@ List of some features:
 
 1. Upload plugin folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. To use the widget, go to 'Widgets' and choose 'بایگانی تاریخ خورشیدی'
-4. To use the widget, go to 'Widgets' and choose 'گاه‌شمار تاریخ خورشیدی'
+3. To use the archives widget, go to 'Widgets' and choose 'بایگانی تاریخ خورشیدی'
+4. To use the calender widget, go to 'Widgets' and choose 'گاه‌شمار تاریخ خورشیدی'
 
 == Screenshots ==
 
@@ -41,6 +41,11 @@ List of some features:
 4. 'Jalali Date Calender' in action
 
 == Changelog ==
+= 2.2 =
+* Fixed: Widgets bug causes Deprecated notices in WordPress >= 4.3
+* Fixed: the_modified_date() is now in Shamsi. [Reported by Amirhossein Habibi]
+* New: Added EDD support to convert prices digits in Persian digits.
+
 = 2.1.7 =
 * Fixed timezone bug [Reported by HANNANStd]
 * Paragraph style returned to its previous style [Reported by WP-Parsi community]
