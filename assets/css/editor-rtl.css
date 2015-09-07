@@ -4,8 +4,10 @@ body, #tinymce {
 	direction: rtl;
 }
 p {
-	margin: 0 !important;
+	margin-top: 13px;
+	margin-bottom: 13px;
 }
 h1, h2, h3, h4, h5, h6 {
-	margin-bottom: 5px !important;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
