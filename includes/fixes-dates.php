@@ -14,8 +14,6 @@ if ( $wpp_settings['persian_date'] != 'disable' ) {
     add_filter( 'the_date', 'wpp_fix_post_date', 10, 2 );
     add_filter( 'get_comment_time', 'wpp_fix_comment_time', 10, 2 );
     add_filter( 'get_comment_date', 'wpp_fix_comment_date', 10, 2 );
-    add_filter( 'get_post_modified_time', 'wpp_fix_post_date', 10, 2 );
-
     add_action( 'date_i18n', 'wpp_fix_i18n', 10, 3 );
 }
 

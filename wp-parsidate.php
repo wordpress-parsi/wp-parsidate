@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP-Parsidate
- * Version: 2.2
+ * Version: 2.1.7
  * Plugin URI: http://forum.wp-parsi.com/
  * Description: Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: posts, comments, pages, archives, search, categories, permalinks and all admin sections and TinyMce editor, lists, quick editor. This package has Jalali archive widget.
  * Author: WP-Parsi Team
@@ -24,7 +24,7 @@
  * @author              Farhan Nisi
  * @author              Ehsaan
  * @link                http://wp-parsi.com/
- * @version             2.2
+ * @version             2.0
  * @license             http://www.gnu.org/licenses/gpl-2.0.html GNU Public License v2.0
  * @package             WP-Parsidate
  * @subpackage          Core
@@ -87,7 +87,7 @@ final class WP_Parsidate {
             define( 'WP_PARSI_URL', plugin_dir_url( WP_PARSI_ROOT ) );
 
         if ( ! defined( 'WP_PARSI_VER' ) )
-            define( 'WP_PARSI_VER', '2.2' );
+            define( 'WP_PARSI_VER', '2.1.5' );
     }
 
      /**
@@ -111,10 +111,9 @@ final class WP_Parsidate {
 			'admin/styles-fix',
 			'admin/lists-fix',
 			'admin/other-fix',
-			'fixes-calendar',
-			'fixes-archives',
+			'fixes-get_calendar',
+			'fixes-get_archives',
 			'plugins/woocommerce',
-      'plugins/edd',
 			'widget/widget_archive',
 			'widget/widget_calendar' 
 		);
