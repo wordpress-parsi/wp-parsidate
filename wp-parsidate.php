@@ -92,12 +92,6 @@ final class WP_Parsidate
 			'بهمن',
 			'اسفند'
 		);
-
-		$timezone = get_option('timezone_string');
-		if ($timezone != '')
-			date_default_timezone_set($timezone);
-		else
-			date_default_timezone_set('Asia/Tehran');
 	}
 
 	/**
