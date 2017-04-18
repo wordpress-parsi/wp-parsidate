@@ -41,6 +41,9 @@ List of some features:
 4. 'Jalali Date Calender' in action
 
 == Changelog ==
+= 2.2.3 =
+* Conflict timezone with wordpress default timezone [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/1)
+
 = 2.2.2 =
 * Fix error in PHP 7
 
