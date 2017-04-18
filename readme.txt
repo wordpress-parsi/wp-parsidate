@@ -3,8 +3,8 @@ Contributors: lord_viper, man4toman, iEhsan.ir
 Donate link: http://forum.wp-parsi.com/
 Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl
 Requires at least: 3.6
-Tested up to: 4.3
-Stable tag: 2.2
+Tested up to: 4.7
+Stable tag: trunk
 
 Persian date support for WordPress
 
@@ -41,6 +41,15 @@ List of some features:
 4. 'Jalali Date Calender' in action
 
 == Changelog ==
+= 2.2.2 =
+* Fix error in PHP 7
+
+= 2.2.1 =
+* Compatible with WP 4.7
+* Fixed: Notice error in acf group page. [#issue](https://wordpress.org/support/topic/need-a-conditional-for-posts-in-wpp_fix_post_date-function/)
+* Fixed: Undefined variable `$predate` error in admin lists-fix.php [#issue](https://wordpress.org/support/topic/undefined-variable-predate-in-admin-lists-fix-php/)
+* Fixed by: [Mostafa Soufi](https://profiles.wordpress.org/mostafas1990/)
+
 = 2.2 =
 * Fixed: Widgets bug causes Deprecated notices in WordPress >= 4.3
 * Fixed: the_modified_date() is now in Shamsi. [Reported by Amirhossein Habibi]

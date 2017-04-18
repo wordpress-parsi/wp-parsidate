@@ -7,7 +7,7 @@
  * @subpackage          Core/Install
  */
 
-register_activation_hook( WP_PARSI_ROOT, 'wpp_install' );
+register_activation_hook(WP_PARSI_ROOT, 'wpp_install');
 
 /**
  * Copys files from plugin languages folder to global languages folder
@@ -15,17 +15,18 @@ register_activation_hook( WP_PARSI_ROOT, 'wpp_install' );
  * @since               1.0
  * @return              void
  */
-function wpp_install() {
-    
-    /*if ( ! is_dir( WP_CONTENT_DIR . '/languages' ) )
-        mkdir( WP_CONTENT_DIR . '/languages/' );
+function wpp_install()
+{
 
-    $source         =   WP_PARSI_DIR . 'languages/*';
-    $destination    =   WP_CONTENT_DIR . '/languages/';
-    $files          =   glob( $source );
+	/*if ( ! is_dir( WP_CONTENT_DIR . '/languages' ) )
+		mkdir( WP_CONTENT_DIR . '/languages/' );
 
-    foreach( $files as $file )
-        @ copy( $file, $destination . basename( $file ) );*/
+	$source         =   WP_PARSI_DIR . 'languages/*';
+	$destination    =   WP_CONTENT_DIR . '/languages/';
+	$files          =   glob( $source );
 
-    update_option( 'wpp_settings', array() );
+	foreach( $files as $file )
+		@ copy( $file, $destination . basename( $file ) );*/
+
+	update_option('wpp_settings', array());
 }

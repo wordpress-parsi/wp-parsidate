@@ -30,7 +30,7 @@ class parsidate_archive extends WP_Widget
         <input style="width: 200px;" id="<?php echo $this->get_field_id('parsidate_archive_title'); ?>" name="<?php echo $this->get_field_name('parsidate_archive_title'); ?>" type="text" value="<?php echo (empty($instance['parsidate_archive_title'])? __('Jalali Date Archives','wp-parsidate') :$instance['parsidate_archive_title']) ?>" />
         <br />
             <label ><input type="radio" id="parsidate_archive_type1" name="<?php echo $this->get_field_name('parsidate_archive_type'); ?>" value="yearly" <?php checked($type,'yearly'); ?>/><label for="parsidate_archive_type1"><?php _e('Yearly','wp-parsidate') ?></label><br />
-            <label ><input type="radio" id="parsidate_archive_type2" name="<?php echo $this->get_field_name('parsidate_archive_type'); ?>" value="monthly" <?php checked($type,'monthly'); ?>/><?php _e('Monthly','wp-parsidate') ?></label><br />
+                <label ><input type="radio" id="parsidate_archive_type2" name="<?php echo $this->get_field_name('parsidate_archive_type'); ?>" value="monthly" <?php checked($type,'monthly'); ?>/><?php _e('Monthly','wp-parsidate') ?></label><br />
             <label ><input type="radio" id="parsidate_archive_type3" name="<?php echo $this->get_field_name('parsidate_archive_type'); ?>" value="daily" <?php checked($type,'daily'); ?>/><?php _e('Daily','wp-parsidate') ?></label><br />
         <br />
         <input type="checkbox" name="<?php echo $this->get_field_name('parsidate_archive_count'); ?>" id="<?php echo $this->get_field_id('parsidate_archive_count'); ?>" value="1" <?php checked($instance['parsidate_archive_count'],1,true); ?>/>
