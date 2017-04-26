@@ -8,17 +8,27 @@
  */
 
 global $wpp_settings;
-
-if ($wpp_settings['persian_date'] != 'disable') {
-	add_filter('the_time', 'wpp_fix_post_time', 10, 2);
-	add_filter('the_date', 'wpp_fix_post_date', 10, 2);
-	add_filter('get_comment_time', 'wpp_fix_comment_time', 10, 2);
-	add_filter('get_comment_date', 'wpp_fix_comment_date', 10, 2);
-	add_filter('get_post_modified_time', 'wpp_fix_post_date', 10, 2);
-
-	add_action('date_i18n', 'wpp_fix_i18n', 10, 3);
+function fix_the_date_after_locale()
+{
+    global $wpp_settings;
+    if (get_locale() == 'fa_IR') {
+        if ($wpp_settings['persian_date'] != 'disable') {
+            add_filter('the_time', 'wpp_fix_post_time', 10, 2);
+            add_filter('the_date', 'wpp_fix_post_date', 10, 2);
+            add_filter('get_comment_time', 'wpp_fix_comment_time', 10, 2);
+            add_filter('get_comment_date', 'wpp_fix_comment_date', 10, 2);
+            add_action('date_i18n', 'wpp_fix_i18n', 10, 3);
+        }
+    } else {
+        remove_filter('the_time', 'wpp_fix_post_time', 10, 2);
+        remove_filter('the_date', 'wpp_fix_post_date', 10, 2);
+        remove_filter('get_comment_time', 'wpp_fix_comment_time', 10, 2);
+        remove_filter('get_comment_date', 'wpp_fix_comment_date', 10, 2);
+        remove_action('date_i18n', 'wpp_fix_i18n', 10, 3);
+    }
 }
 
+add_action('init', 'fix_the_date_after_locale', 10, 3);
 /**
  * Fixes post date and returns in Jalali format
  *
@@ -28,19 +38,14 @@ if ($wpp_settings['persian_date'] != 'disable') {
  */
 function wpp_fix_post_date($time, $format = '')
 {
-	global $post, $wpp_settings;
+    global $post, $wpp_settings;
+    if (empty($format))
+        $format = get_option('date_format');
 
-	// It's seems some plugin like acf does not exits $post.
-	if (empty($post))
-		return $time;
-
-	if (empty($format))
-		$format = get_option('date_format');
-
-	if ($wpp_settings['conv_dates'] == 'disable')
-		return parsidate($format, $post->post_date, 'eng');
-	else
-		return parsidate($format, $post->post_date);
+    if ($wpp_settings['conv_dates'] == 'disable')
+        return parsidate($format, $post->post_date, 'eng');
+    else
+        return parsidate($format, $post->post_date);
 }
 
 /**
@@ -52,14 +57,14 @@ function wpp_fix_post_date($time, $format = '')
  */
 function wpp_fix_post_time($time, $format = '')
 {
-	global $post, $wpp_settings;
-	if (empty($format))
-		$format = get_option('time_format');
+    global $post, $wpp_settings;
+    if (empty($format))
+        $format = get_option('time_format');
 
-	if ($wpp_settings['conv_dates'] == 'disable')
-		return parsidate($format, $post->post_date, 'eng');
-	else
-		return parsidate($format, $post->post_date);
+    if ($wpp_settings['conv_dates'] == 'disable')
+        return parsidate($format, $post->post_date, 'eng');
+    else
+        return parsidate($format, $post->post_date);
 }
 
 /**
@@ -71,14 +76,14 @@ function wpp_fix_post_time($time, $format = '')
  */
 function wpp_fix_comment_time($time, $format = '')
 {
-	global $comment, $wpp_settings;
-	if (empty($format))
-		$format = get_option('time_format');
+    global $comment, $wpp_settings;
+    if (empty($format))
+        $format = get_option('time_format');
 
-	if ($wpp_settings['conv_dates'] == 'disable')
-		return parsidate($format, $comment->comment_date, 'eng');
-	else
-		return parsidate($format, $comment->comment_date);
+    if ($wpp_settings['conv_dates'] == 'disable')
+        return parsidate($format, $comment->comment_date, 'eng');
+    else
+        return parsidate($format, $comment->comment_date);
 }
 
 /**
@@ -90,14 +95,14 @@ function wpp_fix_comment_time($time, $format = '')
  */
 function wpp_fix_comment_date($time, $format = '')
 {
-	global $comment, $wpp_settings;
-	if (empty($format))
-		$format = get_option('date_format');
+    global $comment, $wpp_settings;
+    if (empty($format))
+        $format = get_option('date_format');
 
-	if ($wpp_settings['conv_dates'] == 'disable')
-		return parsidate($format, $comment->comment_date, 'eng');
-	else
-		return parsidate($format, $comment->comment_date);
+    if ($wpp_settings['conv_dates'] == 'disable')
+        return parsidate($format, $comment->comment_date, 'eng');
+    else
+        return parsidate($format, $comment->comment_date);
 }
 
 /**
@@ -110,21 +115,21 @@ function wpp_fix_comment_date($time, $format = '')
  */
 function wpp_fix_i18n($format_string, $timestamp, $gmt)
 {
-	global $wpp_settings;
+    global $wpp_settings;
 
-	if (function_exists('debug_backtrace')) {
-		$callers = debug_backtrace();
+    if (function_exists('debug_backtrace')) {
+        $callers = debug_backtrace();
 
-		// WordPress SEO OpenGraph Dates fix
-		if (isset($callers[6]['class']) && $callers[6]['class'] == 'WPSEO_OpenGraph') return $format_string;
-		if (isset($callers[6]['function']) && $callers[6]['function'] == 'get_the_modified_date') return $format_string;
+        // WordPress SEO OpenGraph Dates fix
+        if (isset($callers[6]['class']) && $callers[6]['class'] == 'WPSEO_OpenGraph') return $format_string;
+        if (isset($callers[6]['function']) && $callers[6]['function'] == 'get_the_modified_date') return $format_string;
 
-		// WooCommerce order detail fix
-		if (isset($callers['4']['class']) && $callers['4']['class'] == 'WC_Meta_Box_Order_Data') return $format_string;
-	}
+        // WooCommerce order detail fix
+        if (isset($callers['4']['class']) && $callers['4']['class'] == 'WC_Meta_Box_Order_Data') return $format_string;
+    }
 
-	if ($wpp_settings['conv_dates'] == 'disable')
-		return parsidate($timestamp, $gmt, 'eng');
-	else
-		return parsidate($timestamp, $gmt);
+    if ($wpp_settings['conv_dates'] == 'disable')
+        return parsidate($timestamp, $gmt, 'eng');
+    else
+        return parsidate($timestamp, $gmt);
 }
