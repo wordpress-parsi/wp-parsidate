@@ -224,7 +224,8 @@ function wpp_pre_get_posts($query)
 		$query->set('day', $var[2]);
 	}
 
-//    $query->set('')
+	$query->is_404 = false;
+    	$query->query_vars['error'] = '';
 
 	return $query;
 
