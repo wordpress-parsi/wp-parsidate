@@ -1,5 +1,5 @@
 ﻿=== Parsi Date ===
-Contributors: lord_viper, man4toman, iEhsan.ir
+Contributors: lord_viper, man4toman, iEhsan.ir, parselearn
 Donate link: http://forum.wp-parsi.com/
 Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl
 Requires at least: 3.6
@@ -14,6 +14,7 @@ This package is made by Persian developers to bring so much better experience of
 
 List of some features:
 
+* [WP-Planet.ir](http://wp-planet.ir) Widget
 * Shamsi (Jalali) date in Posts, comments, pages, archives, search, categories
 * Shamsi (Jalali) date in Permalinks
 * Shamsi (Jalali) date in admin sections such as posts lists, comments lists, pages lists
@@ -24,7 +25,6 @@ List of some features:
 * Poweful and fast function for fixing Arabic (ي , ك) to Persian (ی , ک)
 * Poweful and fast function for Persian numbers
 * Low resources usage
-
 
 == Installation ==
 
@@ -41,6 +41,11 @@ List of some features:
 4. 'Jalali Date Calender' in action
 
 == Changelog ==
+
+= 2.3 =
+* Add [WP-Planet.ir](http://wp-planet.ir) widget
+* Fix some bug
+
 = 2.2.3 =
 * Conflict timezone with wordpress default timezone [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/1)
 

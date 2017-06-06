@@ -1,8 +1,9 @@
-body{
-    font-family:tahoma;
-    font-size:12px;
+body {
+    font-family: tahoma, sans-serif;
+    font-size: 12px;
 }
-#tinymce{
-    font-family: tahoma;
-    font-size:12px;
+
+#tinymce {
+    font-family: tahoma, sans-serif;
+    font-size: 12px;
 }

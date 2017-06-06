@@ -10,70 +10,41 @@
 
 global $wpp_settings;
 
-function fix_the_misc_after_locale ()
-{
-    global $wpp_settings;
-    if (get_locale() == 'fa_IR') {
-        if (isset($wpp_settings['conv_page_title']) && $wpp_settings['conv_page_title'] != 'disable')
-            add_filter('wp_title', 'fixnumber', 20);
-
-        if (isset($wpp_settings['conv_title']) && $wpp_settings['conv_title'] != 'disable')
-            add_filter('the_title', 'fixnumber', 20);
-
-        if (isset($wpp_settings['conv_contents']) && $wpp_settings['conv_contents'] != 'disable')
-            add_filter('the_content', 'fixnumber');
-
-        if (isset($wpp_settings['conv_excerpt']) && $wpp_settings['conv_excerpt'] != 'disable')
-            add_filter('the_excerpt', 'fixnumber');
-
-        if (isset($wpp_settings['conv_comments']) && $wpp_settings['conv_comments'] != 'disable')
-            add_filter('comment_text', 'fixnumber');
-
-        if (isset($wpp_settings['conv_comment_count']) && $wpp_settings['conv_comment_count'] != 'disable')
-            add_filter('comments_number', 'fixnumber');
-
-        if (isset($wpp_settings['conv_cats']) && $wpp_settings['conv_cats'] != 'disable')
-            add_filter('wp_list_categories', 'fixnumber');
-
-        if (isset($wpp_settings['conv_arabic']) && $wpp_settings['conv_arabic'] != 'disable') {
-            add_filter('the_content', 'fixarabic');
-            add_filter('the_title', 'fixarabic');
-            add_filter('comment_text', 'fixarabic');
-            add_filter('wp_list_categories', 'fixarabic');
-            add_filter('the_excerpt', 'fixarabic');
-        }
-    } else {
-        if (isset($wpp_settings['conv_page_title']) && $wpp_settings['conv_page_title'] != 'disable')
-            remove_filter('wp_title', 'fixnumber', 20);
-
-        if (isset($wpp_settings['conv_title']) && $wpp_settings['conv_title'] != 'disable')
-            remove_filter('the_title', 'fixnumber', 20);
-
-        if (isset($wpp_settings['conv_contents']) && $wpp_settings['conv_contents'] != 'disable')
-            remove_filter('the_content', 'fixnumber');
-
-        if (isset($wpp_settings['conv_excerpt']) && $wpp_settings['conv_excerpt'] != 'disable')
-            remove_filter('the_excerpt', 'fixnumber');
-
-        if (isset($wpp_settings['conv_comments']) && $wpp_settings['conv_comments'] != 'disable')
-            remove_filter('comment_text', 'fixnumber');
-
-        if (isset($wpp_settings['conv_comment_count']) && $wpp_settings['conv_comment_count'] != 'disable')
-            remove_filter('comments_number', 'fixnumber');
-
-        if (isset($wpp_settings['conv_cats']) && $wpp_settings['conv_cats'] != 'disable')
-            remove_filter('wp_list_categories', 'fixnumber');
-
-        if (isset($wpp_settings['conv_arabic']) && $wpp_settings['conv_arabic'] != 'disable') {
-            remove_filter('the_content', 'fixarabic');
-            remove_filter('the_title', 'fixarabic');
-            remove_filter('comment_text', 'fixarabic');
-            remove_filter('wp_list_categories', 'fixarabic');
-            remove_filter('the_excerpt', 'fixarabic');
-        }
-
-    }
-
+if ( isset( $wpp_settings['conv_page_title'] ) && $wpp_settings['conv_page_title'] != 'disable' ) {
+	add_filter( 'wp_title', 'fixnumber', 1000 );
+	add_filter( 'pre_get_document_title', 'fixnumber', 1000 ); // WP 4.4+
 }
 
-add_action('init', 'fix_the_misc_after_locale', 10, 3);
+if ( isset( $wpp_settings['conv_title'] ) && $wpp_settings['conv_title'] != 'disable' ) {
+	add_filter( 'the_title', 'fixnumber', 1000 );
+}
+
+if ( isset( $wpp_settings['conv_contents'] ) && $wpp_settings['conv_contents'] != 'disable' ) {
+	add_filter( 'the_content', 'fixnumber', 1000 );
+}
+
+if ( isset( $wpp_settings['conv_excerpt'] ) && $wpp_settings['conv_excerpt'] != 'disable' ) {
+	add_filter( 'the_excerpt', 'fixnumber', 1000 );
+}
+
+if ( isset( $wpp_settings['conv_comments'] ) && $wpp_settings['conv_comments'] != 'disable' ) {
+	add_filter( 'comment_text', 'fixnumber', 1000 );
+}
+
+if ( isset( $wpp_settings['conv_comment_count'] ) && $wpp_settings['conv_comment_count'] != 'disable' ) {
+	add_filter( 'comments_number', 'fixnumber', 1000 );
+}
+
+if ( isset( $wpp_settings['conv_cats'] ) && $wpp_settings['conv_cats'] != 'disable' ) {
+	add_filter( 'wp_list_categories', 'fixnumber', 1000 );
+}
+
+if ( isset( $wpp_settings['conv_arabic'] ) && $wpp_settings['conv_arabic'] != 'disable' ) {
+	add_filter( 'the_content', 'fixarabic' ,1000);
+	add_filter( 'the_title', 'fixarabic' ,1000);
+	add_filter( 'comment_text', 'fixarabic',1000 );
+	add_filter( 'wp_list_categories', 'fixarabic',1000 );
+	add_filter( 'the_excerpt', 'fixarabic' ,1000);
+	add_filter( 'wp_title', 'fixarabic', 1000 );
+	add_filter( 'pre_get_document_title', 'fixarabic', 1000 ); // WP 4.4+
+}

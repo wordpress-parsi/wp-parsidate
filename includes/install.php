@@ -17,16 +17,5 @@ register_activation_hook(WP_PARSI_ROOT, 'wpp_install');
  */
 function wpp_install()
 {
-
-	/*if ( ! is_dir( WP_CONTENT_DIR . '/languages' ) )
-		mkdir( WP_CONTENT_DIR . '/languages/' );
-
-	$source         =   WP_PARSI_DIR . 'languages/*';
-	$destination    =   WP_CONTENT_DIR . '/languages/';
-	$files          =   glob( $source );
-
-	foreach( $files as $file )
-		@ copy( $file, $destination . basename( $file ) );*/
-
 	update_option('wpp_settings', array());
 }
