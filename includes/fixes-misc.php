@@ -39,7 +39,7 @@ if ( isset( $wpp_settings['conv_contents'] ) && $wpp_settings['conv_contents'] !
 if ( isset( $wpp_settings['conv_excerpt'] ) && $wpp_settings['conv_excerpt'] != 'disable' ) {
 	  if (get_locale() == 'fa_IR') { 
 	add_filter( 'the_excerpt', 'fixnumber', 1000 );
-	else {
+	  } else {
 			remove_filter( 'the_excerpt', 'fixnumber', 1000 );
 	}
 }
