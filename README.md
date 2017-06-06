@@ -7,6 +7,7 @@ This package is made by Persian developers to bring so much better experience of
 
 List of some features:
 
+ - [WP-Planet.ir](http://wp-planet.ir) Widget
  - Shamsi (Jalali) date in Posts, comments, pages, archives, search, categories
  - Shamsi (Jalali) date in Permalinks
  - Shamsi (Jalali) date in admin sections such as posts lists, comments lists, pages lists
