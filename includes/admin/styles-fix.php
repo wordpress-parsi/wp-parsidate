@@ -32,8 +32,8 @@ function wpp_fix_tinymce_font()
 	global $wpp_settings;
 
 	add_editor_style(WP_PARSI_URL . 'assets/css/editor.css');
-	if (!isset($wpp_settings['droidsans_editor']) || $wpp_settings['droidsans_editor'] != 'disable') {
-		add_editor_style(WP_PARSI_URL . 'assets/css/editor-font.css');
+	if (isset($wpp_settings['droidsans_editor']) && $wpp_settings['droidsans_editor'] != 'disable') {
+		add_editor_style(WP_PARSI_URL . 'assets/css/editor-font-rtl.css');
 	}
 }
 

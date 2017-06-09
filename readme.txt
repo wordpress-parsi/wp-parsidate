@@ -42,6 +42,9 @@ List of some features:
 
 == Changelog ==
 
+= 2.3.0.2 =
+* Fix set editor font css
+
 = 2.3 =
 * Add [WP-Planet.ir](http://wp-planet.ir) widget
 * Fix some bug
