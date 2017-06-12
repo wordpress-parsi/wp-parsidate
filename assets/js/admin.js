@@ -59,7 +59,7 @@ jQuery(document).ready(function () {
         var div = '<div class="timestamp-wrap persian">' +
             '<select id="mma" name="mma">';
         for (var i = 1; i < 13; i++) {
-            if (i === mon)
+            if (i === parseInt(mon))
                 div += '<option value="' + i + '" selected="selected">' + persian_month_names[i] + '</option>';
             else
                 div += '<option value="' + i + '">' + persian_month_names[i] + '</option>';
