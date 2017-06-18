@@ -9,7 +9,7 @@
 global $wpp_settings;
 
 if ( $wpp_settings['conv_permalinks'] == 'enable' ) {
-	add_filter( 'posts_where', 'wpp_posts_where' );
+	add_filter( 'posts_where', 'wpp_posts_where', 10, 2 );
 	add_action( 'pre_get_posts', 'wpp_pre_get_posts' );
 	add_filter( 'post_link', 'wpp_permalink', 10, 3 );
 }
@@ -17,13 +17,16 @@ if ( $wpp_settings['conv_permalinks'] == 'enable' ) {
 /**
  * Converts post date pointer to Jalali pointer
  *
- * @param           string $where
+ * @param  string   $where
+ * @param  WP_Query $wp_query
  *
- * @return          string
+ * @return string
  */
-function wpp_posts_where( $where ) {
-	global $wp_query, $wpdb;
-	if ( empty( $wp_query->query_vars ) ) {
+function wpp_posts_where( $where, $wp_query ) {
+
+	global $wpdb;
+
+	if ( ! $wp_query->is_main_query() || empty( $wp_query->query_vars ) ) {
 		return $where;
 	}
 
