@@ -41,6 +41,10 @@ List of some features:
 4. 'Jalali Date Calender' in action
 
 == Changelog ==
+
+= Development Log
+* Fix Wrong usage of $wp_query in posts_where filter that create "old posts" issue in WP_Query!
+
 = 2.3.1 =
 * Fix date picker's month dropdown bug in admin edit post. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/5)
 
