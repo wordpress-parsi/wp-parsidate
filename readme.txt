@@ -41,6 +41,9 @@ List of some features:
 4. 'Jalali Date Calender' in action
 
 == Changelog ==
+= 2.3.2 =
+* Change date based on WordPress language (Persian/Farsi)
+* Compatible with WP Multilingual plugin (WPML)
 
 = Development Log
 * Fix Wrong usage of $wp_query in posts_where filter that create "old posts" issue in WP_Query!

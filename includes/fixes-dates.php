@@ -9,7 +9,7 @@
 
 global $wpp_settings;
 
-if ( $wpp_settings['persian_date'] != 'disable' ) {
+if ( get_locale() == 'fa_IR' && $wpp_settings['persian_date'] != 'disable' ) {
 	add_filter( 'the_time', 'wpp_fix_post_time', 10, 2 );
 	add_filter( 'the_date', 'wpp_fix_post_date', 10, 2 );
 	add_filter( 'get_comment_time', 'wpp_fix_comment_time', 10, 2 );
