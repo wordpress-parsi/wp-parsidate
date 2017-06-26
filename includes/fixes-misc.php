@@ -49,4 +49,20 @@ if (get_locale() == 'fa_IR') {
         add_filter('wp_title', 'fixarabic', 1000);
         add_filter('pre_get_document_title', 'fixarabic', 1000); // WP 4.4+
     }
+} else {
+    /*remove_filter('wp_title', 'fixnumber', 1001);
+    remove_filter('pre_get_document_title', 'fixnumber', 1001); // WP 4.4+
+    remove_filter('the_title', 'fixnumber', 1001);
+    remove_filter('the_content', 'fixnumber', 1001);
+    remove_filter('the_excerpt', 'fixnumber', 1001);
+    remove_filter('comment_text', 'fixnumber', 1001);
+    remove_filter('comments_number', 'fixnumber', 1001);
+    remove_filter('wp_list_categories', 'fixnumber', 1001);
+    remove_filter('the_content', 'fixarabic', 1001);
+    remove_filter('the_title', 'fixarabic', 1001);
+    remove_filter('comment_text', 'fixarabic', 1001);
+    remove_filter('wp_list_categories', 'fixarabic', 1001);
+    remove_filter('the_excerpt', 'fixarabic', 1001);
+    remove_filter('wp_title', 'fixarabic', 1001);
+    remove_filter('pre_get_document_title', 'fixarabic', 1001); // WP 4.4+*/
 }
