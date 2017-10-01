@@ -135,19 +135,37 @@ function wpp_fix_i18n($format_string, $timestamp, $gmt)
         $callers = debug_backtrace();
 
         // WordPress SEO OpenGraph Dates fix
-        if (isset($callers[6]['class']) && $callers[6]['class'] == 'WPSEO_OpenGraph') {
+        if (
+            (isset($callers[6]['class']) && $callers[6]['class'] == 'WPSEO_OpenGraph') ||
+            (isset($callers[6]['function']) && $callers[6]['function'] == 'get_the_modified_date')
+        )
             return $format_string;
-        }
 
-        if (isset($callers[6]['function']) && $callers[6]['function'] == 'get_the_modified_date') {
+        // WooCommerce (Order & Product MetaBox)
+        if (
+            (isset($callers['4']['class']) && $callers['4']['class'] == 'WC_Meta_Box_Order_Data') ||
+            (isset($callers['5']['class']) && $callers['5']['class'] == 'WC_Meta_Box_Product_Data')
+        )
             return $format_string;
-        }
 
-        // WooCommerce order detail fix
-        if (isset($callers['4']['class']) && $callers['4']['class'] == 'WC_Meta_Box_Order_Data') {
-            return $format_string;
-        }
     }
 
     return parsidate($timestamp, $gmt, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
+}
+
+function array_key_exists_r($needle, $haystack, $value = null)
+{
+    $result = array_key_exists($needle, $haystack);
+    if ($result) {
+        if ($value != null && $haystack[$needle])
+            return 1;
+        return $result;
+    }
+    foreach ($haystack as $v) {
+        if (is_array($v) || is_object($v))
+            $result = array_key_exists_r($needle, $v);
+        if ($result)
+            return $result;
+    }
+    return $result;
 }

@@ -4,7 +4,7 @@ Donate link: http://forum.wp-parsi.com/
 Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl
 Requires at least: 3.6
 Tested up to: 4.8
-Stable tag: 2.3.1
+Stable tag: 2.3.3
 
 Persian date support for WordPress
 
@@ -41,6 +41,9 @@ List of some features:
 4. 'Jalali Date Calender' in action
 
 == Changelog ==
+= 2.3.3 =
+* Fix Sale Price Dates (From/To) 
+
 = 2.3.2 =
 * Change date based on WordPress language (Persian/Farsi)
 * Compatible with WP Multilingual plugin (WPML)
