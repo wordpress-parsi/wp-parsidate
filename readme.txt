@@ -42,7 +42,7 @@ List of some features:
 
 == Changelog ==
 = 2.3.3 =
-* Fix Sale Price Dates (From/To) 
+* Fix WooCommerce Sale Price Dates (From/To)
 
 = 2.3.2 =
 * Change date based on WordPress language (Persian/Farsi)
