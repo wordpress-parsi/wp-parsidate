@@ -133,12 +133,15 @@ final class WP_Parsidate {
 			'fixes-dates',
 			'fixes-misc',
 			'admin/styles-fix',
+			'admin/datepicker-rtl',
 			'admin/lists-fix',
 			'admin/widgets',
 			'fixes-calendar',
 			'fixes-archives',
 			'plugins/woocommerce',
+			'plugins/fixes-woo',
 			'plugins/edd',
+			'plugins/disable',
 			'widget/widget_archive',
 			'widget/widget_calendar'
 		);
