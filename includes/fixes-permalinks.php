@@ -172,13 +172,13 @@ function wpp_pre_get_posts($query)
         $per = explode('-', $per);
         $out = true;
 
-        if ($year != $per[0]) {
+        if (!empty($year) && $year != $per[0]) {
             $out = false;
         }
-        if ($out && $monthnum != $per[1]) {
+        if ($out && !empty($monthnum) && $monthnum != $per[1]) {
             $out = false;
         }
-        if ($out && $day != $per[2]) {
+        if ($out && !empty($day) && $day != $per[2]) {
             $out = false;
         }
 
@@ -243,10 +243,10 @@ function wpp_pre_get_posts($query)
         $query->set('year', $var[0]);
         $query->set('monthnum', $var[1]);
         $query->set('day', $var[2]);
-    }
-
-    $query->is_404 = false;
-    $query->query_vars['error'] = '';
+        $query->is_404 = false;
+        $query->query_vars['error'] = '';
+    }//else
+     //   $query->is_404 = true;
 
     return $query;
 
