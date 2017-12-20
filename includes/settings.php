@@ -53,8 +53,8 @@ function wp_parsi_get_settings() {
 	$settings = get_option( 'wpp_settings' );
 	if ( empty( $settings ) ) {
 		update_option( 'wpp_settings', array(
-			'admin_lang'         => 'enable',
-			'user_lang'          => 'enable',
+			'admin_lang'         => 'disable',
+			'user_lang'          => 'disable',
 			'submenu_move'       => 'disable',
 			'persian_date'       => 'disable',
 			'conv_title'         => 'disable',
@@ -210,22 +210,27 @@ function wpp_get_registered_settings() {
 		'enable'  => __( 'Enable', 'wp-parsidate' ),
 		'disable' => __( 'Disable', 'wp-parsidate' )
 	);
+	$langopt  = array(
+		'persian' => __( 'Persian', 'wp-parsidate' ),
+		'english' => __( 'English', 'wp-parsidate' ),
+		'disable' => __( 'Disable', 'wp-parsidate' )
+	);
 	$settings = apply_filters( 'wpp_registered_settings', array(
 		'core'    => apply_filters( 'wpp_core_settings', array(
 			'admin_lang'   => array(
 				'id'      => 'admin_lang',
 				'name'    => __( 'Change Locale in admin', 'wp-parsidate' ),
 				'type'    => 'radio',
-				'options' => $options,
-				'std'     => 'enable',
+				'options' => $langopt,
+				'std'     => 'disable',
 				'desc'    => __( 'This option change WordPress locale in Admin', 'wp-parsidate' )
 			),
 			'user_lang'    => array(
 				'id'      => 'user_lang',
 				'name'    => __( 'Change Locale in theme', 'wp-parsidate' ),
 				'type'    => 'radio',
-				'options' => $options,
-				'std'     => 'enable',
+				'options' => $langopt,
+				'std'     => 'disable',
 				'desc'    => __( 'This option change WordPress locale in theme', 'wp-parsidate' )
 			),
 			'persian_date' => array(
