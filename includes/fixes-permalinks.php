@@ -22,9 +22,13 @@ if ($wpp_settings['conv_permalinks'] == 'enable') {
  *
  * @return          string
  */
-function wpp_posts_where($where, $wp_query)
+function wpp_posts_where($where, $wp_query='')
 {
     global $wpdb;
+    if(empty($wp_query)){
+    	global $wp_query;
+    }
+    
     if (!$wp_query->is_main_query() || empty($wp_query->query_vars)) {
         return $where;
     }
