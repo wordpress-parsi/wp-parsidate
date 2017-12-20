@@ -5,6 +5,8 @@
  *
  * @author          Pippin Williamson
  * @author          Ehsaan
+ * @author          Morteza Geransayeh
+ * @author          Mobin Ghasempoor
  * @package         WP-Parsidate
  * @subpackage      Admin/Settings
  */
@@ -55,8 +57,6 @@ function wp_parsi_get_settings() {
 			'user_lang'          => 'enable',
 			'submenu_move'       => 'disable',
 			'persian_date'       => 'disable',
-			'droidsans_editor'   => 'enable',
-			'droidsans_admin'    => 'enable',
 			'conv_title'         => 'disable',
 			'conv_contents'      => 'disable',
 			'conv_excerpt'       => 'disable',
@@ -330,22 +330,6 @@ function wpp_get_registered_settings() {
 			'sep_font'           => array(
 				'id'   => 'sep_font',
 				'type' => 'header'
-			),
-			'droidsans_admin'    => array(
-				'id'      => 'droidsans_admin',
-				'name'    => __( 'Use Droid Sans font for admin side', 'wp-parsidate' ),
-				'type'    => 'radio',
-				'options' => $options,
-				'std'     => 'enable',
-				'desc'    => __( 'Droid Sans Naskh and Roboto font families will be activated in admin side, if this is enabled.', 'wp-parsidate' )
-			),
-			'droidsans_editor'   => array(
-				'id'      => 'droidsans_editor',
-				'name'    => __( 'Use Droid Sans font for editors', 'wp-parsidate' ),
-				'type'    => 'radio',
-				'options' => $options,
-				'std'     => 'enable',
-				'desc'    => __( 'Droid Sans Naskh and Roboto font families will be activated in all rich editors in back end.', 'wp-parsidate' )
 			)
 		) ),
 		'plugins' => apply_filters( 'wpp_plugins_compability_settings', array() )
