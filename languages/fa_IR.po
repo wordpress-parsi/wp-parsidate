@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
-"POT-Creation-Date: 2017-12-20 12:00+0330\n"
-"PO-Revision-Date: 2017-12-20 12:04+0330\n"
+"POT-Creation-Date: 2017-12-20 13:40+0330\n"
+"PO-Revision-Date: 2017-12-20 13:41+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: WP-Pari Team\n"
 "Language: fa_IR\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "settings"
 msgstr "تنظیمات"
 
-#: ../includes/general.php:169
+#: ../includes/general.php:170
 #, php-format
 msgid ""
 "<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to "
@@ -63,16 +63,16 @@ msgid "Disable"
 msgstr "غیرفعال"
 
 #: ../includes/settings.php:217
-msgid "Change Locale in admin"
-msgstr "تغییر زبان مدیریت"
+msgid "Change Locale to Persian in admin"
+msgstr "تغییر زبان مدیریت به فارسی"
 
 #: ../includes/settings.php:221
 msgid "This option change WordPress locale in Admin"
 msgstr "این گزینه باعث تغییر زبان مدیریت میشود"
 
 #: ../includes/settings.php:225
-msgid "Change Locale in theme"
-msgstr "تغییر زبان سایت"
+msgid "Change Locale to Persian in theme"
+msgstr "تغییر زبان سایت به فارسی"
 
 #: ../includes/settings.php:229
 msgid "This option change WordPress locale in theme"
