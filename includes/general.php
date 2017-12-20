@@ -29,15 +29,20 @@ function wp_parsi_set_locale($locale)
     $settings = get_option('wpp_settings');
     $user_locale = $admin_locale = $locale;
     
-    if ($settings['admin_lang'] == 'enable') {
+    if ($settings['admin_lang'] == 'persian') {
         $admin_locale = "fa_IR";
-    } elseif ($locale == 'fa_IR' && $settings['admin_lang'] == 'disable') {
+    } elseif (settings['admin_lang'] == 'english') {
         $admin_locale = "en_US";
+    } elseif ($settings['admin_lang'] == 'disable') {
+        $admin_locale = $locale;
     }
-    if ($settings['user_lang'] == 'enable') {
+    
+    if ($settings['user_lang'] == 'persian') {
         $user_locale = "fa_IR";
-    } elseif ($locale == 'fa_IR' && $settings['user_lang'] == 'disable') {
+    } elseif ($settings['user_lang'] == 'english') {
         $user_locale = "en_US";
+    } elseif ($settings['user_lang'] == 'disable') {
+        $user_locale = $locale;
     }
 
     $locale_s = is_admin() ? $admin_locale : $user_locale;
