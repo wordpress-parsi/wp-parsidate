@@ -218,7 +218,7 @@ function wpp_get_registered_settings() {
 				'type'    => 'radio',
 				'options' => $options,
 				'std'     => 'disable',
-				'desc'    => __( 'This option change WordPress locale in Admin', 'wp-parsidate' )
+				'desc'    => __( 'This option change WordPress locale to Persian in Admin', 'wp-parsidate' )
 			),
 			'user_lang'    => array(
 				'id'      => 'user_lang',
@@ -226,7 +226,7 @@ function wpp_get_registered_settings() {
 				'type'    => 'radio',
 				'options' => $options,
 				'std'     => 'disable',
-				'desc'    => __( 'This option change WordPress locale in theme', 'wp-parsidate' )
+				'desc'    => __( 'This option change WordPress locale to Persian in theme', 'wp-parsidate' )
 			),
 			'persian_date' => array(
 				'id'      => 'persian_date',
