@@ -133,16 +133,16 @@ class WPP_Disable {
 		$settings = array(
 			'dis'          => array(
 				'id'   => 'dis',
-				'name' => __( 'disable Parsi Hook', 'wp-parsidate' ),
+				'name' => __( 'Hook deactivator', 'wp-parsidate' ),
 				'type' => 'header'
 			),
 			'dis_prices'   => array(
 				'id'      => 'dis_input',
-				'name'    => __( 'hook_list', 'wp-parsidate' ),
+				'name'    => __( 'Hook list', 'wp-parsidate' ),
 				'type'    => 'textarea',
 				'options' => $options,
 				'std'     => 'enable',
-                'desc'    => __( 'Enter hook,class,function you want to disable', 'wp-parsidate' )
+                'desc'    => __( 'Enter hook,class,function to remove parsidate filter from it', 'wp-parsidate' )
 			)
 		);
 
