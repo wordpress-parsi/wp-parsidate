@@ -212,7 +212,6 @@ function wpp_get_registered_settings() {
 	);
 	$langopt  = array(
 		'persian' => __( 'Persian', 'wp-parsidate' ),
-		'english' => __( 'English', 'wp-parsidate' ),
 		'disable' => __( 'Disable', 'wp-parsidate' )
 	);
 	$settings = apply_filters( 'wpp_registered_settings', array(
