@@ -1,51 +1,53 @@
 <?php
 /**
- * WP-Parsidate Admin Widget
+ * Replace wp-planet.ir to News and Events widget
  *
- * @author             Parsa Kafi
+ * @author             Morteza Geransayeh
  * @package            WP-Parsidate
  * @subpackage         Core/General
  */
 
-function wpp_add_dashboard_widgets() {
-	wp_add_dashboard_widget(
-		'wpp_planet_widget',
-		__( 'WordPress Planet', 'wp-parsidate' ),
-		'wpp_planet_widget_function'
-	);
+add_filter( 'dashboard_primary_link', 'wpp_dashboard_primary_link', 999, 1 );
+add_filter( 'dashboard_primary_feed', 'wpp_dashboard_primary_feed', 999, 1 );
+add_filter( 'dashboard_secondary_link', 'wpp_dashboard_secondary_link', 999, 1 );
+add_filter( 'dashboard_secondary_feed', 'wpp_dashboard_secondary_feed', 999, 1 );
+
+/**
+ * Widget primary link
+ *
+ * @author          Morteza Geransayeh
+ * @return          string
+ */
+function wpp_dashboard_primary_link(){
+	return 'https://wp-parsi.com/';
 }
 
-function wpp_planet_widget_function() {
-	$rss = fetch_feed( 'http://wp-planet.ir/feed' );
+/**
+ * Widget primary feed
+ *
+ * @author          Morteza Geransayeh
+ * @return          string
+ */
+function wpp_dashboard_primary_feed(){
+	return 'https://wp-parsi.com/feed/';
+}
 
-	$max_items = $rss_items = 0;
+/**
+ * Widget secondary link
+ *
+ * @author          Morteza Geransayeh
+ * @return          string
+ */
+function wpp_dashboard_secondary_link(){
+	return 'http://wp-planet.ir/';
+}
 
-	if ( ! is_wp_error( $rss ) ) {
-		$max_items = $rss->get_item_quantity( 5 );
-		$rss_items = $rss->get_items( 0, $max_items );
-	}
-	?>
-    <div class="rss-widget">
-        <ul>
-			<?php if ( $max_items == 0 ) {
-				echo "<li>" . __( 'No items', 'wp-parsidate' ) . "</li>";
-			} else {
-				$date_format = get_option( 'date_format' );
-				foreach ( $rss_items as $item ) {
-					?>
-                    <li>
-                        <a href="<?php echo esc_url( $item->get_permalink() ); ?>" target="_blank"
-                           title="<?php echo esc_html( parsidate( "Y F d H:i:s", $item->get_date( "Y-m-d H:i:s" ) ) ); ?>">
-							<?php echo esc_html( $item->get_title() ); ?>‌
-                        </a>
-                        <span class="rss-date"><?php echo esc_html( parsidate( $date_format, $item->get_date( "Y-m-d H:i:s" ) ) ); ?></span>
-                        <div class="rssSummary">
-							<?php //echo esc_url( $item->get_description() ); ?>
-                        </div>
-                    </li>
-				<?php }
-			} ?>
-        </ul>
-    </div>
-	<?php
+/**
+ * Widget secondary feed
+ *
+ * @author          Morteza Geransayeh
+ * @return          string
+ */
+function wpp_dashboard_secondary_feed(){
+	return 'http://wp-planet.ir/feed';
 }
