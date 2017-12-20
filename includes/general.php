@@ -3,6 +3,7 @@
  * WP-Parsidate general functions
  *
  * @author             Mobin Ghasempoor
+ * @author             Morteza Geransaye
  * @author             Ehsaan
  * @package            WP-Parsidate
  * @subpackage         Core/General
