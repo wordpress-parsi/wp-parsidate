@@ -1,99 +1,173 @@
 <?php
 
 /**
- * @author lord_viper
- * @copyright 2013
+ * Create Persian Archives
+ *
+ * @param           string $args
+ *
+ * @return          string
  */
-class parsidate_archive extends WP_Widget {
-	public function __construct() {
-		global $wp_version;
+function wpp_get_archives( $args = '' ) {
+	global $wpdb, $persian_month_names;
+	$defaults = array(
+		'type'            => 'monthly',
+		'limit'           => '',
+		'format'          => 'html',
+		'before'          => '',
+		'after'           => '',
+		'show_post_count' => false,
+		'echo'            => 1,
+		'order'           => 'DESC',
+		'post_type'       => 'post'
+	);
+	$r = wp_parse_args( $args, $defaults );
+	
+	$post_type_object = get_post_type_object( $r['post_type'] );
+	if ( ! is_post_type_viewable( $post_type_object ) ) {
+	    return;
+	}
+	$r['post_type'] = $post_type_object->name;
 
-		// backwards compability
-		if ( version_compare( $wp_version, '4.3', '>=' ) ) {
-			parent::__construct( false, __( 'Jalali Date Archives', 'wp-parsidate' ), 'description=' . __( 'Jalali Date Archives', 'wp-parsidate' ) );
-		} else {
-			parent::WP_Widget( false, __( 'Jalali Date Archives', 'wp-parsidate' ), 'description=' . __( 'Jalali Date Archives', 'wp-parsidate' ) );
+	$results = $wpdb->get_results( "SELECT date( post_date )as date,count(ID)as count FROM $wpdb->posts WHERE post_date < NOW() AND post_type = '{$r['post_type']}' AND post_status = 'publish' group by date ORDER BY post_date DESC" );
+
+	if ( ! empty( $results ) ) {
+		if ( $r['type'] == 'yearly' ) {
+			$old_date = parsidate( 'Y', $results[0]->date, 'eng' );
+			$count    = $results[0]->count;
+			$c        = count( $results );
+			for ( $i = 1; $i < $c; $i ++ ) {
+				$dt   = $results[ $i ];
+				$date = parsidate( 'Y', $dt->date, 'eng' );
+				if ( $date === $old_date ) {
+					$count += $dt->count;
+				} else {
+					echo_yarchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'],$r );
+					$old_date = $date;
+					$count    = $dt->count;
+				}
+			}
+			echo_yarchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'],$r );
+		} elseif ( $r['type'] == 'monthly' ) {
+			$old_date = parsidate( 'Ym', $results[0]->date, 'eng' );
+			$count    = $results[0]->count;
+			$c        = count( $results );
+			for ( $i = 1; $i < $c; $i ++ ) {
+				$dt   = $results[ $i ];
+				$date = parsidate( 'Ym', $dt->date, 'eng' );
+				if ( $date == $old_date ) {
+					$count += $dt->count;
+				} else {
+					echo_marchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'],$r );
+					$old_date = $date;
+					$count    = $dt->count;
+				}
+			}
+			echo_marchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'],$r );
+		} elseif ( $r['type'] == 'daily' ) {
+			foreach ( $results as $row ) {
+				$date = parsidate( 'Y,m,d', $row->date, 'eng' );
+				$date = explode( ',', $date );
+				if ( $r['show_post_count'] ) {
+					$count = '&nbsp;(' . fixnumber( $row->count ) . ')';
+				} else {
+					$count = '';
+				}
+				$text = fixnumber( $date[2] ) . ' ' . $persian_month_names[ intval( $date[1] ) ] . ' ' . fixnumber( $date[0] );
+				echo get_archives_link( get_day_link( $date[0], $date[1], $date[2] ), $text, $r['format'], $r['before'], $count );
+			}
 		}
 	}
+}
 
-	public function form( $instance ) {
-		global $wpp_settings;
-		$type                                = isset( $instance['parsidate_archive_type'] ) ? $instance['parsidate_archive_type'] : 'monthly';
-		$instance['parsidate_archive_title'] = isset( $instance['parsidate_archive_title'] ) ? strip_tags( $instance['parsidate_archive_title'] ) : __( 'Jalali Date Archives', 'wp-parsidate' );
-		$instance['parsidate_archive_count'] = isset( $instance['parsidate_archive_count'] ) ? $instance['parsidate_archive_count'] : 0;
-		$instance['parsidate_archive_list']  = isset( $instance['parsidate_archive_list'] ) ? $instance['parsidate_archive_list'] : 0;
-
-		?>
-        <p style="text-align:right; direction:rtl">
-            <label></label>
-            <input style="width: 200px;" id="<?php echo $this->get_field_id( 'parsidate_archive_title' ); ?>"
-                   name="<?php echo $this->get_field_name( 'parsidate_archive_title' ); ?>" type="text"
-                   value="<?php echo( empty( $instance['parsidate_archive_title'] ) ? __( 'Jalali Date Archives', 'wp-parsidate' ) : $instance['parsidate_archive_title'] ) ?>"/>
-            <br/>
-            <label><input type="radio" id="parsidate_archive_type1"
-                          name="<?php echo $this->get_field_name( 'parsidate_archive_type' ); ?>"
-                          value="yearly" <?php checked( $type, 'yearly' ); ?>/><label
-                        for="parsidate_archive_type1"><?php _e( 'Yearly', 'wp-parsidate' ) ?></label><br/>
-                <label><input type="radio" id="parsidate_archive_type2"
-                              name="<?php echo $this->get_field_name( 'parsidate_archive_type' ); ?>"
-                              value="monthly" <?php checked( $type, 'monthly' ); ?>/><?php _e( 'Monthly', 'wp-parsidate' ) ?>
-                </label><br/>
-                <label><input type="radio" id="parsidate_archive_type3"
-                              name="<?php echo $this->get_field_name( 'parsidate_archive_type' ); ?>"
-                              value="daily" <?php checked( $type, 'daily' ); ?>/><?php _e( 'Daily', 'wp-parsidate' ) ?>
-                </label><br/>
-                <br/>
-                <input type="checkbox" name="<?php echo $this->get_field_name( 'parsidate_archive_count' ); ?>"
-                       id="<?php echo $this->get_field_id( 'parsidate_archive_count' ); ?>"
-                       value="1" <?php checked( $instance['parsidate_archive_count'], 1, true ); ?>/>
-                <label for="<?php echo $this->get_field_id( 'parsidate_archive_count' ); ?>"><?php _e( 'Show post counts', 'wp-parsidate' ) ?></label>
-                <br/>
-                <input type="checkbox" name="<?php echo $this->get_field_name( 'parsidate_archive_list' ); ?>"
-                       id="<?php echo $this->get_field_id( 'parsidate_archive_list' ); ?>"
-                       value="1" <?php echo checked( $instance['parsidate_archive_list'], 1, true ); ?>/>
-                <label for="<?php echo $this->get_field_id( 'parsidate_archive_list' ); ?>"><?php _e( 'Display as dropdown', 'wp-parsidate' ) ?></label>
-        </p>
-		<?php
-		if ( $wpp_settings['conv_permalinks'] == 'disable' ) {
-			echo "<p style='color: #ff8153'>" . __( 'For use widget, active "Fix permalinks dates" option in plugin settings.', 'wp-parsidate' ) . "</p>";
-		}
+function echo_yarchive( $year, $format, $before, $count, $show_post_count, $r ) {
+	if ( $show_post_count ) {
+		$count = '&nbsp;(' . fixnumber( $count ) . ')';
+	} else {
+		$count = '';
 	}
+	$url = get_year_link( $year );
+	if ( 'post' !== $r['post_type'] ) 
+		$url = add_query_arg( 'post_type', $r['post_type'], $url );
+	echo get_archives_link( $url, fixnumber( $year ), $format, $before, $count );
+}
 
-	public function update( $new_instance, $old_instance ) {
-		$instance                            = $old_instance;
-		$instance['parsidate_archive_title'] = isset( $new_instance['parsidate_archive_title'] ) ? strip_tags( $new_instance['parsidate_archive_title'] ) : __( 'Jalali Date Archives', 'wp-parsidate' );
-		$instance['parsidate_archive_count'] = isset( $new_instance['parsidate_archive_count'] ) ? $new_instance['parsidate_archive_count'] : 0;
-		$instance['parsidate_archive_list']  = isset( $new_instance['parsidate_archive_list'] ) ? $new_instance['parsidate_archive_list'] : 0;
-		$instance['parsidate_archive_type']  = isset( $new_instance['parsidate_archive_type'] ) ? $new_instance['parsidate_archive_type'] : 'monthly';
-
-		return $instance;
+function echo_marchive( $old_date, $format, $before, $count, $show_post_count ,$r) {
+	global $persian_month_names;
+	$year  = substr( $old_date, 0, 4 );
+	$month = substr( $old_date, 4, 2 );
+	if ( $show_post_count ) {
+		$count = '&nbsp;(' . fixnumber( $count ) . ')';
+	} else {
+		$count = '';
 	}
+	$url = get_month_link( $year, $month );
+	if ( 'post' !== $r['post_type'] ) 
+		$url = add_query_arg( 'post_type', $r['post_type'], $url );
 
-	public function widget( $args, $instance ) {
-		global $wpp_settings;
-		if ( $wpp_settings['conv_permalinks'] == 'disable' ) {
-		    return;
+	echo get_archives_link($url , $persian_month_names[ intval( $month ) ] . ' ' . fixnumber( $year ), $format, $before, $count );
+}
+
+function wp_get_parchives( $args = '' ) {
+	global $wpdb, $persian_month_names;
+	$defaults = array(
+		'type'            => 'monthly',
+		'limit'           => '',
+		'format'          => 'html',
+		'before'          => '',
+		'after'           => '',
+		'show_post_count' => false,
+		'echo'            => 1,
+		'order'           => 'DESC'
+	);
+
+	$r = wp_parse_args( $args, $defaults );
+
+	$results = $wpdb->get_results( "SELECT date( post_date )as date,count(ID)as count FROM $wpdb->posts WHERE post_date < NOW() AND post_type = 'post' AND post_status = 'publish' group by date ORDER BY post_date DESC" );
+	if ( ! empty( $results ) ) {
+		if (  $r['type'] == 'yearly' ) {
+			$old_date = parsidate( 'Y', $results[0]->date, 'eng' );
+			$count    = $results[0]->count;
+			$c        = count( $results );
+			for ( $i = 1; $i < $c; $i ++ ) {
+				$dt   = $results[ $i ];
+				$date = parsidate( 'Y', $dt->date, 'eng' );
+				if ( $date === $old_date ) {
+					$count += $dt->count;
+				} else {
+					echo_yarchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'] );
+					$old_date = $date;
+					$count    = $dt->count;
+				}
+			}
+			echo_yarchive( $old_date,$r['format'], $r['before'], $count, $r['show_post_count'] );
+		} elseif (  $r['type'] == 'monthly' ) {
+			$old_date = parsidate( 'Ym', $results[0]->date, 'eng' );
+			$count    = $results[0]->count;
+			$c        = count( $results );
+			for ( $i = 1; $i < $c; $i ++ ) {
+				$dt   = $results[ $i ];
+				$date = parsidate( 'Ym', $dt->date, 'eng' );
+				if ( $date === $old_date ) {
+					$count += $dt->count;
+				} else {
+					echo_marchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count']);
+					$old_date = $date;
+					$count    = $dt->count;
+				}
+			}
+			echo_marchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'] );
+		} elseif (  $r['type'] == 'daily' ) {
+			foreach ( $results as $row ) {
+				$date = parsidate( 'Y,m,d', $row->date, 'eng' );
+				$date = explode( ',', $date );
+				if ( $r['show_post_count'] ) {
+					$count = '&nbsp;(' . fixnumber( $row->count ) . ')';
+				} else {
+					$count = '';
+				}
+				$text = fixnumber( $date[2] ) . ' ' . $persian_month_names[ intval( $date[1] ) ] . ' ' . fixnumber( $date[0] );
+				echo get_archives_link( get_day_link( $date[0], $date[1], $date[2] ), $text, $r['format'], $r['before'], $count );
+			}
 		}
-
-		$type       = isset( $instance['parsidate_archive_type'] ) ? $instance['parsidate_archive_type'] : 'monthly';
-		$title      = isset( $instance['parsidate_archive_title'] ) ? $instance['parsidate_archive_title'] : __( 'Jalali Date Archives', 'wp-parsidate' );
-		$post_count = isset( $instance['parsidate_archive_count'] ) ? $instance['parsidate_archive_count'] : false;
-		$ddl_style  = isset( $instance['parsidate_archive_list'] ) ? $instance['parsidate_archive_list'] : false;
-
-		echo $args['before_widget'];
-		if ( ! empty( $instance['parsidate_archive_title'] ) ) {
-			echo $args['before_title'] . apply_filters( 'widget_title', $instance['parsidate_archive_title'] ) . $args['after_title'];
-		}
-
-		if ( $ddl_style ) {
-			echo "<select name='parsidate_archive_list' onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value='0'>" . esc_attr( $title ) . "</option>";
-			wp_get_parchives( "type=$type&format=option&show_post_count=$post_count" );
-			echo '</select>';
-		} else {
-			echo '<ul>';
-			wpp_get_archives( "type=$type&show_post_count=$post_count" );
-			echo '</ul>';
-		}
-		echo $args['after_widget'];
 	}
 }
