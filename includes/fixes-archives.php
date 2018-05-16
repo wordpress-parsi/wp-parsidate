@@ -17,11 +17,18 @@ function wpp_get_archives( $args = '' ) {
 		'after'           => '',
 		'show_post_count' => false,
 		'echo'            => 1,
-		'order'           => 'DESC'
+		'order'           => 'DESC',
+		'post_type'       => 'post'
 	);
 	$r = wp_parse_args( $args, $defaults );
+	
+	$post_type_object = get_post_type_object( $r['post_type'] );
+	if ( ! is_post_type_viewable( $post_type_object ) ) {
+	    return;
+	}
+	$r['post_type'] = $post_type_object->name;
 
-	$results = $wpdb->get_results( "SELECT date( post_date )as date,count(ID)as count FROM $wpdb->posts WHERE post_date < NOW() AND post_type = 'post' AND post_status = 'publish' group by date ORDER BY post_date DESC" );
+	$results = $wpdb->get_results( "SELECT date( post_date )as date,count(ID)as count FROM $wpdb->posts WHERE post_date < NOW() AND post_type = '{$r['post_type']}' AND post_status = 'publish' group by date ORDER BY post_date DESC" );
 
 	if ( ! empty( $results ) ) {
 		if ( $r['type'] == 'yearly' ) {
@@ -34,12 +41,12 @@ function wpp_get_archives( $args = '' ) {
 				if ( $date === $old_date ) {
 					$count += $dt->count;
 				} else {
-					echo_yarchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'] );
+					echo_yarchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'],$r );
 					$old_date = $date;
 					$count    = $dt->count;
 				}
 			}
-			echo_yarchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'] );
+			echo_yarchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'],$r );
 		} elseif ( $r['type'] == 'monthly' ) {
 			$old_date = parsidate( 'Ym', $results[0]->date, 'eng' );
 			$count    = $results[0]->count;
@@ -50,12 +57,12 @@ function wpp_get_archives( $args = '' ) {
 				if ( $date == $old_date ) {
 					$count += $dt->count;
 				} else {
-					echo_marchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'] );
+					echo_marchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'],$r );
 					$old_date = $date;
 					$count    = $dt->count;
 				}
 			}
-			echo_marchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'] );
+			echo_marchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'],$r );
 		} elseif ( $r['type'] == 'daily' ) {
 			foreach ( $results as $row ) {
 				$date = parsidate( 'Y,m,d', $row->date, 'eng' );
@@ -72,16 +79,19 @@ function wpp_get_archives( $args = '' ) {
 	}
 }
 
-function echo_yarchive( $year, $format, $before, $count, $show_post_count ) {
+function echo_yarchive( $year, $format, $before, $count, $show_post_count, $r ) {
 	if ( $show_post_count ) {
 		$count = '&nbsp;(' . fixnumber( $count ) . ')';
 	} else {
 		$count = '';
 	}
-	echo get_archives_link( get_year_link( $year ), fixnumber( $year ), $format, $before, $count );
+	$url = get_year_link( $year );
+	if ( 'post' !== $r['post_type'] ) 
+		$url = add_query_arg( 'post_type', $r['post_type'], $url );
+	echo get_archives_link( $url, fixnumber( $year ), $format, $before, $count );
 }
 
-function echo_marchive( $old_date, $format, $before, $count, $show_post_count ) {
+function echo_marchive( $old_date, $format, $before, $count, $show_post_count ,$r) {
 	global $persian_month_names;
 	$year  = substr( $old_date, 0, 4 );
 	$month = substr( $old_date, 4, 2 );
@@ -90,7 +100,11 @@ function echo_marchive( $old_date, $format, $before, $count, $show_post_count ) 
 	} else {
 		$count = '';
 	}
-	echo get_archives_link( get_month_link( $year, $month ), $persian_month_names[ intval( $month ) ] . ' ' . fixnumber( $year ), $format, $before, $count );
+	$url = get_month_link( $year, $month );
+	if ( 'post' !== $r['post_type'] ) 
+		$url = add_query_arg( 'post_type', $r['post_type'], $url );
+
+	echo get_archives_link($url , $persian_month_names[ intval( $month ) ] . ' ' . fixnumber( $year ), $format, $before, $count );
 }
 
 function wp_get_parchives( $args = '' ) {
