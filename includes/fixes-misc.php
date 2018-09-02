@@ -13,7 +13,7 @@ if (get_locale() == 'fa_IR') {
 
     if (isset($wpp_settings['conv_page_title']) && $wpp_settings['conv_page_title'] != 'disable') {
         add_filter('wp_title', 'fixnumber', 1000);
-        add_filter('pre_get_document_title', 'fixnumber', 1000); // WP 4.4+
+        //add_filter('pre_get_document_title', 'fixnumber', 1000); // WP 4.4+
     }
 
     if (isset($wpp_settings['conv_title']) && $wpp_settings['conv_title'] != 'disable') {
@@ -47,7 +47,7 @@ if (get_locale() == 'fa_IR') {
         add_filter('wp_list_categories', 'fixarabic', 1000);
         add_filter('the_excerpt', 'fixarabic', 1000);
         add_filter('wp_title', 'fixarabic', 1000);
-        add_filter('pre_get_document_title', 'fixarabic', 1000); // WP 4.4+
+        //add_filter('pre_get_document_title', 'fixarabic', 1000); // WP 4.4+
     }
 } else {
     /*remove_filter('wp_title', 'fixnumber', 1001);
