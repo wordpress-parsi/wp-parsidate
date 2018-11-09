@@ -6,8 +6,12 @@ function wpp_wc_save_post($data ,$postarr){
     if($data['post_type']=='shop_order')
         $_POST['order_date'] = gregdate('Y-m-d',$_POST['order_date']);
     if($data['post_type']=='product'){
-        $_POST['_sale_price_dates_from'] = gregdate('Y-m-d',$_POST['_sale_price_dates_from']);
-        $_POST['_sale_price_dates_to']   = gregdate('Y-m-d',$_POST['_sale_price_dates_to']);
+        if(isset($_POST['_sale_price_dates_from']) and ! empty($_POST['_sale_price_dates_from'])) {
+		    $_POST['_sale_price_dates_from'] = gregdate('Y-m-d',$_POST['_sale_price_dates_from']);
+	    }
+	    if(isset($_POST['_sale_price_dates_to']) and ! empty($_POST['_sale_price_dates_to'])) {
+		    $_POST['_sale_price_dates_to'] = gregdate('Y-m-d',$_POST['_sale_price_dates_to']);
+	    }
     }
     return $data;
 }
