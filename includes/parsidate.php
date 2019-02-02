@@ -6,7 +6,6 @@
  * @package             WP-Parsidate
  * @subpackage          DateConversation
  */
-
 /*Special thanks to :
 Reza Gholampanahi for convert function*/
 
@@ -44,13 +43,13 @@ class bn_parsidate {
 	);
 	public $sesson = array( 'بهار', 'تابستان', 'پاییز', 'زمستان' );
 
-    public $persian_day_names = array('یکشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه');
-    public $persian_day_small = array('ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش');
+	public $persian_day_names = array( 'یکشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه' );
+	public $persian_day_small = array( 'ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش' );
 
-    public $j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
-    private $j_days_sum_month = array(0, 0, 31, 62, 93, 124, 155, 186, 216, 246, 276, 306, 336);
+	public $j_days_in_month   = array( 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29 );
+	private $j_days_sum_month = array( 0, 0, 31, 62, 93, 124, 155, 186, 216, 246, 276, 306, 336 );
 
-    private $g_days_sum_month = array(0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334);
+	private $g_days_sum_month = array( 0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 );
 
 
 	/**
@@ -289,8 +288,8 @@ class bn_parsidate {
 		}
 		$jm = ++ $i;
 
-        return array($jy, strlen($jm) == 1 ? '0' . $jm : $jm, strlen($jd) == 1 ? '0' . $jd : $jd);
-    }
+		return array( $jy, strlen( $jm ) == 1 ? '0' . $jm : $jm, strlen( $jd ) == 1 ? '0' . $jd : $jd );
+	}
 
 	/**
 	 * Get day of the week shamsi/jalali
@@ -423,5 +422,5 @@ function gregdate( $input, $datetime ) {
 	$bndate = bn_parsidate::getInstance();
 	$bndate = $bndate->gregurian_date( $input, $datetime );
 
-    return $bndate;
+	return $bndate;
 }

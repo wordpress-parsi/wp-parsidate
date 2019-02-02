@@ -16,25 +16,31 @@
 
         global $dis_hook;
         $calls = debug_backtrace();
-        $func  = $calls[4]['args'][0];
-        $hooks = $dis_hook[$func];
-        if(empty($hooks))
-        return true;
         unset($calls[0]);
         unset($calls[1]);
         unset($calls[2]);
-        unset($calls[3]);
-        unset($calls[4]);
 
-        foreach($calls as $call){
+        foreach($calls as $i => $call){
+            unset($calls[$i]);
+            if($call['function']=='apply_filters' and empty($call['class']))
+            break;
+        }
+        $func  = $calls[++$i]['function'];
+        $hooks = $dis_hook[$func];
+        if(empty($hooks))
+        return true;
+
+        unset($calls[$i]);
+
+        foreach($calls as $i => $call){
             foreach($hooks as $hook){
-
+                $hook['class'] = trim($hook['class']);
                 if((isset($call['class']) and empty($hook['class'])) or (!isset($call['class']) and !empty($hook['class'])))
-                continue;
-                if(!empty($hook['func']) and ($call['function']!=$hook['func']))
-                continue;
-                if((!isset($call['class']) and empty($hook['class'])) or ($call['class']==$hook['class']))
-                return false;
+                    continue;
+                if(!empty($hook['func']) and ($call['function']!=trim($hook['func'])))
+                    continue;
+                if((!isset($call['class']) and empty($hook['class'])) or $call['class'] == $hook['class'])
+                    return false;
             }
         }
         return true;
@@ -131,7 +137,7 @@ class WPP_Disable {
 			'disable' => __( 'Disable', 'wp-parsidate' )
 		);
 		$settings = array(
-			'dis'          => array(
+			'dis'      => array(
 				'id'   => 'dis',
 				'name' => __( 'Hook deactivator', 'wp-parsidate' ),
 				'type' => 'header'

@@ -188,7 +188,6 @@ function wpp_settings_sanitize( $input = array() ) {
 			if ( empty( $input[ $key ] ) ) {
 				unset( $wpp_settings[ $key ] );
 			}
-
 		}
 	}
 

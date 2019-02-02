@@ -43,7 +43,7 @@ function wpp_admin_posts_where( $where ) {
 	global $wp_query;
 	if ( isset( $_GET['mfa'] ) && $_GET['mfa'] != '0' ) {
 		$wp_query->query_vars['m'] = $_GET['mfa'];
-		$where                     = wpp_posts_where( $where );
+		$where                     = wpp_posts_where( $where, $wp_query);
 	}
 
 	return $where;
