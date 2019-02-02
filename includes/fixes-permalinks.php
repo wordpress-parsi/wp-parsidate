@@ -35,16 +35,16 @@ function wpp_posts_where($where, $wp_query='')
 
     $pd = bn_parsidate::getInstance();
 
-    $m = (isset($wp_query->query_vars['m'])) ? $wp_query->query_vars['m'] : '';
-    $hour = (isset($wp_query->query_vars['hour'])) ? $wp_query->query_vars['hour'] : '';
+    $m      = (isset($wp_query->query_vars['m'])) ? $wp_query->query_vars['m'] : '';
+    $hour   = (isset($wp_query->query_vars['hour'])) ? $wp_query->query_vars['hour'] : '';
     $minute = (isset($wp_query->query_vars['minute'])) ? $wp_query->query_vars['minute'] : '';
     $second = (isset($wp_query->query_vars['second'])) ? $wp_query->query_vars['second'] : '';
-    $year = (isset($wp_query->query_vars['year'])) ? $wp_query->query_vars['year'] : '';
-    $month = (isset($wp_query->query_vars['month'])) ? $wp_query->query_vars['month'] : '';
-    $day = (isset($wp_query->query_vars['day'])) ? $wp_query->query_vars['day'] : '';
+    $year   = (isset($wp_query->query_vars['year'])) ? $wp_query->query_vars['year'] : '';
+    $month  = (isset($wp_query->query_vars['monthnum'])) ? $wp_query->query_vars['monthnum'] : '';
+    $day    = (isset($wp_query->query_vars['day'])) ? $wp_query->query_vars['day'] : '';
 
     if (!empty($m)) {
-        $len = strlen($m);
+        $len  = strlen($m);
         $year = substr($m, 0, 4);
         if ($len > 5) {
             $month = substr($m, 4, 2);
@@ -84,7 +84,7 @@ function wpp_posts_where($where, $wp_query='')
     if ($month != '') {
         $stamon = $month;
         $endmon = ($month == 12 ? 1 : $month + 1);
-        $endyear = ($endmon == 1 ? $stayear + 1 : $stayear);
+        $endyear= ($endmon == 1 ? $stayear + 1 : $stayear);
     }
 
     if ($day != '') {
@@ -185,7 +185,6 @@ function wpp_pre_get_posts($query)
         if ($out && !empty($day) && $day != $per[2]) {
             $out = false;
         }
-
     } elseif (isset($permalink['post_id'])) {
         $out = true;
         $var = $wpdb->get_var("SELECT post_date FROM {$wpdb->prefix}posts WHERE ID={$permalink['post_id']}");
@@ -199,13 +198,13 @@ function wpp_pre_get_posts($query)
             array(
                 'after' => array(
                     'year' => $stadate[0],
-                    'month' => $stadate[1],
-                    'day' => $stadate[2] - 1,
+                    'month'=> $stadate[1],
+                    'day'  => $stadate[2] - 1,
                 ),
                 'before' => array(
                     'year' => $enddate[0],
-                    'month' => $enddate[1],
-                    'day' => $enddate[2] + 1,
+                    'month'=> $enddate[1],
+                    'day'  => $enddate[2] + 1,
                 ),
                 'inclusive' => true,
             ),
@@ -253,7 +252,6 @@ function wpp_pre_get_posts($query)
      //   $query->is_404 = true;
 
     return $query;
-
 }
 
 /**
