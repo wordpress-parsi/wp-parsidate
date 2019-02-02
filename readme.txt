@@ -41,6 +41,15 @@ List of some features:
 4. 'Jalali Date Calender' in action
 
 == Changelog ==
+
+= 2.4 =
+* Fix for admin_posts_where
+* Add new version of planet on dashboard
+* New fixes for dates
+* Fix month in permalink
+* New fix for hook disabler
+* 
+
 = 2.3.4 =
 * Fix diagnosis leap year function ( bn_parsidate::IsLeapYear() )
 
