@@ -48,7 +48,6 @@ List of some features:
 * New fixes for dates
 * Fix month in permalink
 * New fix for hook disabler
-* 
 
 = 2.3.4 =
 * Fix diagnosis leap year function ( bn_parsidate::IsLeapYear() )
