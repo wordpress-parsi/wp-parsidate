@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2018 by original authors @ fontello.com</metadata>
+<defs>
+<font id="imrc-datetime-picker" horiz-adv-x="1000" >
+<font-face font-family="imrc-datetime-picker" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="clock" unicode="&#xe800;" d="M500 546v-250q0-7-5-12t-13-5h-178q-8 0-13 5t-5 12v36q0 8 5 13t13 5h125v196q0 8 5 13t12 5h36q8 0 13-5t5-13z m232-196q0 83-41 152t-110 111-152 41-153-41-110-111-41-152 41-152 110-111 153-41 152 41 110 111 41 152z m125 0q0-117-57-215t-156-156-215-58-216 58-155 156-58 215 58 215 155 156 216 58 215-58 156-156 57-215z" horiz-adv-x="857.1" />
+
+<glyph glyph-name="angle-left" unicode="&#xf104;" d="M350 546q0-7-6-12l-219-220 219-219q6-6 6-13t-6-13l-28-28q-5-5-12-5t-13 5l-260 261q-6 5-6 12t6 13l260 260q5 6 13 6t12-6l28-28q6-5 6-13z" horiz-adv-x="357.1" />
+
+<glyph glyph-name="angle-right" unicode="&#xf105;" d="M332 314q0-7-5-12l-261-261q-5-5-12-5t-13 5l-28 28q-6 6-6 13t6 13l219 219-219 220q-6 5-6 12t6 13l28 28q5 6 13 6t12-6l261-260q5-5 5-13z" horiz-adv-x="357.1" />
+
+<glyph glyph-name="calendar-empty" unicode="&#xf133;" d="M71-79h786v572h-786v-572z m215 679v161q0 8-5 13t-13 5h-36q-8 0-13-5t-5-13v-161q0-8 5-13t13-5h36q8 0 13 5t5 13z m428 0v161q0 8-5 13t-13 5h-35q-8 0-13-5t-5-13v-161q0-8 5-13t13-5h35q8 0 13 5t5 13z m215 36v-715q0-29-22-50t-50-21h-786q-29 0-50 21t-21 50v715q0 29 21 50t50 21h72v54q0 37 26 63t63 26h36q37 0 63-26t26-63v-54h214v54q0 37 27 63t63 26h35q37 0 64-26t26-63v-54h71q29 0 50-21t22-50z" horiz-adv-x="928.6" />
+</font>
+</defs>
+</svg>

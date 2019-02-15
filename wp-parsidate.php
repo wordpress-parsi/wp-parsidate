@@ -9,7 +9,7 @@
  * Text Domain: wp-parsidate
  * Domain Path: parsi-languages
  * License:     GPL2
- * 
+ *
  * WP-Parsidate is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -134,6 +134,7 @@ final class WP_Parsidate {
 			'fixes-misc',
 			'admin/styles-fix',
 			'admin/datepicker-rtl',
+			'admin/gutenberg-jalali-calendar',
 			'admin/lists-fix',
 			'admin/widgets',
 			'fixes-calendar',
