@@ -62,7 +62,7 @@ final class WP_Parsidate {
 		$this->include_files();
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'parsi_settings_link' ) );
 		add_action( 'widgets_init', array( $this, 'register_widget' ) );
-		add_action( 'wp_dashboard_setup', 'wpp_add_dashboard_widgets' );
+		//add_action( 'wp_dashboard_setup', 'wpp_add_dashboard_widgets' );
 	}
 
 	/**
