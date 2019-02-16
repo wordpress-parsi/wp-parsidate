@@ -1,10 +1,10 @@
 ﻿=== Parsi Date ===
-Contributors: lord_viper, man4toman, iEhsan.ir, parselearn
+Contributors: lord_viper, man4toman, parselearn
 Donate link: http://forum.wp-parsi.com/
-Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl
-Requires at least: 3.6
-Tested up to: 4.8
-Stable tag: 2.3.4
+Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl, gutenberg
+Requires at least: 5.0.0
+Tested up to: 5.0.3
+Stable tag: 3.0.0
 
 Persian date support for WordPress
 
@@ -14,6 +14,8 @@ This package is made by Persian developers to bring so much better experience of
 
 List of some features:
 
+* Shamsi (Jalali) day-picker in Block Editor (Gutenberg)
+* Shamsi (Jalali) jQuery UI date-picker
 * [WP-Planet.ir](http://wp-planet.ir) Widget
 * Shamsi (Jalali) date in Posts, comments, pages, archives, search, categories
 * Shamsi (Jalali) date in Permalinks
@@ -42,9 +44,13 @@ List of some features:
 
 == Changelog ==
 
+= 3.0.0 =
+* Added Shamsi (Jalali) day-picker in Block Editor (Gutenberg)
+* Added Shamsi (Jalali) jQuery UI date-picker
+
 = 2.4 =
 * Fix for admin_posts_where
-* Add new version of planet on dashboard
+* Added new version of planet on dashboard
 * New fixes for dates
 * Fix month in permalink
 * New fix for hook disabler

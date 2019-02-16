@@ -1,14 +1,14 @@
 <?php
 /**
  * Plugin Name: WP-Parsidate
- * Version: 2.3.4
+ * Version: 3.0.0
  * Plugin URI: http://forum.wp-parsi.com/
  * Description: Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: posts, comments, pages, archives, search, categories, permalinks and all admin sections and TinyMce editor, lists, quick editor. This package has Jalali archive widget.
  * Author: WP-Parsi Team
  * Author URI: http://wp-parsi.com/
  * Text Domain: wp-parsidate
  * Domain Path: parsi-languages
- * License:     GPL2
+ * License: GPL3
  *
  * WP-Parsidate is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,16 +31,16 @@
  *              Morteza Geransayeh ( Senior programmer & Manager )
  *              Ehsaan ( Programmer )
  *              Farhan Nisi ( Programmer )
- *                Parsa Kafi ( Programmer )
- *                Saeed Fard ( Analyst )
+ *              Parsa Kafi ( Programmer )
+ *              Alireza Dabiri Nejad ( Programmer )
+ *              Saeed Fard ( Analyst )
  *
  * @author              Mobin Ghasempoor
  * @author              Morteza Geransayeh
- * @author              Farhan Nisi
- * @author              Ehsaan
+ * @author              Alireza Dabiri Nejad
  * @link                http://wp-parsi.com/
- * @version             2.2
- * @license             http://www.gnu.org/licenses/gpl-2.0.html GNU Public License v2.0
+ * @version             3.0.0
+ * @license             http://www.gnu.org/licenses/gpl-3.0.html GNU Public License v3.0
  * @package             WP-Parsidate
  * @subpackage          Core
  */

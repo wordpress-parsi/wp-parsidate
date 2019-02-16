@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @uses {wp-edit-post} to internationalize the block's text.
  * @uses {wp-data}
  * @uses {wp-date}
- * @since X.X.X
+ * @since 3.0.0
  */
 if ( ! function_exists( 'wpp_gutenberg_jalali_calendar_editor_assets' ) ) {
 	function wpp_gutenberg_jalali_calendar_editor_assets() {
