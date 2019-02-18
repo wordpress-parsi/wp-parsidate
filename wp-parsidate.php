@@ -29,10 +29,14 @@
  * Developers:
  *              Mobin Ghasempoor ( Senior programmer & Founder )
  *              Morteza Geransayeh ( Senior programmer & Manager )
+ *              Alireza Dabiri Nejad ( Programmer )
  *              Ehsaan ( Programmer )
  *              Farhan Nisi ( Programmer )
  *              Parsa Kafi ( Programmer )
- *              Alireza Dabiri Nejad ( Programmer )
+ *              Mostafa Soufi ( Programmer )
+ *              Ali Aghdam ( Programmer )
+ *              Kamran Khorsandi ( Programmer )
+ *              Mehrshad Darzi ( Programmer )
  *              Saeed Fard ( Analyst )
  *
  * @author              Mobin Ghasempoor
