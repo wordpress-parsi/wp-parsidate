@@ -24,8 +24,8 @@ List of some features:
 * Shamsi (Jalali) calender widget
 * Shamsi (Jalali) archive widget
 * RTL and fixed tinymce editor
-* Poweful and fast function for fixing Arabic (ي , ك) to Persian (ی , ک)
-* Poweful and fast function for Persian numbers
+* Powerful and fast function for fixing Arabic (ي , ك) to Persian (ی , ک)
+* Powerful and fast function for Persian numbers
 * Low resources usage
 
 == Installation ==
