@@ -43,7 +43,7 @@
  * @author              Morteza Geransayeh
  * @author              Alireza Dabiri Nejad
  * @link                http://wp-parsi.com/
- * @version             3.0.0
+ * @version             3.0.1
  * @license             http://www.gnu.org/licenses/gpl-3.0.html GNU Public License v3.0
  * @package             WP-Parsidate
  * @subpackage          Core
