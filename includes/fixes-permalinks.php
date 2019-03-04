@@ -324,9 +324,9 @@ function wpp_permalink($perma, $post, $leavename = false)
                             $category = get_category_parents($cats[0]->parent, false, '/', true);
                         }
 
-                        if ($cats[0]->parent != 0) {
+                        /*if ($cats[0]->parent != 0) {
                             $category .= $cats[0]->slug;
-                        }
+                        }*/
                     }
                     if (empty($category)) {
                         $default_category = get_term(get_option('default_category'), 'category');
