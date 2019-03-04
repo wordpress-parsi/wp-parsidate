@@ -73,7 +73,7 @@ function wpp_fix_post_time($time, $format = '')
         $format = get_option('time_format');
     }
     if(!disable_wpp())
-    return date($format,$post->post_date);
+    return date($format,strtotime($post->post_date));
     return parsidate($format, $post->post_date, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
 
@@ -97,7 +97,7 @@ function wpp_fix_comment_time($time, $format = '')
         $format = get_option('time_format');
     }
     if(!disable_wpp())
-    return date($format,$comment->comment_date);
+    return date($format,strtotime($comment->comment_date));
     return parsidate($format, $comment->comment_date, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
 
@@ -121,7 +121,7 @@ function wpp_fix_comment_date($time, $format = '')
         $format = get_option('date_format');
     }
     if(!disable_wpp())
-    return date($format,$comment->comment_date);
+    return date($format,strtotime($comment->comment_date));
     return parsidate($format, $comment->comment_date, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
 
