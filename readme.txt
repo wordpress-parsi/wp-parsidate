@@ -1,10 +1,10 @@
-﻿=== Parsi Date ===
+=== Parsi Date ===
 Contributors: lord_viper, man4toman, parselearn, alirdn
 Donate link: http://forum.wp-parsi.com/
 Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl, gutenberg
 Requires at least: 5.0.0
 Tested up to: 5.0.3
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 
 Persian date support for WordPress
 
@@ -24,8 +24,8 @@ List of some features:
 * Shamsi (Jalali) calender widget
 * Shamsi (Jalali) archive widget
 * RTL and fixed tinymce editor
-* Poweful and fast function for fixing Arabic (ي , ك) to Persian (ی , ک)
-* Poweful and fast function for Persian numbers
+* Powerful and fast function for fixing Arabic (ي , ك) to Persian (ی , ک)
+* Powerful and fast function for Persian numbers
 * Low resources usage
 
 == Installation ==
