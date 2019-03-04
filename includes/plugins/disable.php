@@ -15,6 +15,8 @@
 	function disable_wpp(){
 
         global $dis_hook;
+	if(wpp_is_feed())
+            return false;
         $calls = debug_backtrace();
         unset($calls[0]);
         unset($calls[1]);

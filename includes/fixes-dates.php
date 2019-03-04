@@ -16,14 +16,7 @@ if (get_locale() == 'fa_IR' && $wpp_settings['persian_date'] != 'disable') {
     add_filter('get_comment_date', 'wpp_fix_comment_date', 10, 2);
     add_filter('get_post_modified_time', 'wpp_fix_post_date' , 10, 2 );
 
-
     add_action('date_i18n', 'wpp_fix_i18n', 10, 3);
-} else {
-    /*remove_filter('the_time', 'wpp_fix_post_time', 1001);
-    remove_filter('the_date', 'wpp_fix_post_date', 1001);
-    remove_filter('get_comment_time', 'wpp_fix_comment_time', 1001);
-    remove_filter('get_comment_date', 'wpp_fix_comment_date', 1001);
-    remove_filter('date_i18n', 'wpp_fix_i18n', 1001);*/
 }
 
 /**
@@ -73,7 +66,7 @@ function wpp_fix_post_time($time, $format = '')
         $format = get_option('time_format');
     }
     if(!disable_wpp())
-    return date($format,$post->post_date);
+    return date($format,strtotime($post->post_date));
     return parsidate($format, $post->post_date, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
 
@@ -97,7 +90,7 @@ function wpp_fix_comment_time($time, $format = '')
         $format = get_option('time_format');
     }
     if(!disable_wpp())
-    return date($format,$comment->comment_date);
+    return date($format,strtotime($comment->comment_date));
     return parsidate($format, $comment->comment_date, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
 
@@ -121,7 +114,7 @@ function wpp_fix_comment_date($time, $format = '')
         $format = get_option('date_format');
     }
     if(!disable_wpp())
-    return date($format,$comment->comment_date);
+    return date($format,strtotime($comment->comment_date));
     return parsidate($format, $comment->comment_date, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
 
