@@ -317,10 +317,11 @@ function wpp_permalink($perma, $post, $leavename = false)
                     $category = '';
                     $cats = get_the_category($post->ID);
                     if ($cats) {
-                        usort($cats, '_usort_terms_by_ID');
+                        //usort($cats, '_usort_terms_by_ID');
+                        $cats     = wp_list_sort($cats,array('term_id' => 'ASC',));
                         $category = $cats[0]->slug;
-                        if ($parent = $cats[0]->parent) {
-                            $category = get_category_parents($parent, false, '/', true);
+                        if ($cats[0]->parent) {
+                            $category = get_category_parents($cats[0]->parent, false, '/', true);
                         }
 
                         if ($cats[0]->parent != 0) {
