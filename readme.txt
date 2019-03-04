@@ -44,6 +44,9 @@ List of some features:
 
 == Changelog ==
 
+= 3.0.1 =
+* The Woocommerce hook has been temporarily disabled
+
 = 3.0.0 =
 * Added Shamsi (Jalali) day-picker in Block Editor (Gutenberg)
 * Added Shamsi (Jalali) jQuery UI date-picker
