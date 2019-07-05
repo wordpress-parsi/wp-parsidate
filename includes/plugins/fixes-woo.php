@@ -1,10 +1,24 @@
 <?php
 add_filter( 'wp_insert_post_data', 'wpp_wc_save_post', '9999', 2 );
-
 function wpp_wc_save_post($data ,$postarr){
+ 
+    if($data['post_type']=='shop_order'){
+		
+		if ( isset( $_POST['permission_id'] ) ) {
 
-    if($data['post_type']=='shop_order')
+			$max  = max( array_keys( $_POST['permission_id'] ) );
+			
+			for ( $i = 0; $i <= $max; $i ++ ) {
+				if ( empty( $_POST['access_expires'][$i] ) ) {
+					continue;
+				}
+				$access_expiress[$i] = gregdate('Y-m-d',$_POST['access_expires'][$i]);
+			}
+			 $_POST['access_expires'] = $access_expiress;
+		}
+
         $_POST['order_date'] = gregdate('Y-m-d',$_POST['order_date']);
+	}
     if($data['post_type']=='product'){
         if(isset($_POST['_sale_price_dates_from']) and ! empty($_POST['_sale_price_dates_from'])) {
 		    $_POST['_sale_price_dates_from'] = gregdate('Y-m-d',$_POST['_sale_price_dates_from']);
