@@ -130,10 +130,16 @@ function wpp_fix_comment_date($time, $format = '')
 function wpp_fix_i18n($format_string, $timestamp, $gmt)
 {
     global $wpp_settings;
+	global $post;
+	$post_id = $post->ID;
+
     if(!disable_wpp())
         return $format_string;
 
-    return parsidate($timestamp, $gmt, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
+	if( get_post_type($post_id) != 'shop_order' )
+		return parsidate($timestamp, $gmt, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
+	else
+		return $format_string;
 }
 
 function array_key_exists_r($needle, $haystack, $value = null)
