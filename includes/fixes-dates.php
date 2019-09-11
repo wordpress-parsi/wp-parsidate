@@ -131,15 +131,15 @@ function wpp_fix_i18n($format_string, $timestamp, $gmt)
 {
     global $wpp_settings;
 	global $post;
-	$post_id = $post->ID;
+	$post_id = !empty($post) ? $post->ID : null;
 
     if(!disable_wpp())
         return $format_string;
 
-	if( get_post_type($post_id) != 'shop_order' )
-		return parsidate($timestamp, $gmt, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
-	else
+	if( $post_id != null && get_post_type($post_id) == 'shop_order' ) // TODO: Remove after implement convert date for woocommerce
 		return $format_string;
+	else
+		return parsidate($timestamp, $gmt, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
 
 function array_key_exists_r($needle, $haystack, $value = null)
