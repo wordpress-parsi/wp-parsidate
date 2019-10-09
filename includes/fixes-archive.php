@@ -36,7 +36,7 @@ function wpp_fix_title( $title, $sep = '-', $sep_location = 'right' ) {
 		$title = implode( " ", $query ) . " $sep " . get_bloginfo( "name" );
 	}
 
-	if ( $wpp_settings['conv_page_title'] != 'disable' ) {
+	if ( isset( $wpp_settings['conv_page_title'] ) && $wpp_settings['conv_page_title'] != 'disable' ) {
 		$title = fixnumber( $title );
 	}
 
