@@ -28,8 +28,8 @@
             break;
         }
         $func  = $calls[++$i]['function'];
-        $hooks = $dis_hook[$func];
-        if(empty($hooks))
+        $hooks = isset( $dis_hook[$func] ) ? $dis_hook[$func] : [];
+        if(empty($hooks) || is_null($hooks))
         return true;
 
         unset($calls[$i]);
