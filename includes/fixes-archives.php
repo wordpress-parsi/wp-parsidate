@@ -134,12 +134,12 @@ function wp_get_parchives( $args = '' ) {
 				if ( $date === $old_date ) {
 					$count += $dt->count;
 				} else {
-					echo_yarchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'] );
+					echo_yarchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'] , $r);
 					$old_date = $date;
 					$count    = $dt->count;
 				}
 			}
-			echo_yarchive( $old_date,$r['format'], $r['before'], $count, $r['show_post_count'] );
+			echo_yarchive( $old_date,$r['format'], $r['before'], $count, $r['show_post_count'] , $r);
 		} elseif (  $r['type'] == 'monthly' ) {
 			$old_date = parsidate( 'Ym', $results[0]->date, 'eng' );
 			$count    = $results[0]->count;
@@ -150,12 +150,12 @@ function wp_get_parchives( $args = '' ) {
 				if ( $date === $old_date ) {
 					$count += $dt->count;
 				} else {
-					echo_marchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count']);
+					echo_marchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'], $r );
 					$old_date = $date;
 					$count    = $dt->count;
 				}
 			}
-			echo_marchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'] );
+			echo_marchive( $old_date, $r['format'], $r['before'], $count, $r['show_post_count'] , $r);
 		} elseif (  $r['type'] == 'daily' ) {
 			foreach ( $results as $row ) {
 				$date = parsidate( 'Y,m,d', $row->date, 'eng' );
