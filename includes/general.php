@@ -17,11 +17,11 @@ add_action('admin_init', 'wpp_dismiss_notice_action');
 
 /**
  * Change Locale WordPress Admin and Front-end user
- * @author
- *
- * @param    String $locale
+ * @param String $locale
  *
  * @return  String
+ * @author
+ *
  */
 function wp_parsi_set_locale($locale)
 {
@@ -55,8 +55,8 @@ function wp_parsi_set_locale($locale)
 /**
  * Detects current page is feed or not
  *
- * @since               1.0
  * @return              bool True when page is feed, false when page isn't feed
+ * @since               1.0
  */
 function wpp_is_feed()
 {
@@ -74,7 +74,7 @@ function wpp_is_feed()
 /**
  * Converts English digits to Persian digits
  *
- * @param           string $number Numbers
+ * @param string $number Numbers
  *
  * @return          string Formatted numbers
  */
@@ -90,7 +90,7 @@ function per_number($number)
 /**
  * Converts Persian digits to English digits
  *
- * @param           string $number Numbers
+ * @param string $number Numbers
  *
  * @return          string Formatted numbers
  */
@@ -106,7 +106,7 @@ function eng_number($number)
 /**
  * Converts English numbers to Persian numbers in post contents
  *
- * @param           string $content Post content
+ * @param string $content Post content
  *
  * @return          string Formatted content
  */
@@ -120,7 +120,7 @@ function persian_number($content)
 /**
  * Fix numbers and convert them to Persian digits style
  *
- * @param           string $content
+ * @param string $content
  *
  * @return          mixed
  */
@@ -132,7 +132,7 @@ function fixnumber($content)
 /**
  * Fix arabic foreign characters
  *
- * @param           string $content
+ * @param string $content
  *
  * @return          mixed
  */
@@ -155,8 +155,8 @@ function wpp_login_headerurl()
  * Notice for the activation.
  * Added dismiss feature.
  *
- * @author          Ehsaan
  * @return          void
+ * @author          Ehsaan
  */
 function wpp_activation_notice()
 {
@@ -175,8 +175,8 @@ function wpp_activation_notice()
 /**
  * Dismiss the notice action
  *
- * @author          Ehsaan
  * @return          void
+ * @author          Ehsaan
  */
 function wpp_dismiss_notice_action()
 {

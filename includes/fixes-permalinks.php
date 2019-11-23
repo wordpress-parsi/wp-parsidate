@@ -17,34 +17,34 @@ if ($wpp_settings['conv_permalinks'] == 'enable') {
 /**
  * Converts post date pointer to Jalali pointer
  *
- * @param           string $where
- * @param           string $wp_query
+ * @param string $where
+ * @param string $wp_query
  *
  * @return          string
  */
-function wpp_posts_where($where, $wp_query='')
+function wpp_posts_where($where, $wp_query = '')
 {
     global $wpdb;
-    if(empty($wp_query)){
-    	global $wp_query;
+    if (empty($wp_query)) {
+        global $wp_query;
     }
-    
+
     if (!$wp_query->is_main_query() || empty($wp_query->query_vars)) {
         return $where;
     }
 
     $pd = bn_parsidate::getInstance();
 
-    $m      = (isset($wp_query->query_vars['m'])) ? $wp_query->query_vars['m'] : '';
-    $hour   = (isset($wp_query->query_vars['hour'])) ? $wp_query->query_vars['hour'] : '';
+    $m = (isset($wp_query->query_vars['m'])) ? $wp_query->query_vars['m'] : '';
+    $hour = (isset($wp_query->query_vars['hour'])) ? $wp_query->query_vars['hour'] : '';
     $minute = (isset($wp_query->query_vars['minute'])) ? $wp_query->query_vars['minute'] : '';
     $second = (isset($wp_query->query_vars['second'])) ? $wp_query->query_vars['second'] : '';
-    $year   = (isset($wp_query->query_vars['year'])) ? $wp_query->query_vars['year'] : '';
-    $month  = (isset($wp_query->query_vars['monthnum'])) ? $wp_query->query_vars['monthnum'] : '';
-    $day    = (isset($wp_query->query_vars['day'])) ? $wp_query->query_vars['day'] : '';
+    $year = (isset($wp_query->query_vars['year'])) ? $wp_query->query_vars['year'] : '';
+    $month = (isset($wp_query->query_vars['monthnum'])) ? $wp_query->query_vars['monthnum'] : '';
+    $day = (isset($wp_query->query_vars['day'])) ? $wp_query->query_vars['day'] : '';
 
     if (!empty($m)) {
-        $len  = strlen($m);
+        $len = strlen($m);
         $year = substr($m, 0, 4);
         if ($len > 5) {
             $month = substr($m, 4, 2);
@@ -84,7 +84,7 @@ function wpp_posts_where($where, $wp_query='')
     if ($month != '') {
         $stamon = $month;
         $endmon = ($month == 12 ? 1 : $month + 1);
-        $endyear= ($endmon == 1 ? $stayear + 1 : $stayear);
+        $endyear = ($endmon == 1 ? $stayear + 1 : $stayear);
     }
 
     if ($day != '') {
@@ -141,7 +141,7 @@ function wpp_posts_where($where, $wp_query='')
 /**
  * Converts post dates to Georgian dates for preventing errors
  *
- * @param           WP_Query $query
+ * @param WP_Query $query
  *
  * @return          mixed
  */
@@ -198,13 +198,13 @@ function wpp_pre_get_posts($query)
             array(
                 'after' => array(
                     'year' => $stadate[0],
-                    'month'=> $stadate[1],
-                    'day'  => $stadate[2] - 1,
+                    'month' => $stadate[1],
+                    'day' => $stadate[2] - 1,
                 ),
                 'before' => array(
                     'year' => $enddate[0],
-                    'month'=> $enddate[1],
-                    'day'  => $enddate[2] + 1,
+                    'month' => $enddate[1],
+                    'day' => $enddate[2] + 1,
                 ),
                 'inclusive' => true,
             ),
@@ -249,7 +249,7 @@ function wpp_pre_get_posts($query)
         $query->is_404 = false;
         $query->query_vars['error'] = '';
     }//else
-     //   $query->is_404 = true;
+    //   $query->is_404 = true;
 
     return $query;
 }
@@ -257,9 +257,9 @@ function wpp_pre_get_posts($query)
 /**
  * Convert permalink structure to Jalali format
  *
- * @param           mixed $perma
- * @param           WP_Post $post
- * @param           bool $leavename
+ * @param mixed $perma
+ * @param WP_Post $post
+ * @param bool $leavename
  *
  * @return          string New permalink
  */
@@ -277,17 +277,17 @@ function wpp_permalink($perma, $post, $leavename = false)
     }
 
     $permalink = get_option('permalink_structure');
-    preg_match_all('/%([^\/]*)%/', $permalink, $rewritecode);
-    $rewritecode = $rewritecode[0];
+    preg_match_all('/%([^\/]*)%/', $permalink, $rewriteCode);
+    $rewriteCode = $rewriteCode[0];
     if ('' != $permalink && !in_array($post->post_status, array('draft', 'pending', 'auto-draft'))) {
         if ($leavename) {
-            $rewritecode = array_diff($rewritecode, array('%postname%', '%pagename%'));
+            $rewriteCode = array_diff($rewriteCode, array('%postname%', '%pagename%'));
         }
 
         $date = explode(' ', parsidate('Y m d H i s', $post->post_date, 'eng'));
         $out = array();
 
-        foreach ($rewritecode as $rewrite) {
+        foreach ($rewriteCode as $rewrite) {
             switch ($rewrite) {
                 case '%year%':
                     $out[] = $date[0];
@@ -318,7 +318,7 @@ function wpp_permalink($perma, $post, $leavename = false)
                     $cats = get_the_category($post->ID);
                     if ($cats) {
                         //usort($cats, '_usort_terms_by_ID');
-                        $cats     = wp_list_sort($cats,array('term_id' => 'ASC',));
+                        $cats = wp_list_sort($cats, array('term_id' => 'ASC',));
                         $category = $cats[0]->slug;
                         if ($cats[0]->parent) {
                             $category = get_category_parents($cats[0]->parent, false, '/', true);
@@ -338,15 +338,12 @@ function wpp_permalink($perma, $post, $leavename = false)
                     $authordata = get_userdata($post->post_author);
                     $out[] = $authordata->user_nicename;
                     break;
-                case '%pagename%':
-                    $out[] = $post->post_name;
-                    break;
                 default:
-                    unset($rewritecode[array_search($rewrite, $rewritecode)]);
+                    unset($rewriteCode[array_search($rewrite, $rewriteCode)]);
                     break;
             }
         }
-        $permalink = home_url(str_replace($rewritecode, $out, $permalink));
+        $permalink = home_url(str_replace($rewriteCode, $out, $permalink));
 
         return user_trailingslashit($permalink, 'single');
     } else {

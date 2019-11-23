@@ -11,8 +11,8 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if (!defined('ABSPATH')) {
+    exit;
 }
 
 /**
@@ -29,37 +29,38 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @uses {wp-date}
  * @since 3.0.0
  */
-if ( ! function_exists( 'wpp_gutenberg_jalali_calendar_editor_assets' ) ) {
-	function wpp_gutenberg_jalali_calendar_editor_assets() {
-		// Scripts.
-		wp_enqueue_script(
-			'wpp_gutenberg_jalali_calendar_editor_scripts',
-			WP_PARSI_URL . 'assets/js/gutenberg-jalali-calendar.build.js',
-			array(
-				'wp-plugins',
-				'wp-i18n',
-				'wp-compose',
-				'wp-components',
-				'wp-element',
-				'wp-editor',
-				'wp-edit-post',
-				'wp-data',
-				'wp-date'
-			),
-			true
-		);
+if (!function_exists('wpp_gutenberg_jalali_calendar_editor_assets')) {
+    function wpp_gutenberg_jalali_calendar_editor_assets()
+    {
+        // Scripts.
+        wp_enqueue_script(
+            'wpp_gutenberg_jalali_calendar_editor_scripts',
+            WP_PARSI_URL . 'assets/js/gutenberg-jalali-calendar.build.js',
+            array(
+                'wp-plugins',
+                'wp-i18n',
+                'wp-compose',
+                'wp-components',
+                'wp-element',
+                'wp-editor',
+                'wp-edit-post',
+                'wp-data',
+                'wp-date'
+            ),
+            true
+        );
 
-		// Styles.
-		wp_enqueue_style(
-			'wpp_gutenberg_jalali_calendar_editor_styles',
-			WP_PARSI_URL . 'assets/css/gutenberg-jalali-calendar.build.css',
-			array( 'wp-edit-blocks' )
-		);
-	}
+        // Styles.
+        wp_enqueue_style(
+            'wpp_gutenberg_jalali_calendar_editor_styles',
+            WP_PARSI_URL . 'assets/css/gutenberg-jalali-calendar.build.css',
+            array('wp-edit-blocks')
+        );
+    }
 }
 
 // Hook: Editor assets.
-$wpp_options = get_option( 'wpp_settings' );
-if ( version_compare( get_bloginfo( 'version' ), '5.0.0', '>=' ) && $wpp_options['persian_date'] === 'enable' ) {
-	add_action( 'enqueue_block_editor_assets', 'wpp_gutenberg_jalali_calendar_editor_assets' );
+$wpp_options = get_option('wpp_settings');
+if (version_compare(get_bloginfo('version'), '5.0.0', '>=') && $wpp_options['persian_date'] === 'enable') {
+    add_action('enqueue_block_editor_assets', 'wpp_gutenberg_jalali_calendar_editor_assets');
 }
