@@ -18,7 +18,7 @@ if (get_locale() == 'fa_IR' && $wpp_settings['persian_date'] != 'disable') {
     add_filter('get_comment_date', 'wpp_fix_comment_date', 10, 2);
     add_filter('get_post_modified_time', 'wpp_fix_post_modified_time', 10, 3);
     add_filter('date_i18n', 'wpp_fix_i18n', 10, 4);
-    add_filter('wp_date', 'wpp_fix_wp_date', 10, 4);
+    add_filter('wp_date', 'wpp_fix_i18n', 10, 4);
 }
 
 /**
@@ -154,8 +154,7 @@ function wpp_fix_comment_date($time, $format = '')
  */
 function wpp_fix_i18n($date, $format, $timestamp, $gmt)
 {
-    global $wpp_settings;
-    global $post;
+    global $wpp_settings, $post;
     $post_id = !empty($post) ? $post->ID : null;
 
     if (!disable_wpp())
@@ -170,9 +169,10 @@ function wpp_fix_i18n($date, $format, $timestamp, $gmt)
 function wpp_fix_wp_date($date, $format, $timestamp, $timezone)
 {
     global $wpp_settings;
+
     if (!disable_wpp())
         return $format;
-    //$timestamp = eng_number($timestamp);
+
     return parsidate($format, $timestamp, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
 
