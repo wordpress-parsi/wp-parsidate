@@ -16,7 +16,7 @@ if (get_locale() == 'fa_IR' && $wpp_settings['persian_date'] != 'disable') {
     add_filter('get_the_date', 'wpp_fix_post_date', 10, 2);
     add_filter('get_comment_time', 'wpp_fix_comment_time', 10, 2);
     add_filter('get_comment_date', 'wpp_fix_comment_date', 10, 2);
-    add_filter('get_post_modified_time', 'wpp_fix_post_date', 10, 2);
+    add_filter('get_post_modified_time', 'wpp_fix_post_modified_time', 10, 3);
     add_filter('date_i18n', 'wpp_fix_i18n', 10, 4);
     add_filter('wp_date', 'wpp_fix_wp_date', 10, 4);
 }
@@ -46,6 +46,26 @@ function wpp_fix_post_date($time, $format = '')
         return date($format, strtotime($post->post_modified));
 
     return parsidate($format, $post->post_date, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
+}
+
+/**
+ * Fixes post date and returns in Jalali format
+ *
+ * @param   string $time Post time
+ * @param   string $format Date format
+ * @param   bool $gmt retrieve the GMT time. Default false.
+ *
+ * @return  string Formatted date
+ * @author  Parsa Kafi
+ */
+function wpp_fix_post_modified_time($time, $format, $gmt)
+{
+    global $wpp_settings;
+
+    if (!disable_wpp())
+        return $time;
+
+    return parsidate($format, $time, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
 
 /**
@@ -152,6 +172,7 @@ function wpp_fix_wp_date($date, $format, $timestamp, $timezone)
     global $wpp_settings;
     if (!disable_wpp())
         return $format;
+    //$timestamp = eng_number($timestamp);
     return parsidate($format, $timestamp, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
 

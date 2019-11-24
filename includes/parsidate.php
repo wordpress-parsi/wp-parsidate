@@ -252,7 +252,7 @@ class bn_parsidate
             }
         }
 
-        if ($lang == 'per') {
+        if (strtolower($format) != 'u' && $lang == 'per') {
             return self::trim_number($out);
         } else {
             return $out;
