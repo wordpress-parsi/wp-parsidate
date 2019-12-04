@@ -29,6 +29,10 @@ function disable_wpp()
             break;
     }
     $func = $calls[++$i]['function'];
+    
+    if (empty($dis_hook[$func]))
+        return true;
+    
     $hooks = $dis_hook[$func];
     if (empty($hooks))
         return true;
