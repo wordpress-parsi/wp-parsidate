@@ -100,12 +100,12 @@ function wpp_print_archive($results, $args)
             if ($date === $old_date) {
                 $count += $dt->count;
             } else {
-                echo_yarchive($old_date, $args['format'], $args['before'], $count, $args['show_post_count']);
+                echo_yarchive($old_date, $args['format'], $args['before'], $count, $args['show_post_count'], $args);
                 $old_date = $date;
                 $count = $dt->count;
             }
         }
-        echo_yarchive($old_date, $args['format'], $args['before'], $count, $args['show_post_count']);
+        echo_yarchive($old_date, $args['format'], $args['before'], $count, $args['show_post_count'], $args);
     } elseif ($args['type'] == 'monthly') {
         $old_date = parsidate('Ym', $results[0]->date, 'eng');
         $count = $results[0]->count;
@@ -116,12 +116,12 @@ function wpp_print_archive($results, $args)
             if ($date === $old_date) {
                 $count += $dt->count;
             } else {
-                echo_marchive($old_date, $args['format'], $args['before'], $count, $args['show_post_count']);
+                echo_marchive($old_date, $args['format'], $args['before'], $count, $args['show_post_count'], $args);
                 $old_date = $date;
                 $count = $dt->count;
             }
         }
-        echo_marchive($old_date, $args['format'], $args['before'], $count, $args['show_post_count']);
+        echo_marchive($old_date, $args['format'], $args['before'], $count, $args['show_post_count'], $args);
     } elseif ($args['type'] == 'daily') {
         foreach ($results as $row) {
             $date = parsidate('Y,m,d', $row->date, 'eng');
