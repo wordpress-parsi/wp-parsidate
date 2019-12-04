@@ -162,7 +162,7 @@ class WPP_Disable
                 'name' => __('Hook list', 'wp-parsidate'),
                 'type' => 'textarea',
                 'options' => $options,
-                'std' => 'enable',
+                'std' => '',
                 'desc' => __('Enter hook,class,function to remove parsidate filter from it', 'wp-parsidate')
             )
         );
