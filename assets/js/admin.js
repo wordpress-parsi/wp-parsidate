@@ -66,7 +66,7 @@ jQuery(document).ready(function () {
         }
         div += '</select>' +
             '<input type="text" id="jja" name="jja" value="' + day + '" size="2" maxlength="2" autocomplete="off" />,' +
-            '<input type="text" id="aaa" name="aaa" value="' + year + '" size="4" maxlength="4" autocomplete="off" /> @' +
+            '<input type="text" id="aaa" name="aaa" value="' + year + '" size="4" maxlength="4" autocomplete="off" /> در ' +
             '<input type="text" id="hha" name="hha" value="' + hour + '" size="2" maxlength="2" autocomplete="off" /> : ' +
             '<input type="text" id="mna" name="mna" value="' + minu + '" size="2" maxlength="2" autocomplete="off" />' +
             '</div>';
@@ -131,7 +131,7 @@ jQuery(document).ready(function () {
 
     function change_date() {
         var old = jQuery('#timestamp b').text();
-        var info = jQuery('#mma option:selected').text() + ' ' + jQuery('#jja').val() + ', ' + jQuery('#aaa').val() + '@ ' + jQuery('#hha').val() + ':' + jQuery('#mna').val();
+        var info = jQuery('#mma option:selected').text() + ' ' + jQuery('#jja').val() + ', ' + jQuery('#aaa').val() + ' در ' + jQuery('#hha').val() + ':' + jQuery('#mna').val();
         info = info.replace(/\d+/g, function (digit) {
             var ret = '';
             for (var i = 0, len = digit.length; i < len; i++) {
