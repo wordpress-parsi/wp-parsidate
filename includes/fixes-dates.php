@@ -16,7 +16,7 @@ if (get_locale() == 'fa_IR' && $wpp_settings['persian_date'] != 'disable') {
     add_filter('get_the_date', 'wpp_fix_post_date', 10, 2);
     add_filter('get_comment_time', 'wpp_fix_comment_time', 10, 2);
     add_filter('get_comment_date', 'wpp_fix_comment_date', 10, 2);
-    add_filter('get_post_modified_time', 'wpp_fix_post_modified_time', 10, 3);
+    //add_filter('get_post_modified_time', 'wpp_fix_post_modified_time', 10, 3);
     add_filter('date_i18n', 'wpp_fix_i18n', 10, 4);
     add_filter('wp_date', 'wpp_fix_i18n', 10, 4);
 }
