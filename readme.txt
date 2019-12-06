@@ -1,10 +1,10 @@
 === Parsi Date ===
-Contributors: lord_viper, man4toman, parselearn, alirdn, saeedfard
-Donate link: http://forum.wp-parsi.com/
+Contributors: lord_viper, man4toman, parselearn, alirdn, saeedfard, iehsanir
+Donate link: https://wp-parsi.com/support/
 Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl, gutenberg
-Requires at least: 5.0.0
-Tested up to: 5.0.3
-Stable tag: 3.0.1
+Requires at least: 5.3
+Tested up to: 5.3
+Stable tag: 3.0.3
 
 Persian date support for WordPress
 
@@ -43,6 +43,19 @@ List of some features:
 4. 'Jalali Date Calender' in action
 
 == Changelog ==
+
+= 3.0.3 =
+* Fix widgets fatal errors
+* Fix get_post_modified_time output
+* Replace @ with persian character in edit posts
+* Fix notice in disable section
+
+= 3.0.2 =
+* Now we support WordPress 5.3!
+* Replace/add wp_date instead old function
+* Small fix in Woocommerce dates
+* Fix date in media files
+* All core codes cleaned and beautified
 
 = 3.0.1 =
 * The Woocommerce hook has been temporarily disabled
