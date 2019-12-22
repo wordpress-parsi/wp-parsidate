@@ -170,7 +170,8 @@ function wpp_pre_get_posts($query)
     $out = false;
     $pd = bn_parsidate::getInstance();
     if (isset($permalink['name'])) {
-        $var = $wpdb->get_var("SELECT post_date FROM {$wpdb->prefix}posts WHERE post_name='{$permalink['name']}' AND post_type!='attachment' ORDER BY id");
+	    $post_type_condition = isset( $query->query['post_type'] ) ? "AND post_type = '" . $query->query['post_type'] . "'" : "";
+	    $var = $wpdb->get_var("SELECT post_date FROM {$wpdb->prefix}posts WHERE post_name='{$permalink['name']}' $post_type_condition ORDER BY id");
         $per = parsidate('Y-m-d', $var, 'eng');
         //update_option('options', $per );
         $per = explode('-', $per);
