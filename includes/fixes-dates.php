@@ -10,10 +10,10 @@
 global $wpp_settings;
 
 if (get_locale() == 'fa_IR' && $wpp_settings['persian_date'] != 'disable') {
-    // add_filter('the_time', 'wpp_fix_post_time', 10, 2); // no need, instead we filter `get_the_time`
-    // add_filter('the_date', 'wpp_fix_post_date', 10, 2); // no need, instead we filter `get_the_date`
-    add_filter('get_the_time', 'wpp_fix_get_the_time', 10, 3);
-    add_filter('get_the_date', 'wpp_fix_get_the_date', 10, 3);
+    add_filter('the_time', 'wpp_fix_post_time', 10, 2);
+    add_filter('the_date', 'wpp_fix_post_date', 10, 2);
+    add_filter('get_the_time', 'wpp_fix_post_date', 10, 2);
+    add_filter('get_the_date', 'wpp_fix_post_date', 10, 2);
     add_filter('get_comment_time', 'wpp_fix_comment_time', 10, 2);
     add_filter('get_comment_date', 'wpp_fix_comment_date', 10, 2);
     //add_filter('get_post_modified_time', 'wpp_fix_post_modified_time', 10, 3);
@@ -47,67 +47,6 @@ function wpp_fix_post_date($time, $format = '')
         return date($format, strtotime($post->post_modified));
 
     return parsidate($format, $post->post_date, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
-}
-
-/**
- * Filters the `get_the_date` hook in order to convert post date into Jalali.
- *
- * @param string $the_date The formatted date.
- * @param string $d PHP date format. Defaults to 'date_format' option if not
- *                  specified.
- * @param int|WP_Post $post The post object or ID.
- *
- * @return          string Formatted date
- */
-function wpp_fix_get_the_date($the_date, $d, $post)
-{
-    global $wpp_settings;
-
-    if (!disable_wpp())
-        return $the_date;
-
-    $post = get_post( $post );
-
-    if ( ! $post ) {
-        return $the_date;
-    }
-
-    if ( '' == $d ) {
-        $d = get_option('date_format');
-    }
-
-    return parsidate($d, $post->post_date, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
-}
-
-/**
- * Filters the `get_the_time` hook in order to convert post time into Jalali.
- *
- * @param string $the_time The formatted time.
- * @param string $d Format to use for retrieving the time the post was written.
- *                  Accepts 'G', 'U', or php date format value specified in
- *                  'time_format' option. Default empty.
- * @param int|WP_Post $post WP_Post object or ID.
- *
- * @return          string Formatted time
- */
-function wpp_fix_get_the_time($the_time, $d, $post)
-{
-    global $wpp_settings;
-
-    if (!disable_wpp())
-        return $the_time;
-
-    $post = get_post( $post );
-
-    if ( ! $post ) {
-        return $the_time;
-    }
-
-    if ( '' == $d ) {
-        $d = get_option('time_format');
-    }
-
-    return parsidate($d, $post->post_date, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
 
 /**
