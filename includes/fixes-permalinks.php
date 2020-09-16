@@ -278,7 +278,7 @@ function wpp_permalink($perma, $post, $leavename = false)
     }
 
     $permalink = get_option('permalink_structure');
-    preg_match_all('/%([^\/]*)%/', $permalink, $rewriteCode);
+    preg_match_all('%\%([^\%]*)\%%', $permalink, $rewriteCode);
     $rewriteCode = $rewriteCode[0];
     if ('' != $permalink && !in_array($post->post_status, array('draft', 'pending', 'auto-draft'))) {
         if ($leavename) {
