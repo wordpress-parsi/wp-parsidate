@@ -169,7 +169,7 @@ function wpp_pre_get_posts($query)
 
     $out = false;
     $pd = bn_parsidate::getInstance();
-    if (isset($permalink['name'])) {
+    if (!empty($permalink['name'])) {
 	    $post_type_condition = isset( $query->query['post_type'] ) ? "AND post_type = '" . $query->query['post_type'] . "'" : "";
 	    $var = $wpdb->get_var("SELECT post_date FROM {$wpdb->prefix}posts WHERE post_name='{$permalink['name']}' $post_type_condition ORDER BY id");
         $per = parsidate('Y-m-d', $var, 'eng');
@@ -186,7 +186,7 @@ function wpp_pre_get_posts($query)
         if ($out && !empty($day) && $day != $per[2]) {
             $out = false;
         }
-    } elseif (isset($permalink['post_id'])) {
+    } elseif (!empty($permalink['post_id'])) {
         $out = true;
         $var = $wpdb->get_var("SELECT post_date FROM {$wpdb->prefix}posts WHERE ID={$permalink['post_id']}");
     } elseif (!empty($year) && !empty($monthnum) && !empty($day)) {
