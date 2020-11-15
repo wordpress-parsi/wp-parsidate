@@ -184,3 +184,40 @@ function wpp_dismiss_notice_action()
         update_option('wpp_dismissed', true);
     }
 }
+
+/**
+ * parsidate_check_format()
+ * checks format for iso definitions
+ *
+ * @param  string  $format
+ *
+ * @return boolean
+ */
+function parsidate_check_format( $format ) {
+	return in_array( $format, array(
+		'Z', // Timezone offset in seconds // -43200 through 50400
+		'T', // Timezone abbreviation // Examples: EST, MDT
+		'O', // Difference to Greenwich time (GMT) in hours // Example: +0200
+		'P', // Difference to Greenwich time (GMT) with colon between hours and minutes // Example: +02:00
+		'U', // Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)
+		'u', // Microseconds // Example: 654321
+		'e', // Timezone identifier // Examples: UTC, GMT, Atlantic/Azores
+		'r', // RFC 2822 formatted date // Example: Thu, 21 Dec 2000 16:01:07 +0200
+		'c', // ISO 8601 date // 2004-02-12T15:19:21+00:00 // 'Y-m-d\TH:i:s\Z'
+		'G', // 24-hour format of an hour without leading zeros // 0 through 23
+		'I', // Whether or not the date is in daylight saving time // 1 if Daylight Saving Time, 0 otherwise.
+
+		// Commented this lines, because user/system want to convert these formats.
+		/*'Y-m-d_H-i-s',
+		'Y-m-d_G-i-s',
+		'Y-m-d H:i:s',
+		'Y-m-d G:i:s',
+		'd-M-Y H:i',*/
+
+		DATE_W3C, // eq `c`
+		DATE_ISO8601, // eq `c`
+		DATE_RFC2822, // eq `r`
+		'Y-m-d\TH:i:s+00:00', // eq `DATE_W3C` @SEE: http://jochenhebbrecht.be/site/node/761
+		'Y-m-d\TH:i:sP',
+	) );
+}
