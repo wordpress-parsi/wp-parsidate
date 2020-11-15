@@ -63,7 +63,7 @@ function wpp_fix_get_the_date($the_date, $d, $post)
 {
     global $wpp_settings;
 
-    if (!disable_wpp())
+    if ( !disable_wpp() || parsidate_check_format( $d ) )
         return $the_date;
 
     $post = get_post( $post );
@@ -94,7 +94,7 @@ function wpp_fix_get_the_time($the_time, $d, $post)
 {
     global $wpp_settings;
 
-    if (!disable_wpp())
+    if ( !disable_wpp() || parsidate_check_format( $d ) )
         return $the_time;
 
     $post = get_post( $post );
@@ -173,7 +173,7 @@ function wpp_fix_comment_time($time, $format = '')
     if (empty($format)) {
         $format = get_option('time_format');
     }
-    if (!disable_wpp())
+    if ( !disable_wpp() || parsidate_check_format( $format ) )
         return date($format, strtotime($comment->comment_date));
     return parsidate($format, $comment->comment_date, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
@@ -197,7 +197,7 @@ function wpp_fix_comment_date($time, $format = '')
     if (empty($format)) {
         $format = get_option('date_format');
     }
-    if (!disable_wpp())
+    if ( !disable_wpp() || parsidate_check_format( $format ) )
         return date($format, strtotime($comment->comment_date));
     return parsidate($format, $comment->comment_date, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
@@ -219,8 +219,8 @@ function wpp_fix_i18n($date, $format, $timestamp, $gmt)
     global $wpp_settings, $post;
     $post_id = !empty($post) ? $post->ID : null;
 
-    if (!disable_wpp())
-        return $format;
+    if ( !disable_wpp() || parsidate_check_format( $format ))
+        return $date;
 
     if ($post_id != null && get_post_type($post_id) == 'shop_order' && isset($_GET['post'])) // TODO: Remove after implement convert date for woocommerce
         return $date;
@@ -233,7 +233,7 @@ function wpp_fix_wp_date($date, $format, $timestamp, $timezone)
     global $wpp_settings;
 
     if (!disable_wpp())
-        return $format;
+        return $date;
 
     return parsidate($format, $timestamp, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
 }
