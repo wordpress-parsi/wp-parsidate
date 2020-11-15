@@ -89,7 +89,7 @@ final class WP_Parsidate
         }
 
         if (!defined('WP_PARSI_VER')) {
-            define('WP_PARSI_VER', '2.2');
+            define('WP_PARSI_VER', '3.0.4');
         }
     }
 
