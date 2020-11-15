@@ -21,7 +21,7 @@ class parsidate_calendar extends WP_Widget
         global $wpp_settings;
         ?>
         <p style="text-align:right; direction:rtl">
-            <label><?php _e('Title:', 'wp-parsidate') ?></label>
+            <label for="<?php echo $this->get_field_id('parsidate_calendar_title'); ?>"><?php _e('Title:', 'wp-parsidate') ?></label>
             <input style="width: 200px;" id="<?php echo $this->get_field_id('parsidate_calendar_title'); ?>"
                    name="<?php echo $this->get_field_name('parsidate_calendar_title'); ?>" type="text"
                    value="<?php echo(empty($instance['parsidate_calendar_title']) ? __('Jalali Date Calender', 'wp-parsidate') : $instance['parsidate_calendar_title']) ?>"/>
