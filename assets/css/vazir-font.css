@@ -1,0 +1,71 @@
+@font-face {
+  font-family: Vazir;
+  src: url("../fonts/Vazir-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: 'Vazir';
+  src: url('../fonts/Vazir-Bold.woff2') format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap
+}
+
+body {
+  font-family: Vazir, tahoma, arial !important
+}
+
+body#tinymce.wp-editor,
+.rtl .editor-styles-wrapper,
+.rtl .edit-post-visual-editor *,
+.rtl .components-notice__content,
+#wpseo_meta *,
+.edit-post-sidebar *,
+#wpbody, .woocommerce-layout *,
+#tinymce,
+.rtl h1,
+.rtl h2,
+.rtl h3,
+.rtl h4,
+.rtl h5,
+.rtl h6,
+.rtl .media-frame,
+.rtl .media-frame .search,
+.rtl .media-frame input[type="email"],
+.rtl .media-frame input[type="number"],
+.rtl .media-frame input[type="password"],
+.rtl .media-frame input[type="search"],
+.rtl .media-frame input[type="tel"],
+.rtl .media-frame input[type="text"],
+.rtl .media-frame input[type="url"],
+.rtl .media-frame select,
+.rtl .media-frame textarea,
+.rtl .media-modal{
+  font-family: Vazir, tahoma, arial
+}
+
+.edit-post-visual-editor .components-button {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif !important;
+  font-size: 13px;
+}
+
+.dashicons,
+.dashicons-before:before,
+.wpseo-metabox-menu ul li span.dashicons:before{
+  font-family: dashicons !important;
+}
+
+.wooocommerce-task-card__header p,
+.woocommerce-summary__item-label p,
+.components-card__header p,
+.rtl .quicktags-toolbar input,
+.rtl .wp-switch-editor{
+  font-family: Vazir, tahoma, arial !important
+}
+
+#tinymce {
+  font-size: 12px;
+}

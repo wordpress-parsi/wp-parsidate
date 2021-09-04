@@ -1,4 +1,7 @@
 <?php
+
+defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
+
 /**
  * Parsi date main conversation class
  *
@@ -6,12 +9,12 @@
  * @package             WP-Parsidate
  * @subpackage          DateConversation
  */
-
 /*Special thanks to :
 Reza Gholampanahi for convert function*/
 
 class bn_parsidate {
 	protected static $instance;
+
 	public $persian_month_names = array(
 		'',
 		'فروردین',
@@ -27,6 +30,7 @@ class bn_parsidate {
 		'بهمن',
 		'اسفند'
 	);
+
 	public $persian_short_month_names = array(
 		'',
 		'فروردین',
@@ -42,11 +46,15 @@ class bn_parsidate {
 		'بهمن',
 		'اسفند'
 	);
+
 	public $sesson = array( 'بهار', 'تابستان', 'پاییز', 'زمستان' );
+
 	public $persian_day_names = array( 'یکشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه' );
 	public $persian_day_small = array( 'ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش' );
+
 	public $j_days_in_month = array( 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29 );
 	private $j_days_sum_month = array( 0, 0, 31, 62, 93, 124, 155, 186, 216, 246, 276, 306, 336 );
+
 	private $g_days_sum_month = array( 0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 );
 
 	/**
@@ -59,7 +67,7 @@ class bn_parsidate {
 	 * bn_parsidate::IsPerLeapYear()
 	 * check year is leap
 	 *
-	 * @param  mixed  $year
+	 * @param mixed $year
 	 *
 	 * @return boolean
 	 */
@@ -77,39 +85,40 @@ class bn_parsidate {
 	 * bn_parsidate::IsLeapYear()
 	 * check year is leap
 	 *
-	 * @param  mixed  $year
+	 * @param mixed $year
 	 *
 	 * @return boolean
 	 */
 	private function IsLeapYear( $year ) {
 		if ( ( ( $year % 4 ) == 0 && ( $year % 100 ) != 0 ) || ( ( $year % 400 ) == 0 ) && ( $year % 100 ) == 0 ) {
 			return true;
-		} else {
-			return false;
 		}
+
+		return false;
 	}
 
 	/**
 	 * bn_parsidate::persian_date()
 	 * convert gregorian datetime to persian datetime
 	 *
-	 * @param  mixed  $format
-	 * @param  string  $date
-	 * @param  string  $lang
+	 * @param mixed $format
+	 * @param string $date
+	 * @param string $lang
 	 *
 	 * @return string
 	 */
 	public function persian_date( $format, $date = 'now', $lang = 'per' ) {
-
 		$j_days_in_month = array( 31, 62, 93, 124, 155, 186, 216, 246, 276, 306, 336, 365 );
 		$timestamp       = is_numeric( $date ) && (int) $date == $date ? $date : strtotime( $date );
 		$date            = getdate( $timestamp );
-		list( $date['year'], $date['mon'], $date['mday'] ) = self::gregorian_to_persian( $date['year'], $date['mon'],
-			$date['mday'] );
+
+		list( $date['year'], $date['mon'], $date['mday'] ) = self::gregorian_to_persian( $date['year'], $date['mon'], $date['mday'] );
+
 		$date['mon']  = (int) $date['mon'];
 		$date['mday'] = (int) $date['mday'];
 		$out          = '';
 		$len          = strlen( $format );
+
 		for ( $i = 0; $i < $len; $i ++ ) {
 			switch ( $format[ $i ] ) {
 				//day
@@ -162,13 +171,13 @@ class bn_parsidate {
 					}
 					break;
 				case'F':
-					$out .= $this->persian_month_names[ (int) $date['mon'] ];
+					$out .= $this->persian_month_names[ $date['mon'] ];
 					break;
 				case'm':
 					$out .= ( $date['mon'] < 10 ) ? '0' . $date['mon'] : $date['mon'];
 					break;
 				case'M':
-					$out .= $this->persian_short_month_names[ (int) $date['mon'] ];
+					$out .= $this->persian_short_month_names[ $date['mon'] ];
 					break;
 				case'n':
 					$out .= $date['mon'];
@@ -180,7 +189,7 @@ class bn_parsidate {
 					if ( $date['mon'] == 12 && self::IsPerLeapYear( $date['year'] ) ) {
 						$out .= 30;
 					} else {
-						$out .= $this->j_days_in_month[ (int) $date['mon'] - 1 ];
+						$out .= $this->j_days_in_month[ $date['mon'] - 1 ];
 					}
 					break;
 				//year
@@ -228,7 +237,7 @@ class bn_parsidate {
 					$out = $date['year'] . '/' . $date['mon'] . '/' . $date['mday'] . ' ' . $date['hours'] . ':' . ( ( $date['minutes'] < 10 ) ? '0' . $date['minutes'] : $date['minutes'] ) . ':' . ( ( $date['seconds'] < 10 ) ? '0' . $date['seconds'] : $date['seconds'] );//2004-02-12T15:19:21+00:00
 					break;
 				case'r':
-					$out = $this->persian_day_names[ $date['wday'] ] . ',' . $date['mday'] . ' ' . $this->persian_month_names[ (int) $date['mon'] ] . ' ' . $date['year'] . ' ' . $date['hours'] . ':' . ( ( $date['minutes'] < 10 ) ? '0' . $date['minutes'] : $date['minutes'] ) . ':' . ( ( $date['seconds'] < 10 ) ? '0' . $date['seconds'] : $date['seconds'] );//Thu, 21 Dec 2000 16:01:07
+					$out = $this->persian_day_names[ $date['wday'] ] . ',' . $date['mday'] . ' ' . $this->persian_month_names[ $date['mon'] ] . ' ' . $date['year'] . ' ' . $date['hours'] . ':' . ( ( $date['minutes'] < 10 ) ? '0' . $date['minutes'] : $date['minutes'] ) . ':' . ( ( $date['seconds'] < 10 ) ? '0' . $date['seconds'] : $date['seconds'] );//Thu, 21 Dec 2000 16:01:07
 					break;
 				case'U':
 					$out = $timestamp;
@@ -240,7 +249,6 @@ class bn_parsidate {
 				case'P':
 				case'T':
 				case'Z':
-				case'timestamp':
 				case'u':
 					break;
 				default:
@@ -259,25 +267,29 @@ class bn_parsidate {
 	 * bn_parsidate::gregorian_to_persian()
 	 * convert gregorian date to persian date
 	 *
-	 * @param  mixed  $gy
-	 * @param  mixed  $gm
-	 * @param  mixed  $gd
+	 * @param mixed $gy
+	 * @param mixed $gm
+	 * @param mixed $gd
 	 *
 	 * @return array
 	 */
 	function gregorian_to_persian( $gy, $gm, $gd ) {
 		$dayOfYear = $this->g_days_sum_month[ (int) $gm ] + $gd;
+
 		if ( self::IsLeapYear( $gy ) and $gm > 2 ) {
 			$dayOfYear ++;
 		}
+
 		$d_33 = (int) ( ( ( $gy - 16 ) % 132 ) * 0.0305 );
 		$leap = $gy % 4;
 		$a    = ( ( $d_33 == 1 or $d_33 == 2 ) and ( $d_33 == $leap or $leap == 1 ) ) ? 78 : ( ( $d_33 == 3 and $leap == 0 ) ? 80 : 79 );
 		$b    = ( $d_33 == 3 or $d_33 < ( $leap - 1 ) or $leap == 0 ) ? 286 : 287;
+
 		if ( (int) ( ( $gy - 10 ) / 63 ) == 30 ) {
 			$b --;
 			$a ++;
 		}
+
 		if ( $dayOfYear > $a ) {
 			$jy = $gy - 621;
 			$jd = $dayOfYear - $a;
@@ -285,9 +297,11 @@ class bn_parsidate {
 			$jy = $gy - 622;
 			$jd = $dayOfYear + $b;
 		}
+
 		for ( $i = 0; $i < 11 and $jd > $this->j_days_in_month[ $i ]; $i ++ ) {
 			$jd -= $this->j_days_in_month[ $i ];
 		}
+
 		$jm = ++ $i;
 
 		return array( $jy, strlen( $jm ) == 1 ? '0' . $jm : $jm, strlen( $jd ) == 1 ? '0' . $jd : $jd );
@@ -296,7 +310,7 @@ class bn_parsidate {
 	/**
 	 * Get day of the week shamsi/jalali
 	 *
-	 * @param  int  $wday
+	 * @param int $wday
 	 *
 	 * @return       int
 	 * @author       Parsa Kafi
@@ -310,8 +324,8 @@ class bn_parsidate {
 	 * bn_parsidate::trim_number()
 	 * convert english number to persian number
 	 *
-	 * @param  mixed  $num
-	 * @param  string  $sp
+	 * @param mixed $num
+	 * @param string $sp
 	 *
 	 * @return string
 	 */
@@ -341,28 +355,28 @@ class bn_parsidate {
 	 * bn_parsidate::gregorian_date()
 	 * convert persian datetime to gregorian datetime
 	 *
-	 * @param  mixed  $format
-	 * @param  mixed  $persiandate
+	 * @param mixed $format
+	 * @param mixed $persiandate
 	 *
-	 * @return mixed
+	 * @return              false|string
 	 */
 	public function gregorian_date( $format, $persiandate ) {
 		preg_match_all( '!\d+!', $persiandate, $matches );
+
 		$matches = $matches[0];
+
 		list( $year, $mon, $day ) = self::persian_to_gregorian( $matches[0], $matches[1], $matches[2] );
 
-		return date( $format,
-			mktime( ( isset( $matches[3] ) ? $matches[3] : 0 ), ( isset( $matches[4] ) ? $matches[4] : 0 ),
-				( isset( $matches[5] ) ? $matches[5] : 0 ), $mon, $day, $year ) );
+		return date( $format, mktime( ( isset( $matches[3] ) ? $matches[3] : 0 ), ( isset( $matches[4] ) ? $matches[4] : 0 ), ( isset( $matches[5] ) ? $matches[5] : 0 ), $mon, $day, $year ) );
 	}
 
 	/**
 	 * bn_parsidate::persian_to_gregorian()
 	 * convert persian date to gregorian date
 	 *
-	 * @param  mixed  $jy
-	 * @param  mixed  $jm
-	 * @param  mixed  $jd
+	 * @param mixed $jy
+	 * @param mixed $jm
+	 * @param mixed $jd
 	 *
 	 * @return array
 	 */
@@ -372,10 +386,12 @@ class bn_parsidate {
 		$d33  = (int) ( ( ( $jy - 55 ) % 132 ) * .0305 );
 		$a    = ( $d33 != 3 and $d4 <= $d33 ) ? 287 : 286;
 		$b    = ( ( $d33 == 1 or $d33 == 2 ) and ( $d33 == $d4 or $d4 == 1 ) ) ? 78 : ( ( $d33 == 3 and $d4 == 0 ) ? 80 : 79 );
+
 		if ( (int) ( ( $jy - 19 ) / 63 ) == 20 ) {
 			$a --;
 			$b ++;
 		}
+
 		if ( $doyj <= $a ) {
 			$gy = $jy + 621;
 			$gd = $doyj + $b;
@@ -383,10 +399,12 @@ class bn_parsidate {
 			$gy = $jy + 622;
 			$gd = $doyj - $a;
 		}
+
 		foreach ( array( 0, 31, ( $gy % 4 == 0 ) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ) as $gm => $days ) {
 			if ( $gd <= $days ) {
 				break;
 			}
+
 			$gd -= $days;
 		}
 
@@ -394,38 +412,32 @@ class bn_parsidate {
 	}
 }
 
-/*
-* parsidate function
-*/
 /**
- * parsidate()
  * convert gregorian datetime to persian datetime
  *
- * @param  mixed  $input
- * @param  string  $datetime
- * @param  string  $lang
+ * @param mixed $input
+ * @param string $datetime
+ * @param string $lang
  *
  * @return string
  */
 function parsidate( $input, $datetime = 'now', $lang = 'per' ) {
 	$bndate = bn_parsidate::getInstance();
-	$bndate = $bndate->persian_date( $input, $datetime, $lang );
 
-	return $bndate;
+	return $bndate->persian_date( $input, $datetime, $lang );
 }
 
 /**
  * gregdate()
  * convert persian datetime to gregorian datetime
  *
- * @param  mixed  $input
- * @param  mixed  $datetime
+ * @param mixed $input
+ * @param mixed $datetime
  *
- * @return datetime
+ * @return false|string
  */
 function gregdate( $input, $datetime ) {
 	$bndate = bn_parsidate::getInstance();
-	$bndate = $bndate->gregorian_date( $input, $datetime );
 
-	return $bndate;
+	return $bndate->gregorian_date( $input, $datetime );
 }
