@@ -135,11 +135,11 @@ class WPP_Disable {
 	private function __construct() {
 		add_filter( 'wpp_plugins_compatibility_settings', array( $this, 'add_settings' ) );
 
-		if ( !! wpp_is_active( 'dis_prices' )  ) {
+		if ( ! wpp_is_active( 'dis_prices' )  ) {
 			add_filter( 'dis_rial_currency_filter_after', 'per_number', 10, 2 );
 		}
 
-		if ( !! wpp_is_active( 'dis_rial_fix' )  ) {
+		if ( ! wpp_is_active( 'dis_rial_fix' )  ) {
 			add_filter( 'dis_rial_currency_filter_after', array( $this, 'rial_fix' ), 10, 2 );
 		}
 	}
