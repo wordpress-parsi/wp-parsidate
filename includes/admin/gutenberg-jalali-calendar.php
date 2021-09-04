@@ -56,6 +56,6 @@ if ( ! function_exists( 'wpp_gutenberg_jalali_calendar_editor_assets' ) ) {
 }
 
 // Hook: Editor assets.
-if ( version_compare( get_bloginfo( 'version' ), '5.0.0', '>=' ) && ! empty( $wpp_options['persian_date'] ) ) {
+if ( version_compare( get_bloginfo( 'version' ), '5.0.0', '>=' ) && wpp_is_active( 'persian_date' ) ) {
 	add_action( 'enqueue_block_editor_assets', 'wpp_gutenberg_jalali_calendar_editor_assets' );
 }
