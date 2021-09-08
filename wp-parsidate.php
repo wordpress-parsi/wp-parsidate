@@ -1,7 +1,9 @@
 <?php
+defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
+
 /**
  * Plugin Name: WP-Parsidate
- * Version: 3.0.3
+ * Version: 4.0.0
  * Plugin URI: http://forum.wp-parsi.com/
  * Description: Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: posts, comments, pages, archives, search, categories, permalinks and all admin sections and TinyMce editor, lists, quick editor. This package has Jalali archive widget.
  * Author: WP-Parsi Team
@@ -43,167 +45,198 @@
  * @author              Morteza Geransayeh
  * @author              Alireza Dabiri Nejad
  * @link                http://wp-parsi.com/
- * @version             3.0.1
+ * @version             4.0.0
  * @license             http://www.gnu.org/licenses/gpl-3.0.html GNU Public License v3.0
  * @package             WP-Parsidate
  * @subpackage          Core
  */
 
+/**
+ *
+ */
+final class WP_Parsidate {
+	/**
+	 * @var WP_Parsidate Class instance
+	 */
+	public static $instance = null;
 
-if (!defined('ABSPATH')) exit; //No direct access allowed
+	private function __construct() {
+		$this->define_const();
+		$this->setup_vars();
+		$this->include_files();
+		
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'parsi_settings_link' ) );
+		add_action( 'widgets_init', array( $this, 'register_widget' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'wpp_load_vazir_font_in_admin_area' ) );
+	}
 
-final class WP_Parsidate
-{
-    /**
-     * @var WP_Parsidate Class instance
-     */
-    public static $instance = null;
+	/**
+	 * Sets up constants for plugin
+	 *
+	 * @return          void
+	 * @since           2.0
+	 */
+	private function define_const() {
+		if ( ! defined( 'WP_PARSI_ROOT' ) ) {
+			define( 'WP_PARSI_ROOT', __FILE__ );
+		}
 
-    private function __construct()
-    {
-        $this->define_const();
-        $this->setup_vars();
-        $this->include_files();
-        add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'parsi_settings_link'));
-        add_action('widgets_init', array($this, 'register_widget'));
-    }
+		if ( ! defined( 'WP_PARSI_DIR' ) ) {
+			define( 'WP_PARSI_DIR', plugin_dir_path( WP_PARSI_ROOT ) );
+		}
 
-    /**
-     * Sets up constants for plugin
-     *
-     * @return          void
-     * @since           2.0
-     */
-    private function define_const()
-    {
-        if (!defined('WP_PARSI_ROOT')) {
-            define('WP_PARSI_ROOT', __FILE__);
-        }
+		if ( ! defined( 'WP_PARSI_URL' ) ) {
+			define( 'WP_PARSI_URL', plugin_dir_url( WP_PARSI_ROOT ) );
+		}
 
-        if (!defined('WP_PARSI_DIR')) {
-            define('WP_PARSI_DIR', plugin_dir_path(WP_PARSI_ROOT));
-        }
+		if ( ! defined( 'WP_PARSI_VER' ) ) {
+			define( 'WP_PARSI_VER', '4.0.0' );
+		}
+	}
 
-        if (!defined('WP_PARSI_URL')) {
-            define('WP_PARSI_URL', plugin_dir_url(WP_PARSI_ROOT));
-        }
+	/**
+	 * Sets up global variables
+	 *
+	 * @return          void
+	 * @since           2.0
+	 */
+	private function setup_vars() {
+		global $persian_month_names;
+		$persian_month_names = array(
+			'',
+			'فروردین',
+			'اردیبهشت',
+			'خرداد',
+			'تیر',
+			'مرداد',
+			'شهریور',
+			'مهر',
+			'آبان',
+			'آذر',
+			'دی',
+			'بهمن',
+			'اسفند'
+		);
+	}
 
-        if (!defined('WP_PARSI_VER')) {
-            define('WP_PARSI_VER', '3.0.4');
-        }
-    }
+	/**
+	 * Includes files for plugin
+	 *
+	 * @return         void
+	 * @since          2.0
+	 */
+	public function include_files() {
+		require_once( WP_PARSI_DIR . 'includes/settings.php' );
 
-    /**
-     * Sets up global variables
-     *
-     * @return          void
-     * @since           2.0
-     */
-    private function setup_vars()
-    {
-        global $persian_month_names;
-        $persian_month_names = array(
-            '',
-            'فروردین',
-            'اردیبهشت',
-            'خرداد',
-            'تیر',
-            'مرداد',
-            'شهریور',
-            'مهر',
-            'آبان',
-            'آذر',
-            'دی',
-            'بهمن',
-            'اسفند'
-        );
-    }
+		global $wpp_settings;
 
-    /**
-     * Includes files for plugin
-     *
-     * @return         void
-     * @since          2.0
-     */
-    public function include_files()
-    {
-        require_once(WP_PARSI_DIR . 'includes/settings.php');
-        global $wpp_settings;
-        $wpp_settings = wp_parsi_get_settings();
+		$wpp_settings = wp_parsi_get_settings();
+		$files        = array(
+			'parsidate',
+			'general',
+			'fixes-archive',
+			'fixes-permalinks',
+			'fixes-dates',
+			'fixes-misc',
+			'admin/styles-fix',
+			'admin/gutenberg-jalali-calendar',
+			'admin/lists-fix',
+			'admin/widgets',
+			'fixes-calendar',
+			'fixes-archives',
+			'widget/widget_archive',
+			'widget/widget_calendar'
+		);
 
-        $files = array(
-            'parsidate',
-            'general',
-            'fixes-archive',
-            'fixes-permalinks',
-            'fixes-dates',
-            'fixes-misc',
-            'admin/styles-fix',
-            //'admin/datepicker-rtl',
-            'admin/gutenberg-jalali-calendar',
-            'admin/lists-fix',
-            'admin/widgets',
-            'fixes-calendar',
-            'fixes-archives',
-            'plugins/woocommerce',
-            //'plugins/fixes-woo',
-            'plugins/edd',
-            'plugins/disable',
-            'widget/widget_archive',
-            'widget/widget_calendar'
-        );
+		if ( class_exists( 'WooCommerce' ) ) {
+			$files[] = 'plugins/woocommerce';
+		}
 
-        foreach ($files as $file) {
-            require_once(WP_PARSI_DIR . 'includes/' . $file . '.php');
-        }
+		if ( class_exists( 'Easy_Digital_Downloads' ) ) {
+			$files[] = 'plugins/edd';
+		}
 
-        if (get_locale() == 'fa_IR') {
-            load_textdomain('wp-parsidate', WP_PARSI_DIR . 'languages/fa_IR.mo');
-        }
-    }
+		if ( class_exists( 'ACF' ) ) {
+			$files[] = 'plugins/acf';
+		}
 
-    /**
-     * Returns an instance of WP_Parsidate class, makes instance if not exists
-     *
-     * @return          WP_Parsidate Instance of WP_Parsidate
-     * @since           2.0
-     */
-    public static function get_instance()
-    {
-        if (self::$instance == null) {
-            self::$instance = new WP_Parsidate();
-        }
+		$files[] = 'plugins/disable';
 
-        return self::$instance;
-    }
+		foreach ( $files as $file ) {
+			require_once( WP_PARSI_DIR . 'includes/' . $file . '.php' );
+		}
 
-    /**
-     * Add Setting Link To Install Plugin
-     *
-     * @param array $links
-     *
-     * @return          array
-     */
-    public static function parsi_settings_link($links)
-    {
-        $settings_link = array('<a href="' . menu_page_url('wp-parsi-settings', false) . '">' . __('settings', 'wp-parsidate') . '</a>');
+		if ( get_locale() == 'fa_IR' ) {
+			load_textdomain( 'wp-parsidate', WP_PARSI_DIR . 'languages/fa_IR.mo' );
+		}
+	}
 
-        return array_merge($links, $settings_link);
-    }
+	/**
+	 * Returns an instance of WP_Parsidate class, makes instance if not exists
+	 *
+	 * @return          WP_Parsidate Instance of WP_Parsidate
+	 * @since           2.0
+	 */
+	public static function get_instance() {
+		if ( self::$instance == null ) {
+			self::$instance = new WP_Parsidate();
+		}
 
-    /**
-     * Register Plugin Widgets
-     *
-     * @return          boolean
-     * @since           2.0
-     */
-    public function register_widget()
-    {
-        register_widget('parsidate_archive');
-        register_widget('parsidate_calendar');
+		return self::$instance;
+	}
 
-        return true;
-    }
+	/**
+	 * Add Setting Link To Install Plugin
+	 *
+	 * @param array $links
+	 *
+	 * @return          array
+	 */
+	public static function parsi_settings_link( $links ) {
+		$settings_link = array( '<a href="' . menu_page_url( 'wp-parsi-settings', false ) . '">' . __( 'settings', 'wp-parsidate' ) . '</a>' );
+
+		return array_merge( $links, $settings_link );
+	}
+
+	/**
+	 * Register Plugin Widgets
+	 *
+	 * @return          boolean
+	 * @since           2.0
+	 */
+	public function register_widget() {
+		register_widget( 'parsidate_archive' );
+		register_widget( 'parsidate_calendar' );
+
+		return true;
+	}
+
+	/**
+	 * Load vazir font in admin area
+	 *
+	 * @since           4.0.0
+	 */
+	public function wpp_load_vazir_font_in_admin_area() {
+		if ( get_locale() !== 'fa_IR' ) {
+			return;
+		}
+
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
+
+		wp_enqueue_style( 'wpp-vazir-font', WP_PARSI_URL . "assets/css/vazir-font$suffix.css", null, WP_PARSI_VER, 'all' );
+
+		add_action( 'admin_head', array( $this, 'wpp_preload_vazir_fonts' ) );
+	}
+
+	/**
+	 * Preload vazir font to achieve to high performance
+	 *
+	 * @since           4.0.0
+	 */
+	public function wpp_preload_vazir_fonts() {
+		echo '<link rel="preload" href="' . WP_PARSI_URL . 'assets/fonts/Vazir-Regular.woff2" as="font" type="font/woff2" crossorigin>' . PHP_EOL .
+		     '<link rel="preload" href="' . WP_PARSI_URL . 'assets/fonts/Vazir-Bold.woff2" as="font" type="font/woff2" crossorigin>' . PHP_EOL;
+	}
 }
 
 return WP_Parsidate::get_instance();

@@ -1,4 +1,7 @@
 <?php
+
+defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
+
 /**
  * Fixes and converts permalinks date to Jalali
  *
@@ -8,7 +11,7 @@
  */
 global $wpp_settings;
 
-if ( $wpp_settings['conv_permalinks'] == 'enable' ) {
+if ( wpp_is_active( 'conv_permalinks' ) ) {
 	add_filter( 'posts_where', 'wpp_posts_where', 10, 2 );
 	add_action( 'pre_get_posts', 'wpp_pre_get_posts' );
 	add_filter( 'post_link', 'wpp_permalink', 10, 3 );
@@ -17,18 +20,21 @@ if ( $wpp_settings['conv_permalinks'] == 'enable' ) {
 /**
  * Converts post date pointer to Jalali pointer
  *
- * @param  string  $where
- * @param  string  $wp_query
+ * @param string $where
+ * @param string $wp_query
  *
  * @return          string
  */
 function wpp_posts_where( $where, $wp_query = '' ) {
 	global $wpdb;
-	if ( empty( $wp_query ) )
-		global $wp_query;
 
-	if ( ! $wp_query->is_main_query() || empty( $wp_query->query_vars ) )
+	if ( empty( $wp_query ) ) {
+		global $wp_query;
+	}
+
+	if ( ! $wp_query->is_main_query() || empty( $wp_query->query_vars ) ) {
 		return $where;
+	}
 
 	$pd = bn_parsidate::getInstance();
 
@@ -43,32 +49,41 @@ function wpp_posts_where( $where, $wp_query = '' ) {
 	if ( ! empty( $m ) ) {
 		$len  = strlen( $m );
 		$year = substr( $m, 0, 4 );
-		if ( $len > 5 )
+
+		if ( $len > 5 ) {
 			$month = substr( $m, 4, 2 );
-		if ( $len > 7 )
+		}
+
+		if ( $len > 7 ) {
 			$day = substr( $m, 6, 2 );
-		if ( $len > 9 )
+		}
+
+		if ( $len > 9 ) {
 			$hour = substr( $m, 8, 2 );
-		if ( $len > 11 )
+		}
+		if ( $len > 11 ) {
 			$minute = substr( $m, 10, 2 );
-		if ( $len > 13 )
+		}
+
+		if ( $len > 13 ) {
 			$second = substr( $m, 12, 2 );
+		}
 	}
 
-	if ( empty( $year ) || $year > 1700 )
+	if ( empty( $year ) || $year > 1700 ) {
 		return $where;
+	}
 
-	$stamon = 1;
-	$staday = 1;
-	$stahou = '00';
-	$stamin = '00';
-	$stasec = '00';
-	$endmon = 1;
-	$endday = 1;
-	$endhou = '00';
-	$endmin = '00';
-	$endsec = '00';
-
+	$stamon  = 1;
+	$staday  = 1;
+	$stahou  = '00';
+	$stamin  = '00';
+	$stasec  = '00';
+	$endmon  = 1;
+	$endday  = 1;
+	$endhou  = '00';
+	$endmin  = '00';
+	$endsec  = '00';
 	$stayear = $year;
 	$endyear = $year + 1;
 
@@ -117,14 +132,14 @@ function wpp_posts_where( $where, $wp_query = '' ) {
 		'/MINUTE\((.*?)post_date\s*\)\s*=\s*[0-9\']*/',
 		'/SECOND\((.*?)post_date\s*\)\s*=\s*[0-9\']*/'
 	);
+
 	foreach ( $patterns as $pattern ) {
-		$where = preg_replace( $pattern, '1=1', $where );
+		$where = preg_replace( $pattern, '1 = 1', $where );
 	}
 
 	$prefixp = "{$wpdb->posts}.";
 	$prefixp = ( strpos( $where, $prefixp ) == false ) ? '' : $prefixp;
-
-	$where .= " AND {$prefixp}post_date >= '$stadate' AND {$prefixp}post_date < '$enddate' ";
+	$where   .= " AND {$prefixp}post_date >= '$stadate' AND {$prefixp}post_date < '$enddate' ";
 
 	return $where;
 }
@@ -132,9 +147,9 @@ function wpp_posts_where( $where, $wp_query = '' ) {
 /**
  * Converts post dates to Georgian dates for preventing errors
  *
- * @param  WP_Query  $query
+ * @param WP_Query $query
  *
- * @return          mixed
+ * @return          WP_Query
  */
 function wpp_pre_get_posts( $query ) {
 	global $wpdb;
@@ -144,36 +159,42 @@ function wpp_pre_get_posts( $query ) {
 	$monthnum  = '';
 	$day       = '';//start
 
-	if ( isset( $permalink['year'] ) )
+	if ( isset( $permalink['year'] ) ) {
 		$year = $permalink['year'];
+	}
 
-	if ( isset( $permalink['monthnum'] ) )
+	if ( isset( $permalink['monthnum'] ) ) {
 		$monthnum = $permalink['monthnum'];
+	}
 
-	if ( isset( $permalink['day'] ) )
+	if ( isset( $permalink['day'] ) ) {
 		$day = $permalink['day'];
+	}
 
-	if ( $year > 1700 )
+	if ( $year > 1700 ) {
 		return $query;
+	}
 
 	$out = false;
 	$pd  = bn_parsidate::getInstance();
+
 	if ( isset( $permalink['name'] ) ) {
-		$post_type_condition = isset( $query->query['post_type'] ) ? "AND post_type = '" . $query->query['post_type'] . "'" : "";
-		$var                 = $wpdb->get_var( "SELECT post_date FROM {$wpdb->prefix}posts WHERE post_name='{$permalink['name']}' $post_type_condition ORDER BY id" );
-		$per                 = parsidate( 'Y-m-d', $var, 'eng' );
-		//update_option('options', $per );
+		$var = $wpdb->get_var( "SELECT post_date FROM {$wpdb->prefix}posts WHERE post_name='{$permalink['name']}' AND post_type!='attachment' ORDER BY id" );
+		$per = parsidate( 'Y-m-d', $var, 'eng' );
 		$per = explode( '-', $per );
 		$out = true;
 
-		if ( ! empty( $year ) && $year != $per[0] )
+		if ( ! empty( $year ) && $year != $per[0] ) {
 			$out = false;
+		}
 
-		if ( $out && ! empty( $monthnum ) && $monthnum != $per[1] )
+		if ( $out && ! empty( $monthnum ) && $monthnum != $per[1] ) {
 			$out = false;
+		}
 
-		if ( $out && ! empty( $day ) && $day != $per[2] )
+		if ( $out && ! empty( $day ) && $day != $per[2] ) {
 			$out = false;
+		}
 	} elseif ( isset( $permalink['post_id'] ) ) {
 		$out = true;
 		$var = $wpdb->get_var( "SELECT post_date FROM {$wpdb->prefix}posts WHERE ID={$permalink['post_id']}" );
@@ -198,11 +219,9 @@ function wpp_pre_get_posts( $query ) {
 				'inclusive' => true,
 			),
 		);
+
 		$query->set( 'date_query', $date_query );
 
-		// commented for get year & month in calander widget
-		//        $query->set('year', '');
-		//        $query->set('monthnum', '');
 		$out = false;
 	} elseif ( ! empty( $year ) ) {
 		$stadate    = $pd->persian_to_gregorian( $year, 1, 1 );
@@ -222,24 +241,24 @@ function wpp_pre_get_posts( $query ) {
 				'inclusive' => true,
 			),
 		);
+
 		$query->set( 'date_query', $date_query );
-		// $query->set('year', '');
+
 		$out = false;
 	}
 
 	if ( $out ) {
 		preg_match_all( '!\d+!', $var, $matches );
+
 		$var = $matches[0];
 
-		if(!empty($var) and is_array($var)) {
-			$query->set( 'year', $var[0] );
-			$query->set( 'monthnum', $var[1] );
-			$query->set( 'day', $var[2] );
-		}
+		$query->set( 'year', $var[0] );
+		$query->set( 'monthnum', $var[1] );
+		$query->set( 'day', $var[2] );
+
 		$query->is_404              = false;
 		$query->query_vars['error'] = '';
-	}//else
-	//   $query->is_404 = true;
+	}
 
 	return $query;
 }
@@ -247,29 +266,35 @@ function wpp_pre_get_posts( $query ) {
 /**
  * Convert permalink structure to Jalali format
  *
- * @param  mixed  $perma
- * @param  WP_Post  $post
- * @param  bool  $leavename
+ * @param mixed $perma
+ * @param WP_Post $post
+ * @param bool $leavename
  *
  * @return          string New permalink
  */
 function wpp_permalink( $perma, $post, $leavename = false ) {
-	if ( empty( $post->ID ) )
+	if ( empty( $post->ID ) ) {
 		return false;
+	}
 
-	if ( $post->post_type == 'page' || $post->post_status == 'static' )
+	if ( $post->post_type == 'page' || $post->post_status == 'static' ) {
 		return get_page_link( $post->ID );
-	elseif ( $post->post_type == 'attachment' )
+	} elseif ( $post->post_type == 'attachment' ) {
 		return get_attachment_link( $post->ID );
-	elseif ( in_array( $post->post_type, get_post_types( array( '_builtin' => false ) ) ) )
+	} elseif ( in_array( $post->post_type, get_post_types( array( '_builtin' => false ) ) ) ) {
 		return get_post_permalink( $post->ID );
+	}
 
 	$permalink = get_option( 'permalink_structure' );
+
 	preg_match_all( '%\%([^\%]*)\%%', $permalink, $rewriteCode );
+
 	$rewriteCode = $rewriteCode[0];
+
 	if ( '' != $permalink && ! in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) ) ) {
-		if ( $leavename )
+		if ( $leavename ) {
 			$rewriteCode = array_diff( $rewriteCode, array( '%postname%', '%pagename%' ) );
+		}
 
 		$date = explode( ' ', parsidate( 'Y m d H i s', $post->post_date, 'eng' ) );
 		$out  = array();
@@ -302,11 +327,10 @@ function wpp_permalink( $perma, $post, $leavename = false ) {
 					break;
 				case '%category%':
 					$category = '';
-
 					/**
 					 * This code from wp-includes/link-template.php:171
 					 * */
-					$cats     = get_the_category( $post->ID );
+					$cats = get_the_category( $post->ID );
 					if ( $cats ) {
 						$cats = wp_list_sort(
 							$cats,
@@ -318,52 +342,32 @@ function wpp_permalink( $perma, $post, $leavename = false ) {
 						/**
 						 * Filters the category that gets used in the %category% permalink token.
 						 *
-						 * @param  WP_Term  $cat  The category to use in the permalink.
-						 * @param  array  $cats  Array of all categories (WP_Term objects) associated with the post.
-						 * @param  WP_Post  $post  The post in question.
+						 * @param WP_Term $cat The category to use in the permalink.
+						 * @param array $cats Array of all categories (WP_Term objects) associated with the post.
+						 * @param WP_Post $post The post in question.
 						 *
 						 * @since 3.5.0
 						 *
 						 */
 						$category_object = apply_filters( 'post_link_category', $cats[0], $cats, $post );
-
 						$category_object = get_term( $category_object, 'category' );
 						$category        = $category_object->slug;
+
 						if ( $category_object->parent ) {
 							$category = get_category_parents( $category_object->parent, false, '/', true ) . $category;
 						}
 					}
+
 					// Show default category in permalinks,
 					// without having to assign it explicitly.
 					if ( empty( $category ) ) {
 						$default_category = get_term( get_option( 'default_category' ), 'category' );
+
 						if ( $default_category && ! is_wp_error( $default_category ) ) {
 							$category = $default_category->slug;
 						}
 					}
 
-					/*$category = '';
-					$cats     = get_the_category( $post->ID );
-
-					if ( $cats ) {
-						//usort($cats, '_usort_terms_by_ID');
-						$cats = wp_list_sort( $cats, array( 'term_id' => 'ASC' ) );
-
-						$category = $cats[0]->slug;
-						if ( $cats[0]->parent ) {
-							$parentCategory = get_category_parents( $cats[0]->parent, false, '', true );
-
-							if ( ! is_wp_error( $parentCategory ) )
-								$category = $parentCategory . '/' . $cats[0]->slug;
-						}
-
-						//if ($cats[0]->parent != 0)
-						//	$category .= $cats[0]->slug;
-					}
-					if ( empty( $category ) ) {
-						$default_category = get_term( get_option( 'default_category' ), 'category' );
-						$category         = is_wp_error( $default_category ) ? '' : $default_category->slug;
-					}*/
 					$out[] = $category;
 					break;
 				case '%author%':
@@ -375,10 +379,11 @@ function wpp_permalink( $perma, $post, $leavename = false ) {
 					break;
 			}
 		}
+
 		$permalink = home_url( str_replace( $rewriteCode, $out, $permalink ) );
 
 		return user_trailingslashit( $permalink, 'single' );
-	} else {
-		return home_url( "?p=$post->ID" );
 	}
+
+	return home_url( "?p=$post->ID" );
 }
