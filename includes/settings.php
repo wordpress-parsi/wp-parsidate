@@ -648,7 +648,7 @@ function wpp_render_settings() {
 
                 $active = $active_tab == $tab_id ? ' nav-tab-active' : '';
 
-                echo '<a href="' . esc_url( $tab_url ) . '" title="' . esc_attr( $tab_name ) . '" class="nav-tab' . $active . '">';
+                echo '<a href="' . esc_url( $tab_url ) . '" title="' . esc_attr( strip_tags($tab_name) ) . '" class="nav-tab' . $active . '">';
                 echo $tab_name;
                 echo '</a>';
             }
