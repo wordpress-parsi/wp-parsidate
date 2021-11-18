@@ -111,6 +111,12 @@ div.update-nag:before {
   color: #797979
 }
 
+[dir="ltr"] .nav-tab-wrapper > a.nav-tab-active::after {
+	transform: scale(-1);
+	right: 40px;
+	left: auto;
+}
+
 #tab_container {
   flex: 5;
   padding: 0 15px
