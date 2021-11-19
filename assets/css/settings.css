@@ -11,11 +11,11 @@ div.updated {
   border-right-width: 42px
 }
 
-.notice:before,
-div.error:before,
-div.updated:before,
-.nav-tab-wrapper > a.nav-tab-active:after,
-.wpp-settings-wrap div.updated:after {
+.notice::before,
+div.error::before,
+div.updated::before,
+.nav-tab-wrapper > a.nav-tab-active::after,
+.wpp-settings-wrap div.updated::after {
   font-family: dashicons;
   line-height: 1;
   font-weight: 400;
@@ -30,11 +30,11 @@ div.updated:before,
   top: 4px
 }
 
-div.updated:before {
+div.updated::before {
   content: "\f12a"
 }
 
-div.update-nag:before {
+div.update-nag::before {
   content: "\f534"
 }
 
@@ -59,7 +59,7 @@ div.update-nag:before {
   box-shadow: 0 0 5px 0 #8080808a
 }
 
-.wpp-settings-wrap div.updated:after {
+.wpp-settings-wrap div.updated::after {
   content: '\f153';
   left: 0;
   right: auto;
@@ -102,13 +102,19 @@ div.update-nag:before {
   position: relative
 }
 
-.nav-tab-wrapper > a.nav-tab-active:after {
+.nav-tab-wrapper > a.nav-tab-active::after {
   content: '\f341';
   position: absolute;
   left: 40px;
   right: auto;
   top: 12px;
   color: #797979
+}
+
+[dir="ltr"] .nav-tab-wrapper > a.nav-tab-active::after {
+	transform: scale(-1);
+	right: 40px;
+	left: auto;
 }
 
 #tab_container {
@@ -142,7 +148,7 @@ label.wpp-checkbox-label.empty-label {
   box-shadow: none
 }
 
-label.wpp-checkbox-label:before {
+label.wpp-checkbox-label::before {
   content: "";
   position: absolute;
   top: 50%;
@@ -155,7 +161,7 @@ label.wpp-checkbox-label:before {
   box-shadow: 0 1px 3px rgba(100, 100, 100, 0.5) inset, 0 0 10px rgba(100, 100, 100, 0.2) inset
 }
 
-label.wpp-checkbox-label:after {
+label.wpp-checkbox-label::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -172,8 +178,8 @@ label.wpp-checkbox-label:after {
 }
 
 label.wpp-checkbox-label,
-label.wpp-checkbox-label:before,
-label.wpp-checkbox-label:after {
+label.wpp-checkbox-label::before,
+label.wpp-checkbox-label::after {
   transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1)
 }
 
@@ -192,11 +198,11 @@ input[type=checkbox]:checked {
   counter-increment: total
 }
 
-input[type=checkbox]:checked + label.wpp-checkbox-label:before {
+input[type=checkbox]:checked + label.wpp-checkbox-label::before {
   background: #2271B1
 }
 
-input[type=checkbox]:checked + label.wpp-checkbox-label:after {
+input[type=checkbox]:checked + label.wpp-checkbox-label::after {
   transform: translateX(2em) translateY(-50%)
 }
 
