@@ -1,10 +1,10 @@
 === Parsi Date ===
-Contributors: lord_viper, man4toman, parselearn, alirdn, saeedfard, iehsanir
+Contributors: lord_viper, man4toman, parselearn, yazdaniwp, saeedfard, iehsanir
 Donate link: https://wp-parsi.com/support/
-Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, Iran, Iranian, parsidate, rtl, gutenberg
+Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, iran, iranian, parsidate, rtl, gutenberg, acf,woocommerce
 Requires at least: 5.3
-Tested up to: 5.3
-Stable tag: 3.0.3
+Tested up to: 5.8.2
+Stable tag: 4.0.0
 
 Persian date support for WordPress
 
@@ -16,7 +16,7 @@ List of some features:
 
 * Shamsi (Jalali) day-picker in Block Editor (Gutenberg)
 * Shamsi (Jalali) jQuery UI date-picker
-* [WP-Planet.ir](http://wp-planet.ir) Widget
+* [WP-Planet.ir](https://wp-planet.ir) Widget
 * Shamsi (Jalali) date in Posts, comments, pages, archives, search, categories
 * Shamsi (Jalali) date in Permalinks
 * Shamsi (Jalali) date in admin sections such as posts lists, comments lists, pages lists
@@ -24,6 +24,8 @@ List of some features:
 * Shamsi (Jalali) calender widget
 * Shamsi (Jalali) archive widget
 * RTL and fixed tinymce editor
+* Add Persian features to WooCommerce
+* Add Persian features to ACF
 * Powerful and fast function for fixing Arabic (ي , ك) to Persian (ی , ک)
 * Powerful and fast function for Persian numbers
 * Low resources usage
@@ -37,12 +39,45 @@ List of some features:
 
 == Screenshots ==
 
-1. Plugin configuration page
-2. 'Jalali Date Archives' Widget
-3. 'Jalali Date Calender' Widget
-4. 'Jalali Date Calender' in action
+1. Plugin main settings
+2. Number conversions settings
+3. Other plugin compatibility
+4. Persian datepicker in WooCommerce
+5. Persian date type in ACF
 
 == Changelog ==
+
+= 4.0.0 =
+* This release contains huge bug fix:
+  - Conflict with jetpack
+  - Dashboard page warrning
+  - Conflict with DATE_W3C format 
+  - Date problem in comments feed
+  - Error while save ACF fields
+  - Notice: Undefined index: date_i18n
+  - Notice error in archive.php pages
+  - RevSlider conflicts
+  - Date convertion problem in WordPress 5.3
+  - Conflict with get_the_modified_date
+  - Parsi Widget error
+  - Notice: Undefined index: wp_date, disable.php
+  - WooCommerce order detail fix
+  - Conflict with polylang and wpml
+  - Duplicate activity date in dashbaord
+  - Type error in editor datepicke
+  - Direction problem in legacy editor 
+  - Wrong callback in get_the_time hook
+  - Default timezone problem
+* Displaying "@" instead of "at" in Jalali version
+* Persian number in WooCommerce prices
+* Better support of Persian date in WooCommerce 
+* Persian datepicker in WooCommerce 
+* ACF Parsi date
+* Mini support of WMPL and Polylang
+* Update Calendar widgets
+* Update attachments filter dropdown 
+* New looks and feels of settings panel
+* Add Vazir font to admin area
 
 = 3.0.3 =
 * Fix widgets fatal errors
@@ -91,7 +126,7 @@ List of some features:
 * Fix set editor font css
 
 = 2.3 =
-* Add [WP-Planet.ir](http://wp-planet.ir) widget
+* Add [WP-Planet.ir](https://wp-planet.ir) widget
 * Fix some bug
 
 = 2.2.3 =
