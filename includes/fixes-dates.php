@@ -48,7 +48,7 @@ function wpp_fix_post_date( $time, $format = '' ) {
 		return date( $format, strtotime( $post->post_modified ) );
 	}
 
-	return parsidate( $format, date( 'Y-m-d', strtotime( $post->post_date ) ), ! wpp_is_active( 'conv_dates' ) ? 'eng' : 'per' );
+	return parsidate( $format, date( 'Y-m-d H:i:s', strtotime( $post->post_date ) ), ! wpp_is_active( 'conv_dates' ) ? 'eng' : 'per' );
 }
 
 /**
