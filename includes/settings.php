@@ -59,6 +59,7 @@ function wp_parsi_get_settings() {
                 'disable_widget_block' => 'disable',
                 'submenu_move'         => 'disable',
                 'dev_mode'             => 'disable',
+                'enable_fonts'         => 'disable',
                 'conv_title'           => 'disable',
                 'conv_contents'        => 'disable',
                 'conv_excerpt'         => 'disable',
