@@ -221,11 +221,15 @@ final class WP_Parsidate {
 			return;
 		}
 
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
+		if( wpp_is_active( 'enable_fonts' ) ){
+			
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
-		wp_enqueue_style( 'wpp-vazir-font', WP_PARSI_URL . "assets/css/vazir-font$suffix.css", null, WP_PARSI_VER, 'all' );
+			wp_enqueue_style( 'wpp-vazir-font', WP_PARSI_URL . "assets/css/vazir-font$suffix.css", null, WP_PARSI_VER, 'all' );
 
-		add_action( 'admin_head', array( $this, 'wpp_preload_vazir_fonts' ) );
+			add_action( 'admin_head', array( $this, 'wpp_preload_vazir_fonts' ) );
+			
+		}
 	}
 
 	/**
