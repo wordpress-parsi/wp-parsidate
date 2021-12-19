@@ -153,8 +153,7 @@ class WPP_WooCommerce {
 			return;
 		}
 
-		$jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d', strtotime( $post->post_date ) ) );
-
+		$jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d', strtotime( $post->post_date ) ), "en" );
 		echo '<script>jQuery(function($){$("input[name=order_date]").val("' . $jalali_date . '")})</script>';
 	}
 
