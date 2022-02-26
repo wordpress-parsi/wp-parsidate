@@ -644,7 +644,8 @@ function wpp_render_settings() {
 
     ob_start();
     ?>
-    <div class="wrap wpp-settings-wrap">
+    <?php settings_errors( 'wpp-notices' ); ?>
+    <div class="wrapp wpp-settings-wrap">
         <h2><?php _e( 'Parsi Settings', 'wp-parsidate' ) ?></h2>
         <h2 class="nav-tab-wrapper">
             <?php
@@ -663,7 +664,6 @@ function wpp_render_settings() {
             }
             ?>
         </h2>
-        <?php settings_errors( 'wpp-notices' ); ?>
         <div id="tab_container">
             <form method="post" action="options.php">
                 <table class="form-table">
