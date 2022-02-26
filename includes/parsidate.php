@@ -256,7 +256,7 @@ class bn_parsidate {
 			}
 		}
 
-		if ( in_array( strtolower( $format ), [ 'u', 'timestamp' ] ) && $lang == 'per' ) {
+		if ( !in_array( strtolower( $format ), [ 'u', 'timestamp' ] ) && $lang == 'per' ) {
 			return self::trim_number( $out );
 		} else {
 			return $out;
