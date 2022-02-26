@@ -66,7 +66,7 @@ final class WP_Parsidate {
 		$this->define_const();
 		$this->setup_vars();
 		$this->include_files();
-		
+
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'parsi_settings_link' ) );
 		add_action( 'widgets_init', array( $this, 'register_widget' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'wpp_load_vazir_font_in_admin_area' ) );
@@ -162,6 +162,10 @@ final class WP_Parsidate {
 			$files[] = 'plugins/acf';
 		}
 
+		if ( class_exists('\Elementor\Core\Editor\Editor') ) {
+			$files[] = 'plugins/elementor';
+		}
+
 		$files[] = 'plugins/disable';
 
 		foreach ( $files as $file ) {
@@ -224,13 +228,13 @@ final class WP_Parsidate {
 		}
 
 		if( wpp_is_active( 'enable_fonts' ) ){
-			
+
 			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
 			wp_enqueue_style( 'wpp-vazir-font', WP_PARSI_URL . "assets/css/vazir-font$suffix.css", null, WP_PARSI_VER, 'all' );
 
 			add_action( 'admin_head', array( $this, 'wpp_preload_vazir_fonts' ) );
-			
+
 		}
 	}
 
