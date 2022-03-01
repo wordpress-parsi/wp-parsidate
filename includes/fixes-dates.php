@@ -158,7 +158,7 @@ function wpp_fix_comment_date( $time, $format = '' ) {
  */
 function wpp_fix_i18n( $date, $format, $timestamp, $gmt ) {
 	global $post;
-	$post_id = isset( $post->ID ) ? $post->ID : null;
+	$post_id = ! empty( $post ) ? $post->ID : null;
 
 	if ( ! disable_wpp() ) {
 		return $format;
