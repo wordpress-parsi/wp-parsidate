@@ -24,8 +24,12 @@ class WPP_ACF {
 		);
 
 		add_filter( 'wpp_plugins_compatibility_settings', array( $this, 'add_settings' ) );
-		add_action( 'acf/include_field_types', array( $this, 'wpp_acf_include_field' ) ); // v5
-		add_action( 'acf/register_fields', array( $this, 'wpp_acf_include_field' ) ); // v4
+
+		if ( wpp_is_active( 'acf_fix_date' ) )
+		{
+			add_action( 'acf/include_field_types', array( $this, 'wpp_acf_include_field' ) ); // v5
+			add_action( 'acf/register_fields', array( $this, 'wpp_acf_include_field' ) ); // v4
+		}
 	}
 
 	/**
@@ -66,10 +70,17 @@ class WPP_ACF {
 	 */
 	public function add_settings( $old_settings ) {
 		$settings = array(
-			'acf'          => array(
+			'acf'              => array(
 				'id'   => 'acf',
 				'name' => __( 'Advanced Custom Fields (ACF)', 'wp-parsidate' ),
 				'type' => 'header'
+			),
+			'acf_fix_date'     => array(
+				'id'      => 'acf_fix_date',
+				'name'    => __( 'Jalali Datepicker', 'wp-parsidate' ),
+				'type'    => 'checkbox',
+				'options' => 1,
+				'std'     => 0
 			),
 			'acf_persian_date' => array(
 				'id'      => 'acf_persian_date',
