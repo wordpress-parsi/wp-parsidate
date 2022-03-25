@@ -72,14 +72,6 @@ function wp_parsi_get_settings() {
                 'news_source'          => 'parsi'
         ) );
     }
-    // Check settings synced with wpp version 4.0.0
-    /*if ( ! empty( $settings ) ) {
-        $settings_ver = get_option( 'wpp_settings_ver' );
-
-        if ( empty( $settings_ver ) ) {
-            $settings = wpp_sync_setting_version( $settings );
-        }
-    }*/
 
     return apply_filters( 'wpp_get_settings', $settings );
 }
