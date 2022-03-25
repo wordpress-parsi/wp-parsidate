@@ -14,8 +14,20 @@
   font-display: swap
 }
 
-body {
+body,
+#order_data h2,
+.rtl #wpadminbar *:not(.ab-icon),
+.components-menu-item__item,
+.components-menu-item__info,
+.components-menu-group__label,
+.wc-addons-wrap .products li * {
   font-family: Vazir, tahoma, arial !important
+}
+
+pre,
+kbd,
+code {
+  font-family: Tahoma, Arial, sans-serif !important
 }
 
 body#tinymce.wp-editor,
@@ -43,7 +55,7 @@ body#tinymce.wp-editor,
 .rtl .media-frame input[type="url"],
 .rtl .media-frame select,
 .rtl .media-frame textarea,
-.rtl .media-modal{
+.rtl .media-modal {
   font-family: Vazir, tahoma, arial
 }
 
@@ -54,7 +66,7 @@ body#tinymce.wp-editor,
 
 .dashicons,
 .dashicons-before:before,
-.wpseo-metabox-menu ul li span.dashicons:before{
+.wpseo-metabox-menu ul li span.dashicons:before {
   font-family: dashicons;
 }
 
@@ -62,7 +74,7 @@ body#tinymce.wp-editor,
 .woocommerce-summary__item-label p,
 .components-card__header p,
 .rtl .quicktags-toolbar input,
-.rtl .wp-switch-editor{
+.rtl .wp-switch-editor {
   font-family: Vazir, tahoma, arial !important
 }
 
