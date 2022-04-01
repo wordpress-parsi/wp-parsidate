@@ -64,12 +64,21 @@ final class WP_Parsidate {
 
 	private function __construct() {
 		$this->define_const();
-		$this->setup_vars();
 		$this->include_files();
+
+		require_once( WP_PARSI_DIR . 'includes/settings.php' );
+
+		if ( $this->wpp_multilingual_is_active() && wpp_is_active( 'wpp_multilingual_support' ) ) {
+			if ( ( function_exists( 'pll_current_language' ) && pll_current_language() != 'fa'
+			       || defined( 'ICL_LANGUAGE_CODE' ) && 'fa_IR' != ICL_LANGUAGE_CODE ) ) {
+				return;
+			}
+		}
 
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'parsi_settings_link' ) );
 		add_action( 'widgets_init', array( $this, 'register_widget' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'wpp_load_vazir_font_in_admin_area' ) );
+		add_action( 'wpp_jalai_datepicker_enqueued', array( $this, 'wpp_localize_months_name' ) );
 	}
 
 	/**
@@ -92,35 +101,10 @@ final class WP_Parsidate {
 		}
 
 		if ( ! defined( 'WP_PARSI_VER' ) ) {
-			define( 'WP_PARSI_VER', '4.0.0' );
+			define( 'WP_PARSI_VER', '4.0.1' );
 		}
 	}
-
-	/**
-	 * Sets up global variables
-	 *
-	 * @return          void
-	 * @since           2.0
-	 */
-	private function setup_vars() {
-		global $persian_month_names;
-		$persian_month_names = array(
-			'',
-			'فروردین',
-			'اردیبهشت',
-			'خرداد',
-			'تیر',
-			'مرداد',
-			'شهریور',
-			'مهر',
-			'آبان',
-			'آذر',
-			'دی',
-			'بهمن',
-			'اسفند'
-		);
-	}
-
+	
 	/**
 	 * Includes files for plugin
 	 *
@@ -162,7 +146,7 @@ final class WP_Parsidate {
 			$files[] = 'plugins/acf';
 		}
 
-		if ( class_exists('\Elementor\Core\Editor\Editor') ) {
+		if ( class_exists( '\Elementor\Core\Editor\Editor' ) ) {
 			$files[] = 'plugins/elementor';
 		}
 
@@ -175,6 +159,21 @@ final class WP_Parsidate {
 		if ( get_locale() == 'fa_IR' ) {
 			load_textdomain( 'wp-parsidate', WP_PARSI_DIR . 'languages/fa_IR.mo' );
 		}
+	}
+
+	/**
+	 * Localize name of months after date picker enqueued
+	 *
+	 * @since 4.0.1
+	 */
+	public function wpp_localize_months_name() {
+		global $wpp_months_name;
+
+		wp_localize_script( 'wpp_jalali_datepicker', 'WPP_L18N',
+			array(
+				'months' => $wpp_months_name
+			)
+		);
 	}
 
 	/**
@@ -227,7 +226,7 @@ final class WP_Parsidate {
 			return;
 		}
 
-		if( wpp_is_active( 'enable_fonts' ) ){
+		if ( wpp_is_active( 'enable_fonts' ) ) {
 			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
 			wp_enqueue_style( 'wpp-vazir-font', WP_PARSI_URL . "assets/css/vazir-font$suffix.css", null, WP_PARSI_VER, 'all' );
@@ -243,6 +242,19 @@ final class WP_Parsidate {
 	public function wpp_preload_vazir_fonts() {
 		echo '<link rel="preload" href="' . WP_PARSI_URL . 'assets/fonts/Vazir-Regular.woff2" as="font" type="font/woff2" crossorigin>' . PHP_EOL .
 		     '<link rel="preload" href="' . WP_PARSI_URL . 'assets/fonts/Vazir-Bold.woff2" as="font" type="font/woff2" crossorigin>' . PHP_EOL;
+	}
+
+	/**
+	 * Checks WPML or PolyLang plugins is active
+	 *
+	 * Since 4.0.1
+	 */
+	public static function wpp_multilingual_is_active() {
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			include_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		return is_plugin_active( 'polylang/polylang.php' ) || is_plugin_active( 'sitepress-multilingual-cms/sitepress.php' );
 	}
 }
 

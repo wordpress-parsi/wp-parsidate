@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
  * @return                  string New archive title
  */
 function wpp_fix_title( $title, $sep = '-', $sep_location = 'right' ) {
-	global $persian_month_names, $wp_query, $wpp_settings;
+	global $wpp_months_name, $wp_query, $wpp_settings;
 
 	$query = $wp_query->query;
 
@@ -34,7 +34,7 @@ function wpp_fix_title( $title, $sep = '-', $sep_location = 'right' ) {
 	}
 
 	if ( isset( $query['monthnum'] ) ) {
-		$query['monthnum'] = $persian_month_names[ intval( $query['monthnum'] ) ];
+		$query['monthnum'] = $wpp_months_name[ (int) $query['monthnum'] ];
 		$title             = implode( " ", $query ) . " $sep " . get_bloginfo( "name" );
 	}
 

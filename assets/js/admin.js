@@ -121,8 +121,7 @@ jQuery(document).ready(function () {
     jQuery('select[name=mm]').val(date[1]);
     jQuery('input[name=jj]').val(date[2]);
   });
-
-
+  
   /*
    * Filter on post screen dates
    */

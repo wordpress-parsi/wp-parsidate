@@ -13,7 +13,7 @@ function wpp_get_calendar() {
 	global $wpdb, $m, $monthnum, $year, $day, $posts;
 
 	$jy = 0;
-	$pd = bn_parsidate::getInstance();
+	$pd = WPP_ParsiDate::getInstance();
 	$jm = $monthnum;
 
 	if ( $m != '' ) {
@@ -251,7 +251,7 @@ function wpp_get_calendar() {
 		}
 	}
 
-	$pd  = bn_parsidate::getInstance();
+	$pd  = WPP_ParsiDate::getInstance();
 	$pad = $pd->persian_date( "w", $pd->gregorian_date( "Y-m-d", $jthisyear . "-" . $jthismonth . "-01" ), "eng" );
 
 	if ( 0 != $pad ) {

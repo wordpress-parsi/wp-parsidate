@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-25 01:28+0430\n"
-"PO-Revision-Date: 2022-03-25 01:34+0430\n"
+"POT-Creation-Date: 2022-04-02 02:33+0430\n"
+"PO-Revision-Date: 2022-04-02 02:34+0430\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Loco-Parser: loco_parse_po\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../includes/admin/lists-fix.php:90
+#: ../includes/admin/lists-fix.php:89
 msgid "Show All Dates"
 msgstr "نمایش همۀ تاریخ‌ها"
 
@@ -31,8 +31,8 @@ msgid ""
 "&ndash; <a href=\"%s\">Dismiss</a></p></div>"
 msgstr ""
 "<div class=\"updated wpp-message\"><p>وردپرس پارسی فعال شد! برای کارکردن افزونه "
-"نیاز به پیکربندی آن دارید. <a href=\"%s\">برگه‌ی پیکربندی</a> &ndash; <a href="
-"\"%s\">بی‌خیال</a></p></div>"
+"نیاز به پیکربندی آن دارید. <a href=\"%s\">برگه‌ی پیکربندی</a> &ndash; <a href=\"%s"
+"\">بی‌خیال</a></p></div>"
 
 #: ../includes/plugins/acf-fields/class-wpp-acf-datepicker-v4.php:20
 #: ../includes/plugins/acf-fields/class-wpp-acf-datepicker-v5.php:21
@@ -91,7 +91,7 @@ msgstr "نمایش انتخاب‌گر زمان بصورت 24 یا 12 ساعته
 msgid "Advanced Custom Fields (ACF)"
 msgstr "زمینه‌های سفارشی (ACF)"
 
-#: ../includes/plugins/acf.php:80 ../includes/plugins/woocommerce.php:94
+#: ../includes/plugins/acf.php:80 ../includes/plugins/woocommerce.php:104
 msgid "Jalali Datepicker"
 msgstr "انتخاب‌گر تاریخ شمسی (جلالی)"
 
@@ -123,7 +123,7 @@ msgstr "نام قلاب، کلاس و تابع موردنظر را جهت رفع
 msgid "Easy Digital Downloads"
 msgstr "Easy Digital Downloads"
 
-#: ../includes/plugins/edd.php:66 ../includes/plugins/woocommerce.php:101
+#: ../includes/plugins/edd.php:66 ../includes/plugins/woocommerce.php:111
 msgid "Fix prices"
 msgstr "تصحیح قیمت‌ها"
 
@@ -131,33 +131,33 @@ msgstr "تصحیح قیمت‌ها"
 msgid "Replace ریال with RIAL"
 msgstr "جایگزینی ریال با RIAL"
 
-#: ../includes/plugins/woocommerce.php:89
+#: ../includes/plugins/woocommerce.php:99
 msgid "WooCommerce"
 msgstr "ووکامرس"
 
-#: ../includes/plugins/woocommerce.php:108
+#: ../includes/plugins/woocommerce.php:118
 msgid "Fix persian postcode"
 msgstr "تبدیل کد پستی فارسی در روند پرداخت"
 
-#: ../includes/plugins/woocommerce.php:115
+#: ../includes/plugins/woocommerce.php:125
 msgid "Fix persian phone"
 msgstr "تبدیل شماره تماس فارسی در روند پرداخت"
 
-#: ../includes/plugins/woocommerce.php:122
+#: ../includes/plugins/woocommerce.php:132
 msgid "Postcode validation"
 msgstr "اعتبارسنجی کد پستی"
 
-#: ../includes/plugins/woocommerce.php:129
+#: ../includes/plugins/woocommerce.php:139
 msgid "Phone number validation"
 msgstr "اعتبارسنجی شماره تماس"
 
-#: ../includes/plugins/woocommerce.php:347
+#: ../includes/plugins/woocommerce.php:360
 msgid "Expiry date"
 msgstr "تاریخ انقضاء"
 
 #: ../includes/settings.php:25 ../includes/settings.php:26
 #: ../includes/settings.php:33 ../includes/settings.php:34
-#: ../includes/settings.php:641
+#: ../includes/settings.php:653
 msgid "Parsi Settings"
 msgstr "تنظیمات پارسی"
 
@@ -201,29 +201,49 @@ msgid "By enabling this, Dates will convert to Shamsi (Jalali) dates"
 msgstr "با فعال‌کردن این گزینه، تاریخ‌ها به صورت تاریخ خورشیدی (جلالی) درمی‌آیند"
 
 #: ../includes/settings.php:234
+msgid "Months name type"
+msgstr "نوع اسامی ماه‌ها"
+
+#: ../includes/settings.php:237
+msgid "Persian"
+msgstr "پارسی"
+
+#: ../includes/settings.php:238
+msgid "Dari"
+msgstr "دری"
+
+#: ../includes/settings.php:239
+msgid "Kurdish"
+msgstr "کوردی"
+
+#: ../includes/settings.php:240
+msgid "Pashto"
+msgstr "پشتو"
+
+#: ../includes/settings.php:246
 msgid "Disable Widget Block"
 msgstr "غیرفعال کردن ویرایشگر بلوک ابزارک"
 
-#: ../includes/settings.php:238
+#: ../includes/settings.php:250
 msgid "By enabling this, Widget Block Editor disabled"
 msgstr ""
 "با فعال‌کردن این گزینه، «ویرایشگر بلوک ابزارک» در بخش ابزارک‌ها غیرفعال می‌شود."
 
-#: ../includes/settings.php:242
+#: ../includes/settings.php:254
 msgid "Move page to submenu?"
 msgstr "انتقال این برگه به زیرمنو؟"
 
-#: ../includes/settings.php:246
+#: ../includes/settings.php:258
 msgid ""
 "By enabling this option, page item will be moved to Settings menu as submenu."
 msgstr ""
 "با فعال‌کردن این گزینه، صفحۀ پیکربندی پارسی‌دیت به زیرفهرست «تنظیمات» منتقل می‌شود."
 
-#: ../includes/settings.php:250
+#: ../includes/settings.php:262
 msgid "Debug Mode"
 msgstr "حالت اشکال‌زادیی"
 
-#: ../includes/settings.php:254
+#: ../includes/settings.php:266
 msgid ""
 "By enabling this option, the uncompressed version of the JS and CSS files will "
 "be loaded."
@@ -231,74 +251,81 @@ msgstr ""
 "با فعال‌کردن این گزینه، نسخۀ فشرده‌نشدۀ پرونده‌های JS و CSS افزونۀ پارسی‌دیت "
 "بارگذاری می‌شوند."
 
-#: ../includes/settings.php:258
+#: ../includes/settings.php:270
 msgid "Vazir Font"
 msgstr "فونت وزیر"
 
-#: ../includes/settings.php:262
-msgid ""
-"By enabling this option, the Vazir font will be enable in whole admin area."
+#: ../includes/settings.php:274
+msgid "By enabling this option, the Vazir font will be enable in whole admin area."
 msgstr "با فعال‌کردن این گزینه، فونت وزیر در همه بخش‌های مدیریت فعال می‌شود."
 
-#: ../includes/settings.php:268
+#: ../includes/settings.php:280
 msgid "Persian digits"
 msgstr "رقم‌های پارسی"
 
-#: ../includes/settings.php:273
+#: ../includes/settings.php:285
 msgid "Page title"
 msgstr "در عنوان صفحه"
 
-#: ../includes/settings.php:280
+#: ../includes/settings.php:292
 msgid "Post title"
 msgstr "در عنوان نوشته‌ها"
 
-#: ../includes/settings.php:287
+#: ../includes/settings.php:299
 msgid "Post content"
 msgstr "در محتوای نوشته‌ها"
 
-#: ../includes/settings.php:294
+#: ../includes/settings.php:306
 msgid "Post excerpt"
 msgstr "در خلاصه‌ی نوشته‌ها"
 
-#: ../includes/settings.php:301
+#: ../includes/settings.php:313
 msgid "Comments text"
 msgstr "در نوشته‌ی دیدگاه‌ها"
 
-#: ../includes/settings.php:308
+#: ../includes/settings.php:320
 msgid "Comments count"
 msgstr "تعداد دیدگاه‌ها"
 
-#: ../includes/settings.php:315
+#: ../includes/settings.php:327
 msgid "Dates"
 msgstr "تاریخ‌ها"
 
-#: ../includes/settings.php:322
+#: ../includes/settings.php:334
 msgid "Categories"
 msgstr "دسته‌بندی‌ها"
 
-#: ../includes/settings.php:333
+#: ../includes/settings.php:345
 msgid "Fix arabic characters"
 msgstr "تصحیح حروف عربی"
 
-#: ../includes/settings.php:337
+#: ../includes/settings.php:349
 msgid "Fixes arabic characters caused by wrong keyboard layouts"
 msgstr ""
-"این گزینه، حروف عربی را در کل سیستم به حروف فارسی تصحیح می‌کند<br>برای مثال "
-"٤/٥/٦ به ۴ / ۵ / ۶ و ك / ي به ک / ی"
+"این گزینه، حروف عربی را در کل سیستم به حروف فارسی تصحیح می‌کند<br>برای مثال ٤/٥/٦ "
+"به ۴ / ۵ / ۶ و ك / ي به ک / ی"
 
-#: ../includes/settings.php:341
+#: ../includes/settings.php:353
 msgid "Fix permalinks dates"
 msgstr "تبدیل تاریخ در پیوندهای یکتا"
 
-#: ../includes/settings.php:345
+#: ../includes/settings.php:357
 msgid "By enabling this, dates in permalinks converted to Shamsi (Jalali) date"
 msgstr ""
 "با فعال‌کردن این گزینه، تاریخ‌ها در پیوندهای یکتا به تاریخ خورشیدی (جلالی) تبدیل "
 "می‌شوند"
 
-#: ../includes/settings.php:608
+#: ../includes/settings.php:620
 msgid "Upload File"
 msgstr "آپلود فایل"
+
+#: ../includes/settings.php:737
+msgid "Multilingual compatibility"
+msgstr "پشتیبانی از چندزبانه"
+
+#: ../includes/settings.php:741
+msgid "By enabling this, ParsiDate options only work in persian locale"
+msgstr ""
 
 #: ../includes/widget/widget_archive.php:15
 #: ../includes/widget/widget_archive.php:16
@@ -388,6 +415,6 @@ msgstr ""
 msgid "WP-Parsi Team"
 msgstr "تیم وردپرس پارسی"
 
-#: ../wp-parsidate.php:202
+#: ../wp-parsidate.php:201
 msgid "settings"
 msgstr "تنظیمات"
