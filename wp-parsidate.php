@@ -104,7 +104,7 @@ final class WP_Parsidate {
 			define( 'WP_PARSI_VER', '4.0.1' );
 		}
 	}
-	
+
 	/**
 	 * Includes files for plugin
 	 *
@@ -169,9 +169,14 @@ final class WP_Parsidate {
 	public function wpp_localize_months_name() {
 		global $wpp_months_name;
 
+		$months_name = $wpp_months_name;
+
+		// Remove first item (nulled string) from name of months array
+		array_shift( $months_name );
+		
 		wp_localize_script( 'wpp_jalali_datepicker', 'WPP_L18N',
 			array(
-				'months' => $wpp_months_name
+				'months' => $months_name
 			)
 		);
 	}

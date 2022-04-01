@@ -45,6 +45,7 @@ class WPP_ParsiDate {
 			case '':
 			case null:
 				$wpp_months_name = apply_filters( 'wpp_name_of_months', array(
+					'',
 					'فروردین',
 					'اردیبهشت',
 					'خرداد',
@@ -61,6 +62,7 @@ class WPP_ParsiDate {
 				break;
 			case 'dari':
 				$wpp_months_name = apply_filters( 'wpp_name_of_months', array(
+					'',
 					'حمل',
 					'ثور',
 					'جوزا',
@@ -77,6 +79,7 @@ class WPP_ParsiDate {
 				break;
 			case 'kurdish':
 				$wpp_months_name = apply_filters( 'wpp_name_of_months', array(
+					'',
 					'خاکەلێوە',
 					'گوڵان',
 					'جۆزەردان',
@@ -93,6 +96,7 @@ class WPP_ParsiDate {
 				break;
 			case 'pashto':
 				$wpp_months_name = apply_filters( 'wpp_name_of_months', array(
+					'',
 					'وری',
 					'غويی',
 					'غبرګولی',
@@ -125,8 +129,6 @@ class WPP_ParsiDate {
 				), 'persian' );
 				break;
 		}
-		var_dump( $wpp_months_name );
-
 	}
 
 	/**
