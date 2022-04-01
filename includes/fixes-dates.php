@@ -14,9 +14,9 @@ global $wpp_settings;
 
 if ( get_locale() == 'fa_IR' && wpp_is_active( 'persian_date' ) ) {
 	add_filter( 'the_time', 'wpp_fix_post_time', 10, 2 );
-	add_filter( 'the_date', 'wpp_fix_post_date', 10, 2 );
-	add_filter( 'get_the_time', 'wpp_fix_post_date', 10, 2 );
-	add_filter( 'get_the_date', 'wpp_fix_post_date', 100, 2 );
+	add_filter( 'the_date', 'wpp_fix_post_date', 10, 3 );
+	add_filter( 'get_the_time', 'wpp_fix_post_date', 10, 3 );
+	add_filter( 'get_the_date', 'wpp_fix_post_date', 100, 3 );
 	add_filter( 'get_comment_time', 'wpp_fix_comment_time', 10, 2 );
 	add_filter( 'get_comment_date', 'wpp_fix_comment_date', 10, 2 );
 	//add_filter('get_post_modified_time', 'wpp_fix_post_modified_time', 10, 3);
@@ -32,11 +32,15 @@ if ( get_locale() == 'fa_IR' && wpp_is_active( 'persian_date' ) ) {
  *
  * @return          string Formatted date
  */
-function wpp_fix_post_date( $time, $format = '' ) {
-	global $post;
+function wpp_fix_post_date( $time, $format = '', $post = null ) {
+	if ( null === $post ) {
+		global $post;
+	} else {
+		$post = get_post( $post );
+	}
 
 	// It seems some plugin like acf does not exist $post.
-	if ( empty( $post ) ) {
+	if ( ! $post ) {
 		return $time;
 	}
 
