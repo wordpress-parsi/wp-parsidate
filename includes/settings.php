@@ -59,6 +59,7 @@ function wp_parsi_get_settings() {
                 'disable_widget_block' => 'disable',
                 'submenu_move'         => 'disable',
                 'dev_mode'             => 'disable',
+                'enable_fonts'         => 'disable',
                 'conv_title'           => 'disable',
                 'conv_contents'        => 'disable',
                 'conv_excerpt'         => 'disable',
@@ -71,14 +72,6 @@ function wp_parsi_get_settings() {
                 'news_source'          => 'parsi'
         ) );
     }
-    // Check settings synced with wpp version 4.0.0
-    /*if ( ! empty( $settings ) ) {
-        $settings_ver = get_option( 'wpp_settings_ver' );
-
-        if ( empty( $settings_ver ) ) {
-            $settings = wpp_sync_setting_version( $settings );
-        }
-    }*/
 
     return apply_filters( 'wpp_get_settings', $settings );
 }
@@ -259,6 +252,14 @@ function wpp_get_registered_settings() {
                             'options' => 'enable',
                             'std'     => 0,
                             'desc'    => __( 'By enabling this option, the uncompressed version of the JS and CSS files will be loaded.', 'wp-parsidate' )
+                    ),
+                    'enable_fonts'    => array(
+                            'id'      => 'enable_fonts',
+                            'name'    => __( 'Vazir Font', 'wp-parsidate' ),
+                            'type'    => 'checkbox',
+                            'options' => 'enable',
+                            'std'     => 0,
+                            'desc'    => __( 'By enabling this option, the Vazir font will be enable in whole admin area.', 'wp-parsidate' )
                     ),
             ) ),
             'conv'    => apply_filters( 'wpp_conv_settings', array(
@@ -635,7 +636,8 @@ function wpp_render_settings() {
 
     ob_start();
     ?>
-    <div class="wrap wpp-settings-wrap">
+    <?php settings_errors( 'wpp-notices' ); ?>
+    <div class="wrapp wpp-settings-wrap">
         <h2><?php _e( 'Parsi Settings', 'wp-parsidate' ) ?></h2>
         <h2 class="nav-tab-wrapper">
             <?php
@@ -654,7 +656,6 @@ function wpp_render_settings() {
             }
             ?>
         </h2>
-        <?php settings_errors( 'wpp-notices' ); ?>
         <div id="tab_container">
             <form method="post" action="options.php">
                 <table class="form-table">

@@ -1,5 +1,5 @@
 body {
-  background: #fff
+  background: #fff;
 }
 
 .notice,
@@ -8,14 +8,13 @@ div.updated {
   position: relative;
   border-radius: 5px;
   box-shadow: 0 0 5px 0 #5a5a5a57;
-  border-right-width: 42px
 }
 
-.notice::before,
-div.error::before,
-div.updated::before,
 .nav-tab-wrapper > a.nav-tab-active::after,
-.wpp-settings-wrap div.updated::after {
+.notice::before,
+.wpp-settings-wrap div.updated::after,
+div.error::before,
+div.updated::before {
   font-family: dashicons;
   line-height: 1;
   font-weight: 400;
@@ -27,15 +26,34 @@ div.updated::before,
   position: absolute;
   right: -37px;
   color: #fff;
-  top: 4px
+  top: 4px;
+}
+
+.nav-tab-wrapper > a.nav-tab-active:after {
+  position: absolute;
+  top: 12px;
+  color: #797979
+}
+
+body:not(.rtl) .nav-tab-wrapper > a.nav-tab-active:after {
+  content: '\f341';
+  right: 40px;
+  transform: rotate(180deg);
+  left: auto
+}
+
+body.rtl .nav-tab-wrapper > a.nav-tab-active:after {
+  content: '\f341';
+  left: 40px;
+  right: auto
 }
 
 div.updated::before {
-  content: "\f12a"
+  content: "\f12a";
 }
 
 div.update-nag::before {
-  content: "\f534"
+  content: "\f534";
 }
 
 .wpp-settings-wrap {
@@ -45,7 +63,7 @@ div.update-nag::before {
   border: 1px solid #adaaaa;
   overflow: hidden;
   display: flex;
-  flex-flow: row wrap
+  flex-flow: row wrap;
 }
 
 .wpp-settings-wrap .notice,
@@ -56,7 +74,7 @@ div.update-nag::before {
   left: 20px;
   transform: translateY(-150%);
   border-radius: 5px;
-  box-shadow: 0 0 5px 0 #8080808a
+  box-shadow: 0 0 5px 0 #8080808a;
 }
 
 .wpp-settings-wrap div.updated::after {
@@ -68,7 +86,19 @@ div.update-nag::before {
   background: #fff;
   border-radius: 50%;
   cursor: pointer;
-  border: 1px solid
+  border: 1px solid;
+}
+
+.wrapp {
+  margin: 1rem;
+  -webkit-margin-start: 0;
+  margin-inline-start: 0;
+}
+
+div.notice {
+  -webkit-margin-start: 0;
+  margin-inline-start: 0;
+  margin-top: 1rem;
 }
 
 .wpp-settings-wrap h2:first-child {
@@ -78,7 +108,9 @@ div.update-nag::before {
   color: #181818;
   text-align: center;
   border-bottom: 1px solid #adaaaa;
-  box-shadow: inset 0px -5px 5px 0 #8080802b
+  box-shadow: inset 0 -5px 5px 0 #8080802b;
+  margin: 0;
+  padding: 1.5rem;
 }
 
 .nav-tab-wrapper {
@@ -88,7 +120,7 @@ div.update-nag::before {
   border-color: #c3c4c7;
   background: #1d23270d;
   padding: 0 !important;
-  overflow: hidden
+  overflow: hidden;
 }
 
 .nav-tab-wrapper > a {
@@ -96,10 +128,10 @@ div.update-nag::before {
   width: 100%;
   margin: 0;
   padding: 15px;
-  transition: all ease-in-out .3s;
+  transition: all ease-in-out 0.3s;
   border: 0;
   border-bottom: 1px solid #8080804a;
-  position: relative
+  position: relative;
 }
 
 .nav-tab-wrapper > a.nav-tab-active::after {
@@ -108,24 +140,23 @@ div.update-nag::before {
   left: 40px;
   right: auto;
   top: 12px;
-  color: #797979
+  color: #797979;
 }
 
-[dir="ltr"] .nav-tab-wrapper > a.nav-tab-active::after {
-	transform: scale(-1);
-	right: 40px;
-	left: auto;
+:not([dir="rtl"]) .nav-tab-wrapper > a.nav-tab-active::after {
+  transform: scale(-1);
+  right: 40px;
+  left: auto;
 }
 
 #tab_container {
   flex: 5;
-  padding: 0 15px
+  padding: 0 15px;
 }
-
 
 input[type=checkbox] {
   opacity: 0;
-  position: absolute
+  position: absolute;
 }
 
 label.wpp-checkbox-label {
@@ -137,7 +168,7 @@ label.wpp-checkbox-label {
   padding: 0.5em 1em 0.5em 5em;
   box-shadow: 0 1px 2px rgba(100, 100, 100, 0.5) inset, 0 0 10px rgba(100, 100, 100, 0.1) inset;
   cursor: pointer;
-  text-shadow: 0 2px 2px #fff
+  text-shadow: 0 2px 2px #fff;
 }
 
 label.wpp-checkbox-label.empty-label {
@@ -145,7 +176,7 @@ label.wpp-checkbox-label.empty-label {
   background: #fff0;
   border: none;
   padding: 0.5em 0 0.5em 5em;
-  box-shadow: none
+  box-shadow: none;
 }
 
 label.wpp-checkbox-label::before {
@@ -158,7 +189,7 @@ label.wpp-checkbox-label::before {
   border-radius: 0.6em;
   background: #eee;
   transform: translateY(-50%);
-  box-shadow: 0 1px 3px rgba(100, 100, 100, 0.5) inset, 0 0 10px rgba(100, 100, 100, 0.2) inset
+  box-shadow: 0 1px 3px rgba(100, 100, 100, 0.5) inset, 0 0 10px rgba(100, 100, 100, 0.2) inset;
 }
 
 label.wpp-checkbox-label::after {
@@ -174,47 +205,47 @@ label.wpp-checkbox-label::after {
   background-color: #ddd;
   background-image: linear-gradient(to top, #fff 0%, #fff 40%, transparent 100%);
   transform: translateY(-50%);
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.5)
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.5);
 }
 
 label.wpp-checkbox-label,
-label.wpp-checkbox-label::before,
-label.wpp-checkbox-label::after {
-  transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1)
+label.wpp-checkbox-label::after,
+label.wpp-checkbox-label::before {
+  transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-label.wpp-checkbox-label:hover,
-input.wpp-checkbox-label:focus + label {
-  color: black
+input.wpp-checkbox-label:focus + label,
+label.wpp-checkbox-label:hover {
+  color: black;
 }
 
-label.wpp-checkbox-label:hover::after,
-input.wpp-checkbox-label:focus + label::after {
+input.wpp-checkbox-label:focus + label::after,
+label.wpp-checkbox-label:hover::after {
   background-color: #ccc;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5)
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 input[type=checkbox]:checked {
-  counter-increment: total
+  counter-increment: total;
 }
 
 input[type=checkbox]:checked + label.wpp-checkbox-label::before {
-  background: #2271B1
+  background: #2271B1;
 }
 
 input[type=checkbox]:checked + label.wpp-checkbox-label::after {
-  transform: translateX(2em) translateY(-50%)
+  transform: translateX(2em) translateY(-50%);
 }
 
 p.submit {
   text-align: left;
   padding: 15px !important;
-  margin: 0 -15px 0;
+  margin: 0 -15px;
   max-width: none;
   background: #f3f3f4;
-  box-shadow: inset 0px 3px 5px 0 #80808040
+  box-shadow: inset 0 3px 5px 0 #80808040;
 }
 
 #submit {
-  padding: 10px 15px
+  padding: 10px 15px;
 }

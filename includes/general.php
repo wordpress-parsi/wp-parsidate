@@ -53,7 +53,7 @@ add_filter( 'locale', 'wp_parsi_set_locale', 0 );
  * @return              string
  */
 function wpp_login_headerurl() {
-	return 'http://wp-parsi.com';
+	return 'https://wp-parsi.com';
 }
 
 add_filter( 'login_headerurl', 'wpp_login_headerurl', 10, 2 );

@@ -34,17 +34,39 @@ class WPP_WooCommerce {
 				add_action( 'admin_enqueue_scripts', array( $this, 'wpp_admin_woocommerce_jalali_datepicker_assets' ) );
 
 				// Convert order_date using js
-				add_action( 'save_post', array($this, 'wpp_change_order_date_on_save_order'), 0, 2 );
+				add_action( 'save_post', array( $this, 'wpp_change_order_date_on_save_order' ), 0, 2 );
 				add_action( 'admin_footer', array( $this, 'wpp_fix_show_created_order_date' ) );
 
 				add_action( 'admin_init', array( $this, 'wpp_change_wc_report_dates' ), 1000 );
-				add_filter( 'wp_insert_post_data', array( $this, 'wpp_validate_dates_on_woocommerce_save_data' ), 1, 2 );
-				add_action( 'woocommerce_admin_process_variation_object', array( $this, 'wpp_convert_wc_variations_scheduled_sale_dates' ), 1000, 2 );
+				add_filter( 'wp_insert_post_data', array(
+					$this,
+					'wpp_validate_dates_on_woocommerce_save_data'
+				), 1, 2 );
+				add_action( 'woocommerce_admin_process_variation_object', array(
+					$this,
+					'wpp_convert_wc_variations_scheduled_sale_dates'
+				), 1000, 2 );
 
 				add_filter( 'get_post_metadata', array( $this, 'wpp_change_wc_order_date_and_coupon_expires' ), 10, 4 );
 
-				add_filter( 'manage_edit-shop_coupon_columns', array( $this, 'wpp_remove_wc_coupon_expiry_date_column' ), 10, 1 );
-				add_action( 'manage_shop_coupon_posts_custom_column', array( $this, 'wpp_add_jalali_expiry_date_column' ), 10, 2 );
+				add_filter( 'manage_edit-shop_coupon_columns', array(
+					$this,
+					'wpp_remove_wc_coupon_expiry_date_column'
+				), 10, 1 );
+				add_action( 'manage_shop_coupon_posts_custom_column', array(
+					$this,
+					'wpp_add_jalali_expiry_date_column'
+				), 10, 2 );
+			}
+
+			add_filter( 'woocommerce_checkout_process', array( $this, 'wpp_accept_persian_numbers_in_checkout' ), 20 );
+
+			if ( wpp_is_active( 'woo_validate_postcode' ) ) {
+				add_filter( 'woocommerce_validate_postcode', array( $this, 'wpp_validate_postcode' ), 10, 3 );
+			}
+
+			if ( wpp_is_active( 'woo_validate_phone' ) ) {
+				add_action( 'woocommerce_after_checkout_validation', 'wpp_validate_phone_number', 10, 2 );
 			}
 		}
 	}
@@ -72,21 +94,49 @@ class WPP_WooCommerce {
 	 */
 	public function add_settings( $old_settings ) {
 		$settings = array(
-			'woocommerce'   => array(
+			'woocommerce'             => array(
 				'id'   => 'woocommerce',
 				'name' => __( 'WooCommerce', 'wp-parsidate' ),
 				'type' => 'header'
 			),
-			'woo_fix_date'  => array(
+			'woo_fix_date'            => array(
 				'id'      => 'woo_fix_date',
 				'name'    => __( 'Jalali Datepicker', 'wp-parsidate' ),
 				'type'    => 'checkbox',
 				'options' => 1,
 				'std'     => 0
 			),
-			'woo_per_price' => array(
+			'woo_per_price'           => array(
 				'id'      => 'woo_per_price',
 				'name'    => __( 'Fix prices', 'wp-parsidate' ),
+				'type'    => 'checkbox',
+				'options' => 1,
+				'std'     => 0
+			),
+			'woo_accept_per_postcode' => array(
+				'id'      => 'woo_accept_per_postcode',
+				'name'    => __( 'Fix persian postcode', 'wp-parsidate' ),
+				'type'    => 'checkbox',
+				'options' => 1,
+				'std'     => 0
+			),
+			'woo_accept_per_phone'    => array(
+				'id'      => 'woo_accept_per_phone',
+				'name'    => __( 'Fix persian phone', 'wp-parsidate' ),
+				'type'    => 'checkbox',
+				'options' => 1,
+				'std'     => 0
+			),
+			'woo_validate_postcode'   => array(
+				'id'      => 'woo_validate_postcode',
+				'name'    => __( 'Postcode validation', 'wp-parsidate' ),
+				'type'    => 'checkbox',
+				'options' => 1,
+				'std'     => 0
+			),
+			'woo_validate_phone'      => array(
+				'id'      => 'woo_validate_phone',
+				'name'    => __( 'Phone number validation', 'wp-parsidate' ),
 				'type'    => 'checkbox',
 				'options' => 1,
 				'std'     => 0
@@ -113,7 +163,10 @@ class WPP_WooCommerce {
 
 		if ( wpp_is_active( 'woo_fix_date' )
 		     && in_array( $current_screen, array( 'product', 'shop_order', 'shop_coupon', 'wc-reports' ) ) ) {
-			wp_enqueue_script( 'wpp-jalali-datepicker', WP_PARSI_URL . 'assets/js/jalalidatepicker.min.js', array( 'jquery', 'jquery-ui-datepicker' ), WP_PARSI_VER );
+			wp_enqueue_script( 'wpp-jalali-datepicker', WP_PARSI_URL . 'assets/js/jalalidatepicker.min.js', array(
+				'jquery',
+				'jquery-ui-datepicker'
+			), WP_PARSI_VER );
 			wp_enqueue_style( 'wpp-jalali-datepicker', WP_PARSI_URL . "assets/css/jalalidatepicker$suffix.css", null, WP_PARSI_VER );
 		}
 	}
@@ -124,6 +177,7 @@ class WPP_WooCommerce {
 	 *
 	 * @param $post_id
 	 * @param $post
+	 *
 	 * @since 4.0.0
 	 */
 	public function wpp_change_order_date_on_save_order( $post_id, $post ) {
@@ -216,7 +270,7 @@ class WPP_WooCommerce {
 		if ( $action && 'shop_coupon' === $post_type && 'date_expires' === $meta_key ) {
 			$metadata = $wpdb->get_var(
 				$wpdb->prepare(
-				"
+					"
 						SELECT meta_value
 						From $wpdb->postmeta
 						WHERE post_id = %d
@@ -311,6 +365,7 @@ class WPP_WooCommerce {
 	 *
 	 * @param $column
 	 * @param $postid
+	 *
 	 * @since 4.0.0
 	 */
 	public function wpp_add_jalali_expiry_date_column( $column, $postid ) {
@@ -319,6 +374,64 @@ class WPP_WooCommerce {
 
 			echo ! empty( $date ) ? parsidate( 'Y-m-d', $date ) : '&ndash;';
 		}
+	}
+
+	/**
+	 * Fix persian postal code & phone numbers in WooCommerce checkout
+	 *
+	 * @since 4.1.0
+	 */
+	public function wpp_accept_persian_numbers_in_checkout() {
+		if ( wpp_is_active( 'woo_accept_per_postcode' ) ) {
+			if ( isset( $_POST['billing_postcode'] ) ) {
+				$_POST['billing_postcode'] = eng_number( sanitize_text_field( $_POST['billing_postcode'] ) );
+			}
+
+			if ( isset( $_POST['shipping_postcode'] ) ) {
+				$_POST['shipping_postcode'] = eng_number( sanitize_text_field( $_POST['shipping_postcode'] ) );
+			}
+		}
+
+		if ( wpp_is_active( 'woo_accept_per_phone' ) ) {
+			if ( isset( $_POST['billing_phone'] ) ) {
+				$_POST['billing_phone'] = eng_number( sanitize_text_field( $_POST['billing_phone'] ) );
+			}
+
+			if ( isset( $_POST['shipping_phone'] ) ) {
+				$_POST['shipping_phone'] = eng_number( sanitize_text_field( $_POST['shipping_phone'] ) );
+			}
+		}
+	}
+
+	/**
+	 * Validate Iranian customer postal code
+	 *
+	 * @param $valid
+	 * @param $postcode
+	 * @param $country
+	 *
+	 * @return bool|mixed
+	 */
+	public function wpp_validate_postcode( $valid, $postcode, $country ) {
+		if ( 'IR' != $country ) {
+			return $valid;
+		}
+
+		return (bool) preg_match( '/^([13456789]{5}[0-9]{5})$/', $postcode );
+	}
+
+	/**
+	 * @param $data
+	 * @param $errors
+	 *
+	 * @return false|void
+	 */
+	function wpp_validate_phone_number( $data, $errors ) {
+		if ( preg_match( '/^(09[0-9]{9})$/', $data['billing_phone'] ) ) {
+			return false;
+		}
+
+		$errors->add( 'validation', '<b>شماره تماس</b> وارد شده، معتبر نیست.' );
 	}
 }
 
