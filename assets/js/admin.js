@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-  var wpp_months_name = WPP_MONTHS_NAME.months;
+  var wpp_months_name = WPP_I18N.months;
 
   $('.wp-editor-wrap.html-active #content').css("direction", "ltr");
 

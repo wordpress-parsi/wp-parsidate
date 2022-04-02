@@ -20,7 +20,7 @@ function wpp_enqueue_admin_scripts() {
 	global $wpp_months_name;
 
 	wp_enqueue_script( 'wpp_admin', WP_PARSI_URL . 'assets/js/admin.js', false, WP_PARSI_VER );
-	wp_localize_script( 'wpp_admin', 'WPP_MONTHS_NAME',
+	wp_localize_script( 'wpp_admin', 'WPP_I18N',
 		array(
 			'months' => $wpp_months_name
 		)

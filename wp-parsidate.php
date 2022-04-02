@@ -173,8 +173,8 @@ final class WP_Parsidate {
 
 		// Remove first item (nulled string) from name of months array
 		array_shift( $months_name );
-		
-		wp_localize_script( 'wpp_jalali_datepicker', 'WPP_L18N',
+
+		wp_localize_script( 'wpp_jalali_datepicker', 'WPP_I18N',
 			array(
 				'months' => $months_name
 			)
