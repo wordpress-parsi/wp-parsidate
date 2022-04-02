@@ -210,7 +210,8 @@ class WPP_WooCommerce {
 			return;
 		}
 
-		$jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d', strtotime( $post->post_date ) ), "en" );
+		$jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d', strtotime( $post->post_date ) ), 'eng' );
+
 		echo '<script>jQuery(function($){$("input[name=order_date]").val("' . $jalali_date . '")})</script>';
 	}
 
@@ -284,7 +285,7 @@ class WPP_WooCommerce {
 			);
 
 			if ( ! empty( $metadata ) ) {
-				return parsidate( 'Y-m-d', $metadata );
+				return parsidate( 'Y-m-d', $metadata, 'eng' );
 			}
 		}
 

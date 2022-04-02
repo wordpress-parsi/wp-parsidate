@@ -17,7 +17,14 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
  * @author              Ehsaan
  */
 function wpp_enqueue_admin_scripts() {
+	global $wpp_months_name;
+
 	wp_enqueue_script( 'wpp_admin', WP_PARSI_URL . 'assets/js/admin.js', false, WP_PARSI_VER );
+	wp_localize_script( 'wpp_admin', 'WPP_MONTHS_NAME',
+		array(
+			'months' => $wpp_months_name
+		)
+	);
 }
 
 add_action( 'admin_enqueue_scripts', 'wpp_enqueue_admin_scripts' );
@@ -71,7 +78,7 @@ function wpp_restrict_posts() {
 		$post_status_w .= " AND post_status <> 'trash'";
 	}
 
-	$sql  = "SELECT DISTINCT date( post_date ) AS date
+	$sql = "SELECT DISTINCT date( post_date ) AS date
         FROM $wpdb->posts
         WHERE post_type='$post_type' $post_status_w  AND date( post_date ) <> '0000-00-00'
         ORDER BY post_date";
