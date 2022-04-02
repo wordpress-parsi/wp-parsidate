@@ -15,7 +15,7 @@ global $wpp_settings;
 if ( get_locale() == 'fa_IR' && wpp_is_active( 'persian_date' ) ) {
 	add_filter( 'the_time', 'wpp_fix_post_time', 10, 2 );
 	add_filter( 'the_date', 'wpp_fix_post_date', 10, 2 );
-	add_filter( 'get_the_time', 'wpp_fix_post_date', 10, 2 );
+	add_filter( 'get_the_time', 'wpp_fix_post_time', 10, 2 );
 	add_filter( 'get_the_date', 'wpp_fix_post_date', 100, 2 );
 	add_filter( 'get_comment_time', 'wpp_fix_comment_time', 10, 2 );
 	add_filter( 'get_comment_date', 'wpp_fix_comment_date', 10, 2 );
