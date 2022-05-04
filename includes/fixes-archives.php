@@ -84,7 +84,7 @@ function echo_yarchive( $year, $format, $before, $count, $show_post_count, $r ) 
  * @param $r
  */
 function echo_marchive( $old_date, $format, $before, $count, $show_post_count, $r ) {
-	global $persian_month_names;
+	global $wpp_months_name;
 
 	$year  = substr( $old_date, 0, 4 );
 	$month = substr( $old_date, 4, 2 );
@@ -101,7 +101,7 @@ function echo_marchive( $old_date, $format, $before, $count, $show_post_count, $
 		$url = add_query_arg( 'post_type', $r['post_type'], $url );
 	}
 
-	echo get_archives_link( $url, $persian_month_names[ intval( $month ) ] . ' ' . fix_number( $year ), $format, $before, $count );
+	echo get_archives_link( $url, $wpp_months_name[ (int) $month ] . ' ' . fix_number( $year ), $format, $before, $count );
 }
 
 /**
@@ -146,7 +146,7 @@ function wp_get_parchives( $args = '' ) {
  * @param $args
  */
 function wpp_print_archive( $results, $args ) {
-	global $persian_month_names;
+	global $wpp_months_name;
 
 	if ( $args['type'] == 'yearly' ) {
 		$old_date = parsidate( 'Y', $results[0]->date, 'eng' );
@@ -198,7 +198,7 @@ function wpp_print_archive( $results, $args ) {
 				$count = '';
 			}
 
-			$text = fix_number( $date[2] ) . ' ' . $persian_month_names[ intval( $date[1] ) ] . ' ' . fix_number( $date[0] );
+			$text = fix_number( $date[2] ) . ' ' . $wpp_months_name[ (int) $date[1] ] . ' ' . fix_number( $date[0] );
 
 			echo get_archives_link( get_day_link( $date[0], $date[1], $date[2] ), $text, $args['format'], $args['before'], $count );
 		}

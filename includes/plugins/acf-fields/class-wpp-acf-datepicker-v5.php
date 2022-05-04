@@ -77,6 +77,8 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
         if ( ! wp_script_is( 'wpp-jalali-datepicker' ) ) {
             wp_enqueue_script( 'wpp_jalali_datepicker', WP_PARSI_URL . 'assets/js/jalalidatepicker.min.js', array( 'acf-input' ), WP_PARSI_VER );
             wp_enqueue_style( 'wpp_jalali_datepicker', WP_PARSI_URL . "assets/css/jalalidatepicker$suffix.css", array( 'acf-input' ), WP_PARSI_VER );
+
+	        do_action( 'wpp_jalai_datepicker_enqueued', 'acf-5' );
         }
     }
 

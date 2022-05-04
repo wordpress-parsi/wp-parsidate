@@ -10,10 +10,10 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
  * @author          Mobin Ghasempoor
  */
 function wpp_get_calendar() {
-	global $wpdb, $m, $monthnum, $year, $day, $posts;
+	global $wpdb, $m, $monthnum, $year, $day, $posts, $wpp_months_name;
 
 	$jy = 0;
-	$pd = bn_parsidate::getInstance();
+	$pd = WPP_ParsiDate::getInstance();
 	$jm = $monthnum;
 
 	if ( $m != '' ) {
@@ -129,7 +129,7 @@ function wpp_get_calendar() {
 	) );
 
 	$calendar_output = '<table id="wp-calendar" style="direction: rtl" class="widget_calendar">' .
-	                   '<caption>' . $pd->persian_month_names[ (int) $jthismonth ] . ' ' .
+	                   '<caption>' . $wpp_months_name[ (int) $jthismonth ] . ' ' .
 	                   $pd->persian_date( 'Y', $unixmonth ) . '</caption><thead><tr>';
 	$myweek          = array();
 
@@ -153,7 +153,7 @@ function wpp_get_calendar() {
 		}
 
 		$calendar_output .= "\n\t\t" . '<td colspan="3" id="prev"><a href="' . get_month_link( $previous_year, $previous_month ) .
-		                    '">&laquo; ' . $pd->persian_month_names[ $previous_month ] . '</a></td>';
+		                    '">&laquo; ' . $wpp_months_name[ $previous_month ] . '</a></td>';
 	} else {
 		$calendar_output .= "\n\t\t" . '<td colspan="3" id="prev" class="pad">&nbsp;</td>';
 	}
@@ -170,7 +170,7 @@ function wpp_get_calendar() {
 		}
 
 		$calendar_output .= "\n\t\t" . '<td colspan="3" id="next"><a href="' . get_month_link( $next_year, $next_month ) .
-		                    '">' . $pd->persian_month_names[ $next_month ] . ' &raquo;</a></td>';
+		                    '">' . $wpp_months_name[ $next_month ] . ' &raquo;</a></td>';
 	} else {
 		$calendar_output .= "\n\t\t" . '<td colspan="3" id="next" class="pad">&nbsp;</td>';
 	}
@@ -251,7 +251,7 @@ function wpp_get_calendar() {
 		}
 	}
 
-	$pd  = bn_parsidate::getInstance();
+	$pd  = WPP_ParsiDate::getInstance();
 	$pad = $pd->persian_date( "w", $pd->gregorian_date( "Y-m-d", $jthisyear . "-" . $jthismonth . "-01" ), "eng" );
 
 	if ( 0 != $pad ) {

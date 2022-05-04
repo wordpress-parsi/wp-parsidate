@@ -1,12 +1,10 @@
-/*
+/**
  * Author: @senthil2rajan
  * plugin: timepicker
  * website: senthilraj.github.io/Timepicki
  */
 (function($) {
-
 	$.fn.timepicki = function(options) {
-
 		var defaults = {
 			format_output: function(tim, mini, meri) {
 			    if (settings.show_meridian) {

@@ -1,7 +1,7 @@
-jQuery(document).ready(function () {
-  var persian_month_names = ['', 'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+jQuery(document).ready(function ($) {
+  var wpp_months_name = WPP_I18N.months;
 
-  jQuery('.wp-editor-wrap.html-active #content').css("direction", "ltr");
+  $('.wp-editor-wrap.html-active #content').css("direction", "ltr");
 
   function IsLeapYear(year) {
     if (((year % 4) === 0 && (year % 100) !== 0) || (year % 400) === 0 && (year % 100) === 0)
@@ -60,9 +60,9 @@ jQuery(document).ready(function () {
         '<select id="mma" name="mma">';
     for (var i = 1; i < 13; i++) {
       if (i === parseInt(mon))
-        div += '<option value="' + i + '" selected="selected">' + persian_month_names[i] + '</option>';
+        div += '<option value="' + i + '" selected="selected">' + wpp_months_name[i] + '</option>';
       else
-        div += '<option value="' + i + '">' + persian_month_names[i] + '</option>';
+        div += '<option value="' + i + '">' + wpp_months_name[i] + '</option>';
     }
     div += '</select>' +
         '<input type="text" id="jja" name="jja" value="' + day + '" size="2" maxlength="2" autocomplete="off" />,' +
@@ -73,16 +73,16 @@ jQuery(document).ready(function () {
     return div;
   }
 
-  jQuery('a.edit-timestamp').on('click', function () {
-    jQuery('.persian').remove();
-    var date = gregorian_to_persian(jQuery('#aa').val(), jQuery('#mm').val(), jQuery('#jj').val());
-    var div = create_stampdiv(date[0], date[1], date[2], jQuery('#hh').val(), jQuery('#mn').val());
-    jQuery('#timestampdiv').prepend(div);
-    jQuery('#timestampdiv .timestamp-wrap:eq(1)').hide();
+  $('a.edit-timestamp').on('click', function () {
+    $('.persian').remove();
+    var date = gregorian_to_persian($('#aa').val(), $('#mm').val(), $('#jj').val());
+    var div = create_stampdiv(date[0], date[1], date[2], $('#hh').val(), $('#mn').val());
+    $('#timestampdiv').prepend(div);
+    $('#timestampdiv .timestamp-wrap:eq(1)').hide();
   });
 
-  jQuery('#the-list').on('click', '.editinline', function () {
-    var tr = jQuery(this).closest('td');
+  $('#the-list').on('click', '.editinline', function () {
+    var tr = $(this).closest('td');
     var year = tr.find('.aa').html();
     if (year > 1400) {
       var month = tr.find('.mm').html();
@@ -90,48 +90,46 @@ jQuery(document).ready(function () {
       var hour = tr.find('.hh').html();
       var minu = tr.find('.mn').html();
       var date = gregorian_to_persian(year, month, day);
-      jQuery('.persian').remove();
-      jQuery('.inline-edit-date').prepend(create_stampdiv(date[0], date[1], date[2], hour, minu));
-      jQuery('.inline-edit-date div:eq(1)').hide();
+      $('.persian').remove();
+      $('.inline-edit-date').prepend(create_stampdiv(date[0], date[1], date[2], hour, minu));
+      $('.inline-edit-date div:eq(1)').hide();
     }
   });
-
-
-  jQuery('#timestampdiv,.inline-edit-date').on('keyup', '#hha', function () {
-    jQuery('input[name=hh]').val(jQuery(this).val());
+  
+  $('#timestampdiv,.inline-edit-date').on('keyup', '#hha', function () {
+    $('input[name=hh]').val($(this).val());
 
   }).on('keyup', '#mna', function () {
-    jQuery('input[name=mn]').val(jQuery(this).val());
+    $('input[name=mn]').val($(this).val());
 
   }).on('keyup', '#aaa , #jja', function () {
-    var year = jQuery('#aaa').val();
-    var mon = jQuery('#mma').val();
-    var day = jQuery('#jja').val();
+    var year = $('#aaa').val();
+    var mon = $('#mma').val();
+    var day = $('#jja').val();
     date = persian_to_gregorian(year, mon, day);
-    jQuery('input[name=aa]').val(date[0]);
-    jQuery('select[name=mm]').val(date[1]);
-    jQuery('input[name=jj]').val(date[2]);
+    $('input[name=aa]').val(date[0]);
+    $('select[name=mm]').val(date[1]);
+    $('input[name=jj]').val(date[2]);
 
   }).on('change', '#mma', function () {
-    var year = jQuery('#aaa').val();
-    var mon = jQuery('#mma').val();
-    var day = jQuery('#jja').val();
+    var year = $('#aaa').val();
+    var mon = $('#mma').val();
+    var day = $('#jja').val();
     date = persian_to_gregorian(year, mon, day);
-    jQuery('input[name=aa]').val(date[0]);
-    jQuery('select[name=mm]').val(date[1]);
-    jQuery('input[name=jj]').val(date[2]);
+    $('input[name=aa]').val(date[0]);
+    $('select[name=mm]').val(date[1]);
+    $('input[name=jj]').val(date[2]);
   });
-
-
+  
   /*
    * Filter on post screen dates
    */
-  jQuery('select[name=m]').hide()
+  $('select[name=m]').hide()
   var timer;
 
   function change_date() {
-    var old = jQuery('#timestamp b').text();
-    var info = jQuery('#mma option:selected').text() + ' ' + jQuery('#jja').val() + ', ' + jQuery('#aaa').val() + ' در ' + jQuery('#hha').val() + ':' + jQuery('#mna').val();
+    var old = $('#timestamp b').text();
+    var info = $('#mma option:selected').text() + ' ' + $('#jja').val() + ', ' + $('#aaa').val() + ' در ' + $('#hha').val() + ':' + $('#mna').val();
     info = info.replace(/\d+/g, function (digit) {
       var ret = '';
       for (var i = 0, len = digit.length; i < len; i++) {
@@ -140,20 +138,20 @@ jQuery(document).ready(function () {
       return ret;
     });
     if (old != info) {
-      jQuery('#timestamp b').html(info);
+      $('#timestamp b').html(info);
       clearInterval(timer);
     }
   }
 
-  jQuery('#timestampdiv').on('keypress', function (e) {
+  $('#timestampdiv').on('keypress', function (e) {
     if (e.which == 13)
       timer = setInterval(function () {
         change_date();
       }, 50);
   });
 
-  jQuery('.save-timestamp , .cancel-timestamp , #publish').on('click', function () {
-    if (jQuery('#aaa').length)
+  $('.save-timestamp , .cancel-timestamp , #publish').on('click', function () {
+    if ($('#aaa').length)
       timer = setInterval(function () {
         change_date();
       }, 50);
