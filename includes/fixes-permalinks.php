@@ -36,7 +36,7 @@ function wpp_posts_where( $where, $wp_query = '' ) {
 		return $where;
 	}
 
-	$pd = bn_parsidate::getInstance();
+	$pd = WPP_ParsiDate::getInstance();
 
 	$m      = ( isset( $wp_query->query_vars['m'] ) ) ? $wp_query->query_vars['m'] : '';
 	$hour   = ( isset( $wp_query->query_vars['hour'] ) ) ? $wp_query->query_vars['hour'] : '';
