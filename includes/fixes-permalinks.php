@@ -36,7 +36,7 @@ function wpp_posts_where( $where, $wp_query = '' ) {
 		return $where;
 	}
 
-	$pd = WPP_ParsiDate::getInstance();
+	$pd = bn_parsidate::getInstance();
 
 	$m      = ( isset( $wp_query->query_vars['m'] ) ) ? $wp_query->query_vars['m'] : '';
 	$hour   = ( isset( $wp_query->query_vars['hour'] ) ) ? $wp_query->query_vars['hour'] : '';
@@ -176,7 +176,7 @@ function wpp_pre_get_posts( $query ) {
 	}
 
 	$out = false;
-	$pd  = WPP_ParsiDate::getInstance();
+	$pd  = bn_parsidate::getInstance();
 
 	if ( isset( $permalink['name'] ) ) {
 		$var = $wpdb->get_var( "SELECT post_date FROM {$wpdb->prefix}posts WHERE post_name='{$permalink['name']}' AND post_type!='attachment' ORDER BY id" );
@@ -248,19 +248,21 @@ function wpp_pre_get_posts( $query ) {
 	}
 
 	if ( $out ) {
-		if ( isset( $var ) ) {
-			preg_match_all( '!\d+!', $var, $matches );
-
-
-			$var = $matches[0];
-
-			$query->set( 'year', $var[0] );
-			$query->set( 'monthnum', $var[1] );
-			$query->set( 'day', $var[2] );
-
-			$query->is_404              = false;
-			$query->query_vars['error'] = '';
+		if ( ! isset( $var ) ) {
+			return $query;
 		}
+
+		preg_match_all( '!\d+!', $var, $matches );
+
+		$var = $matches[0];
+
+		$query->set( 'year', $var[0] );
+		$query->set( 'monthnum', $var[1] );
+		$query->set( 'day', $var[2] );
+
+		$query->is_404              = false;
+		$query->query_vars['error'] = '';
+
 	}
 
 	return $query;
