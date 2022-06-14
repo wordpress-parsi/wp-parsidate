@@ -248,6 +248,10 @@ function wpp_pre_get_posts( $query ) {
 	}
 
 	if ( $out ) {
+		if ( ! isset( $var ) ) {
+			return $query;
+		}
+
 		preg_match_all( '!\d+!', $var, $matches );
 
 		$var = $matches[0];
