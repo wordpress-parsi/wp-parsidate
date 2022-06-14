@@ -176,7 +176,7 @@ function wpp_pre_get_posts( $query ) {
 	}
 
 	$out = false;
-	$pd  = bn_parsidate::getInstance();
+	$pd  = WPP_ParsiDate::getInstance();
 
 	if ( isset( $permalink['name'] ) ) {
 		$var = $wpdb->get_var( "SELECT post_date FROM {$wpdb->prefix}posts WHERE post_name='{$permalink['name']}' AND post_type!='attachment' ORDER BY id" );
@@ -262,7 +262,6 @@ function wpp_pre_get_posts( $query ) {
 
 		$query->is_404              = false;
 		$query->query_vars['error'] = '';
-
 	}
 
 	return $query;
