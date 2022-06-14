@@ -248,16 +248,19 @@ function wpp_pre_get_posts( $query ) {
 	}
 
 	if ( $out ) {
-		preg_match_all( '!\d+!', $var, $matches );
+		if ( isset( $var ) ) {
+			preg_match_all( '!\d+!', $var, $matches );
 
-		$var = $matches[0];
 
-		$query->set( 'year', $var[0] );
-		$query->set( 'monthnum', $var[1] );
-		$query->set( 'day', $var[2] );
+			$var = $matches[0];
 
-		$query->is_404              = false;
-		$query->query_vars['error'] = '';
+			$query->set( 'year', $var[0] );
+			$query->set( 'monthnum', $var[1] );
+			$query->set( 'day', $var[2] );
+
+			$query->is_404              = false;
+			$query->query_vars['error'] = '';
+		}
 	}
 
 	return $query;
