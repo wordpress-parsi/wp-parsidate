@@ -5,47 +5,16 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 /**
  * Parsi date main conversation class
  *
+ * Special thanks to:
+ * Reza Gholampanahi for convert function
+ *
  * @author              Mobin Ghasempoor
  * @package             WP-Parsidate
  * @subpackage          DateConversation
  */
-/*Special thanks to :
-Reza Gholampanahi for convert function*/
 
-class bn_parsidate {
+class WPP_ParsiDate {
 	protected static $instance;
-
-	public $persian_month_names = array(
-		'',
-		'فروردین',
-		'اردیبهشت',
-		'خرداد',
-		'تیر',
-		'مرداد',
-		'شهریور',
-		'مهر',
-		'آبان',
-		'آذر',
-		'دی',
-		'بهمن',
-		'اسفند'
-	);
-
-	public $persian_short_month_names = array(
-		'',
-		'فروردین',
-		'اردیبهشت',
-		'خرداد',
-		'تیر',
-		'مرداد',
-		'شهریور',
-		'مهر',
-		'آبان',
-		'آذر',
-		'دی',
-		'بهمن',
-		'اسفند'
-	);
 
 	public $sesson = array( 'بهار', 'تابستان', 'پاییز', 'زمستان' );
 
@@ -54,17 +23,116 @@ class bn_parsidate {
 
 	public $j_days_in_month = array( 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29 );
 	private $j_days_sum_month = array( 0, 0, 31, 62, 93, 124, 155, 186, 216, 246, 276, 306, 336 );
-
 	private $g_days_sum_month = array( 0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 );
 
 	/**
 	 * Constructor
 	 */
 	function __construct() {
+		$this->setup_vars();
 	}
 
 	/**
-	 * bn_parsidate::IsPerLeapYear()
+	 * Sets up global variables
+	 *
+	 * @return          void
+	 * @since           2.0
+	 */
+	private function setup_vars() {
+		global $wpp_months_name;
+		switch ( wpp_get_option( 'months_name_type' ) ) {
+			case 'persian':
+			case '':
+			case null:
+				$wpp_months_name = apply_filters( 'wpp_name_of_months', array(
+					'',
+					'فروردین',
+					'اردیبهشت',
+					'خرداد',
+					'تیر',
+					'مرداد',
+					'شهریور',
+					'مهر',
+					'آبان',
+					'آذر',
+					'دی',
+					'بهمن',
+					'اسفند'
+				), 'persian' );
+				break;
+			case 'dari':
+				$wpp_months_name = apply_filters( 'wpp_name_of_months', array(
+					'',
+					'حمل',
+					'ثور',
+					'جوزا',
+					'سرطان',
+					'اسد',
+					'سنبله',
+					'میزان',
+					'عقرب',
+					'قوس',
+					'جدی',
+					'دلو',
+					'حوت'
+				), 'dari' );
+				break;
+			case 'kurdish':
+				$wpp_months_name = apply_filters( 'wpp_name_of_months', array(
+					'',
+					'خاکەلێوە',
+					'گوڵان',
+					'جۆزەردان',
+					'پووشپەڕ',
+					'گەلاوێژ',
+					'خەرمانان',
+					'ڕەزبەر',
+					'گەڵاڕێزان',
+					'سەرماوەز',
+					'بەفرانبار',
+					'ڕێبەندان',
+					'ڕەشەمە'
+				), 'kurdish' );
+				break;
+			case 'pashto':
+				$wpp_months_name = apply_filters( 'wpp_name_of_months', array(
+					'',
+					'وری',
+					'غويی',
+					'غبرګولی',
+					'چنګاښ',
+					'زمری',
+					'وږی',
+					'تله',
+					'لړم',
+					'ليندۍ',
+					'مرغومی',
+					'سلواغه',
+					'كب'
+				), 'pashto' );
+				break;
+			default:
+				$wpp_months_name = apply_filters( 'wpp_name_of_months', array(
+					'',
+					'فروردین',
+					'اردیبهشت',
+					'خرداد',
+					'تیر',
+					'مرداد',
+					'شهریور',
+					'مهر',
+					'آبان',
+					'آذر',
+					'دی',
+					'بهمن',
+					'اسفند'
+				), 'persian' );
+				break;
+		}
+	}
+
+	/**
+	 * WPP_ParsiDate::IsPerLeapYear()
 	 * check year is leap
 	 *
 	 * @param mixed $year
@@ -82,7 +150,7 @@ class bn_parsidate {
 	}
 
 	/**
-	 * bn_parsidate::IsLeapYear()
+	 * WPP_ParsiDate::IsLeapYear()
 	 * check year is leap
 	 *
 	 * @param mixed $year
@@ -98,7 +166,7 @@ class bn_parsidate {
 	}
 
 	/**
-	 * bn_parsidate::persian_date()
+	 * WPP_ParsiDate::persian_date()
 	 * convert gregorian datetime to persian datetime
 	 *
 	 * @param mixed $format
@@ -108,6 +176,8 @@ class bn_parsidate {
 	 * @return string
 	 */
 	public function persian_date( $format, $date = 'now', $lang = 'per' ) {
+		global $wpp_months_name;
+
 		$j_days_in_month = array( 31, 62, 93, 124, 155, 186, 216, 246, 276, 306, 336, 365 );
 		$timestamp       = is_numeric( $date ) && (int) $date == $date ? $date : strtotime( $date );
 		$date            = getdate( $timestamp );
@@ -171,13 +241,13 @@ class bn_parsidate {
 					}
 					break;
 				case'F':
-					$out .= $this->persian_month_names[ $date['mon'] ];
+					$out .= $wpp_months_name[ $date['mon'] ];
 					break;
 				case'm':
 					$out .= ( $date['mon'] < 10 ) ? '0' . $date['mon'] : $date['mon'];
 					break;
 				case'M':
-					$out .= $this->persian_short_month_names[ $date['mon'] ];
+					$out .= $wpp_months_name[ $date['mon'] ];
 					break;
 				case'n':
 					$out .= $date['mon'];
@@ -237,7 +307,7 @@ class bn_parsidate {
 					$out = $date['year'] . '/' . $date['mon'] . '/' . $date['mday'] . ' ' . $date['hours'] . ':' . ( ( $date['minutes'] < 10 ) ? '0' . $date['minutes'] : $date['minutes'] ) . ':' . ( ( $date['seconds'] < 10 ) ? '0' . $date['seconds'] : $date['seconds'] );//2004-02-12T15:19:21+00:00
 					break;
 				case'r':
-					$out = $this->persian_day_names[ $date['wday'] ] . ',' . $date['mday'] . ' ' . $this->persian_month_names[ $date['mon'] ] . ' ' . $date['year'] . ' ' . $date['hours'] . ':' . ( ( $date['minutes'] < 10 ) ? '0' . $date['minutes'] : $date['minutes'] ) . ':' . ( ( $date['seconds'] < 10 ) ? '0' . $date['seconds'] : $date['seconds'] );//Thu, 21 Dec 2000 16:01:07
+					$out = $this->persian_day_names[ $date['wday'] ] . ',' . $date['mday'] . ' ' . $wpp_months_name[ $date['mon'] ] . ' ' . $date['year'] . ' ' . $date['hours'] . ':' . ( ( $date['minutes'] < 10 ) ? '0' . $date['minutes'] : $date['minutes'] ) . ':' . ( ( $date['seconds'] < 10 ) ? '0' . $date['seconds'] : $date['seconds'] );//Thu, 21 Dec 2000 16:01:07
 					break;
 				case'U':
 					$out = $timestamp;
@@ -256,7 +326,7 @@ class bn_parsidate {
 			}
 		}
 
-		if ( !in_array( strtolower( $format ), [ 'u', 'timestamp' ] ) && $lang == 'per' ) {
+		if ( ! in_array( strtolower( $format ), [ 'u', 'timestamp' ] ) && $lang == 'per' ) {
 			return self::trim_number( $out );
 		} else {
 			return $out;
@@ -264,7 +334,7 @@ class bn_parsidate {
 	}
 
 	/**
-	 * bn_parsidate::gregorian_to_persian()
+	 * WPP_ParsiDate::gregorian_to_persian()
 	 * convert gregorian date to persian date
 	 *
 	 * @param mixed $gy
@@ -321,7 +391,7 @@ class bn_parsidate {
 	}
 
 	/**
-	 * bn_parsidate::trim_number()
+	 * WPP_ParsiDate::trim_number()
 	 * convert english number to persian number
 	 *
 	 * @param mixed $num
@@ -338,10 +408,10 @@ class bn_parsidate {
 	}
 
 	/**
-	 * bn_parsidate::getInstance()
-	 * create instance of bn_parsidate class
+	 * WPP_ParsiDate::getInstance()
+	 * create instance of WPP_ParsiDate class
 	 *
-	 * @return bn_parsidate
+	 * @return WPP_ParsiDate
 	 */
 	public static function getInstance() {
 		if ( ! isset( self::$instance ) ) {
@@ -352,7 +422,7 @@ class bn_parsidate {
 	}
 
 	/**
-	 * bn_parsidate::gregorian_date()
+	 * WPP_ParsiDate::gregorian_date()
 	 * convert persian datetime to gregorian datetime
 	 *
 	 * @param mixed $format
@@ -371,7 +441,7 @@ class bn_parsidate {
 	}
 
 	/**
-	 * bn_parsidate::persian_to_gregorian()
+	 * WPP_ParsiDate::persian_to_gregorian()
 	 * convert persian date to gregorian date
 	 *
 	 * @param mixed $jy
@@ -422,7 +492,7 @@ class bn_parsidate {
  * @return string
  */
 function parsidate( $input, $datetime = 'now', $lang = 'per' ) {
-	$bndate = bn_parsidate::getInstance();
+	$bndate = WPP_ParsiDate::getInstance();
 
 	return $bndate->persian_date( $input, $datetime, $lang );
 }
@@ -437,7 +507,7 @@ function parsidate( $input, $datetime = 'now', $lang = 'per' ) {
  * @return false|string
  */
 function gregdate( $input, $datetime ) {
-	$bndate = bn_parsidate::getInstance();
+	$bndate = WPP_ParsiDate::getInstance();
 
 	return $bndate->gregorian_date( $input, $datetime );
 }

@@ -17,8 +17,14 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
  * @author              Ehsaan
  */
 function wpp_enqueue_admin_scripts() {
-	wp_register_script( 'wpp_admin', WP_PARSI_URL . 'assets/js/admin.js', false, WP_PARSI_VER );
-	wp_enqueue_script( 'wpp_admin' );
+	global $wpp_months_name;
+
+	wp_enqueue_script( 'wpp_admin', WP_PARSI_URL . 'assets/js/admin.js', false, WP_PARSI_VER );
+	wp_localize_script( 'wpp_admin', 'WPP_I18N',
+		array(
+			'months' => $wpp_months_name
+		)
+	);
 }
 
 add_action( 'admin_enqueue_scripts', 'wpp_enqueue_admin_scripts' );
@@ -60,7 +66,7 @@ function wpp_admin_posts_where( $where ) {
  * @author            Mobin Ghasempoor
  */
 function wpp_restrict_posts() {
-	global $post_type, $post_status, $wpdb, $persian_month_names;
+	global $post_type, $post_status, $wpdb, $wpp_months_name;
 
 	$post_status_w = "AND post_status <> 'auto-draft'";
 
@@ -72,7 +78,7 @@ function wpp_restrict_posts() {
 		$post_status_w .= " AND post_status <> 'trash'";
 	}
 
-	$sql  = "SELECT DISTINCT date( post_date ) AS date
+	$sql = "SELECT DISTINCT date( post_date ) AS date
         FROM $wpdb->posts
         WHERE post_type='$post_type' $post_status_w  AND date( post_date ) <> '0000-00-00'
         ORDER BY post_date";
@@ -93,7 +99,7 @@ function wpp_restrict_posts() {
 		$date  = parsidate( 'Ym', $date, 'eng' );
 		$year  = substr( $date, 0, 4 );
 		$month = substr( $date, 4, 2 );
-		$month = $persian_month_names[ intval( $month ) ];
+		$month = $wpp_months_name[ (int) $month ];
 
 		if ( $predate != $date ) {
 			echo sprintf( '<option %s value="%s">%s</option>', selected( $m, $date, false ), $date, $month . ' ' . fix_number( $year ) );

@@ -107,7 +107,7 @@ List of some features:
 * New fix for hook disabler
 
 = 2.3.4 =
-* Fix diagnosis leap year function ( bn_parsidate::IsLeapYear() )
+* Fix diagnosis leap year function ( WPP_ParsiDate::IsLeapYear() )
 
 = 2.3.3 =
 * Fix WooCommerce Sale Price Dates (From/To)
