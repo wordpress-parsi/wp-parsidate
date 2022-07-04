@@ -32,20 +32,20 @@ div.updated::before {
 .nav-tab-wrapper > a.nav-tab-active:after {
   position: absolute;
   top: 12px;
-  color: #797979
+  color: #797979;
 }
 
 body:not(.rtl) .nav-tab-wrapper > a.nav-tab-active:after {
   content: '\f341';
   right: 40px;
   transform: rotate(180deg);
-  left: auto
+  left: auto;
 }
 
 body.rtl .nav-tab-wrapper > a.nav-tab-active:after {
   content: '\f341';
   left: 40px;
-  right: auto
+  right: auto;
 }
 
 div.updated::before {
@@ -195,7 +195,7 @@ label.wpp-checkbox-label::before {
 label.wpp-checkbox-label::after {
   content: "";
   position: absolute;
-  top: 50%;
+  top: 47%;
   left: 0.5em;
   width: 1.4em;
   height: 1.4em;
@@ -248,4 +248,16 @@ p.submit {
 
 #submit {
   padding: 10px 15px;
+}
+
+#setting-error-settings_updated {
+  flex: 1 100%;
+  left: auto;
+  transform: none;
+  margin: 1rem;
+  border-right-width: 6px;
+}
+
+.wrap.wpp-settings-wrap h2 {
+  font-family: "tahoma";
 }
