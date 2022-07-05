@@ -93,8 +93,8 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
      * @since           4.0.0
      */
     function load_value( $value, $post_id, $field ) {
-        if ( ! wpp_is_active( 'acf_persian_date' ) ) {
-            $value = parsidate( 'Y-m-d', $value );
+        if ( ! wpp_is_active( 'acf_persian_date' ) && ! is_null( $value ) ) {
+            $value = parsidate( 'Y-m-d', $value, 'en' );
         }
 
         return apply_filters( 'wpp_acf_after_load_jalali_date', $value );
