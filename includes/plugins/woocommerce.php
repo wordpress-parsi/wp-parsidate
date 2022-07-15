@@ -1,4 +1,6 @@
 <?php
+# @Last modified by:   amirhp-com
+# @Last modified time: 2022/07/15 22:33:42
 
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
@@ -19,14 +21,14 @@ class WPP_WooCommerce {
 
 		if ( class_exists( 'WooCommerce' ) && get_locale() === 'fa_IR' ) {
 			if ( wpp_is_active( 'woo_per_price' ) ) {
-				add_filter( 'wc_price', 'fix_number' );
-				add_filter( 'woocommerce_get_price_html', 'fix_number' );
-				add_filter( 'woocommerce_cart_item_price', 'fix_number' );
-				add_filter( 'woocommerce_cart_item_subtotal', 'fix_number' );
-				add_filter( 'woocommerce_cart_subtotal', 'fix_number' );
-				add_filter( 'woocommerce_cart_totals_coupon_html', 'fix_number' );
+				add_filter( 'wc_price',                                    'fix_number' );
+				add_filter( 'woocommerce_get_price_html',                  'fix_number' );
+				add_filter( 'woocommerce_cart_item_price',                 'fix_number' );
+				add_filter( 'woocommerce_cart_item_subtotal',              'fix_number' );
+				add_filter( 'woocommerce_cart_subtotal',                   'fix_number' );
+				add_filter( 'woocommerce_cart_totals_coupon_html',         'fix_number' );
 				add_filter( 'woocommerce_cart_shipping_method_full_label', 'fix_number' );
-				add_filter( 'woocommerce_cart_total', 'fix_number' );
+				add_filter( 'woocommerce_cart_total',                      'fix_number' );
 			}
 
 			if ( wpp_is_active( 'woo_fix_date' ) ) {
@@ -34,39 +36,25 @@ class WPP_WooCommerce {
 				add_action( 'admin_enqueue_scripts', array( $this, 'wpp_admin_woocommerce_jalali_datepicker_assets' ) );
 
 				// Convert order_date using js
-				add_action( 'save_post', array( $this, 'wpp_change_order_date_on_save_order' ), 0, 2 );
-				add_action( 'admin_footer', array( $this, 'wpp_fix_show_created_order_date' ) );
-
-				add_action( 'admin_init', array( $this, 'wpp_change_wc_report_dates' ), 1000 );
-				add_filter( 'wp_insert_post_data', array(
-					$this,
-					'wpp_validate_dates_on_woocommerce_save_data'
-				), 1, 2 );
-				add_action( 'woocommerce_admin_process_variation_object', array(
-					$this,
-					'wpp_convert_wc_variations_scheduled_sale_dates'
-				), 1000, 2 );
-
-				add_filter( 'get_post_metadata', array( $this, 'wpp_change_wc_order_date_and_coupon_expires' ), 10, 4 );
-
-				add_filter( 'manage_edit-shop_coupon_columns', array(
-					$this,
-					'wpp_remove_wc_coupon_expiry_date_column'
-				), 10, 1 );
-				add_action( 'manage_shop_coupon_posts_custom_column', array(
-					$this,
-					'wpp_add_jalali_expiry_date_column'
-				), 10, 2 );
+				add_action( 'save_post',                                  array( $this, 'wpp_change_order_date_on_save_order' ), 0, 2 );
+				add_action( 'admin_footer',                               array( $this, 'wpp_fix_show_created_order_date' ) );
+				add_action( 'admin_init',                                 array( $this, 'wpp_change_wc_report_dates' ), 1000 );
+				add_filter( 'wp_insert_post_data',                        array( $this, 'wpp_validate_dates_on_woocommerce_save_data' ), 1, 2 );
+				add_action( 'woocommerce_admin_process_variation_object', array( $this, 'wpp_convert_wc_variations_scheduled_sale_dates' ), 1000, 2 );
+				add_filter( 'get_post_metadata',                          array( $this, 'wpp_change_wc_order_date_and_coupon_expires' ), 10, 4 );
+				add_filter( 'manage_edit-shop_coupon_columns',            array( $this, 'wpp_remove_wc_coupon_expiry_date_column' ), 10, 1 );
+				add_action( 'manage_shop_coupon_posts_custom_column',     array( $this, 'wpp_add_jalali_expiry_date_column' ), 10, 2 );
 			}
 
-			add_filter( 'woocommerce_checkout_process', array( $this, 'wpp_accept_persian_numbers_in_checkout' ), 20 );
+			add_filter( 'woocommerce_checkout_process',     array( $this, 'wpp_accept_persian_numbers_in_checkout' ), 20 );
+			add_filter( 'woocommerce_checkout_posted_data', array( $this, 'wpp_convert_non_persian_values_in_checkout' ), 10 );
 
 			if ( wpp_is_active( 'woo_validate_postcode' ) ) {
 				add_filter( 'woocommerce_validate_postcode', array( $this, 'wpp_validate_postcode' ), 10, 3 );
 			}
 
 			if ( wpp_is_active( 'woo_validate_phone' ) ) {
-				add_action( 'woocommerce_after_checkout_validation', 'wpp_validate_phone_number', 10, 2 );
+				add_action( 'woocommerce_after_checkout_validation', array($this, 'wpp_validate_phone_number'), 10, 2 );
 			}
 		}
 	}
@@ -169,7 +157,7 @@ class WPP_WooCommerce {
 				'jquery-ui-datepicker'
 			), WP_PARSI_VER );
 			wp_enqueue_style( 'wpp_jalali_datepicker', WP_PARSI_URL . "assets/css/jalalidatepicker$suffix.css", null, WP_PARSI_VER );
-			
+
 			do_action( 'wpp_jalai_datepicker_enqueued', 'wc' );
 		}
 	}
@@ -380,6 +368,89 @@ class WPP_WooCommerce {
 	}
 
 	/**
+	 * Convert Non-Persian Values in checkout to Persian
+	 *
+	 * @method  wpp_convert_non_persian_values_in_checkout
+	 * @param   array $data
+	 * @return  array modified $data
+	 * @version 1.0.0
+	 * @since   4.0.1
+	 */
+	public function wpp_convert_non_persian_values_in_checkout($data) {
+
+		$persian_fields = array(
+			'billing_postcode',
+			'billing_city',
+			'billing_address_1',
+			'billing_address',
+			'billing_address_2',
+			'billing_state',
+			'shipping_postcode',
+			'shipping_city',
+			'shipping_address_1',
+			'shipping_address',
+			'shipping_address_2',
+			'shipping_state',
+			'billing_first_name',
+			'billing_last_name',
+			'billing_company',
+			'billing_email',
+			'shipping_first_name',
+			'shipping_last_name',
+			'shipping_company',
+		);
+		/**
+		 * here we pass those fields we want to convert from arabic to persian
+		 * other developers can hook into this filter and add their fields too
+		 *
+		 * @var array $persian_fields
+		 */
+		$supported_persian_fields = apply_filters( "wpp_woocommerce_checkout_persian_fields", $persian_fields);
+		foreach ($supported_persian_fields as $field) {
+			if (isset( $data[$field] )) {
+				$data[$field] = $this->fix_persian_characters($data[$field]);
+			}
+		}
+		return apply_filters( "wpp_woocommerce_checkout_modified_persian_fields", $data);
+	}
+
+	/**
+	 * replace Arabic characters with equivalent character in Persian
+	 *
+	 * @method  fix_persian_characters
+	 * @param   string $string
+	 * @return  string filtered $string
+	 * @version 1.0.0
+	 * @since   4.0.1
+	 */
+	public static function fix_persian_characters($string)
+	{
+		$characters = [
+			'ك' => 'ک',
+			'دِ' => 'د',
+			'بِ' => 'ب',
+			'زِ' => 'ز',
+			'ذِ' => 'ذ',
+			'شِ' => 'ش',
+			'سِ' => 'س',
+			'ى' => 'ی',
+			'ي' => 'ی',
+			'١' => '۱',
+			'٢' => '۲',
+			'٣' => '۳',
+			'٤' => '۴',
+			'٥' => '۵',
+			'٦' => '۶',
+			'٧' => '۷',
+			'٨' => '۸',
+			'٩' => '۹',
+			'٠' => '۰',
+		];
+		$characters = apply_filters( "wpp_arabic_persian_characters_list", $characters);
+		return str_replace(array_keys($characters), array_values($characters), $string);
+	}
+
+	/**
 	 * Fix persian postal code & phone numbers in WooCommerce checkout
 	 *
 	 * @since 4.1.0
@@ -429,11 +500,10 @@ class WPP_WooCommerce {
 	 *
 	 * @return false|void
 	 */
-	function wpp_validate_phone_number( $data, $errors ) {
+	public function wpp_validate_phone_number( $data, $errors ) {
 		if ( preg_match( '/^(09[0-9]{9})$/', $data['billing_phone'] ) ) {
 			return false;
 		}
-
 		$errors->add( 'validation', '<b>شماره تماس</b> وارد شده، معتبر نیست.' );
 	}
 }

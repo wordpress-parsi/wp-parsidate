@@ -1,3 +1,8 @@
+/**
+ * @Last modified by:   amirhp-com
+ * @Last modified time: 2022/07/15 22:19:33
+ */
+
 body {
   background: #fff;
 }
@@ -143,7 +148,7 @@ div.notice {
   color: #797979;
 }
 
-:not([dir="rtl"]) .nav-tab-wrapper > a.nav-tab-active::after {
+[dir="ltr"] .nav-tab-wrapper > a.nav-tab-active::after {
   transform: scale(-1);
   right: 40px;
   left: auto;
