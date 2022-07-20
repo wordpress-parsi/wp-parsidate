@@ -1,6 +1,6 @@
 <?php
 # @Last modified by:   amirhp-com
-# @Last modified time: 2022/07/15 22:33:42
+# @Last modified time: 2022/07/20 00:32:24
 
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
@@ -490,8 +490,8 @@ class WPP_WooCommerce {
 		if ( 'IR' != $country ) {
 			return $valid;
 		}
-
-		return (bool) preg_match( '/^([13456789]{5}[0-9]{5})$/', $postcode );
+		// based on https://github.com/VahidN/DNTPersianUtils.Core/blob/34b9ae00ad3584bc9ef34033c6402d1b8ae7a148/src/DNTPersianUtils.Core/Validators/IranCodesUtils.cs#L13
+		return (bool) preg_match( '\b(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}\b', $postcode );
 	}
 
 	/**
@@ -501,7 +501,7 @@ class WPP_WooCommerce {
 	 * @return false|void
 	 */
 	public function wpp_validate_phone_number( $data, $errors ) {
-		if ( preg_match( '/^(09[0-9]{9})$/', $data['billing_phone'] ) ) {
+		if ( preg_match( '/^(\+98|0098|98|0)?9\d{9}$/', eng_number( sanitize_text_field( $_POST['billing_phone'] ) ) ) ) {
 			return false;
 		}
 		$errors->add( 'validation', '<b>شماره تماس</b> وارد شده، معتبر نیست.' );
