@@ -229,17 +229,17 @@ class WPP_WooCommerce {
 		switch ( $post['post_type'] ) {
 			case 'product':
 				if ( ! empty( $_POST['_sale_price_dates_from'] ) ) {
-					$_POST['_sale_price_dates_from'] = gregdate( 'Y-m-d', esc_attr( $_POST['_sale_price_dates_from'] ) );
+					$_POST['_sale_price_dates_from'] = gregdate( 'Y-m-d', sanitize_text_field( eng_number( $_POST['_sale_price_dates_from'] ) ) );
 				}
 
 				if ( ! empty( $_POST['_sale_price_dates_to'] ) ) {
-					$_POST['_sale_price_dates_to'] = gregdate( 'Y-m-d', esc_attr( $_POST['_sale_price_dates_to'] ) );
+					$_POST['_sale_price_dates_to'] = gregdate( 'Y-m-d', sanitize_text_field( eng_number( $_POST['_sale_price_dates_to'] ) ) );
 				}
 
 				break;
 			case 'shop_coupon':
 				if ( ! empty( $_POST['expiry_date'] ) ) {
-					$_POST['expiry_date'] = gregdate( 'Y-m-d', esc_attr( $_POST['expiry_date'] ) );
+					$_POST['expiry_date'] = gregdate( 'Y-m-d', sanitize_text_field( eng_number( $_POST['expiry_date'] ) ) );
 				}
 
 				break;
@@ -297,11 +297,11 @@ class WPP_WooCommerce {
 	public function wpp_change_wc_report_dates() {
 		if ( ! empty( $_GET['page'] ) && 'wc-reports' === esc_attr( $_GET['page'] ) ) {
 			if ( ! empty( $_GET['start_date'] ) ) {
-				$_GET['start_date'] = esc_attr( gregdate( 'Y-m-d', $_GET['start_date'] ) );
+				$_GET['start_date'] = gregdate( 'Y-m-d', sanitize_text_field( eng_number( $_GET['start_date'] ) ) );
 			}
 
 			if ( ! empty( $_GET['end_date'] ) ) {
-				$_GET['end_date'] = esc_attr( gregdate( 'Y-m-d', $_GET['end_date'] ) );
+				$_GET['end_date'] = gregdate( 'Y-m-d', sanitize_text_field( eng_number( $_GET['end_date'] ) ) );
 			}
 		}
 	}
@@ -319,7 +319,8 @@ class WPP_WooCommerce {
 		$date_on_sale_to   = '';
 
 		if ( ! empty( $_POST['variable_sale_price_dates_from'][ $index ] ) ) {
-			$date_on_sale_from = wc_clean( wp_unslash( $_POST['variable_sale_price_dates_from'][ $index ] ) );
+			$date_on_sale_from = eng_number( $_POST['variable_sale_price_dates_from'][ $index ] );
+			$date_on_sale_from = wc_clean( wp_unslash( $date_on_sale_from ) );
 
 			if ( ! empty( $date_on_sale_from ) ) {
 				$date_on_sale_from = gregdate( 'Y-m-d 00:00:00', $date_on_sale_from );
@@ -327,7 +328,8 @@ class WPP_WooCommerce {
 		}
 
 		if ( ! empty( $_POST['variable_sale_price_dates_to'][ $index ] ) ) {
-			$date_on_sale_to = wc_clean( wp_unslash( $_POST['variable_sale_price_dates_to'][ $index ] ) );
+			$date_on_sale_to = eng_number( $_POST['variable_sale_price_dates_to'][ $index ] );
+			$date_on_sale_to = wc_clean( wp_unslash( $date_on_sale_to ) );
 
 			if ( ! empty( $date_on_sale_to ) ) {
 				$date_on_sale_to = gregdate( 'Y-m-d 23:59:59', $date_on_sale_to );
