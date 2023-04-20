@@ -29,8 +29,7 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
  */
 if ( ! function_exists( 'wpp_gutenberg_jalali_calendar_editor_assets' ) ) {
 	function wpp_gutenberg_jalali_calendar_editor_assets() {
-		wp_enqueue_script(
-			'wpp_gutenberg_jalali_calendar_editor_scripts',
+		wp_enqueue_script( 'wpp_gutenberg_jalali_calendar_editor_scripts',
 			WP_PARSI_URL . 'assets/js/gutenberg-jalali-calendar.build.js',
 			array(
 				'wp-plugins',
