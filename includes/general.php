@@ -187,7 +187,7 @@ function fix_number( $content ) {
  * @return              array|string|string[]
  */
 function fix_arabic( $content ) {
-	return str_replace( array( 'ي', 'ك', '٤', '٥', '٦', 'ة' ), array( 'ی', 'ک', '۴', '۵', '۶', 'ه' ), $content );
+	return str_replace( array( 'ي', 'ك', 'ة', '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'), array('ی', 'ک', 'ه', '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'), $content );
 }
 
 /**

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-02 02:33+0430\n"
-"PO-Revision-Date: 2022-04-02 02:34+0430\n"
+"POT-Creation-Date: 2023-04-20 15:04+0330\n"
+"PO-Revision-Date: 2023-04-20 15:04+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Loco-Parser: loco_parse_po\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../includes/admin/lists-fix.php:89
+#: ../includes/admin/lists-fix.php:96
 msgid "Show All Dates"
 msgstr "نمایش همۀ تاریخ‌ها"
 
@@ -91,7 +91,7 @@ msgstr "نمایش انتخاب‌گر زمان بصورت 24 یا 12 ساعته
 msgid "Advanced Custom Fields (ACF)"
 msgstr "زمینه‌های سفارشی (ACF)"
 
-#: ../includes/plugins/acf.php:80 ../includes/plugins/woocommerce.php:104
+#: ../includes/plugins/acf.php:80 ../includes/plugins/woocommerce.php:90
 msgid "Jalali Datepicker"
 msgstr "انتخاب‌گر تاریخ شمسی (جلالی)"
 
@@ -99,11 +99,11 @@ msgstr "انتخاب‌گر تاریخ شمسی (جلالی)"
 msgid "Save dates in Jalali format (Not recommended)"
 msgstr "ذخیره‌سازی تاریخ بصورت شمسی (توصیه نمی‌شود)"
 
-#: ../includes/plugins/disable.php:181 ../includes/settings.php:202
+#: ../includes/plugins/disable.php:181 ../includes/settings.php:201
 msgid "Enable"
 msgstr "فعال"
 
-#: ../includes/plugins/disable.php:182 ../includes/settings.php:203
+#: ../includes/plugins/disable.php:182 ../includes/settings.php:202
 msgid "Disable"
 msgstr "غیرفعال"
 
@@ -123,7 +123,7 @@ msgstr "نام قلاب، کلاس و تابع موردنظر را جهت رفع
 msgid "Easy Digital Downloads"
 msgstr "Easy Digital Downloads"
 
-#: ../includes/plugins/edd.php:66 ../includes/plugins/woocommerce.php:111
+#: ../includes/plugins/edd.php:66 ../includes/plugins/woocommerce.php:97
 msgid "Fix prices"
 msgstr "تصحیح قیمت‌ها"
 
@@ -131,119 +131,123 @@ msgstr "تصحیح قیمت‌ها"
 msgid "Replace ریال with RIAL"
 msgstr "جایگزینی ریال با RIAL"
 
-#: ../includes/plugins/woocommerce.php:99
+#: ../includes/plugins/woocommerce.php:85
 msgid "WooCommerce"
 msgstr "ووکامرس"
 
-#: ../includes/plugins/woocommerce.php:118
+#: ../includes/plugins/woocommerce.php:104
+msgid "Use the drop-down list to select a city"
+msgstr "استفاده از لیست کشویی برای انتخاب شهر"
+
+#: ../includes/plugins/woocommerce.php:111
 msgid "Fix persian postcode"
 msgstr "تبدیل کد پستی فارسی در روند پرداخت"
 
-#: ../includes/plugins/woocommerce.php:125
+#: ../includes/plugins/woocommerce.php:118
 msgid "Fix persian phone"
 msgstr "تبدیل شماره تماس فارسی در روند پرداخت"
 
-#: ../includes/plugins/woocommerce.php:132
+#: ../includes/plugins/woocommerce.php:125
 msgid "Postcode validation"
 msgstr "اعتبارسنجی کد پستی"
 
-#: ../includes/plugins/woocommerce.php:139
+#: ../includes/plugins/woocommerce.php:132
 msgid "Phone number validation"
 msgstr "اعتبارسنجی شماره تماس"
 
-#: ../includes/plugins/woocommerce.php:360
+#: ../includes/plugins/woocommerce.php:353
 msgid "Expiry date"
 msgstr "تاریخ انقضاء"
 
-#: ../includes/settings.php:25 ../includes/settings.php:26
-#: ../includes/settings.php:33 ../includes/settings.php:34
-#: ../includes/settings.php:653
+#: ../includes/settings.php:24 ../includes/settings.php:25
+#: ../includes/settings.php:32 ../includes/settings.php:33
+#: ../includes/settings.php:652
 msgid "Parsi Settings"
 msgstr "تنظیمات پارسی"
 
-#: ../includes/settings.php:133
+#: ../includes/settings.php:132
 #, php-format
 msgid "%s Core"
 msgstr "%s هسته"
 
-#: ../includes/settings.php:134
+#: ../includes/settings.php:133
 #, php-format
 msgid "%s Converts"
 msgstr "%s تبدیل"
 
-#: ../includes/settings.php:135
+#: ../includes/settings.php:134
 #, php-format
 msgid "%s Plugins compatibility"
 msgstr "%s هماهنگی با افزونه‌ها"
 
-#: ../includes/settings.php:210
+#: ../includes/settings.php:209
 msgid "Change Locale in admin"
 msgstr "تغییر زبان مدیریت"
 
-#: ../includes/settings.php:214
+#: ../includes/settings.php:213
 msgid "This option change WordPress locale to Persian in Admin"
 msgstr "این گزینه باعث تغییر زبان مدیریت می‌شود"
 
-#: ../includes/settings.php:218
+#: ../includes/settings.php:217
 msgid "Change Locale in theme"
 msgstr "تغییر زبان سایت"
 
-#: ../includes/settings.php:222
+#: ../includes/settings.php:221
 msgid "This option change WordPress locale to Persian in theme"
 msgstr "این گزینه باعث تغییر زبان سایت می‌شود"
 
-#: ../includes/settings.php:226
+#: ../includes/settings.php:225
 msgid "Shamsi date"
 msgstr "تاریخ خورشیدی"
 
-#: ../includes/settings.php:230
+#: ../includes/settings.php:229
 msgid "By enabling this, Dates will convert to Shamsi (Jalali) dates"
 msgstr "با فعال‌کردن این گزینه، تاریخ‌ها به صورت تاریخ خورشیدی (جلالی) درمی‌آیند"
 
-#: ../includes/settings.php:234
+#: ../includes/settings.php:233
 msgid "Months name type"
 msgstr "نوع اسامی ماه‌ها"
 
-#: ../includes/settings.php:237
+#: ../includes/settings.php:236
 msgid "Persian"
 msgstr "پارسی"
 
-#: ../includes/settings.php:238
+#: ../includes/settings.php:237
 msgid "Dari"
 msgstr "دری"
 
-#: ../includes/settings.php:239
+#: ../includes/settings.php:238
 msgid "Kurdish"
 msgstr "کوردی"
 
-#: ../includes/settings.php:240
+#: ../includes/settings.php:239
 msgid "Pashto"
 msgstr "پشتو"
 
-#: ../includes/settings.php:246
+#: ../includes/settings.php:245
 msgid "Disable Widget Block"
 msgstr "غیرفعال کردن ویرایشگر بلوک ابزارک"
 
-#: ../includes/settings.php:250
+#: ../includes/settings.php:249
 msgid "By enabling this, Widget Block Editor disabled"
 msgstr ""
 "با فعال‌کردن این گزینه، «ویرایشگر بلوک ابزارک» در بخش ابزارک‌ها غیرفعال می‌شود."
 
-#: ../includes/settings.php:254
+#: ../includes/settings.php:253
 msgid "Move page to submenu?"
 msgstr "انتقال این برگه به زیرمنو؟"
 
-#: ../includes/settings.php:258
+#: ../includes/settings.php:257
 msgid ""
 "By enabling this option, page item will be moved to Settings menu as submenu."
 msgstr ""
 "با فعال‌کردن این گزینه، صفحۀ پیکربندی پارسی‌دیت به زیرفهرست «تنظیمات» منتقل می‌شود."
 
-#: ../includes/settings.php:262
+#: ../includes/settings.php:261
 msgid "Debug Mode"
 msgstr "حالت اشکال‌زادیی"
 
-#: ../includes/settings.php:266
+#: ../includes/settings.php:265
 msgid ""
 "By enabling this option, the uncompressed version of the JS and CSS files will "
 "be loaded."
@@ -251,79 +255,79 @@ msgstr ""
 "با فعال‌کردن این گزینه، نسخۀ فشرده‌نشدۀ پرونده‌های JS و CSS افزونۀ پارسی‌دیت "
 "بارگذاری می‌شوند."
 
-#: ../includes/settings.php:270
+#: ../includes/settings.php:269
 msgid "Vazir Font"
 msgstr "فونت وزیر"
 
-#: ../includes/settings.php:274
+#: ../includes/settings.php:273
 msgid "By enabling this option, the Vazir font will be enable in whole admin area."
 msgstr "با فعال‌کردن این گزینه، فونت وزیر در همه بخش‌های مدیریت فعال می‌شود."
 
-#: ../includes/settings.php:280
+#: ../includes/settings.php:279
 msgid "Persian digits"
 msgstr "رقم‌های پارسی"
 
-#: ../includes/settings.php:285
+#: ../includes/settings.php:284
 msgid "Page title"
 msgstr "در عنوان صفحه"
 
-#: ../includes/settings.php:292
+#: ../includes/settings.php:291
 msgid "Post title"
 msgstr "در عنوان نوشته‌ها"
 
-#: ../includes/settings.php:299
+#: ../includes/settings.php:298
 msgid "Post content"
 msgstr "در محتوای نوشته‌ها"
 
-#: ../includes/settings.php:306
+#: ../includes/settings.php:305
 msgid "Post excerpt"
 msgstr "در خلاصه‌ی نوشته‌ها"
 
-#: ../includes/settings.php:313
+#: ../includes/settings.php:312
 msgid "Comments text"
 msgstr "در نوشته‌ی دیدگاه‌ها"
 
-#: ../includes/settings.php:320
+#: ../includes/settings.php:319
 msgid "Comments count"
 msgstr "تعداد دیدگاه‌ها"
 
-#: ../includes/settings.php:327
+#: ../includes/settings.php:326
 msgid "Dates"
 msgstr "تاریخ‌ها"
 
-#: ../includes/settings.php:334
+#: ../includes/settings.php:333
 msgid "Categories"
 msgstr "دسته‌بندی‌ها"
 
-#: ../includes/settings.php:345
+#: ../includes/settings.php:344
 msgid "Fix arabic characters"
 msgstr "تصحیح حروف عربی"
 
-#: ../includes/settings.php:349
+#: ../includes/settings.php:348
 msgid "Fixes arabic characters caused by wrong keyboard layouts"
 msgstr ""
 "این گزینه، حروف عربی را در کل سیستم به حروف فارسی تصحیح می‌کند<br>برای مثال ٤/٥/٦ "
 "به ۴ / ۵ / ۶ و ك / ي به ک / ی"
 
-#: ../includes/settings.php:353
+#: ../includes/settings.php:352
 msgid "Fix permalinks dates"
 msgstr "تبدیل تاریخ در پیوندهای یکتا"
 
-#: ../includes/settings.php:357
+#: ../includes/settings.php:356
 msgid "By enabling this, dates in permalinks converted to Shamsi (Jalali) date"
 msgstr ""
 "با فعال‌کردن این گزینه، تاریخ‌ها در پیوندهای یکتا به تاریخ خورشیدی (جلالی) تبدیل "
 "می‌شوند"
 
-#: ../includes/settings.php:620
+#: ../includes/settings.php:619
 msgid "Upload File"
 msgstr "آپلود فایل"
 
-#: ../includes/settings.php:737
+#: ../includes/settings.php:736
 msgid "Multilingual compatibility"
 msgstr "پشتیبانی از چندزبانه"
 
-#: ../includes/settings.php:741
+#: ../includes/settings.php:740
 msgid "By enabling this, ParsiDate options only work in persian locale"
 msgstr ""
 
@@ -331,42 +335,42 @@ msgstr ""
 #: ../includes/widget/widget_archive.php:16
 #: ../includes/widget/widget_archive.php:18
 #: ../includes/widget/widget_archive.php:19
-#: ../includes/widget/widget_archive.php:35
-#: ../includes/widget/widget_archive.php:46
-#: ../includes/widget/widget_archive.php:123
-#: ../includes/widget/widget_archive.php:148
+#: ../includes/widget/widget_archive.php:36
+#: ../includes/widget/widget_archive.php:47
+#: ../includes/widget/widget_archive.php:125
+#: ../includes/widget/widget_archive.php:151
 msgid "Jalali Date Archives"
 msgstr "بایگانی تاریخ خورشیدی"
 
-#: ../includes/widget/widget_archive.php:42
+#: ../includes/widget/widget_archive.php:43
 msgid "Title"
 msgstr "عنوان"
 
-#: ../includes/widget/widget_archive.php:51
+#: ../includes/widget/widget_archive.php:52
 msgid "How to display"
 msgstr "نحوۀ نمایش"
 
-#: ../includes/widget/widget_archive.php:57
+#: ../includes/widget/widget_archive.php:58
 msgid "Yearly"
 msgstr "سالانه"
 
-#: ../includes/widget/widget_archive.php:66
+#: ../includes/widget/widget_archive.php:67
 msgid "Monthly"
 msgstr "ماهانه"
 
-#: ../includes/widget/widget_archive.php:75
+#: ../includes/widget/widget_archive.php:76
 msgid "Daily"
 msgstr "روزانه"
 
-#: ../includes/widget/widget_archive.php:86
+#: ../includes/widget/widget_archive.php:87
 msgid "Show post counts"
 msgstr "نمايش تعداد نوشته‌ها"
 
-#: ../includes/widget/widget_archive.php:96
+#: ../includes/widget/widget_archive.php:97
 msgid "Display as dropdown"
 msgstr "نمايش به صورت ليست بازشو"
 
-#: ../includes/widget/widget_archive.php:102
+#: ../includes/widget/widget_archive.php:103
 #: ../includes/widget/widget_calendar.php:34
 msgid "For use widget, active \"Fix permalinks dates\" option in plugin settings."
 msgstr ""
@@ -383,15 +387,15 @@ msgstr "گاه‌شمار تاریخ خورشیدی"
 msgid "Title:"
 msgstr "عنوان:"
 
-#: ../includes/widget/widget_calendar.php:48
+#: ../includes/widget/widget_calendar.php:49
 msgid "Theme color:"
 msgstr "رنگ پوسته:"
 
-#: ../includes/widget/widget_calendar.php:53
+#: ../includes/widget/widget_calendar.php:54
 msgid "Light Mode"
 msgstr "حالت روشن"
 
-#: ../includes/widget/widget_calendar.php:56
+#: ../includes/widget/widget_calendar.php:57
 msgid "Dark Mode"
 msgstr "حالت تاریک"
 
@@ -415,6 +419,6 @@ msgstr ""
 msgid "WP-Parsi Team"
 msgstr "تیم وردپرس پارسی"
 
-#: ../wp-parsidate.php:201
+#: ../wp-parsidate.php:206
 msgid "settings"
 msgstr "تنظیمات"

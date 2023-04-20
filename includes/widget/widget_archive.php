@@ -33,8 +33,7 @@ class parsidate_archive extends WP_Widget {
 		global $wpp_settings;
 
 		$type                                = isset( $instance['parsidate_archive_type'] ) ? $instance['parsidate_archive_type'] : 'monthly';
-		$instance['parsidate_archive_title'] = isset( $instance['parsidate_archive_title'] ) ? strip_tags( $instance['parsidate_archive_title'] ) : __( 'Jalali Date Archives',
-			'wp-parsidate' );
+		$instance['parsidate_archive_title'] = isset( $instance['parsidate_archive_title'] ) ? strip_tags( $instance['parsidate_archive_title'] ) : __( 'Jalali Date Archives', 'wp-parsidate' );
 		$instance['parsidate_archive_count'] = isset( $instance['parsidate_archive_count'] ) ? $instance['parsidate_archive_count'] : 0;
 		$instance['parsidate_archive_list']  = isset( $instance['parsidate_archive_list'] ) ? $instance['parsidate_archive_list'] : 0;
 		?>

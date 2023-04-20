@@ -58,7 +58,7 @@ function disable_wpp() {
 		foreach ( $hooks as $hook ) {
 			$hook['class'] = trim( $hook['class'] );
 
-			if ( ( isset( $call['class'] ) && empty( $hook['class'] ) ) ||( ! isset( $call['class'] ) && ! empty( $hook['class'] ) ) ) {
+			if ( ( isset( $call['class'] ) && empty( $hook['class'] ) ) || ( ! isset( $call['class'] ) && ! empty( $hook['class'] ) ) ) {
 				continue;
 			}
 
@@ -66,7 +66,7 @@ function disable_wpp() {
 				continue;
 			}
 
-			if ( ( ! isset( $call['class'] ) && empty( $hook['class'] ) ) ||$call['class'] == $hook['class'] ) {
+			if ( ( ! isset( $call['class'] ) && empty( $hook['class'] ) ) || $call['class'] == $hook['class'] ) {
 				return false;
 			}
 		}
@@ -93,7 +93,7 @@ function wpp_woocommerce_admin_report_data( $report_data ) {
  * @return array|mixed|string|string[]
  */
 function fix_date_woo_report( $date ) {
-	if ( empty( $_GET['start_date'] ) ||empty( $_GET['end_date'] ) ) {
+	if ( empty( $_GET['start_date'] ) || empty( $_GET['end_date'] ) ) {
 		return $date[0];
 	}
 
@@ -135,11 +135,11 @@ class WPP_Disable {
 	private function __construct() {
 		add_filter( 'wpp_plugins_compatibility_settings', array( $this, 'add_settings' ) );
 
-		if ( ! wpp_is_active( 'dis_prices' )  ) {
+		if ( ! wpp_is_active( 'dis_prices' ) ) {
 			add_filter( 'dis_rial_currency_filter_after', 'per_number', 10, 2 );
 		}
 
-		if ( ! wpp_is_active( 'dis_rial_fix' )  ) {
+		if ( ! wpp_is_active( 'dis_rial_fix' ) ) {
 			add_filter( 'dis_rial_currency_filter_after', array( $this, 'rial_fix' ), 10, 2 );
 		}
 	}
@@ -160,7 +160,7 @@ class WPP_Disable {
 	/**
 	 * RIAL fix for EDD
 	 *
-	 * @param  integer|string  $price  Price Number
+	 * @param integer|string $price Price Number
 	 * @param  $did
 	 *
 	 * @return string
@@ -177,7 +177,7 @@ class WPP_Disable {
 	 * @return          array New settings
 	 */
 	public function add_settings( $old_settings ) {
-		$options  = array(
+		$options = array(
 			'enable'  => __( 'Enable', 'wp-parsidate' ),
 			'disable' => __( 'Disable', 'wp-parsidate' )
 		);
