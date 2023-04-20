@@ -150,6 +150,7 @@ class WPP_WooCommerce {
 	 */
 	public function wpp_admin_woocommerce_jalali_datepicker_assets() {
 		global $wpp_months_name;
+		
 		$screen = get_current_screen();
 
 		if ( ! $screen || ! property_exists( $screen, 'post_type' ) ) {
@@ -159,12 +160,9 @@ class WPP_WooCommerce {
 		$suffix         = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 		$current_screen = $screen->post_type;
 
-		if ( wpp_is_active( 'woo_fix_date' )
-		     && in_array( $current_screen, array( 'product', 'shop_order', 'shop_coupon', 'wc-reports' ) ) ) {
-			wp_enqueue_script( 'wpp_jalali_datepicker', WP_PARSI_URL . 'assets/js/jalalidatepicker.min.js', array(
-				'jquery',
-				'jquery-ui-datepicker'
-			), WP_PARSI_VER );
+		if ( wpp_is_active( 'woo_fix_date' ) && in_array( $current_screen, array( 'product', 'shop_order', 'shop_coupon', 'wc-reports' ) ) ) {
+			wp_enqueue_script( 'wpp_jalali_datepicker', WP_PARSI_URL . 'assets/js/jalalidatepicker.min.js', array( 'jquery', 'jquery-ui-datepicker' ), WP_PARSI_VER );
+
 			wp_enqueue_style( 'wpp_jalali_datepicker', WP_PARSI_URL . "assets/css/jalalidatepicker$suffix.css", null, WP_PARSI_VER );
 
 			do_action( 'wpp_jalai_datepicker_enqueued', 'wc' );
