@@ -1,4 +1,6 @@
 <?php
+# @Last modified by:   amirhp-com
+# @Last modified time: 2022/07/20 00:32:24
 
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
@@ -19,14 +21,14 @@ class WPP_WooCommerce {
 
 		if ( class_exists( 'WooCommerce' ) && get_locale() === 'fa_IR' ) {
 			if ( wpp_is_active( 'woo_per_price' ) ) {
-				add_filter( 'wc_price', 'fix_number' );
-				add_filter( 'woocommerce_get_price_html', 'fix_number' );
-				add_filter( 'woocommerce_cart_item_price', 'fix_number' );
-				add_filter( 'woocommerce_cart_item_subtotal', 'fix_number' );
-				add_filter( 'woocommerce_cart_subtotal', 'fix_number' );
-				add_filter( 'woocommerce_cart_totals_coupon_html', 'fix_number' );
+				add_filter( 'wc_price',                                    'fix_number' );
+				add_filter( 'woocommerce_get_price_html',                  'fix_number' );
+				add_filter( 'woocommerce_cart_item_price',                 'fix_number' );
+				add_filter( 'woocommerce_cart_item_subtotal',              'fix_number' );
+				add_filter( 'woocommerce_cart_subtotal',                   'fix_number' );
+				add_filter( 'woocommerce_cart_totals_coupon_html',         'fix_number' );
 				add_filter( 'woocommerce_cart_shipping_method_full_label', 'fix_number' );
-				add_filter( 'woocommerce_cart_total', 'fix_number' );
+				add_filter( 'woocommerce_cart_total',                      'fix_number' );
 			}
 
 			if ( wpp_is_active( 'woo_fix_date' ) ) {
@@ -34,6 +36,7 @@ class WPP_WooCommerce {
 				add_action( 'admin_enqueue_scripts', array( $this, 'wpp_admin_woocommerce_jalali_datepicker_assets' ) );
 
 				// Convert order_date using js
+.1.0
 				add_action( 'save_post', array( $this, 'wpp_change_order_date_on_save_order' ), 0, 2 );
 				add_action( 'admin_footer', array( $this, 'wpp_fix_show_created_order_date' ) );
 				add_action( 'admin_init', array( $this, 'wpp_change_wc_report_dates' ), 1000 );
@@ -45,6 +48,7 @@ class WPP_WooCommerce {
 			}
 
 			add_filter( 'woocommerce_checkout_process', array( $this, 'wpp_accept_persian_numbers_in_checkout' ), 20 );
+
 			add_filter( 'woocommerce_checkout_posted_data', array( $this, 'wpp_convert_non_persian_values_in_checkout' ), 10 );
 
 			if ( wpp_is_active( 'woo_validate_postcode' ) ) {
@@ -57,6 +61,7 @@ class WPP_WooCommerce {
 
 			if ( wpp_is_active( 'woo_dropdown_cities' ) ) {
 				include_once WP_PARSI_DIR . 'includes/plugins/wc-cities/wc-city-select.php';
+
 			}
 		}
 	}
@@ -503,7 +508,6 @@ class WPP_WooCommerce {
 		if ( 'IR' != $country ) {
 			return $valid;
 		}
-
 		// based on https://github.com/VahidN/DNTPersianUtils.Core/blob/34b9ae00ad3584bc9ef34033c6402d1b8ae7a148/src/DNTPersianUtils.Core/Validators/IranCodesUtils.cs#L13
 		return (bool) preg_match( '\b(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}\b', $postcode );
 	}
