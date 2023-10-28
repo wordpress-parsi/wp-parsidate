@@ -36,7 +36,6 @@ class WPP_WooCommerce {
 				add_action( 'admin_enqueue_scripts', array( $this, 'wpp_admin_woocommerce_jalali_datepicker_assets' ) );
 
 				// Convert order_date using js
-.1.0
 				add_action( 'save_post', array( $this, 'wpp_change_order_date_on_save_order' ), 0, 2 );
 				add_action( 'admin_footer', array( $this, 'wpp_fix_show_created_order_date' ) );
 				add_action( 'admin_init', array( $this, 'wpp_change_wc_report_dates' ), 1000 );
