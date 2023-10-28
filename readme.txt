@@ -4,7 +4,7 @@ Donate link: https://wp-parsi.com/support/
 Tags: shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, iran, iranian, parsidate, rtl, gutenberg, acf,woocommerce
 Requires at least: 5.3
 Tested up to: 5.8.2
-Stable tag: 4.0.0
+Stable tag: 5.0.0 RC1
 
 Persian date support for WordPress
 
