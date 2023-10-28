@@ -55,9 +55,6 @@ jdp-container .jdp-icon-plus.not-in-range svg, jdp-container .jdp-icon-minus.not
 }
 
 jdp-container .jdp-years, jdp-container .jdp-months {
-  display: -webkit-inline-box;
-  display: -webkit-flex;
-  display: -ms-inline-flexbox;
   display: inline-flex;
   margin: 0 2.5%;
   font-size: 120%;

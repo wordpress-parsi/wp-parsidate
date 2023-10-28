@@ -1,5 +1,4 @@
 <?php
-
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
 /**
@@ -13,11 +12,10 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
  * @package         WP-Parsidate
  * @subpackage      Admin/Settings
  */
-add_action( 'admin_menu', 'wpp_add_settings_menu', 11 );
 
 /**
  * Add WP-Parsidate admin page settings
- * */
+ **/
 function wpp_add_settings_menu() {
 	if ( wpp_is_active( 'submenu_move' ) ) {
 		add_submenu_page(
@@ -41,6 +39,8 @@ function wpp_add_settings_menu() {
 
 	add_action( 'admin_enqueue_scripts', 'wpp_enqueue_setting_page_style' );
 }
+
+add_action( 'admin_menu', 'wpp_add_settings_menu', 11 );
 
 /**
  * Gets saved settings from WP core
@@ -445,7 +445,7 @@ function wpp_text_callback( $args ) {
 		$value = isset( $args['std'] ) ? $args['std'] : '';
 	}
 
-	$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+	$size = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
 	$html = '<input type="text" class="' . $size . '-text" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
 	$html .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
 
@@ -467,7 +467,7 @@ function wpp_number_callback( $args ) {
 	$max  = isset( $args['max'] ) ? $args['max'] : 999999;
 	$min  = isset( $args['min'] ) ? $args['min'] : 0;
 	$step = isset( $args['step'] ) ? $args['step'] : 1;
-	$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+	$size = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
 	$html = '<input type="number" step="' . esc_attr( $step ) . '" max="' . esc_attr( $max ) . '" min="' . esc_attr( $min ) . '" class="' . $size . '-text" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
 	$html .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
 
@@ -486,7 +486,7 @@ function wpp_textarea_callback( $args ) {
 		$value = isset( $args['std'] ) ? $args['std'] : '';
 	}
 
-	$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+	$size = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
 	$html = '<textarea class="large-text" cols="50" rows="5" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
 	$html .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
 
@@ -505,7 +505,7 @@ function wpp_password_callback( $args ) {
 		$value = isset( $args['std'] ) ? $args['std'] : '';
 	}
 
-	$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+	$size = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
 	$html = '<input type="password" class="' . $size . '-text" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( $value ) . '"/>';
 	$html .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
 
@@ -615,7 +615,7 @@ function wpp_upload_callback( $args ) {
 		$value = isset( $args['std'] ) ? $args['std'] : '';
 	}
 
-	$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+	$size = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
 	$html = '<input type="text" class="' . $size . '-text wpp_upload_field" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
 	$html .= '<span>&nbsp;<input type="button" class="wpp_settings_upload_button button-secondary" value="' . __( 'Upload File', 'wpp' ) . '"/></span>';
 	$html .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
@@ -636,7 +636,7 @@ function wpp_color_callback( $args ) {
 	}
 
 	$default = isset( $args['std'] ) ? $args['std'] : '';
-	$size    = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+	$size    = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
 	$html    = '<input type="text" class="wpp-color-picker" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( $value ) . '" data-default-color="' . esc_attr( $default ) . '" />';
 	$html    .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
 

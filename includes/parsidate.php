@@ -12,11 +12,10 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
  * @package             WP-Parsidate
  * @subpackage          DateConversation
  */
-
 class WPP_ParsiDate {
 	protected static $instance;
 
-	public $sesson = array( 'بهار', 'تابستان', 'پاییز', 'زمستان' );
+	public $sessions = array( 'بهار', 'تابستان', 'پاییز', 'زمستان' );
 
 	public $persian_day_names = array( 'یکشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه' );
 	public $persian_day_small = array( 'ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش' );
@@ -41,25 +40,6 @@ class WPP_ParsiDate {
 	private function setup_vars() {
 		global $wpp_months_name;
 		switch ( wpp_get_option( 'months_name_type' ) ) {
-			case 'persian':
-			case '':
-			case null:
-				$wpp_months_name = apply_filters( 'wpp_name_of_months', array(
-					'',
-					'فروردین',
-					'اردیبهشت',
-					'خرداد',
-					'تیر',
-					'مرداد',
-					'شهریور',
-					'مهر',
-					'آبان',
-					'آذر',
-					'دی',
-					'بهمن',
-					'اسفند'
-				), 'persian' );
-				break;
 			case 'dari':
 				$wpp_months_name = apply_filters( 'wpp_name_of_months', array(
 					'',
@@ -227,27 +207,25 @@ class WPP_ParsiDate {
 					$mon = $date['mon'];
 					switch ( $mon ) {
 						case( $mon < 4 ):
-							$out .= $this->sesson[0];
+							$out .= $this->sessions[0];
 							break;
 						case( $mon < 7 ):
-							$out .= $this->sesson[1];
+							$out .= $this->sessions[1];
 							break;
 						case( $mon < 10 ):
-							$out .= $this->sesson[2];
+							$out .= $this->sessions[2];
 							break;
 						case( $mon > 9 ):
-							$out .= $this->sesson[3];
+							$out .= $this->sessions[3];
 							break;
 					}
 					break;
+				case 'M':
 				case'F':
 					$out .= $wpp_months_name[ $date['mon'] ];
 					break;
 				case'm':
 					$out .= ( $date['mon'] < 10 ) ? '0' . $date['mon'] : $date['mon'];
-					break;
-				case'M':
-					$out .= $wpp_months_name[ $date['mon'] ];
 					break;
 				case'n':
 					$out .= $date['mon'];
