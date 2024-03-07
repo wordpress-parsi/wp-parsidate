@@ -15,7 +15,7 @@ if ( isset( $wpp_settings['dis_input'] ) ) {
 			continue;
 		}
 
-		$dis_hook[ $list[0] ][] = array( 'func' => $list[1], 'class' => ( isset( $list[2] ) ? $list[2] : '' ) );
+		$dis_hook[ $list[0] ][] = array( 'func' => $list[1], 'class' => ( $list[2] ?? '' ) );
 	}
 }
 
@@ -47,10 +47,6 @@ function disable_wpp() {
 	}
 
 	$hooks = $dis_hook[ $func ];
-
-	if ( empty( $hooks ) ) {
-		return true;
-	}
 
 	unset( $calls[ $i ] );
 

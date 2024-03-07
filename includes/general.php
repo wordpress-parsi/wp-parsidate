@@ -116,6 +116,12 @@ add_action( 'init', 'wpp_disable_gutenberg_blocks_widget' );
  * @since               1.0
  */
 function wpp_is_feed() {
+	global $wp_query;
+
+	if ( ! isset( $wp_query ) ) {
+		return false;
+	}
+
 	if ( is_feed() ) {
 		return true;
 	}
@@ -187,7 +193,7 @@ function fix_number( $content ) {
  * @return              array|string|string[]
  */
 function fix_arabic( $content ) {
-	return str_replace( array( 'ي', 'ك', 'ة', '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'), array('ی', 'ک', 'ه', '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'), $content );
+	return str_replace( array( 'ي', 'ك', 'ة', '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩' ), array( 'ی', 'ک', 'ه', '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹' ), $content );
 }
 
 /**
