@@ -81,8 +81,12 @@ function wpp_fix_post_modified_time( $time, $format, $gmt ) {
  *
  * @return          string Formatted date
  */
-function wpp_fix_post_time( $time, $format = '' ) {
-	global $post;
+function wpp_fix_post_time( $time, $format = '', $post = null ) {
+	$post = get_post( $post );
+
+	if ( ! $post ) {
+		global $post;
+	}
 
 	if ( empty( $post ) ) {
 		return $time;
@@ -91,6 +95,7 @@ function wpp_fix_post_time( $time, $format = '' ) {
 	if ( empty( $format ) ) {
 		$format = get_option( 'time_format' );
 	}
+
 	if ( ! disable_wpp() ) {
 		return date( $format, strtotime( $post->post_date ) );
 	}
