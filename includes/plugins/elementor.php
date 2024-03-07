@@ -1,9 +1,4 @@
 <?php
-# @Author: Amirhosseinhpv
-# @Date:   2022/02/26 20:55:45
-# @Email:  its@hpv.im
-# @Last modified by:   Amirhosseinhpv
-# @Last modified time: 2022/02/26 21:21:55
 
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
