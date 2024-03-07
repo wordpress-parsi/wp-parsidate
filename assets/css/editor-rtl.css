@@ -1,6 +1,22 @@
+@font-face {
+  font-family: Vazir;
+  src: url("../fonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/Vazirmatn-Bold.woff2') format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap
+}
+
 body,
 #tinymce {
-  font-family: Vazir, tahoma, arial;
+  font-family: Vazir, tahoma, arial, serif;
   font-size: 13px;
   direction: rtl
 }

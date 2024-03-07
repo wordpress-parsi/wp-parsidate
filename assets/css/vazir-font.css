@@ -1,14 +1,14 @@
 @font-face {
   font-family: Vazir;
-  src: url("../fonts/Vazir-Regular.woff2") format("woff2");
+  src: url("../fonts/Vazirmatn-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap
 }
 
 @font-face {
-  font-family: 'Vazir';
-  src: url('../fonts/Vazir-Bold.woff2') format("woff2");
+  font-family: Vazir;
+  src: url('../fonts/Vazirmatn-Bold.woff2') format("woff2");
   font-weight: bold;
   font-style: normal;
   font-display: swap
@@ -21,7 +21,7 @@ body,
 .components-menu-item__info,
 .components-menu-group__label,
 .wc-addons-wrap .products li * {
-  font-family: Vazir, tahoma, arial !important
+  font-family: Vazir, tahoma, arial, serif !important
 }
 
 pre,
