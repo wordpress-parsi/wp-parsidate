@@ -71,6 +71,15 @@ class parsidate_archive extends WP_Widget {
             <label>
                 <input type="radio" id="parsidate_archive_type3"
                        name="<?php echo $this->get_field_name( 'parsidate_archive_type' ); ?>"
+                       value="weekly" <?php checked( $type, 'weekly' ); ?>/>
+				<?php _e( 'Weekly', 'wp-parsidate' ) ?>
+            </label>
+
+            <br/>
+
+            <label>
+                <input type="radio" id="parsidate_archive_type4"
+                       name="<?php echo $this->get_field_name( 'parsidate_archive_type' ); ?>"
                        value="daily" <?php checked( $type, 'daily' ); ?>/>
 				<?php _e( 'Daily', 'wp-parsidate' ) ?>
             </label>
