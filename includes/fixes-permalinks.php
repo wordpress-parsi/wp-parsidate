@@ -137,7 +137,7 @@ function wpp_posts_where( $where, $wp_query = '' ) {
 		$where = preg_replace( $pattern, '1 = 1', $where );
 	}
 
-	$prefixp = "{$wpdb->posts}.";
+	$prefixp = "$wpdb->posts.";
 	$prefixp = ( strpos( $where, $prefixp ) == false ) ? '' : $prefixp;
 	$where   .= " AND {$prefixp}post_date >= '$stadate' AND {$prefixp}post_date < '$enddate' ";
 
@@ -179,7 +179,17 @@ function wpp_pre_get_posts( $query ) {
 	$pd  = WPP_ParsiDate::getInstance();
 
 	if ( isset( $permalink['name'] ) ) {
-		$var = $wpdb->get_var( "SELECT post_date FROM {$wpdb->prefix}posts WHERE post_name='{$permalink['name']}' AND post_type!='attachment' ORDER BY id" );
+		$var = $wpdb->get_var(
+			$wpdb->prepare(
+				"
+				SELECT post_date FROM $wpdb->posts
+				WHERE post_name = '%s'
+				  AND post_type != 'attachment'
+				ORDER BY ID
+				",
+				$permalink['name'],
+			),
+		);
 		$per = parsidate( 'Y-m-d', $var, 'eng' );
 		$per = explode( '-', $per );
 		$out = true;
@@ -197,7 +207,15 @@ function wpp_pre_get_posts( $query ) {
 		}
 	} elseif ( isset( $permalink['post_id'] ) ) {
 		$out = true;
-		$var = $wpdb->get_var( "SELECT post_date FROM {$wpdb->prefix}posts WHERE ID={$permalink['post_id']}" );
+		$var = $wpdb->get_var(
+			$wpdb->prepare(
+				"
+					SELECT post_date FROM $wpdb->posts
+					WHERE ID = %d
+				",
+				absint( $permalink['post_id'] )
+			),
+		);
 	} elseif ( ! empty( $year ) && ! empty( $monthnum ) && ! empty( $day ) ) {
 		$out = true;
 		$var = gregdate( 'Y-m-d', "$year-$monthnum-$day" );
@@ -221,8 +239,6 @@ function wpp_pre_get_posts( $query ) {
 		);
 
 		$query->set( 'date_query', $date_query );
-
-		$out = false;
 	} elseif ( ! empty( $year ) ) {
 		$stadate    = $pd->persian_to_gregorian( $year, 1, 1 );
 		$enddate    = $pd->persian_to_gregorian( ( $year + 1 ), 1, 1 );
@@ -243,8 +259,6 @@ function wpp_pre_get_posts( $query ) {
 		);
 
 		$query->set( 'date_query', $date_query );
-
-		$out = false;
 	}
 
 	if ( $out ) {
@@ -256,11 +270,12 @@ function wpp_pre_get_posts( $query ) {
 
 		$var = $matches[0];
 
-		if ( !empty($var) ) {
-            $query->set('year', $var[0]);
-            $query->set('monthnum', $var[1]);
-            $query->set('day', $var[2]);
-        }
+		if ( ! empty( $var ) ) {
+			error_log('PARSIDATE' . print_r($var,true));
+			$query->set( 'year', $var[0] );
+			$query->set( 'monthnum', $var[1] );
+			$query->set( 'day', $var[2] );
+		}
 
 		$query->is_404              = false;
 		$query->query_vars['error'] = '';
@@ -285,7 +300,7 @@ function wpp_permalink( $perma, $post, $leavename = false ) {
 
 	if ( $post->post_type == 'page' || $post->post_status == 'static' ) {
 		return get_page_link( $post->ID );
-	} elseif ( $post->post_type == 'attachment' ) {
+	} elseif ( 'attachment' === $post->post_type ) {
 		return get_attachment_link( $post->ID );
 	} elseif ( in_array( $post->post_type, get_post_types( array( '_builtin' => false ) ) ) ) {
 		return get_post_permalink( $post->ID );
