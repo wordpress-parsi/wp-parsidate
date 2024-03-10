@@ -539,7 +539,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 * @since 5.0.0
 		 */
 		public function fix_emails_order_date_direction( $style, $email ) {
-			return $style . 'mark.order-date{unicode-bidi:embed!important}';
+			return $style . 'time{unicode-bidi:embed!important}';
 		}
 
 		/**
