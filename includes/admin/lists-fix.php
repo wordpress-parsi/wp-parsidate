@@ -70,6 +70,10 @@ function wpp_admin_posts_where( $where ) {
 function wpp_restrict_posts() {
 	global $post_type, $post_status, $wpdb, $wpp_months_name;
 
+	if ( apply_filters( 'disable_months_dropdown', false, $post_type ) ) {
+		return;
+	}
+
 	$post_status_w = "AND post_status <> 'auto-draft'";
 
 	if ( $post_status != "" ) {
