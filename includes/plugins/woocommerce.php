@@ -16,6 +16,8 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 * Hooks required tags
 		 */
 		private function __construct() {
+			$this->include_files();
+
 			add_filter( 'wpp_plugins_compatibility_settings', array( $this, 'add_settings' ) );
 
 			if ( class_exists( 'WooCommerce' ) && get_locale() === 'fa_IR' ) {
@@ -30,7 +32,9 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 					add_filter( 'woocommerce_cart_total', 'fix_number' );
 				}
 
-				if ( wpp_is_active( 'woo_fix_date' ) ) {
+				if ( wpp_is_active( 'persian_date' ) ) {
+					add_action( 'wp_head', array( $this, 'fix_wc_date_time_direction' ) );
+					add_filter( 'woocommerce_email_styles', array( $this, 'fix_emails_order_date_direction' ), 9999, 2 );
 					// Jalali datepicker
 					add_action( 'admin_enqueue_scripts', array( $this, 'wpp_admin_woocommerce_jalali_datepicker_assets' ) );
 
@@ -46,7 +50,6 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				}
 
 				add_filter( 'woocommerce_checkout_process', array( $this, 'wpp_accept_persian_numbers_in_checkout' ), 20 );
-
 				add_filter( 'woocommerce_checkout_posted_data', array( $this, 'wpp_convert_non_persian_values_in_checkout' ), 10 );
 
 				if ( wpp_is_active( 'woo_validate_postcode' ) ) {
@@ -55,15 +58,6 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 
 				if ( wpp_is_active( 'woo_validate_phone' ) ) {
 					add_action( 'woocommerce_after_checkout_validation', array( $this, 'wpp_validate_phone_number' ), 10, 2 );
-				}
-
-				if ( wpp_is_active( 'woo_dropdown_cities' ) ) {
-					include_once WP_PARSI_DIR . 'includes/plugins/wc-cities/wc-city-select.php';
-				}
-
-				if ( get_locale() == 'fa_IR' && wpp_is_active( 'persian_date' ) ) {
-					add_filter( 'woocommerce_email_styles', array( $this, 'fix_emails_order_date_direction' ), 9999, 2 );
-					add_action( 'woocommerce_before_account_navigation', array( $this, 'fix_myaccount_order_date_direction' ) );
 				}
 			}
 		}
@@ -82,6 +76,20 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		}
 
 		/**
+		 * Includes files for WooCommerce payment gateways
+		 *
+		 * @return         void
+		 * @since          4.0.1
+		 */
+		public function include_files() {
+			if ( wpp_is_active( 'woo_dropdown_cities' ) ) {
+				include_once WP_PARSI_DIR . 'includes/plugins/wc-cities/wc-city-select.php';
+			}
+
+			require_once( WP_PARSI_DIR . 'includes/plugins/wc-gateways/wc-gateways.php' );
+		}
+
+		/**
 		 * Adds settings for toggle fixing
 		 *
 		 * @param array $old_settings Old settings
@@ -90,18 +98,11 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 * @since 4.0.0
 		 */
 		public function add_settings( $old_settings ) {
-			$settings = array(
+			$settings = apply_filters( 'wpp_woocommerce_settings', array(
 				'woocommerce'             => array(
 					'id'   => 'woocommerce',
 					'name' => __( 'WooCommerce', 'wp-parsidate' ),
 					'type' => 'header'
-				),
-				'woo_fix_date'            => array(
-					'id'      => 'woo_fix_date',
-					'name'    => __( 'Jalali Datepicker', 'wp-parsidate' ),
-					'type'    => 'checkbox',
-					'options' => 1,
-					'std'     => 0
 				),
 				'woo_per_price'           => array(
 					'id'      => 'woo_per_price',
@@ -144,8 +145,8 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 					'type'    => 'checkbox',
 					'options' => 1,
 					'std'     => 0
-				)
-			);
+				),
+			) );
 
 			return array_merge( $old_settings, $settings );
 		}
@@ -167,7 +168,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 			$suffix         = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 			$current_screen = $screen->post_type;
 
-			if ( wpp_is_active( 'woo_fix_date' ) && in_array( $current_screen, array( 'product', 'shop_order', 'shop_coupon', 'wc-reports' ) ) ) {
+			if ( wpp_is_active( 'persian_date' ) && in_array( $current_screen, array( 'product', 'shop_order', 'shop_coupon', 'wc-reports' ) ) ) {
 				wp_enqueue_script( 'wpp_jalali_datepicker', WP_PARSI_URL . 'assets/js/jalalidatepicker.min.js', array( 'jquery', 'jquery-ui-datepicker' ), WP_PARSI_VER );
 
 				wp_enqueue_style( 'wpp_jalali_datepicker', WP_PARSI_URL . "assets/css/jalalidatepicker$suffix.css", null, WP_PARSI_VER );
@@ -548,8 +549,10 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 * @return void
 		 * @since 5.0.0
 		 */
-		public function fix_myaccount_order_date_direction() {
-			echo '<style>mark.order-date{unicode-bidi:embed!important}</style>';
+		public function fix_wc_date_time_direction() {
+			if ( is_woocommerce() || is_wc_endpoint_url() || is_cart() || is_checkout() ) {
+				echo '<style>mark.order-date,time{unicode-bidi:embed!important}</style>';
+			}
 		}
 	}
 

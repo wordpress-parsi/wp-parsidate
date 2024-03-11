@@ -83,6 +83,7 @@ if ( ! class_exists( 'WPP_WC_Gateways' ) ) {
 					'std'     => array( 'parsian', 'pasargad', 'mellat' )
 				)
 			);
+			var_dump('ddddddddddddddddddddd');
 
 			return array_merge( $old_settings, $settings );
 		}
