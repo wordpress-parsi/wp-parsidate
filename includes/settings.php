@@ -6,6 +6,7 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
  * Originally, wrote by Pippin Williamson
  *
  * @author          Pippin Williamson
+ * @author          Hamid Reza Yazdani
  * @author          Ehsaan
  * @author          Morteza Geransayeh
  * @author          Mobin Ghasempoor
@@ -96,7 +97,7 @@ function wpp_register_settings() {
 		);
 
 		foreach ( $settings as $option ) {
-			$name = isset( $option['name'] ) ? $option['name'] : '';
+			$name = $option['name'] ?? '';
 
 			add_settings_field(
 				'wpp_settings[' . $option['id'] . ']',
@@ -105,13 +106,13 @@ function wpp_register_settings() {
 				'wpp_settings_' . $tab,
 				'wpp_settings_' . $tab,
 				array(
-					'id'      => isset( $option['id'] ) ? $option['id'] : null,
+					'id'      => $option['id'] ?? null,
 					'desc'    => ! empty( $option['desc'] ) ? $option['desc'] : '',
-					'name'    => isset( $option['name'] ) ? $option['name'] : null,
+					'name'    => $option['name'] ?? null,
 					'section' => $tab,
-					'size'    => isset( $option['size'] ) ? $option['size'] : null,
-					'options' => isset( $option['options'] ) ? $option['options'] : '',
-					'std'     => isset( $option['std'] ) ? $option['std'] : ''
+					'size'    => $option['size'] ?? null,
+					'options' => $option['options'] ?? '',
+					'std'     => $option['std'] ?? ''
 				)
 			);
 
@@ -155,14 +156,14 @@ function wpp_settings_sanitize( $input = array() ) {
 	parse_str( $_POST['_wp_http_referer'], $referrer );
 
 	$settings = wpp_get_registered_settings();
-	$tab      = isset( $referrer['tab'] ) ? $referrer['tab'] : 'core';
+	$tab      = $referrer['tab'] ?? 'core';
 	$input    = $input ?: array();
 	$input    = apply_filters( 'wpp_settings_' . $tab . '_sanitize', $input );
 
 	// Loop through each setting being saved and pass it through a sanitization filter
 	foreach ( $input as $key => $value ) {
 		// Get the setting type (checkbox, select, etc.)
-		$type = isset( $settings[ $tab ][ $key ]['type'] ) ? $settings[ $tab ][ $key ]['type'] : false;
+		$type = $settings[ $tab ][ $key ]['type'] ?? false;
 
 		if ( $type ) {
 			// Field type specific filter
@@ -181,7 +182,7 @@ function wpp_settings_sanitize( $input = array() ) {
 				$key = $value['id'];
 			}
 
-			if ( empty( $input[ $key ] ) ) {
+			if ( ! isset( $input[ $key ] ) ) {
 				unset( $wpp_settings[ $key ] );
 			}
 		}
@@ -198,11 +199,6 @@ function wpp_settings_sanitize( $input = array() ) {
  * @since           2.0
  */
 function wpp_get_registered_settings() {
-	$options = array(
-		'enable'  => __( 'Enable', 'wp-parsidate' ),
-		'disable' => __( 'Disable', 'wp-parsidate' )
-	);
-
 	return apply_filters( 'wpp_registered_settings', array(
 		'core'    => apply_filters( 'wpp_core_settings', array(
 			'admin_lang'           => array(
@@ -374,38 +370,50 @@ function wpp_header_callback( $args ) {
 }
 
 /**
+ * Generates checkbox field
+ *
  * @param $args
  */
 function wpp_checkbox_callback( $args ) {
 	global $wpp_settings;
 
-	$checked = isset( $wpp_settings[ $args['id'] ] ) ? checked( 'enable', $wpp_settings[ $args['id'] ], false ) : '';
-	$html    = sprintf( '<input type="checkbox" id="wpp_settings[%1$s]" name="wpp_settings[%1$s]" value="enable" %2$s/>' .
-	                    '<label for="wpp_settings[%1$s]" class="wpp-checkbox-label %3$s"><span></span> %4$s</label>',
-		$args['id'],
+	if ( isset( $wpp_settings[ $args['id'] ] ) ) {
+		$checked = ! is_array( $wpp_settings[ $args['id'] ] ) ? checked( 'enable', $wpp_settings[ $args['id'] ], false ) : checked( 'enable', $wpp_settings[ $args['parent'] ][ $args['id'] ], false );
+	} else {
+		$checked = '';
+	}
+	$is_multiple = ! empty( $args['is_multiple'] ) ? ' checkbox-list' : '';
+	$html        = sprintf( '<input type="checkbox" id="wpp_settings%1$s" name="wpp_settings%1$s" value="enable" %2$s/>' .
+	                        '<label for="wpp_settings%1$s" class="wpp-checkbox-label %3$s %4$s"><span></span> %5$s</label>',
+		! $is_multiple ? '[' . $args['id'] . ']' : '[' . $args['parent'] . '][' . $args['id'] . ']',
 		$checked,
 		empty( $args['desc'] ) ? 'empty-label' : '',
-		$args['desc']
+		$is_multiple,
+		$args['desc'],
 	);
 
 	echo $html;
 }
 
 /**
+ * Generates multiple checkboxes fields
+ *
  * @param $args
  */
 function wpp_multicheck_callback( $args ) {
+	global $wpp_settings;
+
 	$html = '';
 
-	foreach ( $args['options'] as $key => $value ) {
-		$option_name = $args['id'] . '-' . $key;
-
-		wpp_checkbox_callback( array(
-			'id'   => $option_name,
-			'desc' => $value
-		) );
-
-		echo '<br>';
+	foreach ( $args['options'] as $key => $option ) {
+		$html .= sprintf(
+			'<input name="wpp_settings[%1$s][%2$s]" id="wpp_settings[%1$s][%2$s]" type="checkbox" value="%2$s" %3$s/><label for="wpp_settings[%1$s][%2$s]" class="wpp-checkbox-label multicheck">%4$s<span></span> %5$s</label>',
+			$args['id'],
+			$key,
+			in_array( $key, $wpp_settings[ $args['id'] ] ) ? 'checked="checked"' : '',
+			$option,
+			$args['desc']
+		);
 	}
 
 	echo $html;
@@ -439,15 +447,10 @@ function wpp_radio_callback( $args ) {
 function wpp_text_callback( $args ) {
 	global $wpp_settings;
 
-	if ( isset( $wpp_settings[ $args['id'] ] ) ) {
-		$value = $wpp_settings[ $args['id'] ];
-	} else {
-		$value = isset( $args['std'] ) ? $args['std'] : '';
-	}
-
-	$size = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
-	$html = '<input type="text" class="' . $size . '-text" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
-	$html .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
+	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? '';
+	$size  = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
+	$html  = '<input type="text" class="' . $size . '-text" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+	$html  .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
 
 	echo $html;
 }
@@ -458,18 +461,13 @@ function wpp_text_callback( $args ) {
 function wpp_number_callback( $args ) {
 	global $wpp_settings;
 
-	if ( isset( $wpp_settings[ $args['id'] ] ) ) {
-		$value = $wpp_settings[ $args['id'] ];
-	} else {
-		$value = isset( $args['std'] ) ? $args['std'] : '';
-	}
-
-	$max  = isset( $args['max'] ) ? $args['max'] : 999999;
-	$min  = isset( $args['min'] ) ? $args['min'] : 0;
-	$step = isset( $args['step'] ) ? $args['step'] : 1;
-	$size = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
-	$html = '<input type="number" step="' . esc_attr( $step ) . '" max="' . esc_attr( $max ) . '" min="' . esc_attr( $min ) . '" class="' . $size . '-text" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
-	$html .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
+	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? '';
+	$max   = $args['max'] ?? 999999;
+	$min   = $args['min'] ?? 0;
+	$step  = $args['step'] ?? 1;
+	$size  = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
+	$html  = '<input type="number" step="' . esc_attr( $step ) . '" max="' . esc_attr( $max ) . '" min="' . esc_attr( $min ) . '" class="' . $size . '-text" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+	$html  .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
 
 	echo $html;
 }
@@ -480,15 +478,10 @@ function wpp_number_callback( $args ) {
 function wpp_textarea_callback( $args ) {
 	global $wpp_settings;
 
-	if ( isset( $wpp_settings[ $args['id'] ] ) ) {
-		$value = $wpp_settings[ $args['id'] ];
-	} else {
-		$value = isset( $args['std'] ) ? $args['std'] : '';
-	}
-
-	$size = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
-	$html = '<textarea class="large-text" cols="50" rows="5" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
-	$html .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
+	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? '';
+	$size  = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
+	$html  = '<textarea class="large-text" cols="50" rows="5" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
+	$html  .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
 
 	echo $html;
 }
@@ -499,15 +492,10 @@ function wpp_textarea_callback( $args ) {
 function wpp_password_callback( $args ) {
 	global $wpp_settings;
 
-	if ( isset( $wpp_settings[ $args['id'] ] ) ) {
-		$value = $wpp_settings[ $args['id'] ];
-	} else {
-		$value = isset( $args['std'] ) ? $args['std'] : '';
-	}
-
-	$size = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
-	$html = '<input type="password" class="' . $size . '-text" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( $value ) . '"/>';
-	$html .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
+	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? '';
+	$size  = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
+	$html  = '<input type="password" class="' . $size . '-text" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( $value ) . '"/>';
+	$html  .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
 
 	echo $html;
 }
@@ -523,20 +511,14 @@ function wpp_missing_callback( $args ) {
 	return false;
 }
 
-
 /**
  * @param $args
  */
 function wpp_select_callback( $args ) {
 	global $wpp_settings;
 
-	if ( isset( $wpp_settings[ $args['id'] ] ) ) {
-		$value = $wpp_settings[ $args['id'] ];
-	} else {
-		$value = isset( $args['std'] ) ? $args['std'] : '';
-	}
-
-	$html = '<select id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']"/>';
+	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? '';
+	$html  = '<select id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']"/>';
 
 	foreach ( $args['options'] as $option => $name ) :
 		$selected = selected( $option, $value, false );
@@ -555,13 +537,8 @@ function wpp_select_callback( $args ) {
 function wpp_color_select_callback( $args ) {
 	global $wpp_settings;
 
-	if ( isset( $wpp_settings[ $args['id'] ] ) ) {
-		$value = $wpp_settings[ $args['id'] ];
-	} else {
-		$value = isset( $args['std'] ) ? $args['std'] : '';
-	}
-
-	$html = '<select id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']"/>';
+	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? '';
+	$html  = '<select id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']"/>';
 
 	foreach ( $args['options'] as $option => $color ) :
 		$selected = selected( $option, $value, false );
@@ -580,11 +557,7 @@ function wpp_color_select_callback( $args ) {
 function wpp_rich_editor_callback( $args ) {
 	global $wpp_settings, $wp_version;
 
-	if ( isset( $wpp_settings[ $args['id'] ] ) ) {
-		$value = $wpp_settings[ $args['id'] ];
-	} else {
-		$value = isset( $args['std'] ) ? $args['std'] : '';
-	}
+	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? '';
 
 	if ( $wp_version >= 3.3 && function_exists( 'wp_editor' ) ) {
 		ob_start();
@@ -609,16 +582,11 @@ function wpp_rich_editor_callback( $args ) {
 function wpp_upload_callback( $args ) {
 	global $wpp_settings;
 
-	if ( isset( $wpp_settings[ $args['id'] ] ) ) {
-		$value = $wpp_settings[ $args['id'] ];
-	} else {
-		$value = isset( $args['std'] ) ? $args['std'] : '';
-	}
-
-	$size = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
-	$html = '<input type="text" class="' . $size . '-text wpp_upload_field" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
-	$html .= '<span>&nbsp;<input type="button" class="wpp_settings_upload_button button-secondary" value="' . __( 'Upload File', 'wpp' ) . '"/></span>';
-	$html .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
+	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? '';
+	$size  = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
+	$html  = '<input type="text" class="' . $size . '-text wpp_upload_field" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+	$html  .= '<span>&nbsp;<input type="button" class="wpp_settings_upload_button button-secondary" value="' . __( 'Upload File', 'wpp' ) . '"/></span>';
+	$html  .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
 
 	echo $html;
 }
@@ -629,13 +597,8 @@ function wpp_upload_callback( $args ) {
 function wpp_color_callback( $args ) {
 	global $wpp_settings;
 
-	if ( isset( $wpp_settings[ $args['id'] ] ) ) {
-		$value = $wpp_settings[ $args['id'] ];
-	} else {
-		$value = isset( $args['std'] ) ? $args['std'] : '';
-	}
-
-	$default = isset( $args['std'] ) ? $args['std'] : '';
+	$value   = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? '';
+	$default = $args['std'] ?? '';
 	$size    = ( isset( $args['size'] ) ) ? $args['size'] : 'regular';
 	$html    = '<input type="text" class="wpp-color-picker" id="wpp_settings[' . $args['id'] . ']" name="wpp_settings[' . $args['id'] . ']" value="' . esc_attr( $value ) . '" data-default-color="' . esc_attr( $default ) . '" />';
 	$html    .= '<label for="wpp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
