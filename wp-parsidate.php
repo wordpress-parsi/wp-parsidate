@@ -75,6 +75,8 @@ final class WP_Parsidate {
 			}
 		}
 
+		WPP_ParsiDate::getInstance();
+
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'parsi_settings_link' ) );
 		add_action( 'widgets_init', array( $this, 'register_widget' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'wpp_load_vazir_font_in_admin_area' ) );

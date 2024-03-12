@@ -17,8 +17,9 @@
 body,
 #tinymce {
   font-family: Vazir, tahoma, arial, serif;
-  font-size: 13px;
-  direction: rtl
+  direction: rtl;
+  font-size: 15px;
+  line-height: 1.7
 }
 
 p {
