@@ -404,7 +404,7 @@ function wpp_multicheck_callback( $args ) {
 	global $wpp_settings;
 
 	$html = '';
-	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? '';
+	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? array();
 
 	foreach ( $args['options'] as $key => $option ) {
 		$html .= sprintf(
