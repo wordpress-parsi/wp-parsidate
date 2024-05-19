@@ -404,13 +404,14 @@ function wpp_multicheck_callback( $args ) {
 	global $wpp_settings;
 
 	$html = '';
+	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? array();
 
 	foreach ( $args['options'] as $key => $option ) {
 		$html .= sprintf(
 			'<input name="wpp_settings[%1$s][%2$s]" id="wpp_settings[%1$s][%2$s]" type="checkbox" value="%2$s" %3$s/><label for="wpp_settings[%1$s][%2$s]" class="wpp-checkbox-label multicheck">%4$s<span></span> %5$s</label>',
 			$args['id'],
 			$key,
-			in_array( $key, $wpp_settings[ $args['id'] ] ) ? 'checked="checked"' : '',
+			in_array( $key, $value ) ? 'checked="checked"' : '',
 			$option,
 			$args['desc']
 		);
