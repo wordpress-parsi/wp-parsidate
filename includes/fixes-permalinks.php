@@ -271,7 +271,6 @@ function wpp_pre_get_posts( $query ) {
 		$var = $matches[0];
 
 		if ( ! empty( $var ) ) {
-			error_log('PARSIDATE' . print_r($var,true));
 			$query->set( 'year', $var[0] );
 			$query->set( 'monthnum', $var[1] );
 			$query->set( 'day', $var[2] );
