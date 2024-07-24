@@ -43,6 +43,7 @@ defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
  *              Mehrshad Darzi ( Contributor )
  *              Nasser Rafie ( Contributor )
  *              Milad Nazari ( Contributor )
+ *              Amirhossein Hosseinpour ( Contributor )
  *
  * @author              Mobin Ghasempoor
  * @author              Morteza Geransayeh
