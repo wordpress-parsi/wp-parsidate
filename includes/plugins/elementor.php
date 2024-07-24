@@ -24,8 +24,4 @@ class WPP_Elementor {
 	}
 }
 
-/*##########################################
-Developer: [amirhosseinhpv](https://hpv.im/)
-############################################*/
-
 return new WPP_Elementor;
