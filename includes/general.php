@@ -68,7 +68,7 @@ add_filter( 'login_headerurl', 'wpp_login_headerurl', 10, 2 );
 function wpp_activation_notice() {
 	$dismissed = get_option( 'wpp_dismissed', false );
 
-	if ( ! $dismissed ) {
+	if ( ! $dismissed && ( ! isset( $_GET['page'] ) || $_GET['page'] !== 'wp-parsi-settings' ) ) {
 		if ( ! wpp_is_active( 'persian_date' ) ) {
 			echo sprintf(
 				__( '<div class="updated wpp-message"><p>ParsiDate activated, you may need to configure it to work properly. <a href="%s">Go to configuration page</a> &ndash; <a href="%s">Dismiss</a></p></div>', 'wp-parsidate' ),
