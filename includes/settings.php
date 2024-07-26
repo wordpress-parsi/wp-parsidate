@@ -281,56 +281,64 @@ function wpp_get_registered_settings() {
 				'name'    => __( 'Page title', 'wp-parsidate' ),
 				'type'    => 'checkbox',
 				'options' => 'enable',
-				'std'     => 0
+				'std'     => 0,
+				'desc'    => __( 'Active', 'wp-parsidate' ),
 			),
 			'conv_title'         => array(
 				'id'      => 'conv_title',
 				'name'    => __( 'Post title', 'wp-parsidate' ),
 				'type'    => 'checkbox',
 				'options' => 'enable',
-				'std'     => 0
+				'std'     => 0,
+				'desc'    => __( 'Active', 'wp-parsidate' ),
 			),
 			'conv_contents'      => array(
 				'id'      => 'conv_contents',
 				'name'    => __( 'Post content', 'wp-parsidate' ),
 				'type'    => 'checkbox',
 				'options' => 'enable',
-				'std'     => 'enable'
+				'std'     => 'enable',
+				'desc'    => __( 'Active', 'wp-parsidate' ),
 			),
 			'conv_excerpt'       => array(
 				'id'      => 'conv_excerpt',
 				'name'    => __( 'Post excerpt', 'wp-parsidate' ),
 				'type'    => 'checkbox',
 				'options' => 'enable',
-				'std'     => 0
+				'std'     => 0,
+				'desc'    => __( 'Active', 'wp-parsidate' ),
 			),
 			'conv_comments'      => array(
 				'id'      => 'conv_comments',
 				'name'    => __( 'Comments text', 'wp-parsidate' ),
 				'type'    => 'checkbox',
 				'options' => 'enable',
-				'std'     => 0
+				'std'     => 0,
+				'desc'    => __( 'Active', 'wp-parsidate' ),
 			),
 			'conv_comment_count' => array(
 				'id'      => 'conv_comment_count',
 				'name'    => __( 'Comments count', 'wp-parsidate' ),
 				'type'    => 'checkbox',
 				'options' => 'enable',
-				'std'     => 0
+				'std'     => 0,
+				'desc'    => __( 'Active', 'wp-parsidate' ),
 			),
 			'conv_dates'         => array(
 				'id'      => 'conv_dates',
 				'name'    => __( 'Dates', 'wp-parsidate' ),
 				'type'    => 'checkbox',
 				'options' => 'enable',
-				'std'     => 0
+				'std'     => 0,
+				'desc'    => __( 'Active', 'wp-parsidate' ),
 			),
 			'conv_cats'          => array(
 				'id'      => 'conv_cats',
 				'name'    => __( 'Categories', 'wp-parsidate' ),
 				'type'    => 'checkbox',
 				'options' => 'enable',
-				'std'     => 0
+				'std'     => 0,
+				'desc'    => __( 'Active', 'wp-parsidate' ),
 			),
 			'sep'                => array(
 				'id'   => 'sep',
@@ -403,7 +411,7 @@ function wpp_checkbox_callback( $args ) {
 function wpp_multicheck_callback( $args ) {
 	global $wpp_settings;
 
-	$html = '';
+	$html  = '';
 	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? array();
 
 	foreach ( $args['options'] as $key => $option ) {
