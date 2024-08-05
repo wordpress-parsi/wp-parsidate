@@ -39,7 +39,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 					add_action( 'admin_enqueue_scripts', array( $this, 'wpp_admin_woocommerce_jalali_datepicker_assets' ) );
 
 					// Convert order_date using js
-					add_action( 'save_post', array( $this, 'wpp_change_order_date_on_save_order' ), 0, 2 );
+					add_action('woocommerce_before_order_object_save', array($this, 'wpp_change_order_date_on_save_order_object'), 20, 2);
 					add_action( 'admin_footer', array( $this, 'wpp_fix_show_created_order_date' ) );
 					add_action( 'admin_init', array( $this, 'wpp_change_wc_report_dates' ), 1000 );
 					add_filter( 'wp_insert_post_data', array( $this, 'wpp_validate_dates_on_woocommerce_save_data' ), 1, 2 );
@@ -178,20 +178,36 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		}
 
 		/**
-		 * Unfortunately WooCommerce does not use standard functions for dates,
-		 * so we have to change values after or before submission.
+		 * Convert order date to gregorian before saved at database
 		 *
-		 * @param $post_id
-		 * @param $post
+		 * @param $order
+		 * @param $data
 		 *
-		 * @since 4.0.0
+		 * @since 5.0.2
 		 */
-		public function wpp_change_order_date_on_save_order( $post_id, $post ) {
-			$post_type = get_post_type( $post_id );
-
-			if ( 'shop_order' === $post_type && ! empty( $_POST['order_date'] ) ) {
-				$_POST['order_date'] = gregdate( 'Y-m-d', $_POST['order_date'] );
+		public function wpp_change_order_date_on_save_order_object($order, $data)
+		{
+		    global $pagenow;
+		
+		    if (is_admin() and $pagenow == "admin.php" and isset($_GET['page']) and $_GET['page'] == "wc-orders" and !empty($_POST['order_date'])) {
+		
+			// Sanitize Text Field
+			$_POST['order_date'] = sanitize_text_field($_POST['order_date']);
+		
+			// Check Validate Date
+			if (!preg_match('/^(\d{4})-(\d{1,2})-(\d{1,2})$/', $_POST['order_date'])) {
+			    return;
 			}
+		
+			// Check Date Time If Before Procced
+			$explode = explode("-", $_POST['order_date']);
+			if ((int)$explode[0] > 2000) {
+			    return;
+			}
+		
+			// Convert To Gregorian
+			$_POST['order_date'] = gregdate('Y-m-d', trim($_POST['order_date']));
+		    }
 		}
 
 		/**
