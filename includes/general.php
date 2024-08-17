@@ -122,7 +122,8 @@ function wpp_is_feed() {
 		return false;
 	}
 
-	if ( is_feed() ) {
+	//if ( is_feed() ) { // Experimental change
+	if ( $wp_query->is_feed() ) {
 		return true;
 	}
 
