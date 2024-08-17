@@ -1,5 +1,7 @@
 jQuery(document).ready(function ($) {
-  var wpp_months_name = WPP_I18N.months;
+	//var wpp_months_name = WPP_I18N.months;
+	var wpp_months_name = ['', 'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+
 
   $('.wp-editor-wrap.html-active #content').css("direction", "ltr");
 
