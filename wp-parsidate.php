@@ -248,8 +248,8 @@ final class WP_Parsidate {
 	 * @since           4.0.0
 	 */
 	public function wpp_preload_vazir_fonts() {
-		echo '<link rel="preload" href="' . WP_PARSI_URL . 'assets/fonts/Vazir-Regular.woff2" as="font" type="font/woff2" crossorigin>' . PHP_EOL .
-		     '<link rel="preload" href="' . WP_PARSI_URL . 'assets/fonts/Vazir-Bold.woff2" as="font" type="font/woff2" crossorigin>' . PHP_EOL;
+		echo '<link rel="preload" href="' . WP_PARSI_URL . 'assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>' . PHP_EOL .
+		     '<link rel="preload" href="' . WP_PARSI_URL . 'assets/fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>' . PHP_EOL;
 	}
 
 	/**
