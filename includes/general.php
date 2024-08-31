@@ -233,3 +233,14 @@ function parsidate_check_format( $format ) {
 		'Y-m-d\TH:i:sP',
 	) );
 }
+
+
+/**
+ * wpp_is_sitemap()
+ * checks is WordPress sitemap
+ *
+ * @return boolean
+ */
+function wpp_is_sitemap() {
+	return ( strpos( $_SERVER[REQUEST_URI], 'wp-sitemap' ) !== false )? true : false;
+}
