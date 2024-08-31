@@ -21,7 +21,9 @@ if ( get_locale() == 'fa_IR' && wpp_is_active( 'persian_date' ) ) {
 	add_filter( 'get_comment_date', 'wpp_fix_comment_date', 10, 2 );
 	//add_filter('get_post_modified_time', 'wpp_fix_post_modified_time', 10, 3);
 	add_filter( 'date_i18n', 'wpp_fix_i18n', 10, 4 );
-	add_filter( 'wp_date', 'wpp_fix_i18n', 10, 4 );
+	
+	if( !wpp_is_sitemap() )
+	    add_filter( 'wp_date', 'wpp_fix_i18n', 10, 4 );
 
 	add_filter( "rank_math/opengraph/facebook/article_published_time", function( $content ) {
 		return gregdate('c',  eng_number( $content) );
