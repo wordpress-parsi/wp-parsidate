@@ -243,5 +243,5 @@ function parsidate_check_format( $format ) {
  * @return boolean
  */
 function wpp_is_sitemap() {
-	return ( strpos( $_SERVER[REQUEST_URI], 'wp-sitemap' ) !== false )? true : false;
+	return ( isset($_SERVER['REQUEST_URI']) and strpos( $_SERVER['REQUEST_URI'], 'wp-sitemap' ) !== false ) ? true : false;
 }
