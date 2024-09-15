@@ -67,7 +67,7 @@ body#tinymce.wp-editor,
 .dashicons,
 .dashicons-before:before,
 .wpseo-metabox-menu ul li span.dashicons:before {
-  font-family: dashicons;
+  font-family: dashicons !important;
 }
 
 .wooocommerce-task-card__header p,
