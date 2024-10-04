@@ -35,11 +35,12 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				if ( wpp_is_active( 'persian_date' ) ) {
 					add_action( 'wp_head', array( $this, 'fix_wc_date_time_direction' ) );
 					add_filter( 'woocommerce_email_styles', array( $this, 'fix_emails_order_date_direction' ), 9999, 2 );
+
 					// Jalali datepicker
 					add_action( 'admin_enqueue_scripts', array( $this, 'wpp_admin_woocommerce_jalali_datepicker_assets' ) );
 
 					// Convert order_date using js
-					add_action('woocommerce_before_order_object_save', array($this, 'wpp_change_order_date_on_save_order_object'), 20, 2);
+					add_action( 'woocommerce_before_order_object_save', array( $this, 'wpp_change_order_date_on_save_order_object' ), 99, 2 );
 					add_action( 'admin_footer', array( $this, 'wpp_fix_show_created_order_date' ) );
 					add_action( 'admin_init', array( $this, 'wpp_change_wc_report_dates' ), 1000 );
 					add_filter( 'wp_insert_post_data', array( $this, 'wpp_validate_dates_on_woocommerce_save_data' ), 1, 2 );
@@ -50,7 +51,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				}
 
 				add_filter( 'woocommerce_checkout_process', array( $this, 'wpp_accept_persian_numbers_in_checkout' ), 20 );
-				add_filter( 'woocommerce_checkout_posted_data', array( $this, 'wpp_convert_non_persian_values_in_checkout' ), 10 );
+				add_filter( 'woocommerce_checkout_posted_data', array( $this, 'wpp_convert_non_persian_values_in_checkout' ) );
 
 				if ( wpp_is_active( 'woo_validate_postcode' ) ) {
 					add_filter( 'woocommerce_validate_postcode', array( $this, 'wpp_validate_postcode' ), 10, 3 );
@@ -102,49 +103,49 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				'woocommerce'             => array(
 					'id'   => 'woocommerce',
 					'name' => __( 'WooCommerce', 'wp-parsidate' ),
-					'type' => 'header'
+					'type' => 'header',
 				),
 				'woo_per_price'           => array(
 					'id'      => 'woo_per_price',
 					'name'    => __( 'Fix prices', 'wp-parsidate' ),
 					'type'    => 'checkbox',
 					'options' => 1,
-					'std'     => 0
+					'std'     => 0,
 				),
 				'woo_accept_per_postcode' => array(
 					'id'      => 'woo_accept_per_postcode',
 					'name'    => __( 'Fix persian postcode', 'wp-parsidate' ),
 					'type'    => 'checkbox',
 					'options' => 1,
-					'std'     => 0
+					'std'     => 0,
 				),
 				'woo_dropdown_cities'     => array(
 					'id'      => 'woo_dropdown_cities',
 					'name'    => __( 'Display cities as a drop-down list', 'wp-parsidate' ),
 					'type'    => 'checkbox',
 					'options' => 1,
-					'std'     => 0
+					'std'     => 0,
 				),
 				'woo_accept_per_phone'    => array(
 					'id'      => 'woo_accept_per_phone',
 					'name'    => __( 'Fix persian phone', 'wp-parsidate' ),
 					'type'    => 'checkbox',
 					'options' => 1,
-					'std'     => 0
+					'std'     => 0,
 				),
 				'woo_validate_postcode'   => array(
 					'id'      => 'woo_validate_postcode',
 					'name'    => __( 'Postcode validation', 'wp-parsidate' ),
 					'type'    => 'checkbox',
 					'options' => 1,
-					'std'     => 0
+					'std'     => 0,
 				),
 				'woo_validate_phone'      => array(
 					'id'      => 'woo_validate_phone',
 					'name'    => __( 'Phone number validation', 'wp-parsidate' ),
 					'type'    => 'checkbox',
 					'options' => 1,
-					'std'     => 0
+					'std'     => 0,
 				),
 			) );
 
@@ -159,18 +160,12 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		public function wpp_admin_woocommerce_jalali_datepicker_assets() {
 			global $wpp_months_name;
 
-			$screen = get_current_screen();
-
-			if ( ! $screen || ! property_exists( $screen, 'post_type' ) ) {
-				return;
-			}
-
+			$screen         = get_current_screen();
+			$current_screen = $screen->id;
 			$suffix         = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
-			$current_screen = $screen->post_type;
 
-			if ( wpp_is_active( 'persian_date' ) && in_array( $current_screen, array( 'product', 'shop_order', 'shop_coupon', 'wc-reports' ) ) ) {
+			if ( wpp_is_active( 'persian_date' ) && in_array( $current_screen, array( 'product', 'shop_order', 'shop_coupon', 'woocommerce_page_wc-reports' ) ) ) {
 				wp_enqueue_script( 'wpp_jalali_datepicker', WP_PARSI_URL . 'assets/js/jalalidatepicker.min.js', array( 'jquery', 'jquery-ui-datepicker' ), WP_PARSI_VER );
-
 				wp_enqueue_style( 'wpp_jalali_datepicker', WP_PARSI_URL . "assets/css/jalalidatepicker$suffix.css", null, WP_PARSI_VER );
 
 				do_action( 'wpp_jalai_datepicker_enqueued', 'wc' );
@@ -185,29 +180,29 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 *
 		 * @since 5.0.2
 		 */
-		public function wpp_change_order_date_on_save_order_object($order, $data)
-		{
-		    global $pagenow;
-		
-		    if (is_admin() and $pagenow == "admin.php" and isset($_GET['page']) and $_GET['page'] == "wc-orders" and !empty($_POST['order_date'])) {
-		
-			// Sanitize Text Field
-			$_POST['order_date'] = sanitize_text_field($_POST['order_date']);
-		
-			// Check Validate Date
-			if (!preg_match('/^(\d{4})-(\d{1,2})-(\d{1,2})$/', $_POST['order_date'])) {
-			    return;
+		public function wpp_change_order_date_on_save_order_object( $order, $data ) {
+			global $pagenow;
+
+			if ( is_admin() && 'post.php' === $pagenow && isset( $_POST['post_type'] ) && 'shop_order' === $_POST['post_type'] && ! empty( $_POST['order_date'] ) ) {
+
+				// Sanitize Text Field
+				$_POST['order_date'] = sanitize_text_field( eng_number( $_POST['order_date'] ) );
+
+				// Check Validate Date
+				if ( ! preg_match( '/^(\d{4})-(\d{1,2})-(\d{1,2})$/', $_POST['order_date'] ) ) {
+					return;
+				}
+
+				// Check Date Time If Before Proceed
+				$explode = explode( "-", $_POST['order_date'] );
+
+				if ( (int) $explode[0] > 2000 ) {
+					return;
+				}
+
+				// Convert To Gregorian
+				$_POST['order_date'] = gregdate( 'Y-m-d', trim( $_POST['order_date'] ) );
 			}
-		
-			// Check Date Time If Before Procced
-			$explode = explode("-", $_POST['order_date']);
-			if ((int)$explode[0] > 2000) {
-			    return;
-			}
-		
-			// Convert To Gregorian
-			$_POST['order_date'] = gregdate('Y-m-d', trim($_POST['order_date']));
-		    }
 		}
 
 		/**
@@ -219,19 +214,22 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 			$screen    = get_current_screen();
 			$screen_id = $screen ? $screen->id : '';
 
-			if ( 'shop_order' !== $screen_id ) {
-				return;
+			if ( 'shop_order' === $screen_id ) {
+				global $post;
+
+				if ( ! $post ) {
+					return;
+				}
+
+				$jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d', strtotime( $post->post_date ) ), 'eng' );
+
+				echo '<script>jQuery(function($){$("input[name=order_date]").val("' . $jalali_date . '")})</script>';
+			} elseif ( 'woocommerce_page_wc-reports' === $screen_id ) {
+				$jalali_start_date = ! empty($_GET['start_date']) ?parsidate( 'Y-m-d', date( 'Y-m-d', strtotime( $_GET['start_date'] ) ), 'eng' ) : '';
+				$jalali_end_date = ! empty($_GET['end_date']) ?parsidate( 'Y-m-d', date( 'Y-m-d', strtotime( $_GET['end_date'] ) ), 'eng' ) : '';
+
+				echo '<script>jQuery(function($){$("input[name=start_date]").val("' . $jalali_start_date . '");$("input[name=end_date]").val("' . $jalali_end_date . '")})</script>';
 			}
-
-			global $post;
-
-			if ( ! $post ) {
-				return;
-			}
-
-			$jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d', strtotime( $post->post_date ) ), 'eng' );
-
-			echo '<script>jQuery(function($){$("input[name=order_date]").val("' . $jalali_date . '")})</script>';
 		}
 
 		/**
