@@ -225,7 +225,7 @@ final class WP_Parsidate {
 	}
 
 	/**
-	 * Load vazir font in admin area
+	 * Load Vazir font in admin area
 	 *
 	 * @since           4.0.0
 	 */
@@ -253,16 +253,28 @@ final class WP_Parsidate {
 	}
 
 	/**
+	 * Check the given plugin is installed and activated
+	 *
+	 * Since 5.0.1
+	 */
+	public static function is_plugin_activated( $plugin_file ) {
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			include_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		return is_plugin_active( $plugin_file );
+	}
+
+	/**
 	 * Checks WPML or PolyLang plugins is active
 	 *
 	 * Since 4.0.1
 	 */
 	public static function wpp_multilingual_is_active() {
-		if ( ! function_exists( 'is_plugin_active' ) ) {
-			include_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
+		$polylang_activated  = self::is_plugin_activated( 'polylang/polylang.php' );
+		$sitepress_activated = self::is_plugin_activated( 'sitepress-multilingual-cms/sitepress.php' );
 
-		return is_plugin_active( 'polylang/polylang.php' ) || is_plugin_active( 'sitepress-multilingual-cms/sitepress.php' );
+		return $polylang_activated || $sitepress_activated;
 	}
 }
 

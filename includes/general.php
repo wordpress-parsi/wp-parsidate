@@ -195,7 +195,11 @@ function fix_number( $content ) {
  * @return              array|string|string[]
  */
 function fix_arabic( $content ) {
-	return str_replace( array( 'ي', 'ك', 'ة', '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩' ), array( 'ی', 'ک', 'ه', '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹' ), $content );
+	return str_replace(
+		array( 'ي', 'ك', 'ة', '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩' ),
+		array( 'ی', 'ک', 'ه', '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹' ),
+		$content,
+	);
 }
 
 /**
@@ -235,7 +239,6 @@ function parsidate_check_format( $format ) {
 	) );
 }
 
-
 /**
  * wpp_is_sitemap()
  * checks is WordPress sitemap
@@ -243,5 +246,5 @@ function parsidate_check_format( $format ) {
  * @return boolean
  */
 function wpp_is_sitemap() {
-	return ( isset($_SERVER['REQUEST_URI']) and strpos( $_SERVER['REQUEST_URI'], 'wp-sitemap' ) !== false ) ? true : false;
+	return ( isset( $_SERVER['REQUEST_URI'] ) and strpos( $_SERVER['REQUEST_URI'], 'wp-sitemap' ) !== false );
 }

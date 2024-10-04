@@ -14,7 +14,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
 	/**
 	 * Hooks required tags
 	 */
-	function __construct( $settings ) {
+	public function __construct( $settings ) {
 		$this->name = 'jalali_datepicker';
 
 		$this->label = __( 'Date', 'wp-parsidate' );
@@ -37,7 +37,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
 	 *
 	 * @since           4.0.0
 	 */
-	function create_options( $field ) {
+	public function create_options( $field ) {
 		$key = $field['name'];
 		?>
         <tr class="field_option field_option_<?php echo $this->name; ?>">
@@ -66,7 +66,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
 	 *
 	 * @since           4.0.0
 	 */
-	function create_field( $field ) {
+	public function create_field( $field ) {
 		?>
         <div>
             <input type="text" name="<?php echo esc_attr( $field['name'] ) ?>"
@@ -82,7 +82,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
 	 *
 	 * @since           4.0.0
 	 */
-	function input_admin_enqueue_scripts() {
+	public function input_admin_enqueue_scripts() {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
 		wp_enqueue_script( 'wpp_jalali_datepicker', WP_PARSI_URL . 'assets/js/jalalidatepicker.min.js', array( 'acf-input' ), WP_PARSI_VER );
@@ -101,7 +101,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
 	 * @return          int|string $value
 	 * @since           4.0.0
 	 */
-	function load_value( $value, $post_id, $field ) {
+	public function load_value( $value, $post_id, $field ) {
 		if ( ! wpp_is_active( 'acf_persian_date' ) ) {
 			$value = parsidate( 'Y-m-d', $value );
 		}
@@ -119,7 +119,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
 	 * @return          false|string $value
 	 * @since           4.0.0
 	 */
-	function update_value( $value, $post_id, $field ) {
+	public function update_value( $value, $post_id, $field ) {
 		if ( ! wpp_is_active( 'acf_persian_date' ) ) {
 			$value = gregdate( 'Y-m-d', $value );
 		}
@@ -137,7 +137,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
 	 * @return   mixed|void $value    - the modified value
 	 * @since    4.0.0
 	 */
-	function format_value_for_api( $value, $post_id, $field ) {
+	public function format_value_for_api( $value, $post_id, $field ) {
 		if ( ! wpp_is_active( 'acf_persian_date' ) ) {
 			$value = parsidate( 'Y-m-d', $value );
 		}
