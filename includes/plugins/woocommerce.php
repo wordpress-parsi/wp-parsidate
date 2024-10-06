@@ -438,6 +438,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 			 * @var array $persian_fields
 			 */
 			$supported_persian_fields = apply_filters( "wpp_woocommerce_checkout_persian_fields", $persian_fields );
+
 			foreach ( $supported_persian_fields as $field ) {
 				if ( isset( $data[ $field ] ) ) {
 					$data[ $field ] = $this->fix_persian_characters( $data[ $field ] );

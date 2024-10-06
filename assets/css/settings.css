@@ -1,4 +1,4 @@
-body {
+/*body {
   background: #fff;
 }
 
@@ -260,4 +260,135 @@ p.submit {
 
 .wrap.wpp-settings-wrap h2 {
   font-family: "tahoma";
+}
+*/
+/**
+ * Icons by: https://fontawesome.com/
+ */
+.wpp-team {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.wpp-team h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.wpp-team-members {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.wpp-team-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.wpp-team-member:hover {
+  transform: translateY(-10px);
+}
+
+.wpp-team-member .avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.wpp-team-member h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+.wpp-team-member .social-links {
+  display: flex;
+  gap: 10px;
+}
+
+.wpp-team-member .social-links a {
+  transition: transform 0.3s;
+}
+
+.wpp-team-member .social-links a:hover {
+  transform: scale(1.2);
+}
+
+.wpp-team-member .social-links img {
+  width: 20px;
+}
+
+.wpp-contributors {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.wpp-contributors h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+#wpp-contributors-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.wpp-contributor {
+  position: relative;
+  margin: 1px;
+  text-align: center;
+}
+
+.wpp-contributor img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.wpp-contributor:hover img {
+  transform: translateY(-10px);
+}
+
+.wpp-contributor .tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Position the tooltip above the image */
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.wpp-contributor .tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* Arrow at the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.wpp-contributor:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }

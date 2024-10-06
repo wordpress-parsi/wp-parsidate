@@ -80,7 +80,7 @@ if ( ! class_exists( 'WPP_WC_Gateways' ) ) {
 						'pasargad' => __( 'Pasargad Bank', 'wp-parsidate' ),
 						'mellat'   => __( 'Mellat Bank', 'wp-parsidate' ),
 					),
-					'std'     => 0 //array( 'parsian', 'pasargad', 'mellat' )
+					'std'     => array( 'parsian', 'pasargad', 'mellat' )
 				)
 			);
 

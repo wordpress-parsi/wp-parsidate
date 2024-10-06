@@ -38,7 +38,7 @@ function wpp_add_settings_menu() {
 		);
 	}
 
-	//add_action( 'admin_enqueue_scripts', 'wpp_enqueue_setting_page_style' );
+	add_action( 'admin_enqueue_scripts', 'wpp_enqueue_setting_page_style' );
 }
 
 add_action( 'admin_menu', 'wpp_add_settings_menu', 11 );
@@ -133,7 +133,9 @@ function wpp_get_tabs() {
 	return array(
 		'core'    => sprintf( __( '%s Core', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-site"></span>' ),
 		'conv'    => sprintf( __( '%s Converts', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-settings"></span>' ),
-		'plugins' => sprintf( __( '%s Plugins compatibility', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-plugins"></span>' )
+		'plugins' => sprintf( __( '%s Plugins compatibility', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-plugins"></span>' ),
+		'about'   => sprintf( __( '%s About', 'wp-parsidate' ), '<span class="dashicons dashicons-info"></span>' ),
+
 	);
 }
 
@@ -411,12 +413,12 @@ function wpp_checkbox_callback( $args ) {
 function wpp_multicheck_callback( $args ) {
 	global $wpp_settings;
 
-	$html  = '';
+	$html  = '<ul class="wpp-settings-multicheck">';
 	$value = $wpp_settings[ $args['id'] ] ?? $args['std'] ?? array();
 
 	foreach ( $args['options'] as $key => $option ) {
 		$html .= sprintf(
-			'<input name="wpp_settings[%1$s][%2$s]" id="wpp_settings[%1$s][%2$s]" type="checkbox" value="%2$s" %3$s/><label for="wpp_settings[%1$s][%2$s]" class="wpp-checkbox-label multicheck">%4$s<span></span> %5$s</label>',
+			'<li><input name="wpp_settings[%1$s][%2$s]" id="wpp_settings[%1$s][%2$s]" type="checkbox" value="%2$s" %3$s/><label for="wpp_settings[%1$s][%2$s]" class="wpp-checkbox-label multicheck">%4$s<span></span> %5$s</label></li>',
 			$args['id'],
 			$key,
 			in_array( $key, $value ) ? 'checked="checked"' : '',
@@ -425,7 +427,7 @@ function wpp_multicheck_callback( $args ) {
 		);
 	}
 
-	echo $html;
+	echo $html.'</ul>';
 }
 
 /**
@@ -629,7 +631,7 @@ function wpp_render_settings() {
 
 				$tab_url = add_query_arg( array(
 					'settings-updated' => false,
-					'tab'              => $tab_id
+					'tab'              => $tab_id,
 				) );
 
 				$active = $active_tab == $tab_id ? ' nav-tab-active' : '';
@@ -641,15 +643,19 @@ function wpp_render_settings() {
 			?>
         </h2>
         <div id="tab_container">
-            <form method="post" action="options.php">
-                <table class="form-table">
-					<?php
-					settings_fields( 'wpp_settings' );
-					do_settings_fields( 'wpp_settings_' . $active_tab, 'wpp_settings_' . $active_tab );
-					?>
-                </table>
-				<?php submit_button(); ?>
-            </form>
+			<?php if ( 'about' !== $active_tab ) : ?>
+                <form method="post" action="options.php">
+                    <table class="form-table">
+						<?php
+						settings_fields( 'wpp_settings' );
+						do_settings_fields( 'wpp_settings_' . $active_tab, 'wpp_settings_' . $active_tab );
+						?>
+                    </table>
+					<?php submit_button(); ?>
+                </form>
+			<?php else : ?>
+				<?php include WP_PARSI_DIR . 'includes/views/html-about.php'; ?>
+			<?php endif; ?>
         </div><!-- #tab_container-->
     </div><!-- .wrap -->
 	<?php
