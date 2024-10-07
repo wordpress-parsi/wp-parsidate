@@ -528,7 +528,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 			}
 
 			// based on https://github.com/VahidN/DNTPersianUtils.Core/blob/34b9ae00ad3584bc9ef34033c6402d1b8ae7a148/src/DNTPersianUtils.Core/Validators/IranCodesUtils.cs#L13
-			return (bool) preg_match( '\b(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}\b', $postcode );
+			return (bool) preg_match( '/\b(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}\b/', $postcode );
 		}
 
 		/**
@@ -538,11 +538,12 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 * @return false|void
 		 */
 		public function wpp_validate_phone_number( $data, $errors ) {
-			if ( preg_match( '/^(\+98|0098|98|0)?9\d{9}$/', eng_number( sanitize_text_field( $_POST['billing_phone'] ) ) ) ) {
+			// This pattern ensures the phone number follows the specified structure for both mobile and landline numbers
+			if ( preg_match( '/^(0|0098|\+98)?(9\d{9}|[1-8]\d{9,10})$/', eng_number( sanitize_text_field( $_POST['billing_phone'] ) ) ) ) {
 				return false;
 			}
 
-			$errors->add( 'validation', esc_html__( '<strong>Phone number</strong> is invalid.', 'wp-parsidate' ) );
+			$errors->add( 'validation', __( '<strong>Phone number</strong> is invalid.', 'wp-parsidate' ) );
 		}
 
 		/**
@@ -559,7 +560,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		}
 
 		/**
-		 * Fixes jalali order date direction in WooCommerce myaccount endpoints (Issue: https://github.com/wordpress-parsi/wp-parsidate/issues/154)
+		 * Fixes jalali order date direction in WooCommerce my-account endpoints (Issue: https://github.com/wordpress-parsi/wp-parsidate/issues/154)
 		 *
 		 * @return void
 		 * @since 5.0.0

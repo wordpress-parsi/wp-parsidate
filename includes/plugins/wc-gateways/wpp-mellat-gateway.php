@@ -81,7 +81,7 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
 								'type'        => 'textarea',
 								'description' => __( 'The description that will be displayed during the purchase process for the gateway', 'wp-parsidate' ),
 								/* translators: %s: Bank name */
-								'default'     => sprintf( __( "Secure payment by all Shatab's cards through %s", 'wp-parsidate' ), $this->gateway_name )
+								'default'     => sprintf( __( "Secure payment by all Shetab's cards through %s", 'wp-parsidate' ), $this->gateway_name )
 							),
 							'success_massage'   => array(
 								'title'       => __( 'Successful payment message', 'wp-parsidate' ),

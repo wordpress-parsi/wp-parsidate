@@ -2,6 +2,26 @@
 
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
+/**
+ * To not show team members in GitHub Contributors, you must set the array ID equal to the GitHub username
+ *
+ * Available brand logos:
+ *  behance
+ *  codepen
+ *  facebook
+ *  github
+ *  google
+ *  instagram
+ *  linkedin
+ *  medium
+ *  stack-overflow
+ *  telegram
+ *  tiktok
+ *  whatsapp
+ *  wordpress
+ *  x-twitter
+ *  youtube
+ */
 $team_members = array(
 	'john_doe'   => array(
 		'name'   => esc_html__( 'John Doe', 'wp-parsidate' ),
