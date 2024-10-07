@@ -113,7 +113,7 @@ jQuery(function ($) {
          * we explicitly pass a string as value of aria-expanded and
          * sometimes a boolean as the result of an evaluation.
          */
-        action = 'true' == $toggleButton.attr('aria-expanded') ? 'hide' : 'show';
+        action = 'true' === $toggleButton.attr('aria-expanded') ? 'hide' : 'show';
       }
 
       if ('hide' === action) {
@@ -566,11 +566,33 @@ wppWidgetOption.remove();
 
 async function wppInitSponsors() {
   try {
-    const response = await fetch('http://localhost/wp-json/sponsorship/v1/sponsors/');
-    const data = await response.json();
-    const slidesData = Object.values(data); // Convert object to array
-    wppsPlaceholder.remove();
-    createSlides(slidesData);
+    const response = await fetch(ajaxurl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        action: 'fetch_sponsorship_slides'
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      const slidesData = Object.values(result.data); // Convert object to array
+
+      wppsPlaceholder.remove();
+      createSlides(slidesData);
+
+      new KeenSlider(slidesContainer, {
+        loop: true,
+        duration: 5000,
+        controls: true,
+        indicators: true,
+      });
+    } else {
+      console.error('Error fetching slides:', result.data);
+    }
   } catch (error) {
     console.error('Error fetching slides:', error);
   }
@@ -615,7 +637,7 @@ function initWPPSSlider() {
       }, 4000);
     }
 
-    slider.on("created", () => {
+    slider.on('created', () => {
       slider.container.addEventListener('mouseover', () => {
         mouseOver = true;
         clearNextTimeout();
@@ -670,8 +692,9 @@ function wppsNavigation(slider) {
   function wrapperMarkup(remove) {
     if (remove) {
       const parent = wrapper.parentNode;
-      while (wrapper.firstChild)
+      while (wrapper.firstChild) {
         parent.insertBefore(wrapper.firstChild, wrapper);
+      }
       removeElement(wrapper);
       return;
     }

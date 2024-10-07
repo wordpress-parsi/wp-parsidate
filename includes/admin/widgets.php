@@ -70,7 +70,7 @@ if ( ! function_exists( 'wpp_dashboard_secondary_feed' ) ) {
 
 if ( ! function_exists( 'wpp_remove_wp_dashboard_events_news' ) ) {
 	/**
-	 * Remove default WP events and news widget
+	 * Remove the default WP events and news widget
 	 *
 	 * @return void
 	 * @author HamidReza Yazdani
@@ -129,10 +129,12 @@ if ( ! function_exists( 'wpp_dashboard_primary_widget_content' ) ) {
                     </a></li>
             </ul>
         </div>
-        <div  id="wpp_sponsorship_placeholder">
+        <div id="wpp_sponsorship_placeholder">
             <img src="<?php echo WP_PARSI_URL; ?>assets/images/icon.svg" alt="<?php esc_html_e( 'Loading Sponsors', 'wp-parsidate' ); ?>">
         </div>
-        <div id="wpp_sponsorship" class="keen-slider"></div>
+        <div id="wpp_sponsorship" class="keen-slider">
+
+        </div>
 		<?php
 		wp_dashboard_events_news();
 	}
@@ -160,11 +162,37 @@ if ( ! function_exists( 'wpp_enqueue_admin_dashboard_assets' ) ) {
 		wp_enqueue_style( 'keen-slider', WP_PARSI_URL . "assets/css/keen-slider$suffix.css", false, '1.0.0' );
 		wp_enqueue_style( 'wpp_dashboard', WP_PARSI_URL . "assets/css/dashboard$suffix.css", false, '1.0.0' );
 		wp_enqueue_script( 'keen-slider', WP_PARSI_URL . "assets/js/keen-slider$suffix.js", array(), '1.6.0', true );
-		wp_enqueue_script( 'wpp_dashboard', WP_PARSI_URL . "assets/js/dashboard$suffix.js", array(
-			'jquery',
-			'keen-slider'
-		), '1.0.0', true );
+		wp_enqueue_script( 'wpp_dashboard', WP_PARSI_URL . "assets/js/dashboard$suffix.js", array( 'jquery', 'keen-slider' ), '1.0.0', true );
 	}
 
 	add_action( 'admin_enqueue_scripts', 'wpp_enqueue_admin_dashboard_assets' );
+}
+
+if ( ! function_exists( 'wpp_fetch_sponsorship_slides_callback' ) ) {
+	/**
+     * Fetch the sponsors banners
+     *
+     * @sicne 5.1.0
+	 * @return void
+	 */
+	function wpp_fetch_sponsorship_slides_callback() {
+		$sponsors_cache = get_transient( 'wpp_sponsors_cache' );
+
+		if ( $sponsors_cache ) {
+			wp_send_json_success( json_decode( $sponsors_cache, true ) );
+		}
+
+		$response = wp_remote_get( 'http://localhost/wp-json/sponsorship/v1/sponsors/' );
+
+		if ( is_wp_error( $response ) ) {
+			wp_send_json_error( 'Error fetching slides' );
+		}
+
+		$slides = wp_remote_retrieve_body( $response );
+
+		set_transient( 'wpp_sponsors_cache', $slides, WEEK_IN_SECONDS );
+		wp_send_json_success( json_decode( $slides, true ) );
+	}
+
+	add_action( 'wp_ajax_fetch_sponsorship_slides', 'wpp_fetch_sponsorship_slides_callback' );
 }
