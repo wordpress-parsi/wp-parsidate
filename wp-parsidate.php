@@ -123,6 +123,7 @@ final class WP_Parsidate {
 		$files        = array(
 			'parsidate',
 			'general',
+			'tools',
 			'fixes-archive',
 			'fixes-permalinks',
 			'fixes-dates',

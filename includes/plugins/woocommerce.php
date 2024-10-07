@@ -360,7 +360,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				array(
 					'date_on_sale_from' => $date_on_sale_from,
 					'date_on_sale_to'   => $date_on_sale_to,
-				)
+				),
 			);
 
 			$variation->save();

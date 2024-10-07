@@ -74,7 +74,7 @@ if ( ! function_exists( 'wpp_remove_wp_dashboard_events_news' ) ) {
 	 *
 	 * @return void
 	 * @author HamidReza Yazdani
-	 * @sicne 5.0.1
+	 * @sicne 5.1.0
 	 *
 	 */
 	function wpp_remove_wp_dashboard_events_news() {
@@ -90,7 +90,7 @@ if ( ! function_exists( 'wpp_add_our_dashboard_primary_widget' ) ) {
 	 *
 	 * @return void
 	 * @author HamidReza Yazdani
-	 * @sicne 5.0.1
+	 * @sicne 5.1.0
 	 *
 	 */
 	function wpp_add_our_dashboard_primary_widget() {
@@ -110,7 +110,7 @@ if ( ! function_exists( 'wpp_dashboard_primary_widget_content' ) ) {
 	 *
 	 * @return void
 	 * @author HamidReza Yazdani
-	 * @sicne 5.0.1
+	 * @sicne 5.1.0
 	 *
 	 */
 	function wpp_dashboard_primary_widget_content() {
@@ -146,7 +146,7 @@ if ( ! function_exists( 'wpp_enqueue_admin_dashboard_assets' ) ) {
 	 *
 	 * @return void
 	 * @author HamidReza Yazdani
-	 * @sicne 5.0.1
+	 * @sicne 5.1.0
 	 *
 	 */
 	function wpp_enqueue_admin_dashboard_assets( $hook ) {

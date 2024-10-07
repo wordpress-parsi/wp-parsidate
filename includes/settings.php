@@ -133,9 +133,9 @@ function wpp_get_tabs() {
 	return array(
 		'core'    => sprintf( __( '%s Core', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-site"></span>' ),
 		'conv'    => sprintf( __( '%s Converts', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-settings"></span>' ),
+		'tools' => sprintf( __( '%s Tools', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-tools"></span>' ),
 		'plugins' => sprintf( __( '%s Plugins compatibility', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-plugins"></span>' ),
 		'about'   => sprintf( __( '%s About', 'wp-parsidate' ), '<span class="dashicons dashicons-info"></span>' ),
-
 	);
 }
 
@@ -209,7 +209,7 @@ function wpp_get_registered_settings() {
 				'type'    => 'checkbox',
 				'options' => 'enable',
 				'std'     => 0,
-				'desc'    => __( 'This option change WordPress locale to Persian in Admin', 'wp-parsidate' )
+				'desc'    => __( 'This option change WordPress locale to Persian in Admin', 'wp-parsidate' ),
 			),
 			'user_lang'            => array(
 				'id'      => 'user_lang',
@@ -217,7 +217,7 @@ function wpp_get_registered_settings() {
 				'type'    => 'checkbox',
 				'options' => 'enable',
 				'std'     => 0,
-				'desc'    => __( 'This option change WordPress locale to Persian in theme', 'wp-parsidate' )
+				'desc'    => __( 'This option change WordPress locale to Persian in theme', 'wp-parsidate' ),
 			),
 			'persian_date'         => array(
 				'id'      => 'persian_date',
@@ -225,7 +225,7 @@ function wpp_get_registered_settings() {
 				'type'    => 'checkbox',
 				'options' => 'enable',
 				'std'     => 0,
-				'desc'    => __( 'By enabling this, Dates will convert to Shamsi (Jalali) dates', 'wp-parsidate' )
+				'desc'    => __( 'By enabling this, Dates will convert to Shamsi (Jalali) dates', 'wp-parsidate' ),
 			),
 			'months_name_type'     => array(
 				'id'      => 'months_name_type',
@@ -245,7 +245,7 @@ function wpp_get_registered_settings() {
 				'type'    => 'checkbox',
 				'options' => 'enable',
 				'std'     => 0,
-				'desc'    => __( 'By enabling this, Widget Block Editor disabled', 'wp-parsidate' )
+				'desc'    => __( 'By enabling this, Widget Block Editor disabled', 'wp-parsidate' ),
 			),
 			'submenu_move'         => array(
 				'id'      => 'submenu_move',
@@ -253,7 +253,7 @@ function wpp_get_registered_settings() {
 				'type'    => 'checkbox',
 				'options' => 'enable',
 				'std'     => 0,
-				'desc'    => __( 'By enabling this option, page item will be moved to Settings menu as submenu.', 'wp-parsidate' )
+				'desc'    => __( 'By enabling this option, page item will be moved to Settings menu as submenu.', 'wp-parsidate' ),
 			),
 			'dev_mode'             => array(
 				'id'      => 'dev_mode',
@@ -261,7 +261,7 @@ function wpp_get_registered_settings() {
 				'type'    => 'checkbox',
 				'options' => 'enable',
 				'std'     => 0,
-				'desc'    => __( 'By enabling this option, the uncompressed version of the JS and CSS files will be loaded.', 'wp-parsidate' )
+				'desc'    => __( 'By enabling this option, the uncompressed version of the JS and CSS files will be loaded.', 'wp-parsidate' ),
 			),
 			'enable_fonts'         => array(
 				'id'      => 'enable_fonts',
@@ -269,14 +269,14 @@ function wpp_get_registered_settings() {
 				'type'    => 'checkbox',
 				'options' => 'enable',
 				'std'     => 0,
-				'desc'    => __( 'By enabling this option, the Vazir font will be enable in whole admin area.', 'wp-parsidate' )
+				'desc'    => __( 'By enabling this option, the Vazir font will be enable in whole admin area.', 'wp-parsidate' ),
 			),
 		) ),
 		'conv'    => apply_filters( 'wpp_conv_settings', array(
 			'conv_nums'          => array(
 				'id'   => 'conv_nums',
 				'name' => __( 'Persian digits', 'wp-parsidate' ),
-				'type' => 'header'
+				'type' => 'header',
 			),
 			'conv_page_title'    => array(
 				'id'      => 'conv_page_title',
@@ -344,7 +344,7 @@ function wpp_get_registered_settings() {
 			),
 			'sep'                => array(
 				'id'   => 'sep',
-				'type' => 'header'
+				'type' => 'header',
 			),
 			'conv_arabic'        => array(
 				'id'      => 'conv_arabic',
@@ -352,7 +352,7 @@ function wpp_get_registered_settings() {
 				'type'    => 'checkbox',
 				'options' => 'enable',
 				'std'     => 'disable',
-				'desc'    => __( 'Fixes arabic characters caused by wrong keyboard layouts', 'wp-parsidate' )
+				'desc'    => __( 'Fixes arabic characters caused by wrong keyboard layouts', 'wp-parsidate' ),
 			),
 			'conv_permalinks'    => array(
 				'id'      => 'conv_permalinks',
@@ -360,14 +360,49 @@ function wpp_get_registered_settings() {
 				'type'    => 'checkbox',
 				'options' => 'enable',
 				'std'     => 0,
-				'desc'    => __( 'By enabling this, dates in permalinks converted to Shamsi (Jalali) date', 'wp-parsidate' )
+				'desc'    => __( 'By enabling this, dates in permalinks converted to Shamsi (Jalali) date', 'wp-parsidate' ),
 			),
 			'sep_font'           => array(
 				'id'   => 'sep_font',
-				'type' => 'header'
-			)
+				'type' => 'header',
+			),
 		) ),
-		'plugins' => apply_filters( 'wpp_plugins_compatibility_settings', array() )
+		'tools'    => apply_filters( 'wpp_tools_settings', array(
+			'advanced_tools'          => array(
+				'id'   => 'advanced_tools',
+				'name' => __( 'Advanced Tools', 'wp-parsidate' ),
+				'type' => 'header'
+			),
+			'date_in_admin_bar'         => array(
+				'id'      => 'date_in_admin_bar',
+				'name'    => __( "Display date in the admin bar", 'wp-parsidate' ),
+				'type'    => 'checkbox',
+				'options' => 'enable',
+				'std'     => 'disable',
+				'desc'    => __( "Display today's Jalali date in the WordPress admin bar.", 'wp-parsidate' ),
+			),
+			'sep_admin_bar_ate'           => array(
+				'id'   => 'sep_admin_bar_ate',
+				'type' => 'header',
+			),
+			'disable_copy'         => array(
+				'id'      => 'disable_copy',
+				'name'    => __( 'Prevent users from copying site content', 'wp-parsidate' ),
+				'type'    => 'checkbox',
+				'options' => 'enable',
+				'std'     => 'disable',
+				'desc'    => __( "Simply protect your site's content from those who want to copy it.", 'wp-parsidate' ),
+			),
+			'disable_right_click'    => array(
+				'id'      => 'disable_right_click',
+				'name'    => __( 'Disable right click on website pages', 'wp-parsidate' ),
+				'type'    => 'checkbox',
+				'options' => 'enable',
+				'std'     => 0,
+				'desc'    => __( "Don't worry about downloading website images and other files anymore, this option prevents users from right clicking", 'wp-parsidate' ),
+			),
+		) ),
+		'plugins' => apply_filters( 'wpp_plugins_compatibility_settings', array() ),
 	) );
 }
 
