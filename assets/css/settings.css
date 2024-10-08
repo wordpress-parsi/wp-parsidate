@@ -310,19 +310,23 @@ p.submit {
   margin: 10px 0;
 }
 
+.follow-us .social-links ,
 .wpp-team-member .social-links {
   display: flex;
   gap: 10px;
 }
 
+.follow-us .social-links a ,
 .wpp-team-member .social-links a {
   transition: transform 0.3s;
 }
 
+.follow-us .social-links a:hover ,
 .wpp-team-member .social-links a:hover {
   transform: scale(1.2);
 }
 
+.follow-us .social-links img ,
 .wpp-team-member .social-links img {
   width: 20px;
 }

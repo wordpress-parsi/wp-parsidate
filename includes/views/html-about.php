@@ -46,7 +46,29 @@ $team_members = array(
 	// Add more team members as needed
 );
 
+$social_accounts = array(
+	'instagram' => '#',
+	'telegram'  => '#',
+	'x-twitter' => '#',
+	'linkedin'  => '#',
+	'facebook'  => '#',
+	'github'    => '#',
+);
 ?>
+<section class="about-us">
+    <h1><?php esc_html_e( 'About Us', 'wp-parsidate' ); ?></h1>
+    <p></p>
+    <p></p>
+    <div class="follow-us">
+        <h3><?php esc_html_e( 'Follow Us', 'wp-parsidate' ); ?></h3>
+        <div class="social-links">
+			<?php foreach ( $social_accounts as $platform => $url ) : ?>
+                <a href="<?php echo esc_url( $url ); ?>" target="_blank"><img src="<?php echo esc_url( WP_PARSI_URL . "assets/svg/$platform-brands-solid.svg" ); ?>" alt="<?php echo esc_attr( ucfirst( $platform ) ); ?>"></a>
+			<?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
 <section class="wpp-team">
     <h1><?php esc_html_e( 'Our Team', 'wp-parsidate' ); ?></h1>
     <div class="wpp-team-members">
