@@ -38,7 +38,7 @@ function wpp_add_settings_menu() {
 		);
 	}
 
-	add_action( 'admin_enqueue_scripts', 'wpp_enqueue_setting_page_style' );
+	//add_action( 'admin_enqueue_scripts', 'wpp_enqueue_setting_page_style' );
 }
 
 add_action( 'admin_menu', 'wpp_add_settings_menu', 11 );
