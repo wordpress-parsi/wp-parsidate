@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-08 04:12+0330\n"
-"PO-Revision-Date: 2024-10-08 04:13+0330\n"
+"POT-Creation-Date: 2024-10-08 04:13+0330\n"
+"PO-Revision-Date: 2024-10-08 05:15+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -18,6 +18,44 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Loco-Parser: loco_parse_po\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../assets/js/dashboard.js:243 ../assets/js/dashboard.min.js:1
+msgid "Attend an upcoming event near you."
+msgstr ""
+
+#: ../assets/js/dashboard.js:273 ../assets/js/dashboard.min.js:1
+#, javascript-format
+msgid "City updated. Listing events near %s."
+msgstr ""
+
+#: ../assets/js/dashboard.js:305 ../assets/js/dashboard.min.js:1
+#, javascript-format
+msgid ""
+"We couldn’t locate %s. Please try another nearby city. For example: Kansas City; "
+"Springfield; Portland."
+msgstr ""
+
+#: ../assets/js/dashboard.js:320 ../assets/js/dashboard.min.js:1
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: ../assets/js/dashboard.js:325 ../assets/js/dashboard.min.js:1
+msgid "Enter your closest city to find nearby events."
+msgstr ""
+
+#: ../assets/js/dashboard.js:509 ../assets/js/dashboard.min.js:1
+msgid "l, M j, Y"
+msgstr ""
+
+#: ../assets/js/dashboard.js:511 ../assets/js/dashboard.min.js:1
+#, javascript-format
+msgid "%1$s %2$d–%3$d, %4$d"
+msgstr ""
+
+#: ../assets/js/dashboard.js:513 ../assets/js/dashboard.min.js:1
+#, javascript-format
+msgid "%1$s %2$d – %3$s %4$d, %5$d"
+msgstr ""
 
 #: ../assets/js/gutenberg-jalali-calendar.build.js:1
 msgid "mustShowMonthPicker"

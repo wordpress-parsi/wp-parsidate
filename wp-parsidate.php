@@ -48,7 +48,7 @@ defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
  * @author              Mobin Ghasempoor
  * @author              Morteza Geransayeh
  * @link                https://wp-parsi.com/
- * @version             4.0.0
+ * @version             5.1.0
  * @license             http://www.gnu.org/licenses/gpl-3.0.html GNU Public License v3.0
  * @package             WP-Parsidate
  * @subpackage          Core
@@ -104,7 +104,7 @@ final class WP_Parsidate {
 		}
 
 		if ( ! defined( 'WP_PARSI_VER' ) ) {
-			define( 'WP_PARSI_VER', '4.0.1' );
+			define( 'WP_PARSI_VER', '5.1.0' );
 		}
 	}
 

@@ -221,7 +221,6 @@ label[for="wpp_dashboard_primary-hide"] {
   position: absolute;
   bottom: 5px;
   transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
   fill: #fff;
   cursor: pointer;
   margin: 0;
@@ -233,7 +232,7 @@ label[for="wpp_dashboard_primary-hide"] {
 
 .arrow--left {
   right: 33px;
-  fill: '#fff';
+  fill: #fff;
   background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' %3E%3Cpath d='M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z' %3E%3C/path%3E%3C/svg%3E");
 }
 

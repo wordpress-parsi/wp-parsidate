@@ -611,7 +611,6 @@ function createSlides(slidesData) {
   });
   initWPPSSlider();
 }
-
 function initWPPSSlider() {
   let wppsSlider = new KeenSlider(slidesContainer, {
     rtl: getComputedStyle(slidesContainer).direction,
