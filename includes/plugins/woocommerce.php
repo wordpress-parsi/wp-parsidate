@@ -165,7 +165,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 			$screen          = get_current_screen();
 			$current_screen  = $screen->id;
 			$suffix          = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
-			var_dump($current_screen);
+
 			$allowed_screens = array(
 				'product',
 				'shop_order',
