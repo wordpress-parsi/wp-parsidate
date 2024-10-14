@@ -185,9 +185,9 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		/**
 		 * Convert order date to gregorian before saved at database
 		 *
-		 * @param $order
-		 * @param $data
+		 * @param $order_id
 		 *
+		 * @throws WC_Data_Exception
 		 * @since 5.0.2
 		 */
 		public function change_order_date_on_save_order_object( $order_id ) {
