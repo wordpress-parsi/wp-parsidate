@@ -40,7 +40,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 					add_action( 'admin_enqueue_scripts', array( $this, 'wc_jalali_datepicker_assets' ) );
 
 					// Convert order_date using js
-					add_action( 'woocommerce_before_order_object_save', array( $this, 'change_order_date_on_save_order_object' ), 1000, 2 );
+					add_action( 'woocommerce_process_shop_order_meta', array( $this, 'change_order_date_on_save_order_object' ), 1000 );
 					add_filter( 'woocommerce_process_product_meta', array( $this, 'validate_non_variable_product_dates' ), 1000 );
 					add_action( 'woocommerce_ajax_save_product_variations', array( $this, 'validate_variable_product_dates' ), 1000 );
 					add_action( 'woocommerce_process_shop_coupon_meta', array( $this, 'validate_wc_coupons_date' ), 1000 );
@@ -162,9 +162,9 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		public function wc_jalali_datepicker_assets() {
 			global $wpp_months_name;
 
-			$screen          = get_current_screen();
-			$current_screen  = $screen->id;
-			$suffix          = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
+			$screen         = get_current_screen();
+			$current_screen = $screen->id;
+			$suffix         = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
 			$allowed_screens = array(
 				'product',
@@ -190,27 +190,27 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 *
 		 * @since 5.0.2
 		 */
-		public function change_order_date_on_save_order_object( $order, $data ) {
-			if ( $this->get_current_screen() ) {
-
-				// Sanitize Text Field
-				$_POST['order_date'] = eng_number( wc_clean( wp_unslash( $_POST['order_date'] ) ) );
-
-				// Check Validate Date
-				if ( ! preg_match( '/^(\d{4})-(\d{1,2})-(\d{1,2})$/', $_POST['order_date'] ) ) {
-					return;
-				}
-
-				// Check Date Time If Before Proceed
-				$explode = explode( "-", $_POST['order_date'] );
-
-				if ( (int) $explode[0] > 2000 ) {
-					return;
-				}
-
-				// Convert To Gregorian
-				$_POST['order_date'] = gregdate( 'Y-m-d', trim( $_POST['order_date'] ) );
+		public function change_order_date_on_save_order_object( $order_id ) {
+			if ( ! isset( $_POST['order_date'] ) ) {
+				return;
 			}
+
+			$order = wc_get_order( $order_id );
+
+			if ( ! $order ) {
+				return;
+			}
+
+			$order_date = wc_clean( $_POST['order_date'] );
+			$hour       = str_pad( (int) $_POST['order_date_hour'], 2, '0', STR_PAD_LEFT );
+			$minute     = str_pad( (int) $_POST['order_date_minute'], 2, '0', STR_PAD_LEFT );
+			$second     = str_pad( (int) $_POST['order_date_second'], 2, '0', STR_PAD_LEFT );
+			$time_stamp = "$order_date $hour:$minute:$second";
+			$fixed_date = gregdate( 'Y-m-d H:i:s', $time_stamp );
+			$date       = empty( $order_date ) ? current_time( 'mysql' ) : gmdate( 'Y-m-d H:i:s', strtotime( $fixed_date ) );
+
+			$order->set_date_created( $date );
+			$order->save();
 		}
 
 		/**
