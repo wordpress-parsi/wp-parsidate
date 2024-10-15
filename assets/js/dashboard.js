@@ -542,7 +542,9 @@ jQuery(function ($) {
     }
   };
 
-  if ($('#wpp_dashboard_primary').is(':visible')) {
+  const wppWidget = $('#wpp_dashboard_primary');
+
+  if (wppWidget.is(':visible')) {
     app.init();
   } else {
     $(document).on('postbox-toggled', function (event, postbox) {

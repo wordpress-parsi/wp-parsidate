@@ -1,4 +1,12 @@
 /* Dashboard WordPress news */
+#wpp_dashboard_primary .hndle.ui-sortable-handle {
+  cursor: no-drop;
+  pointer-events: none;
+}
+
+#wpp_dashboard_primary .handle-actions {
+  display: none;
+}
 
 #wpp_dashboard_primary .inside {
   margin: 0;

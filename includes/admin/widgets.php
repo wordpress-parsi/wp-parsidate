@@ -94,14 +94,17 @@ if ( ! function_exists( 'wpp_add_our_dashboard_primary_widget' ) ) {
 	 *
 	 */
 	function wpp_add_our_dashboard_primary_widget() {
-		wp_add_dashboard_widget(
+		add_meta_box(
 			'wpp_dashboard_primary',
 			__( 'WordPress Events and News' ),
 			'wpp_dashboard_primary_widget_content',
+            'dashboard',
+            'normal',
+            'high',
 		);
 	}
 
-	add_action( 'wp_dashboard_setup', 'wpp_add_our_dashboard_primary_widget' );
+	add_action( 'admin_init', 'wpp_add_our_dashboard_primary_widget',1 );
 }
 
 if ( ! function_exists( 'wpp_dashboard_primary_widget_content' ) ) {
@@ -170,9 +173,9 @@ if ( ! function_exists( 'wpp_enqueue_admin_dashboard_assets' ) ) {
 
 if ( ! function_exists( 'wpp_fetch_sponsorship_slides_callback' ) ) {
 	/**
-     * Fetch the sponsors banners
-     *
-     * @sicne 5.1.0
+	 * Fetch the sponsors banners
+	 *
+	 * @sicne 5.1.0
 	 * @return void
 	 */
 	function wpp_fetch_sponsorship_slides_callback() {
@@ -195,4 +198,25 @@ if ( ! function_exists( 'wpp_fetch_sponsorship_slides_callback' ) ) {
 	}
 
 	add_action( 'wp_ajax_fetch_sponsorship_slides', 'wpp_fetch_sponsorship_slides_callback' );
+}
+
+if ( ! function_exists( 'wpp_force_events_and_news_widget_to_top' ) ) {
+	/**
+	 * Force the widget to the top
+	 *
+	 * @sicne 5.1.0
+	 */
+	function wpp_force_events_and_news_widget_to_top() {
+		global $wp_meta_boxes;
+
+		$dashboard  = $wp_meta_boxes['dashboard']['normal']['core'];
+		$wpp_widget = array( 'wpp_dashboard_primary' => $dashboard['wpp_dashboard_primary'] );
+
+		unset( $dashboard['wpp_dashboard_primary'] );
+/*
+		$sorted_dashboard                             = array_merge( $wpp_widget, $dashboard );
+		$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;*/
+	}
+
+	//add_action( 'wp_dashboard_setup', 'wpp_force_events_and_news_widget_to_top', PHP_INT_MAX );
 }
