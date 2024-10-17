@@ -454,18 +454,14 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		}
 
 		public function validate_wc_coupons_date( $coupon_id ) {
-			if ( ! isset( $_POST['expiry_date'] ) ) {
-				return;
-			}
-
-			$coupon      = new WC_Coupon( $coupon_id );
 			$expiry_date = eng_number( wc_get_post_data_by_key( 'expiry_date' ) );
+
 			if ( empty( $expiry_date ) ) {
 				return;
 			}
 
+			$coupon            = new WC_Coupon( $coupon_id );
 			$fixed_expiry_date = strtotime( gregdate( 'Y-m-d 23:59:59', $expiry_date ) );
-			error_log( $expiry_date );
 
 			$coupon->set_props( array( 'date_expires' => $fixed_expiry_date ) );
 			$coupon->save();
