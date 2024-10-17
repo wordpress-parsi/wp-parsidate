@@ -191,7 +191,9 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 * @since 5.0.2
 		 */
 		public function change_order_date_on_save_order_object( $order_id ) {
-			if ( ! isset( $_POST['order_date'] ) ) {
+			$order_date = wc_get_post_data_by_key( 'order_date' );
+
+			if ( empty( $order_date ) ) {
 				return;
 			}
 
@@ -201,10 +203,9 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				return;
 			}
 
-			$order_date = wc_clean( $_POST['order_date'] );
-			$hour       = str_pad( (int) $_POST['order_date_hour'], 2, '0', STR_PAD_LEFT );
-			$minute     = str_pad( (int) $_POST['order_date_minute'], 2, '0', STR_PAD_LEFT );
-			$second     = str_pad( (int) $_POST['order_date_second'], 2, '0', STR_PAD_LEFT );
+			$hour       = str_pad( (int) wc_get_post_data_by_key( 'order_date_hour' ), 2, '0', STR_PAD_LEFT );
+			$minute     = str_pad( (int) wc_get_post_data_by_key( 'order_date_minute' ), 2, '0', STR_PAD_LEFT );
+			$second     = str_pad( (int) wc_get_post_data_by_key( 'order_date_second' ), 2, '0', STR_PAD_LEFT );
 			$time_stamp = "$order_date $hour:$minute:$second";
 			$fixed_date = gregdate( 'Y-m-d H:i:s', $time_stamp );
 			$date       = empty( $order_date ) ? current_time( 'mysql' ) : gmdate( 'Y-m-d H:i:s', strtotime( $fixed_date ) );
@@ -316,14 +317,15 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 			$props = array();
 
 			if ( isset( $_POST['_sale_price_dates_from'] ) ) {
-				$date_on_sale_from = wc_clean( wp_unslash( eng_number( $_POST['_sale_price_dates_from'] ) ) );
+				$date_on_sale_from = eng_number( wc_get_post_data_by_key( '_sale_price_dates_from' ) );
+
 				if ( ! empty( $date_on_sale_from ) ) {
 					$props['date_on_sale_from'] = date( 'Y-m-d 00:00:00', strtotime( gregdate( 'Y-m-d', $date_on_sale_from ) ) );
 				}
 			}
 
 			if ( isset( $_POST['_sale_price_dates_to'] ) ) {
-				$date_on_sale_to = wc_clean( wp_unslash( eng_number( $_POST['_sale_price_dates_to'] ) ) );
+				$date_on_sale_to = eng_number( wc_get_post_data_by_key( '_sale_price_dates_to' ) );
 
 				if ( ! empty( $date_on_sale_to ) ) {
 					$props['date_on_sale_to'] = date( 'Y-m-d 23:59:59', strtotime( gregdate( 'Y-m-d', $date_on_sale_to ) ) );
@@ -389,11 +391,11 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		public function change_wc_report_dates() {
 			if ( ! empty( $_GET['page'] ) && 'wc-reports' === esc_attr( $_GET['page'] ) ) {
 				if ( ! empty( $_GET['start_date'] ) ) {
-					$_GET['start_date'] = gregdate( 'Y-m-d', wc_clean( wp_unslash( eng_number( $_GET['start_date'] ) ) ) );
+					$_GET['start_date'] = gregdate( 'Y-m-d', eng_number( wc_clean( wp_unslash( $_GET['start_date'] ) ) ) );
 				}
 
 				if ( ! empty( $_GET['end_date'] ) ) {
-					$_GET['end_date'] = gregdate( 'Y-m-d', wc_clean( wp_unslash( eng_number( $_GET['end_date'] ) ) ) );
+					$_GET['end_date'] = gregdate( 'Y-m-d', eng_number( wc_clean( wp_unslash( $_GET['end_date'] ) ) ) );
 				}
 			}
 		}
@@ -427,7 +429,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				$props        = array();
 
 				if ( isset( $_POST['variable_sale_price_dates_from'][ $i ] ) ) {
-					$date_on_sale_from = wc_clean( wp_unslash( eng_number( $_POST['variable_sale_price_dates_from'][ $i ] ) ) );
+					$date_on_sale_from = eng_number( wc_clean( wp_unslash( $_POST['variable_sale_price_dates_from'][ $i ] ) ) );
 
 					if ( ! empty( $date_on_sale_from ) ) {
 						$props['date_on_sale_from'] = gregdate( 'Y-m-d 00:00:00', $date_on_sale_from );
@@ -435,7 +437,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				}
 
 				if ( isset( $_POST['variable_sale_price_dates_to'][ $i ] ) ) {
-					$date_on_sale_to = wc_clean( wp_unslash( eng_number( $_POST['variable_sale_price_dates_to'][ $i ] ) ) );
+					$date_on_sale_to = eng_number( wc_clean( wp_unslash( $_POST['variable_sale_price_dates_to'][ $i ] ) ) );
 
 					if ( ! empty( $date_on_sale_to ) ) {
 						$props['date_on_sale_to'] = gregdate( 'Y-m-d 23:59:59', $date_on_sale_to );
@@ -457,13 +459,13 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 			}
 
 			$coupon      = new WC_Coupon( $coupon_id );
-			$expiry_date = wc_clean( wp_unslash( eng_number( $_POST['expiry_date'] ) ) );
-
+			$expiry_date = eng_number( wc_get_post_data_by_key( 'expiry_date' ) );
 			if ( empty( $expiry_date ) ) {
 				return;
 			}
 
-			$fixed_expiry_date = gregdate( 'Y-m-d', $expiry_date );
+			$fixed_expiry_date = strtotime( gregdate( 'Y-m-d 23:59:59', $expiry_date ) );
+			error_log( $expiry_date );
 
 			$coupon->set_props( array( 'date_expires' => $fixed_expiry_date ) );
 			$coupon->save();
@@ -597,21 +599,21 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		public function accept_persian_numbers_in_checkout() {
 			if ( wpp_is_active( 'woo_accept_per_postcode' ) ) {
 				if ( isset( $_POST['billing_postcode'] ) ) {
-					$_POST['billing_postcode'] = eng_number( wc_clean( wp_unslash( $_POST['billing_postcode'] ) ) );
+					$_POST['billing_postcode'] = eng_number( wc_get_post_data_by_key( 'billing_postcode' ) );
 				}
 
 				if ( isset( $_POST['shipping_postcode'] ) ) {
-					$_POST['shipping_postcode'] = eng_number( wc_clean( wp_unslash( $_POST['shipping_postcode'] ) ) );
+					$_POST['shipping_postcode'] = eng_number( wc_get_post_data_by_key( 'shipping_postcode' ) );
 				}
 			}
 
 			if ( wpp_is_active( 'woo_accept_per_phone' ) ) {
 				if ( isset( $_POST['billing_phone'] ) ) {
-					$_POST['billing_phone'] = eng_number( wc_clean( wp_unslash( $_POST['billing_phone'] ) ) );
+					$_POST['billing_phone'] = eng_number( wc_get_post_data_by_key( 'billing_phone' ) );
 				}
 
 				if ( isset( $_POST['shipping_phone'] ) ) {
-					$_POST['shipping_phone'] = eng_number( wc_clean( wp_unslash( $_POST['shipping_phone'] ) ) );
+					$_POST['shipping_phone'] = eng_number( wc_get_post_data_by_key( 'shipping_phone' ) );
 				}
 			}
 		}
@@ -642,7 +644,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 */
 		public function validate_phone_number( $data, $errors ) {
 			// This pattern ensures the phone number follows the specified structure for both mobile and landline numbers
-			if ( preg_match( '/^(0|0098|\+98)?(9\d{9}|[1-8]\d{9,10})$/', eng_number( wc_clean( wp_unslash( $_POST['billing_phone'] ) ) ) ) ) {
+			if ( preg_match( '/^(0|0098|\+98)?(9\d{9}|[1-8]\d{9,10})$/', eng_number( wc_get_post_data_by_key( 'billing_phone' ) ) ) ) {
 				return false;
 			}
 
