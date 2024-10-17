@@ -55,7 +55,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				add_filter( 'woocommerce_checkout_posted_data', array( $this, 'convert_non_persian_values_in_checkout' ) );
 
 				if ( wpp_is_active( 'woo_validate_postcode' ) ) {
-					add_filter( 'woocommerce_validate_postcode', array( $this, 'validate_postalcode' ), 10, 3 );
+					add_filter( 'woocommerce_validate_postcode', array( $this, 'validate_postal_code' ), 10, 3 );
 				}
 
 				if ( wpp_is_active( 'woo_validate_phone' ) ) {
@@ -623,7 +623,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 *
 		 * @return bool|mixed
 		 */
-		public function validate_postalcode( $valid, $postcode, $country ) {
+		public function validate_postal_code( $valid, $postcode, $country ) {
 			if ( 'IR' != $country ) {
 				return $valid;
 			}
@@ -656,9 +656,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 * @return string
 		 * @since 5.0.0
 		 */
-		public function fix_emails_order_date_direction(
-			$style, $email
-		) {
+		public function fix_emails_order_date_direction( $style, $email ) {
 			return $style . 'time{unicode-bidi:embed!important}';
 		}
 
