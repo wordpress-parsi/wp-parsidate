@@ -126,7 +126,7 @@ function wp_get_parchives( $args = '' ) {
 	$results = $wpdb->get_results(
 		"
 				SELECT date ( post_date ) AS date, 
-				  	count ( ID ) AS count
+				  	COUNT( ID ) AS count
 				FROM $wpdb->posts
 				WHERE post_date < NOW()
 					AND post_type = 'post'
