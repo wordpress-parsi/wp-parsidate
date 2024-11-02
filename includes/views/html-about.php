@@ -23,76 +23,88 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
  *  youtube
  */
 $team_members = array(
-	'john_doe'   => array(
-		'name'   => esc_html__( 'John Doe', 'wp-parsidate' ),
-		'role'   => esc_html__( 'CEO', 'wp-parsidate' ),
+	'man4toman'   => array(
+		'name'   => esc_html__( 'Morteza Geransayeh', 'wp-parsidate' ),
+		'role'   => esc_html__( 'Developer', 'wp-parsidate' ),
 		'avatar' => 'https://avatars.githubusercontent.com/u/935397',
 		'social' => array(
-			'x-twitter' => '#',
-			'linkedin'  => '#',
+			'x-twitter' => 'https://x.com/man4toman/',
+			'linkedin'  => 'https://www.linkedin.com/in/morteza-geransayeh-27a70829/',
+			'github'    => 'https://github.com/man4toman',
 		),
 	),
-	'jane_smith' => array(
-		'name'   => esc_html__( 'Jane Smith', 'wp-parsidate' ),
-		'role'   => esc_html__( 'CTO', 'wp-parsidate' ),
-		'avatar' => 'https://avatars.githubusercontent.com/u/935397',
+	'saeed_fard' => array(
+		'name'   => esc_html__( 'Saeed Fard', 'wp-parsidate' ),
+		'role'   => esc_html__( 'Developer', 'wp-parsidate' ),
+		'avatar' => 'https://avatars.githubusercontent.com/u/8706783',
 		'social' => array(
-			'x-twitter' => '#',
-			'linkedin'  => '#',
+			'x-twitter' => 'https://x.com/saeed_fard',
+			'linkedin'  => 'https://www.linkedin.com/in/saeed-fard/',
+			'github'    => 'https://github.com/SaeedFard',
 		)
 	),
-	'john_doe2'   => array(
-		'name'   => esc_html__( 'John Doe', 'wp-parsidate' ),
-		'role'   => esc_html__( 'CEO', 'wp-parsidate' ),
-		'avatar' => 'https://avatars.githubusercontent.com/u/935397',
+	'yazdaniwp'   => array(
+		'name'   => esc_html__( 'HamidReza Yazdani', 'wp-parsidate' ),
+		'role'   => esc_html__( 'Developer', 'wp-parsidate' ),
+		'avatar' => 'https://avatars.githubusercontent.com/u/40775953',
 		'social' => array(
-			'x-twitter' => '#',
-			'linkedin'  => '#',
+			'x-twitter' => '#https://twitter.com/yazdani_wp',
+			'linkedin'  => 'https://www.linkedin.com/in/hamid-reza-yazdani/',
+			'github'    => 'https://github.com/hamidrezayazdani',
 		),
 	),
-	'jane_smith2' => array(
-		'name'   => esc_html__( 'Jane Smith', 'wp-parsidate' ),
-		'role'   => esc_html__( 'CTO', 'wp-parsidate' ),
-		'avatar' => 'https://avatars.githubusercontent.com/u/935397',
+	'lord_viper' => array(
+		'name'   => esc_html__( 'Mobin Ghasempoor', 'wp-parsidate' ),
+		'role'   => esc_html__( 'Developer', 'wp-parsidate' ),
+		'avatar' => 'https://avatars.githubusercontent.com/u/5211249',
 		'social' => array(
-			'x-twitter' => '#',
-			'linkedin'  => '#',
+			'x-twitter' => 'https://twitter.com/GhasempoorMobin',
+			'linkedin'  => 'https://www.linkedin.com/in/mobin-ghasempoor-07580788/',
+			'github'    => 'https://github.com/lord-viper',
 		)
 	),
-	'john_do3e'   => array(
-		'name'   => esc_html__( 'John Doe', 'wp-parsidate' ),
-		'role'   => esc_html__( 'CEO', 'wp-parsidate' ),
-		'avatar' => 'https://avatars.githubusercontent.com/u/935397',
+	'parsakafi'   => array(
+		'name'   => esc_html__( 'Parsa Kafi', 'wp-parsidate' ),
+		'role'   => esc_html__( 'Developer', 'wp-parsidate' ),
+		'avatar' => 'https://avatars.githubusercontent.com/u/7957513',
 		'social' => array(
-			'x-twitter' => '#',
-			'linkedin'  => '#',
+			'x-twitter' => 'https://x.com/parsakafi',
+			'linkedin'  => 'https://www.linkedin.com/in/parsakafi/',
+			'github'    => 'https://github.com/parsakafi',
 		),
 	),
-	'jane_smith3' => array(
-		'name'   => esc_html__( 'Jane Smith', 'wp-parsidate' ),
-		'role'   => esc_html__( 'CTO', 'wp-parsidate' ),
-		'avatar' => 'https://avatars.githubusercontent.com/u/935397',
+	'mohsengham' => array(
+		'name'   => esc_html__( 'Mohsen Ghiasi', 'wp-parsidate' ),
+		'role'   => esc_html__( 'DevOps', 'wp-parsidate' ),
+		'avatar' => 'https://secure.gravatar.com/avatar/64d4e212c9263a72b2fcadbe3951342f?s=300&d=mm&r=g',
 		'social' => array(
-			'x-twitter' => '#',
-			'linkedin'  => '#',
+			'x-twitter' => 'https://x.com/mohsengham',
+			'linkedin'  => 'https://www.linkedin.com/in/mohsen-ghiasi/',
 		)
 	)
 	// Add more team members as needed
 );
 
 $social_accounts = array(
-	'instagram' => '#',
-	'telegram'  => '#',
-	'x-twitter' => '#',
-	'linkedin'  => '#',
-	'github'    => '#',
+	'instagram' => 'https://www.instagram.com/irwpmeetup',
+	'telegram'  => 'https://t.me/wp_Community',
+	'x-twitter' => 'https://x.com/wpparsi',
+	'linkedin'  => 'https://www.linkedin.com/company/wp-parsi',
+	'github'    => 'https://github.com/wordpress-parsi/wp-parsidate/',
 );
 ?>
 <section class="about-us wpp-team">
     <h1><?php esc_html_e( 'About Us', 'wp-parsidate' ); ?></h1>
-    <p>گسترش محبوبيت و روز افزون سيستم مديريت محتواي وردپرس در ايران و جهان اين امر را ايجاب كرده تا هر روز نياز بيشتري به وجود منابع كامل در اين زمينه احساس شود. گروه وردپرس پارسي در ۱ ارديبهشت ماه ۱۳۹۱ با همكاري افراد فعال و متخصص وردپرس در جهت  پشتيباني و رفع كمبود‌هايي كه در وردپس پارسي مشاهده مي‌شود و براي توسعه و پيشرفت هر چه بيشتر آن در ايران ايجاد گرديده و در اين راستا تلاش ميكند . وردپرس پارسي كاملا كاربر محور بوده و رضايت كاربر در آن مهمتر از هر چيزي است .</p>
-    <p> گروه وردپرس پارسی جهت رفع نیازهاو و حمایت و پشتیبانی کاربران، ارائه سرویس ها و خدمات نوین و همچنین توسعه هرچه بیشتر وردپرس در ایران تشکیل یافت. گروه وردپرس پارسی به صورت کاملاً جدا اما همراستا با سایت مرجع وردپرس فارسی فعالیت می کند.</p>
-    <div class="follow-us">
+	<p>افزونه شمسی ساز پارسی دیت یکی از ابزارهای کاربردی و مفید برای کاربران وردپرس فارسی است که امکان شمسی کردن تاریخ وردپرس را برای کاربرانش فراهم می‌کند. این افزونه در سال ۱۳۹۲ توسط تیم توسعه وردپرس پارسی ایجاد شد و با هدف ساده‌سازی فرآیند نمایش تاریخ‌ها در وب‌سایت‌های فارسی زبان به کار می‌رود.</p>
+	<p>این افزونه در طی سال‌ها مورد استفاده محبوب‌ترین سایت‌های وردپرسی فارسی زبان بوده و افراد بسیاری در توسعه این افزونه مشارکت داشته‌اند. پارسی‌دیت در تمام این مدت به صورت رایگان توسعه داده شده و در اختیار کاربران بوده و توسط تیم وردپرس پارسی پشتیبانی شده است.</p>
+	<p>این افزونه به صورت منظم آپدیت می‌شود و همواره نیازهای کاربران وردپرس فارسی را تحت پوشش قرار می‌دهد.</p>
+	<p>برخی از ویژگی‌های مهم افزونه:<br>
+	- شمسی‌سازی تاریخ وردپرس و ووکامرس<br>
+	- شمسی‌سازی افزونه‌های پرطرفدار وردپرس<br>
+	- سازگاری با آخرین نسخه‌های وردپرس و ووکامرس<br>
+	- نصب و استفاده آسان و کاربردی<br>
+	- اضافه کردن امکانات مورد نیاز برای وب‌سایت‌های فارسی</p>
+	<div class="follow-us">
         <h3><?php esc_html_e( 'Follow Us', 'wp-parsidate' ); ?></h3>
         <div class="social-links">
 			<?php foreach ( $social_accounts as $platform => $url ) : ?>
@@ -112,9 +124,6 @@ $social_accounts = array(
 				<?php foreach ( $team_members as $member ) : ?>
 				<div class="contributer-list-item">
 					<div div="" class="contributer-list-info">
-						<div div="" class="contributer-list-name"><?php echo esc_html( $member['name'] ); ?></div>
-						<div div="" class="contributer-list-title"><?php echo esc_html( $member['role'] ); ?></div>
-
 						<ul class="contributer-list-tags">
 							<?php foreach ( $member['social'] as $platform => $url ) : ?>
 							<li class="contributer-list-tag"><a href="<?php echo esc_url( $url ); ?>"><img src="<?php echo esc_url( WP_PARSI_URL . "assets/svg/$platform-brands-solid.svg" ); ?>" width="15" height="15"></a></li>
@@ -125,6 +134,10 @@ $social_accounts = array(
 					<div div="" class="contributer-list-image">
 						<img alt="<?php echo esc_attr( $member['name'] ); ?>" width="300" height="300" src="<?php echo esc_url( $member['avatar'] ); ?>" loading="lazy">
 					</div>
+					
+					<div div="" class="contributer-list-name"><?php echo esc_html( $member['name'] ); ?></div>
+					<div div="" class="contributer-list-title"><?php echo esc_html( $member['role'] ); ?></div>
+
 				</div>
 				<?php endforeach; ?>
 			</div>
