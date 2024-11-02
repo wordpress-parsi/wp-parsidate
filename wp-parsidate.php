@@ -34,16 +34,6 @@ defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
  *              HamidReza Yazdani ( Developer )
  *              Saeed Fard ( Analyst & Developer )
  *              Parsa Kafi ( Developer )
- *              Ehsaan ( Developer )
- *              Alireza Dabiri Nejad ( Contributor )
- *              Farhan Nisi ( Contributor )
- *              Mostafa Soufi ( Contributor )
- *              Ali Aghdam ( Contributor )
- *              Kamran Khorsandi ( Contributor )
- *              Mehrshad Darzi ( Contributor )
- *              Nasser Rafie ( Contributor )
- *              Milad Nazari ( Contributor )
- *              Amirhossein Hosseinpour ( Contributor )
  *
  * @author              Mobin Ghasempoor
  * @author              Morteza Geransayeh
