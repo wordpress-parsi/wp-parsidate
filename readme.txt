@@ -47,6 +47,43 @@ List of some features:
 
 == Changelog ==
 
+= 5.1.0 =
+- HPOS compatible
+- Block-based gateways Woocommerce
+- Iranian cities for Woocommerce
+- Persian datepicker in Block editor 
+- Fixed conflict with Jetpack.
+- Resolved dashboard page warning.
+- Addressed conflict with DATE_W3C format.
+- Fixed date problem in comments feed.
+- Resolved error while saving ACF fields.
+- Fixed "Undefined index: date_i18n" notice.
+- Addressed notice error in archive.php pages.
+- Resolved conflicts with RevSlider.
+- Fixed date conversion problem in WordPress 5.3.
+- Addressed conflict with get_the_modified_date.
+- Fixed Parsi Widget error.
+- Resolved "Undefined index: wp_date" notice in disable.php.
+- Fixed WooCommerce order detail issue.
+- Addressed conflict with Polylang and WPML.
+- Fixed duplicate activity date in the dashboard.
+- Resolved type error in editor date picker.
+- Fixed direction problem in the legacy editor.
+- Corrected wrong callback in get_the_time hook.
+- Addressed default timezone problem.
+- Displaying "@" instead of "at" in the Jalali version.
+- Added Persian numbers in WooCommerce prices.
+- Improved support for Persian dates in WooCommerce.
+- Added Persian date picker in WooCommerce.
+- Added ACF Parsi date.
+- Mini support for WPML and Polylang.
+- Updated calendar widgets.
+- Updated attachments filter dropdown.
+- New looks and feels for the settings panel.
+- Added Vazir font to the admin area.
+- Fix convert order date to Gregorian in edit order screen.
+- Compatiblity with WordPress 6.5x and WooCommerce 8.7x.
+
 = 4.0.0 =
 * This release contains huge bug fix:
   - Conflict with jetpack
