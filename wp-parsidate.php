@@ -29,13 +29,13 @@ defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
  * WordPress Parsi Package, Adds Persian language & Jalali date support to your blog
  *
  * Developers:
- *              Mobin Ghasempoor ( Senior programmer & Founder )
- *              Morteza Geransayeh ( Senior programmer & Manager )
- *              HamidReza Yazdani ( Programmer )
- *              Parsa Kafi ( Programmer )
- *              Alireza Dabiri Nejad ( Programmer )
- *              Ehsaan ( Programmer )
- *              Saeed Fard ( Analyst & Contributor )
+ *              Mobin Ghasempoor ( Developer & Founder )
+ *              Morteza Geransayeh ( Developer & Founder )
+ *              HamidReza Yazdani ( Developer )
+ *              Saeed Fard ( Analyst & Developer )
+ *              Parsa Kafi ( Developer )
+ *              Ehsaan ( Developer )
+ *              Alireza Dabiri Nejad ( Contributor )
  *              Farhan Nisi ( Contributor )
  *              Mostafa Soufi ( Contributor )
  *              Ali Aghdam ( Contributor )
