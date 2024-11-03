@@ -156,11 +156,11 @@ if ( ! function_exists( 'wpp_enqueue_admin_dashboard_assets' ) ) {
 	 */
 	function wpp_enqueue_admin_dashboard_assets( $hook ) {
 		// Check if we are on the admin dashboard page
-		if ( $hook != 'index.php' ) {
+		if ( $hook !== 'index.php' ) {
 			return;
 		}
 
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
+		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
 		wp_enqueue_style( 'keen-slider', WP_PARSI_URL . "assets/css/keen-slider$suffix.css", false, '1.0.0' );
 		wp_enqueue_style( 'wpp_dashboard', WP_PARSI_URL . "assets/css/dashboard$suffix.css", false, '1.0.0' );
