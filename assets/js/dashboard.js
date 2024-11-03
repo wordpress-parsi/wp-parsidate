@@ -1,3 +1,87 @@
+/**
+ * @output wp-admin/js/dashboard.js
+ */
+
+/* global pagenow, ajaxurl, postboxes, wpActiveEditor:true, ajaxWidgets */
+/* global ajaxPopulateWidgets, quickPressLoad,  */
+window.wp = window.wp || {};
+window.communityEventsData = window.communityEventsData || {};
+
+/**
+ * Initializes the dashboard widget functionality.
+ *
+ * @since 2.7.0
+ */
+jQuery( function($) {
+  /**
+   * These widgets can be populated via ajax.
+   *
+   * @since 2.7.0
+   *
+   * @type {string[]}
+   *
+   * @global
+   */
+  window.ajaxWidgets = ['wpp_dashboard_primary'];
+
+  /**
+   * Triggers widget updates via Ajax.
+   *
+   * @since 2.7.0
+   *
+   * @global
+   *
+   * @param {string} el Optional. Widget to fetch or none to update all.
+   *
+   * @return {void}
+   */
+  window.ajaxPopulateWidgets = function(el) {
+    /**
+     * Fetch the latest representation of the widget via Ajax and show it.
+     *
+     * @param {number} i Number of half-seconds to use as the timeout.
+     * @param {string} id ID of the element which is going to be checked for changes.
+     *
+     * @return {void}
+     */
+    function show(i, id) {
+      var p, e = $('#' + id + ' div.inside:visible').find('.widget-loading');
+      // If the element is found in the dom, queue to load latest representation.
+      if ( e.length ) {
+        p = e.parent();
+        setTimeout( function(){
+          // Request the widget content.
+          p.load( ajaxurl + '?action=wpp-dashboard-widgets&widget=' + id + '&pagenow=' + pagenow, '', function() {
+            // Hide the parent and slide it out for visual fanciness.
+            p.hide().slideDown('normal', function(){
+              $(this).css('display', '');
+            });
+          });
+        }, i * 500 );
+      }
+    }
+
+    // If we have received a specific element to fetch, check if it is valid.
+    if ( el ) {
+      el = el.toString();
+      // If the element is available as Ajax widget, show it.
+      if ( $.inArray(el, ajaxWidgets) !== -1 ) {
+        // Show element without any delay.
+        show(0, el);
+      }
+    } else {
+      // Walk through all ajaxWidgets, loading them after each other.
+      $.each( ajaxWidgets, show );
+    }
+  };
+
+  // Initially populate ajax widgets.
+  ajaxPopulateWidgets();
+
+  // Register ajax widgets as postbox toggles.
+  postboxes.add_postbox_toggles(pagenow, { pbshow: ajaxPopulateWidgets } );
+} );
+
 jQuery(function ($) {
   'use strict';
 
@@ -611,8 +695,12 @@ function createSlides(slidesData) {
         `;
     slidesContainer.appendChild(slideElement);
   });
-  initWPPSSlider();
+
+  if (slidesData.length > 1) {
+    initWPPSSlider();
+  }
 }
+
 function initWPPSSlider() {
   let wppsSlider = new KeenSlider(slidesContainer, {
     rtl: getComputedStyle(slidesContainer).direction,

@@ -2,72 +2,6 @@
 
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
-/**
- * Replace wp-planet.ir to News and Events widget
- *
- * @author             Morteza Geransayeh
- * @author             HamidReza Yazdani
- * @package            WP-Parsidate
- * @subpackage         Core/General
- */
-
-if ( ! function_exists( 'wpp_dashboard_primary_link' ) ) {
-	/**
-	 * Widget primary link
-	 *
-	 * @return          string
-	 * @author          Morteza Geransayeh
-	 * @author          HamidReza Yazdani
-	 */
-	function wpp_dashboard_primary_link() {
-		return 'https://wp-parsi.com/';
-	}
-
-	add_filter( 'dashboard_primary_link', 'wpp_dashboard_primary_link', 999, 1 );
-}
-
-if ( ! function_exists( 'wpp_dashboard_primary_feed' ) ) {
-	/**
-	 * Widget primary feed
-	 *
-	 * @return          string
-	 * @author          Morteza Geransayeh
-	 */
-	function wpp_dashboard_primary_feed() {
-		return 'https://wp-parsi.com/feed/';
-	}
-
-	add_filter( 'dashboard_primary_feed', 'wpp_dashboard_primary_feed', 999, 1 );
-}
-
-if ( ! function_exists( 'wpp_dashboard_secondary_link' ) ) {
-	/**
-	 * Widget secondary link
-	 *
-	 * @return          string
-	 * @author          Morteza Geransayeh
-	 */
-	function wpp_dashboard_secondary_link() {
-		return 'https://wp-planet.ir/';
-	}
-
-	add_filter( 'dashboard_secondary_link', 'wpp_dashboard_secondary_link', 999, 1 );
-}
-
-if ( ! function_exists( 'wpp_dashboard_secondary_feed' ) ) {
-	/**
-	 * Widget secondary feed
-	 *
-	 * @return          string
-	 * @author          Morteza Geransayeh
-	 */
-	function wpp_dashboard_secondary_feed() {
-		return 'https://wp-planet.ir/feed';
-	}
-
-	add_filter( 'dashboard_secondary_feed', 'wpp_dashboard_secondary_feed', 999, 1 );
-}
-
 if ( ! function_exists( 'wpp_remove_wp_dashboard_events_news' ) ) {
 	/**
 	 * Remove the default WP events and news widget
@@ -98,13 +32,13 @@ if ( ! function_exists( 'wpp_add_our_dashboard_primary_widget' ) ) {
 			'wpp_dashboard_primary',
 			__( 'WordPress Events and News' ),
 			'wpp_dashboard_primary_widget_content',
-            'dashboard',
-            'normal',
-            'high',
+			'dashboard',
+			'normal',
+			'high',
 		);
 	}
 
-	add_action( 'admin_init', 'wpp_add_our_dashboard_primary_widget',1 );
+	add_action( 'admin_init', 'wpp_add_our_dashboard_primary_widget', 1 );
 }
 
 if ( ! function_exists( 'wpp_dashboard_primary_widget_content' ) ) {
@@ -139,8 +73,204 @@ if ( ! function_exists( 'wpp_dashboard_primary_widget_content' ) ) {
 
         </div>
 		<?php
-		wp_dashboard_events_news();
+		wpp_dashboard_events_news();
 	}
+}
+
+if ( ! function_exists( 'wpp_dashboard_events_news' ) ) {
+	/**
+	 * Renders the Events and News dashboard widget.
+	 *
+	 * @since 4.8.0
+	 */
+	function wpp_dashboard_events_news() {
+		?>
+
+        <div class="wordpress-news hide-if-no-js">
+			<?php wpp_dashboard_primary(); ?>
+        </div>
+
+        <p class="community-events-footer">
+			<?php
+			printf(
+				'<a href="%1$s" target="_blank">%2$s <span class="screen-reader-text"> %3$s</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>',
+				'https://make.wordpress.org/community/meetups-landing-page',
+				__( 'Meetups' ),
+				/* translators: Hidden accessibility text. */
+				__( '(opens in a new tab)' )
+			);
+			?>
+
+            |
+
+			<?php
+			printf(
+				'<a href="%1$s" target="_blank">%2$s <span class="screen-reader-text"> %3$s</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>',
+				'https://central.wordcamp.org/schedule/',
+				__( 'WordCamps' ),
+				/* translators: Hidden accessibility text. */
+				__( '(opens in a new tab)' )
+			);
+			?>
+
+            |
+
+			<?php
+			printf(
+				'<a href="%1$s" target="_blank">%2$s <span class="screen-reader-text"> %3$s</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>',
+				/* translators: If a Rosetta site exists (e.g. https://es.wordpress.org/news/), then use that. Otherwise, leave untranslated. */
+				esc_url( _x( 'https://wordpress.org/news/', 'Events and News dashboard widget' ) ),
+				__( 'News' ),
+				/* translators: Hidden accessibility text. */
+				__( '(opens in a new tab)' )
+			);
+			?>
+        </p>
+
+		<?php
+	}
+}
+
+if ( ! function_exists( 'wpp_dashboard_primary' ) ) {
+	/**
+	 * 'WordPress Events and News' dashboard widget.
+	 *
+	 * @since 2.7.0
+	 * @since 4.8.0 Removed popular plugins feed.
+	 */
+	function wpp_dashboard_primary() {
+		$feeds = array(
+			'news'   => array(
+
+				/**
+				 * Filters the primary link URL for the 'WordPress Events and News' dashboard widget.
+				 *
+				 * @param string $link The widget's primary link URL.
+				 *
+				 * @since 2.5.0
+				 *
+				 */
+				'link'         => 'https://wp-parsi.com/',
+
+				/**
+				 * Filters the primary feed URL for the 'WordPress Events and News' dashboard widget.
+				 *
+				 * @param string $url The widget's primary feed URL.
+				 *
+				 * @since 2.3.0
+				 *
+				 */
+				'url'          => 'https://wp-parsi.com/feed/',
+
+				/**
+				 * Filters the primary link title for the 'WordPress Events and News' dashboard widget.
+				 *
+				 * @param string $title Title attribute for the widget's primary link.
+				 *
+				 * @since 2.3.0
+				 *
+				 */
+				'title'        => apply_filters( 'dashboard_primary_title', __( 'WordPress Blog' ) ),
+				'items'        => 2,
+				'show_summary' => 0,
+				'show_author'  => 0,
+				'show_date'    => 0,
+			),
+			'planet' => array(
+
+				/**
+				 * Filters the secondary link URL for the 'WordPress Events and News' dashboard widget.
+				 *
+				 * @param string $link The widget's secondary link URL.
+				 *
+				 * @since 2.3.0
+				 *
+				 */
+				'link'         => __( 'https://wp-planet.ir/' ),
+
+				/**
+				 * Filters the secondary feed URL for the 'WordPress Events and News' dashboard widget.
+				 *
+				 * @param string $url The widget's secondary feed URL.
+				 *
+				 * @since 2.3.0
+				 *
+				 */
+				'url'          => __( 'https://wp-planet.ir/feed' ),
+
+				/**
+				 * Filters the secondary link title for the 'WordPress Events and News' dashboard widget.
+				 *
+				 * @param string $title Title attribute for the widget's secondary link.
+				 *
+				 * @since 2.3.0
+				 *
+				 */
+				'title'        => apply_filters( 'dashboard_secondary_title', __( 'Other WordPress News' ) ),
+
+				/**
+				 * Filters the number of secondary link items for the 'WordPress Events and News' dashboard widget.
+				 *
+				 * @param string $items How many items to show in the secondary feed.
+				 *
+				 * @since 4.4.0
+				 *
+				 */
+				'items'        => apply_filters( 'dashboard_secondary_items', 3 ),
+				'show_summary' => 0,
+				'show_author'  => 0,
+				'show_date'    => 0,
+			),
+		);
+
+		wp_dashboard_cached_rss_widget( 'wpp_dashboard_primary', 'wpp_dashboard_primary_output', $feeds );
+	}
+}
+
+if ( ! function_exists( 'wpp_dashboard_primary_output' ) ) {
+	/**
+	 * Displays the WordPress events and news feeds.
+	 *
+	 * @param string $widget_id Widget ID.
+	 * @param array $feeds Array of RSS feeds.
+	 *
+	 * @since 3.8.0
+	 * @since 4.8.0 Removed popular plugins feed.
+	 *
+	 */
+	function wpp_dashboard_primary_output( $widget_id, $feeds ) {
+		foreach ( $feeds as $type => $args ) {
+			$args['type'] = $type;
+			echo '<div class="rss-widget">';
+			wp_widget_rss_output( $args['url'], $args );
+			echo '</div>';
+		}
+	}
+}
+
+if ( ! function_exists( 'wpp_ajax_dashboard_widgets' ) ) {
+	/**
+	 * Handles dashboard widgets via AJAX.
+	 *
+	 * @since 5.1.0
+	 */
+	function wpp_ajax_dashboard_widgets() {
+		require_once ABSPATH . 'wp-admin/includes/dashboard.php';
+
+		$pagenow = $_GET['pagenow'];
+		if ( 'dashboard-user' === $pagenow || 'dashboard-network' === $pagenow || 'dashboard' === $pagenow ) {
+			set_current_screen( $pagenow );
+		}
+
+		switch ( $_GET['widget'] ) {
+			case 'wpp_dashboard_primary':
+				wpp_dashboard_primary();
+				break;
+		}
+		wp_die();
+	}
+
+	add_action( 'wp_ajax_wpp-dashboard-widgets', 'wpp_ajax_dashboard_widgets' );
 }
 
 if ( ! function_exists( 'wpp_enqueue_admin_dashboard_assets' ) ) {
@@ -164,7 +294,7 @@ if ( ! function_exists( 'wpp_enqueue_admin_dashboard_assets' ) ) {
 
 		wp_enqueue_style( 'keen-slider', WP_PARSI_URL . "assets/css/keen-slider$suffix.css", false, '1.0.0' );
 		wp_enqueue_style( 'wpp_dashboard', WP_PARSI_URL . "assets/css/dashboard$suffix.css", false, '1.0.0' );
-		wp_enqueue_script( 'keen-slider', WP_PARSI_URL . "assets/js/keen-slider.js", array(), '1.6.0', true );
+		wp_enqueue_script( 'keen-slider', WP_PARSI_URL . "assets/js/keen-slider.min.js", array(), '1.6.0', true );
 		wp_enqueue_script( 'wpp_dashboard', WP_PARSI_URL . "assets/js/dashboard$suffix.js", array( 'jquery', 'keen-slider' ), '1.0.0', true );
 	}
 
@@ -198,25 +328,4 @@ if ( ! function_exists( 'wpp_fetch_sponsorship_slides_callback' ) ) {
 	}
 
 	add_action( 'wp_ajax_fetch_sponsorship_slides', 'wpp_fetch_sponsorship_slides_callback' );
-}
-
-if ( ! function_exists( 'wpp_force_events_and_news_widget_to_top' ) ) {
-	/**
-	 * Force the widget to the top
-	 *
-	 * @sicne 5.1.0
-	 */
-	function wpp_force_events_and_news_widget_to_top() {
-		global $wp_meta_boxes;
-
-		$dashboard  = $wp_meta_boxes['dashboard']['normal']['core'];
-		$wpp_widget = array( 'wpp_dashboard_primary' => $dashboard['wpp_dashboard_primary'] );
-
-		unset( $dashboard['wpp_dashboard_primary'] );
-/*
-		$sorted_dashboard                             = array_merge( $wpp_widget, $dashboard );
-		$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;*/
-	}
-
-	//add_action( 'wp_dashboard_setup', 'wpp_force_events_and_news_widget_to_top', PHP_INT_MAX );
 }
