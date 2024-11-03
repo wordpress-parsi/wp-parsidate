@@ -185,7 +185,7 @@ if ( ! function_exists( 'wpp_fetch_sponsorship_slides_callback' ) ) {
 			wp_send_json_success( json_decode( $sponsors_cache, true ) );
 		}
 
-		$response = wp_remote_get( 'http://localhost/wp-json/sponsorship/v1/sponsors/' );
+		$response = wp_remote_get( 'https://wp-planet.ir/wp-json/sponsorship/v1/sponsors/' );
 
 		if ( is_wp_error( $response ) ) {
 			wp_send_json_error( 'Error fetching slides' );
