@@ -48,7 +48,7 @@ if ( ! function_exists( 'wpp_dashboard_secondary_link' ) ) {
 	 * @author          Morteza Geransayeh
 	 */
 	function wpp_dashboard_secondary_link() {
-		return 'http://wp-planet.ir/';
+		return 'https://wp-planet.ir/';
 	}
 
 	add_filter( 'dashboard_secondary_link', 'wpp_dashboard_secondary_link', 999, 1 );
@@ -62,7 +62,7 @@ if ( ! function_exists( 'wpp_dashboard_secondary_feed' ) ) {
 	 * @author          Morteza Geransayeh
 	 */
 	function wpp_dashboard_secondary_feed() {
-		return 'http://wp-planet.ir/feed';
+		return 'https://wp-planet.ir/feed';
 	}
 
 	add_filter( 'dashboard_secondary_feed', 'wpp_dashboard_secondary_feed', 999, 1 );
@@ -124,10 +124,10 @@ if ( ! function_exists( 'wpp_dashboard_primary_widget_content' ) ) {
                 <span><?php esc_html_e( 'What is this?', 'wp-parsidate' ); ?></span>
             </div>
             <ul>
-                <li><a href="#" target="_blank"><span
+                <li><a href="https://wp-parsi.com/donate/" target="_blank"><span
                                 class="dashicons dashicons-external"></span>&nbsp;<?php esc_html_e( 'Why are you showing me this?', 'wp-parsidate' ); ?>
                     </a></li>
-                <li><a href="#" target="_blank"><span
+                <li><a href="https://wp-parsi.com/sponser/" target="_blank"><span
                                 class="dashicons dashicons-external"></span>&nbsp;<?php esc_html_e( 'How can I become a sponsor?', 'wp-parsidate' ); ?>
                     </a></li>
             </ul>
@@ -185,7 +185,7 @@ if ( ! function_exists( 'wpp_fetch_sponsorship_slides_callback' ) ) {
 			wp_send_json_success( json_decode( $sponsors_cache, true ) );
 		}
 
-		$response = wp_remote_get( 'https://wp-planet.ir/wp-json/sponsorship/v1/sponsors/' );
+		$response = wp_remote_get( 'https://wp-parsi.com/wp-json/sponsorship/v1/sponsors/' );
 
 		if ( is_wp_error( $response ) ) {
 			wp_send_json_error( 'Error fetching slides' );
