@@ -39,11 +39,12 @@ This package, created by Persian developers, enhances the Persian experience on 
 
 ## Screenshots
 
-1. Main settings page
-2. Number conversions settings
-3. Compatibility with other plugins
-4. Persian datepicker in WooCommerce
-5. Persian date type in ACF
+1. Plugin main settings
+2. Conversions settings
+3. Tools
+4. Other plugin compatibility
+5. Persian datepicker in WooCommerce
+6. Persian date type in ACF
 
 ## Changelog
 
@@ -56,12 +57,6 @@ This package, created by Persian developers, enhances the Persian experience on 
 - Improved Persian date support in WooCommerce
 - Updated settings panel design and added Vazir font to admin area
 - Compatibility with WordPress 6.5x and WooCommerce 8.7x
-
-### 4.0.0
-- Various fixes, including Jetpack conflict, date issues in comments feed, RevSlider conflict, and timezone problems
-- Improved WooCommerce integration for Persian dates and prices
-- Updated calendar widgets and attachment filter dropdown
-- Added ACF Parsi date support
 
 
 ## Development Log
