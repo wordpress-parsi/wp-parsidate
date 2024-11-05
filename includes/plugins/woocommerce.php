@@ -164,7 +164,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 
 			$screen         = get_current_screen();
 			$current_screen = $screen->id;
-			$suffix         = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
+			$suffix         = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
 			$allowed_screens = array(
 				'product',
@@ -359,7 +359,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 			global $wpdb;
 
 			$post_type = get_post_type( $object_id );
-			$action    = isset( $_GET['action'] ) && $_GET['action'] == 'edit';
+			$action    = isset( $_GET['action'] ) && $_GET['action'] === 'edit';
 
 			if ( $action && 'shop_coupon' === $post_type && 'date_expires' === $meta_key ) {
 				$metadata = $wpdb->get_var(
@@ -492,7 +492,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 * @since 4.0.0
 		 */
 		public function add_jalali_expiry_date_column( $column, $postid ) {
-			if ( $column == 'wpp_expiry_date' ) {
+			if ( $column === 'wpp_expiry_date' ) {
 				$date = get_post_meta( $postid, 'date_expires', true );
 
 				echo ! empty( $date ) ? parsidate( 'Y-m-d', $date ) : '&ndash;';
@@ -624,7 +624,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 * @return bool|mixed
 		 */
 		public function validate_postcode( $valid, $postcode, $country ) {
-			if ( 'IR' != $country ) {
+			if ( 'IR' !== $country ) {
 				return $valid;
 			}
 

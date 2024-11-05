@@ -32,19 +32,19 @@ function wpp_posts_where( $where, $wp_query = '' ) {
 		global $wp_query;
 	}
 
-	if ( ! $wp_query->is_main_query() || empty( $wp_query->query_vars ) ) {
+	if ( empty( $wp_query->query_vars ) || ! $wp_query->is_main_query() ) {
 		return $where;
 	}
 
 	$pd = WPP_ParsiDate::getInstance();
 
-	$m      = ( isset( $wp_query->query_vars['m'] ) ) ? $wp_query->query_vars['m'] : '';
-	$hour   = ( isset( $wp_query->query_vars['hour'] ) ) ? $wp_query->query_vars['hour'] : '';
-	$minute = ( isset( $wp_query->query_vars['minute'] ) ) ? $wp_query->query_vars['minute'] : '';
-	$second = ( isset( $wp_query->query_vars['second'] ) ) ? $wp_query->query_vars['second'] : '';
-	$year   = ( isset( $wp_query->query_vars['year'] ) ) ? $wp_query->query_vars['year'] : '';
-	$month  = ( isset( $wp_query->query_vars['monthnum'] ) ) ? $wp_query->query_vars['monthnum'] : '';
-	$day    = ( isset( $wp_query->query_vars['day'] ) ) ? $wp_query->query_vars['day'] : '';
+	$m      = $wp_query->query_vars['m'] ?? '';
+	$hour   = $wp_query->query_vars['hour'] ?? '';
+	$minute = $wp_query->query_vars['minute'] ?? '';
+	$second = $wp_query->query_vars['second'] ?? '';
+	$year   = $wp_query->query_vars['year'] ?? '';
+	$month  = $wp_query->query_vars['monthnum'] ?? '';
+	$day    = $wp_query->query_vars['day'] ?? '';
 
 	if ( ! empty( $m ) ) {
 		$len  = strlen( $m );
@@ -87,31 +87,31 @@ function wpp_posts_where( $where, $wp_query = '' ) {
 	$stayear = $year;
 	$endyear = $year + 1;
 
-	if ( $month != '' ) {
+	if ( ! empty( $month ) ) {
 		$stamon  = $month;
 		$endmon  = ( $month == 12 ? 1 : $month + 1 );
 		$endyear = ( $endmon == 1 ? $stayear + 1 : $stayear );
 	}
 
-	if ( $day != '' ) {
+	if ( ! empty( $day ) ) {
 		$staday = $day;
 		$endday = ( $day == $pd->j_days_in_month[ (int) $month - 1 ] ? 1 : $day + 1 );
 		$endmon = ( $endday == 1 ? $stamon + 1 : $stamon );
 	}
 
-	if ( $hour != '' ) {
+	if ( ! empty( $hour ) ) {
 		$stahou = $hour;
 		$endhou = ( $hour == 24 ? '00' : $hour + 1 );
 		$endday = ( $endhou == '00' ? $staday + 1 : $staday );
 	}
 
-	if ( $minute != '' ) {
+	if ( ! empty( $minute ) ) {
 		$stamin = $minute;
 		$endmin = ( $minute == 59 ? '00' : $minute + 1 );
 		$endhou = ( $endmin == '00' ? $stahou + 1 : $stahou );
 	}
 
-	if ( $second != '' ) {
+	if ( ! empty( $second ) ) {
 		$stasec = $second;
 		$endsec = ( $second == 59 ? '00' : $second + 1 );
 		$endmin = ( $endsec == '00' ? $stamin + 1 : $stamin );
@@ -138,7 +138,7 @@ function wpp_posts_where( $where, $wp_query = '' ) {
 	}
 
 	$prefixp = "$wpdb->posts.";
-	$prefixp = ( strpos( $where, $prefixp ) == false ) ? '' : $prefixp;
+	$prefixp = ( strpos( $where, $prefixp ) === false ) ? '' : $prefixp;
 	$where   .= " AND {$prefixp}post_date >= '$stadate' AND {$prefixp}post_date < '$enddate' ";
 
 	return $where;
@@ -297,7 +297,7 @@ function wpp_permalink( $perma, $post, $leavename = false ) {
 		return false;
 	}
 
-	if ( $post->post_type == 'page' || $post->post_status == 'static' ) {
+	if ( $post->post_type === 'page' || $post->post_status === 'static' ) {
 		return get_page_link( $post->ID );
 	} elseif ( 'attachment' === $post->post_type ) {
 		return get_attachment_link( $post->ID );
@@ -311,7 +311,7 @@ function wpp_permalink( $perma, $post, $leavename = false ) {
 
 	$rewriteCode = $rewriteCode[0];
 
-	if ( '' != $permalink && ! in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) ) ) {
+	if ( ! empty( $permalink ) && ! in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) ) ) {
 		if ( $leavename ) {
 			$rewriteCode = array_diff( $rewriteCode, array( '%postname%', '%pagename%' ) );
 		}

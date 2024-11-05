@@ -45,7 +45,7 @@ if ( ! function_exists( 'wpp_gutenberg_jalali_calendar_editor_assets' ) ) {
 			true
 		);
 
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
+		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
 		// Styles.
 		wp_enqueue_style(

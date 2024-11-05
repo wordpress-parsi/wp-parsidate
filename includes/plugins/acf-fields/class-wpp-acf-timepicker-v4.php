@@ -83,7 +83,7 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
 	 * @since           4.0.0
 	 */
 	function input_admin_enqueue_scripts() {
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
+		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
 		wp_enqueue_script( 'wpp_wpp_timepicker', WP_PARSI_URL . 'assets/js/jalalidatepicker.min.js', array( 'acf-input' ), WP_PARSI_VER );
 		wp_enqueue_style( 'wpp_wpp_timepicker', WP_PARSI_URL . "assets/css/jalalidatepicker$suffix.css", array( 'acf-input' ), WP_PARSI_VER );

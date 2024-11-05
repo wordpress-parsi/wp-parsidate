@@ -12,15 +12,15 @@ class WPP_Elementor {
 	}
 
 	public function add_elementor_editor_css( $value = '' ) {
-		$wpp_elmentor_css = "
+		$wpp_elementor_css = "
       body, .tipsy-inner, .elementor-button, .elementor-panel {
         font-family: Tahoma,Arial,Helvetica,Verdana,sans-serif;
       }
       .tipsy-inner {
         font-size: small;
       }";
-		$wpp_elmentor_css = apply_filters( "wpp_elementor_css", $wpp_elmentor_css );
-		wp_add_inline_style( "elementor-editor", $wpp_elmentor_css );
+		$wpp_elementor_css = apply_filters( "wpp_elementor_css", $wpp_elementor_css );
+		wp_add_inline_style( "elementor-editor", $wpp_elementor_css );
 	}
 }
 

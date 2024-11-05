@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
 global $wpp_settings;
 
-if ( get_locale() == 'fa_IR' && wpp_is_active( 'persian_date' ) ) {
+if ( get_locale() === 'fa_IR' && wpp_is_active( 'persian_date' ) ) {
 	add_filter( 'the_time', 'wpp_fix_post_time', 10, 2 );
 	add_filter( 'the_date', 'wpp_fix_post_date', 10, 3 );
 	add_filter( 'get_the_time', 'wpp_fix_post_time', 10, 2 );
@@ -181,7 +181,7 @@ function wpp_fix_comment_date( $time, $format = '' ) {
 function wpp_fix_i18n( $date, $format, $timestamp, $gmt ) {
 	global $post;
 
-	$post_id = ( is_object( $post ) && isset( $post->ID ) ) ? $post->ID : null;
+	//$post_id = ( is_object( $post ) && isset( $post->ID ) ) ? $post->ID : null;
 
 	if ( ! disable_wpp() ) {
 		return $format;

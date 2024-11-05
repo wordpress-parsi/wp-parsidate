@@ -148,7 +148,7 @@ function wp_get_parchives( $args = '' ) {
 function wpp_print_archive( $results, $args ) {
 	global $wpp_months_name;
 
-	if ( $args['type'] == 'yearly' ) {
+	if ( $args['type'] === 'yearly' ) {
 		$old_date = parsidate( 'Y', $results[0]->date, 'eng' );
 		$count    = $results[0]->count;
 		$c        = count( $results );
@@ -168,7 +168,7 @@ function wpp_print_archive( $results, $args ) {
 		}
 
 		echo_yarchive( $old_date, $args['format'], $args['before'], $count, $args['show_post_count'], $args );
-	} elseif ( $args['type'] == 'monthly' ) {
+	} elseif ( $args['type'] === 'monthly' ) {
 		$old_date = parsidate( 'Ym', $results[0]->date, 'eng' );
 		$count    = $results[0]->count;
 		$c        = count( $results );
@@ -187,7 +187,7 @@ function wpp_print_archive( $results, $args ) {
 		}
 
 		echo_marchive( $old_date, $args['format'], $args['before'], $count, $args['show_post_count'], $args );
-	} elseif ( $args['type'] == 'daily' ) {
+	} elseif ( $args['type'] === 'daily' ) {
 		foreach ( $results as $row ) {
 			$date = parsidate( 'Y,m,d', $row->date, 'eng' );
 			$date = explode( ',', $date );

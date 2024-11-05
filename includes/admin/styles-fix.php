@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
  * @since               2.0
  */
 function wpp_fix_editor_rtl() {
-	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
+	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
 	wp_enqueue_style( 'functions', WP_PARSI_URL . "assets/css/admin-fix$suffix.css", false, WP_PARSI_VER, 'all' );
 }
@@ -33,7 +33,7 @@ add_action( 'admin_print_styles-theme-editor.php', 'wpp_fix_editor_rtl', 10 );
  */
 function wpp_fix_tinymce_font() {
     if( wpp_is_active( 'enable_fonts' ) ){
-	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
+	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 	add_editor_style( WP_PARSI_URL . "assets/css/editor$suffix.css" );
     }
 }

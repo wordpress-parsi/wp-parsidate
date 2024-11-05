@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 function wpp_enqueue_admin_scripts() {
 	global $wpp_months_name;
 
-	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
+	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
 	wp_enqueue_script( 'wpp_admin', WP_PARSI_URL . 'assets/js/admin' . $suffix . '.js', false, WP_PARSI_VER );
 	wp_localize_script(

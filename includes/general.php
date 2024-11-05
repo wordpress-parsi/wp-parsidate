@@ -232,7 +232,7 @@ function parsidate_check_format( $format ) {
 		'd-M-Y H:i',*/
 
 		DATE_W3C, // eq `c`
-		DATE_ISO8601, // eq `c`
+		DATE_ATOM, // eq `c`
 		DATE_RFC2822, // eq `r`
 		'Y-m-d\TH:i:s+00:00', // eq `DATE_W3C` @SEE: http://jochenhebbrecht.be/site/node/761
 		'Y-m-d\TH:i:sP',

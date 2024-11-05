@@ -35,7 +35,7 @@ function disable_wpp() {
 	foreach ( $calls as $i => $call ) {
 		unset( $calls[ $i ] );
 
-		if ( $call['function'] == 'apply_filters' && empty( $call['class'] ) ) {
+		if ( $call['function'] === 'apply_filters' && empty( $call['class'] ) ) {
 			break;
 		}
 	}
@@ -58,11 +58,11 @@ function disable_wpp() {
 				continue;
 			}
 
-			if ( ! empty( $hook['func'] ) && ( $call['function'] != trim( $hook['func'] ) ) ) {
+			if ( ! empty( $hook['func'] ) && ( $call['function'] !== trim( $hook['func'] ) ) ) {
 				continue;
 			}
 
-			if ( ( ! isset( $call['class'] ) && empty( $hook['class'] ) ) || $call['class'] == $hook['class'] ) {
+			if ( ( ! isset( $call['class'] ) && empty( $hook['class'] ) ) || $call['class'] === $hook['class'] ) {
 				return false;
 			}
 		}

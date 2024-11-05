@@ -84,7 +84,7 @@ function wp_parsi_get_settings() {
  * @since           2.0
  */
 function wpp_register_settings() {
-	if ( false == get_option( 'wpp_settings' ) ) {
+	if ( false === get_option( 'wpp_settings' ) ) {
 		add_option( 'wpp_settings', array() );
 	}
 
@@ -133,7 +133,7 @@ function wpp_get_tabs() {
 	return array(
 		'core'    => sprintf( __( '%s Core', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-site"></span>' ),
 		'conv'    => sprintf( __( '%s Converts', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-settings"></span>' ),
-		'tools' => sprintf( __( '%s Tools', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-tools"></span>' ),
+		'tools'   => sprintf( __( '%s Tools', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-tools"></span>' ),
 		'plugins' => sprintf( __( '%s Plugins compatibility', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-plugins"></span>' ),
 		'about'   => sprintf( __( '%s About', 'wp-parsidate' ), '<span class="dashicons dashicons-info"></span>' ),
 	);
@@ -367,13 +367,13 @@ function wpp_get_registered_settings() {
 				'type' => 'header',
 			),
 		) ),
-		'tools'    => apply_filters( 'wpp_tools_settings', array(
-			'advanced_tools'          => array(
+		'tools'   => apply_filters( 'wpp_tools_settings', array(
+			'advanced_tools'      => array(
 				'id'   => 'advanced_tools',
 				'name' => __( 'Advanced Tools', 'wp-parsidate' ),
 				'type' => 'header'
 			),
-			'date_in_admin_bar'         => array(
+			'date_in_admin_bar'   => array(
 				'id'      => 'date_in_admin_bar',
 				'name'    => __( "Display date in the admin bar", 'wp-parsidate' ),
 				'type'    => 'checkbox',
@@ -381,11 +381,11 @@ function wpp_get_registered_settings() {
 				'std'     => 'disable',
 				'desc'    => __( "Display today's Jalali date in the WordPress admin bar.", 'wp-parsidate' ),
 			),
-			'sep_admin_bar_ate'           => array(
+			'sep_admin_bar_ate'   => array(
 				'id'   => 'sep_admin_bar_ate',
 				'type' => 'header',
 			),
-			'disable_copy'         => array(
+			'disable_copy'        => array(
 				'id'      => 'disable_copy',
 				'name'    => __( 'Prevent users from copying site content', 'wp-parsidate' ),
 				'type'    => 'checkbox',
@@ -393,7 +393,7 @@ function wpp_get_registered_settings() {
 				'std'     => 'disable',
 				'desc'    => __( "Simply protect your site's content from those who want to copy it.", 'wp-parsidate' ),
 			),
-			'disable_right_click'    => array(
+			'disable_right_click' => array(
 				'id'      => 'disable_right_click',
 				'name'    => __( 'Disable right click on website pages', 'wp-parsidate' ),
 				'type'    => 'checkbox',
@@ -462,7 +462,7 @@ function wpp_multicheck_callback( $args ) {
 		);
 	}
 
-	echo $html.'</ul>';
+	echo $html . '</ul>';
 }
 
 /**
@@ -737,7 +737,7 @@ function wpp_enqueue_setting_page_style( $hook ) {
 		return;
 	}
 
-	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
+	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
 	wp_enqueue_style( 'wpp_option_page', WP_PARSI_URL . "assets/css/settings$suffix.css", null, WP_PARSI_VER );
 }

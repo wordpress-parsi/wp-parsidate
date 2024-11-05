@@ -62,9 +62,9 @@ final class WP_Parsidate {
 
 		require_once( WP_PARSI_DIR . 'includes/settings.php' );
 
-		if ( $this->wpp_multilingual_is_active() && wpp_is_active( 'wpp_multilingual_support' ) ) {
-			if ( ( function_exists( 'pll_current_language' ) && pll_current_language() != 'fa'
-			       || defined( 'ICL_LANGUAGE_CODE' ) && 'fa_IR' != ICL_LANGUAGE_CODE ) ) {
+		if ( self::wpp_multilingual_is_active() && wpp_is_active( 'wpp_multilingual_support' ) ) {
+			if ( ( defined( 'ICL_LANGUAGE_CODE' ) && 'fa_IR' !== ICL_LANGUAGE_CODE ) ||
+			     ( function_exists( 'pll_current_language' ) && pll_current_language() !== 'fa' ) ) {
 				return;
 			}
 		}
@@ -153,7 +153,7 @@ final class WP_Parsidate {
 			require_once( WP_PARSI_DIR . 'includes/' . $file . '.php' );
 		}
 
-		if ( get_locale() == 'fa_IR' ) {
+		if ( get_locale() === 'fa_IR' ) {
 			load_textdomain( 'wp-parsidate', WP_PARSI_DIR . 'languages/fa_IR.mo' );
 		}
 	}
@@ -185,7 +185,7 @@ final class WP_Parsidate {
 	 * @since           2.0
 	 */
 	public static function get_instance() {
-		if ( self::$instance == null ) {
+		if ( self::$instance === null ) {
 			self::$instance = new WP_Parsidate();
 		}
 
@@ -229,7 +229,7 @@ final class WP_Parsidate {
 		}
 
 		if ( wpp_is_active( 'enable_fonts' ) ) {
-			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || wpp_is_active( 'dev_mode' ) ? '' : '.min';
+			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
 			wp_enqueue_style( 'wpp-vazir-font', WP_PARSI_URL . "assets/css/vazir-font$suffix.css", null, WP_PARSI_VER, 'all' );
 			add_action( 'admin_head', array( $this, 'wpp_preload_vazir_fonts' ) );

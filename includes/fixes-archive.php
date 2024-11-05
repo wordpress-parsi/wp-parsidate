@@ -29,7 +29,7 @@ function wpp_fix_title( $title, $sep = '-', $sep_location = 'right' ) {
 		return $title;
 	}
 
-	if ( $sep_location == 'right' ) {
+	if ( $sep_location === 'right' ) {
 		$query = array_reverse( $query );
 	}
 

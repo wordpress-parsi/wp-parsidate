@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
  * @subpackage      Fixes/NumbersAndArabic
  */
 
-if ( get_locale() == 'fa_IR' ) {
+if ( get_locale() === 'fa_IR' ) {
 	global $wpp_settings;
 
 	if ( wpp_is_active( 'conv_page_title' ) ) {
