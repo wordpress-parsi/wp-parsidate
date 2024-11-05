@@ -40,10 +40,11 @@ List of some features:
 == Screenshots ==
 
 1. Plugin main settings
-2. Number conversions settings
-3. Other plugin compatibility
-4. Persian datepicker in WooCommerce
-5. Persian date type in ACF
+2. Conversions settings
+3. Tools
+4. Other plugin compatibility
+5. Persian datepicker in WooCommerce
+6. Persian date type in ACF
 
 == Changelog ==
 
