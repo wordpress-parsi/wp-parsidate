@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
  * Author: WP-Parsi Team
  * Author URI: https://wp-parsi.com/
  * Text Domain: wp-parsidate
- * Domain Path: parsi-languages
+ * Domain Path: /languages
  * License: GPL3
  *
  * WP-Parsidate is free software: you can redistribute it and/or modify
