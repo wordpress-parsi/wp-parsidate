@@ -63,7 +63,6 @@ This package, created by Persian developers, enhances the Persian experience on 
 - Updated calendar widgets and attachment filter dropdown
 - Added ACF Parsi date support
 
-... *(additional version details follow the same structure)* ...
 
 ## Development Log
 
