@@ -184,7 +184,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				wp_enqueue_script( 'wpp_jalali_datepicker', WP_PARSI_URL . 'assets/js/jalalidatepicker.min.js', array( 'jquery-ui-datepicker' ), WP_PARSI_VER );
 				wp_enqueue_style( 'wpp_jalali_datepicker', WP_PARSI_URL . "assets/css/jalalidatepicker$suffix.css", null, WP_PARSI_VER );
 
-				do_action( 'wpp_jalai_datepicker_enqueued', 'wc' );
+				do_action( 'wpp_jalali_datepicker_enqueued', 'wc' );
 			}
 		}
 

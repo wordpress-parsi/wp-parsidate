@@ -74,7 +74,7 @@ final class WP_Parsidate {
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'parsi_settings_link' ) );
 		add_action( 'widgets_init', array( $this, 'register_widget' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'wpp_load_vazir_font_in_admin_area' ) );
-		add_action( 'wpp_jalai_datepicker_enqueued', array( $this, 'wpp_localize_months_name' ) );
+		add_action( 'wpp_jalali_datepicker_enqueued', array( $this, 'wpp_localize_months_name' ) );
 	}
 
 	/**
