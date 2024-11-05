@@ -20,6 +20,12 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 
 			add_filter( 'wpp_plugins_compatibility_settings', array( $this, 'add_settings' ) );
 
+			add_action( 'before_woocommerce_init', function() {
+				if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+					\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT, true );
+				}
+			} );
+
 			if ( class_exists( 'WooCommerce' ) && get_locale() === 'fa_IR' ) {
 				if ( wpp_is_active( 'woo_per_price' ) ) {
 					add_filter( 'wc_price', 'fix_number' );
