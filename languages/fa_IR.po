@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-08 04:13+0330\n"
-"PO-Revision-Date: 2024-10-08 05:15+0330\n"
+"POT-Creation-Date: 2024-11-15 15:01+0330\n"
+"PO-Revision-Date: 2024-11-15 15:07+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -14,47 +14,73 @@ msgstr ""
 "X-Loco-Source-Locale: en_FR\n"
 "X-Generator: Poedit 2.2\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-KeywordsList: __;_e;esc_html__;_e;__ngettext:1,2;_n:1,2;"
+"__ngettext_noop:1,2;_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Loco-Parser: loco_parse_po\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../assets/js/dashboard.js:243 ../assets/js/dashboard.min.js:1
+#: ../assets/js/dashboard.js:327 ../assets/js/dashboard.min.js:1
 msgid "Attend an upcoming event near you."
 msgstr ""
 
-#: ../assets/js/dashboard.js:273 ../assets/js/dashboard.min.js:1
+#: ../assets/js/dashboard.js:357 ../assets/js/dashboard.min.js:1
 #, javascript-format
 msgid "City updated. Listing events near %s."
 msgstr ""
 
-#: ../assets/js/dashboard.js:305 ../assets/js/dashboard.min.js:1
+#: ../assets/js/dashboard.js:389 ../assets/js/dashboard.min.js:1
 #, javascript-format
 msgid ""
 "We couldn’t locate %s. Please try another nearby city. For example: Kansas City; "
 "Springfield; Portland."
 msgstr ""
 
-#: ../assets/js/dashboard.js:320 ../assets/js/dashboard.min.js:1
+#: ../assets/js/dashboard.js:404 ../assets/js/dashboard.min.js:1
 msgid "An error occurred. Please try again."
 msgstr ""
 
-#: ../assets/js/dashboard.js:325 ../assets/js/dashboard.min.js:1
+#: ../assets/js/dashboard.js:409 ../assets/js/dashboard.min.js:1
 msgid "Enter your closest city to find nearby events."
 msgstr ""
 
-#: ../assets/js/dashboard.js:509 ../assets/js/dashboard.min.js:1
+#: ../assets/js/dashboard.js:561 ../assets/js/dashboard.min.js:1
+msgctxt "Events widget offset prefix"
+msgid "GMT"
+msgstr ""
+
+#: ../assets/js/dashboard.js:593 ../assets/js/dashboard.min.js:1
 msgid "l, M j, Y"
 msgstr ""
 
-#: ../assets/js/dashboard.js:511 ../assets/js/dashboard.min.js:1
+#: ../assets/js/dashboard.js:595 ../assets/js/dashboard.min.js:1
 #, javascript-format
 msgid "%1$s %2$d–%3$d, %4$d"
 msgstr ""
 
-#: ../assets/js/dashboard.js:513 ../assets/js/dashboard.min.js:1
+#: ../assets/js/dashboard.js:597 ../assets/js/dashboard.min.js:1
 #, javascript-format
 msgid "%1$s %2$d – %3$s %4$d, %5$d"
+msgstr ""
+
+#: ../assets/js/dashboard.js:607 ../assets/js/dashboard.js:617
+#: ../assets/js/dashboard.js:619 ../assets/js/dashboard.min.js:1
+msgctxt "upcoming events month format"
+msgid "F"
+msgstr ""
+
+#: ../assets/js/dashboard.js:608 ../assets/js/dashboard.js:609
+#: ../assets/js/dashboard.js:618 ../assets/js/dashboard.js:620
+#: ../assets/js/dashboard.min.js:1
+msgctxt "upcoming events day format"
+msgid "j"
+msgstr ""
+
+#: ../assets/js/dashboard.js:610 ../assets/js/dashboard.js:621
+#: ../assets/js/dashboard.min.js:1
+msgctxt "upcoming events year format"
+msgid "Y"
 msgstr ""
 
 #: ../assets/js/gutenberg-jalali-calendar.build.js:1
@@ -105,9 +131,54 @@ msgstr "بانک پاسارگاد"
 msgid "Show All Dates"
 msgstr "نمایش همۀ تاریخ‌ها"
 
+#: ../includes/admin/widgets.php:74
+msgid "WP Parsidate"
+msgstr "بستۀ وردپرس پارسی"
+
 #: ../includes/admin/widgets.php:99
-msgid "WordPress Events and News"
-msgstr "اخبار و رویدادهای وردپرس"
+msgid "What is this?"
+msgstr "این چیست؟"
+
+#: ../includes/admin/widgets.php:103
+msgid "Why are you showing me this?"
+msgstr "چرا این را به من نشان می‌دهید؟"
+
+#: ../includes/admin/widgets.php:106
+msgid "How can I become a sponsor?"
+msgstr "چطور می‌توانم حامی مالی شوم؟"
+
+#: ../includes/admin/widgets.php:111
+msgid "Loading Sponsors"
+msgstr "در حال بارگذاری حامیان مالی"
+
+#: ../includes/admin/widgets.php:139
+msgid "WordPress Parsi"
+msgstr "اخبار و رویدادهای وردپرس پارسی"
+
+#: ../includes/admin/widgets.php:141 ../includes/admin/widgets.php:153
+#: ../includes/admin/widgets.php:166
+msgid "(opens in a new tab)"
+msgstr "(در زبانۀ جدید باز می‌شود)"
+
+#: ../includes/admin/widgets.php:151
+msgid "About"
+msgstr "%s درباره"
+
+#: ../includes/admin/widgets.php:163
+msgctxt "Sponsership plans"
+msgid "https://wp-parsi.com/sponser/"
+msgstr "https://wp-parsi.com/sponser/"
+
+#: ../includes/admin/widgets.php:164
+msgid "Sponser"
+msgstr "حامی مالی"
+
+#: ../includes/admin/widgets.php:214
+#: ../includes/plugins/acf-fields/class-wpp-acf-datepicker-v4.php:22
+#: ../includes/plugins/acf-fields/class-wpp-acf-datepicker-v5.php:23
+#: ../includes/plugins/acf-fields/class-wpp-acf-timepicker-v5.php:23
+msgid "Parsidate"
+msgstr "بستۀ وردپرس پارسی"
 
 #: ../includes/general.php:74
 #, php-format
@@ -126,12 +197,6 @@ msgstr ""
 #: ../includes/plugins/acf-fields/class-wpp-acf-timepicker-v4.php:22
 msgid "Date"
 msgstr "تاریخ شمسی"
-
-#: ../includes/plugins/acf-fields/class-wpp-acf-datepicker-v4.php:22
-#: ../includes/plugins/acf-fields/class-wpp-acf-datepicker-v5.php:23
-#: ../includes/plugins/acf-fields/class-wpp-acf-timepicker-v5.php:23
-msgid "Parsidate"
-msgstr "بسته وردپرس پارسی"
 
 #: ../includes/plugins/acf-fields/class-wpp-acf-datepicker-v4.php:45
 #: ../includes/plugins/acf-fields/class-wpp-acf-datepicker-v5.php:47
@@ -209,7 +274,7 @@ msgstr "نام قلاب، کلاس و تابع موردنظر را جهت رفع
 msgid "Easy Digital Downloads"
 msgstr "Easy Digital Downloads"
 
-#: ../includes/plugins/edd.php:66 ../includes/plugins/woocommerce.php:110
+#: ../includes/plugins/edd.php:66 ../includes/plugins/woocommerce.php:118
 msgid "Fix prices"
 msgstr "تصحیح قیمت‌ها"
 
@@ -217,7 +282,12 @@ msgstr "تصحیح قیمت‌ها"
 msgid "Replace ریال with RIAL"
 msgstr "جایگزینی ریال با RIAL"
 
+#: ../includes/plugins/wc-cities/wc-city-select.php:98
+msgid "required"
+msgstr "الزامی"
+
 #: ../includes/plugins/wc-cities/wc-city-select.php:137
+#: ../includes/plugins/wc-cities/wc-city-select.php:179
 msgid "Select an option&hellip;"
 msgstr "گزینه‌ای را انتخاب کنید&hellip;"
 
@@ -361,6 +431,10 @@ msgstr ""
 msgid "Back to checkout"
 msgstr ""
 
+#: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:196
+msgid "Connecting to the bank..."
+msgstr ""
+
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:220
 #, php-format
 msgid "Error sending to the bank: %s"
@@ -409,6 +483,12 @@ msgid ""
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:533
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:316
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:317
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:324
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:401
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:402
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:409
 msgid "The order number is incorrect"
 msgstr ""
 
@@ -434,6 +514,8 @@ msgid "Your second password is incorrect."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:550
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:230
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:314
 msgid "The number of incorrect password entries has exceeded the limit."
 msgstr ""
 
@@ -608,6 +690,617 @@ msgstr ""
 msgid "Secure payment by all Shatab's cards through %s"
 msgstr ""
 
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:166
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:250
+msgid "An unexpected error has occurred"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:167
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:251
+msgid "Transaction reversal is not allowed"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:168
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:252
+msgid "The transaction has already been reversed"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:169
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:253
+msgid "It is not possible to reverse the transaction in the current state"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:170
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:254
+msgid "The time allowed to request a transaction reversal has expired"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:171
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:255
+msgid "The bill payment request service call failed"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:172
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:256
+msgid "Transaction confirmation is unsuccessful"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:173
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:257
+msgid "The top-up charge request service call failed"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:174
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:258
+msgid "The transaction has already been confirmed"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:175
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:259
+msgid "The transaction was confirmed by the recipient"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:176
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:260
+msgid "The transaction was unsuccessful due to your withdrawal from the bank"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:177
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:261
+msgid "The merchant is not authorized to confirm this transaction"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:178
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:262
+msgid "Payment information not found"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:179
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:263
+msgid "The purchase transaction payment request operation failed"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:180
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:264
+msgid "The transaction was sent back to the switch"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:181
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:265
+msgid "The transaction was confirmed by the merchant"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:182
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:266
+msgid "The transaction amount is less than the minimum allowed"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:183
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:267
+msgid "Token is invalid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:184
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:268
+msgid "Token has expired"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:185
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:269
+msgid "The IP address format is not valid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:186
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:270
+msgid "The URL is not valid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:187
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:271
+msgid "The merchant's identification code is not valid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:188
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:272
+msgid "The given string is not entirely numeric"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:189
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:273
+msgid "The length of the input data is not valid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:190
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:274
+msgid "The organization is invalid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:191
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:275
+msgid "The value sent is not a number"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:192
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:276
+msgid "The string length is less than the allowed limit"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:193
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:277
+msgid "The length of the string exceeds the allowed limit"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:194
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:278
+msgid "The payment ID is invalid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:195
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:279
+msgid "The bill ID is invalid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:196
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:280
+msgid "The input parameter is empty"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:197
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:281
+msgid "The order number is duplicate"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:198
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:282
+msgid "The transaction amount is more than the merchant's limit"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:199
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:283
+msgid "The ability to reverse the transaction is disabled for the merchant"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:200
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:284
+msgid "The ability to send transaction confirmation is disabled for the merchant"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:201
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:285
+msgid "Charging is disabled for the merchant"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:202
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:286
+msgid "The top-up feature is disabled for the merchant"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:203
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:287
+msgid "The ability to pay the bill is inactive for the merchant"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:204
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:288
+msgid "The purchase feature is disabled for the merchant"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:205
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:289
+msgid "The transaction was successfully rolled back"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:206
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:290
+msgid "The merchant could not be authenticated"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:207
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:291
+msgid "The merchant is inactive"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:208
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:292
+msgid "Server error"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:209
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:293
+msgid "The operation is successful"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:210
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:294
+msgid "The card issuer refused to complete the transaction"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:211
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:295
+msgid ""
+"The confirmation operation of this transaction has already been done successfully"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:212
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:296
+msgid "The store merchant is invalid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:213
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:297
+msgid "The transaction was abandoned"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:214
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:298
+msgid "An unknown error occurred"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:215
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:299
+msgid ""
+"By recognizing the identity of the card holder, the transaction is successful"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:216
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:300
+msgid "The received request is being followed up"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:217
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:301
+msgid ""
+"The transaction with an amount lower than the requested amount (deficiency in "
+"the customer's account) has been accepted"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:218
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:302
+msgid "The transaction is invalid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:219
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:303
+msgid "The transaction amount is incorrect"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:220
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:304
+msgid "The sent card number is invalid (does not exist)"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:221
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:305
+msgid "Card issuer is invalid (does not exist)"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:222
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:306
+msgid "The requesting customer has been deleted"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:223
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:307
+msgid ""
+"In a situation where the switch needs to query the card to accept the "
+"transaction, it may make a request from the card (terminal), this message "
+"indicates that the answer is invalid."
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:224
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:308
+msgid ""
+"If the response to the terminal request does not require any specific response "
+"or function, we will have this message."
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:225
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:309
+msgid ""
+"The transaction was suspected of malpractice (card, terminal, card holder), so "
+"it was not accepted"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:226
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:310
+msgid "The message format has errors"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:227
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:311
+msgid "The merchant is not supported by the switch"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:228
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:312
+msgid ""
+"The transaction is incompletely completed (for example, a deposit transaction "
+"that is completed from the customer's point of view, but needs to be completed)"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:229
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:237
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:313
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:321
+msgid "The card has expired"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:231
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:315
+msgid "There is no credit card account"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:232
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:316
+msgid "The requested operation is not supported"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:233
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:317
+msgid "The card has been declared lost"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:234
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:318
+msgid "The card has been declared stolen"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:235
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:319
+msgid "The bill can not be paid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:236
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:320
+msgid "The account balance is insufficient"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:238
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:322
+msgid "The card password is invalid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:239
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:323
+msgid "The card is invalid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:240
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:324
+msgid "The relevant transaction is not allowed by the card holder"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:241
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:325
+msgid ""
+"It is not allowed to perform the relevant transaction by the operator's terminal"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:242
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:326
+msgid "The card is suspected of fraud"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:243
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:327
+msgid "The transaction amount is over the limit"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:244
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:328
+msgid "The card is limited"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:245
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:329
+msgid "The security measures have been violated"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:246
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:330
+msgid "The number of transaction requests exceeds the limit"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:247
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:331
+msgid ""
+"The response required to complete or complete the transaction has arrived too "
+"late"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:248
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:332
+msgid "The number of times the password has been repeated has exceeded the limit"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:249
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:333
+msgid "The number of incorrect password entries has exceeded the limit"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:250
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:334
+msgid "The card is not active"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:251
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:335
+msgid "The account connected to the card is invalid or has errors"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:252
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:336
+msgid "The transaction request has been rejected"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:253
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:337
+msgid "The card was not accepted"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:254
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:338
+msgid "The switch card service provider has not accepted the transaction"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:255
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:339
+msgid ""
+"In transactions that require communication with the exporter, if the exporter is "
+"not active, this message will be sent in response."
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:256
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:340
+msgid ""
+"The transaction authorization system is temporarily disabled or the time set for "
+"the authorization has expired"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:257
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:341
+msgid "The destination of the transaction was not found"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:258
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:342
+msgid "It is not possible to complete the transaction"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:261
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:345
+msgid ""
+"The payment of the transaction was unsuccessful due to cancellation on the bank "
+"page"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:276
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:278
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:361
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:363
+msgid "Temporary error in payment"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:277
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:362
+msgid ""
+"When the customer returned from the bank, the bank server did not respond, the "
+"customer was asked to refresh the page"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:279
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:364
+msgid ""
+"The server of the internet portal has temporarily encountered a problem, to "
+"complete the transaction moments later, click on the button below"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:280
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:365
+msgid "Try again"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:283
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:368
+msgid "Trying again please wait.."
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:292
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:300
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:377
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:385
+msgid "Service delivery error"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:294
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:379
+#, php-format
+msgid ""
+"Your payment with the tracking number %s has been successfully processed at the "
+"bank, but there has been a problem with the service"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:295
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:303
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:380
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:388
+msgid ""
+"The order to return the money to your account has been registered in the bank, "
+"if the payment is not returned to your account within the next few hours, "
+"contact support (the maximum time to return to the account is 72 hours)"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:296
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:381
+msgid ""
+"The customer paid the amount, but when returning from the bank, there was a "
+"problem in providing the service, the order to return the money to the "
+"customer's account was registered in the bank."
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:302
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:387
+#, php-format
+msgid ""
+"Your payment with the tracking number %s has been successfully made in the bank, "
+"but there is a problem in providing the service!"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:304
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:389
+msgid ""
+"The customer paid the amount, but when he returned from the bank, there was a "
+"problem in providing the service, there was an error in registering the order to "
+"return the money to the customer's account, this customer should either be "
+"provided with the service or the amount should be returned to his bank account."
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:308
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:393
+msgid "The order has already been paid"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:310
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:395
+#, php-format
+msgid "Your order has already been successfully placed with tracking number %s"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:318
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:403
+msgid "The order number is incorrect; Call for support if needed"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:323
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:408
+msgid "Problem with placing an order"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:325
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:410
+msgid "There is a problem with placing an order, please contact support"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:343
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:428
+msgid "Error sending to the bank"
+msgstr ""
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:353
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:354
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:438
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:439
+msgid "Payment was not made"
+msgstr "پرداخت انجام نشد"
+
+#: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:361
+#: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:446
+msgid ""
+"If the payment has been deducted from your bank account, it will be "
+"automatically returned to your account by the bank (the final return time to the "
+"account is 72 hours) - contact support if needed."
+msgstr ""
+
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:452
 msgid "Payment was successful."
 msgstr ""
@@ -620,35 +1313,35 @@ msgstr ""
 msgid "Store No."
 msgstr ""
 
-#: ../includes/plugins/woocommerce.php:105
+#: ../includes/plugins/woocommerce.php:113
 msgid "WooCommerce"
 msgstr "ووکامرس"
 
-#: ../includes/plugins/woocommerce.php:117
+#: ../includes/plugins/woocommerce.php:125
 msgid "Fix persian postcode"
 msgstr "تبدیل کد پستی فارسی در روند پرداخت"
 
-#: ../includes/plugins/woocommerce.php:124
+#: ../includes/plugins/woocommerce.php:132
 msgid "Display cities as a drop-down list"
 msgstr "نمایش شهرها به‌صورت لیست کشویی"
 
-#: ../includes/plugins/woocommerce.php:131
+#: ../includes/plugins/woocommerce.php:139
 msgid "Fix persian phone"
 msgstr "تبدیل شماره تماس فارسی در روند پرداخت"
 
-#: ../includes/plugins/woocommerce.php:138
+#: ../includes/plugins/woocommerce.php:146
 msgid "Postcode validation"
 msgstr "اعتبارسنجی کد پستی"
 
-#: ../includes/plugins/woocommerce.php:145
+#: ../includes/plugins/woocommerce.php:153
 msgid "Phone number validation"
 msgstr "اعتبارسنجی شماره تماس"
 
-#: ../includes/plugins/woocommerce.php:380
+#: ../includes/plugins/woocommerce.php:487
 msgid "Expiry date"
 msgstr "تاریخ انقضاء"
 
-#: ../includes/plugins/woocommerce.php:546
+#: ../includes/plugins/woocommerce.php:653
 msgid "<strong>Phone number</strong> is invalid."
 msgstr "<strong>شمارۀ تماس</strong> معتبر نیست."
 
@@ -734,7 +1427,7 @@ msgstr "غیرفعال کردن ویرایشگر بلوک ابزارک"
 #: ../includes/settings.php:248
 msgid "By enabling this, Widget Block Editor disabled"
 msgstr ""
-"با فعال‌کردن این گزینه، «ویرایشگر بلوک ابزارک» در بخش ابزارک‌ها غیرفعال می‌شود."
+"با فعال‌کردن این گزینه، «ویرایشگر بلوک ابزارک» در بخش ابزارک‌ها غیرفعال می‌شود"
 
 #: ../includes/settings.php:252
 msgid "Move page to submenu?"
@@ -859,7 +1552,7 @@ msgid ""
 "option prevents users from right clicking"
 msgstr ""
 "دیگر نگران دانلود تصاویر و محتویات دیگر سایتتان نباشید، این گزینه کلیک راست را "
-"غیرفعال می‌کند."
+"غیرفعال می‌کند"
 
 #: ../includes/settings.php:634
 msgid "Upload File"
@@ -872,6 +1565,64 @@ msgstr "پشتیبانی از چندزبانه"
 #: ../includes/settings.php:754
 msgid "By enabling this, ParsiDate options only work in persian locale"
 msgstr "با فعال کردن این گزینه، تنظیمات پارسی‌دیت فقط برای زبان فارسی اعمال می‌شود"
+
+#: ../includes/tools.php:27
+msgid "Today:&nbsp;"
+msgstr "امروز:&nbsp;"
+
+#: ../includes/views/html-about.php:27
+msgid "Morteza Geransayeh"
+msgstr "مرتضی گزانسایه"
+
+#: ../includes/views/html-about.php:28 ../includes/views/html-about.php:38
+#: ../includes/views/html-about.php:48 ../includes/views/html-about.php:58
+#: ../includes/views/html-about.php:68
+msgid "Developer"
+msgstr "توسعه‌دهنده"
+
+#: ../includes/views/html-about.php:37
+msgid "Saeed Fard"
+msgstr "سعید فرد"
+
+#: ../includes/views/html-about.php:47
+msgid "HamidReza Yazdani"
+msgstr "حمید رضا یزدانی"
+
+#: ../includes/views/html-about.php:57
+msgid "Mobin Ghasempoor"
+msgstr "مبین قاسمپور"
+
+#: ../includes/views/html-about.php:67
+msgid "Parsa Kafi"
+msgstr "پارسا کافی"
+
+#: ../includes/views/html-about.php:77
+msgid "Mohsen Ghiasi"
+msgstr "محسن قیاسی"
+
+#: ../includes/views/html-about.php:78
+msgid "DevOps"
+msgstr "دواپس"
+
+#: ../includes/views/html-about.php:97
+msgid "About Us"
+msgstr "دربارۀ ما"
+
+#: ../includes/views/html-about.php:108
+msgid "Follow Us"
+msgstr "ما را دنبال کنید"
+
+#: ../includes/views/html-about.php:118
+msgid "Our Team"
+msgstr "تیم ما"
+
+#: ../includes/views/html-about.php:150
+msgid "GitHub Contributors"
+msgstr "مشارکت‌کننده‌های گیت‌هاب"
+
+#: ../includes/views/html-about.php:171
+msgid "Unable to fetch contributors."
+msgstr "امکان واکشی مشارکت‌کننده‌ها وجود ندارد."
 
 #: ../includes/widget/widget_archive.php:15
 #: ../includes/widget/widget_archive.php:16
@@ -965,7 +1716,7 @@ msgstr ""
 msgid "WP-Parsi Team"
 msgstr "تیم وردپرس پارسی"
 
-#: ../wp-parsidate.php:210
+#: ../wp-parsidate.php:203
 msgid "settings"
 msgstr "تنظیمات"
 

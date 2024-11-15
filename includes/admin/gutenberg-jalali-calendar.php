@@ -50,7 +50,7 @@ if ( ! function_exists( 'wpp_gutenberg_jalali_calendar_editor_assets' ) ) {
 		// Styles.
 		wp_enqueue_style(
 			'wpp_gutenberg_jalali_calendar_editor_styles',
-			WP_PARSI_URL . 'assets/css/gutenberg-jalali-calendar.build' . $suffix . '.css',
+			WP_PARSI_URL . 'assets/css/gutenberg-jalali-calendar.build.css',
 			array( 'wp-edit-blocks' )
 		);
 	}

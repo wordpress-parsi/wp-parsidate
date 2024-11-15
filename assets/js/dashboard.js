@@ -12,7 +12,7 @@ window.communityEventsData = window.communityEventsData || {};
  *
  * @since 2.7.0
  */
-jQuery( function($) {
+jQuery(function ($) {
   /**
    * These widgets can be populated via ajax.
    *
@@ -35,7 +35,7 @@ jQuery( function($) {
    *
    * @return {void}
    */
-  window.ajaxPopulateWidgets = function(el) {
+  window.ajaxPopulateWidgets = function (el) {
     /**
      * Fetch the latest representation of the widget via Ajax and show it.
      *
@@ -47,31 +47,31 @@ jQuery( function($) {
     function show(i, id) {
       var p, e = $('#' + id + ' div.inside:visible').find('.widget-loading');
       // If the element is found in the dom, queue to load latest representation.
-      if ( e.length ) {
+      if (e.length) {
         p = e.parent();
-        setTimeout( function(){
+        setTimeout(function () {
           // Request the widget content.
-          p.load( ajaxurl + '?action=wpp-dashboard-widgets&widget=' + id + '&pagenow=' + pagenow, '', function() {
+          p.load(ajaxurl + '?action=wpp-dashboard-widgets&widget=' + id + '&pagenow=' + pagenow, '', function () {
             // Hide the parent and slide it out for visual fanciness.
-            p.hide().slideDown('normal', function(){
+            p.hide().slideDown('normal', function () {
               $(this).css('display', '');
             });
           });
-        }, i * 500 );
+        }, i * 500);
       }
     }
 
     // If we have received a specific element to fetch, check if it is valid.
-    if ( el ) {
+    if (el) {
       el = el.toString();
       // If the element is available as Ajax widget, show it.
-      if ( $.inArray(el, ajaxWidgets) !== -1 ) {
+      if ($.inArray(el, ajaxWidgets) !== -1) {
         // Show element without any delay.
         show(0, el);
       }
     } else {
       // Walk through all ajaxWidgets, loading them after each other.
-      $.each( ajaxWidgets, show );
+      $.each(ajaxWidgets, show);
     }
   };
 
@@ -79,8 +79,8 @@ jQuery( function($) {
   ajaxPopulateWidgets();
 
   // Register ajax widgets as postbox toggles.
-  postboxes.add_postbox_toggles(pagenow, { pbshow: ajaxPopulateWidgets } );
-} );
+  postboxes.add_postbox_toggles(pagenow, {pbshow: ajaxPopulateWidgets});
+});
 
 jQuery(function ($) {
   'use strict';
@@ -688,11 +688,7 @@ function createSlides(slidesData) {
   slidesData.forEach((slide) => {
     const slideElement = document.createElement('div');
     slideElement.classList.add('keen-slider__slide');
-    slideElement.innerHTML = `
-            <a href="${slide.link}" target="_blank">
-                <img src="${slide.image_url}" alt="${slide.image_alt}" loading="lazy">
-            </a>
-        `;
+    slideElement.innerHTML = '<a href="' + slide.link + '" target="_blank"><img src="' + slide.image_url + '" alt="' + slide.image_alt + '" loading="lazy"></a>';
     slidesContainer.appendChild(slideElement);
   });
 
