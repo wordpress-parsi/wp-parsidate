@@ -1,13 +1,4 @@
 /* Dashboard WordPress news */
-#wpp_dashboard_primary .hndle.ui-sortable-handle {
-  cursor: no-drop;
-  pointer-events: none;
-}
-
-#wpp_dashboard_primary .handle-actions {
-  display: none;
-}
-
 #wpp_dashboard_primary .inside {
   margin: 0;
   padding: 0;
@@ -53,10 +44,6 @@
 
 #wpp_dashboard_primary a.rsswidget {
   font-weight: 400;
-}
-
-label[for="wpp_dashboard_primary-hide"] {
-  display: none !important;
 }
 
 #wpp_sponsorship_placeholder {
