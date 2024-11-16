@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
  * Requires at least: 5.2
  * Requires PHP: 7.4
  * WC tested up to: 9.3.3
- * License: GPL3
+ * License: GPLv3
  *
  * WP-Parsidate is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
  * @author              Mobin Ghasempoor
  * @author              Morteza Geransayeh
  * @link                https://wp-parsi.com/
- * @version             5.1.0
+ * @version             5.1.1
  * @license             http://www.gnu.org/licenses/gpl-3.0.html GNU Public License v3.0
  * @package             WP-Parsidate
  * @subpackage          Core

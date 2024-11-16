@@ -644,11 +644,9 @@ jQuery(function ($) {
 const slidesContainer = document.getElementById('wpp_sponsorship');
 const sponsorshipGuid = document.getElementById('sponsorship-guide');
 const wppsPlaceholder = document.getElementById('wpp_sponsorship_placeholder');
-const wppWidgetOption = document.querySelector('label[for="wpp_dashboard_primary-hide"]');
 const wppsQuestion = document.querySelector('#sponsorship-guide .question');
 const sponsorshipUl = document.querySelector('#sponsorship-guide ul');
 
-wppWidgetOption.remove();
 
 async function wppInitSponsors() {
   try {

@@ -70,7 +70,6 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 			}
 		}
 
-
 		/**
 		 * Returns an instance of class
 		 *
@@ -425,7 +424,6 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 			$data_store->sort_all_product_variations( $parent->get_id() );
 
 			for ( $i = 0; $i <= $max_loop; $i ++ ) {
-
 				if ( ! isset( $_POST['variable_post_id'][ $i ] ) ) {
 					continue;
 				}
