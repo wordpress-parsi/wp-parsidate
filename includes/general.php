@@ -68,12 +68,14 @@ add_filter( 'login_headerurl', 'wpp_login_headerurl', 10, 2 );
 function wpp_activation_notice() {
 	$dismissed = get_option( 'wpp_dismissed', false );
 
-	if ( ! $dismissed && ( ! isset( $_GET['page'] ) || $_GET['page'] !== 'wp-parsi-settings' ) ) {
+	if ( ! $dismissed && ( ! isset( $_GET['page'] ) || 'wp-parsi-settings' !== $_GET['page'] ) ) {
 		if ( ! wpp_is_active( 'persian_date' ) ) {
+			$dismiss_url = wp_nonce_url( add_query_arg( 'wpp-action', 'dismiss-notice' ), 'wpp_dismiss_notice' );
+
 			echo sprintf(
 				__( '<div class="updated wpp-message"><p>ParsiDate activated, you may need to configure it to work properly. <a href="%s">Go to configuration page</a> &ndash; <a href="%s">Dismiss</a></p></div>', 'wp-parsidate' ),
-				admin_url( 'admin.php?page=wp-parsi-settings' ),
-				add_query_arg( 'wpp-action', 'dismiss-notice' )
+				esc_url( admin_url( 'admin.php?page=wp-parsi-settings' ) ),
+				esc_url( $dismiss_url ),
 			);
 		}
 	}
@@ -89,6 +91,7 @@ add_action( 'admin_notices', 'wpp_activation_notice' );
  */
 function wpp_dismiss_notice_action() {
 	if ( isset( $_GET['wpp-action'] ) && $_GET['wpp-action'] == 'dismiss-notice' ) {
+		check_admin_referer( 'wpp_dismiss_notice' );
 		update_option( 'wpp_dismissed', true );
 	}
 }
