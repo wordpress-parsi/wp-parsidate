@@ -97,7 +97,10 @@ final class WP_Parsidate {
 		}
 
 		if ( ! defined( 'WP_PARSI_VER' ) ) {
-			define( 'WP_PARSI_VER', '5.1.0' );
+			if ( ! function_exists( 'get_plugin_data' ) )
+				require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			$pluginData = get_plugin_data( WP_PARSI_ROOT );
+			define( 'WP_PARSI_VER', $pluginData['Version'] );
 		}
 	}
 
