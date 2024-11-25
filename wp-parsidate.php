@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
  * @author              Mobin Ghasempoor
  * @author              Morteza Geransayeh
  * @link                https://wp-parsi.com/
- * @version             5.1.1
+ * @version             5.1.2
  * @license             http://www.gnu.org/licenses/gpl-3.0.html GNU Public License v3.0
  * @package             WP-Parsidate
  * @subpackage          Core
