@@ -42,7 +42,7 @@ if ( ! function_exists( 'wpp_gutenberg_jalali_calendar_editor_assets' ) ) {
 				'wp-data',
 				'wp-date'
 			),
-			true
+			WP_PARSI_VER
 		);
 
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || wpp_is_active( 'dev_mode' ) ? '' : '.min';
@@ -51,7 +51,7 @@ if ( ! function_exists( 'wpp_gutenberg_jalali_calendar_editor_assets' ) ) {
 		wp_enqueue_style(
 			'wpp_gutenberg_jalali_calendar_editor_styles',
 			WP_PARSI_URL . 'assets/css/gutenberg-jalali-calendar.build.css',
-			array( 'wp-edit-blocks' )
+			array( 'wp-edit-blocks' ), WP_PARSI_VER
 		);
 	}
 }
