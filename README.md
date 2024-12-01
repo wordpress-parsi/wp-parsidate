@@ -1,7 +1,7 @@
 # Parsi Date
 
 ![Version](https://img.shields.io/badge/version-5.1.2-blue)
-![WordPress Compatible](https://img.shields.io/badge/WordPress-5.3%20to%206.6.7.1-blue)
+![WordPress Compatible](https://img.shields.io/badge/WordPress-5.3%20to%206.7.1-blue)
 
 **Contributors:** [lord_viper](https://profiles.wordpress.org/lord_viper), [man4toman](https://profiles.wordpress.org/man4toman), [parselearn](https://profiles.wordpress.org/parselearn), [yazdaniwp](https://profiles.wordpress.org/yazdaniwp), [saeedfard](https://profiles.wordpress.org/saeedfard), [iehsanir](https://profiles.wordpress.org/iehsanir)  
 **Donate link:** [https://wp-parsi.com/support/](https://wp-parsi.com/support/)  
