@@ -100,7 +100,7 @@ final class WP_Parsidate {
 		}
 
 		if ( ! defined( 'WP_PARSI_VER' ) ) {
-			define( 'WP_PARSI_VER', '5.1.0' );
+			define( 'WP_PARSI_VER', '5.1.3' );
 		}
 	}
 
