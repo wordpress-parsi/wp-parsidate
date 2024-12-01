@@ -18,16 +18,13 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		private function __construct() {
 			$this->include_files();
 
+			add_filter( 'wpp_settings_tabs', array( $this, 'add_tab' ) );
 			add_filter( 'wpp_registered_settings', array( $this, 'add_settings' ) );
-			add_filter( 'wpp_settings_tabs', function ($tabs) {
-				$tabs['woocommerce'] =  __( 'WooCommerce', 'wp-parsidate' );
 
-				return $tabs;
-			} );
-
+			// Add WooCommerce HPOS compatibility
 			add_action( 'before_woocommerce_init', function () {
 				if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-					\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT, true );
+					\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT );
 				}
 			} );
 
@@ -100,10 +97,29 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 */
 		public function include_files() {
 			if ( wpp_is_active( 'woo_dropdown_cities' ) ) {
-				include_once WP_PARSI_DIR . 'includes/plugins/wc-cities/wc-city-select.php';
+				include_once WP_PARSI_DIR . 'includes/plugins/woocommerce/wc-cities/wc-city-select.php';
 			}
 
-			require_once( WP_PARSI_DIR . 'includes/plugins/wc-gateways/wc-gateways.php' );
+			require_once( WP_PARSI_DIR . 'includes/plugins/woocommerce/wc-gateways/wc-gateways.php' );
+		}
+
+		/**
+		 * Add WooCommerce settings tab
+		 *
+		 * @param $tabs
+		 *
+		 * @return mixed
+		 * @sicne 5.1.3
+		 */
+		public function add_tab( $tabs ) {
+			$about_tab = $tabs['about'];
+
+			unset( $tabs['about'] );
+
+			$tabs['woocommerce'] = __( 'WooCommerce', 'wp-parsidate' );
+			$tabs['about']       = $about_tab;
+
+			return $tabs;
 		}
 
 		/**
@@ -116,9 +132,9 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 */
 		public function add_settings( $old_settings ) {
 			$settings['woocommerce'] = apply_filters( 'wpp_woocommerce_settings', array(
-				'woocommerce'             => array(
-					'id'   => 'woocommerce',
-					'name' => __( 'WooCommerce', 'wp-parsidate' ),
+				'wc_validation_header'    => array(
+					'id'   => 'wc_validation_header',
+					'name' => __( 'Fix & Validation', 'wp-parsidate' ),
 					'type' => 'header',
 				),
 				'woo_per_price'           => array(
@@ -131,13 +147,6 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				'woo_accept_per_postcode' => array(
 					'id'      => 'woo_accept_per_postcode',
 					'name'    => __( 'Fix persian postcode', 'wp-parsidate' ),
-					'type'    => 'checkbox',
-					'options' => 1,
-					'std'     => 0,
-				),
-				'woo_dropdown_cities'     => array(
-					'id'      => 'woo_dropdown_cities',
-					'name'    => __( 'Display cities as a drop-down list', 'wp-parsidate' ),
 					'type'    => 'checkbox',
 					'options' => 1,
 					'std'     => 0,
@@ -162,6 +171,15 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 					'type'    => 'checkbox',
 					'options' => 1,
 					'std'     => 0,
+				),
+				'wc_validation_footer'    => array(
+					'id'   => 'wc_validation_footer',
+					'type' => 'footer',
+				),
+				'wc_checkout_header'      => array(
+					'id'   => 'wc_checkout_header',
+					'name' => __( 'Checkout Fields', 'wp-parsidate' ),
+					'type' => 'header',
 				),
 				'woo_checkout_fields'     => array(
 					'id'   => 'woo_checkout_fields',
@@ -314,6 +332,26 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 						),
 					),
 				),
+				'wc_checkout_footer'      => array(
+					'id'   => 'wc_checkout_footer',
+					'type' => 'footer',
+				),
+				'wc_more_header'          => array(
+					'id'   => 'wc_more_header',
+					'name' => __( 'More Features', 'wp-parsidate' ),
+					'type' => 'header',
+				),
+				'woo_dropdown_cities'     => array(
+					'id'      => 'woo_dropdown_cities',
+					'name'    => __( 'Display cities as a drop-down list', 'wp-parsidate' ),
+					'type'    => 'checkbox',
+					'options' => 1,
+					'std'     => 0,
+				),
+				'wc_more_footer'          => array(
+					'id'   => 'wc_more_footer',
+					'type' => 'footer',
+				),
 			) );
 
 			return array_merge( $old_settings, $settings );
@@ -346,7 +384,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				do_action( 'wpp_jalali_datepicker_enqueued', 'wc' );
 			}
 
-			if ( 'settings_page_wp-parsi-settings' === $hook ) {
+			if ( 'toplevel_page_wp-parsi-settings' === $hook ) {
 				wp_enqueue_script( 'jquery-ui-sortable' );
 				wp_enqueue_script( 'wpp_checkout_fields', WP_PARSI_URL . "assets/js/wpp-checkout-fields$suffix.js", array( 'jquery-ui-sortable' ), WP_PARSI_VER );
 			}

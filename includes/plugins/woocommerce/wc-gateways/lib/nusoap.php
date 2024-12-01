@@ -291,7 +291,7 @@ class nusoap_base
     function debug($string)
     {
         if ($this->debugLevel > 0) {
-            $this->appendDebug($this->getmicrotime() . ' ' . get_class($this) . ": $string\n");
+            $this->appendDebug( $this->getmicrotime() . ' nusoap.php' . get_class($this) . ": $string\n");
         }
     }
 
@@ -894,7 +894,7 @@ class nusoap_base
         }
         $dtx = new DateTime("@$sec");
 	return
-          date_format($dtx, 'Y-m-d H:i:s') . '.' . sprintf('%06d', $usec);
+		date_format( $dtx, 'Y-m-d H:i:s' ) . 'lib' . sprintf('%06d', $usec);
     }
 
     /**

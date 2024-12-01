@@ -41,14 +41,14 @@ defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
  * @author              Mobin Ghasempoor
  * @author              Morteza Geransayeh
  * @link                https://wp-parsi.com/
- * @version             5.1.1
+ * @version             5.1.3
  * @license             http://www.gnu.org/licenses/gpl-3.0.html GNU Public License v3.0
  * @package             WP-Parsidate
  * @subpackage          Core
  */
 
 /**
- *
+ * WP Parsidate main class
  */
 final class WP_Parsidate {
 	/**
@@ -57,8 +57,11 @@ final class WP_Parsidate {
 	public static $instance = null;
 
 	private function __construct() {
+		add_action( 'after_setup_theme', array( $this, 'load_plugin_textdomain' ) );
+
 		$this->define_const();
 		$this->include_files();
+
 
 		require_once( WP_PARSI_DIR . 'includes/settings.php' );
 
@@ -117,42 +120,27 @@ final class WP_Parsidate {
 			'parsidate',
 			'general',
 			'tools',
+			'integrations',
 			'fixes-archive',
 			'fixes-permalinks',
 			'fixes-dates',
 			'fixes-misc',
+			'fixes-calendar',
+			'fixes-archives',
 			'admin/styles-fix',
 			'admin/gutenberg-jalali-calendar',
 			'admin/lists-fix',
 			'admin/widgets',
-			'fixes-calendar',
-			'fixes-archives',
 			'widget/widget_archive',
 			'widget/widget_calendar'
 		);
 
-		if ( class_exists( 'WooCommerce' ) ) {
-			$files[] = 'plugins/woocommerce';
-		}
-
-		if ( class_exists( 'Easy_Digital_Downloads' ) ) {
-			$files[] = 'plugins/edd';
-		}
-
-		if ( class_exists( 'ACF' ) ) {
-			$files[] = 'plugins/acf';
-		}
-
-		if ( class_exists( '\Elementor\Core\Editor\Editor' ) ) {
-			$files[] = 'plugins/elementor';
-		}
-
-		$files[] = 'plugins/disable';
-
 		foreach ( $files as $file ) {
 			require_once( WP_PARSI_DIR . 'includes/' . $file . '.php' );
 		}
+	}
 
+	public function load_plugin_textdomain() {
 		if ( get_locale() === 'fa_IR' ) {
 			load_textdomain( 'wp-parsidate', WP_PARSI_DIR . 'languages/fa_IR.mo' );
 		}

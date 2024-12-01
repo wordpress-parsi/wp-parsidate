@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-15 15:01+0330\n"
-"PO-Revision-Date: 2024-11-15 15:07+0330\n"
+"POT-Creation-Date: 2024-11-26 01:18+0330\n"
+"PO-Revision-Date: 2024-11-26 01:23+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -14,9 +14,9 @@ msgstr ""
 "X-Loco-Source-Locale: en_FR\n"
 "X-Generator: Poedit 2.2\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-KeywordsList: __;_e;esc_html__;_e;__ngettext:1,2;_n:1,2;"
-"__ngettext_noop:1,2;_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_ex:1,2c;"
-"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-KeywordsList: __;_e;esc_html__;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;"
+"esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Loco-Parser: loco_parse_po\n"
 "X-Poedit-SearchPath-0: ..\n"
@@ -183,13 +183,13 @@ msgstr "بستۀ وردپرس پارسی"
 #: ../includes/general.php:74
 #, php-format
 msgid ""
-"<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to "
-"configure it to work properly. <a href=\"%s\">Go to configuration page</a> "
-"&ndash; <a href=\"%s\">Dismiss</a></p></div>"
+"<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to configure "
+"it to work properly. <a href=\"%s\">Go to configuration page</a> &ndash; <a href=\"%s"
+"\">Dismiss</a></p></div>"
 msgstr ""
-"<div class=\"updated wpp-message\"><p>وردپرس پارسی فعال شد! برای کارکردن افزونه "
-"نیاز به پیکربندی آن دارید. <a href=\"%s\">برگه‌ی پیکربندی</a> &ndash; <a href=\"%s"
-"\">بی‌خیال</a></p></div>"
+"<div class=\"updated wpp-message\"><p>وردپرس پارسی فعال شد! برای کارکردن افزونه نیاز "
+"به پیکربندی آن دارید. <a href=\"%s\">برگه‌ی پیکربندی</a> &ndash; <a href=\"%s\">بی‌خیال</"
+"a></p></div>"
 
 #: ../includes/plugins/acf-fields/class-wpp-acf-datepicker-v4.php:20
 #: ../includes/plugins/acf-fields/class-wpp-acf-datepicker-v5.php:21
@@ -250,7 +250,7 @@ msgstr "انتخاب‌گر تاریخ شمسی (جلالی)"
 msgid "Save dates in Jalali format (Not recommended)"
 msgstr "ذخیره‌سازی تاریخ بصورت شمسی (توصیه نمی‌شود)"
 
-#: ../includes/plugins/disable.php:177
+#: ../includes/plugins/disable.php:177 ../includes/settings.php:788
 msgid "Enable"
 msgstr "فعال"
 
@@ -274,7 +274,7 @@ msgstr "نام قلاب، کلاس و تابع موردنظر را جهت رفع
 msgid "Easy Digital Downloads"
 msgstr "Easy Digital Downloads"
 
-#: ../includes/plugins/edd.php:66 ../includes/plugins/woocommerce.php:118
+#: ../includes/plugins/edd.php:66 ../includes/plugins/woocommerce.php:121
 msgid "Fix prices"
 msgstr "تصحیح قیمت‌ها"
 
@@ -350,8 +350,7 @@ msgstr "توضیحات درگاه"
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:67
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:76
 msgid ""
-"The description that will be displayed during the purchase process for the "
-"gateway"
+"The description that will be displayed during the purchase process for the gateway"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:84
@@ -369,8 +368,7 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:74
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:83
 msgid ""
-"Enter the text of the message you want to display to the user after successful "
-"payment."
+"Enter the text of the message you want to display to the user after successful payment."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:90
@@ -389,15 +387,14 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:80
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:89
 msgid ""
-"Enter the text of the message you want to display to the user after an "
-"unsuccessful payment."
+"Enter the text of the message you want to display to the user after an unsuccessful "
+"payment."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:96
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:81
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:90
-msgid ""
-"Your payment has failed. Please try again or contact us in case of problems."
+msgid "Your payment has failed. Please try again or contact us in case of problems."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:99
@@ -410,8 +407,8 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:86
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:95
 msgid ""
-"Enter the text of the message you want to display after the user cancels the "
-"payment. This message will be displayed after returning from the bank."
+"Enter the text of the message you want to display after the user cancels the payment. "
+"This message will be displayed after returning from the bank."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:102
@@ -448,8 +445,8 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:467
 #, php-format
 msgid ""
-"The payment was successful.<br/>Tracking code (transaction reference code): "
-"%1$s<br/>Transaction request number: %2$s"
+"The payment was successful.<br/>Tracking code (transaction reference code): %1$s<br/"
+">Transaction request number: %2$s"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:478
@@ -478,8 +475,8 @@ msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:513
 msgid ""
-"The paid amount must be returned to the user's account because a system error "
-"occurred while returning the amount."
+"The paid amount must be returned to the user's account because a system error occurred "
+"while returning the amount."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:533
@@ -656,8 +653,7 @@ msgid "An error occurred in the definition of customer information."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:585
-msgid ""
-"The number of times the information has been entered has exceeded the limit."
+msgid "The number of times the information has been entered has exceeded the limit."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-mellat-gateway.php:586
@@ -917,8 +913,7 @@ msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:211
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:295
-msgid ""
-"The confirmation operation of this transaction has already been done successfully"
+msgid "The confirmation operation of this transaction has already been done successfully"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:212
@@ -938,8 +933,7 @@ msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:215
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:299
-msgid ""
-"By recognizing the identity of the card holder, the transaction is successful"
+msgid "By recognizing the identity of the card holder, the transaction is successful"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:216
@@ -950,8 +944,8 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:217
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:301
 msgid ""
-"The transaction with an amount lower than the requested amount (deficiency in "
-"the customer's account) has been accepted"
+"The transaction with an amount lower than the requested amount (deficiency in the "
+"customer's account) has been accepted"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:218
@@ -982,23 +976,23 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:223
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:307
 msgid ""
-"In a situation where the switch needs to query the card to accept the "
-"transaction, it may make a request from the card (terminal), this message "
-"indicates that the answer is invalid."
+"In a situation where the switch needs to query the card to accept the transaction, it "
+"may make a request from the card (terminal), this message indicates that the answer is "
+"invalid."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:224
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:308
 msgid ""
-"If the response to the terminal request does not require any specific response "
-"or function, we will have this message."
+"If the response to the terminal request does not require any specific response or "
+"function, we will have this message."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:225
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:309
 msgid ""
-"The transaction was suspected of malpractice (card, terminal, card holder), so "
-"it was not accepted"
+"The transaction was suspected of malpractice (card, terminal, card holder), so it was "
+"not accepted"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:226
@@ -1014,8 +1008,8 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:228
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:312
 msgid ""
-"The transaction is incompletely completed (for example, a deposit transaction "
-"that is completed from the customer's point of view, but needs to be completed)"
+"The transaction is incompletely completed (for example, a deposit transaction that is "
+"completed from the customer's point of view, but needs to be completed)"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:229
@@ -1072,8 +1066,7 @@ msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:241
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:325
-msgid ""
-"It is not allowed to perform the relevant transaction by the operator's terminal"
+msgid "It is not allowed to perform the relevant transaction by the operator's terminal"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:242
@@ -1104,8 +1097,7 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:247
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:331
 msgid ""
-"The response required to complete or complete the transaction has arrived too "
-"late"
+"The response required to complete or complete the transaction has arrived too late"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:248
@@ -1146,15 +1138,15 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:255
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:339
 msgid ""
-"In transactions that require communication with the exporter, if the exporter is "
-"not active, this message will be sent in response."
+"In transactions that require communication with the exporter, if the exporter is not "
+"active, this message will be sent in response."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:256
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:340
 msgid ""
-"The transaction authorization system is temporarily disabled or the time set for "
-"the authorization has expired"
+"The transaction authorization system is temporarily disabled or the time set for the "
+"authorization has expired"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:257
@@ -1170,8 +1162,7 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:261
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:345
 msgid ""
-"The payment of the transaction was unsuccessful due to cancellation on the bank "
-"page"
+"The payment of the transaction was unsuccessful due to cancellation on the bank page"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:276
@@ -1191,8 +1182,8 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:279
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:364
 msgid ""
-"The server of the internet portal has temporarily encountered a problem, to "
-"complete the transaction moments later, click on the button below"
+"The server of the internet portal has temporarily encountered a problem, to complete "
+"the transaction moments later, click on the button below"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:280
@@ -1216,8 +1207,8 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:379
 #, php-format
 msgid ""
-"Your payment with the tracking number %s has been successfully processed at the "
-"bank, but there has been a problem with the service"
+"Your payment with the tracking number %s has been successfully processed at the bank, "
+"but there has been a problem with the service"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:295
@@ -1225,34 +1216,34 @@ msgstr ""
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:380
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:388
 msgid ""
-"The order to return the money to your account has been registered in the bank, "
-"if the payment is not returned to your account within the next few hours, "
-"contact support (the maximum time to return to the account is 72 hours)"
+"The order to return the money to your account has been registered in the bank, if the "
+"payment is not returned to your account within the next few hours, contact support "
+"(the maximum time to return to the account is 72 hours)"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:296
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:381
 msgid ""
-"The customer paid the amount, but when returning from the bank, there was a "
-"problem in providing the service, the order to return the money to the "
-"customer's account was registered in the bank."
+"The customer paid the amount, but when returning from the bank, there was a problem in "
+"providing the service, the order to return the money to the customer's account was "
+"registered in the bank."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:302
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:387
 #, php-format
 msgid ""
-"Your payment with the tracking number %s has been successfully made in the bank, "
-"but there is a problem in providing the service!"
+"Your payment with the tracking number %s has been successfully made in the bank, but "
+"there is a problem in providing the service!"
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:304
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:389
 msgid ""
-"The customer paid the amount, but when he returned from the bank, there was a "
-"problem in providing the service, there was an error in registering the order to "
-"return the money to the customer's account, this customer should either be "
-"provided with the service or the amount should be returned to his bank account."
+"The customer paid the amount, but when he returned from the bank, there was a problem "
+"in providing the service, there was an error in registering the order to return the "
+"money to the customer's account, this customer should either be provided with the "
+"service or the amount should be returned to his bank account."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:308
@@ -1296,9 +1287,9 @@ msgstr "پرداخت انجام نشد"
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:361
 #: ../includes/plugins/wc-gateways/wpp-pasargad-gateway.php:446
 msgid ""
-"If the payment has been deducted from your bank account, it will be "
-"automatically returned to your account by the bank (the final return time to the "
-"account is 72 hours) - contact support if needed."
+"If the payment has been deducted from your bank account, it will be automatically "
+"returned to your account by the bank (the final return time to the account is 72 "
+"hours) - contact support if needed."
 msgstr ""
 
 #: ../includes/plugins/wc-gateways/wpp-parsian-gateway.php:452
@@ -1313,256 +1304,294 @@ msgstr ""
 msgid "Store No."
 msgstr ""
 
-#: ../includes/plugins/woocommerce.php:113
+#: ../includes/plugins/woocommerce.php:116
 msgid "WooCommerce"
 msgstr "ووکامرس"
 
-#: ../includes/plugins/woocommerce.php:125
+#: ../includes/plugins/woocommerce.php:128
 msgid "Fix persian postcode"
 msgstr "تبدیل کد پستی فارسی در روند پرداخت"
 
-#: ../includes/plugins/woocommerce.php:132
+#: ../includes/plugins/woocommerce.php:135
 msgid "Display cities as a drop-down list"
 msgstr "نمایش شهرها به‌صورت لیست کشویی"
 
-#: ../includes/plugins/woocommerce.php:139
+#: ../includes/plugins/woocommerce.php:142
 msgid "Fix persian phone"
 msgstr "تبدیل شماره تماس فارسی در روند پرداخت"
 
-#: ../includes/plugins/woocommerce.php:146
+#: ../includes/plugins/woocommerce.php:149
 msgid "Postcode validation"
 msgstr "اعتبارسنجی کد پستی"
 
-#: ../includes/plugins/woocommerce.php:153
+#: ../includes/plugins/woocommerce.php:156
 msgid "Phone number validation"
 msgstr "اعتبارسنجی شماره تماس"
 
-#: ../includes/plugins/woocommerce.php:487
+#: ../includes/plugins/woocommerce.php:163
+msgid "Customize Checkout Fields"
+msgstr "سفارشی‌سازی فیلدهای پرداخت"
+
+#: ../includes/plugins/woocommerce.php:645
 msgid "Expiry date"
 msgstr "تاریخ انقضاء"
 
-#: ../includes/plugins/woocommerce.php:653
+#: ../includes/plugins/woocommerce.php:811
 msgid "<strong>Phone number</strong> is invalid."
 msgstr "<strong>شمارۀ تماس</strong> معتبر نیست."
 
-#: ../includes/settings.php:24 ../includes/settings.php:25
-#: ../includes/settings.php:32 ../includes/settings.php:33
-#: ../includes/settings.php:662
+#: ../includes/settings.php:26 ../includes/settings.php:27 ../includes/settings.php:34
+#: ../includes/settings.php:35 ../includes/settings.php:841
 msgid "Parsi Settings"
 msgstr "تنظیمات پارسی"
 
-#: ../includes/settings.php:134
+#: ../includes/settings.php:145
 #, php-format
 msgid "%s Core"
 msgstr "%s هسته"
 
-#: ../includes/settings.php:135
+#: ../includes/settings.php:146
 #, php-format
 msgid "%s Converts"
 msgstr "%s تبدیل"
 
-#: ../includes/settings.php:136
+#: ../includes/settings.php:147
 #, php-format
 msgid "%s Tools"
 msgstr "%s ابزارها"
 
-#: ../includes/settings.php:137
+#: ../includes/settings.php:148
 #, php-format
 msgid "%s Plugins compatibility"
 msgstr "%s هماهنگی با افزونه‌ها"
 
-#: ../includes/settings.php:138
+#: ../includes/settings.php:149
 #, php-format
 msgid "%s About"
 msgstr "%s درباره"
 
-#: ../includes/settings.php:208
+#: ../includes/settings.php:225
 msgid "Change Locale in admin"
 msgstr "تغییر زبان مدیریت"
 
-#: ../includes/settings.php:212
+#: ../includes/settings.php:229
 msgid "This option change WordPress locale to Persian in Admin"
 msgstr "این گزینه باعث تغییر زبان مدیریت می‌شود"
 
-#: ../includes/settings.php:216
+#: ../includes/settings.php:233
 msgid "Change Locale in theme"
 msgstr "تغییر زبان سایت"
 
-#: ../includes/settings.php:220
+#: ../includes/settings.php:237
 msgid "This option change WordPress locale to Persian in theme"
 msgstr "این گزینه باعث تغییر زبان سایت می‌شود"
 
-#: ../includes/settings.php:224
+#: ../includes/settings.php:241
 msgid "Shamsi date"
 msgstr "تاریخ خورشیدی"
 
-#: ../includes/settings.php:228
+#: ../includes/settings.php:245
 msgid "By enabling this, Dates will convert to Shamsi (Jalali) dates"
 msgstr "با فعال‌کردن این گزینه، تاریخ‌ها به صورت تاریخ خورشیدی (جلالی) درمی‌آیند"
 
-#: ../includes/settings.php:232
+#: ../includes/settings.php:249
 msgid "Months name type"
 msgstr "نوع اسامی ماه‌ها"
 
-#: ../includes/settings.php:235
+#: ../includes/settings.php:252
 msgid "Persian"
 msgstr "پارسی"
 
-#: ../includes/settings.php:236
+#: ../includes/settings.php:253
 msgid "Dari"
 msgstr "دری"
 
-#: ../includes/settings.php:237
+#: ../includes/settings.php:254
 msgid "Kurdish"
 msgstr "کوردی"
 
-#: ../includes/settings.php:238
+#: ../includes/settings.php:255
 msgid "Pashto"
 msgstr "پشتو"
 
-#: ../includes/settings.php:244
+#: ../includes/settings.php:261
 msgid "Disable Widget Block"
 msgstr "غیرفعال کردن ویرایشگر بلوک ابزارک"
 
-#: ../includes/settings.php:248
+#: ../includes/settings.php:265
 msgid "By enabling this, Widget Block Editor disabled"
-msgstr ""
-"با فعال‌کردن این گزینه، «ویرایشگر بلوک ابزارک» در بخش ابزارک‌ها غیرفعال می‌شود"
+msgstr "با فعال‌کردن این گزینه، «ویرایشگر بلوک ابزارک» در بخش ابزارک‌ها غیرفعال می‌شود"
 
-#: ../includes/settings.php:252
+#: ../includes/settings.php:269
 msgid "Move page to submenu?"
 msgstr "انتقال این برگه به زیرمنو؟"
 
-#: ../includes/settings.php:256
-msgid ""
-"By enabling this option, page item will be moved to Settings menu as submenu."
-msgstr ""
-"با فعال‌کردن این گزینه، صفحۀ پیکربندی پارسی‌دیت به زیرفهرست «تنظیمات» منتقل می‌شود."
+#: ../includes/settings.php:273
+msgid "By enabling this option, page item will be moved to Settings menu as submenu."
+msgstr "با فعال‌کردن این گزینه، صفحۀ پیکربندی پارسی‌دیت به زیرفهرست «تنظیمات» منتقل می‌شود."
 
-#: ../includes/settings.php:260
+#: ../includes/settings.php:277
 msgid "Debug Mode"
 msgstr "حالت اشکال‌زادیی"
 
-#: ../includes/settings.php:264
+#: ../includes/settings.php:281
 msgid ""
-"By enabling this option, the uncompressed version of the JS and CSS files will "
-"be loaded."
+"By enabling this option, the uncompressed version of the JS and CSS files will be "
+"loaded."
 msgstr ""
-"با فعال‌کردن این گزینه، نسخۀ فشرده‌نشدۀ پرونده‌های JS و CSS افزونۀ پارسی‌دیت "
-"بارگذاری می‌شوند."
+"با فعال‌کردن این گزینه، نسخۀ فشرده‌نشدۀ پرونده‌های JS و CSS افزونۀ پارسی‌دیت بارگذاری "
+"می‌شوند."
 
-#: ../includes/settings.php:268
+#: ../includes/settings.php:285
 msgid "Vazir Font"
 msgstr "فونت وزیر"
 
-#: ../includes/settings.php:272
+#: ../includes/settings.php:289
 msgid "By enabling this option, the Vazir font will be enable in whole admin area."
 msgstr "با فعال‌کردن این گزینه، فونت وزیر در همه بخش‌های مدیریت فعال می‌شود."
 
-#: ../includes/settings.php:278
+#: ../includes/settings.php:295
 msgid "Persian digits"
 msgstr "رقم‌های پارسی"
 
-#: ../includes/settings.php:283
+#: ../includes/settings.php:300
 msgid "Page title"
 msgstr "در عنوان صفحه"
 
-#: ../includes/settings.php:287 ../includes/settings.php:295
-#: ../includes/settings.php:303 ../includes/settings.php:311
-#: ../includes/settings.php:319 ../includes/settings.php:327
-#: ../includes/settings.php:335 ../includes/settings.php:343
+#: ../includes/settings.php:304 ../includes/settings.php:312 ../includes/settings.php:320
+#: ../includes/settings.php:328 ../includes/settings.php:336 ../includes/settings.php:344
+#: ../includes/settings.php:352 ../includes/settings.php:360
 msgid "Active"
 msgstr "فعال"
 
-#: ../includes/settings.php:291
+#: ../includes/settings.php:308
 msgid "Post title"
 msgstr "در عنوان نوشته‌ها"
 
-#: ../includes/settings.php:299
+#: ../includes/settings.php:316
 msgid "Post content"
 msgstr "در محتوای نوشته‌ها"
 
-#: ../includes/settings.php:307
+#: ../includes/settings.php:324
 msgid "Post excerpt"
 msgstr "در خلاصه‌ی نوشته‌ها"
 
-#: ../includes/settings.php:315
+#: ../includes/settings.php:332
 msgid "Comments text"
 msgstr "در نوشته‌ی دیدگاه‌ها"
 
-#: ../includes/settings.php:323
+#: ../includes/settings.php:340
 msgid "Comments count"
 msgstr "تعداد دیدگاه‌ها"
 
-#: ../includes/settings.php:331
+#: ../includes/settings.php:348
 msgid "Dates"
 msgstr "تاریخ‌ها"
 
-#: ../includes/settings.php:339
+#: ../includes/settings.php:356
 msgid "Categories"
 msgstr "دسته‌بندی‌ها"
 
-#: ../includes/settings.php:351
+#: ../includes/settings.php:368
 msgid "Fix arabic characters"
 msgstr "تصحیح حروف عربی"
 
-#: ../includes/settings.php:355
+#: ../includes/settings.php:372
 msgid "Fixes arabic characters caused by wrong keyboard layouts"
 msgstr ""
-"این گزینه، حروف عربی را در کل سیستم به حروف فارسی تصحیح می‌کند<br>برای مثال ٤/٥/٦ "
-"به ۴ / ۵ / ۶ و ك / ي به ک / ی"
+"این گزینه، حروف عربی را در کل سیستم به حروف فارسی تصحیح می‌کند<br>برای مثال ٤/٥/٦ به "
+"۴ / ۵ / ۶ و ك / ي به ک / ی"
 
-#: ../includes/settings.php:359
+#: ../includes/settings.php:376
 msgid "Fix permalinks dates"
 msgstr "تبدیل تاریخ در پیوندهای یکتا"
 
-#: ../includes/settings.php:363
+#: ../includes/settings.php:380
 msgid "By enabling this, dates in permalinks converted to Shamsi (Jalali) date"
 msgstr ""
-"با فعال‌کردن این گزینه، تاریخ‌ها در پیوندهای یکتا به تاریخ خورشیدی (جلالی) تبدیل "
-"می‌شوند"
+"با فعال‌کردن این گزینه، تاریخ‌ها در پیوندهای یکتا به تاریخ خورشیدی (جلالی) تبدیل می‌شوند"
 
-#: ../includes/settings.php:373
+#: ../includes/settings.php:390
 msgid "Advanced Tools"
 msgstr "ابزارهای پیشرفته"
 
-#: ../includes/settings.php:378
+#: ../includes/settings.php:395
 msgid "Display date in the admin bar"
 msgstr "نمایش تاریخ در نوار مدیریت"
 
-#: ../includes/settings.php:382
+#: ../includes/settings.php:399
 msgid "Display today's Jalali date in the WordPress admin bar."
 msgstr "تاریخ شمسی امروز را در نوار مدیریت وردپرس نمایش دهید."
 
-#: ../includes/settings.php:390
+#: ../includes/settings.php:407
 msgid "Prevent users from copying site content"
 msgstr "جلوگیری از کپی محتوا"
 
-#: ../includes/settings.php:394
+#: ../includes/settings.php:411
 msgid "Simply protect your site's content from those who want to copy it."
 msgstr "به سادگی امکان کپی محتوای سایتتان توسط دیگران را بگیرید."
 
-#: ../includes/settings.php:398
+#: ../includes/settings.php:415
 msgid "Disable right click on website pages"
 msgstr "غیرفعال کردن کلیک راست در صفحات سایت"
 
-#: ../includes/settings.php:402
+#: ../includes/settings.php:419
 msgid ""
-"Don't worry about downloading website images and other files anymore, this "
-"option prevents users from right clicking"
+"Don't worry about downloading website images and other files anymore, this option "
+"prevents users from right clicking"
 msgstr ""
-"دیگر نگران دانلود تصاویر و محتویات دیگر سایتتان نباشید، این گزینه کلیک راست را "
-"غیرفعال می‌کند"
+"دیگر نگران دانلود تصاویر و محتویات دیگر سایتتان نباشید، این گزینه کلیک راست را غیرفعال "
+"می‌کند"
 
-#: ../includes/settings.php:634
+#: ../includes/settings.php:694
 msgid "Upload File"
 msgstr "بارگذاری پرونده"
 
-#: ../includes/settings.php:750
+#: ../includes/settings.php:733
+msgid "Billing"
+msgstr "صورت‌حساب"
+
+#: ../includes/settings.php:734
+msgid "Shipping"
+msgstr "حمل و نقل"
+
+#: ../includes/settings.php:735
+msgid "Additional"
+msgstr "اضافی"
+
+#: ../includes/settings.php:793
+msgid "Required"
+msgstr "الزامی"
+
+#: ../includes/settings.php:798
+msgid "Width"
+msgstr "عرض"
+
+#: ../includes/settings.php:803
+msgid "Full Width"
+msgstr "تمام‌عرض"
+
+#: ../includes/settings.php:805
+msgid "Half Width"
+msgstr "نیم‌عرض"
+
+#: ../includes/settings.php:806
+msgid "Position"
+msgstr "جایگاه"
+
+#: ../includes/settings.php:811
+msgid "Start"
+msgstr "ابتدا"
+
+#: ../includes/settings.php:813
+msgid "End"
+msgstr "انتها"
+
+#: ../includes/settings.php:940
 msgid "Multilingual compatibility"
 msgstr "پشتیبانی از چندزبانه"
 
-#: ../includes/settings.php:754
+#: ../includes/settings.php:944
 msgid "By enabling this, ParsiDate options only work in persian locale"
 msgstr "با فعال کردن این گزینه، تنظیمات پارسی‌دیت فقط برای زبان فارسی اعمال می‌شود"
 
@@ -1624,14 +1653,10 @@ msgstr "مشارکت‌کننده‌های گیت‌هاب"
 msgid "Unable to fetch contributors."
 msgstr "امکان واکشی مشارکت‌کننده‌ها وجود ندارد."
 
-#: ../includes/widget/widget_archive.php:15
-#: ../includes/widget/widget_archive.php:16
-#: ../includes/widget/widget_archive.php:18
-#: ../includes/widget/widget_archive.php:19
-#: ../includes/widget/widget_archive.php:36
-#: ../includes/widget/widget_archive.php:46
-#: ../includes/widget/widget_archive.php:133
-#: ../includes/widget/widget_archive.php:159
+#: ../includes/widget/widget_archive.php:15 ../includes/widget/widget_archive.php:16
+#: ../includes/widget/widget_archive.php:18 ../includes/widget/widget_archive.php:19
+#: ../includes/widget/widget_archive.php:36 ../includes/widget/widget_archive.php:46
+#: ../includes/widget/widget_archive.php:133 ../includes/widget/widget_archive.php:159
 msgid "Jalali Date Archives"
 msgstr "بایگانی تاریخ خورشیدی"
 
@@ -1667,15 +1692,13 @@ msgstr "نمايش تعداد نوشته‌ها"
 msgid "Display as dropdown"
 msgstr "نمايش به صورت ليست بازشو"
 
-#: ../includes/widget/widget_archive.php:111
-#: ../includes/widget/widget_calendar.php:34
+#: ../includes/widget/widget_archive.php:111 ../includes/widget/widget_calendar.php:34
 msgid "For use widget, active \"Fix permalinks dates\" option in plugin settings."
 msgstr ""
-"برای استفاده از ابزارک، گزینه \"تبدیل تاریخ در پیوندهای یکتا\" را در تنظیمات "
-"افزونه فعال کنید."
+"برای استفاده از ابزارک، گزینه \"تبدیل تاریخ در پیوندهای یکتا\" را در تنظیمات افزونه "
+"فعال کنید."
 
-#: ../includes/widget/widget_calendar.php:14
-#: ../includes/widget/widget_calendar.php:16
+#: ../includes/widget/widget_calendar.php:14 ../includes/widget/widget_calendar.php:16
 #: ../includes/widget/widget_calendar.php:30
 msgid "Jalali Date Calender"
 msgstr "گاه‌شمار تاریخ خورشیدی"
@@ -1702,15 +1725,14 @@ msgstr "بستۀ وردپرس پارسی"
 
 #: ../languages/common-strings.php:3
 msgid ""
-"Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: "
-"posts, comments, pages, archives, search, categories, permalinks and all admin "
-"sections and TinyMce editor, lists, quick editor. This package has Jalali "
-"archive widget."
+"Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: posts, "
+"comments, pages, archives, search, categories, permalinks and all admin sections and "
+"TinyMce editor, lists, quick editor. This package has Jalali archive widget."
 msgstr ""
-"بستۀ پارسی‌سازی وردپرس، اضافه‌کردن پشتیبانی کامل راست‌به‌چپ و تاریخ خورشیدی برای "
-"وردپرس. این افزونه از نوشته‌ها، دیدگاه‌ها، برگه‌ها، بایگانی‌ها، جستجو‌ها، دسته‌بندی‌ها "
-"و پیوندهای یکتا پشتیبانی می‌کند و تمام قسمت‌های مدیریت و ویرایشگر را پارسی می‌کند. "
-"این افزونه هم‌چنین یک ابزارک بایگانی شمسی نیز دارد."
+"بستۀ پارسی‌سازی وردپرس، اضافه‌کردن پشتیبانی کامل راست‌به‌چپ و تاریخ خورشیدی برای وردپرس. "
+"این افزونه از نوشته‌ها، دیدگاه‌ها، برگه‌ها، بایگانی‌ها، جستجو‌ها، دسته‌بندی‌ها و پیوندهای "
+"یکتا پشتیبانی می‌کند و تمام قسمت‌های مدیریت و ویرایشگر را پارسی می‌کند. این افزونه هم‌چنین "
+"یک ابزارک بایگانی شمسی نیز دارد."
 
 #: ../languages/common-strings.php:4
 msgid "WP-Parsi Team"
