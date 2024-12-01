@@ -333,10 +333,10 @@ if ( ! function_exists( 'wpp_enqueue_admin_dashboard_assets' ) ) {
 
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || wpp_is_active( 'dev_mode' ) ? '' : '.min';
 
-		wp_enqueue_style( 'keen-slider', WP_PARSI_URL . "assets/css/keen-slider$suffix.css", false, '1.0.0' );
-		wp_enqueue_style( 'wpp_dashboard', WP_PARSI_URL . "assets/css/dashboard$suffix.css", false, '1.0.0' );
-		wp_enqueue_script( 'keen-slider', WP_PARSI_URL . "assets/js/keen-slider.min.js", array(), '1.6.0', true );
-		wp_enqueue_script( 'wpp_dashboard', WP_PARSI_URL . "assets/js/dashboard$suffix.js", array( 'jquery', 'keen-slider' ), '1.0.0', true );
+		wp_enqueue_style( 'keen-slider', WP_PARSI_URL . "assets/css/keen-slider$suffix.css", false, '6.8.6' );
+		wp_enqueue_style( 'wpp_dashboard', WP_PARSI_URL . "assets/css/dashboard$suffix.css", false, WP_PARSI_VER );
+		wp_enqueue_script( 'keen-slider', WP_PARSI_URL . "assets/js/keen-slider.min.js", array(), '6.8.6', true );
+		wp_enqueue_script( 'wpp_dashboard', WP_PARSI_URL . "assets/js/dashboard$suffix.js", array( 'jquery', 'keen-slider' ), WP_PARSI_VER, true );
 	}
 
 	add_action( 'admin_enqueue_scripts', 'wpp_enqueue_admin_dashboard_assets' );
