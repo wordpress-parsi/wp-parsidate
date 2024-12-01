@@ -117,26 +117,26 @@ $social_accounts = array(
 <section class="wpp-team">
     <h1><?php esc_html_e( 'Our Team', 'wp-parsidate' ); ?></h1>
 
-	<div class="contributer-list">
-		<div class="contributer-list__track">
-			<div class="contributer-list__grid">
+	<div class="contributor-list">
+		<div class="contributor-list__track">
+			<div class="contributor-list__grid">
 
 				<?php foreach ( $team_members as $member ) : ?>
-				<div class="contributer-list-item">
-					<div div="" class="contributer-list-info">
-						<ul class="contributer-list-tags">
+				<div class="contributor-list-item">
+					<div div="" class="contributor-list-info">
+						<ul class="contributor-list-tags">
 							<?php foreach ( $member['social'] as $platform => $url ) : ?>
-							<li class="contributer-list-tag"><a href="<?php echo esc_url( $url ); ?>"><img src="<?php echo esc_url( WP_PARSI_URL . "assets/svg/$platform-brands-solid.svg" ); ?>" width="15" height="15"></a></li>
+							<li class="contributor-list-tag"><a href="<?php echo esc_url( $url ); ?>"><img src="<?php echo esc_url( WP_PARSI_URL . "assets/svg/$platform-brands-solid.svg" ); ?>" width="15" height="15"></a></li>
 							<?php endforeach; ?>
 						</ul>
 					</div>
 
-					<div div="" class="contributer-list-image">
+					<div div="" class="contributor-list-image">
 						<img alt="<?php echo esc_attr( $member['name'] ); ?>" width="300" height="300" src="<?php echo esc_url( $member['avatar'] ); ?>" loading="lazy">
 					</div>
 					
-					<div div="" class="contributer-list-name"><?php echo esc_html( $member['name'] ); ?></div>
-					<div div="" class="contributer-list-title"><?php echo esc_html( $member['role'] ); ?></div>
+					<div div="" class="contributor-list-name"><?php echo esc_html( $member['name'] ); ?></div>
+					<div div="" class="contributor-list-title"><?php echo esc_html( $member['role'] ); ?></div>
 
 				</div>
 				<?php endforeach; ?>

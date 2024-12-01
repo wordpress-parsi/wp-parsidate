@@ -18,11 +18,13 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		private function __construct() {
 			$this->include_files();
 
-			add_filter( 'wpp_plugins_compatibility_settings', array( $this, 'add_settings' ) );
+			add_filter( 'wpp_settings_tabs', array( $this, 'add_tab' ) );
+			add_filter( 'wpp_registered_settings', array( $this, 'add_settings' ) );
 
-			add_action( 'before_woocommerce_init', function() {
+			// Add WooCommerce HPOS compatibility
+			add_action( 'before_woocommerce_init', function () {
 				if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-					\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT, true );
+					\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT );
 				}
 			} );
 
@@ -67,6 +69,10 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				if ( wpp_is_active( 'woo_validate_phone' ) ) {
 					add_action( 'woocommerce_after_checkout_validation', array( $this, 'validate_phone_number' ), 10, 2 );
 				}
+
+				if ( wpp_is_active( 'woo_checkout_fields' ) ) {
+					add_filter( 'woocommerce_checkout_fields', array( $this, 'modify_checkout_fields' ) );
+				}
 			}
 		}
 
@@ -91,10 +97,29 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 */
 		public function include_files() {
 			if ( wpp_is_active( 'woo_dropdown_cities' ) ) {
-				include_once WP_PARSI_DIR . 'includes/plugins/wc-cities/wc-city-select.php';
+				include_once WP_PARSI_DIR . 'includes/plugins/woocommerce/wc-cities/wc-city-select.php';
 			}
 
-			require_once( WP_PARSI_DIR . 'includes/plugins/wc-gateways/wc-gateways.php' );
+			require_once( WP_PARSI_DIR . 'includes/plugins/woocommerce/wc-gateways/wc-gateways.php' );
+		}
+
+		/**
+		 * Add WooCommerce settings tab
+		 *
+		 * @param $tabs
+		 *
+		 * @return mixed
+		 * @sicne 5.1.3
+		 */
+		public function add_tab( $tabs ) {
+			$about_tab = $tabs['about'];
+
+			unset( $tabs['about'] );
+
+			$tabs['woocommerce'] = __( 'WooCommerce', 'wp-parsidate' );
+			$tabs['about']       = $about_tab;
+
+			return $tabs;
 		}
 
 		/**
@@ -106,10 +131,10 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 * @since 4.0.0
 		 */
 		public function add_settings( $old_settings ) {
-			$settings = apply_filters( 'wpp_woocommerce_settings', array(
-				'woocommerce'             => array(
-					'id'   => 'woocommerce',
-					'name' => __( 'WooCommerce', 'wp-parsidate' ),
+			$settings['woocommerce'] = apply_filters( 'wpp_woocommerce_settings', array(
+				'wc_validation_header'    => array(
+					'id'   => 'wc_validation_header',
+					'name' => __( 'Fix & Validation', 'wp-parsidate' ),
 					'type' => 'header',
 				),
 				'woo_per_price'           => array(
@@ -122,13 +147,6 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				'woo_accept_per_postcode' => array(
 					'id'      => 'woo_accept_per_postcode',
 					'name'    => __( 'Fix persian postcode', 'wp-parsidate' ),
-					'type'    => 'checkbox',
-					'options' => 1,
-					'std'     => 0,
-				),
-				'woo_dropdown_cities'     => array(
-					'id'      => 'woo_dropdown_cities',
-					'name'    => __( 'Display cities as a drop-down list', 'wp-parsidate' ),
 					'type'    => 'checkbox',
 					'options' => 1,
 					'std'     => 0,
@@ -154,6 +172,186 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 					'options' => 1,
 					'std'     => 0,
 				),
+				'wc_validation_footer'    => array(
+					'id'   => 'wc_validation_footer',
+					'type' => 'footer',
+				),
+				'wc_checkout_header'      => array(
+					'id'   => 'wc_checkout_header',
+					'name' => __( 'Checkout Fields', 'wp-parsidate' ),
+					'type' => 'header',
+				),
+				'woo_checkout_fields'     => array(
+					'id'   => 'woo_checkout_fields',
+					'name' => __( 'Customize Checkout Fields', 'wp-parsidate' ),
+					'type' => 'checkout_fields',
+					'std'  => array(
+						'billing'  => array(
+							'billing_first_name' => array(
+								'enabled'  => true,
+								'required' => true,
+								'priority' => 10,
+								'width'    => 'half',
+								'position' => 'start',
+							),
+							'billing_last_name'  => array(
+								'enabled'  => true,
+								'required' => true,
+								'priority' => 20,
+								'width'    => 'half',
+								'position' => 'end',
+							),
+							'billing_company'    => array(
+								'label'    => 'Company',
+								'required' => false,
+								'priority' => 30,
+								'width'    => 'full',
+								'position' => 'start',
+							),
+							'billing_country'    => array(
+								'label'    => 'Country',
+								'required' => true,
+								'priority' => 40,
+								'width'    => 'full',
+								'position' => 'start',
+							),
+							'billing_address_1'  => array(
+								'label'    => 'Street address',
+								'required' => true,
+								'priority' => 50,
+								'width'    => 'full',
+								'position' => 'start',
+							),
+							'billing_address_2'  => array(
+								'label'    => 'Apartment, suite, unit etc.',
+								'required' => false,
+								'priority' => 60,
+								'width'    => 'full',
+								'position' => 'start',
+							),
+							'billing_city'       => array(
+								'label'    => 'Town / City',
+								'required' => true,
+								'priority' => 70,
+								'width'    => 'half',
+								'position' => 'start',
+							),
+							'billing_state'      => array(
+								'label'    => 'State / County',
+								'required' => true,
+								'priority' => 80,
+								'width'    => 'half',
+								'position' => 'end',
+							),
+							'billing_postcode'   => array(
+								'label'    => 'Postcode / ZIP',
+								'required' => true,
+								'priority' => 90,
+								'width'    => 'half',
+								'position' => 'start',
+							),
+							'billing_phone'      => array(
+								'label'    => 'Phone',
+								'required' => true,
+								'priority' => 100,
+								'width'    => 'half',
+								'position' => 'end',
+							),
+							'billing_email'      => array(
+								'label'    => 'Email address',
+								'required' => true,
+								'priority' => 110,
+								'width'    => 'full',
+								'position' => 'start',
+							)
+						),
+						'shipping' => array(
+							'shipping_first_name' => array(
+								'label'    => 'First Name',
+								'required' => true,
+								'priority' => 10,
+								'width'    => 'half',
+								'position' => 'start',
+							),
+							'shipping_last_name'  => array(
+								'label'    => 'Last Name',
+								'required' => true,
+								'priority' => 20,
+								'width'    => 'half',
+								'position' => 'end',
+							),
+							'shipping_company'    => array(
+								'label'    => 'Company',
+								'required' => false,
+								'priority' => 30,
+								'width'    => 'full',
+								'position' => 'start',
+							),
+							'shipping_country'    => array(
+								'label'    => 'Country',
+								'required' => true,
+								'priority' => 40,
+								'width'    => 'full',
+								'position' => 'start',
+							),
+							'shipping_address_1'  => array(
+								'label'    => 'Street address',
+								'required' => true,
+								'priority' => 50,
+								'width'    => 'full',
+								'position' => 'start',
+							),
+							'shipping_address_2'  => array(
+								'label'    => 'Apartment, suite, unit etc.',
+								'required' => false,
+								'priority' => 60,
+								'width'    => 'full',
+								'position' => 'start',
+							),
+							'shipping_city'       => array(
+								'label'    => 'Town / City',
+								'required' => true,
+								'priority' => 70,
+								'width'    => 'half',
+								'position' => 'start',
+							),
+							'shipping_state'      => array(
+								'label'    => 'State / County',
+								'required' => true,
+								'priority' => 80,
+								'width'    => 'half',
+								'position' => 'end',
+							),
+							'shipping_postcode'   => array(
+								'label'    => 'Postcode / ZIP',
+								'required' => true,
+								'priority' => 90,
+								'width'    => 'half',
+								'position' => 'start',
+							),
+						),
+					),
+				),
+				'wc_checkout_footer'      => array(
+					'id'   => 'wc_checkout_footer',
+					'type' => 'footer',
+				),
+				'wc_more_header'          => array(
+					'id'   => 'wc_more_header',
+					'name' => __( 'More Features', 'wp-parsidate' ),
+					'type' => 'header',
+				),
+				'woo_dropdown_cities'     => array(
+					'id'      => 'woo_dropdown_cities',
+					'name'    => __( 'Display cities as a drop-down list', 'wp-parsidate' ),
+					'type'    => 'checkbox',
+					'options' => 1,
+					'std'     => 0,
+				),
+				'wc_more_footer'          => array(
+					'id'   => 'wc_more_footer',
+					'type' => 'footer',
+				),
 			) );
 
 			return array_merge( $old_settings, $settings );
@@ -164,7 +362,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 *
 		 * @since           4.0.0
 		 */
-		public function wc_jalali_datepicker_assets() {
+		public function wc_jalali_datepicker_assets( $hook ) {
 			global $wpp_months_name;
 
 			$screen         = get_current_screen();
@@ -184,6 +382,11 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				wp_enqueue_style( 'wpp_jalali_datepicker', WP_PARSI_URL . "assets/css/jalalidatepicker$suffix.css", null, WP_PARSI_VER );
 
 				do_action( 'wpp_jalali_datepicker_enqueued', 'wc' );
+			}
+
+			if ( 'toplevel_page_wp-parsi-settings' === $hook ) {
+				wp_enqueue_script( 'jquery-ui-sortable' );
+				wp_enqueue_script( 'wpp_checkout_fields', WP_PARSI_URL . "assets/js/wpp-checkout-fields$suffix.js", array( 'jquery-ui-sortable' ), WP_PARSI_VER );
 			}
 		}
 
@@ -713,6 +916,43 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 			}
 
 			return null;
+		}
+
+		/**
+		 * Modify WooCommerce checkout fields
+		 *
+		 * @param $fields
+		 *
+		 * @return array|mixed
+		 * @sicne 5.1.3
+		 */
+		public function modify_checkout_fields( $fields ) {
+			$settings = wpp_get_option( 'woo_checkout_fields' );
+
+			if ( empty( $settings ) ) {
+				return $fields;
+			}
+
+			foreach ( $fields as $section => $section_fields ) {
+				foreach ( $section_fields as $key => $field ) {
+					if ( isset( $settings[ $section ][ $key ] ) ) {
+						$field_settings = $settings[ $section ][ $key ];
+
+						if ( ! $field_settings['enabled'] ) {
+							unset( $fields[ $section ][ $key ] );
+							continue;
+						}
+
+						$fields[ $section ][ $key ]['required'] = $field_settings['required'];
+						$fields[ $section ][ $key ]['priority'] = $field_settings['priority'];
+
+						$width_class                         = $field_settings['width'] === 'half' ? 'form-row-' . $field_settings['position'] : 'form-row-wide';
+						$fields[ $section ][ $key ]['class'] = array( $width_class );
+					}
+				}
+			}
+
+			return $fields;
 		}
 	}
 
