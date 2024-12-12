@@ -249,7 +249,7 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
 							}
 
 							if ( ! class_exists( 'nusoap_client' ) ) {
-								require_once( WP_PARSI_DIR . 'includes/plugins/wc-gateways/lib/"nusoap.php.php' );
+								require_once( WP_PARSI_DIR . 'includes/plugins/wc-gateways/lib/nusoap.php' );
 							}
 
 							$terminalId    = $this->terminal;
