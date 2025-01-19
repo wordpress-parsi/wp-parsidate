@@ -4,7 +4,7 @@ Donate link: https://wp-parsi.com/support/
 Tags: shamsi, persian, jalali, date, woocommerce
 Requires at least: 5.3
 Tested up to: 6.6.1
-Stable tag: 5.1.2
+Stable tag: 5.1.3
 License: GPLv3
 
 Persian date support for WordPress
@@ -48,6 +48,14 @@ List of some features:
 6. Persian date type in ACF
 
 == Changelog ==
+
+= 5.1.3 =
+* Fix convert order date to gregorian in edit order screen
+* Update fixes-dates.php
+* Warning REQUEST Params in PHP
+* Fix: Translations not loading
+* Fix: The posting time of posts in the block editor
+* Fix some reported bugs
 
 = 5.1.2 =
 * Fix some reported bugs
