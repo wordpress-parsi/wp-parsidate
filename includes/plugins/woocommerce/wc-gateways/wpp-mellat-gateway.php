@@ -124,9 +124,9 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
 					 </form><br/>';
 
 					echo wp_kses( $form, array(
-						'form'  => array( 'action', 'method', 'class', 'id' ),
-						'input' => array( 'type', 'name', 'class', 'id', 'value' ),
-						'a'     => array( 'class', 'href' )
+						'form'  => array( 'action' => array() , 'method' => array(), 'class' => array(), 'id' => array() ),
+						'input' => array( 'type' => array(), 'name' => array(), 'class' => array(), 'id' => array(), 'value' => array() ),
+						'a'     => array( 'class' => array(), 'href' => array() )
 					) );
 
 					if ( isset( $_POST["bankmellat_submit"] ) ) {
@@ -195,7 +195,12 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
 								if ( $res_code == "0" ) {
 									wc_add_notice( esc_html__( 'Connecting to the bank...', 'wp-parsidate' ) );
 
-									$connect_form = '<form id="redirect_to_mellat" method="post" action="https://bpm.shaparak.ir/pgwchannel/startpay.mellat" style="display:none!important">
+									add_filter('safe_style_css', function ($styles) {
+								                    $styles[] = 'display';
+								                    return $styles;
+								        });
+									
+									$connect_form = '<form id="redirect_to_mellat" method="post" action="https://bpm.shaparak.ir/pgwchannel/startpay.mellat" style="display:none !important;">
 										<input type="hidden"  name="RefId" value="' . esc_attr( $res[1] ) . '" />
 										<input type="submit" value="' . __( 'Pay off', 'wp-parsidate' ) . '"/>
 									</form>
@@ -204,9 +209,9 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
 									</script>';
 
 									echo wp_kses( $connect_form, array(
-										'form'   => array( 'id', 'method', 'action', 'style' ),
-										'input'  => array( 'type', 'name', 'value' ),
-										'script' => array( 'language', 'type' )
+										'form'   => array( 'id' => array(), 'method' => array(), 'action' => array(), 'style' => array() ),
+										'input'  => array( 'type' => array(), 'name' => array(), 'value' => array() ),
+										'script' => array( 'language' => array(), 'type' => array() )
 									) );
 								} else {
 									$is_error   = 'yes';
