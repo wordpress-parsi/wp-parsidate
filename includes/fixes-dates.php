@@ -94,7 +94,7 @@ function wpp_fix_post_modified_time( $time, $format, $gmt ) {
  *
  * @return          string Formatted date
  */
-function wpp_fix_get_time( $time, $format = '' ) {
+function wpp_fix_the_time( $time, $format = '' ) {
 	if ( empty( $time ) ) {
 		return $time;
 	}
