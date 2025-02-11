@@ -17,8 +17,9 @@ if ( get_locale() === 'fa_IR' && wpp_is_active( 'persian_date' ) ) {
 	add_filter( 'the_date', 'wpp_fix_post_date', 10, 3 );
 	add_filter( 'get_the_time', 'wpp_fix_get_the_time', 10, 3 );
 	add_filter( 'get_the_date', 'wpp_fix_post_date', 100, 3 );
+	add_filter( 'get_the_modified_date', 'wpp_fix_modified_date', 10, 3 );
 	add_filter( 'get_comment_time', 'wpp_fix_comment_time', 10, 2 );
-	add_filter( 'get_comment_date', 'wpp_fix_comment_date', 10, 2 );
+	add_filter( 'get_comment_date', 'wpp_fix_comment_date', 10, 3 );
 	//add_filter('get_post_modified_time', 'wpp_fix_post_modified_time', 10, 3);
 	add_filter( 'date_i18n', 'wpp_fix_i18n', 10, 4 );
 
@@ -61,11 +62,33 @@ function wpp_fix_post_date( $time, $format = '', $post = null ) {
 		$format = get_option( 'date_format' );
 	}
 
-	if ( ! disable_wpp() ) {
+	if ( 'c' === $format || ! disable_wpp() ) {
 		return date( $format, strtotime( $post->post_modified ) );
 	}
 
 	return parsidate( $format, date( 'Y-m-d H:i:s', strtotime( $post->post_date ) ), ! wpp_is_active( 'conv_dates' ) ? 'eng' : 'per' );
+}
+
+/**
+ * Fixes post modified date and returns to Jalali format
+ *
+ * @param string $time Post modified time
+ * @param string $format Date format
+ * @param WP_Post|null	$post	WP_Post object or null if no post is found.
+ *
+ * @return string Formatted date
+ * @author Yousef Mahmoudi
+ */
+function wpp_fix_modified_date( $time, $format, $post ) {
+	if ( empty( $post ) ) {
+		return $time;
+	}
+	
+	if ( 'c' === $format ) {
+		return date( $format, strtotime( $post->post_modified ) );
+	}
+	
+	return $time;
 }
 
 /**
@@ -174,9 +197,7 @@ function wpp_fix_comment_time( $time, $format = '' ) {
  *
  * @return          string Formatted date
  */
-function wpp_fix_comment_date( $time, $format = '' ) {
-	global $comment;
-
+function wpp_fix_comment_date( $time, $format = '', $comment ) {
 	if ( empty( $comment ) ) {
 		return $time;
 	}
@@ -184,7 +205,7 @@ function wpp_fix_comment_date( $time, $format = '' ) {
 	if ( empty( $format ) ) {
 		$format = get_option( 'date_format' );
 	}
-	if ( ! disable_wpp() ) {
+	if ( 'c' === $format || ! disable_wpp() ) {
 		return date( $format, strtotime( $comment->comment_date ) );
 	}
 
