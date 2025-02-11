@@ -63,7 +63,7 @@ function wpp_fix_post_date( $time, $format = '', $post = null ) {
 	}
 
 	if ( 'c' === $format || ! disable_wpp() ) {
-		return date( $format, strtotime( $post->post_modified ) );
+		return date( $format, strtotime( $post->post_date ) );
 	}
 
 	return parsidate( $format, date( 'Y-m-d H:i:s', strtotime( $post->post_date ) ), ! wpp_is_active( 'conv_dates' ) ? 'eng' : 'per' );
