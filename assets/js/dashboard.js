@@ -650,33 +650,17 @@ const sponsorshipUl = document.querySelector('#sponsorship-guide ul');
 
 async function wppInitSponsors() {
   try {
-    const response = await fetch(ajaxurl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: new URLSearchParams({
-        action: 'fetch_sponsorship_slides'
-      })
+    const slidesData = Object.values(sponsors);
+
+    wppsPlaceholder.remove();
+    createSlides(slidesData);
+
+    new KeenSlider(slidesContainer, {
+      loop: true,
+      duration: 5000,
+      controls: true,
+      indicators: true,
     });
-
-    const result = await response.json();
-
-    if (result.success) {
-      const slidesData = Object.values(result.data); // Convert object to array
-
-      wppsPlaceholder.remove();
-      createSlides(slidesData);
-
-      new KeenSlider(slidesContainer, {
-        loop: true,
-        duration: 5000,
-        controls: true,
-        indicators: true,
-      });
-    } else {
-      console.error('Error fetching slides:', result.data);
-    }
   } catch (error) {
     console.error('Error fetching slides:', error);
   }
