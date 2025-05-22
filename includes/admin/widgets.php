@@ -314,6 +314,42 @@ if ( ! function_exists( 'wpp_ajax_dashboard_widgets' ) ) {
 	add_action( 'wp_ajax_wpp-dashboard-widgets', 'wpp_ajax_dashboard_widgets' );
 }
 
+if ( ! function_exists( 'get_mocked_sponsors' ) ) {
+	/**
+	 * Get mocked sponsors
+	 *
+	 * @return array
+	 * @author Mohammad Zarei
+	 * @sicne 5.1.3
+	 *
+	 */
+	function get_mocked_sponsors() {
+		$sponsors = array();
+		$all_sponsors = array(
+			array(
+				'image_url' => WP_PARSI_URL . 'assets/images/icon.svg',
+				'image_alt' => __( 'Loading Sponsors', 'wp-parsidate' ),
+				'link'      => 'https://wp-parsi.com/',
+				'end_date'  => '2024-01-01',
+			),
+			array(
+				'image_url' => WP_PARSI_URL . 'assets/images/icon.svg',
+				'image_alt' => __( 'Loading Sponsors', 'wp-parsidate' ),
+				'link'      => 'https://wp-parsi.com/',
+				'end_date'  => '2026-01-01',
+			),
+		);
+		$today = date( 'Y-m-d' );
+		foreach ( $all_sponsors as $sponsor ) {
+			if ( strtotime( $sponsor['end_date'] ) > strtotime( $today ) ) {
+				$sponsors[] = $sponsor;
+			}
+		}
+
+		return $sponsors;
+	}
+}
+
 if ( ! function_exists( 'wpp_enqueue_admin_dashboard_assets' ) ) {
 	/**
 	 * Enqueue our assets to WP admin dashboard
@@ -337,6 +373,8 @@ if ( ! function_exists( 'wpp_enqueue_admin_dashboard_assets' ) ) {
 		wp_enqueue_style( 'wpp_dashboard', WP_PARSI_URL . "assets/css/dashboard$suffix.css", false, WP_PARSI_VER );
 		wp_enqueue_script( 'keen-slider', WP_PARSI_URL . "assets/js/keen-slider.min.js", array(), '6.8.6', true );
 		wp_enqueue_script( 'wpp_dashboard', WP_PARSI_URL . "assets/js/dashboard$suffix.js", array( 'jquery', 'keen-slider' ), WP_PARSI_VER, true );
+
+		wp_localize_script( 'wpp_dashboard', 'sponsors', get_mocked_sponsors() );
 	}
 
 	add_action( 'admin_enqueue_scripts', 'wpp_enqueue_admin_dashboard_assets' );
