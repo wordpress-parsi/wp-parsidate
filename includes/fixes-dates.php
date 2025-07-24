@@ -13,9 +13,9 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 global $wpp_settings;
 
 if ( get_locale() === 'fa_IR' && wpp_is_active( 'persian_date' ) ) {
-	add_filter( 'the_time', 'wpp_fix_the_time', 10, 2 );
+	add_filter( 'the_time', 'wpp_fix_post_time', 10, 2 );
 	add_filter( 'the_date', 'wpp_fix_post_date', 10, 3 );
-	add_filter( 'get_the_time', 'wpp_fix_get_the_time', 10, 3 );
+	add_filter( 'get_the_time', 'wpp_fix_post_time', 10, 2 );
 	add_filter( 'get_the_date', 'wpp_fix_post_date', 100, 3 );
 	add_filter( 'get_comment_time', 'wpp_fix_comment_time', 10, 2 );
 	add_filter( 'get_comment_date', 'wpp_fix_comment_date', 10, 2 );
@@ -87,39 +87,14 @@ function wpp_fix_post_modified_time( $time, $format, $gmt ) {
 }
 
 /**
- * Fixes the_time hook and returns to Jalali format
+ * Fixes post time and returns to Jalali format
  *
  * @param string $time Post time
  * @param string $format Date format
  *
  * @return          string Formatted date
  */
-function wpp_fix_the_time( $time, $format = '' ) {
-	if ( empty( $time ) ) {
-		return $time;
-	}
-
-	if ( empty( $format ) ) {
-		$format = get_option( 'time_format' );
-	}
-
-	if ( ! disable_wpp() ) {
-		return date( $format, strtotime( $time ) );
-	}
-
-	return parsidate( $format, $time, wpp_is_active( 'conv_dates' ) ? 'eng' : 'per' );
-}
-
-/**
- * Fixes get_the_time hook and returns to Jalali format
- *
- * @param string $time Post time
- * @param string $format Date format
- * @param string $post WP Post
- *
- * @return          string Formatted date
- */
-function wpp_fix_get_the_time( $time, $format = '', $post = null ) {
+function wpp_fix_post_time( $time, $format = '', $post = null ) {
 	$post = get_post( $post );
 
 	if ( ! $post ) {

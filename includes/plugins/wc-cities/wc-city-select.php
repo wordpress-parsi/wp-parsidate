@@ -13,7 +13,9 @@
  * WC tested up to:      7.6
  */
 
-defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} // Exit if accessed directly
 
 if ( ! class_exists( 'WC_City_Select' ) ) {
 	class WC_City_Select {

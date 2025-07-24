@@ -196,11 +196,11 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
 									wc_add_notice( esc_html__( 'Connecting to the bank...', 'wp-parsidate' ) );
 
 									add_filter('safe_style_css', function ($styles) {
-								                    $styles[] = 'display';
-								                    return $styles;
-								        });
-									
-									$connect_form = '<form id="redirect_to_mellat" method="post" action="https://bpm.shaparak.ir/pgwchannel/startpay.mellat" style="display:none !important;">
+										$styles[] = 'display';
+										return $styles;
+									});
+
+									$connect_form = '<form id="redirect_to_mellat" method="post" action="https://bpm.shaparak.ir/pgwchannel/startpay.mellat" style="display:none!important">
 										<input type="hidden"  name="RefId" value="' . esc_attr( $res[1] ) . '" />
 										<input type="submit" value="' . __( 'Pay off', 'wp-parsidate' ) . '"/>
 									</form>

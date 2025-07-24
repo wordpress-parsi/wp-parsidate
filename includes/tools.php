@@ -53,7 +53,7 @@ if ( wpp_is_active( 'date_in_admin_bar' ) ) {
 	}
 }
 
-if ( wpp_is_active( 'disable_copy' ) ) {
+/*if ( wpp_is_active( 'disable_copy' ) ) {
 	if ( ! function_exists( 'wpp_disable_copy' ) ) {
 		function wpp_disable_copy() {
 			echo '<script>
@@ -83,4 +83,4 @@ if ( wpp_is_active( 'disable_right_click' ) ) {
 
 		add_action( 'wp_footer', 'wpp_disable_right_click' );
 	}
-}
+}*/

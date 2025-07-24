@@ -71,11 +71,6 @@ if ( ! class_exists( 'WPP_WC_Gateways' ) ) {
 		 */
 		public function add_settings( $old_settings ) {
 			$settings = array(
-				'wc_pg_header'      => array(
-					'id'   => 'wc_pg_header',
-					'name' => __( 'Payment Gateways', 'wp-parsidate' ),
-					'type' => 'header',
-				),
 				'woo_gateways' => array(
 					'id'      => 'woo_gateways',
 					'name'    => __( 'Payment gateways', 'wp-parsidate' ),
@@ -86,11 +81,7 @@ if ( ! class_exists( 'WPP_WC_Gateways' ) ) {
 						'mellat'   => __( 'Mellat Bank', 'wp-parsidate' ),
 					),
 					'std'     => array( ),
-				),
-				'wc_pg_footer'      => array(
-					'id'   => 'wc_pg_footer',
-					'type' => 'footer',
-				),
+				)
 			);
 
 			return array_merge( $old_settings, $settings );
