@@ -53,6 +53,40 @@ if ( wpp_is_active( 'date_in_admin_bar' ) ) {
 	}
 }
 
+if (!function_exists('wpp_is_postal_code_validate')) {
+    function wpp_is_postal_code_validate($postalCode, $checkSum = false): bool
+    {
+        // Convert to english
+        $postalCode = eng_number($postalCode);
+
+        // Remove space and special character
+        $cleanedCode = preg_replace('/[-\s]/', '', $postalCode);
+        if (!preg_match("/^\d{10}$/", $cleanedCode)) {
+            return false;
+        }
+
+        // Postal code not start with zero
+        if ($cleanedCode[0] === '0') {
+            return false;
+        }
+
+        // Checksum Control
+        if ($checkSum) {
+
+            $checkDigit = (int)$cleanedCode[9];
+            $sum = 0;
+            for ($i = 0; $i < 9; $i++) {
+                $sum += (int)$cleanedCode[$i] * (10 - $i);
+            }
+            $remainder = $sum % 11;
+            $calculatedCheckDigit = ($remainder < 2) ? $remainder : 11 - $remainder;
+            return $checkDigit === $calculatedCheckDigit;
+        }
+
+        return true;
+    }
+}
+
 /*if ( wpp_is_active( 'disable_copy' ) ) {
 	if ( ! function_exists( 'wpp_disable_copy' ) ) {
 		function wpp_disable_copy() {

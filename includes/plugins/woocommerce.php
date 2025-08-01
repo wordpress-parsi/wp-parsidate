@@ -632,8 +632,7 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 				return $valid;
 			}
 
-			// based on https://github.com/VahidN/DNTPersianUtils.Core/blob/34b9ae00ad3584bc9ef34033c6402d1b8ae7a148/src/DNTPersianUtils.Core/Validators/IranCodesUtils.cs#L13
-			return (bool) preg_match( '/\b(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}\b/', $postcode );
+            return wpp_is_postal_code_validate($postcode, apply_filters('wpp_validate_postal_code_checksum', false));
 		}
 
 		/**
