@@ -24,7 +24,7 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
 					$this->method_title       = $this->gateway_name;
 					$this->method_description = $this->gateway_name . ' ' . __( 'payment gateway (By WP-Parsidate)', 'wp-parsidate' );
 					$this->has_fields         = false;
-					$this->icon               = apply_filters( $this->id . '_logo', WP_PARSI_URL . "assets/images/$this->id.png" );
+					$this->icon               = apply_filters( $this->id . '_logo', WP_PARSI_URL . "assets/images/$this->id-logo.png" );
 					$this->redirect_uri       = WC()->api_request_url( strtolower( get_class( $this ) ) );
 
 					$this->init_form_fields();
