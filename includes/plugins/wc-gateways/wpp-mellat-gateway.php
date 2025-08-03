@@ -119,7 +119,7 @@ if (!function_exists('wpp_mellat_payment_gateway_init')) {
                     do_action('wpp_wc_' . $this->id . '_gateway_process_payment', $order, $refId);
 
                     if (!$refId) {
-                        wc_add_notice(__('خطا در اتصال به درگاه پرداخت. لطفا مجددا تلاش کنید.', 'wp-parsidate'), 'error');
+                        wc_add_notice('خطا در اتصال به درگاه پرداخت. لطفا مجددا تلاش کنید.', 'error');
                         return [];
                     }
 
@@ -179,7 +179,7 @@ if (!function_exists('wpp_mellat_payment_gateway_init')) {
 
                     if ($client->fault) {
 
-                        $order->add_order_note('خطا در ارتباط با بانک ملت رخ داده است');
+                        $order->add_order_note($this->failed_massage);
                         return false;
                     } else {
 
@@ -231,7 +231,7 @@ if (!function_exists('wpp_mellat_payment_gateway_init')) {
                     $refId = WC()->session->get('mellat_ref_id');
 
                     if (empty($refId)) {
-                        wc_add_notice(__('خطا در اطلاعات پرداخت. لطفا مجددا تلاش کنید.', 'wp-parsidate'), 'error');
+                        wc_add_notice($this->failed_massage, 'error');
                         wp_redirect(wc_get_checkout_url());
                         exit;
                     }
@@ -289,7 +289,7 @@ if (!function_exists('wpp_mellat_payment_gateway_init')) {
                                 $order->payment_complete($saleReferenceId);
 
                                 // Add Order Note
-                                $order->add_order_note(sprintf(__('پرداخت با موفقیت انجام شد. کد پیگیری: %s', 'wp-parsidate'), $saleReferenceId));
+                                $order->add_order_note(sprintf('پرداخت با موفقیت انجام شد. کد پیگیری: %s', $saleReferenceId));
 
                                 // Remove WC Session
                                 WC()->session->__unset('mellat_ref_id');
@@ -337,7 +337,8 @@ if (!function_exists('wpp_mellat_payment_gateway_init')) {
                         'iran-toman',
                         'iran_toman',
                         'تومان',
-                        'تومان ایران'))) {
+                        'تومان ایران'
+                    ))) {
                         $amount = $amount * 10;
                     } else if ('irht' === $currency) {
                         $amount = $amount * 1000 * 10;
@@ -399,7 +400,7 @@ if (!function_exists('wpp_mellat_payment_gateway_init')) {
 
                         return [
                             'status' => false,
-                            'message' => 'خطا در اعتبار سنجی پرداخت ملت رخ داده است. کد خطا: ' . $this->get_error_message($result->return),
+                            'message' => 'خطا در اعتبار سنجی پرداخت ملت رخ داده است. کد خطا: ' . $this->get_error_message($result),
                             'code' => ''
                         ];
                     }
@@ -414,37 +415,37 @@ if (!function_exists('wpp_mellat_payment_gateway_init')) {
                 public function get_error_message($resCode)
                 {
                     $messages = array(
-                        '11' => __('شماره کارت نامعتبر است', 'wp-parsidate'),
-                        '12' => __('موجودی کافی نیست', 'wp-parsidate'),
-                        '13' => __('رمز نادرست است', 'wp-parsidate'),
-                        '14' => __('تعداد دفعات وارد کردن رمز بیش از حد مجاز است', 'wp-parsidate'),
-                        '15' => __('کارت نامعتبر است', 'wp-parsidate'),
-                        '16' => __('دفعات برداشت وجه بیش از حد مجاز است', 'wp-parsidate'),
-                        '17' => __('کاربر از انجام تراکنش منصرف شده است', 'wp-parsidate'),
-                        '18' => __('تاریخ انقضای کارت گذشته است', 'wp-parsidate'),
-                        '19' => __('مبلغ برداشت وجه بیش از حد مجاز است', 'wp-parsidate'),
-                        '21' => __('پذیرنده نامعتبر است', 'wp-parsidate'),
-                        '23' => __('خطای امنیتی رخ داده است', 'wp-parsidate'),
-                        '24' => __('اطلاعات کاربری پذیرنده نامعتبر است', 'wp-parsidate'),
-                        '25' => __('مبلغ نامعتبر است', 'wp-parsidate'),
-                        '31' => __('پاسخ نامعتبر است', 'wp-parsidate'),
-                        '32' => __('فرمت اطلاعات وارد شده صحیح نیست', 'wp-parsidate'),
-                        '33' => __('حساب نامعتبر است', 'wp-parsidate'),
-                        '34' => __('خطای سیستمی', 'wp-parsidate'),
-                        '35' => __('تاریخ نامعتبر است', 'wp-parsidate'),
-                        '41' => __('شماره درخواست تکراری است', 'wp-parsidate'),
-                        '42' => __('تراکنش Sale یافت نشد', 'wp-parsidate'),
-                        '43' => __('قبلا درخواست Verify داده شده است', 'wp-parsidate'),
-                        '44' => __('درخواست Verify یافت نشد', 'wp-parsidate'),
-                        '45' => __('تراکنش Settle شده است', 'wp-parsidate'),
-                        '46' => __('تراکنش Settle نشده است', 'wp-parsidate'),
-                        '47' => __('تراکنش Settle یافت نشد', 'wp-parsidate'),
-                        '48' => __('تراکنش Reverse شده است', 'wp-parsidate'),
-                        '49' => __('تراکنش Refund یافت نشد', 'wp-parsidate'),
-                        '51' => __('تراکنش تکراری است', 'wp-parsidate'),
-                        '54' => __('تراکنش مرجع موجود نیست', 'wp-parsidate'),
-                        '55' => __('تراکنش نامعتبر است', 'wp-parsidate'),
-                        '61' => __('خطا در واریز', 'wp-parsidate'),
+                        '11' => 'شماره کارت نامعتبر است',
+                        '12' => 'موجودی کافی نیست',
+                        '13' => 'رمز نادرست است',
+                        '14' => 'تعداد دفعات وارد کردن رمز بیش از حد مجاز است',
+                        '15' => 'کارت نامعتبر است',
+                        '16' => 'دفعات برداشت وجه بیش از حد مجاز است',
+                        '17' => 'کاربر از انجام تراکنش منصرف شده است',
+                        '18' => 'تاریخ انقضای کارت گذشته است',
+                        '19' => 'مبلغ برداشت وجه بیش از حد مجاز است',
+                        '21' => 'پذیرنده نامعتبر است',
+                        '23' => 'خطای امنیتی رخ داده است',
+                        '24' => 'اطلاعات کاربری پذیرنده نامعتبر است',
+                        '25' => 'مبلغ نامعتبر است',
+                        '31' => 'پاسخ نامعتبر است',
+                        '32' => 'فرمت اطلاعات وارد شده صحیح نیست',
+                        '33' => 'حساب نامعتبر است',
+                        '34' => 'خطای سیستمی',
+                        '35' => 'تاریخ نامعتبر است',
+                        '41' => 'شماره درخواست تکراری است',
+                        '42' => 'تراکنش Sale یافت نشد',
+                        '43' => 'قبلا درخواست Verify داده شده است',
+                        '44' => 'درخواست Verify یافت نشد',
+                        '45' => 'تراکنش Settle شده است',
+                        '46' => 'تراکنش Settle نشده است',
+                        '47' => 'تراکنش Settle یافت نشد',
+                        '48' => 'تراکنش Reverse شده است',
+                        '49' => 'تراکنش Refund یافت نشد',
+                        '51' => 'تراکنش تکراری است',
+                        '54' => 'تراکنش مرجع موجود نیست',
+                        '55' => 'تراکنش نامعتبر است',
+                        '61' => 'خطا در واریز'
                     );
 
                     return $messages[$resCode] ?? 'کد خطا: ' . $resCode;
