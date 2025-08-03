@@ -118,17 +118,25 @@ if (!function_exists('wpp_mellat_payment_gateway_init')) {
                     // Action
                     do_action('wpp_wc_' . $this->id . '_gateway_process_payment', $order, $refId);
 
-                    if (!$refId) {
-                        wc_add_notice('خطا در اتصال به درگاه پرداخت. لطفا مجددا تلاش کنید.', 'error');
-                        return [];
+                    if ($refId['status'] === false) {
+
+                        // Add Notice
+                        wc_add_notice($refId['message'], 'error');
+
+                        // Return for Block Support
+                        return [
+                            'result' => 'failure',
+                            'messages' => $refId['message'],
+                            'reload' => false
+                        ];
                     }
 
                     // Save Session
-                    WC()->session->set('mellat_ref_id', $refId);
+                    WC()->session->set('mellat_ref_id', $refId['refId']);
                     WC()->session->set('mellat_order_id', $order_id);
 
                     // Return
-                    return array(
+                    return [
                         'result' => 'success',
                         'redirect' => add_query_arg(
                             array(
@@ -138,7 +146,7 @@ if (!function_exists('wpp_mellat_payment_gateway_init')) {
                             ),
                             get_site_url(null, '/')
                         )
-                    );
+                    ];
                 }
 
                 public function get_ref_id_from_mellat($order)
@@ -150,8 +158,11 @@ if (!function_exists('wpp_mellat_payment_gateway_init')) {
                     $client = new nusoap_client('https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl');
                     $err = $client->getError();
                     if ($err) {
-                        $order->add_order_note('خطا در ارتباط با بانک ملت: ' . $err);
-                        return false;
+
+                        return [
+                            'status' => false,
+                            'message' => 'خطا در ارتباط با بانک ملت: ' . $err
+                        ];
                     }
 
                     $description = 'خرید به شماره سفارش: ' . $order->get_order_number();
@@ -179,27 +190,36 @@ if (!function_exists('wpp_mellat_payment_gateway_init')) {
 
                     if ($client->fault) {
 
-                        $order->add_order_note($this->failed_massage);
-                        return false;
+                        return [
+                            'status' => false,
+                            'message' => $this->failed_massage
+                        ];
                     } else {
 
                         $resultStr = $result;
                         $err = $client->getError();
                         if ($err) {
 
-                            $order->add_order_note('خطا در ارتباط با بانک ملت: ' . $err);
-                            return false;
+                            return [
+                                'status' => false,
+                                'message' => 'خطا در ارتباط با بانک ملت: ' . $err
+                            ];
                         } else {
 
                             $res = explode(',', $resultStr);
                             $ResCode = $res[0];
                             if ($ResCode == "0") {
 
-                                return $res[1];
+                                return [
+                                    'status' => true,
+                                    'refId' => $res[1]
+                                ];
                             } else {
 
-                                $order->add_order_note('خطا در دریافت RefId از بانک ملت. ' . $this->get_error_message($ResCode));
-                                return false;
+                                return [
+                                    'status' => false,
+                                    'message' => 'خطا در دریافت RefId از بانک ملت: ' . $this->get_error_message($ResCode)
+                                ];
                             }
                         }
                     }
