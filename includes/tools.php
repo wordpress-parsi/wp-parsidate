@@ -87,6 +87,25 @@ if (!function_exists('wpp_is_postal_code_validate')) {
     }
 }
 
+if (!function_exists('wpp_is_time_validate')) {
+    function wpp_is_time_validate($time, $default_seconds = '00')
+    {
+        if (!is_string($time)) {
+            return false;
+        }
+
+        if (preg_match('/^(?:2[0-3]|[01][0-9]):[0-5][0-9](?::[0-5][0-9])?$/', $time)) {
+            if (substr_count($time, ':') === 1) {
+                $time .= ':' . $default_seconds;
+            }
+
+            return $time;
+        }
+
+        return false;
+    }
+}
+
 /*if ( wpp_is_active( 'disable_copy' ) ) {
 	if ( ! function_exists( 'wpp_disable_copy' ) ) {
 		function wpp_disable_copy() {
