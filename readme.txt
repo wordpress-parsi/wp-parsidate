@@ -49,6 +49,19 @@ List of some features:
 
 == Changelog ==
 
+= 5.1.7 =
+* Fix date format in ISO 8601
+* Update dashboard.css
+* Fix postalCode Validate
+* Fix editor rtl
+* Fix show gateway logo
+* Central Gateways Method
+* Fix Mellat Gateway + Support Block API
+* Add Melli Gateway + Support Block API
+* Fixes Media view Select box and returns in Jalali Format Date
+* Compatible with Sales Countdown Timer plugin
+* Fix block editor datepicker wrong date
+
 = 5.1.6 =
 * Some additional/unused options have been removed
 * The sponsors widget loading mechanism has been optimized 
