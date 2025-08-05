@@ -74,11 +74,17 @@
   display: none !important;
 }
 
-.editor-post-panel__section.editor-post-summary > div > .components-flex.components-h-stack.components-v-stack:has(.components-panel__row.wpp-calendar-edit-post-post-schedule) {
-  padding-top: 42px;
-  position: relative;
-}
+.editor-post-panel__section,.editor-post-panel__section.editor-post-summary > div > .components-flex.components-h-stack.components-v-stack:has(.components-panel__row.wpp-calendar-edit-post-post-schedule) {
 
+  position: relative !important;
+}
+.components-flex.components-h-stack.components-v-stack{
+	position:relative;
+	
+}
+.editor-post-panel__row:first-child{
+	margin-top:42px;
+}
 .components-panel__row.wpp-calendar-edit-post-post-schedule {
   position: absolute;
   top: 0;
