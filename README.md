@@ -46,23 +46,6 @@ This package, created by Persian developers, enhances the Persian experience on 
 5. Persian datepicker in WooCommerce
 6. Persian date type in ACF
 
-## Changelog
-
-### 5.1.0
-- Added HPOS compatibility and block-based gateways in WooCommerce
-- Added Iranian cities for WooCommerce
-- Introduced Persian datepicker in Block Editor
-- Fixed conflicts with Jetpack and DATE_W3C format
-- Resolved warnings and errors related to ACF, comments feed, and archive pages
-- Improved Persian date support in WooCommerce
-- Updated settings panel design and added Vazir font to admin area
-- Compatibility with WordPress 6.5x and WooCommerce 8.7x
-
-
-## Development Log
-
-- Improved handling of `$wp_query` in `posts_where` filter.
-- Fixed month dropdown bug in admin edit post date picker.
 
 ## License
 

@@ -1,10 +1,10 @@
 === Parsi Date ===
-Contributors: lord_viper, man4toman, parselearn, yazdaniwp, saeedfard, iehsanir
+Contributors: lord_viper, man4toman, parselearn, yazdaniwp, saeedfard, iehsanir, wordpress-parsi
 Donate link: https://wp-parsi.com/support/
 Tags: shamsi, persian, jalali, date, woocommerce
 Requires at least: 5.3
 Tested up to: 6.8
-Stable tag: 5.1.6
+Stable tag: 5.1.7
 License: GPLv3
 
 Persian date support for WordPress
