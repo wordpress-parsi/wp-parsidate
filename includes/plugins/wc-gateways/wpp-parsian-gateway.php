@@ -488,5 +488,5 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
 		}
 	}
 
-	add_action( 'plugins_loaded', 'wpp_parsian_payment_gateway_init', 0 );
+	add_action( 'before_woocommerce_init', 'wpp_parsian_payment_gateway_init', 15 );
 }

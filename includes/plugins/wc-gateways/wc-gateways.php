@@ -18,8 +18,8 @@ if (!class_exists('WPP_WC_Gateways')) {
          */
         private function __construct()
         {
-            $this->include_files();
 
+            add_action('before_woocommerce_init', [$this, 'include_files'], 10);
             add_filter('wpp_woocommerce_settings', array($this, 'add_settings'));
             add_filter('woocommerce_payment_gateways', array($this, 'register_selected_gateways'));
             add_action('woocommerce_blocks_loaded', array($this, 'register_order_approval_payment_method_type'));

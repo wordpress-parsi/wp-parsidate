@@ -16,15 +16,11 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 		 * Hooks required tags
 		 */
 		private function __construct() {
-			$this->include_files();
-
 			add_filter( 'wpp_plugins_compatibility_settings', array( $this, 'add_settings' ) );
 
-			add_action( 'before_woocommerce_init', function() {
-				if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-					\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT, true );
-				}
-			} );
+			add_action( 'before_woocommerce_init', array($this, 'before_woocommerce_init'));
+
+            add_action('plugins_loaded', [$this, 'include_gateways'], 0);
 
 			if ( class_exists( 'WooCommerce' ) && get_locale() === 'fa_IR' ) {
 				if ( wpp_is_active( 'woo_per_price' ) ) {
@@ -83,19 +79,25 @@ if ( ! class_exists( 'WPP_WooCommerce' ) ) {
 			return self::$instance;
 		}
 
-		/**
-		 * Includes files for WooCommerce payment gateways
-		 *
-		 * @return         void
-		 * @since          4.0.1
-		 */
-		public function include_files() {
-			if ( wpp_is_active( 'woo_dropdown_cities' ) ) {
-				include_once WP_PARSI_DIR . 'includes/plugins/wc-cities/wc-city-select.php';
-			}
+        /**
+         * Init Before WooCommerce Loaded
+         */
+        public function before_woocommerce_init()
+        {
+            // Include City Translate
+            if ( wpp_is_active( 'woo_dropdown_cities' ) ) {
+                include_once WP_PARSI_DIR . 'includes/plugins/wc-cities/wc-city-select.php';
+            }
 
-			require_once( WP_PARSI_DIR . 'includes/plugins/wc-gateways/wc-gateways.php' );
-		}
+            if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
+                \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', WP_PARSI_ROOT, true);
+            }
+        }
+
+        public function include_gateways()
+        {
+            require_once( WP_PARSI_DIR . 'includes/plugins/wc-gateways/wc-gateways.php' );
+        }
 
 		/**
 		 * Adds settings for toggle fixing
