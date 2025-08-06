@@ -17,8 +17,15 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
 			class WPP_WC_Pasargad_Gateway extends WC_Payment_Gateway {
 
 				private $gateway_name;
+                public $redirect_uri;
+                public $pasargad_terminal_id;
+                public $pasargad_merchant_id;
+                public $description;
+                public $success_massage;
+                public $failed_massage;
+                public $cancelled_massage;
 
-				public function __construct() {
+                public function __construct() {
 					$this->id                 = 'pasargad';
 					$this->gateway_name       = __( 'Pasargad Bank', 'wp-parsidate' );
 					$this->method_title       = $this->gateway_name;

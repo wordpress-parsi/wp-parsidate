@@ -16,8 +16,15 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
 			class WPP_WC_Parsian_Gateway extends WC_Payment_Gateway {
 
 				private $gateway_name;
+                public $redirect_uri;
+                public $description;
+                public $success_massage;
+                public $failed_massage;
+                public $cancelled_massage;
+                public $title;
+                public $parsian_login_account;
 
-				public function __construct() {
+                public function __construct() {
 					$this->id                 = 'parsian';
 					$this->gateway_name       = __( 'Parsian Bank', 'wp-parsidate' );
 					$this->method_title       = $this->gateway_name;
