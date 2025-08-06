@@ -168,24 +168,24 @@ function wpp_fix_comment_time( $time, $format = '' ) {
 /**
  * Fixes comment date and returns in Jalali format
  *
- * @param string $time Comment time
- * @param string $format Date format
- *
- * @return          string Formatted date
+ * @param string|int $comment_date Formatted date string or Unix timestamp.
+ * @param string $format PHP date format.
+ * @param \WP_Comment $comment The comment object.
  */
-function wpp_fix_comment_date( $time, $format = '', $comment ) {
-	if ( empty( $comment ) ) {
-		return $time;
-	}
+function wpp_fix_comment_date($comment_date, $format, $comment)
+{
+    if (empty($comment)) {
+        return $comment_date;
+    }
 
-	if ( empty( $format ) ) {
-		$format = get_option( 'date_format' );
-	}
-	if ( 'c' === $format || ! disable_wpp() ) {
-		return date( $format, strtotime( $comment->comment_date ) );
-	}
+    if (empty($format)) {
+        $format = get_option('date_format');
+    }
+    if ('c' === $format || !disable_wpp()) {
+        return date($format, strtotime($comment->comment_date));
+    }
 
-	return parsidate( $format, $comment->comment_date, ! wpp_is_active( 'conv_dates' ) ? 'eng' : 'per' );
+    return parsidate($format, $comment->comment_date, !wpp_is_active('conv_dates') ? 'eng' : 'per');
 }
 
 /**
