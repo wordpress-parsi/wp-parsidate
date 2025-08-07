@@ -149,6 +149,10 @@ final class WP_Parsidate {
 			$files[] = 'plugins/elementor';
 		}
 
+        if ( class_exists( '\RankMath' ) ) {
+            $files[] = 'plugins/rank-math';
+        }
+
 		$files[] = 'plugins/disable';
 
 		foreach ( $files as $file ) {

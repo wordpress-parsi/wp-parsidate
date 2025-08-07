@@ -28,15 +28,6 @@ if ( get_locale() === 'fa_IR' && wpp_is_active( 'persian_date' ) ) {
 		add_filter( 'wp_date', 'wpp_fix_i18n', 10, 4 );
 	}
 
-	if ( WP_Parsidate::is_plugin_activated( 'seo-by-rank-math/rank-math.php' ) ) {
-		add_filter( "rank_math/opengraph/facebook/article_published_time", function ( $content ) {
-			return gregdate( 'c', eng_number( $content ) );
-		} );
-
-		add_filter( "rank_math/opengraph/facebook/article_modified_time", function ( $content ) {
-			return gregdate( 'c', eng_number( $content ) );
-		} );
-	}
 }
 
 /**
