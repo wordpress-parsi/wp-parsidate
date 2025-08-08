@@ -26,6 +26,10 @@ if (!class_exists('WPP_Rank_Math')) {
 
         public function json_ld($data, $jsonld)
         {
+            if (empty($data) || !is_array($data)) {
+                return $data;
+            }
+
             foreach ($data as $key => $item) {
 
                 // Fix uploadDate in video Object
