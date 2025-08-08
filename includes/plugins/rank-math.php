@@ -10,7 +10,7 @@ if (!class_exists('WPP_Rank_Math')) {
         {
             add_filter("rank_math/opengraph/facebook/article_published_time", [$this, 'convert_date_time']);
             add_filter("rank_math/opengraph/facebook/article_modified_time", [$this, 'convert_date_time']);
-            add_filter("rank_math/schema/videoobject", [$this, 'fix_upload_date'], 30);
+            add_filter("rank_math/json_ld", [$this, 'json_ld'], 20, 2);
             add_filter('rank_math/snippet/rich_snippet_product_entity', [$this, 'fix_price_currency'], 30);
         }
 
@@ -24,13 +24,19 @@ if (!class_exists('WPP_Rank_Math')) {
             return $this->convert($content);
         }
 
-        public function fix_upload_date($schema)
+        public function json_ld($data, $jsonld)
         {
-            if (is_array($schema) && isset($schema['uploadDate'])) {
-                $schema['uploadDate'] = $this->convert($schema['uploadDate']);
+            foreach ($data as $key => $item) {
+
+                // Fix uploadDate in video Object
+                if (isset($item['@type']) && $item['@type'] === 'VideoObject') {
+                    if (isset($item['uploadDate']) and !empty($item['uploadDate'])) {
+                        $data[$key]['uploadDate'] = $this->convert_date_time($item['uploadDate']);
+                    }
+                }
             }
 
-            return $schema;
+            return $data;
         }
 
         public function fix_price_currency($entity)
