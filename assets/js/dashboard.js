@@ -79,7 +79,7 @@ jQuery(function ($) {
   ajaxPopulateWidgets();
 
   // Register ajax widgets as postbox toggles.
-  // postboxes.add_postbox_toggles(pagenow, {pbshow: ajaxPopulateWidgets});
+  
   $(document).on('postbox-toggled', function (e, postbox) {
       if (ajaxWidgets.indexOf(postbox.id) !== -1) {
           if(wppDashboardSlider){
