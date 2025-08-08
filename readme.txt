@@ -1,7 +1,7 @@
-=== Parsi Date ===
+=== پارسی دیت – Parsi Date ===
 Contributors: lord_viper, man4toman, parselearn, yazdaniwp, saeedfard, iehsanir, wordpress-parsi
 Donate link: https://wp-parsi.com/support/
-Tags: shamsi, persian, jalali, date, woocommerce
+Tags: shamsi, persian, jalali, date, woocommerce, ووکامرس, تاریخ شمسی, پارسی دیت
 Requires at least: 5.3
 Tested up to: 6.8
 Stable tag: 5.1.7
