@@ -79,7 +79,15 @@ jQuery(function ($) {
   ajaxPopulateWidgets();
 
   // Register ajax widgets as postbox toggles.
-  postboxes.add_postbox_toggles(pagenow, {pbshow: ajaxPopulateWidgets});
+  
+  $(document).on('postbox-toggled', function (e, postbox) {
+      if (ajaxWidgets.indexOf(postbox.id) !== -1) {
+          if(wppDashboardSlider){
+              wppDashboardSlider.update();
+          }
+          ajaxPopulateWidgets();
+      }
+  });
 });
 
 jQuery(function ($) {
@@ -680,7 +688,7 @@ function createSlides(slidesData) {
 }
 
 function initWPPSSlider() {
-  let wppsSlider = new KeenSlider(slidesContainer, {
+  window.wppDashboardSlider = new KeenSlider(slidesContainer, {
     rtl: getComputedStyle(slidesContainer).direction,
     loop: true,
     duration: 3000,
