@@ -77,6 +77,8 @@ final class WP_Parsidate {
 		add_action( 'widgets_init', array( $this, 'register_widget' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'wpp_load_vazir_font_in_admin_area' ) );
 		add_action( 'wpp_jalali_datepicker_enqueued', array( $this, 'wpp_localize_months_name' ) );
+
+        do_action('wpp_init');
 	}
 
 	/**
