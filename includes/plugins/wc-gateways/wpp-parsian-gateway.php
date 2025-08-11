@@ -29,24 +29,29 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
 					$this->gateway_name       = __( 'Parsian Bank', 'wp-parsidate' );
 					$this->method_title       = $this->gateway_name;
 					$this->method_description = $this->gateway_name . ' ' . __( 'payment gateway (By WP-Parsidate)', 'wp-parsidate' );
-					$this->has_fields         = false;
+					$this->has_fields         = true;
 					$this->icon               = apply_filters( $this->id . '_logo', WP_PARSI_URL . "assets/images/$this->id-logo.png" );
-					$this->redirect_uri       = WC()->api_request_url( strtolower( get_class( $this ) ) );
+					$this->redirect_uri       = WC()->api_request_url( $this->get_class() );
 
 					$this->init_form_fields();
 					$this->init_settings();
 
-					$this->parsian_login_account = $this->settings['parsian_login_account'];
-					$this->title                 = $this->settings['title'];
-					$this->description           = $this->settings['description'];
-					$this->success_massage       = $this->settings['success_massage'];
-					$this->failed_massage        = $this->settings['failed_massage'];
-					$this->cancelled_massage     = $this->settings['cancelled_massage'];
+					$this->parsian_login_account = $this->get_option('parsian_login_account');
+					$this->title                 = $this->get_option('title');
+					$this->description           = $this->get_option('description');
+					$this->success_massage       = $this->get_option('success_massage');
+					$this->failed_massage        = $this->get_option('failed_massage');
+					$this->cancelled_massage     = $this->get_option('cancelled_massage');
 
 					add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 					add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
-					add_action( 'woocommerce_api_' . strtolower( get_class( $this ) ), array( $this, 'callback' ) );
+					add_action( 'woocommerce_api_' . $this->get_class(), array( $this, 'callback' ) );
 				}
+
+                public function get_class()
+                {
+                    return strtolower(get_class($this));
+                }
 
 				public function init_form_fields() {
 					$this->form_fields = apply_filters( 'wpp_wc_' . $this->id . '_gateway_config', array(
@@ -418,7 +423,7 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
 
 						$login_account = $this->parsian_login_account;
 						$callback_url  = $this->redirect_uri . "?order_id=" . $order_id;
-						$order_id      = $order_id . mt_rand( 10, 100 );
+						$order_id      = $order_id . mt_rand( 1, 10000 );
 						$request       = self::send_pay_request( $login_account, $amount, $order_id, $callback_url );
 
 						if ( $request->Status == '0' && $request->Token > 0 ) {
@@ -437,60 +442,59 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
 					return false;
 				}
 
-				public function callback() {
-					$token    = $_REQUEST['Token'] ?? '';
-					$status   = $_REQUEST['status'] ?? '';
-					$order_id = $_REQUEST['OrderId'] ?? '';
+                public function callback()
+                {
+                    $token = $_REQUEST['Token'] ?? '';
+                    $status = $_REQUEST['status'] ?? '';
+                    $OrderId = $_REQUEST['OrderId'] ?? '';
 
-					if ( $status == '0' && $token > 0 ) {
-						if ( $order_id == substr( $order_id, 0, - 2 ) ) {
-							$order = wc_get_order( $order_id );
+                    $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
+                    $order = wc_get_order($order_id);
+                    if ($order) {
+                        if ($status == '0' && $token > 0) {
 
-							if ( isset( $order ) ) {
-								if ( 'wc-completed' === $order->get_status() ) {
-									$error_code = 'already_been_completed';
-								} else {
-									$login_account = $this->parsian_login_account;
-									$request       = self::verify_request( $login_account, $token );
+                            $login_account = $this->parsian_login_account;
+                            $request = self::verify_request($login_account, $token);
 
-									if ( $request->Status == '0' && $request->RRN > 0 ) {
-										if ( $order->update_status( 'completed' ) ) {
-											$order->payment_complete();
-											$order->add_order_note( __( 'Payment was successful.', 'wp-parsidate' ) . ' - ' . __( 'Tracking number:', 'wp-parsidate' ) . ' ' . $token, 1 );
-											WC()->cart->empty_cart();
+                            if ($request->Status == '0' && $request->RRN > 0) {
 
-											wp_safe_redirect( $this->get_return_url( $order ) );
+                                // Set Payment Completed
+                                $order->payment_complete($request->RRN);
 
-											exit();
-										} else {
-											$reversal_request = self::reversal_request( $login_account, $token );
+                                // Add Order Note
+                                $order->add_order_note(sprintf('پرداخت با موفقیت انجام شد. کد پیگیری: %s', $request->RRN));
 
-											if ( $reversal_request == '0' ) {
-												$error_code = 'reversal_done';
-											} else {
-												$error_code = 'reversal_error';
-											}
-										}
-									} elseif ( $request->Status == '-1' ) {
-										$error_code = 'retry';
-									} else {
-										$error_code = $request->Status;
-									}
-								}
-							} else {
-								$error_code = 'order_not_exist';
-							}
-						} else {
-							$error_code = 'order_not_for_this_person';
-						}
-					} else {
-						$error_code = $status;
-					}
+                                // Remove cart.
+                                WC()->cart->empty_cart();
 
-					self::display_error( $error_code, $token, $order_id );
+                                // Action
+                                do_action('wpp_wc_' . $this->id . '_gateway_completed_payment', $order, [
+                                    'RRN' => $request->RRN,
+                                    'Token' => $token
+                                ]);
 
-					exit;
-				}
+                                // Redirect
+                                wp_redirect($this->get_return_url($order));
+                                exit;
+                            } else {
+
+                                $reversal_request = self::reversal_request($login_account, $token);
+                                if ($reversal_request == '0') {
+                                    $error_code = 'reversal_done';
+                                } else {
+                                    $error_code = 'reversal_error';
+                                }
+                            }
+                        } else {
+                            $error_code = '-32768';
+                        }
+                    } else {
+                        $error_code = 'order_not_exist';
+                    }
+
+                    self::display_error($error_code, $token, $order_id);
+                    exit;
+                }
 			}
 		}
 	}
