@@ -57,7 +57,7 @@ final class WP_Parsidate {
 	public static $instance = null;
 
 	private function __construct() {
-		add_action( 'after_setup_theme', array( $this, 'load_plugin_textdomain' ) );
+		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 		$this->define_const();
 		$this->include_files();

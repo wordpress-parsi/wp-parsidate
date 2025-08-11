@@ -408,15 +408,29 @@ class WPP_ParsiDate {
 	 *
 	 * @return              false|string
 	 */
-	public function gregorian_date( $format, $persiandate ) {
-		preg_match_all( '!\d+!', $persiandate, $matches );
+public function gregorian_date( $format, $persiandate = '' ) {
+    preg_match_all( '!\d+!', $persiandate, $matches );
 
-		$matches = $matches[0];
+    $matches = $matches[0];
 
-		list( $year, $mon, $day ) = self::persian_to_gregorian( $matches[0], $matches[1], $matches[2] );
+    list( $year, $mon, $day ) = self::persian_to_gregorian(
+        $matches[0],
+        $matches[1],
+        $matches[2]
+    );
 
-		return date( $format, mktime( ( isset( $matches[3] ) ? $matches[3] : 0 ), ( isset( $matches[4] ) ? $matches[4] : 0 ), ( isset( $matches[5] ) ? $matches[5] : 0 ), $mon, $day, $year ) );
-	}
+    return date(
+        $format,
+        mktime(
+            isset( $matches[3] ) ? $matches[3] : 0,
+            isset( $matches[4] ) ? $matches[4] : 0,
+            isset( $matches[5] ) ? $matches[5] : 0,
+            $mon,
+            $day,
+            $year
+        )
+    );
+}
 
 	/**
 	 * WPP_ParsiDate::persian_to_gregorian()

@@ -261,7 +261,15 @@ function wpp_fix_media_view_settings($settings, $post)
     if (isset($settings['months']) and !empty($settings['months'])) {
         for ($i = 0; $i < count($settings['months']); $i++) {
             if (isset($settings['months'][$i]->year) and isset($settings['months'][$i]->month)) {
-                $settings['months'][$i]->text = parsidate("F Y", $settings['months'][$i]->year . '-' . $settings['months'][$i]->month, $wpp_settings['conv_dates'] == 'disable' ? 'eng' : 'per');
+                $conv_dates_status = 'eng';
+                if (isset($wpp_settings['conv_dates']) && $wpp_settings['conv_dates'] != 'disable') {
+                    $conv_dates_status = 'per';
+                }
+                $settings['months'][$i]->text = parsidate(
+                    "F Y",
+                    $settings['months'][$i]->year . '-' . $settings['months'][$i]->month,
+                    $conv_dates_status
+                );
             }
         }
     }
