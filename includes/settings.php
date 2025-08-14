@@ -130,13 +130,13 @@ add_action( 'admin_init', 'wpp_register_settings' );
  * @since               2.0
  */
 function wpp_get_tabs() {
-	return array(
+    return apply_filters('wpp_registered_settings_tabs', array(
 		'core'    => sprintf( __( '%s Core', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-site"></span>' ),
 		'conv'    => sprintf( __( '%s Converts', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-settings"></span>' ),
 		'tools'   => sprintf( __( '%s Tools', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-tools"></span>' ),
 		'plugins' => sprintf( __( '%s Plugins compatibility', 'wp-parsidate' ), '<span class="dashicons dashicons-admin-plugins"></span>' ),
 		'about'   => sprintf( __( '%s About', 'wp-parsidate' ), '<span class="dashicons dashicons-info"></span>' ),
-	);
+	));
 }
 
 /**
