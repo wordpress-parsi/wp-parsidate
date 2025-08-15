@@ -75,11 +75,11 @@ if ( ! function_exists( 'wpp_add_our_dashboard_primary_widget' ) ) {
 			'wpp_dashboard_primary_widget_content',
 			'dashboard',
 			'normal',
-			'high',
+			'high'
 		);
 	}
 
-	add_action( 'admin_init', 'wpp_add_our_dashboard_primary_widget', 1 );
+	add_action( 'wp_dashboard_setup', 'wpp_add_our_dashboard_primary_widget', 1 );
 }
 
 if ( ! function_exists( 'wpp_dashboard_primary_widget_content' ) ) {
