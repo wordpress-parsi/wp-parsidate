@@ -57,7 +57,9 @@ function wpp_fix_post_date( $time, $format = '', $post = null ) {
 	if ( ! $post ) {
 		return $time;
 	}
-
+	if (function_exists( 'pll_current_language' ) && pll_current_language() !== "fa"  ) {
+		return $time;
+	}
 	if ( empty( $format ) ) {
 		$format = get_option( 'date_format' );
 	}
@@ -202,7 +204,9 @@ function wpp_fix_comment_date( $time, $format = '', $comment ) {
 function wpp_fix_i18n( $date, $format, $timestamp, $gmt ) {
 	global $post;
 
-	//$post_id = ( is_object( $post ) && isset( $post->ID ) ) ? $post->ID : null;
+	if((function_exists( 'pll_current_language' ) && pll_current_language() !== "fa" )){
+		return $date;
+	}
 
 	if ( ! disable_wpp() ) {
 		return $format;
