@@ -66,12 +66,6 @@ body#tinymce.wp-editor,
   font-size: 13px;
 }
 
-.dashicons,
-.dashicons-before:before,
-.wpseo-metabox-menu ul li span.dashicons:before {
-  font-family: dashicons !important;
-}
-
 .wooocommerce-task-card__header p,
 .woocommerce-summary__item-label p,
 .components-card__header p,
