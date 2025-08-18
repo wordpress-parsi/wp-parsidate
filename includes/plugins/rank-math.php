@@ -14,16 +14,19 @@ if (!class_exists('WPP_Rank_Math')) {
             add_filter('rank_math/snippet/rich_snippet_product_entity', [$this, 'fix_price_currency'], 30);
         }
 
-        public function convert($datetime)
+        /* @method */
+        public function convert($datetime, $format = 'c')
         {
-            return gregdate('c', eng_number($datetime));
+            return gregdate($format, eng_number($datetime));
         }
 
+        /* @hook */
         public function convert_date_time($content)
         {
             return $this->convert($content);
         }
 
+        /* @hook */
         public function json_ld($data, $jsonld)
         {
             if (empty($data) || !is_array($data)) {
@@ -38,11 +41,22 @@ if (!class_exists('WPP_Rank_Math')) {
                         $data[$key]['uploadDate'] = $this->convert_date_time($item['uploadDate']);
                     }
                 }
+
+                // Fix priceValidUntil Date
+                if (isset($item['@type']) && $item['@type'] === 'Product') {
+                    if (isset($item['offers']['priceValidUntil']) and !empty($item['offers']['priceValidUntil'])) {
+                        $jalali = wpp_date_is($item['offers']['priceValidUntil'], "Y-m-d");
+                        if ($jalali['status'] === true and $jalali['type'] == "jalali") {
+                            $data[$key]['offers']['priceValidUntil'] = $this->convert($jalali['value'], "Y-m-d");
+                        }
+                    }
+                }
             }
 
             return $data;
         }
 
+        /* @hook */
         public function fix_price_currency($entity)
         {
             if (isset($entity['offers']['priceCurrency']) and strtoupper($entity['offers']['priceCurrency']) == "IRT") {
