@@ -51,6 +51,20 @@ if (!class_exists('WPP_Rank_Math')) {
                         }
                     }
                 }
+
+                // Fix ProductGroup / hasVariant / offers / priceValidUntil
+                if (isset($item['@type']) && $item['@type'] === 'ProductGroup') {
+                    if (isset($item['hasVariant']) and !empty($item['hasVariant']) and is_array($item['hasVariant'])) {
+                        foreach ($item['hasVariant'] as $variantKey => $variant) {
+                            if (isset($variant['offers']['priceValidUntil']) and !empty($variant['offers']['priceValidUntil'])) {
+                                $jalali = wpp_date_is($variant['offers']['priceValidUntil'], "Y-m-d");
+                                if ($jalali['status'] === true and $jalali['type'] == "jalali") {
+                                    $data[$key]['hasVariant'][$variantKey]['priceValidUntil'] = $this->convert($jalali['value'], "Y-m-d");
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             return $data;
