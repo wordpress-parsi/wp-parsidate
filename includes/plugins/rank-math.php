@@ -59,7 +59,7 @@ if (!class_exists('WPP_Rank_Math')) {
                             if (isset($variant['offers']['priceValidUntil']) and !empty($variant['offers']['priceValidUntil'])) {
                                 $jalali = wpp_date_is($variant['offers']['priceValidUntil'], "Y-m-d");
                                 if ($jalali['status'] === true and $jalali['type'] == "jalali") {
-                                    $data[$key]['hasVariant'][$variantKey]['priceValidUntil'] = $this->convert($jalali['value'], "Y-m-d");
+                                    $data[$key]['hasVariant'][$variantKey]['offers']['priceValidUntil'] = $this->convert($jalali['value'], "Y-m-d");
                                 }
                             }
                         }
