@@ -52,14 +52,24 @@ if (!class_exists('WPP_Rank_Math')) {
                     }
                 }
 
-                // Fix ProductGroup / hasVariant / offers / priceValidUntil
+                // Fix ProductGroup / hasVariant / offers
                 if (isset($item['@type']) && $item['@type'] === 'ProductGroup') {
                     if (isset($item['hasVariant']) and !empty($item['hasVariant']) and is_array($item['hasVariant'])) {
                         foreach ($item['hasVariant'] as $variantKey => $variant) {
+
+                            // Check priceValidUntil
                             if (isset($variant['offers']['priceValidUntil']) and !empty($variant['offers']['priceValidUntil'])) {
                                 $jalali = wpp_date_is($variant['offers']['priceValidUntil'], "Y-m-d");
                                 if ($jalali['status'] === true and $jalali['type'] == "jalali") {
                                     $data[$key]['hasVariant'][$variantKey]['offers']['priceValidUntil'] = $this->convert($jalali['value'], "Y-m-d");
+                                }
+                            }
+
+                            // Check offer Price
+                            if (isset($variant['offers']['priceCurrency']) and strtoupper($variant['offers']['priceCurrency']) == "IRT") {
+                                $data[$key]['hasVariant'][$variantKey]['offers']['priceCurrency'] = 'IRR';
+                                if (!empty($variant['offers']['price']) and (float)$variant['offers']['price'] > 0) {
+                                    $data[$key]['hasVariant'][$variantKey]['offers']['price'] = apply_filters("wpp_rank_math_product_variant_price", ($variant['offers']['price'] * 10), $variant);
                                 }
                             }
                         }
