@@ -1,7 +1,7 @@
 === پارسی دیت – Parsi Date ===
 Contributors: lord_viper, man4toman, parselearn, yazdaniwp, saeedfard, iehsanir, wordpress-parsi
 Donate link: https://wp-parsi.com/support/
-Tags: shamsi, persian, jalali, date, woocommerce, ووکامرس, تاریخ شمسی, پارسی دیت
+Tags: shamsi, persian, jalali, date, woocommerce, ووکامرس, تاریخ شمسی, پارسی دیت, پارسی‌دیت
 Requires at least: 5.3
 Tested up to: 6.8
 Stable tag: 5.1.7
@@ -11,25 +11,23 @@ Persian date support for WordPress
 
 == Description ==
 
-This package is made by Persian developers to bring so much better experience of Persian WordPress. It includes Shamsi (Jalali) calendar, character issues fixes and Right-To-Left fix for WordPress back-end environment.
+ParsiDate is a powerful plugin developed by Persian contributors to enhance the WordPress experience for Farsi users. It provides full support for the Shamsi (Jalali) calendar across the WordPress dashboard and front-end, fixes character display issues, and improves Right-to-Left (RTL) compatibility. With seamless integration into core features and popular plugins like WooCommerce and Gravity Forms, ParsiDate makes managing Persian websites easier and more professional.
 
 List of some features:
 
 * Shamsi (Jalali) day-picker in Block Editor (Gutenberg)
 * Shamsi (Jalali) jQuery UI date-picker
-* [WP-Planet.ir](https://wp-planet.ir) Widget
-* Shamsi (Jalali) date in Posts, comments, pages, archives, search, categories
-* Shamsi (Jalali) date in Permalinks
-* Shamsi (Jalali) date in admin sections such as posts lists, comments lists, pages lists
-* Shamsi (Jalali) date in post quick edit, comment quick edit, page quick edit of admin panel
-* Shamsi (Jalali) calender widget
-* Shamsi (Jalali) archive widget
-* RTL and fixed tinymce editor
+* Shamsi (Jalali) dates in posts, pages, comments, archives, categories, search results, and permalinks
+* Full WooCommerce support (checkout fields, orders, reports, widgets, and date-pickers)
+* Shamsi (Jalali) dates in admin sections: post list, comment list, page list, and Quick Edit panels
+* Shamsi (Jalali) calendar widget and archive widget
+* RTL and fixed TinyMCE editor for a better writing experience
 * Add Persian features to WooCommerce
-* Add Persian features to ACF
+* Advanced compatibility with ACF (Advanced Custom Fields)
 * Powerful and fast function for fixing Arabic (ي , ك) to Persian (ی , ک)
-* Powerful and fast function for Persian numbers
-* Low resources usage
+* Automatic conversion of English numbers to Persian numbers
+* Lightweight and optimized for low resource usage
+* [WP-Planet.ir](https://wp-planet.ir) Widget
 
 == Installation ==
 
