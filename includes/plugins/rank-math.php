@@ -12,6 +12,7 @@ if (!class_exists('WPP_Rank_Math')) {
             add_filter("rank_math/opengraph/facebook/article_modified_time", [$this, 'convert_date_time']);
             add_filter("rank_math/json_ld", [$this, 'json_ld'], 20, 2);
             add_filter('rank_math/snippet/rich_snippet_product_entity', [$this, 'fix_price_currency'], 30);
+	        add_filter( 'rank_math/snippet/rich_snippet_videoobject_entity', [ $this, 'revert_jalali_date' ], 11 );
         }
 
         /* @method */
@@ -93,6 +94,18 @@ if (!class_exists('WPP_Rank_Math')) {
 
             return $entity;
         }
+
+	    /* @hook */
+	    public function revert_jalali_date( $entity ) {
+
+		    // Check if it's jalali
+		    if ( preg_match( '/^1[3-4]\d{2}\s*/', $entity['uploadDate'] ) ) {
+
+			    $entity['uploadDate'] = gregdate( DATE_ISO8601, $entity['uploadDate'] );
+		    }
+
+		    return $entity;
+	    }
     }
 
     $GLOBALS['WPP_Rank_Math'] = new WPP_Rank_Math();
