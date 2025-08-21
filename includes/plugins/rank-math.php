@@ -99,9 +99,9 @@ if (!class_exists('WPP_Rank_Math')) {
 	    public function revert_jalali_date( $entity ) {
 
 		    // Check if it's jalali
-		    if ( preg_match( '/^1[3-4]\d{2}\s*/', $entity['uploadDate'] ) ) {
+		    if ( isset( $entity['uploadDate'] ) && preg_match( '/^1[3-4]\d{2}\s*/', $entity['uploadDate'] ) ) {
 
-			    $entity['uploadDate'] = gregdate( DATE_ISO8601, $entity['uploadDate'] );
+			    $entity['uploadDate'] = gregdate( DATE_ATOM, $entity['uploadDate'] );
 		    }
 
 		    return $entity;
