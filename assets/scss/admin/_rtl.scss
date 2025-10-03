@@ -1,0 +1,63 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+html[dir="rtl"] {
+  body.toplevel_page_#{variables.$plugin_key} {
+    .#{variables.$plugin_key}-wrap {
+      select:not([multiple]) {
+        background-position-x: 10px;
+        background-position-x: left 10px;
+      }
+
+      .wppd-radio-wrap .wppd-checkmark::after {
+        left: inherit;
+        right: 3px;
+      }
+
+      .wppd-repeatable .wppd-repeatable-fields-wrap .wppd-repeatable-actions {
+        right: inherit;
+        left: 10px;
+      }
+
+      .wppd-display-sidebar {
+        a {
+          -webkit-transform: scale(-1, -1);
+          -moz-transform: scale(-1, -1);
+          -o-transform: scale(-1, -1);
+          transform: scale(-1, -1);
+        }
+      }
+
+      .wppd-sidebar.wppd-mobile-sidebar {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+      }
+
+      .wppd-addon-wrap {
+        .wppd-title-desc {
+          .wppd-more-info-link {
+            flex-direction: row-reverse;
+            text-decoration: none;
+            align-items: normal;
+
+            i {
+              -webkit-transform: rotate(180deg);
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 783px) {
+    body.toplevel_page_#{variables.$plugin_key} {
+      .#{variables.$plugin_key}-wrap {
+        .wppd-sidebar {
+          -webkit-transform: translateX(100%);
+          transform: translateX(100%);
+        }
+      }
+    }
+  }
+}

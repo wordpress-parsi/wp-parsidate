@@ -92,6 +92,7 @@ jQuery( function($) {
     var country = $container.find( '#billing_country, #shipping_country, #calc_shipping_country' ).val();
     var state = $( this ).val();
 
+    console.log([country, state, $container ]);
     $( document.body ).trigger( 'state_changing', [country, state, $container ] );
   });
 

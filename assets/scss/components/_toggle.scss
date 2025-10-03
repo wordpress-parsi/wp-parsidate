@@ -1,0 +1,78 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+@mixin wppd-toggle {
+  .wppd-toggle {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .wppd-toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: variables.$background_input;
+      -webkit-transition: .4s;
+      transition: .4s;
+      border-radius: 34px;
+      box-shadow: 0 0 0 1px color.scale(variables.$background_input, $lightness: -3%);
+      margin: 0;
+      padding: 0;
+
+      .wppd-check-icon {
+        display: none;
+      }
+
+      .wppd-cross-icon {
+        display: inline-block;
+      }
+
+      .wppd-toggle-handle {
+        position: absolute;
+        content: "";
+        left: 2px;
+        top: 2px;
+        -webkit-transition: .2s;
+        transition: .2s;
+      }
+    }
+
+    input:checked + .wppd-toggle-slider {
+      .wppd-check-icon {
+        display: inline-block;
+      }
+
+      .wppd-cross-icon {
+        display: none;
+      }
+    }
+
+    input:focus + .wppd-toggle-slider {
+      box-shadow: 0 0 0 2px variables.$primary;
+    }
+
+    input:checked + .wppd-toggle-slider .wppd-toggle-handle {
+      -webkit-transform: translateX(20px);
+      -ms-transform: translateX(20px);
+      transform: translateX(20px);
+    }
+
+    input[disabled] + .wppd-toggle-slider {
+      opacity: 0.7;
+    }
+  }
+
+  .wppd-control-disabled .wppd-toggle .wppd-toggle-slider {
+    cursor: default;
+  }
+}

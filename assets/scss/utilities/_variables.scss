@@ -1,0 +1,64 @@
+@use 'sass:color';
+
+$plugin_key: "wp-parsidate";
+
+// https://woocommerce.com/brand-and-logo-guidelines/
+$woo_purple_10: #d1c1ff;
+$woo_purple_40: #873eff;
+$woo_purple_50: #720eec;
+$woo_purple_70: #5007aa;
+$woo_purple_90: #2c045d;
+
+$blue_10: #c3ddf8;
+$blue_40: #64aeff;
+$blue_50: #2577d7;
+$blue_70: #2b6eb7;
+$blue_90: #10539b;
+
+$primary: $blue_50;
+$primary_light: #E1CEFF;
+
+$dark: #2B2B2B;
+$gray: #525252;
+$gray_light: #8A8A8A;
+$gray_light_two: #D3D3D3;
+$gray_light_three: #f3f3f3;
+$text: $dark;
+$meta: $gray;
+
+$white: color.adjust(#fff);
+$white2: color.scale($white, $lightness: -3%);
+$red: #b04b55;
+
+$default: $blue_50;
+$default_light: #f0f7fd;
+$warning: #8c6d29;
+$warning_light: #FFF8E3;
+$error: $red;
+$error_light: #FFEEEC;
+$success: #207b34;
+$success_light: #E2F3E6;
+$info: #356aa3;
+$info_light: #DCEBFB;
+
+$link: $primary;
+$link_hover: color.scale($primary, $lightness: -40%);
+
+// Background
+$background_side: #f5f7f9;
+$background_light: color.scale($background_side, $lightness: 50%);
+$background_menu: #e5edf3;
+$background_input: $default_light;
+$background_input_2: $gray_light;
+$background_disabled: $gray_light_three;
+
+// Border
+$border_color: $gray_light_three;
+$input_border_color: color.scale($border_color, $lightness: -10%);
+
+// Badges
+$default__badge: #818181;
+$info__badge: #3f7cff;
+$success__badge: #1bb034;
+$warning__badge: #ff6c3f;
+$danger__badge: #fd2828;

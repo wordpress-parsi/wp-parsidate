@@ -1,2 +1,4 @@
 .idea/
 .ftpconfig
+node_modules
+vendor
