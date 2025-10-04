@@ -14,6 +14,7 @@ class AppAssets {
 		add_filter( 'admin_init', [ $this, 'fixTinyMceFont' ], 9 );
 		add_action( 'admin_print_styles-plugin-editor.php', [ $this, 'fixCodeEditor' ] );
 		add_action( 'admin_print_styles-theme-editor.php', [ $this, 'fixCodeEditor' ] );
+		add_action( 'wpp_jalali_datepicker_enqueued', [ $this, 'localizeMonthsName' ] );
 
 		if ( Settings::get( 'persian_date', false ) && version_compare( get_bloginfo( 'version' ), '5.0.0', '>=' ) ) {
 			add_action( 'enqueue_block_editor_assets', [ $this, 'blockEditorAssets' ] );
@@ -58,6 +59,24 @@ class AppAssets {
 			'wpp_gutenberg_jalali_calendar_editor_styles',
 			Assets::url( 'css-admin/gutenberg-jalali-calendar.build.css' ),
 			array( 'wp-edit-blocks' ), $pluginVersion
+		);
+	}
+
+	/**
+	 * Localize name of months after date picker enqueued
+	 *
+	 * @since 4.0.1
+	 */
+	public function localizeMonthsName(): void {
+		$months_name = Months::getNames();
+
+		// Remove first item (null string) from name of months array
+		array_shift( $months_name );
+
+		wp_localize_script( 'wpp_jalali_datepicker', 'WPP_I18N',
+			array(
+				'months' => $months_name
+			)
 		);
 	}
 
