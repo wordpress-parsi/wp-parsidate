@@ -54,7 +54,9 @@ use WPParsidate\Addons\Addons;
 use WPParsidate\Admin\Admin;
 use WPParsidate\App\App;
 use WPParsidate\Core\Core;
+use WPParsidate\Helper\WordPress;
 use WPParsidate\Plugin\Plugin;
+use WPParsidate\Settings\Settings;
 use WPParsidate\Widget\Widget;
 
 final class WP_Parsidate {
@@ -133,6 +135,16 @@ final class WP_Parsidate {
 	private function instance(): void {
 		new Admin();
 		new Addons();
+
+		if ( WordPress::isMultilingualActive() && Settings::get( 'multilingual_support', false ) ) {
+			if (
+				( defined( 'ICL_LANGUAGE_CODE' ) && 'fa_IR' !== ICL_LANGUAGE_CODE ) ||
+				( function_exists( 'pll_current_language' ) && pll_current_language() !== 'fa' )
+			) {
+				return;
+			}
+		}
+
 		new App();
 		new Core();
 		new Plugin();

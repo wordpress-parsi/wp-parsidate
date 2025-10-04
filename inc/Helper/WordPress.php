@@ -156,4 +156,13 @@ class WordPress {
 
 		return is_plugin_active( $plugin_file );
 	}
+
+	/**
+	 * Checks WPML or PolyLang plugins is active
+	 *
+	 * Since 4.0.1
+	 */
+	public static function isMultilingualActive(): bool {
+		return self::isPluginActivated( 'polylang/polylang.php' ) || self::isPluginActivated( 'sitepress-multilingual-cms/sitepress.php' );
+	}
 }

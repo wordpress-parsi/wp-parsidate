@@ -4,6 +4,7 @@ namespace WPParsidate\App\Core;
 
 defined( 'ABSPATH' ) || exit;
 
+use WPParsidate\Helper\WordPress;
 use WPParsidate\Settings\Settings;
 
 class Core {
@@ -29,7 +30,7 @@ class Core {
 	}
 
 	public function settings(): array {
-		return array(
+		$settings = array(
 			// Locale
 			'start_grid_language'  => array(
 				'title' => __( 'Change Locale', 'wp-parsidate' ),
@@ -129,5 +130,28 @@ class Core {
 				'type' => 'endGrid',
 			),
 		);
+
+		if ( WordPress::isMultilingualActive() ) {
+			$settings = array_merge( $settings, array(
+				'start_grid_multilingual' => array(
+					'title' => __( 'Multilingual', 'wp-parsidate' ),
+					'type'  => 'startGrid',
+				),
+				'multilingual_support'    => array(
+					'id'       => 'multilingual_support',
+					'title'    => __( 'Multilingual compatibility', 'wp-parsidate' ),
+					'type'     => 'toggle',
+					'default'  => false,
+					'desc'     => __( 'By enabling this, ParsiDate options only work in persian locale',
+						'wp-parsidate' ),
+					'sanitize' => 'bool'
+				),
+				'end_grid_multilingual'   => array(
+					'type' => 'endGrid',
+				),
+			) );
+		}
+
+		return $settings;
 	}
 }
