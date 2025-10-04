@@ -5,6 +5,21 @@ use WPParsidate\Helper\Date;
 use WPParsidate\Helper\Number;
 use WPParsidate\Helper\WooCommerce;
 use WPParsidate\Helper\WordPress;
+use WPParsidate\Settings\Settings;
+
+if ( ! function_exists( 'wpp_is_active' ) ) {
+	/**
+	 * Gets an option name and check that option is active or not
+	 *
+	 * @param               $option_name
+	 *
+	 * @return              bool
+	 * @since               4.0.0
+	 */
+	function wpp_is_active( $option_name ) {
+		return Settings::get( $option_name, false );
+	}
+}
 
 if ( ! function_exists( 'disable_wpp' ) ) {
 	function disable_wpp(): bool {
