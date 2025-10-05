@@ -55,6 +55,7 @@ use WPParsidate\Admin\Admin;
 use WPParsidate\App\App;
 use WPParsidate\Core\Core;
 use WPParsidate\Helper\WordPress;
+use WPParsidate\Plugin\Install;
 use WPParsidate\Plugin\Plugin;
 use WPParsidate\Settings\Settings;
 use WPParsidate\Widget\Widget;
@@ -99,10 +100,6 @@ final class WP_Parsidate {
 
 		if ( ! defined( 'WP_PARSI_URL' ) ) {
 			define( 'WP_PARSI_URL', plugin_dir_url( WP_PARSI_ROOT ) );
-		}
-
-		if ( ! defined( 'WP_PARSI_DEBUG_MODE' ) ) {
-			define( 'WP_PARSI_DEBUG_MODE', true );
 		}
 
 		if ( ! defined( 'WP_PARSI_INPUT_PREFIX' ) ) {
@@ -171,3 +168,4 @@ final class WP_Parsidate {
 }
 
 WP_Parsidate::getInstance();
+register_activation_hook( __FILE__, array( Install::class, 'run' ) );
