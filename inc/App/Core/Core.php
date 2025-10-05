@@ -117,8 +117,8 @@ class Core {
 				'title' => __( 'Plugin', 'wp-parsidate' ),
 				'type'  => 'startGrid',
 			),
-			'dev_mode'             => array(
-				'id'       => 'dev_mode',
+			'debug_mode'           => array(
+				'id'       => 'debug_mode',
 				'title'    => __( 'Debug Mode', 'wp-parsidate' ),
 				'type'     => 'toggle',
 				'default'  => false,
