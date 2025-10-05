@@ -133,6 +133,10 @@ final class WP_Parsidate {
 	 * @return void
 	 */
 	private function instance(): void {
+		if ( ! defined( 'WP_PARSI_DEBUG_MODE' ) ) {
+			define( 'WP_PARSI_DEBUG_MODE', Settings::get( 'debug_mode', false ) );
+		}
+
 		new Admin();
 		new Addons();
 
