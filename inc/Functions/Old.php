@@ -16,8 +16,8 @@ if ( ! function_exists( 'wpp_is_active' ) ) {
 	 * @return              bool
 	 * @since               4.0.0
 	 */
-	function wpp_is_active( $option_name ) {
-		return Settings::get( $option_name, false );
+	function wpp_is_active( $option_name ): bool {
+		return Settings::get( $option_name, false ) === true;
 	}
 }
 
