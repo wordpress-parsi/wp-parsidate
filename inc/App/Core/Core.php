@@ -133,6 +133,9 @@ class Core {
 
 		if ( WordPress::isMultilingualActive() ) {
 			$settings = array_merge( $settings, array(
+				'sep_multilingual'        => array(
+					'type' => 'hr',
+				),
 				'start_grid_multilingual' => array(
 					'title' => __( 'Multilingual', 'wp-parsidate' ),
 					'type'  => 'startGrid',
