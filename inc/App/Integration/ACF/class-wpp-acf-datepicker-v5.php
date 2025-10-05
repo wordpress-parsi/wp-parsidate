@@ -81,7 +81,8 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
         if ( ! wp_script_is( 'wpp-jalali-datepicker' ) ) {
             wp_enqueue_script( 'wpp_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ),
                     array( 'acf-input' ), $pluginVersion );
-            wp_enqueue_style( 'wpp_jalali_datepicker', Assets::url( 'css-admin/jalalidatepicker' . $debugName . '.css' ),
+            wp_enqueue_style( 'wpp_jalali_datepicker',
+                    Assets::url( 'css-admin/jalalidatepicker' . $debugName . '.css' ),
                     array( 'acf-input' ), $pluginVersion );
 
             do_action( 'wpp_jalali_datepicker_enqueued', 'acf-5' );
@@ -99,7 +100,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
      * @since           4.0.0
      */
     function load_value( $value, $post_id, $field ) {
-        if ( ! empty( $value ) && ! Settings::get( 'acf_persian_date', false, 'acf' ) ) {
+        if ( ! empty( $value ) && ! Settings::get( 'save_persian_date', false, 'acf' ) ) {
             $value = parsidate( 'Y-m-d', $value, 'en' );
         }
 
@@ -117,7 +118,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
      * @since           4.0.0
      */
     function update_value( $value, $post_id, $field ) {
-        if ( ! empty( $value ) && ! Settings::get( 'acf_persian_date', false, 'acf' ) ) {
+        if ( ! empty( $value ) && ! Settings::get( 'save_persian_date', false, 'acf' ) ) {
             $value = gregdate( 'Y-m-d', $value );
         }
 

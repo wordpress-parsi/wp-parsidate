@@ -19,7 +19,7 @@ class ACF extends Addon {
 	public string $currentTab = 'integration';
 
 	public function registerInitM1Action(): void {
-		if ( $this->getSetting( 'acf_fix_date', false ) ) {
+		if ( $this->getSetting( 'fix_date', false ) ) {
 			add_action( 'acf/include_field_types', [ $this, 'includeField' ] ); // v5
 			add_action( 'acf/register_fields', [ $this, 'includeField' ] ); // v4
 		}
@@ -46,26 +46,26 @@ class ACF extends Addon {
 			'desc'         => __( 'ParsiDate integration for Advanced Custom Fields (ACF)', 'wp-parsidate' ),
 			'settings_key' => $this->addonID,
 			'settings'     => [
-				'acf_start_grid'   => array(
+				'acf_start_grid'    => array(
 					'id'    => 'edd_start_grid',
 					'title' => __( 'Advanced Custom Fields', 'wp-parsidate' ),
 					'type'  => 'startGrid',
 				),
-				'acf_fix_date'     => array(
-					'id'       => 'acf_fix_date',
+				'fix_date'          => array(
+					'id'       => 'fix_date',
 					'title'    => __( 'Jalali Datepicker', 'wp-parsidate' ),
 					'type'     => 'toggle',
 					'default'  => false,
 					'sanitize' => 'bool'
 				),
-				'acf_persian_date' => array(
-					'id'       => 'acf_persian_date',
+				'save_persian_date' => array(
+					'id'       => 'save_persian_date',
 					'title'    => __( 'Save dates in Jalali format (Not recommended)', 'wp-parsidate' ),
 					'type'     => 'toggle',
 					'default'  => false,
 					'sanitize' => 'bool'
 				),
-				'acf_end_grid'     => array(
+				'acf_end_grid'      => array(
 					'type' => 'endGrid',
 				)
 			]

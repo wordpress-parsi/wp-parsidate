@@ -108,7 +108,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
      * @since           4.0.0
      */
     public function load_value( $value, $post_id, $field ) {
-        if ( ! Settings::get( 'acf_persian_date', false, 'acf' ) ) {
+        if ( ! Settings::get( 'save_persian_date', false, 'acf' ) ) {
             $value = parsidate( 'Y-m-d', $value );
         }
 
@@ -126,7 +126,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
      * @since           4.0.0
      */
     public function update_value( $value, $post_id, $field ) {
-        if ( ! Settings::get( 'acf_persian_date', false, 'acf' ) ) {
+        if ( ! Settings::get( 'save_persian_date', false, 'acf' ) ) {
             $value = gregdate( 'Y-m-d', $value );
         }
 
@@ -144,7 +144,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
      * @since    4.0.0
      */
     public function format_value_for_api( $value, $post_id, $field ) {
-        if ( ! Settings::get( 'acf_persian_date', false, 'acf' ) ) {
+        if ( ! Settings::get( 'save_persian_date', false, 'acf' ) ) {
             $value = parsidate( 'Y-m-d', $value );
         }
 
