@@ -16,12 +16,8 @@ class WooCommerce extends Addon {
 	public string $addonID = 'woocommerce';
 	public string $currentTab = 'integration';
 
-	public function __construct() {
-		parent::__construct();
-		add_action( 'plugins_loaded', [ $this, 'includeGateways' ], 0 );
-	}
-
 	public function initM1Action(): void {
+		WcGateways::getInstance();
 		add_action( 'before_woocommerce_init', [ $this, 'beforeWooCommerceInit' ] );
 	}
 
@@ -75,10 +71,6 @@ class WooCommerce extends Addon {
 		}
 	}
 
-	public function includeGateways(): void {
-		WcGateways::getInstance();
-	}
-
 	/**
 	 * Init Before WooCommerce Loaded
 	 */
@@ -89,8 +81,8 @@ class WooCommerce extends Addon {
 		}
 
 		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT,
-				true );
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables',
+				WP_PARSI_ROOT, true );
 		}
 	}
 
