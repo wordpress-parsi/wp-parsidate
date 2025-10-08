@@ -15,7 +15,6 @@ use WPParsidate\Addons\Addon;
 
 class RankMath extends Addon {
 	public string $addonID = 'rank_math';
-	public string $currentTab = 'integration';
 
 	public function initAction(): void {
 		add_filter( "rank_math/opengraph/facebook/article_published_time", [ $this, 'convert_date_time' ] );
