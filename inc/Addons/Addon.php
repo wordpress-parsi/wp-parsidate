@@ -23,9 +23,11 @@ abstract class Addon {
 		add_filter( 'wp_parsidate_settings', [ $this, 'allSettings' ] );
 
 		if ( $this->addonID ) {
-			add_filter( 'wp_parsidate_' . $this->addonID . '_tab_display_notice', '__return_false' );
-			add_filter( 'wp_parsidate_' . $this->addonID . '_tab_content_display_notice', '__return_true' );
-			add_filter( 'wp_parsidate_dashboard_addon_links', [ $this, 'addDashboardLink' ] );
+			//add_filter( 'wp_parsidate_' . $this->addonID . '_tab_display_notice', '__return_false' );
+			//add_filter( 'wp_parsidate_' . $this->addonID . '_tab_content_display_notice', '__return_true' );
+			if ( $this->currentTab ) {
+				add_filter( 'wp_parsidate_dashboard_addon_links', [ $this, 'addDashboardLink' ] );
+			}
 		}
 
 		// Register Plugin hooks
