@@ -42,7 +42,7 @@ class fixDates {
 	 * @return string Formatted time
 	 */
 	public function fixDateI18n( $date, $format, $timestamp, $gmt ): string {
-		if ( ( function_exists( 'pll_current_language' ) && pll_current_language() !== "fa" ) ) {
+		if ( ( function_exists( 'pll_current_language' ) && ( pll_current_language() !== false && pll_current_language() !== "fa" ) ) ) {
 			return $date;
 		}
 

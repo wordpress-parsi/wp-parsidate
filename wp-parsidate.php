@@ -140,7 +140,7 @@ final class WP_Parsidate {
 		if ( WordPress::isMultilingualActive() && Settings::get( 'multilingual_support', false ) ) {
 			if (
 				( defined( 'ICL_LANGUAGE_CODE' ) && 'fa_IR' !== ICL_LANGUAGE_CODE ) ||
-				( function_exists( 'pll_current_language' ) && pll_current_language() !== 'fa' )
+				( function_exists( 'pll_current_language' ) && ( pll_current_language() !== false && pll_current_language() !== "fa" ) )
 			) {
 				return;
 			}
