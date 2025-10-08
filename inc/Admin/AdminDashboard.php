@@ -63,9 +63,7 @@ class AdminDashboard {
 		echo '<div class="wppd-dashboard-feed-news"><strong class="wppd-dashboard-feed-head">' .
 		     __( 'WP Parsi news', 'wp-parsidate' ) . '</strong>';
 		$feedReader = new FeedReader( [ 'url' => 'https://wp-parsi.com/parsidate/feed/' ] );
-		$feedItems  = $feedReader->replaceDescText( array(
-			[ 'The post %title% appeared first on The WooCommerce Developer Blog.', '' ]
-		) )->read()->getFeedLinks();
+		$feedItems  = $feedReader->read()->getFeedLinks();
 
 		Templates::load( Templates::getPath( 'feed-reader/feed_list.php' ), array( 'items' => $feedItems ) );
 		echo '</div>';
