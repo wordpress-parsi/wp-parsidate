@@ -18,6 +18,10 @@ class Notice {
 	}
 
 	public static function add( $key, $message, $type = null ): void {
+		if ( ! $key || ! $message ) {
+			return;
+		}
+
 		$type                     = self::getType( $type );
 		self::$messages[ $key ][] = array(
 			'type'    => $type,
