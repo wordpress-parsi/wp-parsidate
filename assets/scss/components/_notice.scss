@@ -1,6 +1,18 @@
 @use 'sass:color';
 @use "../utilities/variables";
 
+.#{variables.$plugin_key}-wrap {
+  .wppd-content {
+    > .#{variables.$plugin_key}-notices {
+      padding: 20px 30px 0 30px;
+    }
+
+    > .#{variables.$plugin_key}-notices + .#{variables.$plugin_key}-notices {
+      padding-top: 0;
+    }
+  }
+}
+
 .#{variables.$plugin_key}-notices {
   display: flex;
   flex-direction: column;

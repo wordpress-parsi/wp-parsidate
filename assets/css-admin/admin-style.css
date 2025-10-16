@@ -49,6 +49,13 @@ body *[class^=wppd-] {
     --wppd-admin-bar-height: 46px;
   }
 }
+.wp-parsidate-wrap .wppd-content > .wp-parsidate-notices {
+  padding: 20px 30px 0 30px;
+}
+.wp-parsidate-wrap .wppd-content > .wp-parsidate-notices + .wp-parsidate-notices {
+  padding-top: 0;
+}
+
 .wp-parsidate-notices {
   display: flex;
   flex-direction: column;
