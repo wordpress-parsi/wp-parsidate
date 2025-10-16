@@ -17,7 +17,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
     /**
      * Hooks required tags
      */
-    public function __construct( $settings ) {
+    public function __construct() {
         $this->name = 'jalali_datepicker';
 
         $this->label = __( 'Date', 'wp-parsidate' );
@@ -29,8 +29,6 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
         );
 
         parent::__construct();
-
-        $this->settings = $settings;
     }
 
     /**
@@ -152,4 +150,4 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
     }
 }
 
-new WPP_acf_field_jalali_datepicker( $this->settings );
+new WPP_acf_field_jalali_datepicker();

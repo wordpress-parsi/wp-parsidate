@@ -17,7 +17,7 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
     /**
      * Hooks required tags
      */
-    function __construct( $settings ) {
+    function __construct() {
         $this->name = 'wpp_timepicker';
 
         $this->label = __( 'Time', 'wp-parsidate' );
@@ -32,8 +32,6 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
         $this->l10n = array(
                 'error' => __( 'Error! Please select a valid time.', 'wp-parsidate' ),
         );
-
-        $this->settings = $settings;
 
         parent::__construct();
     }
@@ -199,4 +197,4 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
     }
 }
 
-new WPP_acf_field_wpp_timepicker( $this->settings );
+new WPP_acf_field_wpp_timepicker();
