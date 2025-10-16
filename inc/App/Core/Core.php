@@ -4,6 +4,7 @@ namespace WPParsidate\App\Core;
 
 defined( 'ABSPATH' ) || exit;
 
+use WPParsidate\Helper\Notice;
 use WPParsidate\Helper\WordPress;
 use WPParsidate\Settings\Settings;
 
@@ -15,6 +16,13 @@ class Core {
 
 		add_filter( 'wp_parsidate_core_settings_options', [ $this, 'settings' ] );
 		add_action( 'init', [ $this, 'disableGutenbergBlocksWidget' ] );
+		add_action( 'wp_parsidate_admin_init', [ $this, 'addNotice' ] );
+	}
+
+	public function addNotice( $tab ): void {
+		if ( Settings::get( 'debug_mode', false ) ) {
+			Notice::add( 'dashboard', esc_html__( 'Debug mode is enabled!', 'wp-parsidate' ), 'warning' );
+		}
 	}
 
 	/**
