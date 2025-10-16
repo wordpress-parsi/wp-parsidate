@@ -1168,7 +1168,7 @@ class HTML {
 
 		if ( ! empty( $data['attributes'] ) && is_array( $data['attributes'] ) ) {
 			foreach ( $data['attributes'] as $key => $value ) {
-				$attributes .= ' ' . $key . '="' . $value . '"';
+				$attributes .= ' ' . esc_attr( $key ) . '="' . esc_attr( $value ) . '"';
 			}
 		}
 
@@ -1182,6 +1182,6 @@ class HTML {
 			$class .= ' ' . ( is_array( $data['class'] ) ? implode( ' ', $data['class'] ) : $data['class'] );
 		}
 
-		return $class;
+		return esc_attr( $class );
 	}
 }

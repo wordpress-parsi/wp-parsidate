@@ -38,4 +38,13 @@ class WooCommerce {
 
 		return true;
 	}
+
+	public static function getOrderStatuses(): array {
+		$statuses = wc_get_order_statuses();
+
+		return array_combine(
+			array_map( static fn( $k ) => str_replace( 'wc-', '', $k ), array_keys( $statuses ) ),
+			array_values( $statuses )
+		);
+	}
 }
