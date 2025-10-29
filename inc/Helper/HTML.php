@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit;
 use WP_Query;
 
 class HTML {
-	private const prefix = 'wppd-';
+	private const prefix = WP_PARSI_CLASS_PREFIX;
 	private const prefixName = WP_PARSI_INPUT_PREFIX;
 
 	public const saveFields = [
@@ -792,6 +792,77 @@ class HTML {
 		$key = 'notice_element_' . $data['id'];
 
 		return Notice::addAndDisplay( $key, $data['notices'], false );
+	}
+
+	public static function table( $data ): string {
+		if ( ! $data = self::checkData( $data ) ) {
+			return '';
+		}
+
+		// WP table class: widefat, fixed, striped
+		$tableClass  = ( $data['table_class'] ?? '' ) . ' widefat';
+		$class       = self::getClass( $data, self::prefix . 'table-wrap' );
+		$tableHead   = $data['head'] ?? [];
+		$tableBody   = $data['body'] ?? [];
+		$tableFooter = $data['footer'] ?? [];
+		$noEntries   = $data['no_entries'] ?? esc_html__( 'No entries!', 'wp-parsidate' );
+
+		if ( empty( $tableHead ) ) {
+			return '';
+		}
+
+		$id    = self::prefix . $data['type'] . '-' . $data['id'];
+		$table = '<div class="' . $class . '" id="' . $id . '">';
+
+		if ( ! empty( $data['title'] ) ) {
+			$table .= '<div class="' . self::prefix . 'table-title">' . $data['title'] . '</div>';
+		}
+
+		$table .= '<table class="' . $tableClass . '">';
+		if ( $data['mode'] === 'vertical' ) {
+			$table .= '<thead><tr>';
+			foreach ( $tableHead as $head ) {
+				$table .= "<th>$head</th>";
+			}
+			$table .= '</tr></thead>';
+		}
+
+		if ( empty( $tableBody ) ) {
+			$table .= '<tr><td colspan="100%">' . $noEntries . '</td></tr>';
+
+		} else {
+			foreach ( $tableBody as $index => $body ) {
+				$table .= '<tr>';
+
+				if ( $data['mode'] === 'horizontal' ) {
+					$table .= '<th>' . $tableHead[ $index ] . '</th>';
+				}
+
+				foreach ( $body as $value ) {
+					$table .= '<td>' . $value . '</td>';
+				}
+
+				$table .= '</tr>';
+			}
+		}
+
+		if ( $data['mode'] === 'vertical' && ! empty( $tableFooter ) ) {
+			$table .= '<tfoot><tr>';
+			foreach ( $tableFooter as $foot ) {
+				$table .= "<th>$foot</th>";
+			}
+			$table .= '</tr></tfoot>';
+		}
+
+		$table .= '</table>';
+
+		if ( ! empty( $data['desc'] ) ) {
+			$table .= '<p class="' . self::prefix . 'description">' . $data['desc'] . '</p>';
+		}
+
+		$table .= '</div>';
+
+		return $table;
 	}
 
 	public static function paragraph( $data ): string {
