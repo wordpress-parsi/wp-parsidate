@@ -125,7 +125,7 @@ class WordPress {
 	 *
 	 * @return boolean
 	 */
-	public static function isSitemap() {
+	public static function isSitemap(): bool {
 		return ( isset( $_SERVER['REQUEST_URI'] ) and strpos( $_SERVER['REQUEST_URI'], 'wp-sitemap' ) !== false );
 	}
 
