@@ -7,6 +7,10 @@ use WPParsidate\Settings\Settings;
 
 class fixNumbers {
 	public function __construct() {
+		if ( Settings::get( 'conv_number_format_i18n', false ) ) {
+			add_filter( 'number_format_i18n', [ $this, 'changeNumbersToPersian' ], 1000 );
+		}
+
 		if ( Settings::get( 'conv_page_title', false ) ) {
 			add_filter( 'wp_title', [ $this, 'changeNumbersToPersian' ], 1000 );
 		}

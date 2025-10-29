@@ -18,6 +18,14 @@ class Convert {
 				'title' => __( 'Convert numbers to Persian', 'wp-parsidate' ),
 				'type'  => 'startGrid',
 			),
+			'conv_number_format_i18n'    => array(
+				'id'       => 'conv_number_format_i18n',
+				'title'    => __( 'Numbers', 'wp-parsidate' ),
+				'desc'     => __( 'Used in menus, comments, API, media, etc.', 'wp-parsidate' ),
+				'type'     => 'toggle',
+				'default'  => false,
+				'sanitize' => 'bool'
+			),
 			'conv_page_title'            => array(
 				'id'       => 'conv_page_title',
 				'title'    => __( 'Page title', 'wp-parsidate' ),
