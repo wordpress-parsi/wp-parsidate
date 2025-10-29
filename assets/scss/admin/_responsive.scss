@@ -81,7 +81,7 @@
         }
       }
 
-      &.wp-parsidate-wrapper {
+      &.#{variables.$plugin_key}-wrapper {
         display: block;
         grid-template-columns: auto;
         min-height: calc(100vh - 60px - var(--wp-admin--admin-bar--height, 0));
