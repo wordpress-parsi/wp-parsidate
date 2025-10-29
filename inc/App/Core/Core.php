@@ -12,7 +12,6 @@ class Core {
 	public function __construct() {
 		new fixTitle();
 		new fixDates();
-		new Locale();
 
 		add_filter( 'wp_parsidate_core_settings_options', [ $this, 'settings' ] );
 		add_action( 'init', [ $this, 'disableGutenbergBlocksWidget' ] );
@@ -39,31 +38,6 @@ class Core {
 
 	public function settings(): array {
 		$settings = array(
-			// Locale
-			'start_grid_language'  => array(
-				'title' => __( 'Change Locale', 'wp-parsidate' ),
-				'type'  => 'startGrid',
-			),
-			'admin_lang'           => array(
-				'id'       => 'admin_lang',
-				'title'    => __( 'Change Locale in admin', 'wp-parsidate' ),
-				'type'     => 'toggle',
-				'default'  => false,
-				'desc'     => __( 'This option change WordPress locale to Persian in Admin', 'wp-parsidate' ),
-				'sanitize' => 'bool'
-			),
-			'user_lang'            => array(
-				'id'       => 'user_lang',
-				'title'    => __( 'Change Locale in theme', 'wp-parsidate' ),
-				'type'     => 'toggle',
-				'default'  => false,
-				'desc'     => __( 'This option change WordPress locale to Persian in theme', 'wp-parsidate' ),
-				'sanitize' => 'bool'
-			),
-			'end_grid_language'    => array(
-				'type' => 'endGrid',
-			),
-
 			// Date
 			'start_grid_date'      => array(
 				'title' => __( 'Date', 'wp-parsidate' ),
