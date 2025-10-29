@@ -25,7 +25,6 @@ return array(
     'WPParsidate\\App\\Convert\\fixNumbers' => $baseDir . '/inc/App/Convert/fixNumbers.php',
     'WPParsidate\\App\\Convert\\fixPermalink' => $baseDir . '/inc/App/Convert/fixPermalink.php',
     'WPParsidate\\App\\Core\\Core' => $baseDir . '/inc/App/Core/Core.php',
-    'WPParsidate\\App\\Core\\Locale' => $baseDir . '/inc/App/Core/Locale.php',
     'WPParsidate\\App\\Core\\fixDates' => $baseDir . '/inc/App/Core/fixDates.php',
     'WPParsidate\\App\\Core\\fixTitle' => $baseDir . '/inc/App/Core/fixTitle.php',
     'WPParsidate\\App\\Integration\\ACF' => $baseDir . '/inc/App/Integration/ACF.php',

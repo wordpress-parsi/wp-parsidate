@@ -53,7 +53,6 @@ class ComposerStaticInit28b7438669d760234aa27dffd45581b6
         'WPParsidate\\App\\Convert\\fixNumbers' => __DIR__ . '/../..' . '/inc/App/Convert/fixNumbers.php',
         'WPParsidate\\App\\Convert\\fixPermalink' => __DIR__ . '/../..' . '/inc/App/Convert/fixPermalink.php',
         'WPParsidate\\App\\Core\\Core' => __DIR__ . '/../..' . '/inc/App/Core/Core.php',
-        'WPParsidate\\App\\Core\\Locale' => __DIR__ . '/../..' . '/inc/App/Core/Locale.php',
         'WPParsidate\\App\\Core\\fixDates' => __DIR__ . '/../..' . '/inc/App/Core/fixDates.php',
         'WPParsidate\\App\\Core\\fixTitle' => __DIR__ . '/../..' . '/inc/App/Core/fixTitle.php',
         'WPParsidate\\App\\Integration\\ACF' => __DIR__ . '/../..' . '/inc/App/Integration/ACF.php',
