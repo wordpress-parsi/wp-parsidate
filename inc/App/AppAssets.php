@@ -10,7 +10,7 @@ use WPParsidate\Settings\Settings;
 
 class AppAssets {
 	public function __construct() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'adminEnqueueScripts' ) );
 		add_filter( 'admin_init', [ $this, 'fixTinyMceFont' ], 9 );
 		add_action( 'admin_print_styles-plugin-editor.php', [ $this, 'fixCodeEditor' ] );
 		add_action( 'admin_print_styles-theme-editor.php', [ $this, 'fixCodeEditor' ] );
@@ -109,7 +109,7 @@ class AppAssets {
 		}
 	}
 
-	public function enqueueScripts(): void {
+	public function adminEnqueueScripts(): void {
 		$pluginVersion = Assets::getVersion();
 		$debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
