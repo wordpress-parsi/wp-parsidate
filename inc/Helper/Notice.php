@@ -11,21 +11,26 @@ class Notice {
 		self::clear( $key );
 
 		foreach ( $notices as $notice ) {
-			self::add( $key, $notice['message'], $notice['type'] );
+			if ( is_array( $notice ) ) {
+				self::add( $key, $notice['message'], $notice['type'] ?? null, $notice['link_title'] ?? null,
+					$notice['link'] ?? null );
+			}
 		}
 
 		return self::display( $key, null, $echo );
 	}
 
-	public static function add( $key, $message, $type = null ): void {
+	public static function add( $key, $message, $type = null, $linkTitle = null, $link = null ): void {
 		if ( ! $key || ! $message ) {
 			return;
 		}
 
 		$type                     = self::getType( $type );
 		self::$messages[ $key ][] = array(
-			'type'    => $type,
-			'message' => $message
+			'type'       => $type,
+			'message'    => $message,
+			'link_title' => $linkTitle,
+			'link'       => $link,
 		);
 	}
 
@@ -37,13 +42,15 @@ class Notice {
 		$type     = is_null( $type ) ? $type : self::getType( $type );
 		$messages = self::$messages[ $key ] ?? [];
 		$notices  = $noticeWrap = '';
+
 		if ( ! empty( $messages ) ) {
 			foreach ( $messages as $message ) {
 				if ( ! is_null( $type ) && $message['type'] !== $type ) {
 					continue;
 				}
 
-				$notices .= self::html( $message['type'], $message['message'] );
+				$notices .= self::html( $message['type'], $message['message'], $message['link_title'] ?? null,
+					$message['link'] ?? null );
 			}
 
 			self::clear( $key );
@@ -63,10 +70,12 @@ class Notice {
 		return '';
 	}
 
-	public static function html( $type, $message ): string {
+	public static function html( $type, $message, $linkTitle = '', $link = '' ): string {
 		$type = self::getType( $type );
 
-		return '<div class="wppd-notice wppd-notice-' . $type . '" ><div>' . self::getIcon( $type ) . '<p>' . $message . '</p></div></div>';
+		$link = $link && $linkTitle ? '<a href="' . $link . '" ' . ( Validating::isExternalLink( $link ) ? 'target="_blank"' : '' ) . ' class="' . TELIGRO_CLASS_PREFIX . 'notice-link">' . $linkTitle . '</a>' : '';
+
+		return '<div class="' . WP_PARSI_CLASS_PREFIX . 'notice ' . WP_PARSI_CLASS_PREFIX . 'notice-' . $type . '" ><div>' . self::getIcon( $type ) . '<p>' . $message . '</p></div>' . $link . '</div>';
 	}
 
 	private static function getIcon( $type ): string {

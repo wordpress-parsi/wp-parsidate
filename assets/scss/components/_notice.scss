@@ -60,6 +60,14 @@
         color: color.scale(variables.$info, $lightness: -5%);
         background-color: color.scale(variables.$info_light, $lightness: -5%);
       }
+
+      a {
+        color: color.scale(variables.$info, $lightness: -30%);
+
+        &:hover, &:focus, &:active {
+          color: variables.$info;
+        }
+      }
     }
 
     &.wppd-notice-success {
@@ -69,6 +77,14 @@
       code {
         color: color.scale(variables.$success, $lightness: -5%);
         background-color: color.scale(variables.$success_light, $lightness: -5%);
+      }
+
+      a {
+        color: color.scale(variables.$success, $lightness: -30%);
+
+        &:hover, &:focus, &:active {
+          color: variables.$success;
+        }
       }
     }
 
@@ -80,6 +96,14 @@
         color: color.scale(variables.$warning, $lightness: -5%);
         background-color: color.scale(variables.$warning_light, $lightness: -5%);
       }
+
+      a {
+        color: color.scale(variables.$warning, $lightness: -30%);
+
+        &:hover, &:focus, &:active {
+          color: variables.$warning;
+        }
+      }
     }
 
     &.wppd-notice-error {
@@ -89,6 +113,14 @@
       code {
         color: color.scale(variables.$error, $lightness: -5%);
         background-color: color.scale(variables.$error_light, $lightness: -5%);
+      }
+
+      a {
+        color: color.scale(variables.$error, $lightness: -30%);
+
+        &:hover, &:focus, &:active {
+          color: variables.$error;
+        }
       }
     }
   }
