@@ -102,6 +102,10 @@ final class WP_Parsidate {
 			define( 'WP_PARSI_URL', plugin_dir_url( WP_PARSI_ROOT ) );
 		}
 
+		if ( ! defined( 'WP_PARSI_CLASS_PREFIX' ) ) {
+			define( 'WP_PARSI_CLASS_PREFIX', 'wppd-' );
+		}
+
 		if ( ! defined( 'WP_PARSI_INPUT_PREFIX' ) ) {
 			define( 'WP_PARSI_INPUT_PREFIX', 'wp_parsidate_' );
 		}
