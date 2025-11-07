@@ -14,96 +14,96 @@ defined( 'ABSPATH' ) || exit;
 use WPParsidate\Addons\Addon;
 
 class RankMath extends Addon {
-	public string $addonID = 'rank_math';
+  public string $addonID = 'rank_math';
 
-	public function initAction(): void {
-		add_filter( "rank_math/opengraph/facebook/article_published_time", [ $this, 'convert_date_time' ] );
-		add_filter( "rank_math/opengraph/facebook/article_modified_time", [ $this, 'convert_date_time' ] );
-		add_filter( "rank_math/json_ld", [ $this, 'json_ld' ], 20, 2 );
-		add_filter( 'rank_math/snippet/rich_snippet_product_entity', [ $this, 'fix_price_currency' ], 30 );
-	}
+  public function initAction(): void {
+    add_filter( "rank_math/opengraph/facebook/article_published_time", [ $this, 'convert_date_time' ] );
+    add_filter( "rank_math/opengraph/facebook/article_modified_time", [ $this, 'convert_date_time' ] );
+    add_filter( "rank_math/json_ld", [ $this, 'json_ld' ], 20, 2 );
+    add_filter( 'rank_math/snippet/rich_snippet_product_entity', [ $this, 'fix_price_currency' ], 30 );
+  }
 
-	/* @method */
-	public function convert( $datetime, $format = 'c' ) {
-		return gregdate( $format, eng_number( $datetime ) );
-	}
+  /* @method */
+  public function convert( $datetime, $format = 'c' ) {
+    return gregdate( $format, eng_number( $datetime ) );
+  }
 
-	/* @hook */
-	public function convert_date_time( $content ) {
-		return $this->convert( $content );
-	}
+  /* @hook */
+  public function convert_date_time( $content ) {
+    return $this->convert( $content );
+  }
 
-	/* @hook */
-	public function json_ld( $data, $jsonld ) {
-		if ( empty( $data ) || ! is_array( $data ) ) {
-			return $data;
-		}
+  /* @hook */
+  public function json_ld( $data, $jsonld ) {
+    if ( empty( $data ) || ! is_array( $data ) ) {
+      return $data;
+    }
 
-		foreach ( $data as $key => $item ) {
+    foreach ( $data as $key => $item ) {
 
-			// Fix uploadDate in video Object
-			if ( isset( $item['@type'] ) && $item['@type'] === 'VideoObject' ) {
-				if ( isset( $item['uploadDate'] ) and ! empty( $item['uploadDate'] ) ) {
-					$data[ $key ]['uploadDate'] = $this->convert_date_time( $item['uploadDate'] );
-				}
-			}
+      // Fix uploadDate in video Object
+      if ( isset( $item['@type'] ) && $item['@type'] === 'VideoObject' ) {
+        if ( isset( $item['uploadDate'] ) and ! empty( $item['uploadDate'] ) ) {
+          $data[ $key ]['uploadDate'] = $this->convert_date_time( $item['uploadDate'] );
+        }
+      }
 
-			// Fix priceValidUntil Date
-			if ( isset( $item['@type'] ) && $item['@type'] === 'Product' ) {
-				if ( isset( $item['offers']['priceValidUntil'] ) and ! empty( $item['offers']['priceValidUntil'] ) ) {
-					$jalali = wpp_date_is( $item['offers']['priceValidUntil'], "Y-m-d" );
-					if ( $jalali['status'] === true and $jalali['type'] === "jalali" ) {
-						$data[ $key ]['offers']['priceValidUntil'] = $this->convert( $jalali['value'], "Y-m-d" );
-					}
-				}
-			}
+      // Fix priceValidUntil Date
+      if ( isset( $item['@type'] ) && $item['@type'] === 'Product' ) {
+        if ( isset( $item['offers']['priceValidUntil'] ) and ! empty( $item['offers']['priceValidUntil'] ) ) {
+          $jalali = wpp_date_is( $item['offers']['priceValidUntil'], "Y-m-d" );
+          if ( $jalali['status'] === true and $jalali['type'] === "jalali" ) {
+            $data[ $key ]['offers']['priceValidUntil'] = $this->convert( $jalali['value'], "Y-m-d" );
+          }
+        }
+      }
 
-			// Fix ProductGroup / hasVariant / offers
-			if ( isset( $item['@type'] ) && $item['@type'] === 'ProductGroup' ) {
-				if ( isset( $item['hasVariant'] ) and ! empty( $item['hasVariant'] ) and is_array( $item['hasVariant'] ) ) {
-					foreach ( $item['hasVariant'] as $variantKey => $variant ) {
+      // Fix ProductGroup / hasVariant / offers
+      if ( isset( $item['@type'] ) && $item['@type'] === 'ProductGroup' ) {
+        if ( isset( $item['hasVariant'] ) and ! empty( $item['hasVariant'] ) and is_array( $item['hasVariant'] ) ) {
+          foreach ( $item['hasVariant'] as $variantKey => $variant ) {
 
-						// Check priceValidUntil
-						if ( isset( $variant['offers']['priceValidUntil'] ) and ! empty( $variant['offers']['priceValidUntil'] ) ) {
-							$jalali = wpp_date_is( $variant['offers']['priceValidUntil'], "Y-m-d" );
-							if ( $jalali['status'] === true and $jalali['type'] === "jalali" ) {
-								$data[ $key ]['hasVariant'][ $variantKey ]['offers']['priceValidUntil'] = $this->convert( $jalali['value'],
-									"Y-m-d" );
-							}
-						}
+            // Check priceValidUntil
+            if ( isset( $variant['offers']['priceValidUntil'] ) and ! empty( $variant['offers']['priceValidUntil'] ) ) {
+              $jalali = wpp_date_is( $variant['offers']['priceValidUntil'], "Y-m-d" );
+              if ( $jalali['status'] === true and $jalali['type'] === "jalali" ) {
+                $data[ $key ]['hasVariant'][ $variantKey ]['offers']['priceValidUntil'] = $this->convert( $jalali['value'],
+                  "Y-m-d" );
+              }
+            }
 
-						// Check offer Price
-						if ( isset( $variant['offers']['priceCurrency'] ) and strtoupper( $variant['offers']['priceCurrency'] ) === "IRT" ) {
-							$data[ $key ]['hasVariant'][ $variantKey ]['offers']['priceCurrency'] = 'IRR';
-							if ( ! empty( $variant['offers']['price'] ) and (float) $variant['offers']['price'] > 0 ) {
-								$data[ $key ]['hasVariant'][ $variantKey ]['offers']['price'] = apply_filters( "wpp_rank_math_product_variant_price",
-									( $variant['offers']['price'] * 10 ), $variant );
-							}
-						}
-					}
-				}
-			}
-		}
+            // Check offer Price
+            if ( isset( $variant['offers']['priceCurrency'] ) and strtoupper( $variant['offers']['priceCurrency'] ) === "IRT" ) {
+              $data[ $key ]['hasVariant'][ $variantKey ]['offers']['priceCurrency'] = 'IRR';
+              if ( ! empty( $variant['offers']['price'] ) and (float) $variant['offers']['price'] > 0 ) {
+                $data[ $key ]['hasVariant'][ $variantKey ]['offers']['price'] = apply_filters( "wpp_rank_math_product_variant_price",
+                  ( $variant['offers']['price'] * 10 ), $variant );
+              }
+            }
+          }
+        }
+      }
+    }
 
-		return $data;
-	}
+    return $data;
+  }
 
-	/* @hook */
-	public function fix_price_currency( $entity ) {
-		if ( isset( $entity['offers']['priceCurrency'] ) and strtoupper( $entity['offers']['priceCurrency'] ) === "IRT" ) {
+  /* @hook */
+  public function fix_price_currency( $entity ) {
+    if ( isset( $entity['offers']['priceCurrency'] ) and strtoupper( $entity['offers']['priceCurrency'] ) === "IRT" ) {
 
-			$entity['offers']['priceCurrency'] = 'IRR';
-			if ( ! empty( $entity['offers']['price'] ) and (float) $entity['offers']['price'] > 0 ) {
-				$entity['offers']['price'] = apply_filters( "wpp_rank_math_product_price",
-					( $entity['offers']['price'] * 10 ), $entity );
-			}
-		}
+      $entity['offers']['priceCurrency'] = 'IRR';
+      if ( ! empty( $entity['offers']['price'] ) and (float) $entity['offers']['price'] > 0 ) {
+        $entity['offers']['price'] = apply_filters( "wpp_rank_math_product_price",
+          ( $entity['offers']['price'] * 10 ), $entity );
+      }
+    }
 
-		return $entity;
-	}
+    return $entity;
+  }
 
-	public function info(): array {
-		$svg = '<?xml version="1.0"?>
+  public function info(): array {
+    $svg = '<?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 350">
  <defs>
   <clipPath id="clip0_3148_2108">
@@ -133,23 +133,23 @@ class RankMath extends Addon {
  </g>
 </svg>';
 
-		return array(
-			'id'               => $this->addonID,
-			'title'            => __( 'Rank Math', 'wp-parsidate' ),
-			'desc'             => __( 'ParsiDate integration for Rank Math', 'wp-parsidate' ),
-			'force_enable'     => false,
-			'icon'             => $svg,
-			'tags'             => [ __( 'SEO', 'wp-parsidate' ) ],
-			'cat'              => 'seo',
-			'settings_key'     => $this->addonID,
-			'requires_plugins' => [
-				'seo-by-rank-math/rank-math.php' => array(
-					'is_wp_plugin' => true,
-					'is_free'      => true,
-					'plugin_link'  => 'https://wordpress.org/plugins/seo-by-rank-math/',
-					'class_check'  => 'RankMath'
-				)
-			]
-		);
-	}
+    return array(
+      'id'               => $this->addonID,
+      'title'            => __( 'Rank Math', 'wp-parsidate' ),
+      'desc'             => __( 'ParsiDate integration for Rank Math', 'wp-parsidate' ),
+      'force_enable'     => false,
+      'icon'             => $svg,
+      'tags'             => [ __( 'SEO', 'wp-parsidate' ) ],
+      'cat'              => 'seo',
+      'settings_key'     => $this->addonID,
+      'requires_plugins' => [
+        'seo-by-rank-math/rank-math.php' => array(
+          'is_wp_plugin' => true,
+          'is_free'      => true,
+          'plugin_link'  => 'https://wordpress.org/plugins/seo-by-rank-math/',
+          'class_check'  => 'RankMath'
+        )
+      ]
+    );
+  }
 }

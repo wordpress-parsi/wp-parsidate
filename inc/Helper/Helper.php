@@ -3,90 +3,90 @@
 namespace WPParsidate\Helper;
 
 class Helper {
-	public static function reorderArray( $array, $orders ) {
-		$reorderArray = [];
-		$orders       = array_map( 'intval', $orders );
+  public static function reorderArray( $array, $orders ) {
+    $reorderArray = [];
+    $orders       = array_map( 'intval', $orders );
 
-		if ( count( array_unique( array_keys( $orders ) ) ) !== count( array_unique( array_values( $orders ) ) ) ) {
-			return false;
-		}
+    if ( count( array_unique( array_keys( $orders ) ) ) !== count( array_unique( array_values( $orders ) ) ) ) {
+      return false;
+    }
 
-		foreach ( $orders as $index => $order ) {
-			$reorderArray[ $order ] = $array[ $index ];
-		}
+    foreach ( $orders as $index => $order ) {
+      $reorderArray[ $order ] = $array[ $index ];
+    }
 
-		ksort( $reorderArray );
+    ksort( $reorderArray );
 
-		return $reorderArray;
-	}
+    return $reorderArray;
+  }
 
-	public static function randomString( $length, $smallAlphabet = true, $largeAlphabet = true, $numbers = true ) {
-		$strings = [];
-		if ( $smallAlphabet ) {
-			$strings = array_merge( $strings, range( 'a', 'z' ) );
-		}
-		if ( $largeAlphabet ) {
-			$strings = array_merge( $strings, range( 'A', 'Z' ) );
-		}
-		if ( $numbers ) {
-			$strings = array_merge( $strings, range( 1, 9 ) );
-		}
+  public static function randomString( $length, $smallAlphabet = true, $largeAlphabet = true, $numbers = true ) {
+    $strings = [];
+    if ( $smallAlphabet ) {
+      $strings = array_merge( $strings, range( 'a', 'z' ) );
+    }
+    if ( $largeAlphabet ) {
+      $strings = array_merge( $strings, range( 'A', 'Z' ) );
+    }
+    if ( $numbers ) {
+      $strings = array_merge( $strings, range( 1, 9 ) );
+    }
 
-		if ( empty( $strings ) ) {
-			return false;
-		}
+    if ( empty( $strings ) ) {
+      return false;
+    }
 
-		shuffle( $strings );
+    shuffle( $strings );
 
-		$strings = implode( "", $strings );
+    $strings = implode( "", $strings );
 
-		return substr( str_shuffle( $strings ), 0, $length );
-	}
+    return substr( str_shuffle( $strings ), 0, $length );
+  }
 
-	/**
-	 * Inserts any number of scalars or arrays at the point
-	 * in the haystack immediately after the search key ($needle) was found,
-	 * or at the end if the needle is not found or not supplied.
-	 * Modifies $haystack in place.
-	 * https://stackoverflow.com/a/7257599/3224296
-	 *
-	 * @param  array &$haystack  the associative array to search. This will be modified by the function
-	 * @param  int  $needle  the key to search for
-	 * @param  array  $stuff  one or more arrays or scalars to be inserted into $haystack
-	 *
-	 * @return array the index at which $needle was found
-	 */
-	public static function arrayInsertAfter( array $haystack, int $needle = 0, array $stuff = [] ): array {
-		return array_merge( array_slice( $haystack, 0, $needle, true ), $stuff,
-			array_slice( $haystack, $needle, count( $haystack ) - 1, true ) );
-	}
+  /**
+   * Inserts any number of scalars or arrays at the point
+   * in the haystack immediately after the search key ($needle) was found,
+   * or at the end if the needle is not found or not supplied.
+   * Modifies $haystack in place.
+   * https://stackoverflow.com/a/7257599/3224296
+   *
+   * @param  array &$haystack  the associative array to search. This will be modified by the function
+   * @param  int  $needle  the key to search for
+   * @param  array  $stuff  one or more arrays or scalars to be inserted into $haystack
+   *
+   * @return array the index at which $needle was found
+   */
+  public static function arrayInsertAfter( array $haystack, int $needle = 0, array $stuff = [] ): array {
+    return array_merge( array_slice( $haystack, 0, $needle, true ), $stuff,
+      array_slice( $haystack, $needle, count( $haystack ) - 1, true ) );
+  }
 
-	public static function urlToKey( string $url, $hostOnly = false ) {
-		if ( Validating::isUrl( $url ) ) {
-			if ( $hostOnly ) {
-				$url = wp_parse_url( $url, PHP_URL_HOST );
-			} else {
-				$url = wp_parse_url( $url, PHP_URL_HOST ) . wp_parse_url( $url, PHP_URL_PATH );
-				$url = trim( $url, '/' );
-			}
+  public static function urlToKey( string $url, $hostOnly = false ) {
+    if ( Validating::isUrl( $url ) ) {
+      if ( $hostOnly ) {
+        $url = wp_parse_url( $url, PHP_URL_HOST );
+      } else {
+        $url = wp_parse_url( $url, PHP_URL_HOST ) . wp_parse_url( $url, PHP_URL_PATH );
+        $url = trim( $url, '/' );
+      }
 
-			return Sanitizing::title( $url );
-		}
+      return Sanitizing::title( $url );
+    }
 
-		return false;
-	}
+    return false;
+  }
 
-	public static function combineStyles( $styles ): string {
-		if ( ! is_array( $styles ) || empty( $styles ) ) {
-			return '';
-		}
+  public static function combineStyles( $styles ): string {
+    if ( ! is_array( $styles ) || empty( $styles ) ) {
+      return '';
+    }
 
-		$style = [];
+    $style = [];
 
-		foreach ( $styles as $key => $value ) {
-			$style[] = $key . ': ' . $value . ';';
-		}
+    foreach ( $styles as $key => $value ) {
+      $style[] = $key . ': ' . $value . ';';
+    }
 
-		return "\n\t" . implode( "\n\t", $style );
-	}
+    return "\n\t" . implode( "\n\t", $style );
+  }
 }

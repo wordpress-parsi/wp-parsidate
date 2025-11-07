@@ -61,114 +61,114 @@ use WPParsidate\Settings\Settings;
 use WPParsidate\Widget\Widget;
 
 final class WP_Parsidate {
-	/**
-	 * @var WP_Parsidate|null Class instance
-	 */
-	public static ?WP_Parsidate $instance = null;
+  /**
+   * @var WP_Parsidate|null Class instance
+   */
+  public static ?WP_Parsidate $instance = null;
 
-	public function __construct() {
-		$this->define();
-		$this->include();
-		$this->instance();
-	}
+  public function __construct() {
+    $this->define();
+    $this->include();
+    $this->instance();
+  }
 
-	/**
-	 * Define constant
-	 *
-	 * @return void
-	 */
-	private function define(): void {
-		if ( ! defined( 'WP_PARSI_KEY' ) ) {
-			define( 'WP_PARSI_KEY', 'wp_parsidate' );
-		}
+  /**
+   * Define constant
+   *
+   * @return void
+   */
+  private function define(): void {
+    if ( ! defined( 'WP_PARSI_KEY' ) ) {
+      define( 'WP_PARSI_KEY', 'wp_parsidate' );
+    }
 
-		if ( ! defined( 'WP_PARSI_KEY_SLUG' ) ) {
-			define( 'WP_PARSI_KEY_SLUG', 'wp-parsidate' );
-		}
+    if ( ! defined( 'WP_PARSI_KEY_SLUG' ) ) {
+      define( 'WP_PARSI_KEY_SLUG', 'wp-parsidate' );
+    }
 
-		if ( ! defined( 'WP_PARSI_KEY_CAP' ) ) {
-			define( 'WP_PARSI_KEY_CAP', 'WpParsiDate' );
-		}
+    if ( ! defined( 'WP_PARSI_KEY_CAP' ) ) {
+      define( 'WP_PARSI_KEY_CAP', 'WpParsiDate' );
+    }
 
-		if ( ! defined( 'WP_PARSI_ROOT' ) ) {
-			define( 'WP_PARSI_ROOT', __FILE__ );
-		}
+    if ( ! defined( 'WP_PARSI_ROOT' ) ) {
+      define( 'WP_PARSI_ROOT', __FILE__ );
+    }
 
-		if ( ! defined( 'WP_PARSI_DIR' ) ) {
-			define( 'WP_PARSI_DIR', plugin_dir_path( WP_PARSI_ROOT ) );
-		}
+    if ( ! defined( 'WP_PARSI_DIR' ) ) {
+      define( 'WP_PARSI_DIR', plugin_dir_path( WP_PARSI_ROOT ) );
+    }
 
-		if ( ! defined( 'WP_PARSI_URL' ) ) {
-			define( 'WP_PARSI_URL', plugin_dir_url( WP_PARSI_ROOT ) );
-		}
+    if ( ! defined( 'WP_PARSI_URL' ) ) {
+      define( 'WP_PARSI_URL', plugin_dir_url( WP_PARSI_ROOT ) );
+    }
 
-		if ( ! defined( 'WP_PARSI_CLASS_PREFIX' ) ) {
-			define( 'WP_PARSI_CLASS_PREFIX', 'wppd-' );
-		}
+    if ( ! defined( 'WP_PARSI_CLASS_PREFIX' ) ) {
+      define( 'WP_PARSI_CLASS_PREFIX', 'wppd-' );
+    }
 
-		if ( ! defined( 'WP_PARSI_INPUT_PREFIX' ) ) {
-			define( 'WP_PARSI_INPUT_PREFIX', 'wp_parsidate_' );
-		}
+    if ( ! defined( 'WP_PARSI_INPUT_PREFIX' ) ) {
+      define( 'WP_PARSI_INPUT_PREFIX', 'wp_parsidate_' );
+    }
 
-		add_action( 'init', static function () {
-			if ( ! function_exists( 'get_plugin_data' ) ) {
-				require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-			}
-			$pluginData = get_plugin_data( WP_PARSI_ROOT );
-			define( 'WP_PARSI_VER', $pluginData['Version'] );
-		}, 0 );
-	}
+    add_action( 'init', static function () {
+      if ( ! function_exists( 'get_plugin_data' ) ) {
+        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+      }
+      $pluginData = get_plugin_data( WP_PARSI_ROOT );
+      define( 'WP_PARSI_VER', $pluginData['Version'] );
+    }, 0 );
+  }
 
-	/**
-	 * Include required files
-	 *
-	 * @return void
-	 */
-	private function include(): void {
-		require_once __DIR__ . '/vendor/autoload.php';
-	}
+  /**
+   * Include required files
+   *
+   * @return void
+   */
+  private function include(): void {
+    require_once __DIR__ . '/vendor/autoload.php';
+  }
 
-	/**
-	 * Instant classes
-	 *
-	 * @return void
-	 */
-	private function instance(): void {
-		if ( ! defined( 'WP_PARSI_DEBUG_MODE' ) ) {
-			define( 'WP_PARSI_DEBUG_MODE', Settings::get( 'debug_mode', false ) );
-		}
+  /**
+   * Instant classes
+   *
+   * @return void
+   */
+  private function instance(): void {
+    if ( ! defined( 'WP_PARSI_DEBUG_MODE' ) ) {
+      define( 'WP_PARSI_DEBUG_MODE', Settings::get( 'debug_mode', false ) );
+    }
 
-		new Admin();
-		new Addons();
+    new Admin();
+    new Addons();
 
-		if ( WordPress::isMultilingualActive() && Settings::get( 'multilingual_support', false ) ) {
-			if (
-				( defined( 'ICL_LANGUAGE_CODE' ) && 'fa_IR' !== ICL_LANGUAGE_CODE ) ||
-				( function_exists( 'pll_current_language' ) && ( pll_current_language() !== false && pll_current_language() !== "fa" ) )
-			) {
-				return;
-			}
-		}
+    if ( WordPress::isMultilingualActive() && Settings::get( 'multilingual_support', false ) ) {
+      if (
+        ( defined( 'ICL_LANGUAGE_CODE' ) && 'fa_IR' !== ICL_LANGUAGE_CODE ) ||
+        ( function_exists( 'pll_current_language' ) && ( pll_current_language() !== false && pll_current_language() !== "fa" ) )
+      ) {
+        return;
+      }
+    }
 
-		new App();
-		new Core();
-		new Plugin();
-		new Widget();
-	}
+    new App();
+    new Core();
+    new Plugin();
+    new Widget();
+  }
 
-	/**
-	 * Returns an instance of WP_Parsidate class, makes instance if not exists
-	 *
-	 * @return          WP_Parsidate Instance of WP_Parsidate
-	 * @since           2.0
-	 */
-	public static function getInstance(): ?WP_Parsidate {
-		if ( self::$instance === null ) {
-			self::$instance = new WP_Parsidate();
-		}
+  /**
+   * Returns an instance of WP_Parsidate class, makes instance if not exists
+   *
+   * @return          WP_Parsidate Instance of WP_Parsidate
+   * @since           2.0
+   */
+  public static function getInstance(): ?WP_Parsidate {
+    if ( self::$instance === null ) {
+      self::$instance = new WP_Parsidate();
+    }
 
-		return self::$instance;
-	}
+    return self::$instance;
+  }
 }
 
 WP_Parsidate::getInstance();

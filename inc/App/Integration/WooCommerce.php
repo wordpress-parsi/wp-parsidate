@@ -13,784 +13,784 @@ use WPParsidate\Helper\Number;
 use WPParsidate\Settings\Settings;
 
 class WooCommerce extends Addon {
-	public string $addonID = 'woocommerce';
-	public string $currentTab = 'integration';
+  public string $addonID = 'woocommerce';
+  public string $currentTab = 'integration';
 
-	public function initM1Action(): void {
-		WcGateways::getInstance();
-		add_action( 'before_woocommerce_init', [ $this, 'beforeWooCommerceInit' ] );
-	}
+  public function initM1Action(): void {
+    WcGateways::getInstance();
+    add_action( 'before_woocommerce_init', [ $this, 'beforeWooCommerceInit' ] );
+  }
 
-	public function initAction(): void {
-		add_filter( 'woocommerce_reports_get_order_report_query', [ $this, 'fixOrderReportQueryDate' ] );
+  public function initAction(): void {
+    add_filter( 'woocommerce_reports_get_order_report_query', [ $this, 'fixOrderReportQueryDate' ] );
 
-		if ( get_locale() === 'fa_IR' ) {
-			if ( $this->getSetting( 'fix_prices', false ) ) {
-				add_filter( 'wc_price', [ $this, 'fixNumbersToPersian' ] );
-				add_filter( 'woocommerce_get_price_html', [ $this, 'fixNumbersToPersian' ] );
-				add_filter( 'woocommerce_cart_item_price', [ $this, 'fixNumbersToPersian' ] );
-				add_filter( 'woocommerce_cart_item_subtotal', [ $this, 'fixNumbersToPersian' ] );
-				add_filter( 'woocommerce_cart_subtotal', [ $this, 'fixNumbersToPersian' ] );
-				add_filter( 'woocommerce_cart_totals_coupon_html', [ $this, 'fixNumbersToPersian' ] );
-				add_filter( 'woocommerce_cart_shipping_method_full_label', [ $this, 'fixNumbersToPersian' ] );
-				add_filter( 'woocommerce_cart_total', [ $this, 'fixNumbersToPersian' ] );
-			}
+    if ( get_locale() === 'fa_IR' ) {
+      if ( $this->getSetting( 'fix_prices', false ) ) {
+        add_filter( 'wc_price', [ $this, 'fixNumbersToPersian' ] );
+        add_filter( 'woocommerce_get_price_html', [ $this, 'fixNumbersToPersian' ] );
+        add_filter( 'woocommerce_cart_item_price', [ $this, 'fixNumbersToPersian' ] );
+        add_filter( 'woocommerce_cart_item_subtotal', [ $this, 'fixNumbersToPersian' ] );
+        add_filter( 'woocommerce_cart_subtotal', [ $this, 'fixNumbersToPersian' ] );
+        add_filter( 'woocommerce_cart_totals_coupon_html', [ $this, 'fixNumbersToPersian' ] );
+        add_filter( 'woocommerce_cart_shipping_method_full_label', [ $this, 'fixNumbersToPersian' ] );
+        add_filter( 'woocommerce_cart_total', [ $this, 'fixNumbersToPersian' ] );
+      }
 
-			if ( Settings::get( 'persian_date', false ) ) {
-				add_action( 'wp_head', [ $this, 'fixDateTimeDirection' ] );
-				add_filter( 'woocommerce_email_styles', [ $this, 'fixEmailTime' ], 9999, 2 );
+      if ( Settings::get( 'persian_date', false ) ) {
+        add_action( 'wp_head', [ $this, 'fixDateTimeDirection' ] );
+        add_filter( 'woocommerce_email_styles', [ $this, 'fixEmailTime' ], 9999, 2 );
 
-				// Jalali datepicker
-				add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueScripts' ] );
+        // Jalali datepicker
+        add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueScripts' ] );
 
-				// Convert order_date using js
-				add_action( 'woocommerce_process_shop_order_meta', [ $this, 'changeOrderDateOnSave' ], 1000 );
-				add_filter( 'woocommerce_process_product_meta', [ $this, 'validateNonVariableProductDates' ], 1000 );
-				add_action( 'woocommerce_ajax_save_product_variations', [ $this, 'validateVariableProductDates' ],
-					1000 );
-				add_action( 'woocommerce_process_shop_coupon_meta', [ $this, 'validateCouponsDate' ], 1000 );
-				add_filter( 'get_post_metadata', [ $this, 'changeOrderDateAndCouponExpiresMeta' ], 10, 4 );
+        // Convert order_date using js
+        add_action( 'woocommerce_process_shop_order_meta', [ $this, 'changeOrderDateOnSave' ], 1000 );
+        add_filter( 'woocommerce_process_product_meta', [ $this, 'validateNonVariableProductDates' ], 1000 );
+        add_action( 'woocommerce_ajax_save_product_variations', [ $this, 'validateVariableProductDates' ],
+          1000 );
+        add_action( 'woocommerce_process_shop_coupon_meta', [ $this, 'validateCouponsDate' ], 1000 );
+        add_filter( 'get_post_metadata', [ $this, 'changeOrderDateAndCouponExpiresMeta' ], 10, 4 );
 
-				add_filter( 'manage_edit-shop_coupon_columns', [ $this, 'removeCouponExpiryDateColumn' ] );
-				add_action( 'manage_shop_coupon_posts_custom_column', [ $this, 'printCouponExpiryDateColumn' ], 10, 2 );
+        add_filter( 'manage_edit-shop_coupon_columns', [ $this, 'removeCouponExpiryDateColumn' ] );
+        add_action( 'manage_shop_coupon_posts_custom_column', [ $this, 'printCouponExpiryDateColumn' ], 10, 2 );
 
-				add_action( 'admin_footer', [ $this, 'fixShowCreatedOrderDate' ] );
-				add_action( 'admin_init', [ $this, 'changeReportDates' ], 1000 );
-			}
+        add_action( 'admin_footer', [ $this, 'fixShowCreatedOrderDate' ] );
+        add_action( 'admin_init', [ $this, 'changeReportDates' ], 1000 );
+      }
 
-			add_filter( 'woocommerce_checkout_process', [ $this, 'acceptPersianNumbersInCheckout' ], 20 );
-			add_filter( 'woocommerce_checkout_posted_data', [ $this, 'convertNonPersianValuesInCheckout' ] );
+      add_filter( 'woocommerce_checkout_process', [ $this, 'acceptPersianNumbersInCheckout' ], 20 );
+      add_filter( 'woocommerce_checkout_posted_data', [ $this, 'convertNonPersianValuesInCheckout' ] );
 
-			if ( $this->getSetting( 'validate_postcode', false ) ) {
-				add_filter( 'woocommerce_validate_postcode', [ $this, 'validatePostcode' ], 10, 3 );
-			}
+      if ( $this->getSetting( 'validate_postcode', false ) ) {
+        add_filter( 'woocommerce_validate_postcode', [ $this, 'validatePostcode' ], 10, 3 );
+      }
 
-			if ( $this->getSetting( 'validate_phone', false ) ) {
-				add_action( 'woocommerce_after_checkout_validation', [ $this, 'validatePhoneNumber' ], 10, 2 );
-			}
-		}
-	}
+      if ( $this->getSetting( 'validate_phone', false ) ) {
+        add_action( 'woocommerce_after_checkout_validation', [ $this, 'validatePhoneNumber' ], 10, 2 );
+      }
+    }
+  }
 
-	/**
-	 * Init Before WooCommerce Loaded
-	 */
-	public function beforeWooCommerceInit(): void {
-		// Include City Translate
-		if ( $this->getSetting( 'dropdown_cities', false ) ) {
-			new WooCommerceCitySelect();
-		}
+  /**
+   * Init Before WooCommerce Loaded
+   */
+  public function beforeWooCommerceInit(): void {
+    // Include City Translate
+    if ( $this->getSetting( 'dropdown_cities', false ) ) {
+      new WooCommerceCitySelect();
+    }
 
-		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables',
-				WP_PARSI_ROOT, true );
-		}
-	}
+    if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+      \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables',
+        WP_PARSI_ROOT, true );
+    }
+  }
 
-	/**
-	 * @param $data
-	 * @param  \WP_Error  $errors  WP Error
-	 *
-	 * @return void
-	 */
-	public function validatePhoneNumber( $data, $errors ): void {
-		// This pattern ensures the phone number follows the specified structure for both mobile and landline numbers
-		if ( ! preg_match( '/^(0|0098|\+98)?(9\d{9}|[1-8]\d{9,10})$/',
-			Number::toEnglish( wc_get_post_data_by_key( 'billing_phone' ) ) ) ) {
-			$errors->add( 'validation', __( '<strong>Phone number</strong> is invalid.', 'wp-parsidate' ) );
-		}
-	}
+  /**
+   * @param $data
+   * @param  \WP_Error  $errors  WP Error
+   *
+   * @return void
+   */
+  public function validatePhoneNumber( $data, $errors ): void {
+    // This pattern ensures the phone number follows the specified structure for both mobile and landline numbers
+    if ( ! preg_match( '/^(0|0098|\+98)?(9\d{9}|[1-8]\d{9,10})$/',
+      Number::toEnglish( wc_get_post_data_by_key( 'billing_phone' ) ) ) ) {
+      $errors->add( 'validation', __( '<strong>Phone number</strong> is invalid.', 'wp-parsidate' ) );
+    }
+  }
 
-	/**
-	 * Validate Iranian customer postal code
-	 *
-	 * @param $valid
-	 * @param $postcode
-	 * @param $country
-	 *
-	 * @return bool
-	 */
-	public function validatePostcode( $valid, $postcode, $country ): bool {
-		if ( 'IR' !== $country ) {
-			return $valid;
-		}
+  /**
+   * Validate Iranian customer postal code
+   *
+   * @param $valid
+   * @param $postcode
+   * @param $country
+   *
+   * @return bool
+   */
+  public function validatePostcode( $valid, $postcode, $country ): bool {
+    if ( 'IR' !== $country ) {
+      return $valid;
+    }
 
-		return \WPParsidate\Helper\WooCommerce::isPostalCode( $postcode,
-			apply_filters( 'wpp_validate_postal_code_checksum', false ) );
-	}
+    return \WPParsidate\Helper\WooCommerce::isPostalCode( $postcode,
+      apply_filters( 'wpp_validate_postal_code_checksum', false ) );
+  }
 
-	/**
-	 * Convert Non-Persian Values in checkout to Persian
-	 *
-	 * @method  convertNonPersianValuesInCheckout
-	 * @param  array  $data
-	 *
-	 * @return  array modified $data
-	 * @version 1.0.0
-	 * @since   4.0.1
-	 */
-	public function convertNonPersianValuesInCheckout( $data ): array {
-		$persian_fields = array(
-			'billing_postcode',
-			'billing_city',
-			'billing_address_1',
-			'billing_address',
-			'billing_address_2',
-			'billing_state',
-			'shipping_postcode',
-			'shipping_city',
-			'shipping_address_1',
-			'shipping_address',
-			'shipping_address_2',
-			'shipping_state',
-			'billing_first_name',
-			'billing_last_name',
-			'billing_company',
-			'billing_email',
-			'shipping_first_name',
-			'shipping_last_name',
-			'shipping_company',
-		);
+  /**
+   * Convert Non-Persian Values in checkout to Persian
+   *
+   * @method  convertNonPersianValuesInCheckout
+   * @param  array  $data
+   *
+   * @return  array modified $data
+   * @version 1.0.0
+   * @since   4.0.1
+   */
+  public function convertNonPersianValuesInCheckout( $data ): array {
+    $persian_fields = array(
+      'billing_postcode',
+      'billing_city',
+      'billing_address_1',
+      'billing_address',
+      'billing_address_2',
+      'billing_state',
+      'shipping_postcode',
+      'shipping_city',
+      'shipping_address_1',
+      'shipping_address',
+      'shipping_address_2',
+      'shipping_state',
+      'billing_first_name',
+      'billing_last_name',
+      'billing_company',
+      'billing_email',
+      'shipping_first_name',
+      'shipping_last_name',
+      'shipping_company',
+    );
 
-		/**
-		 * here we pass those fields we want to convert from arabic to persian
-		 * other developers can hook into this filter and add their fields too
-		 *
-		 * @var array $persian_fields
-		 */
-		$supported_persian_fields = apply_filters( "wpp_woocommerce_checkout_persian_fields", $persian_fields );
+    /**
+     * here we pass those fields we want to convert from arabic to persian
+     * other developers can hook into this filter and add their fields too
+     *
+     * @var array $persian_fields
+     */
+    $supported_persian_fields = apply_filters( "wpp_woocommerce_checkout_persian_fields", $persian_fields );
 
-		foreach ( $supported_persian_fields as $field ) {
-			if ( isset( $data[ $field ] ) ) {
-				$data[ $field ] = $this->fixPersianCharacters( $data[ $field ] );
-			}
-		}
+    foreach ( $supported_persian_fields as $field ) {
+      if ( isset( $data[ $field ] ) ) {
+        $data[ $field ] = $this->fixPersianCharacters( $data[ $field ] );
+      }
+    }
 
-		return apply_filters( "wpp_woocommerce_checkout_modified_persian_fields", $data );
-	}
+    return apply_filters( "wpp_woocommerce_checkout_modified_persian_fields", $data );
+  }
 
-	/**
-	 * replace Arabic characters with equivalent character in Persian
-	 *
-	 * @method  fixPersianCharacters
-	 * @param  string  $string
-	 *
-	 * @return  string filtered $string
-	 * @version 1.0.0
-	 * @since   4.0.1
-	 */
-	public static function fixPersianCharacters( $string ): string {
-		$characters = array(
-			'ك'  => 'ک',
-			'دِ' => 'د',
-			'بِ' => 'ب',
-			'زِ' => 'ز',
-			'ذِ' => 'ذ',
-			'شِ' => 'ش',
-			'سِ' => 'س',
-			'ى'  => 'ی',
-			'ي'  => 'ی',
-			'١'  => '۱',
-			'٢'  => '۲',
-			'٣'  => '۳',
-			'٤'  => '۴',
-			'٥'  => '۵',
-			'٦'  => '۶',
-			'٧'  => '۷',
-			'٨'  => '۸',
-			'٩'  => '۹',
-			'٠'  => '۰',
-		);
+  /**
+   * replace Arabic characters with equivalent character in Persian
+   *
+   * @method  fixPersianCharacters
+   * @param  string  $string
+   *
+   * @return  string filtered $string
+   * @version 1.0.0
+   * @since   4.0.1
+   */
+  public static function fixPersianCharacters( $string ): string {
+    $characters = array(
+      'ك'  => 'ک',
+      'دِ' => 'د',
+      'بِ' => 'ب',
+      'زِ' => 'ز',
+      'ذِ' => 'ذ',
+      'شِ' => 'ش',
+      'سِ' => 'س',
+      'ى'  => 'ی',
+      'ي'  => 'ی',
+      '١'  => '۱',
+      '٢'  => '۲',
+      '٣'  => '۳',
+      '٤'  => '۴',
+      '٥'  => '۵',
+      '٦'  => '۶',
+      '٧'  => '۷',
+      '٨'  => '۸',
+      '٩'  => '۹',
+      '٠'  => '۰',
+    );
 
-		$characters = apply_filters( "wpp_arabic_persian_characters_list", $characters );
+    $characters = apply_filters( "wpp_arabic_persian_characters_list", $characters );
 
-		return str_replace( array_keys( $characters ), array_values( $characters ), $string );
-	}
+    return str_replace( array_keys( $characters ), array_values( $characters ), $string );
+  }
 
-	/**
-	 * Fix persian postal code & phone numbers in WooCommerce checkout
-	 *
-	 * @since 4.1.0
-	 */
-	public function acceptPersianNumbersInCheckout() {
-		if ( $this->getSetting( 'fix_persian_postcode', false ) ) {
-			if ( isset( $_POST['billing_postcode'] ) ) {
-				$_POST['billing_postcode'] = Number::toEnglish( wc_get_post_data_by_key( 'billing_postcode' ) );
-			}
+  /**
+   * Fix persian postal code & phone numbers in WooCommerce checkout
+   *
+   * @since 4.1.0
+   */
+  public function acceptPersianNumbersInCheckout() {
+    if ( $this->getSetting( 'fix_persian_postcode', false ) ) {
+      if ( isset( $_POST['billing_postcode'] ) ) {
+        $_POST['billing_postcode'] = Number::toEnglish( wc_get_post_data_by_key( 'billing_postcode' ) );
+      }
 
-			if ( isset( $_POST['shipping_postcode'] ) ) {
-				$_POST['shipping_postcode'] = Number::toEnglish( wc_get_post_data_by_key( 'shipping_postcode' ) );
-			}
-		}
+      if ( isset( $_POST['shipping_postcode'] ) ) {
+        $_POST['shipping_postcode'] = Number::toEnglish( wc_get_post_data_by_key( 'shipping_postcode' ) );
+      }
+    }
 
-		if ( $this->getSetting( 'fix_persian_phone', false ) ) {
-			if ( isset( $_POST['billing_phone'] ) ) {
-				$_POST['billing_phone'] = Number::toEnglish( wc_get_post_data_by_key( 'billing_phone' ) );
-			}
+    if ( $this->getSetting( 'fix_persian_phone', false ) ) {
+      if ( isset( $_POST['billing_phone'] ) ) {
+        $_POST['billing_phone'] = Number::toEnglish( wc_get_post_data_by_key( 'billing_phone' ) );
+      }
 
-			if ( isset( $_POST['shipping_phone'] ) ) {
-				$_POST['shipping_phone'] = Number::toEnglish( wc_get_post_data_by_key( 'shipping_phone' ) );
-			}
-		}
-	}
+      if ( isset( $_POST['shipping_phone'] ) ) {
+        $_POST['shipping_phone'] = Number::toEnglish( wc_get_post_data_by_key( 'shipping_phone' ) );
+      }
+    }
+  }
 
-	/**
-	 * Changes gregorian dates to Jalali date on wc report screen
-	 *
-	 * @since           4.0.0
-	 */
-	public function changeReportDates(): void {
-		if ( ! empty( $_GET['page'] ) && 'wc-reports' === esc_attr( $_GET['page'] ) ) {
-			if ( ! empty( $_GET['start_date'] ) ) {
-				$_GET['start_date'] = gregdate( 'Y-m-d',
-					Number::toEnglish( wc_clean( wp_unslash( $_GET['start_date'] ) ) ) );
-			}
+  /**
+   * Changes gregorian dates to Jalali date on wc report screen
+   *
+   * @since           4.0.0
+   */
+  public function changeReportDates(): void {
+    if ( ! empty( $_GET['page'] ) && 'wc-reports' === esc_attr( $_GET['page'] ) ) {
+      if ( ! empty( $_GET['start_date'] ) ) {
+        $_GET['start_date'] = gregdate( 'Y-m-d',
+          Number::toEnglish( wc_clean( wp_unslash( $_GET['start_date'] ) ) ) );
+      }
 
-			if ( ! empty( $_GET['end_date'] ) ) {
-				$_GET['end_date'] = gregdate( 'Y-m-d',
-					Number::toEnglish( wc_clean( wp_unslash( $_GET['end_date'] ) ) ) );
-			}
-		}
-	}
+      if ( ! empty( $_GET['end_date'] ) ) {
+        $_GET['end_date'] = gregdate( 'Y-m-d',
+          Number::toEnglish( wc_clean( wp_unslash( $_GET['end_date'] ) ) ) );
+      }
+    }
+  }
 
-	/**
-	 * Changes order_date field in "Edit order" screen using JS
-	 *
-	 * @since 4.0.0
-	 */
-	public function fixShowCreatedOrderDate(): void {
-		$current_screen = $this->getCurrentScreen();
+  /**
+   * Changes order_date field in "Edit order" screen using JS
+   *
+   * @since 4.0.0
+   */
+  public function fixShowCreatedOrderDate(): void {
+    $current_screen = $this->getCurrentScreen();
 
-		if ( 'edit_order' === $current_screen ) {
-			if ( ! \WPParsidate\Helper\WooCommerce::hposEnabled() ) {
-				global $post;
+    if ( 'edit_order' === $current_screen ) {
+      if ( ! \WPParsidate\Helper\WooCommerce::hposEnabled() ) {
+        global $post;
 
-				if ( ! $post ) {
-					$jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d' ), 'eng' );
-				} else {
-					$jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d', strtotime( $post->post_date ) ), 'eng' );
-				}
-			} else {
-				global $theorder;
+        if ( ! $post ) {
+          $jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d' ), 'eng' );
+        } else {
+          $jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d', strtotime( $post->post_date ) ), 'eng' );
+        }
+      } else {
+        global $theorder;
 
-				if ( ! $theorder ) {
-					$jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d' ), 'eng' );
-				} else {
-					$jalali_date = parsidate( 'Y-m-d',
-						! is_null( $theorder->get_date_created() ) ? $theorder->get_date_created()->getOffsetTimestamp() : '',
-						'eng' );
-				}
-			}
+        if ( ! $theorder ) {
+          $jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d' ), 'eng' );
+        } else {
+          $jalali_date = parsidate( 'Y-m-d',
+            ! is_null( $theorder->get_date_created() ) ? $theorder->get_date_created()->getOffsetTimestamp() : '',
+            'eng' );
+        }
+      }
 
-			wc_enqueue_js( '$("input[name=order_date]").val("' . $jalali_date . '")' );
+      wc_enqueue_js( '$("input[name=order_date]").val("' . $jalali_date . '")' );
 
-		} elseif ( 'legacy_report' === $current_screen ) {
-			$jalali_start_date = ! empty( $_GET['start_date'] ) ? parsidate( 'Y-m-d',
-				date( 'Y-m-d', strtotime( $_GET['start_date'] ) ), 'eng' ) : '';
-			$jalali_end_date   = ! empty( $_GET['end_date'] ) ? parsidate( 'Y-m-d',
-				date( 'Y-m-d', strtotime( $_GET['end_date'] ) ), 'eng' ) : '';
+    } elseif ( 'legacy_report' === $current_screen ) {
+      $jalali_start_date = ! empty( $_GET['start_date'] ) ? parsidate( 'Y-m-d',
+        date( 'Y-m-d', strtotime( $_GET['start_date'] ) ), 'eng' ) : '';
+      $jalali_end_date   = ! empty( $_GET['end_date'] ) ? parsidate( 'Y-m-d',
+        date( 'Y-m-d', strtotime( $_GET['end_date'] ) ), 'eng' ) : '';
 
-			wc_enqueue_js( '$("input[name=start_date]").val("' . $jalali_start_date . '");$("input[name=end_date]").val("' . $jalali_end_date . '");' );
+      wc_enqueue_js( '$("input[name=start_date]").val("' . $jalali_start_date . '");$("input[name=end_date]").val("' . $jalali_end_date . '");' );
 
-		} elseif ( 'product' === $current_screen ) {
-			global $post;
+    } elseif ( 'product' === $current_screen ) {
+      global $post;
 
-			if ( ! $post ) {
-				return;
-			}
+      if ( ! $post ) {
+        return;
+      }
 
-			$product = wc_get_product( $post->ID );
+      $product = wc_get_product( $post->ID );
 
-			if ( ! $product ) {
-				return;
-			}
+      if ( ! $product ) {
+        return;
+      }
 
-			if ( ! $product->is_type( 'variable' ) ) {
-				$sale_price_dates_from_timestamp = $product->get_date_on_sale_from( 'edit' ) ? $product->get_date_on_sale_from( 'edit' )->getOffsetTimestamp() : false;
-				$sale_price_dates_to_timestamp   = $product->get_date_on_sale_to( 'edit' ) ? $product->get_date_on_sale_to( 'edit' )->getOffsetTimestamp() : false;
+      if ( ! $product->is_type( 'variable' ) ) {
+        $sale_price_dates_from_timestamp = $product->get_date_on_sale_from( 'edit' ) ? $product->get_date_on_sale_from( 'edit' )->getOffsetTimestamp() : false;
+        $sale_price_dates_to_timestamp   = $product->get_date_on_sale_to( 'edit' ) ? $product->get_date_on_sale_to( 'edit' )->getOffsetTimestamp() : false;
 
-				$sale_price_dates_from = $sale_price_dates_from_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
-					$sale_price_dates_from_timestamp ) ) : '';
-				$sale_price_dates_to   = $sale_price_dates_to_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
-					$sale_price_dates_to_timestamp ) ) : '';
+        $sale_price_dates_from = $sale_price_dates_from_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
+          $sale_price_dates_from_timestamp ) ) : '';
+        $sale_price_dates_to   = $sale_price_dates_to_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
+          $sale_price_dates_to_timestamp ) ) : '';
 
-				wc_enqueue_js( '$("#_sale_price_dates_from").val("' . $sale_price_dates_from . '");$("#_sale_price_dates_to").val("' . $sale_price_dates_to . '");' );
+        wc_enqueue_js( '$("#_sale_price_dates_from").val("' . $sale_price_dates_from . '");$("#_sale_price_dates_to").val("' . $sale_price_dates_to . '");' );
 
-			} else {
-				$dates                = array();
-				$loop                 = 0;
-				$available_variations = $product->get_available_variations();
+      } else {
+        $dates                = array();
+        $loop                 = 0;
+        $available_variations = $product->get_available_variations();
 
-				foreach ( $available_variations as $variation ) {
-					$variation_id  = $variation['variation_id'];
-					$variation_obj = new \WC_Product_Variation( $variation_id );
+        foreach ( $available_variations as $variation ) {
+          $variation_id  = $variation['variation_id'];
+          $variation_obj = new \WC_Product_Variation( $variation_id );
 
-					$sale_price_dates_from_timestamp = $variation_obj->get_date_on_sale_from( 'edit' ) ? $variation_obj->get_date_on_sale_from( 'edit' )->getOffsetTimestamp() : false;
-					$sale_price_dates_to_timestamp   = $variation_obj->get_date_on_sale_to( 'edit' ) ? $variation_obj->get_date_on_sale_to( 'edit' )->getOffsetTimestamp() : false;
+          $sale_price_dates_from_timestamp = $variation_obj->get_date_on_sale_from( 'edit' ) ? $variation_obj->get_date_on_sale_from( 'edit' )->getOffsetTimestamp() : false;
+          $sale_price_dates_to_timestamp   = $variation_obj->get_date_on_sale_to( 'edit' ) ? $variation_obj->get_date_on_sale_to( 'edit' )->getOffsetTimestamp() : false;
 
-					$sale_price_dates_from = $sale_price_dates_from_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
-						$sale_price_dates_from_timestamp ) ) : '';
-					$sale_price_dates_to   = $sale_price_dates_to_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
-						$sale_price_dates_to_timestamp ) ) : '';
-					$dates[ $loop ]        = array(
-						'start' => esc_attr( $sale_price_dates_from ),
-						'end'   => esc_attr( $sale_price_dates_to ),
-					);
+          $sale_price_dates_from = $sale_price_dates_from_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
+            $sale_price_dates_from_timestamp ) ) : '';
+          $sale_price_dates_to   = $sale_price_dates_to_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
+            $sale_price_dates_to_timestamp ) ) : '';
+          $dates[ $loop ]        = array(
+            'start' => esc_attr( $sale_price_dates_from ),
+            'end'   => esc_attr( $sale_price_dates_to ),
+          );
 
-					$loop ++;
-				}
+          $loop ++;
+        }
 
-				if ( ! empty( $dates ) ) {
-					wc_enqueue_js(
-						'const wppVariationsDates = ' . wp_json_encode( $dates ) . '
+        if ( ! empty( $dates ) ) {
+          wc_enqueue_js(
+            'const wppVariationsDates = ' . wp_json_encode( $dates ) . '
 						    $("#woocommerce-product-data").on("woocommerce_variations_loaded", function(e) {
 							  wppVariationsDates.forEach((date, index) => {
                                 $(`input[name="variable_sale_price_dates_from[${index}]"]`).val(date.start)
 						        $(`input[name="variable_sale_price_dates_to[${index}]"]`).val(date.end)
 						      })
 						    })'
-					);
-				}
-			}
-		}
-	}
+          );
+        }
+      }
+    }
+  }
 
-	/**
-	 * Remove default wc expire date column in coupons screen and add our custom column
-	 *
-	 * @param $columns
-	 *
-	 * @return mixed
-	 * @since 4.0.0
-	 */
-	public function removeCouponExpiryDateColumn( $columns ) {
-		unset( $columns['expiry_date'] );
+  /**
+   * Remove default wc expire date column in coupons screen and add our custom column
+   *
+   * @param $columns
+   *
+   * @return mixed
+   * @since 4.0.0
+   */
+  public function removeCouponExpiryDateColumn( $columns ) {
+    unset( $columns['expiry_date'] );
 
-		$columns['wpp_expiry_date'] = __( 'Expiry date', 'woocommerce' );
+    $columns['wpp_expiry_date'] = __( 'Expiry date', 'woocommerce' );
 
-		return $columns;
-	}
+    return $columns;
+  }
 
-	/**
-	 * Fill our custom date expires column value
-	 *
-	 * @param $column
-	 * @param $postid
-	 *
-	 * @since 4.0.0
-	 */
-	public function printCouponExpiryDateColumn( $column, $postid ) {
-		if ( $column === 'wpp_expiry_date' ) {
-			$date = get_post_meta( $postid, 'date_expires', true );
+  /**
+   * Fill our custom date expires column value
+   *
+   * @param $column
+   * @param $postid
+   *
+   * @since 4.0.0
+   */
+  public function printCouponExpiryDateColumn( $column, $postid ) {
+    if ( $column === 'wpp_expiry_date' ) {
+      $date = get_post_meta( $postid, 'date_expires', true );
 
-			echo ! empty( $date ) ? parsidate( 'Y-m-d', $date ) : '&ndash;';
-		}
-	}
+      echo ! empty( $date ) ? parsidate( 'Y-m-d', $date ) : '&ndash;';
+    }
+  }
 
-	/**
-	 * Changes coupon expire date on load coupon data
-	 * We use $wpdb to avoid creating an infinite loop
-	 *
-	 * @param $metadata
-	 * @param $object_id
-	 * @param $meta_key
-	 * @param $single
-	 *
-	 * @return int|mixed|string
-	 *
-	 * @since           4.0.0
-	 */
-	public function changeOrderDateAndCouponExpiresMeta( $metadata, $object_id, $meta_key, $single ) {
-		global $wpdb;
+  /**
+   * Changes coupon expire date on load coupon data
+   * We use $wpdb to avoid creating an infinite loop
+   *
+   * @param $metadata
+   * @param $object_id
+   * @param $meta_key
+   * @param $single
+   *
+   * @return int|mixed|string
+   *
+   * @since           4.0.0
+   */
+  public function changeOrderDateAndCouponExpiresMeta( $metadata, $object_id, $meta_key, $single ) {
+    global $wpdb;
 
-		$post_type = get_post_type( $object_id );
-		$action    = isset( $_GET['action'] ) && $_GET['action'] === 'edit';
+    $post_type = get_post_type( $object_id );
+    $action    = isset( $_GET['action'] ) && $_GET['action'] === 'edit';
 
-		if ( $action && 'shop_coupon' === $post_type && 'date_expires' === $meta_key ) {
-			$metadata = $wpdb->get_var(
-				$wpdb->prepare(
-					"
+    if ( $action && 'shop_coupon' === $post_type && 'date_expires' === $meta_key ) {
+      $metadata = $wpdb->get_var(
+        $wpdb->prepare(
+          "
 						SELECT meta_value
 						From $wpdb->postmeta
 						WHERE post_id = %d
 							AND meta_key = '%s'
 					",
-					$object_id,
-					$meta_key
-				)
-			);
+          $object_id,
+          $meta_key
+        )
+      );
 
-			if ( ! empty( $metadata ) ) {
-				return parsidate( 'Y-m-d', $metadata, 'eng' );
-			}
-		}
+      if ( ! empty( $metadata ) ) {
+        return parsidate( 'Y-m-d', $metadata, 'eng' );
+      }
+    }
 
-		return $metadata;
-	}
+    return $metadata;
+  }
 
-	public function validateCouponsDate( $coupon_id ): void {
-		$expiry_date = Number::toEnglish( wc_get_post_data_by_key( 'expiry_date' ) );
+  public function validateCouponsDate( $coupon_id ): void {
+    $expiry_date = Number::toEnglish( wc_get_post_data_by_key( 'expiry_date' ) );
 
-		if ( empty( $expiry_date ) ) {
-			return;
-		}
+    if ( empty( $expiry_date ) ) {
+      return;
+    }
 
-		$coupon            = new \WC_Coupon( $coupon_id );
-		$fixed_expiry_date = strtotime( gregdate( 'Y-m-d 23:59:59', $expiry_date ) );
+    $coupon            = new \WC_Coupon( $coupon_id );
+    $fixed_expiry_date = strtotime( gregdate( 'Y-m-d 23:59:59', $expiry_date ) );
 
-		$coupon->set_props( array( 'date_expires' => $fixed_expiry_date ) );
-		$coupon->save();
-	}
+    $coupon->set_props( array( 'date_expires' => $fixed_expiry_date ) );
+    $coupon->save();
+  }
 
-	/**
-	 * Converts variations selected Jalali dates to gregorian
-	 *
-	 * @param $product_id
-	 *
-	 * @since           4.0.0
-	 */
-	public function validateVariableProductDates( $product_id ): void {
-		if ( ! isset( $_POST['variable_post_id'] ) ) {
-			return;
-		}
+  /**
+   * Converts variations selected Jalali dates to gregorian
+   *
+   * @param $product_id
+   *
+   * @since           4.0.0
+   */
+  public function validateVariableProductDates( $product_id ): void {
+    if ( ! isset( $_POST['variable_post_id'] ) ) {
+      return;
+    }
 
-		$max_loop   = max( array_keys( wp_unslash( $_POST['variable_post_id'] ) ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$parent     = wc_get_product( $product_id );
-		$data_store = $parent->get_data_store();
+    $max_loop   = max( array_keys( wp_unslash( $_POST['variable_post_id'] ) ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+    $parent     = wc_get_product( $product_id );
+    $data_store = $parent->get_data_store();
 
-		$data_store->sort_all_product_variations( $parent->get_id() );
+    $data_store->sort_all_product_variations( $parent->get_id() );
 
-		for ( $i = 0; $i <= $max_loop; $i ++ ) {
-			if ( ! isset( $_POST['variable_post_id'][ $i ] ) ) {
-				continue;
-			}
+    for ( $i = 0; $i <= $max_loop; $i ++ ) {
+      if ( ! isset( $_POST['variable_post_id'][ $i ] ) ) {
+        continue;
+      }
 
-			$variation_id = absint( $_POST['variable_post_id'][ $i ] );
-			$variation    = wc_get_product_object( 'variation', $variation_id );
-			$props        = array();
+      $variation_id = absint( $_POST['variable_post_id'][ $i ] );
+      $variation    = wc_get_product_object( 'variation', $variation_id );
+      $props        = array();
 
-			if ( isset( $_POST['variable_sale_price_dates_from'][ $i ] ) ) {
-				$date_on_sale_from = Number::toEnglish( wc_clean( wp_unslash( $_POST['variable_sale_price_dates_from'][ $i ] ) ) );
+      if ( isset( $_POST['variable_sale_price_dates_from'][ $i ] ) ) {
+        $date_on_sale_from = Number::toEnglish( wc_clean( wp_unslash( $_POST['variable_sale_price_dates_from'][ $i ] ) ) );
 
-				if ( ! empty( $date_on_sale_from ) ) {
-					$props['date_on_sale_from'] = gregdate( 'Y-m-d 00:00:00', $date_on_sale_from );
-				}
-			}
+        if ( ! empty( $date_on_sale_from ) ) {
+          $props['date_on_sale_from'] = gregdate( 'Y-m-d 00:00:00', $date_on_sale_from );
+        }
+      }
 
-			if ( isset( $_POST['variable_sale_price_dates_to'][ $i ] ) ) {
-				$date_on_sale_to = Number::toEnglish( wc_clean( wp_unslash( $_POST['variable_sale_price_dates_to'][ $i ] ) ) );
+      if ( isset( $_POST['variable_sale_price_dates_to'][ $i ] ) ) {
+        $date_on_sale_to = Number::toEnglish( wc_clean( wp_unslash( $_POST['variable_sale_price_dates_to'][ $i ] ) ) );
 
-				if ( ! empty( $date_on_sale_to ) ) {
-					$props['date_on_sale_to'] = gregdate( 'Y-m-d 23:59:59', $date_on_sale_to );
-				}
-			}
+        if ( ! empty( $date_on_sale_to ) ) {
+          $props['date_on_sale_to'] = gregdate( 'Y-m-d 23:59:59', $date_on_sale_to );
+        }
+      }
 
-			if ( empty( $props ) ) {
-				continue;
-			}
+      if ( empty( $props ) ) {
+        continue;
+      }
 
-			$variation->set_props( $props );
-			$variation->save();
-		}
-	}
+      $variation->set_props( $props );
+      $variation->save();
+    }
+  }
 
-	/**
-	 * Convert selected Jalali dates to gregorian on woocommerce save non-variable products
-	 *
-	 * @param  $product_id  $
-	 *
-	 * @return          void
-	 * @author HamidReza Yazdani
-	 *
-	 * @since           4.0.0
-	 */
-	public function validateNonVariableProductDates( $product_id ) {
-		$props = array();
+  /**
+   * Convert selected Jalali dates to gregorian on woocommerce save non-variable products
+   *
+   * @param  $product_id  $
+   *
+   * @return          void
+   * @author HamidReza Yazdani
+   *
+   * @since           4.0.0
+   */
+  public function validateNonVariableProductDates( $product_id ) {
+    $props = array();
 
-		if ( isset( $_POST['_sale_price_dates_from'] ) ) {
-			$date_on_sale_from = Number::toEnglish( wc_get_post_data_by_key( '_sale_price_dates_from' ) );
-			$time_on_sale_from = ! empty( $_POST['_sale_price_times_from'] ) && Date::isTimeString( $_POST['_sale_price_times_from'] ) ? Date::isTimeString( $_POST['_sale_price_times_from'] ) : '00:00:00';
+    if ( isset( $_POST['_sale_price_dates_from'] ) ) {
+      $date_on_sale_from = Number::toEnglish( wc_get_post_data_by_key( '_sale_price_dates_from' ) );
+      $time_on_sale_from = ! empty( $_POST['_sale_price_times_from'] ) && Date::isTimeString( $_POST['_sale_price_times_from'] ) ? Date::isTimeString( $_POST['_sale_price_times_from'] ) : '00:00:00';
 
-			if ( ! empty( $date_on_sale_from ) ) {
-				$props['date_on_sale_from'] = date( 'Y-m-d ' . $time_on_sale_from,
-					strtotime( gregdate( 'Y-m-d', $date_on_sale_from ) ) );
-			}
-		}
+      if ( ! empty( $date_on_sale_from ) ) {
+        $props['date_on_sale_from'] = date( 'Y-m-d ' . $time_on_sale_from,
+          strtotime( gregdate( 'Y-m-d', $date_on_sale_from ) ) );
+      }
+    }
 
-		if ( isset( $_POST['_sale_price_dates_to'] ) ) {
-			$date_on_sale_to = Number::toEnglish( wc_get_post_data_by_key( '_sale_price_dates_to' ) );
-			$time_on_sale_to = ! empty( $_POST['_sale_price_times_to'] ) && Date::isTimeString( $_POST['_sale_price_times_to'] ) ? Date::isTimeString( $_POST['_sale_price_times_to'] ) : '23:59:59';
+    if ( isset( $_POST['_sale_price_dates_to'] ) ) {
+      $date_on_sale_to = Number::toEnglish( wc_get_post_data_by_key( '_sale_price_dates_to' ) );
+      $time_on_sale_to = ! empty( $_POST['_sale_price_times_to'] ) && Date::isTimeString( $_POST['_sale_price_times_to'] ) ? Date::isTimeString( $_POST['_sale_price_times_to'] ) : '23:59:59';
 
-			if ( ! empty( $date_on_sale_to ) ) {
-				$props['date_on_sale_to'] = date( 'Y-m-d ' . $time_on_sale_to,
-					strtotime( gregdate( 'Y-m-d', $date_on_sale_to ) ) );
-			}
-		}
+      if ( ! empty( $date_on_sale_to ) ) {
+        $props['date_on_sale_to'] = date( 'Y-m-d ' . $time_on_sale_to,
+          strtotime( gregdate( 'Y-m-d', $date_on_sale_to ) ) );
+      }
+    }
 
-		if ( empty( $props ) ) {
-			return;
-		}
+    if ( empty( $props ) ) {
+      return;
+    }
 
-		$product = wc_get_product( $product_id );
+    $product = wc_get_product( $product_id );
 
-		$product->set_props( $props );
-		$product->save();
-	}
+    $product->set_props( $props );
+    $product->save();
+  }
 
-	/**
-	 * Convert order date to gregorian before saved at database
-	 *
-	 * @param $order_id
-	 *
-	 * @throws \WC_Data_Exception
-	 * @since 5.0.2
-	 */
-	public function changeOrderDateOnSave( $order_id ): void {
-		$order_date = wc_get_post_data_by_key( 'order_date' );
+  /**
+   * Convert order date to gregorian before saved at database
+   *
+   * @param $order_id
+   *
+   * @throws \WC_Data_Exception
+   * @since 5.0.2
+   */
+  public function changeOrderDateOnSave( $order_id ): void {
+    $order_date = wc_get_post_data_by_key( 'order_date' );
 
-		if ( empty( $order_date ) ) {
-			return;
-		}
+    if ( empty( $order_date ) ) {
+      return;
+    }
 
-		$order = wc_get_order( $order_id );
+    $order = wc_get_order( $order_id );
 
-		if ( ! $order ) {
-			return;
-		}
+    if ( ! $order ) {
+      return;
+    }
 
-		$hour       = str_pad( (int) wc_get_post_data_by_key( 'order_date_hour' ), 2, '0', STR_PAD_LEFT );
-		$minute     = str_pad( (int) wc_get_post_data_by_key( 'order_date_minute' ), 2, '0', STR_PAD_LEFT );
-		$second     = str_pad( (int) wc_get_post_data_by_key( 'order_date_second' ), 2, '0', STR_PAD_LEFT );
-		$time_stamp = "$order_date $hour:$minute:$second";
-		$fixed_date = gregdate( 'Y-m-d H:i:s', $time_stamp );
-		$date       = gmdate( 'Y-m-d H:i:s', strtotime( $fixed_date ) );
+    $hour       = str_pad( (int) wc_get_post_data_by_key( 'order_date_hour' ), 2, '0', STR_PAD_LEFT );
+    $minute     = str_pad( (int) wc_get_post_data_by_key( 'order_date_minute' ), 2, '0', STR_PAD_LEFT );
+    $second     = str_pad( (int) wc_get_post_data_by_key( 'order_date_second' ), 2, '0', STR_PAD_LEFT );
+    $time_stamp = "$order_date $hour:$minute:$second";
+    $fixed_date = gregdate( 'Y-m-d H:i:s', $time_stamp );
+    $date       = gmdate( 'Y-m-d H:i:s', strtotime( $fixed_date ) );
 
-		$order->set_date_created( $date );
-		$order->save();
-	}
+    $order->set_date_created( $date );
+    $order->save();
+  }
 
-	/**
-	 * enqueue jalali date picker assets
-	 *
-	 * @since           4.0.0
-	 */
-	public function adminEnqueueScripts(): void {
-		$screen         = get_current_screen();
-		$current_screen = is_null( $screen ) ? false : $screen->id;
-		$pluginVersion  = Assets::getVersion();
-		$debugName      = WP_PARSI_DEBUG_MODE ? '' : '.min';
+  /**
+   * enqueue jalali date picker assets
+   *
+   * @since           4.0.0
+   */
+  public function adminEnqueueScripts(): void {
+    $screen         = get_current_screen();
+    $current_screen = is_null( $screen ) ? false : $screen->id;
+    $pluginVersion  = Assets::getVersion();
+    $debugName      = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
-		$allowed_screens = array(
-			'product',
-			'shop_order',
-			'woocommerce_page_wc-orders',
-			'woocommerce_page_wc-reports',
-			'shop_coupon',
-		);
+    $allowed_screens = array(
+      'product',
+      'shop_order',
+      'woocommerce_page_wc-orders',
+      'woocommerce_page_wc-reports',
+      'shop_coupon',
+    );
 
-		if ( in_array( $current_screen, $allowed_screens, true ) && Settings::get( 'persian_date' ) ) {
-			wp_enqueue_script( 'wpp_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ),
-				array( 'jquery-ui-datepicker' ), $pluginVersion );
-			wp_enqueue_style( 'wpp_jalali_datepicker', Assets::url( "css-admin/jalalidatepicker$debugName.css" ),
-				null, $pluginVersion );
+    if ( in_array( $current_screen, $allowed_screens, true ) && Settings::get( 'persian_date' ) ) {
+      wp_enqueue_script( 'wpp_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ),
+        array( 'jquery-ui-datepicker' ), $pluginVersion );
+      wp_enqueue_style( 'wpp_jalali_datepicker', Assets::url( "css-admin/jalalidatepicker$debugName.css" ),
+        null, $pluginVersion );
 
-			do_action( 'wpp_jalali_datepicker_enqueued', 'wc' );
-		}
-	}
+      do_action( 'wpp_jalali_datepicker_enqueued', 'wc' );
+    }
+  }
 
-	/**
-	 * Fixes jalali order date direction in WooCommerce emails (Issue: https://github.com/wordpress-parsi/wp-parsidate/issues/154)
-	 *
-	 * @param $style
-	 * @param $email
-	 *
-	 * @return string
-	 * @since 5.0.0
-	 */
-	public function fixEmailTime( $style, $email ): string {
-		return $style . 'time{unicode-bidi:embed!important}';
-	}
+  /**
+   * Fixes jalali order date direction in WooCommerce emails (Issue: https://github.com/wordpress-parsi/wp-parsidate/issues/154)
+   *
+   * @param $style
+   * @param $email
+   *
+   * @return string
+   * @since 5.0.0
+   */
+  public function fixEmailTime( $style, $email ): string {
+    return $style . 'time{unicode-bidi:embed!important}';
+  }
 
-	/**
-	 * Fixes jalali order date direction in WooCommerce my-account endpoints (Issue: https://github.com/wordpress-parsi/wp-parsidate/issues/154)
-	 *
-	 * @return void
-	 * @since 5.0.0
-	 */
-	public function fixDateTimeDirection(): void {
-		if ( is_woocommerce() || is_wc_endpoint_url() || is_cart() || is_checkout() ) {
-			echo '<style>mark.order-date,time{unicode-bidi:embed!important}</style>';
-		}
-	}
+  /**
+   * Fixes jalali order date direction in WooCommerce my-account endpoints (Issue: https://github.com/wordpress-parsi/wp-parsidate/issues/154)
+   *
+   * @return void
+   * @since 5.0.0
+   */
+  public function fixDateTimeDirection(): void {
+    if ( is_woocommerce() || is_wc_endpoint_url() || is_cart() || is_checkout() ) {
+      echo '<style>mark.order-date,time{unicode-bidi:embed!important}</style>';
+    }
+  }
 
-	public function fixNumbersToPersian( $content ): string {
-		return Number::fixNumber( $content );
-	}
+  public function fixNumbersToPersian( $content ): string {
+    return Number::fixNumber( $content );
+  }
 
-	/**
-	 * @param $report_data
-	 *
-	 * @return mixed
-	 */
-	public function fixOrderReportQueryDate( $report_data ) {
-		$report_data['where'] = preg_replace_callback( "/posts.post_date\s.=?\s'([^']+)'/i",
-			[ __CLASS__, 'fixOrderReportQueryDateCallback' ], $report_data['where'] );
+  /**
+   * @param $report_data
+   *
+   * @return mixed
+   */
+  public function fixOrderReportQueryDate( $report_data ) {
+    $report_data['where'] = preg_replace_callback( "/posts.post_date\s.=?\s'([^']+)'/i",
+      [ __CLASS__, 'fixOrderReportQueryDateCallback' ], $report_data['where'] );
 
-		return $report_data;
-	}
+    return $report_data;
+  }
 
-	/**
-	 * @param $date
-	 *
-	 * @return array|mixed|string|string[]
-	 */
-	public function fixOrderReportQueryDateCallback( $date ) {
-		if ( empty( $_GET['start_date'] ) || empty( $_GET['end_date'] ) ) {
-			return $date[0];
-		}
+  /**
+   * @param $date
+   *
+   * @return array|mixed|string|string[]
+   */
+  public function fixOrderReportQueryDateCallback( $date ) {
+    if ( empty( $_GET['start_date'] ) || empty( $_GET['end_date'] ) ) {
+      return $date[0];
+    }
 
-		if ( strpos( $date[0], '=' ) === false ) {
-			if ( (int) $_GET['end_date'] > 1900 ) {
-				return $date[0];
-			}
+    if ( strpos( $date[0], '=' ) === false ) {
+      if ( (int) $_GET['end_date'] > 1900 ) {
+        return $date[0];
+      }
 
-			$dt = gregdate( 'Y-m-d', $_GET['end_date'] );
-			$dt = date( 'Y-m-d', strtotime( "$dt +1 day" ) );
-		} else {
-			if ( (int) $_GET['start_date'] > 1900 ) {
-				return $date[0];
-			}
+      $dt = gregdate( 'Y-m-d', $_GET['end_date'] );
+      $dt = date( 'Y-m-d', strtotime( "$dt +1 day" ) );
+    } else {
+      if ( (int) $_GET['start_date'] > 1900 ) {
+        return $date[0];
+      }
 
-			$dt = gregdate( 'Y-m-d', $_GET['start_date'] );
-		}
+      $dt = gregdate( 'Y-m-d', $_GET['start_date'] );
+    }
 
-		return substr_replace( $date[0], $dt, - 20, 10 );
-	}
+    return substr_replace( $date[0], $dt, - 20, 10 );
+  }
 
-	/**
-	 * Check the current screen is the WooCommerce order edit page
-	 *
-	 * @return string
-	 */
-	private function getCurrentScreen(): ?string {
-		if ( 'woocommerce_before_order_object_save' === current_action() ) {
-			global $pagenow;
+  /**
+   * Check the current screen is the WooCommerce order edit page
+   *
+   * @return string
+   */
+  private function getCurrentScreen(): ?string {
+    if ( 'woocommerce_before_order_object_save' === current_action() ) {
+      global $pagenow;
 
-			if ( \WPParsidate\Helper\WooCommerce::hposEnabled() ) {
-				return isset( $_POST['post_ID'] ) && 'shop_order' === get_post_type( $_POST['post_ID'] ) && ! empty( $_POST['order_date'] ) ? 'edit_order' : '';
-			}
+      if ( \WPParsidate\Helper\WooCommerce::hposEnabled() ) {
+        return isset( $_POST['post_ID'] ) && 'shop_order' === get_post_type( $_POST['post_ID'] ) && ! empty( $_POST['order_date'] ) ? 'edit_order' : '';
+      }
 
-			return is_admin() && 'post.php' === $pagenow && isset( $_POST['post_type'] ) && 'shop_order' === $_POST['post_type'] && ! empty( $_POST['order_date'] ) ? 'edit_order' : '';
-		}
+      return is_admin() && 'post.php' === $pagenow && isset( $_POST['post_type'] ) && 'shop_order' === $_POST['post_type'] && ! empty( $_POST['order_date'] ) ? 'edit_order' : '';
+    }
 
-		if ( 'admin_footer' === current_action() ) {
-			$screen         = get_current_screen();
-			$current_screen = is_null( $screen ) ? '' : $screen->id;
+    if ( 'admin_footer' === current_action() ) {
+      $screen         = get_current_screen();
+      $current_screen = is_null( $screen ) ? '' : $screen->id;
 
-			if ( in_array( $current_screen, array( 'shop_order', 'woocommerce_page_wc-orders' ) ) ) {
-				return 'edit_order';
-			}
+      if ( in_array( $current_screen, array( 'shop_order', 'woocommerce_page_wc-orders' ) ) ) {
+        return 'edit_order';
+      }
 
-			if ( 'woocommerce_page_wc-reports' === $current_screen ) {
-				return 'legacy_report';
-			}
+      if ( 'woocommerce_page_wc-reports' === $current_screen ) {
+        return 'legacy_report';
+      }
 
-			return $current_screen;
-		}
+      return $current_screen;
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	public function addSectionSettings( $sections ) {
-		$sections[ $this->addonID ] = array(
-			'title'        => __( 'WooCommerce', 'wp-parsidate' ),
-			'desc'         => __( 'ParsiDate integration for WooCommerce', 'wp-parsidate' ),
-			'settings_key' => $this->addonID,
-			'settings'     => [
-				'woo_product_start_grid'  => array(
-					'id'    => 'woo_product_start_grid',
-					'title' => __( 'Products', 'wp-parsidate' ),
-					'type'  => 'startGrid',
-				),
-				'fix_prices'              => array(
-					'id'       => 'fix_prices',
-					'title'    => __( 'Fix prices', 'wp-parsidate' ),
-					'type'     => 'toggle',
-					'default'  => false,
-					'sanitize' => 'bool'
-				),
-				'woo_product_end_grid'    => array(
-					'type' => 'endGrid',
-				),
-				'woo_checkout_start_grid' => array(
-					'id'    => 'woo_checkout_start_grid',
-					'title' => __( 'Checkout page', 'wp-parsidate' ),
-					'type'  => 'startGrid',
-				),
-				'fix_persian_postcode'    => array(
-					'id'       => 'fix_persian_postcode',
-					'title'    => __( 'Fix persian postcode', 'wp-parsidate' ),
-					'type'     => 'toggle',
-					'default'  => false,
-					'sanitize' => 'bool'
-				),
-				'fix_persian_phone'       => array(
-					'id'       => 'fix_persian_phone',
-					'title'    => __( 'Fix persian phone', 'wp-parsidate' ),
-					'type'     => 'toggle',
-					'default'  => false,
-					'sanitize' => 'bool'
-				),
-				'dropdown_cities'         => array(
-					'id'       => 'dropdown_cities',
-					'title'    => __( 'Display cities as a drop-down list', 'wp-parsidate' ),
-					'type'     => 'toggle',
-					'default'  => false,
-					'sanitize' => 'bool'
-				),
-				'validate_postcode'       => array(
-					'id'       => 'validate_postcode',
-					'title'    => __( 'Postcode validation', 'wp-parsidate' ),
-					'type'     => 'toggle',
-					'default'  => false,
-					'sanitize' => 'bool'
-				),
-				'validate_phone'          => array(
-					'id'       => 'validate_phone',
-					'title'    => __( 'Phone number validation', 'wp-parsidate' ),
-					'type'     => 'toggle',
-					'default'  => false,
-					'sanitize' => 'bool'
-				),
-				'woo_checkout_end_grid'   => array(
-					'type' => 'endGrid',
-				)
-			]
-		);
+  public function addSectionSettings( $sections ) {
+    $sections[ $this->addonID ] = array(
+      'title'        => __( 'WooCommerce', 'wp-parsidate' ),
+      'desc'         => __( 'ParsiDate integration for WooCommerce', 'wp-parsidate' ),
+      'settings_key' => $this->addonID,
+      'settings'     => [
+        'woo_product_start_grid'  => array(
+          'id'    => 'woo_product_start_grid',
+          'title' => __( 'Products', 'wp-parsidate' ),
+          'type'  => 'startGrid',
+        ),
+        'fix_prices'              => array(
+          'id'       => 'fix_prices',
+          'title'    => __( 'Fix prices', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => false,
+          'sanitize' => 'bool'
+        ),
+        'woo_product_end_grid'    => array(
+          'type' => 'endGrid',
+        ),
+        'woo_checkout_start_grid' => array(
+          'id'    => 'woo_checkout_start_grid',
+          'title' => __( 'Checkout page', 'wp-parsidate' ),
+          'type'  => 'startGrid',
+        ),
+        'fix_persian_postcode'    => array(
+          'id'       => 'fix_persian_postcode',
+          'title'    => __( 'Fix persian postcode', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => false,
+          'sanitize' => 'bool'
+        ),
+        'fix_persian_phone'       => array(
+          'id'       => 'fix_persian_phone',
+          'title'    => __( 'Fix persian phone', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => false,
+          'sanitize' => 'bool'
+        ),
+        'dropdown_cities'         => array(
+          'id'       => 'dropdown_cities',
+          'title'    => __( 'Display cities as a drop-down list', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => false,
+          'sanitize' => 'bool'
+        ),
+        'validate_postcode'       => array(
+          'id'       => 'validate_postcode',
+          'title'    => __( 'Postcode validation', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => false,
+          'sanitize' => 'bool'
+        ),
+        'validate_phone'          => array(
+          'id'       => 'validate_phone',
+          'title'    => __( 'Phone number validation', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => false,
+          'sanitize' => 'bool'
+        ),
+        'woo_checkout_end_grid'   => array(
+          'type' => 'endGrid',
+        )
+      ]
+    );
 
-		return $sections;
-	}
+    return $sections;
+  }
 
-	public function info(): array {
-		$svg = '<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" x="0" y="0" viewBox="0 0 183.6 47.5"><style>.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#873eff}</style><path d="M77.4 0c-4.3 0-7.1 1.4-9.6 6.1L56.4 27.6V8.5c0-5.7-2.7-8.5-7.7-8.5s-7.1 1.7-9.6 6.5L28.3 27.6V8.7c0-6.1-2.5-8.7-8.6-8.7H7.3C2.6 0 0 2.2 0 6.2s2.5 6.4 7.1 6.4h5.1v24.1c0 6.8 4.6 10.8 11.2 10.8s9.6-2.6 12.9-8.7l7.2-13.5v11.4c0 6.7 4.4 10.8 11.1 10.8s9.2-2.3 13-8.7l16.6-28C87.8 4.7 85.3 0 77.3 0zM108.6 0C95 0 84.7 10.1 84.7 23.8s10.4 23.7 23.9 23.7 23.8-10.1 23.9-23.7c0-13.7-10.4-23.8-23.9-23.8m0 32.9c-5.1 0-8.6-3.8-8.6-9.1s3.5-9.2 8.6-9.2 8.6 3.9 8.6 9.2-3.4 9.1-8.6 9.1M159.7 0c-13.5 0-23.9 10.1-23.9 23.8s10.4 23.7 23.9 23.7 23.9-10.1 23.9-23.7S173.2 0 159.7 0m0 32.9c-5.2 0-8.5-3.8-8.5-9.1s3.4-9.2 8.5-9.2 8.6 3.9 8.6 9.2-3.4 9.1-8.6 9.1" class="st0"/></svg>';
+  public function info(): array {
+    $svg = '<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" x="0" y="0" viewBox="0 0 183.6 47.5"><style>.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#873eff}</style><path d="M77.4 0c-4.3 0-7.1 1.4-9.6 6.1L56.4 27.6V8.5c0-5.7-2.7-8.5-7.7-8.5s-7.1 1.7-9.6 6.5L28.3 27.6V8.7c0-6.1-2.5-8.7-8.6-8.7H7.3C2.6 0 0 2.2 0 6.2s2.5 6.4 7.1 6.4h5.1v24.1c0 6.8 4.6 10.8 11.2 10.8s9.6-2.6 12.9-8.7l7.2-13.5v11.4c0 6.7 4.4 10.8 11.1 10.8s9.2-2.3 13-8.7l16.6-28C87.8 4.7 85.3 0 77.3 0zM108.6 0C95 0 84.7 10.1 84.7 23.8s10.4 23.7 23.9 23.7 23.8-10.1 23.9-23.7c0-13.7-10.4-23.8-23.9-23.8m0 32.9c-5.1 0-8.6-3.8-8.6-9.1s3.5-9.2 8.6-9.2 8.6 3.9 8.6 9.2-3.4 9.1-8.6 9.1M159.7 0c-13.5 0-23.9 10.1-23.9 23.8s10.4 23.7 23.9 23.7 23.9-10.1 23.9-23.7S173.2 0 159.7 0m0 32.9c-5.2 0-8.5-3.8-8.5-9.1s3.4-9.2 8.5-9.2 8.6 3.9 8.6 9.2-3.4 9.1-8.6 9.1" class="st0"/></svg>';
 
-		return array(
-			'id'               => $this->addonID,
-			'title'            => __( 'WooCommerce', 'wp-parsidate' ),
-			'desc'             => __( 'ParsiDate integration for WooCommerce', 'wp-parsidate' ),
-			'force_enable'     => true,
-			'icon'             => $svg,
-			'tags'             => [ __( 'WooCommerce', 'wp-parsidate' ) ],
-			'cat'              => 'ecommerce',
-			'settings_key'     => $this->addonID,
-			'requires_plugins' => [
-				'woocommerce/woocommerce.php' => array(
-					'is_wp_plugin'   => true,
-					'is_free'        => true,
-					'plugin_link'    => 'https://wordpress.org/plugins/woocommerce/',
-					'function_check' => '',
-					'class_check'    => 'WooCommerce',
-				)
-			]
-		);
-	}
+    return array(
+      'id'               => $this->addonID,
+      'title'            => __( 'WooCommerce', 'wp-parsidate' ),
+      'desc'             => __( 'ParsiDate integration for WooCommerce', 'wp-parsidate' ),
+      'force_enable'     => true,
+      'icon'             => $svg,
+      'tags'             => [ __( 'WooCommerce', 'wp-parsidate' ) ],
+      'cat'              => 'ecommerce',
+      'settings_key'     => $this->addonID,
+      'requires_plugins' => [
+        'woocommerce/woocommerce.php' => array(
+          'is_wp_plugin'   => true,
+          'is_free'        => true,
+          'plugin_link'    => 'https://wordpress.org/plugins/woocommerce/',
+          'function_check' => '',
+          'class_check'    => 'WooCommerce',
+        )
+      ]
+    );
+  }
 }

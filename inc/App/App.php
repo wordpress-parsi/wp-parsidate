@@ -12,18 +12,18 @@ use WPParsidate\App\Tools\Tools;
 defined( 'ABSPATH' ) || exit;
 
 class App {
-	public function __construct() {
-		new AppAssets();
-		new Core();
-		new Convert();
-		new Tools();
-		new Integration();
+  public function __construct() {
+    new AppAssets();
+    new Core();
+    new Convert();
+    new Tools();
+    new Integration();
 
-		add_action( 'init', [ $this, 'init' ], 0 );
-	}
+    add_action( 'init', [ $this, 'init' ], 0 );
+  }
 
-	public function init(): void {
-		do_action( 'wp_parsidate_addons_load' );
-		do_action( 'wp_parsidate_init' );
-	}
+  public function init(): void {
+    do_action( 'wp_parsidate_addons_load' );
+    do_action( 'wp_parsidate_init' );
+  }
 }

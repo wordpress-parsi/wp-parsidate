@@ -14,166 +14,166 @@ use WPParsidate\Settings\Settings;
  * @subpackage              Plugins/WooCommerce/PaymentGateways
  */
 class WcGateways {
-	public static $instance = null;
+  public static $instance = null;
 
-	/**
-	 * Hooks required tags
-	 */
-	public function __construct() {
-		add_action( 'before_woocommerce_init', [ $this, 'includeFiles' ] );
-		add_filter( 'wp_parsidate_integration_settings_sections', [ $this, 'addSettings' ] );
-		add_filter( 'woocommerce_payment_gateways', [ $this, 'registerSelectedGateways' ] );
-		add_action( 'woocommerce_blocks_loaded', [ $this, 'registerOrderApprovalPaymentMethodType' ] );
-	}
+  /**
+   * Hooks required tags
+   */
+  public function __construct() {
+    add_action( 'before_woocommerce_init', [ $this, 'includeFiles' ] );
+    add_filter( 'wp_parsidate_integration_settings_sections', [ $this, 'addSettings' ] );
+    add_filter( 'woocommerce_payment_gateways', [ $this, 'registerSelectedGateways' ] );
+    add_action( 'woocommerce_blocks_loaded', [ $this, 'registerOrderApprovalPaymentMethodType' ] );
+  }
 
-	public function gateways(): array {
-		return array(
-			'parsian'  => __( 'Parsian Bank', 'wp-parsidate' ),
-			'pasargad' => __( 'Pasargad Bank', 'wp-parsidate' ),
-			'mellat'   => __( 'Mellat Bank (Behpardakht)', 'wp-parsidate' ),
-			'melli'    => __( 'Melli Bank (Sadad)', 'wp-parsidate' ),
-		);
-	}
+  public function gateways(): array {
+    return array(
+      'parsian'  => __( 'Parsian Bank', 'wp-parsidate' ),
+      'pasargad' => __( 'Pasargad Bank', 'wp-parsidate' ),
+      'mellat'   => __( 'Mellat Bank (Behpardakht)', 'wp-parsidate' ),
+      'melli'    => __( 'Melli Bank (Sadad)', 'wp-parsidate' ),
+    );
+  }
 
-	/**
-	 * Includes files for plugin
-	 *
-	 * @return         void
-	 * @since          2.0
-	 */
-	public function includeFiles(): void {
-		$implemented_gateways = array_keys( $this->gateways() );
+  /**
+   * Includes files for plugin
+   *
+   * @return         void
+   * @since          2.0
+   */
+  public function includeFiles(): void {
+    $implemented_gateways = array_keys( $this->gateways() );
 
-		$selected_gateways = $this->getSelectedGateways();
-		$maybe_include     = array_intersect( $implemented_gateways, $selected_gateways );
+    $selected_gateways = $this->getSelectedGateways();
+    $maybe_include     = array_intersect( $implemented_gateways, $selected_gateways );
 
-		foreach ( $maybe_include as $filename ) {
-			$file_path = __DIR__ . "/wc-gateways/wpp-$filename-gateway.php";
+    foreach ( $maybe_include as $filename ) {
+      $file_path = __DIR__ . "/wc-gateways/wpp-$filename-gateway.php";
 
-			if ( file_exists( $file_path ) ) {
-				require_once( $file_path );
-			}
-		}
-	}
+      if ( file_exists( $file_path ) ) {
+        require_once( $file_path );
+      }
+    }
+  }
 
-	/**
-	 * Returns an instance of class
-	 *
-	 * @return          WcGateways
-	 */
-	public static function getInstance(): ?WcGateways {
-		if ( self::$instance === null ) {
-			self::$instance = new WcGateways();
-		}
+  /**
+   * Returns an instance of class
+   *
+   * @return          WcGateways
+   */
+  public static function getInstance(): ?WcGateways {
+    if ( self::$instance === null ) {
+      self::$instance = new WcGateways();
+    }
 
-		return self::$instance;
-	}
+    return self::$instance;
+  }
 
-	/**
-	 * Adds settings for toggle fixing
-	 *
-	 * @param  array  $sections  WooCommerce section settings
-	 *
-	 * @return          array New settings
-	 * @since 4.0.0
-	 */
-	public function addSettings( $sections ): array {
-		$gateWays        = $this->gateways();
-		$gateWaySettings = [];
+  /**
+   * Adds settings for toggle fixing
+   *
+   * @param  array  $sections  WooCommerce section settings
+   *
+   * @return          array New settings
+   * @since 4.0.0
+   */
+  public function addSettings( $sections ): array {
+    $gateWays        = $this->gateways();
+    $gateWaySettings = [];
 
-		foreach ( $gateWays as $code => $name ) {
-			$gateWaySettings[ $code . '_gateway_enable' ] = array(
-				'id'       => $code . '_gateway_enable',
-				'title'    => $name,
-				'type'     => 'toggle',
-				'default'  => false,
-				'sanitize' => 'bool'
-			);
-		}
+    foreach ( $gateWays as $code => $name ) {
+      $gateWaySettings[ $code . '_gateway_enable' ] = array(
+        'id'       => $code . '_gateway_enable',
+        'title'    => $name,
+        'type'     => 'toggle',
+        'default'  => false,
+        'sanitize' => 'bool'
+      );
+    }
 
-		$settings                          = array(
-			'woo_gateways_start_grid' => array(
-				'id'    => 'woo_product_start_grid',
-				'title' => __( 'Payment Gateways', 'wp-parsidate' ),
-				'type'  => 'startGrid',
-			)
-		);
-		$settings                          = array_merge( $settings, $gateWaySettings );
-		$settings['woo_gateways_end_grid'] = array( 'type' => 'endGrid' );
+    $settings                          = array(
+      'woo_gateways_start_grid' => array(
+        'id'    => 'woo_product_start_grid',
+        'title' => __( 'Payment Gateways', 'wp-parsidate' ),
+        'type'  => 'startGrid',
+      )
+    );
+    $settings                          = array_merge( $settings, $gateWaySettings );
+    $settings['woo_gateways_end_grid'] = array( 'type' => 'endGrid' );
 
-		$sections['woocommerce']['settings'] = array_merge( $sections['woocommerce']['settings'], $settings );
+    $sections['woocommerce']['settings'] = array_merge( $sections['woocommerce']['settings'], $settings );
 
-		return $sections;
-	}
+    return $sections;
+  }
 
-	/**
-	 * @param $methods
-	 *
-	 * @return mixed
-	 * @since 5.0.0
-	 */
-	public function registerSelectedGateways( $methods ) {
-		$selected_pgs = $this->getSelectedGateways();
+  /**
+   * @param $methods
+   *
+   * @return mixed
+   * @since 5.0.0
+   */
+  public function registerSelectedGateways( $methods ) {
+    $selected_pgs = $this->getSelectedGateways();
 
-		if ( empty( $selected_pgs ) ) {
-			return $methods;
-		}
+    if ( empty( $selected_pgs ) ) {
+      return $methods;
+    }
 
-		foreach ( $selected_pgs as $method ) {
-			$methods[] = 'WPP_WC_' . ucfirst( $method ) . '_Gateway';
-		}
+    foreach ( $selected_pgs as $method ) {
+      $methods[] = 'WPP_WC_' . ucfirst( $method ) . '_Gateway';
+    }
 
-		return $methods;
-	}
+    return $methods;
+  }
 
-	public function registerOrderApprovalPaymentMethodType(): void {
-		if ( ! class_exists( 'Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType' ) ) {
-			return;
-		}
+  public function registerOrderApprovalPaymentMethodType(): void {
+    if ( ! class_exists( 'Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType' ) ) {
+      return;
+    }
 
-		add_action( 'woocommerce_blocks_payment_method_type_registration',
-			function ( \Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry ) {
-				$implemented_gateways = array_keys( $this->gateways() );
+    add_action( 'woocommerce_blocks_payment_method_type_registration',
+      function ( \Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry ) {
+        $implemented_gateways = array_keys( $this->gateways() );
 
-				$selected_gateways = self::getSelectedGateways();
-				$maybe_include     = array_intersect( $implemented_gateways, $selected_gateways );
+        $selected_gateways = self::getSelectedGateways();
+        $maybe_include     = array_intersect( $implemented_gateways, $selected_gateways );
 
-				foreach ( $maybe_include as $gateway ) {
-					$block_path = __DIR__ . "/wc-gateways/blocks/wpp-$gateway-pg-block.php";
+        foreach ( $maybe_include as $gateway ) {
+          $block_path = __DIR__ . "/wc-gateways/blocks/wpp-$gateway-pg-block.php";
 
-					if ( file_exists( $block_path ) ) {
-						require_once( $block_path );
+          if ( file_exists( $block_path ) ) {
+            require_once( $block_path );
 
-						$class_name = 'WPP_WC_' . ucfirst( $gateway ) . '_Gateway_Blocks';
+            $class_name = 'WPP_WC_' . ucfirst( $gateway ) . '_Gateway_Blocks';
 
-						$payment_method_registry->register( new $class_name );
-					}
-				}
-			}
-		);
-	}
+            $payment_method_registry->register( new $class_name );
+          }
+        }
+      }
+    );
+  }
 
-	public function is_soap_enabled() {
-		return extension_loaded( 'soap' );
-	}
+  public function is_soap_enabled() {
+    return extension_loaded( 'soap' );
+  }
 
-	private function getSelectedGateways() {
-		$cache = Cache::get( 'woocommerce_active_gateways', false );
-		if ( is_array( $cache ) ) {
-			return $cache;
-		}
+  private function getSelectedGateways() {
+    $cache = Cache::get( 'woocommerce_active_gateways', false );
+    if ( is_array( $cache ) ) {
+      return $cache;
+    }
 
-		$gateWays       = array_keys( $this->gateways() );
-		$activeGateways = [];
-		foreach ( $gateWays as $code ) {
-			if ( Settings::get( $code . '_gateway_enable', false, 'woocommerce' ) ) {
-				$activeGateways[] = $code;
-			}
-		}
+    $gateWays       = array_keys( $this->gateways() );
+    $activeGateways = [];
+    foreach ( $gateWays as $code ) {
+      if ( Settings::get( $code . '_gateway_enable', false, 'woocommerce' ) ) {
+        $activeGateways[] = $code;
+      }
+    }
 
-		$activeGateways = apply_filters( 'wpp_get_selected_wc_payment_gateways', $activeGateways );
-		Cache::set( 'woocommerce_active_gateways', $activeGateways );
+    $activeGateways = apply_filters( 'wpp_get_selected_wc_payment_gateways', $activeGateways );
+    Cache::set( 'woocommerce_active_gateways', $activeGateways );
 
-		return $activeGateways;
-	}
+    return $activeGateways;
+  }
 }
