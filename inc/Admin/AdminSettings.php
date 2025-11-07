@@ -99,8 +99,14 @@ class AdminSettings {
     if ( in_array( 'startrepeatableelements', $types, true ) ) {
       $saveValue              = [];
       $saveRepeatableElements = $repeatableSettingId = false;
+      $maxRepeatElements      = $maxRepeat = 100;
+
       foreach ( $settings as $key => $setting ) {
         $setting['type'] = strtolower( $setting['type'] );
+
+        if ( $setting['type'] === 'startrepeatable' ) {
+          $maxRepeatElements = (int) ( $setting['max_repeat'] ?? $maxRepeat );
+        }
 
         if ( $setting['type'] === 'startrepeatableelements' ) {
           $saveRepeatableElements            = true;
@@ -119,9 +125,13 @@ class AdminSettings {
           $value                    = Param::post( WP_PARSI_INPUT_PREFIX . $setting['id'], $default );
 
           if ( is_array( $value ) ) {
-            for ( $i = 0; $i <= count( $value ) - 1; $i ++ ) {
+            $count = count( $value );
+            for ( $i = 0; $i < $count; $i ++ ) {
               $saveValue[ $repeatableSettingId ][ $i ][ $rowKey ] = $value[ $i ];
             }
+
+            $saveValue[ $repeatableSettingId ] = array_slice( $saveValue[ $repeatableSettingId ], 0,
+              $maxRepeatElements );
           }
         }
 
@@ -355,67 +365,87 @@ class AdminSettings {
   private static function checkRepeatableSettings( $settings, $optionsName ): array {
     $types = array_column( $settings, 'type' );
     $types = array_map( 'strtolower', $types );
+
     if ( in_array( 'startrepeatableelements', $types, true ) ) {
-      $repeatableElements      = [];
-      $saveRepeatableElements  = $repeatableSettingValue = $repeatableSettingId = $repeatableSettinKey = false;
-      $repeatableElementsIndex = $index = 0;
-      foreach ( $settings as $key => $setting ) {
-        $setting['type'] = strtolower( $setting['type'] );
+      $repeatableElementsCount        = ( array_count_values( $types ) )['startrepeatableelements'];
+      $repeatableElementsProcessedIDs = [];
+      $maxRepeatElements              = $maxRepeat = 100;
 
-        if ( $setting['type'] === 'startrepeatableelements' ) {
-          $saveRepeatableElements  = true;
-          $repeatableElementsIndex = $index;
-          $repeatableSettingId     = $setting['id'];
-          $repeatableSettingValue  = Settings::get( $repeatableSettingId, [], $optionsName );
-        }
+      for ( $repeatableElementsCountNumber = 0; $repeatableElementsCountNumber < $repeatableElementsCount; $repeatableElementsCountNumber ++ ) {
+        $repeatableElements      = [];
+        $saveRepeatableElements  = $repeatableSettingValue = $repeatableSettingId = false;
+        $repeatableElementsIndex = 0;
+        $index                   = - 1;
 
-        if ( $saveRepeatableElements ) {
-          if ( ! in_array( $setting['type'], [ 'startrepeatableelements', 'endrepeatableelements' ] ) ) {
-            $setting['is_repeatable'] = true;
+        foreach ( $settings as $key => $setting ) {
+          $setting['type'] = strtolower( $setting['type'] );
+          $index ++;
+
+          if ( $setting['type'] === 'startrepeatable' ) {
+            $maxRepeatElements = (int) ( $setting['max_repeat'] ?? $maxRepeat );
           }
 
-          $repeatableElements[ $key ] = $setting;
-        }
+          if ( $setting['type'] === 'startrepeatableelements' ) {
+            $saveRepeatableElements  = true;
+            $repeatableElementsIndex = $index;
+            $repeatableSettingId     = $setting['id'];
+            $repeatableSettingValue  = Settings::get( $repeatableSettingId, [], $optionsName );
+          }
 
-        $settings[ $key ] = $setting;
+          if ( $saveRepeatableElements && in_array( $repeatableSettingId, $repeatableElementsProcessedIDs, true ) ) {
+            $saveRepeatableElements = false;
+            continue;
+          }
 
-        if ( $setting['type'] === 'endrepeatableelements' ) {
-          $saveRepeatableElements = false;
-          $addElements            = [];
-          if ( is_array( $repeatableSettingValue ) && count( $repeatableSettingValue ) ) {
-            foreach ( $repeatableSettingValue as $rowIndex => $rowValue ) {
-              foreach ( $repeatableElements as $repeatableElementIndex => $repeatableElement ) {
-                if ( in_array( $repeatableElement['type'], [
-                  'startrepeatableelements',
-                  'endrepeatableelements'
-                ] ) ) {
-                  $addElements[ $repeatableElementIndex . '_' . $rowIndex ] = $repeatableElement;
+          if ( $saveRepeatableElements ) {
+            if ( ! in_array( $setting['type'], [ 'startrepeatableelements', 'endrepeatableelements' ] ) ) {
+              $setting['is_repeatable'] = true;
+            }
 
-                } else {
-                  $repeatableRowKey = str_replace( $repeatableSettingId . '_', '',
-                    $repeatableElementIndex );
+            $repeatableElements[ $key ] = $setting;
+          }
 
-                  if ( isset( $rowValue[ $repeatableRowKey ] ) ) {
-                    $repeatableElement['force_value'] = $rowValue[ $repeatableRowKey ];
+          $settings[ $key ] = $setting;
+
+          if ( $saveRepeatableElements && $setting['type'] === 'endrepeatableelements' ) {
+            $saveRepeatableElements           = false;
+            $addElements                      = [];
+            $repeatableElementsProcessedIDs[] = $repeatableSettingId;
+
+            if ( is_array( $repeatableSettingValue ) && count( $repeatableSettingValue ) ) {
+              foreach ( $repeatableSettingValue as $rowIndex => $rowValue ) {
+                foreach ( $repeatableElements as $repeatableElementIndex => $repeatableElement ) {
+                  if ( ! in_array( $repeatableElement['type'], [
+                    'startrepeatableelements',
+                    'endrepeatableelements'
+                  ] ) ) {
+                    $repeatableRowKey = str_replace( $repeatableSettingId . '_', '', $repeatableElementIndex );
+
+                    if ( isset( $rowValue[ $repeatableRowKey ] ) ) {
+                      $repeatableElement['force_value'] = $rowValue[ $repeatableRowKey ];
+                    }
                   }
 
                   $addElements[ $repeatableElementIndex . '_' . $rowIndex ] = $repeatableElement;
                 }
               }
             }
-          }
 
-          if ( ! empty( $addElements ) ) {
-            $settings = Helper::arrayInsertAfter( $settings, $repeatableElementsIndex, $addElements );
-          }
+            if ( ! empty( $addElements ) ) {
+              $addElements = array_slice( $addElements, 0, $maxRepeatElements * count( $repeatableElements ) );
+              //$settings = Helper::arrayInsertAfter( $settings, $repeatableElementsIndex, $addElements );
 
-          $repeatableElements = [];
+              if ( count( $addElements ) / count( $repeatableElements ) >= $maxRepeatElements ) {
+                array_splice( $settings, $repeatableElementsIndex, count( $repeatableElements ), $addElements );
+              } else {
+                array_splice( $settings, $repeatableElementsIndex, 0, $addElements );
+              }
+            }
+
+            break;
+          }
         }
-
-        $index ++;
       }
-
-      //DebugTrait::dd( $settings );
     }
 
     return $settings;
