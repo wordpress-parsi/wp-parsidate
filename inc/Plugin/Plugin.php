@@ -13,6 +13,13 @@ class Plugin {
     add_filter( 'login_headerurl', [ $this, 'changeLoginLink' ], 10, 2 );
     add_action( 'admin_notices', [ $this, 'activationAdminNotice' ] );
     add_action( 'admin_init', [ $this, 'dismissActivationNotice' ] );
+    add_action( 'init', [ $this, 'loadTextDomain' ] );
+  }
+
+  public function loadTextDomain(): void {
+    if ( get_locale() === 'fa_IR' ) {
+      load_textdomain( 'wp-parsidate', WP_PARSI_DIR . 'languages/wp-parsidate-fa_IR.mo' );
+    }
   }
 
   /**
