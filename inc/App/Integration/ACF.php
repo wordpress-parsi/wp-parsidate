@@ -91,6 +91,7 @@ class ACF extends Addon {
           'is_wp_plugin' => true,
           'is_free'      => true,
           'plugin_link'  => 'https://wordpress.org/plugins/advanced-custom-fields/',
+          'class_check'  => 'ACF'
         )
       ]
     );
