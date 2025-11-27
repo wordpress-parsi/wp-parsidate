@@ -10,7 +10,7 @@ class Tools {
 
     if ( Settings::get( 'date_in_admin_bar', false ) ) {
       add_action( 'admin_bar_menu', [ $this, 'addDateToAdminBar' ], PHP_INT_MAX );
-      //add_action( 'admin_head', [ $this, 'adminBarDateStyle' ] );
+      add_action( 'admin_head', [ $this, 'adminBarDateStyle' ] );
     }
   }
 
@@ -38,7 +38,6 @@ class Tools {
 			.wpp-admin-bar-date {
 			    color: #fff;
 			    background-color: var(--e-context-primary-color) !important;
-			    border-radius: 5px 5px 0 0 !important;
 			    unicode-bidi: embed !important;
 			}
 			</style>';
