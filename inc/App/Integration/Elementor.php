@@ -8,7 +8,6 @@ use WPParsidate\Addons\Addon;
 
 class Elementor extends Addon {
   public string $addonID = 'elementor';
-  public string $currentTab = 'integration';
 
   public function initAction(): void {
     add_action( "elementor/editor/after_enqueue_styles", [ $this, 'fixEditorStyle' ] );
