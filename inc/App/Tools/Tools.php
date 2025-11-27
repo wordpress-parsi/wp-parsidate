@@ -22,7 +22,7 @@ class Tools {
    * @return void
    */
   public function addDateToAdminBar( $adminBar ): void {
-    $currentDate = parsidate( 'l Y/m/d', date( 'Y-m-d' ) );
+    $currentDate = parsidate( 'l Y/m/d', current_time( 'timestamp' ) );
 
     $args = array(
       'id'    => 'wpp_current_date',
