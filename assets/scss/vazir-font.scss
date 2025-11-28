@@ -1,3 +1,5 @@
+$vazirFont: Vazir, tahoma, arial, serif;
+
 @font-face {
   font-family: Vazir;
   src: url("../fonts/Vazirmatn-Regular.woff2") format("woff2");
@@ -21,7 +23,7 @@ body,
 .components-menu-item__info,
 .components-menu-group__label,
 .wc-addons-wrap .products li * {
-  font-family: Vazir, tahoma, arial, serif !important;
+  font-family: $vazirFont !important;
 }
 
 pre,
@@ -52,7 +54,7 @@ code {
   .media-frame select,
   .media-frame textarea,
   .media-modal {
-    font-family: Vazir, tahoma, arial, serif;
+    font-family: $vazirFont;
   }
 }
 
@@ -62,7 +64,7 @@ body#tinymce.wp-editor,
 #tinymce,
 .edit-post-sidebar *,
 .woocommerce-layout *, {
-  font-family: Vazir, tahoma, arial, serif;
+  font-family: $vazirFont;
 }
 
 .edit-post-visual-editor {
@@ -78,7 +80,7 @@ body#tinymce.wp-editor,
 .rtl .quicktags-toolbar input,
 .rtl .wp-switch-editor,
 body.woocommerce_page_wc-settings .nav-tab-wrapper a {
-  font-family: Vazir, tahoma, arial, serif !important;
+  font-family: $vazirFont !important;
 }
 
 // TinyMCE
@@ -88,10 +90,10 @@ body.woocommerce_page_wc-settings .nav-tab-wrapper a {
 
 .mce-rtl {
   .mce-text, .mce-container *:not(i) {
-    font-family: Vazir, tahoma, arial, serif;
+    font-family: $vazirFont;
   }
 }
 
 .mce-tooltip * {
-  font-family: Vazir, tahoma, arial, serif !important;
+  font-family: $vazirFont !important;
 }
