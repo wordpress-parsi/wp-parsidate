@@ -105,7 +105,7 @@ class AppAssets {
       $pluginVersion = Assets::getVersion();
       $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
-      add_editor_style( Assets::url( 'css-admin/editor' . $debugName . '.css?v=' . $pluginVersion ) );
+      add_editor_style( Assets::url( 'css-admin/tinymce-editor' . $debugName . '.css?v=' . $pluginVersion ) );
     }
   }
 
