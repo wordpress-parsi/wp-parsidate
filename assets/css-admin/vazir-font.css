@@ -28,15 +28,9 @@ code {
   font-family: Tahoma, Arial, sans-serif !important;
 }
 
-body#tinymce.wp-editor,
 .rtl .editor-styles-wrapper,
-.rtl .edit-post-visual-editor *,
+.rtl .edit-post-visual-editor *:not(i),
 .rtl .components-notice__content,
-#wpseo_meta *,
-.edit-post-sidebar *,
-#wpbody,
-.woocommerce-layout *,
-#tinymce,
 .rtl h1,
 .rtl h2,
 .rtl h3,
@@ -58,6 +52,15 @@ body#tinymce.wp-editor,
   font-family: Vazir, tahoma, arial, serif;
 }
 
+body#tinymce.wp-editor,
+#wpseo_meta *,
+#wpbody,
+#tinymce,
+.edit-post-sidebar *,
+.woocommerce-layout * {
+  font-family: Vazir, tahoma, arial, serif;
+}
+
 .edit-post-visual-editor .components-button {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif !important;
   font-size: 13px;
@@ -74,6 +77,14 @@ body.woocommerce_page_wc-settings .nav-tab-wrapper a {
 
 #tinymce {
   font-size: 12px;
+}
+
+.mce-rtl .mce-text, .mce-rtl .mce-container *:not(i) {
+  font-family: Vazir, tahoma, arial, serif;
+}
+
+.mce-tooltip * {
+  font-family: Vazir, tahoma, arial, serif !important;
 }
 
 /*# sourceMappingURL=vazir-font.css.map */

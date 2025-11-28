@@ -30,33 +30,38 @@ code {
   font-family: Tahoma, Arial, sans-serif !important;
 }
 
+.rtl {
+  .editor-styles-wrapper,
+  .edit-post-visual-editor *:not(i),
+  .components-notice__content,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .media-frame,
+  .media-frame .search,
+  .media-frame input[type="email"],
+  .media-frame input[type="number"],
+  .media-frame input[type="password"],
+  .media-frame input[type="search"],
+  .media-frame input[type="tel"],
+  .media-frame input[type="text"],
+  .media-frame input[type="url"],
+  .media-frame select,
+  .media-frame textarea,
+  .media-modal {
+    font-family: Vazir, tahoma, arial, serif;
+  }
+}
+
 body#tinymce.wp-editor,
-.rtl .editor-styles-wrapper,
-.rtl .edit-post-visual-editor *,
-.rtl .components-notice__content,
 #wpseo_meta *,
-.edit-post-sidebar *,
 #wpbody,
-.woocommerce-layout *,
 #tinymce,
-.rtl h1,
-.rtl h2,
-.rtl h3,
-.rtl h4,
-.rtl h5,
-.rtl h6,
-.rtl .media-frame,
-.rtl .media-frame .search,
-.rtl .media-frame input[type="email"],
-.rtl .media-frame input[type="number"],
-.rtl .media-frame input[type="password"],
-.rtl .media-frame input[type="search"],
-.rtl .media-frame input[type="tel"],
-.rtl .media-frame input[type="text"],
-.rtl .media-frame input[type="url"],
-.rtl .media-frame select,
-.rtl .media-frame textarea,
-.rtl .media-modal {
+.edit-post-sidebar *,
+.woocommerce-layout *, {
   font-family: Vazir, tahoma, arial, serif;
 }
 
@@ -76,6 +81,17 @@ body.woocommerce_page_wc-settings .nav-tab-wrapper a {
   font-family: Vazir, tahoma, arial, serif !important;
 }
 
+// TinyMCE
 #tinymce {
   font-size: 12px;
+}
+
+.mce-rtl {
+  .mce-text, .mce-container *:not(i) {
+    font-family: Vazir, tahoma, arial, serif;
+  }
+}
+
+.mce-tooltip * {
+  font-family: Vazir, tahoma, arial, serif !important;
 }
