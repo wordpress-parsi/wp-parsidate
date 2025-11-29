@@ -34,10 +34,14 @@ class Tools {
   }
 
   public function adminBarDateStyle(): void {
+    global $_wp_admin_css_colors;
+    $color   = get_user_option( 'admin_color' );
+    $bgColor = $_wp_admin_css_colors[ $color ]->colors[2] ?? '#2271b1';
+
     echo '<style>
 			.wpp-admin-bar-date {
-			    color: #fff;
-			    background-color: var(--e-context-primary-color) !important;
+			    color: #fff !important;
+			    background-color: ' . $bgColor . ' !important;
 			    unicode-bidi: embed !important;
 			}
 			</style>';
