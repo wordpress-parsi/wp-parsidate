@@ -9,8 +9,6 @@ use WPParsidate\App\Core\Core;
 use WPParsidate\App\Integration\Integration;
 use WPParsidate\App\Tools\Tools;
 
-defined( 'ABSPATH' ) || exit;
-
 class App {
   public function __construct() {
     new AppAssets();
