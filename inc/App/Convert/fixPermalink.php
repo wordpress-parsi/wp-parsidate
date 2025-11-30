@@ -73,6 +73,11 @@ class fixPermalink {
           $permalink['name'],
         ),
       );
+
+      if ( empty( $var ) ) {
+        return;
+      }
+
       $per = parsidate( 'Y-m-d', $var, 'eng' );
       $per = explode( '-', $per );
       $out = true;
@@ -88,6 +93,7 @@ class fixPermalink {
       if ( $out && ! empty( $day ) && $day != $per[2] ) {
         $out = false;
       }
+
     } elseif ( isset( $permalink['post_id'] ) ) {
       $out = true;
       $var = $wpdb->get_var(
@@ -99,9 +105,11 @@ class fixPermalink {
           absint( $permalink['post_id'] )
         ),
       );
+
     } elseif ( ! empty( $year ) && ! empty( $monthnum ) && ! empty( $day ) ) {
       $out = true;
       $var = gregdate( 'Y-m-d', "$year-$monthnum-$day" );
+
     } elseif ( ! empty( $year ) && ! empty( $monthnum ) ) {
       $stadate    = $pd->persian_to_gregorian( $year, $monthnum, 1 );
       $enddate    = $pd->persian_to_gregorian( $year, $monthnum, $pd->j_days_in_month[ ( $monthnum - 1 ) ] );
@@ -122,6 +130,7 @@ class fixPermalink {
       );
 
       $query->set( 'date_query', $date_query );
+
     } elseif ( ! empty( $year ) ) {
       $stadate    = $pd->persian_to_gregorian( $year, 1, 1 );
       $enddate    = $pd->persian_to_gregorian( ( $year + 1 ), 1, 1 );
