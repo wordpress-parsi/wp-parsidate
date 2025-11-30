@@ -34,11 +34,13 @@ class AdminAssets {
       ], $pluginVersion, [ 'in_footer' => true ] );
 
     wp_localize_script( WP_PARSI_KEY_SLUG . '-admin', WP_PARSI_KEY_CAP, array(
-      'ajaxUrl'          => admin_url( 'admin-ajax.php' ),
-      'ajaxNonce'        => Nonce::create(),
-      'removeText'       => __( 'Remove', 'wp-parsidate' ),
-      'dtuConfirmDelete' => __( 'Are you sure you want to delete this item(s)?', 'wp-parsidate' ),
-      'copyText'         => __( 'Click to copy this text.', 'wp-parsidate' ),
+      'ajaxUrl'            => admin_url( 'admin-ajax.php' ),
+      'ajaxNonce'          => Nonce::create(),
+      'pageRefreshedAfter' => apply_filters( 'wp_parsidate_settings_page_refreshed_after', 0 ),
+      'pageRefreshUrl'     => apply_filters( 'wp_parsidate_settings_page_refresh_url', null ),
+      'removeText'         => __( 'Remove', 'wp-parsidate' ),
+      'dtuConfirmDelete'   => __( 'Are you sure you want to delete this item(s)?', 'wp-parsidate' ),
+      'copyText'           => __( 'Click to copy this text.', 'wp-parsidate' ),
     ) );
   }
 

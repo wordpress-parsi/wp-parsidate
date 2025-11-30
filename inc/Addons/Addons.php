@@ -56,15 +56,13 @@ class Addons {
     if ( $tab === self::tab && Cache::get( 'settings_saved' ) ) {
       Notice::add( self::tab, __( 'To load the add-on initial hooks, the page refreshes.', 'wp-parsidate' ),
         'warning' );
-      ?>
-      <script>
-        setTimeout(function () {
-          window.location.href = '<?php
-            echo esc_url_raw( AdminPages::link( [ 'tab' => self::tab, 'addons-refreshed' => true ] ) )
-            ?>';
-        }, 5000)
-      </script>
-      <?php
+
+      add_filter( 'wp_parsidate_settings_page_refreshed_after', static function () {
+        return 5000;
+      } );
+      add_filter( 'wp_parsidate_settings_page_refresh_url', static function () {
+        return AdminPages::link( [ 'tab' => self::tab, 'addons-refreshed' => true ] );
+      } );
     }
   }
 

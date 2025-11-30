@@ -22,7 +22,20 @@ jQuery(document).ready(function ($) {
     settingsResetButton = document.getElementById("wppd-settings-reset-button");
 
   let wppdContentWrapPrevScrollPos = wppdContentWrap.scrollTop(),
-    wppdContentWrapCurrentScrollPos = wppdContentWrapPrevScrollPos;
+    wppdContentWrapCurrentScrollPos = wppdContentWrapPrevScrollPos,
+    wppdPageRefreshedAfter = parseInt(WpParsiDate.pageRefreshedAfter);
+
+  /**
+   * Page refresh
+   * */
+  if (wppdPageRefreshedAfter > 0) {
+    setTimeout(function () {
+      if (WpParsiDate.pageRefreshUrl !== null)
+        window.location.href = WpParsiDate.pageRefreshUrl;
+      else
+        window.location.reload(true);
+    }, wppdPageRefreshedAfter);
+  }
 
   /**
    * Hide header on scroll down and sticky on scroll to top
@@ -259,7 +272,7 @@ jQuery(document).ready(function ($) {
     if (navigator.clipboard) {
       wppdCopyText.each(function () {
         if ($(this).attr('title') === undefined)
-          $(this).attr('title', WooAssistant.copyText);
+          $(this).attr('title', WpParsiDate.copyText);
       })
       wppdCopyText.unbind('click').on('click', function () {
         let wppdCopyTextElm = $(this),
