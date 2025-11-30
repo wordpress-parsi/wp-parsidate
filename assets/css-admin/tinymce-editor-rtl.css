@@ -14,9 +14,17 @@
   font-display: swap
 }
 
+body#tinymce.wp-editor.content p,
+body#tinymce.wp-editor.content ol,
+body#tinymce.wp-editor.content ul,
+body#tinymce.wp-editor.content dl,
+body#tinymce.wp-editor.content dt {
+  font-family: Vazir, tahoma, arial, serif !important;
+}
+
 body,
 #tinymce {
-  font-family: Vazir, tahoma, arial, serif;
+  font-family: Vazir, tahoma, arial, serif !important;
   direction: rtl;
   font-size: 15px;
   line-height: 1.7

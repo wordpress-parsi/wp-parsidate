@@ -11,7 +11,7 @@ use WPParsidate\Settings\Settings;
 class AppAssets {
   public function __construct() {
     add_action( 'admin_enqueue_scripts', array( $this, 'adminEnqueueScripts' ) );
-    add_filter( 'admin_init', [ $this, 'fixTinyMceFont' ], 9 );
+    add_filter( 'admin_init', [ $this, 'fixTinyMceFont' ], 9999999 );
     add_action( 'admin_print_styles-plugin-editor.php', [ $this, 'fixCodeEditor' ] );
     add_action( 'admin_print_styles-theme-editor.php', [ $this, 'fixCodeEditor' ] );
     add_action( 'wpp_jalali_datepicker_enqueued', [ $this, 'localizeMonthsName' ] );
