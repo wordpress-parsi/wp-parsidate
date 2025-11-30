@@ -13,7 +13,7 @@ class Plugin {
     add_filter( 'login_headerurl', [ $this, 'changeLoginLink' ], 10, 2 );
     add_action( 'admin_notices', [ $this, 'activationAdminNotice' ] );
     add_action( 'admin_init', [ $this, 'dismissActivationNotice' ] );
-    add_action( 'init', [ $this, 'loadTextDomain' ] );
+    add_action( 'init', [ $this, 'loadTextDomain' ], -1 );
   }
 
   public function loadTextDomain(): void {

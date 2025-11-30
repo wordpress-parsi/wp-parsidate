@@ -150,9 +150,9 @@ final class WP_Parsidate {
       }
     }
 
+    new Plugin();
     new App();
     new Core();
-    new Plugin();
     new Widget();
   }
 

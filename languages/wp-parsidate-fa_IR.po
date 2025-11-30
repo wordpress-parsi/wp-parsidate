@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-24 18:30+0330\n"
-"PO-Revision-Date: 2025-11-24 18:34+0330\n"
+"POT-Creation-Date: 2025-11-30 17:50+0330\n"
+"PO-Revision-Date: 2025-11-30 17:50+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -578,11 +578,11 @@ msgstr "جایگزینی نام واحد پولی"
 msgid "Download"
 msgstr "دانلود"
 
-#: inc/App/Integration/Elementor.php:34 inc/App/Integration/Elementor.php:38
+#: inc/App/Integration/Elementor.php:33 inc/App/Integration/Elementor.php:37
 msgid "Elementor"
 msgstr "المنتور"
 
-#: inc/App/Integration/Elementor.php:35
+#: inc/App/Integration/Elementor.php:34
 msgid "ParsiDate integration for Elementor"
 msgstr "هماهنگ‌سازی تاریخ پارسی با المنتور"
 
@@ -622,12 +622,13 @@ msgstr "<strong>شمارۀ تماس</strong> معتبر نیست."
 msgid "Expiry date"
 msgstr "تاریخ انقضاء"
 
-#: inc/App/Integration/WooCommerce.php:705 inc/App/Integration/WooCommerce.php:778
-#: inc/App/Integration/WooCommerce.php:782
+#: inc/App/Integration/WooCommerce.php:705 inc/App/Integration/WooCommerce.php:780
+#: inc/App/Integration/WooCommerce.php:784
 msgid "WooCommerce"
 msgstr "ووکامرس"
 
-#: inc/App/Integration/WooCommerce.php:706 inc/App/Integration/WooCommerce.php:779
+#: inc/App/Integration/WooCommerce.php:706 inc/App/Integration/WooCommerce.php:776
+#: inc/App/Integration/WooCommerce.php:781
 msgid "ParsiDate integration for WooCommerce"
 msgstr "هماهنگ‌سازی تاریخ پارسی با ووکامرس"
 
@@ -1463,15 +1464,15 @@ msgstr ""
 msgid "Today:&nbsp;"
 msgstr "امروز:&nbsp;"
 
-#: inc/App/Tools/Tools.php:51
+#: inc/App/Tools/Tools.php:54
 msgid "Admin Bar"
 msgstr "نوار مدیریت"
 
-#: inc/App/Tools/Tools.php:56
+#: inc/App/Tools/Tools.php:59
 msgid "Display date in the admin bar"
 msgstr "نمایش تاریخ در نوار مدیریت"
 
-#: inc/App/Tools/Tools.php:59
+#: inc/App/Tools/Tools.php:62
 msgid "Display today's Jalali date in the WordPress admin bar."
 msgstr "تاریخ شمسی امروز را در نوار مدیریت وردپرس نمایش دهید."
 
