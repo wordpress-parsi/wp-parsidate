@@ -13,9 +13,18 @@ class HookDeactivator {
     add_filter( 'wp_parsidate_integration_settings_sections', [ $this, 'addSectionSettings' ] );
   }
 
+  /**
+   * Check hook list for deactivating WP-Parsidate functionality, If disable return True.
+   *
+   * @return bool Disable status
+   */
   public static function checkDisable(): bool {
+    if ( apply_filters( 'wp_parsidate_hook_deactivator_check_disable', false ) ) {
+      return true;
+    }
+
     if ( WordPress::isFeed() ) {
-      return false;
+      return true;
     }
 
     $i        = 0;
@@ -34,7 +43,7 @@ class HookDeactivator {
     $func = $calls[ ++ $i ]['function'];
 
     if ( empty( $dis_hook[ $func ] ) ) {
-      return true;
+      return false;
     }
 
     $hooks = $dis_hook[ $func ];
@@ -53,13 +62,34 @@ class HookDeactivator {
           continue;
         }
 
+        /*if (
+          ! empty( $call['function'] ) &&
+          ! empty( $hook['func'] ) &&
+          ! empty( $call['class'] ) &&
+          ! empty( $hook['class'] ) &&
+          $call['function'] === $hook['func'] &&
+          $call['class'] === $hook['class']
+        ) {
+          return true;
+        }
+
+        if (
+          ! empty( $call['function'] ) &&
+          ! empty( $hook['func'] ) &&
+          empty( $call['class'] ) &&
+          empty( $hook['class'] ) &&
+          $call['function'] === $hook['func']
+        ) {
+          return true;
+        }*/
+
         if ( ( ! isset( $call['class'] ) && empty( $hook['class'] ) ) || $call['class'] === $hook['class'] ) {
-          return false;
+          return true;
         }
       }
     }
 
-    return true;
+    return false;
   }
 
   public static function getList(): array {
@@ -68,11 +98,14 @@ class HookDeactivator {
       return $cache;
     }
 
-    $hooks = array();
-    $lists = explode( "\n", Settings::get( 'hook_deactivator_list', '' ) );
+    $hooks   = array();
+    $rawList = Settings::get( 'hook_deactivator_list', '' );
+    $rawList = apply_filters( 'wp_parsidate_hook_deactivator_raw_list', $rawList );
+    $lists   = explode( "\n", $rawList );
 
     foreach ( $lists as $list ) {
       $list = explode( ',', $list );
+      $list = array_map( 'trim', $list );
 
       if ( count( $list ) < 2 ) {
         continue;
@@ -83,7 +116,7 @@ class HookDeactivator {
 
     Cache::set( 'hook_deactivator_list', $hooks );
 
-    return $hooks;
+    return apply_filters( 'wp_parsidate_hook_deactivator_list', $hooks );
   }
 
   public function addSectionSettings( array $sections ): array {

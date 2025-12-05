@@ -46,8 +46,7 @@ class fixDates {
       return $date;
     }
 
-    if ( ! HookDeactivator::checkDisable() ) {
-      return $format;
+    if ( HookDeactivator::checkDisable() ) {
       return $date;
     }
 
@@ -96,7 +95,7 @@ class fixDates {
     if ( empty( $format ) ) {
       $format = get_option( 'date_format' );
     }
-    if ( 'c' === $format || ! HookDeactivator::checkDisable() ) {
+    if ( 'c' === $format || HookDeactivator::checkDisable() ) {
       return date( $format, strtotime( $comment->comment_date ) );
     }
 
@@ -121,7 +120,7 @@ class fixDates {
     if ( empty( $format ) ) {
       $format = get_option( 'time_format' );
     }
-    if ( ! HookDeactivator::checkDisable() ) {
+    if ( HookDeactivator::checkDisable() ) {
       return date( $format, strtotime( $comment->comment_date ) );
     }
 
@@ -173,7 +172,7 @@ class fixDates {
       $format = get_option( 'time_format' );
     }
 
-    if ( ! HookDeactivator::checkDisable() ) {
+    if ( HookDeactivator::checkDisable() ) {
       return date( $format, strtotime( $post->post_date ) );
     }
 
@@ -207,7 +206,7 @@ class fixDates {
       $format = is_string( $format ) ? $format : 'F j, Y';
     }
 
-    if ( 'c' === $format || ! HookDeactivator::checkDisable() ) {
+    if ( 'c' === $format || HookDeactivator::checkDisable() ) {
       return date( $format, strtotime( $post->post_date ) );
     }
 
