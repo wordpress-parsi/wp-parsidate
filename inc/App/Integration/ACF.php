@@ -13,6 +13,7 @@ namespace WPParsidate\App\Integration;
 defined( 'ABSPATH' ) || exit;
 
 use WPParsidate\Addons\Addon;
+use WPParsidate\Helper\Date;
 
 class ACF extends Addon {
   public string $addonID = 'acf';
@@ -22,7 +23,55 @@ class ACF extends Addon {
     if ( $this->getSetting( 'fix_date', false ) ) {
       add_action( 'acf/include_field_types', [ $this, 'includeField' ] ); // v5
       add_action( 'acf/register_fields', [ $this, 'includeField' ] ); // v4
+
+      add_filter( 'acf/update_value', [ $this, 'updateDateValue' ], 10, 3 );
+      add_filter( 'acf/load_value', [ $this, 'loadDateValue' ], 10, 3 );
+      add_action( 'admin_enqueue_scripts', [ $this, 'fixDatePickerScript' ], 99999 );
     }
+
+    add_filter( 'wp_parsidate_hook_deactivator_raw_list', [ $this, 'addDateHooksToDeactivator' ] );
+  }
+
+  public function addDateHooksToDeactivator( $rawList ): string {
+    $rawList .= "\nwp_date,acf_format_date\nwp_date,render_field,acf_field_date_picker\ndate_i18n,acf_format_date\ndate_i18n,render_field,acf_field_date_picker";
+
+    return $rawList;
+  }
+
+  public function fixDatePickerScript(): void {
+    wp_add_inline_script( 'wpp_jalali_datepicker', "document.addEventListener('DOMContentLoaded', function () {
+          setTimeout(function () {
+            jQuery('.acf-date-picker input.hasDatepicker').on('keyup change', function () {
+              let acfDatePickerParent = jQuery(this).closest('div.acf-date-picker');
+              if (acfDatePickerParent.length)
+                acfDatePickerParent.children('input[type=\"hidden\"]').val(jQuery(this).val().replaceAll('-', ''));
+            });
+          }, 2000);
+        });" );
+  }
+
+  public function loadDateValue( $value, $postID, $field ) {
+    if ( $field['type'] === 'date_picker' && ! empty( $value ) ) {
+      $value = Date::changeDateFormat( $value, 'Ymd', $field['display_format'] );
+      $value = parsidate( $field['display_format'], $value, 'en' );
+    }
+
+    return $value;
+  }
+
+  public function updateDateValue( $value, $postID, $field ) {
+    if ( $field['type'] === 'date_picker' && ! empty( $value ) ) {
+      if ( is_numeric( $value ) && strlen( $value ) === 8 ) {
+        $year  = substr( $value, 0, 4 );
+        $month = substr( $value, 4, 2 );
+        $day   = substr( $value, 6, 2 );
+
+        $value = "$year-$month-$day";
+      }
+      $value = gregdate( 'Ymd', $value );
+    }
+
+    return $value;
   }
 
   /**
