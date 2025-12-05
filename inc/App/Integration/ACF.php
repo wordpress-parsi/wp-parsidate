@@ -37,7 +37,7 @@ class ACF extends Addon {
     $version = $version ? (int) $version : 4;
 
     include_once( 'ACF/class-wpp-acf-datepicker-v' . (float) $version . '.php' );
-    include_once( 'ACF/class-wpp-acf-timepicker-v' . (float) $version . '.php' );
+    //include_once( 'ACF/class-wpp-acf-timepicker-v' . (float) $version . '.php' );
   }
 
   public function addSectionSettings( $sections ) {
