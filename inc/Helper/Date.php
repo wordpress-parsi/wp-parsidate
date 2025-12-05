@@ -2,7 +2,13 @@
 
 namespace WPParsidate\Helper;
 
+use DateTime;
+
 class Date {
+  public static function changeDateFormat( $date, $dateFormat, $returnFormat ): string {
+    return DateTime::createFromFormat( $dateFormat, $date )->format( $returnFormat );
+  }
+
   public static function isDateString( $dateString, $format = 'Y-m-d\TH:i:sP' ): array {
     $default = [
       'status' => false,
