@@ -48,6 +48,7 @@ class fixDates {
 
     if ( ! HookDeactivator::checkDisable() ) {
       return $format;
+      return $date;
     }
 
     return parsidate( $format, $timestamp, Settings::get( 'conv_dates' ) ? 'per' : 'eng' );
