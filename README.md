@@ -11,7 +11,7 @@
 **Tested up to:** 6.7.1  
 **Stable tag:** 5.1.2
 
-**Telegram group:** @parsidate(https://t.me/parsidate)
+**Telegram group:** [Parsidate](https://t.me/parsidate)
 
 Persian date support for WordPress.
 
