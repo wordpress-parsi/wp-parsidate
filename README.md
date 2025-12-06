@@ -1,14 +1,16 @@
-# Parsi Date
+# Parsi Date - افزونه پارسی دیت
 
-![Version](https://img.shields.io/badge/version-5.1.2-blue)
-![WordPress Compatible](https://img.shields.io/badge/WordPress-5.3%20to%206.7.1-blue)
+![Version](https://img.shields.io/badge/version-5.1.8-blue)
+![WordPress Compatible](https://img.shields.io/badge/WordPress-5.3%20to%206.9-blue)
+[![WordPress Plugin Downloads](https://img.shields.io/wordpress/plugin/dt/wp-parsidate.svg)](https://wordpress.org/plugins/wp-parsidate/)
 
 **Contributors:** [lord_viper](https://profiles.wordpress.org/lord_viper), [man4toman](https://profiles.wordpress.org/man4toman), [parselearn](https://profiles.wordpress.org/parselearn), [yazdaniwp](https://profiles.wordpress.org/yazdaniwp), [saeedfard](https://profiles.wordpress.org/saeedfard), [iehsanir](https://profiles.wordpress.org/iehsanir)  
 **Donate link:** [https://wp-parsi.com/support/](https://wp-parsi.com/support/)  
 **Tags:** shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, iran, iranian, parsidate, rtl, gutenberg, acf, woocommerce  
 **Requires at least:** 5.3  
 **Tested up to:** 6.7.1  
-**Stable tag:** 5.1.2  
+**Stable tag:** 5.1.2
+**Telegram group:** @parsidate (https://t.me/parsidate)
 
 Persian date support for WordPress.
 
