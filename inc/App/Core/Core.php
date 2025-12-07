@@ -108,6 +108,14 @@ class Core {
           'wp-parsidate' ),
         'sanitize' => 'bool'
       ),
+      'local_text_domain'    => array(
+        'id'       => 'local_text_domain',
+        'title'    => __( 'Load translate file', 'wp-parsidate' ),
+        'type'     => 'toggle',
+        'default'  => false,
+        'desc'     => __( 'Load translate file from plugin directory.', 'wp-parsidate' ),
+        'sanitize' => 'bool'
+      ),
       'end_grid_plugin'      => array(
         'type' => 'endGrid',
       ),
