@@ -91,7 +91,7 @@ class AdminPages {
     $wrapperClass = array(
       WP_PARSI_KEY_SLUG . '-wrap',
       WP_PARSI_KEY_SLUG . '-wrapper',
-      WP_PARSI_KEY_SLUG . esc_html( $currentTab ),
+      WP_PARSI_KEY_SLUG . '-' . esc_html( $currentTab ),
     );
     ?>
     <div class="wrap">
@@ -199,7 +199,7 @@ class AdminPages {
   }
 
   private static function defaultTabs(): array {
-    return [ 'dashboard', 'core', 'convert', 'tools', 'integration', 'addons' ];
+    return [ 'dashboard', 'core', 'convert', 'tools', 'integration', 'addons', 'about' ];
   }
 
   public static function isSettingPage(): bool {
