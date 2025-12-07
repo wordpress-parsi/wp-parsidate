@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-30 17:50+0330\n"
-"PO-Revision-Date: 2025-11-30 17:50+0330\n"
+"POT-Creation-Date: 2025-12-07 20:23+0330\n"
+"PO-Revision-Date: 2025-12-07 20:23+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -126,7 +126,7 @@ msgstr "بانک پارسیان"
 msgid "Pasargad Bank"
 msgstr "بانک پاسارگاد"
 
-#: inc/Addons/Addons.php:35 inc/Addons/Addons.php:73 inc/Addons/Addons.php:225
+#: inc/Addons/Addons.php:35 inc/Addons/Addons.php:71 inc/Addons/Addons.php:223
 msgid "Addons"
 msgstr "افزونه‌ها"
 
@@ -138,83 +138,137 @@ msgstr "افزونه‌های وردپرس پارسی"
 msgid "To load the add-on initial hooks, the page refreshes."
 msgstr "برای بارگذاری قلاب‌های اولیه افزونه، صفحه رفرش می‌شود."
 
-#: inc/Addons/Addons.php:82
+#: inc/Addons/Addons.php:80
 msgid "Addons settings saved."
 msgstr "تنظیمات افزونه‌ها ذخیره شد."
 
-#: inc/Addons/Addons.php:113
+#: inc/Addons/Addons.php:111
 msgid "Enable addon"
 msgstr "فعال کردن افزونه"
 
-#: inc/Addons/Addons.php:131
+#: inc/Addons/Addons.php:129
 msgid "Activate required addon"
 msgstr "افزونه مورد نیاز را فعال کنید"
 
-#: inc/Addons/Addons.php:140
+#: inc/Addons/Addons.php:138
 msgid "Install required addon"
 msgstr "افزونه مورد نیاز را نصب کنید"
 
-#: inc/Addons/Addons.php:144
+#: inc/Addons/Addons.php:142
 msgid "Download required addon"
 msgstr "دانلود افزونه مورد نیاز"
 
-#: inc/Addons/Addons.php:145
+#: inc/Addons/Addons.php:143
 msgid "Buy required addon"
 msgstr "افزونه مورد نیاز را خریداری کنید"
 
-#: inc/Addons/Addons.php:226
+#: inc/Addons/Addons.php:224
 msgid "You can enable or disable these integrations below."
 msgstr "می‌توانید این ادغام‌ها را در زیر فعال یا غیرفعال کنید."
 
-#: inc/Addons/Addons.php:238
+#: inc/Addons/Addons.php:236
 msgid "Recommended"
 msgstr "توصیه‌شده"
 
-#: inc/Addons/Addons.php:239
+#: inc/Addons/Addons.php:237
 msgid "E-commerce"
 msgstr "تجارت الکترونیک"
 
-#: inc/Addons/Addons.php:240 inc/Admin/AdminTools.php:21
+#: inc/Addons/Addons.php:238 inc/Admin/AdminTools.php:21
 msgid "Tools"
 msgstr "ابزارها"
 
-#: inc/Addons/Addons.php:241
+#: inc/Addons/Addons.php:239
 msgid "Marketing"
 msgstr "بازاریابی"
 
-#: inc/Addons/Addons.php:242
+#: inc/Addons/Addons.php:240
 msgid "Customizations"
 msgstr "سفارشی‌سازی"
 
-#: inc/Addons/Addons.php:243 inc/App/Integration/RankMath.php:142
+#: inc/Addons/Addons.php:241 inc/App/Integration/RankMath.php:142
 msgid "SEO"
 msgstr "سئو"
 
-#: inc/Addons/Addons.php:244
+#: inc/Addons/Addons.php:242
 msgid "Utility"
 msgstr "ابزار مفید"
 
-#: inc/Addons/Addons.php:245
+#: inc/Addons/Addons.php:243
 msgid "Page Builder"
 msgstr "صفحه‌ساز"
 
-#: inc/Addons/Addons.php:251
+#: inc/Addons/Addons.php:249
 msgid "Other addons"
 msgstr "دیگر افزونه‌ها"
 
-#: inc/Addons/Addons.php:259
+#: inc/Addons/Addons.php:257
 msgid "Save active addons"
 msgstr "ذخیره افزونه‌های فعال"
 
-#: inc/Admin/AdminAssets.php:39
+#: inc/Admin/AdminAbout.php:200
+msgid "GitHub Contributors"
+msgstr "مشارکت‌کننده‌های گیت‌هاب"
+
+#: inc/Admin/AdminAbout.php:213
+msgid "Morteza Geransayeh"
+msgstr "مرتضی گزانسایه"
+
+#: inc/Admin/AdminAbout.php:214 inc/Admin/AdminAbout.php:224
+#: inc/Admin/AdminAbout.php:234 inc/Admin/AdminAbout.php:244
+#: inc/Admin/AdminAbout.php:254
+msgid "Developer"
+msgstr "توسعه‌دهنده"
+
+#: inc/Admin/AdminAbout.php:223
+msgid "Saeed Fard"
+msgstr "سعید فرد"
+
+#: inc/Admin/AdminAbout.php:233
+msgid "HamidReza Yazdani"
+msgstr "حمید رضا یزدانی"
+
+#: inc/Admin/AdminAbout.php:243
+msgid "Mobin Ghasempoor"
+msgstr "مبین قاسمپور"
+
+#: inc/Admin/AdminAbout.php:253
+msgid "Parsa Kafi"
+msgstr "پارسا کافی"
+
+#: inc/Admin/AdminAbout.php:263
+msgid "Mohsen Ghiasi"
+msgstr "محسن قیاسی"
+
+#: inc/Admin/AdminAbout.php:264
+msgid "DevOps"
+msgstr "دواپس"
+
+#: inc/Admin/AdminAbout.php:362
+msgid "About Us"
+msgstr "درباره ما"
+
+#: inc/Admin/AdminAbout.php:363
+msgid "About the WordPress Parsi team and plugin"
+msgstr "درباره تیم و افزونه وردپرس پارسی"
+
+#: inc/Admin/AdminAbout.php:369
+msgid "The text of this page is in Persian."
+msgstr "متن این صفحه به زبان فارسی است."
+
+#: inc/Admin/AdminAbout.php:375 inc/Widget/DashboardWidget.php:156
+msgid "About"
+msgstr "درباره"
+
+#: inc/Admin/AdminAssets.php:41
 msgid "Remove"
 msgstr "حذف"
 
-#: inc/Admin/AdminAssets.php:40
+#: inc/Admin/AdminAssets.php:42
 msgid "Are you sure you want to delete this item(s)?"
 msgstr "آیا مطمئن هستید که می‌خواهید این مورد(ها) را حذف کنید؟"
 
-#: inc/Admin/AdminAssets.php:41
+#: inc/Admin/AdminAssets.php:43
 msgid "Click to copy this text."
 msgstr "برای کپی کردن این متن کلیک کنید."
 
@@ -459,36 +513,44 @@ msgstr ""
 "با فعال‌کردن این گزینه، نسخۀ فشرده‌نشدۀ پرونده‌های JS و CSS افزونۀ پارسی‌دیت "
 "بارگذاری می‌شوند."
 
-#: inc/App/Core/Core.php:122
+#: inc/App/Core/Core.php:113
+msgid "Load translate file"
+msgstr "بارگذاری فایل ترجمه"
+
+#: inc/App/Core/Core.php:116
+msgid "Load translate file from plugin directory."
+msgstr "بارگذاری فایل ترجمه از پوشه افزونه."
+
+#: inc/App/Core/Core.php:130
 msgid "Multilingual"
 msgstr "چندزبانه"
 
-#: inc/App/Core/Core.php:127
+#: inc/App/Core/Core.php:135
 msgid "Multilingual compatibility"
 msgstr "پشتیبانی از چندزبانه"
 
-#: inc/App/Core/Core.php:130
+#: inc/App/Core/Core.php:138
 msgid "By enabling this, ParsiDate options only work in persian locale"
 msgstr "با فعال کردن این گزینه، تنظیمات پارسی‌دیت فقط برای زبان فارسی اعمال می‌شود"
 
-#: inc/App/Integration/ACF.php:45 inc/App/Integration/ACF.php:51
-#: inc/App/Integration/ACF.php:82
+#: inc/App/Integration/ACF.php:94 inc/App/Integration/ACF.php:100
+#: inc/App/Integration/ACF.php:131
 msgid "Advanced Custom Fields"
 msgstr "زمینه‌های سفارشی"
 
-#: inc/App/Integration/ACF.php:46 inc/App/Integration/ACF.php:83
+#: inc/App/Integration/ACF.php:95 inc/App/Integration/ACF.php:132
 msgid "ParsiDate integration for Advanced Custom Fields (ACF)"
 msgstr "هماهنگ‌سازی تاریخ پارسی با زمینه‌های سفارشی (ACF)"
 
-#: inc/App/Integration/ACF.php:56
+#: inc/App/Integration/ACF.php:105
 msgid "Jalali Datepicker"
 msgstr "انتخاب‌گر تاریخ شمسی (جلالی)"
 
-#: inc/App/Integration/ACF.php:63
+#: inc/App/Integration/ACF.php:112
 msgid "Save dates in Jalali format (Not recommended)"
 msgstr "ذخیره‌سازی تاریخ بصورت شمسی (توصیه نمی‌شود)"
 
-#: inc/App/Integration/ACF.php:86
+#: inc/App/Integration/ACF.php:135
 msgid "Meta"
 msgstr "متا"
 
@@ -554,7 +616,7 @@ msgstr "هماهنگ‌سازی تاریخ پارسی با دانلود آسان
 msgid "Price"
 msgstr "قیمت"
 
-#: inc/App/Integration/EDD.php:81 inc/App/Integration/WooCommerce.php:716
+#: inc/App/Integration/EDD.php:81 inc/App/Integration/WooCommerce.php:723
 msgid "Fix prices"
 msgstr "تصحیح قیمت‌ها"
 
@@ -586,23 +648,23 @@ msgstr "المنتور"
 msgid "ParsiDate integration for Elementor"
 msgstr "هماهنگ‌سازی تاریخ پارسی با المنتور"
 
-#: inc/App/Integration/HookDeactivator.php:92
+#: inc/App/Integration/HookDeactivator.php:125
 msgid "Hooks"
 msgstr "قلاب‌ها"
 
-#: inc/App/Integration/HookDeactivator.php:97
+#: inc/App/Integration/HookDeactivator.php:130
 msgid "Hook list"
 msgstr "لیست قلاب‌ها"
 
-#: inc/App/Integration/HookDeactivator.php:99
+#: inc/App/Integration/HookDeactivator.php:132
 msgid "Enter hook,class,function to remove parsidate filter from it"
 msgstr "نام قلاب، کلاس و تابع موردنظر را جهت رفع فیلتر پارسی‌دیت وارد کنید"
 
-#: inc/App/Integration/HookDeactivator.php:112
+#: inc/App/Integration/HookDeactivator.php:145
 msgid "Hook deactivator"
 msgstr "غیرفعال کردن قلاب"
 
-#: inc/App/Integration/HookDeactivator.php:113
+#: inc/App/Integration/HookDeactivator.php:146
 msgid "Disable plugin hooks"
 msgstr "غیرفعال کردن قلابهای افزونه"
 
@@ -614,49 +676,48 @@ msgstr "رنک‌مث"
 msgid "ParsiDate integration for Rank Math"
 msgstr "هماهنگ‌سازی تاریخ پارسی با رنک‌مث"
 
-#: inc/App/Integration/WooCommerce.php:99
+#: inc/App/Integration/WooCommerce.php:106
 msgid "<strong>Phone number</strong> is invalid."
 msgstr "<strong>شمارۀ تماس</strong> معتبر نیست."
 
-#: inc/App/Integration/WooCommerce.php:368
+#: inc/App/Integration/WooCommerce.php:375
 msgid "Expiry date"
 msgstr "تاریخ انقضاء"
 
-#: inc/App/Integration/WooCommerce.php:705 inc/App/Integration/WooCommerce.php:780
-#: inc/App/Integration/WooCommerce.php:784
+#: inc/App/Integration/WooCommerce.php:712 inc/App/Integration/WooCommerce.php:782
+#: inc/App/Integration/WooCommerce.php:796 inc/App/Integration/WooCommerce.php:800
 msgid "WooCommerce"
 msgstr "ووکامرس"
 
-#: inc/App/Integration/WooCommerce.php:706 inc/App/Integration/WooCommerce.php:776
-#: inc/App/Integration/WooCommerce.php:781
+#: inc/App/Integration/WooCommerce.php:713 inc/App/Integration/WooCommerce.php:797
 msgid "ParsiDate integration for WooCommerce"
 msgstr "هماهنگ‌سازی تاریخ پارسی با ووکامرس"
 
-#: inc/App/Integration/WooCommerce.php:711
+#: inc/App/Integration/WooCommerce.php:718
 msgid "Products"
 msgstr "محصولات"
 
-#: inc/App/Integration/WooCommerce.php:726
+#: inc/App/Integration/WooCommerce.php:733
 msgid "Checkout page"
 msgstr "برگه پرداخت"
 
-#: inc/App/Integration/WooCommerce.php:731
+#: inc/App/Integration/WooCommerce.php:738
 msgid "Fix persian postcode"
 msgstr "تبدیل کد پستی فارسی در روند پرداخت"
 
-#: inc/App/Integration/WooCommerce.php:738
+#: inc/App/Integration/WooCommerce.php:745
 msgid "Fix persian phone"
 msgstr "تبدیل شماره تماس فارسی در روند پرداخت"
 
-#: inc/App/Integration/WooCommerce.php:745
+#: inc/App/Integration/WooCommerce.php:752
 msgid "Display cities as a drop-down list"
 msgstr "نمایش شهرها به‌صورت لیست کشویی"
 
-#: inc/App/Integration/WooCommerce.php:752
+#: inc/App/Integration/WooCommerce.php:759
 msgid "Postcode validation"
 msgstr "اعتبارسنجی کد پستی"
 
-#: inc/App/Integration/WooCommerce.php:759
+#: inc/App/Integration/WooCommerce.php:766
 msgid "Phone number validation"
 msgstr "اعتبارسنجی شماره تماس"
 
@@ -1588,10 +1649,6 @@ msgstr "وردپرس پارسی"
 msgid "(opens in a new tab)"
 msgstr "(در زبانۀ جدید باز می‌شود)"
 
-#: inc/Widget/DashboardWidget.php:156
-msgid "About"
-msgstr "%s درباره"
-
 #: inc/Widget/DashboardWidget.php:168
 msgctxt "Sponsership plans"
 msgid "https://wp-parsi.com/sponser/"
@@ -1788,41 +1845,11 @@ msgstr "تیم وردپرس پارسی"
 #~ msgid "Upload File"
 #~ msgstr "بارگذاری پرونده"
 
-#~ msgid "Morteza Geransayeh"
-#~ msgstr "مرتضی گزانسایه"
-
-#~ msgid "Developer"
-#~ msgstr "توسعه‌دهنده"
-
-#~ msgid "Saeed Fard"
-#~ msgstr "سعید فرد"
-
-#~ msgid "HamidReza Yazdani"
-#~ msgstr "حمید رضا یزدانی"
-
-#~ msgid "Mobin Ghasempoor"
-#~ msgstr "مبین قاسمپور"
-
-#~ msgid "Parsa Kafi"
-#~ msgstr "پارسا کافی"
-
-#~ msgid "Mohsen Ghiasi"
-#~ msgstr "محسن قیاسی"
-
-#~ msgid "DevOps"
-#~ msgstr "دواپس"
-
-#~ msgid "About Us"
-#~ msgstr "دربارۀ ما"
-
 #~ msgid "Follow Us"
 #~ msgstr "ما را دنبال کنید"
 
 #~ msgid "Our Team"
 #~ msgstr "تیم ما"
-
-#~ msgid "GitHub Contributors"
-#~ msgstr "مشارکت‌کننده‌های گیت‌هاب"
 
 #~ msgid "Unable to fetch contributors."
 #~ msgstr "امکان واکشی مشارکت‌کننده‌ها وجود ندارد."
