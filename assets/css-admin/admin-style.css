@@ -2093,6 +2093,11 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-c
   width: 40px;
   height: 40px;
 }
+@media only screen and (max-width: 783px) {
+  body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .plugin-features {
+    grid-template-columns: none;
+  }
+}
 @media only screen and (min-width: 1600px) {
   body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members {
     grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
