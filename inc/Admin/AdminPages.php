@@ -178,6 +178,7 @@ class AdminPages {
 
   public static function menuItem( $tab, $menu, $link = null ): string {
     $current = self::getActiveTab();
+    $link    = $menu['link'] ?? $link;
     $link    = empty( $link ) ? self::link( [ 'tab' => $tab ] ) : $link;
 
     if ( ! is_array( $menu ) || ! isset( $menu['title'] ) ) {
