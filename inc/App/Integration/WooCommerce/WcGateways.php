@@ -21,7 +21,7 @@ class WcGateways {
    */
   public function __construct() {
     add_action( 'before_woocommerce_init', [ $this, 'includeFiles' ] );
-    add_filter( 'wp_parsidate_integration_settings_sections', [ $this, 'addSettings' ] );
+    add_filter( 'wp_parsidate_woocommerce_settings_options', [ $this, 'addSettings' ] );
     add_filter( 'woocommerce_payment_gateways', [ $this, 'registerSelectedGateways' ] );
     add_action( 'woocommerce_blocks_loaded', [ $this, 'registerOrderApprovalPaymentMethodType' ] );
   }
@@ -72,12 +72,12 @@ class WcGateways {
   /**
    * Adds settings for toggle fixing
    *
-   * @param  array  $sections  WooCommerce section settings
+   * @param  array  $wooSettings  WooCommerce section settings
    *
    * @return          array New settings
    * @since 4.0.0
    */
-  public function addSettings( $sections ): array {
+  public function addSettings( $wooSettings ): array {
     $gateWays        = $this->gateways();
     $gateWaySettings = [];
 
@@ -101,9 +101,9 @@ class WcGateways {
     $settings                          = array_merge( $settings, $gateWaySettings );
     $settings['woo_gateways_end_grid'] = array( 'type' => 'endGrid' );
 
-    $sections['woocommerce']['settings'] = array_merge( $sections['woocommerce']['settings'], $settings );
+    $wooSettings['settings'] = array_merge( $wooSettings['settings'], $settings );
 
-    return $sections;
+    return $wooSettings;
   }
 
   /**
