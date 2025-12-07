@@ -18,7 +18,7 @@ class WooCommerce extends Addon {
   //public string $currentTab = 'integration';
 
   public function initM1Action(): void {
-    add_filter( 'wp_parsidate_menus', [ $this, 'addMenu' ] );
+    add_filter( 'wp_parsidate_menus', [ $this, 'addMenu' ], 20 );
     add_filter( 'wp_parsidate_' . $this->addonID . '_settings', [ $this, 'addTabSettings' ] );
     add_filter( 'wp_parsidate_' . $this->addonID . '_tab_display_notice', '__return_false' );
     add_filter( 'wp_parsidate_' . $this->addonID . '_tab_content_display_notice', '__return_true' );
