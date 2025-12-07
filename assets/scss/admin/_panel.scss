@@ -2,6 +2,7 @@
 @use "../utilities/variables";
 @use "../components/list_links";
 @use "dashboard";
+@use "about";
 
 body {
   &.wppd-mobile-sidebar-active {
@@ -126,6 +127,7 @@ body.toplevel_page_#{variables.$plugin_key} {
         .wppd-logo-wrap {
           display: flex;
           gap: 10px;
+          padding-inline-start: 5px;
 
           > div {
             display: flex;
@@ -441,6 +443,7 @@ body.toplevel_page_#{variables.$plugin_key} {
 
     @include list_links.wppd-list-links;
     @include dashboard.dashboard;
+    @include about.about;
   }
 }
 

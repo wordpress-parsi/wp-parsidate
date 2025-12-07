@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-07 20:23+0330\n"
-"PO-Revision-Date: 2025-12-07 20:23+0330\n"
+"PO-Revision-Date: 2025-12-07 20:32+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -212,7 +212,7 @@ msgstr "مشارکت‌کننده‌های گیت‌هاب"
 
 #: inc/Admin/AdminAbout.php:213
 msgid "Morteza Geransayeh"
-msgstr "مرتضی گزانسایه"
+msgstr "مرتضی گرانسایه"
 
 #: inc/Admin/AdminAbout.php:214 inc/Admin/AdminAbout.php:224
 #: inc/Admin/AdminAbout.php:234 inc/Admin/AdminAbout.php:244

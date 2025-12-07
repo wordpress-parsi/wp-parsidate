@@ -15,5 +15,6 @@ class Admin {
     new AdminConvert();
     new AdminTools();
     new AdminIntegration();
+    new AdminAbout();
   }
 }
