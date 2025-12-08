@@ -2046,6 +2046,9 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-mem
   grid-template-columns: repeat(auto-fit, minmax(120px, 0.5fr));
   gap: 20px;
 }
+body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members:hover .team-member:not(:hover) .team-member-name {
+  background-color: #3c3c3c;
+}
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member {
   border: 1px solid #f3f3f3;
   border-radius: 10px;
@@ -2074,9 +2077,6 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-mem
   padding: 5px;
   max-height: 25px;
 }
-body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member:hover .team-member-info .team-member-name {
-  background-color: #3c3c3c;
-}
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-contributors-wrapper {
   background-color: #fafbfc;
   padding: 15px;
@@ -2088,10 +2088,20 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-c
   gap: 20px;
   margin-top: 15px;
 }
-body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-contributors-wrapper .github-contributors img {
+body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-contributors-wrapper .github-contributors a {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-contributors-wrapper .github-contributors a img {
+  border: 1px solid #f3f3f3;
   border-radius: 50%;
   width: 40px;
   height: 40px;
+}
+body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-contributors-wrapper .github-contributors a:hover img {
+  border-color: rgb(194.4, 194.4, 194.4);
 }
 @media only screen and (max-width: 783px) {
   body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .plugin-features {
