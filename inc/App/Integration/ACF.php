@@ -24,8 +24,9 @@ class ACF extends Addon {
       add_action( 'acf/include_field_types', [ $this, 'includeField' ] ); // v5
       add_action( 'acf/register_fields', [ $this, 'includeField' ] ); // v4
 
-      add_filter( 'acf/update_value', [ $this, 'updateDateValue' ], 10, 3 );
-      add_filter( 'acf/load_value', [ $this, 'loadDateValue' ], 10, 3 );
+      add_filter( 'acf/update_value', [ $this, 'updateDatePickerValue' ], 10, 3 );
+      add_filter( 'acf/load_value', [ $this, 'loadDatePickerValue' ], 10, 3 );
+      add_filter( 'acf/load_field', [ $this, 'loadDatePickerField' ] );
       add_action( 'admin_enqueue_scripts', [ $this, 'fixDatePickerScript' ], 99999 );
     }
 
@@ -50,16 +51,24 @@ class ACF extends Addon {
         });" );
   }
 
-  public function loadDateValue( $value, $postID, $field ) {
+  public function loadDatePickerField( $field ) {
+    if ( $field['type'] === 'date_picker' ) {
+      $field['display_format'] = 'Y-m-d';
+    }
+
+    return $field;
+  }
+
+  public function loadDatePickerValue( $value, $postID, $field ) {
     if ( $field['type'] === 'date_picker' && ! empty( $value ) ) {
-      $value = Date::changeDateFormat( $value, 'Ymd', $field['display_format'] );
-      $value = parsidate( $field['display_format'], $value, 'en' );
+      $value = Date::changeDateFormat( $value, 'Ymd', 'Y-m-d' );
+      $value = parsidate( 'Y-m-d', $value, 'en' );
     }
 
     return $value;
   }
 
-  public function updateDateValue( $value, $postID, $field ) {
+  public function updateDatePickerValue( $value, $postID, $field ) {
     if ( $field['type'] === 'date_picker' && ! empty( $value ) ) {
       if ( is_numeric( $value ) && strlen( $value ) === 8 ) {
         $year  = substr( $value, 0, 4 );
@@ -68,6 +77,7 @@ class ACF extends Addon {
 
         $value = "$year-$month-$day";
       }
+
       $value = gregdate( 'Ymd', $value );
     }
 
