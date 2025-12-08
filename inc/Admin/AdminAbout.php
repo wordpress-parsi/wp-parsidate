@@ -5,6 +5,7 @@ namespace WPParsidate\Admin;
 use WPParsidate\Addons\Addons;
 use WPParsidate\Helper\Assets;
 use WPParsidate\Helper\Cache;
+use WPParsidate\Helper\JSON;
 use WPParsidate\Helper\Notice;
 
 defined( 'ABSPATH' ) || exit;
@@ -282,7 +283,7 @@ class AdminAbout {
     $githubContributors = [];
     $response           = wp_remote_get( 'https://api.github.com/repos/wordpress-parsi/wp-parsidate/contributors' );
     if ( is_array( $response ) && ! is_wp_error( $response ) ) {
-      $contributors = json_decode( wp_remote_retrieve_body( $response ), false, 512, JSON_THROW_ON_ERROR );
+      $contributors = JSON::decode( wp_remote_retrieve_body( $response ) );
       foreach ( $contributors as $contributor ) {
         // Skip if the contributor is a team member
         if ( array_key_exists( $contributor->login, $teamMembers ) ) {
