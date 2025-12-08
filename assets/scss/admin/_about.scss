@@ -67,10 +67,6 @@
       grid-template-columns: repeat(auto-fit, minmax(120px, 0.5fr));
       gap: 20px;
 
-      &:hover .team-member:not(:hover) .team-member-name {
-        background-color: #3c3c3c;
-      }
-
       .team-member {
         border: 1px solid variables.$border_color;
         border-radius: 10px;
@@ -104,13 +100,13 @@
           max-height: 25px;
         }
 
-        /*&:hover {
+        &:hover {
           .team-member-info {
             .team-member-name {
               background-color: #3c3c3c;
             }
           }
-        }*/
+        }
       }
     }
 
@@ -125,22 +121,10 @@
         gap: 20px;
         margin-top: 15px;
 
-        a {
+        img {
           border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          img {
-            border: 1px solid variables.$border_color;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-          }
-
-          &:hover img {
-            border-color: color.scale(variables.$border_color, $lightness: -20%);
-          }
+          width: 40px;
+          height: 40px;
         }
       }
     }
