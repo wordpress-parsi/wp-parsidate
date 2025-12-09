@@ -56,7 +56,7 @@ class ACF extends Addon {
   public function addOptionToDatePickerSettings( $field ): void {
     if ( $field['type'] === 'date_picker' ) {
       acf_render_field_setting( $field, array(
-        'label'        => __( 'Jalali Date', 'wp-parsidate' ),
+        'label'        => __( 'Convert to Shamsi Date', 'wp-parsidate' ),
         'instructions' => '',
         'name'         => 'jalali_date',
         'type'         => 'true_false',

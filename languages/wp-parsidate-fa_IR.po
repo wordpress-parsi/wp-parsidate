@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-09 03:22+0330\n"
-"PO-Revision-Date: 2025-12-09 03:22+0330\n"
+"POT-Creation-Date: 2025-12-09 15:49+0330\n"
+"PO-Revision-Date: 2025-12-09 15:49+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -534,8 +534,8 @@ msgid "By enabling this, ParsiDate options only work in persian locale"
 msgstr "با فعال کردن این گزینه، تنظیمات پارسی‌دیت فقط برای زبان فارسی اعمال می‌شود"
 
 #: inc/App/Integration/ACF.php:59
-msgid "Jalali Date"
-msgstr "تاریخ جلالی"
+msgid "Convert to Shamsi Date"
+msgstr "تبدیل به تاریخ شمسی"
 
 #: inc/App/Integration/ACF.php:130 inc/App/Integration/ACF.php:136
 #: inc/App/Integration/ACF.php:167
