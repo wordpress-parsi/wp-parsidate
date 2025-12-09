@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-07 20:23+0330\n"
-"PO-Revision-Date: 2025-12-07 20:32+0330\n"
+"POT-Creation-Date: 2025-12-09 03:22+0330\n"
+"PO-Revision-Date: 2025-12-09 03:22+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -206,57 +206,57 @@ msgstr "دیگر افزونه‌ها"
 msgid "Save active addons"
 msgstr "ذخیره افزونه‌های فعال"
 
-#: inc/Admin/AdminAbout.php:200
+#: inc/Admin/AdminAbout.php:201
 msgid "GitHub Contributors"
 msgstr "مشارکت‌کننده‌های گیت‌هاب"
 
-#: inc/Admin/AdminAbout.php:213
+#: inc/Admin/AdminAbout.php:214
 msgid "Morteza Geransayeh"
 msgstr "مرتضی گرانسایه"
 
-#: inc/Admin/AdminAbout.php:214 inc/Admin/AdminAbout.php:224
-#: inc/Admin/AdminAbout.php:234 inc/Admin/AdminAbout.php:244
-#: inc/Admin/AdminAbout.php:254
+#: inc/Admin/AdminAbout.php:215 inc/Admin/AdminAbout.php:225
+#: inc/Admin/AdminAbout.php:235 inc/Admin/AdminAbout.php:245
+#: inc/Admin/AdminAbout.php:255
 msgid "Developer"
 msgstr "توسعه‌دهنده"
 
-#: inc/Admin/AdminAbout.php:223
+#: inc/Admin/AdminAbout.php:224
 msgid "Saeed Fard"
 msgstr "سعید فرد"
 
-#: inc/Admin/AdminAbout.php:233
+#: inc/Admin/AdminAbout.php:234
 msgid "HamidReza Yazdani"
 msgstr "حمید رضا یزدانی"
 
-#: inc/Admin/AdminAbout.php:243
+#: inc/Admin/AdminAbout.php:244
 msgid "Mobin Ghasempoor"
 msgstr "مبین قاسمپور"
 
-#: inc/Admin/AdminAbout.php:253
+#: inc/Admin/AdminAbout.php:254
 msgid "Parsa Kafi"
 msgstr "پارسا کافی"
 
-#: inc/Admin/AdminAbout.php:263
+#: inc/Admin/AdminAbout.php:264
 msgid "Mohsen Ghiasi"
 msgstr "محسن قیاسی"
 
-#: inc/Admin/AdminAbout.php:264
+#: inc/Admin/AdminAbout.php:265
 msgid "DevOps"
 msgstr "دواپس"
 
-#: inc/Admin/AdminAbout.php:362
+#: inc/Admin/AdminAbout.php:363
 msgid "About Us"
 msgstr "درباره ما"
 
-#: inc/Admin/AdminAbout.php:363
+#: inc/Admin/AdminAbout.php:364
 msgid "About the WordPress Parsi team and plugin"
 msgstr "درباره تیم و افزونه وردپرس پارسی"
 
-#: inc/Admin/AdminAbout.php:369
+#: inc/Admin/AdminAbout.php:370
 msgid "The text of this page is in Persian."
 msgstr "متن این صفحه به زبان فارسی است."
 
-#: inc/Admin/AdminAbout.php:375 inc/Widget/DashboardWidget.php:156
+#: inc/Admin/AdminAbout.php:376 inc/Widget/DashboardWidget.php:156
 msgid "About"
 msgstr "درباره"
 
@@ -533,24 +533,28 @@ msgstr "پشتیبانی از چندزبانه"
 msgid "By enabling this, ParsiDate options only work in persian locale"
 msgstr "با فعال کردن این گزینه، تنظیمات پارسی‌دیت فقط برای زبان فارسی اعمال می‌شود"
 
-#: inc/App/Integration/ACF.php:94 inc/App/Integration/ACF.php:100
-#: inc/App/Integration/ACF.php:131
+#: inc/App/Integration/ACF.php:59
+msgid "Jalali Date"
+msgstr "تاریخ جلالی"
+
+#: inc/App/Integration/ACF.php:130 inc/App/Integration/ACF.php:136
+#: inc/App/Integration/ACF.php:167
 msgid "Advanced Custom Fields"
 msgstr "زمینه‌های سفارشی"
 
-#: inc/App/Integration/ACF.php:95 inc/App/Integration/ACF.php:132
+#: inc/App/Integration/ACF.php:131 inc/App/Integration/ACF.php:168
 msgid "ParsiDate integration for Advanced Custom Fields (ACF)"
 msgstr "هماهنگ‌سازی تاریخ پارسی با زمینه‌های سفارشی (ACF)"
 
-#: inc/App/Integration/ACF.php:105
+#: inc/App/Integration/ACF.php:141
 msgid "Jalali Datepicker"
 msgstr "انتخاب‌گر تاریخ شمسی (جلالی)"
 
-#: inc/App/Integration/ACF.php:112
+#: inc/App/Integration/ACF.php:148
 msgid "Save dates in Jalali format (Not recommended)"
 msgstr "ذخیره‌سازی تاریخ بصورت شمسی (توصیه نمی‌شود)"
 
-#: inc/App/Integration/ACF.php:135
+#: inc/App/Integration/ACF.php:171
 msgid "Meta"
 msgstr "متا"
 
