@@ -1563,7 +1563,7 @@ body.toplevel_page_wp-parsidate .wrap P {
   font-size: 13px;
 }
 body.toplevel_page_wp-parsidate .notice {
-  display: none;
+  display: none !important;
 }
 body.toplevel_page_wp-parsidate code {
   background-color: #f5f7f9;

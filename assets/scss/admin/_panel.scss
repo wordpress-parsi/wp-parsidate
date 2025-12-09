@@ -37,7 +37,7 @@ body.toplevel_page_#{variables.$plugin_key} {
   }
 
   .notice {
-    display: none;
+    display: none !important;
   }
 
   code {
