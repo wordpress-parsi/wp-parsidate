@@ -24,9 +24,11 @@ class ACF extends Addon {
       add_action( 'acf/include_field_types', [ $this, 'includeField' ] ); // v5
       add_action( 'acf/register_fields', [ $this, 'includeField' ] ); // v4
 
+      add_action( 'acf/render_field_settings', [ $this, 'addOptionToDatePickerSettings' ] );
       add_filter( 'acf/update_value', [ $this, 'updateDatePickerValue' ], 10, 3 );
       add_filter( 'acf/load_value', [ $this, 'loadDatePickerValue' ], 10, 3 );
       add_filter( 'acf/load_field', [ $this, 'loadDatePickerField' ] );
+      add_filter( 'acf/pre_format_value', [ $this, 'formatDatePickerValue' ], 10, 5 );
       add_action( 'admin_enqueue_scripts', [ $this, 'fixDatePickerScript' ], 99999 );
     }
 
@@ -51,8 +53,28 @@ class ACF extends Addon {
         });" );
   }
 
-  public function loadDatePickerField( $field ) {
+  public function addOptionToDatePickerSettings( $field ): void {
     if ( $field['type'] === 'date_picker' ) {
+      acf_render_field_setting( $field, array(
+        'label'        => __( 'Jalali Date', 'wp-parsidate' ),
+        'instructions' => '',
+        'name'         => 'jalali_date',
+        'type'         => 'true_false',
+        'ui'           => 1,
+      ) );
+    }
+  }
+
+  public function formatDatePickerValue( $currentValue, $value, $postID, $field, $escapeHTML ): ?string {
+    if ( $field['type'] === 'date_picker' && $field['jalali_date'] && ! is_admin() ) {
+      return $escapeHTML ? esc_html( $escapeHTML ) : $value;
+    }
+
+    return $currentValue;
+  }
+
+  public function loadDatePickerField( $field ) {
+    if ( $field['type'] === 'date_picker' && is_admin() ) {
       $field['display_format'] = 'Y-m-d';
     }
 
@@ -61,8 +83,12 @@ class ACF extends Addon {
 
   public function loadDatePickerValue( $value, $postID, $field ) {
     if ( $field['type'] === 'date_picker' && ! empty( $value ) ) {
+      if ( ! $field['jalali_date'] && ! is_admin() ) {
+        return $value;
+      }
+
       $value = Date::changeDateFormat( $value, 'Ymd', 'Y-m-d' );
-      $value = parsidate( 'Y-m-d', $value, 'en' );
+      $value = parsidate( is_admin() ? 'Y-m-d' : $field['return_format'], $value, ! is_admin() );
     }
 
     return $value;
