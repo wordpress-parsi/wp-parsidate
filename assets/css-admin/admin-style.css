@@ -1576,11 +1576,11 @@ body.toplevel_page_wp-parsidate code.wppd-copy-text {
   gap: 3px;
 }
 body.toplevel_page_wp-parsidate code.wppd-copy-text:before {
-  content: "\e912";
-  font-family: "wooassistant-icon" !important;
+  content: "○";
   color: rgb(133.9, 133.9, 133.9);
 }
 body.toplevel_page_wp-parsidate code.wppd-copy-text.wppd-text-copied:before {
+  content: "●";
   color: #2577d7;
 }
 body.toplevel_page_wp-parsidate #wpbody-content {

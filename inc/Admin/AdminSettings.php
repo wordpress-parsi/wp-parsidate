@@ -222,7 +222,7 @@ class AdminSettings {
 
     if ( isset( $setting['sanitize_options'] ) && method_exists( Sanitizing::class,
         $setting['sanitize_options'] ) ) {
-      $value = array_map( 'WooAssistant\Helper\Sanitizing::' . $setting['sanitize_options'], $value );
+      $value = array_map( 'WPParsidate\Helper\Sanitizing::' . $setting['sanitize_options'], $value );
     }
 
     return $value;

@@ -51,13 +51,13 @@ body.toplevel_page_#{variables.$plugin_key} {
       gap: 3px;
 
       &:before {
-        content: "";
-        font-family: "wooassistant-icon" !important;
+        content: "○";
         color: color.scale(variables.$meta, $lightness: 30%);
       }
 
       &.wppd-text-copied {
         &:before {
+          content: "●";
           color: variables.$primary
         }
       }

@@ -11,21 +11,6 @@ const optimization = {
                 parse: {},
                 compress: {},
                 mangle: true,
-                // mangle: {
-                //     properties: {
-                //         debug: false,
-                //         reserved: ['wooAssistantAjax'],
-                //         keep_quoted: false
-                //     }
-                // },
-                // mangle: {
-                //     keep_fnames: true,
-                //     keep_classnames: true,
-                //     properties: {
-                //         //reserved: ['wooAssistantAjax', 'BaseModel'],
-                //         regex: /(^wooAssistantAjax|^p1|^_p1)[A-Z]\w*/
-                //     }
-                // }, // Note `mangle.properties` is `false` by default.
                 module: false,
                 // Deprecated
                 output: null,
