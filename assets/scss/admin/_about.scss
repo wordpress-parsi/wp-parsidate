@@ -7,6 +7,10 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+
+      p {
+        font-size: 15px;
+      }
     }
 
     .plugin-features {
@@ -83,6 +87,7 @@
 
         .team-member-info {
           font-size: 0.9em;
+          line-height: 1;
 
           .team-member-name {
             background-color: black;

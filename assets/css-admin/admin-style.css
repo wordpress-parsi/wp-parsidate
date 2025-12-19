@@ -1998,6 +1998,9 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .wppd-con
   flex-direction: column;
   gap: 20px;
 }
+body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .wppd-content-body p {
+  font-size: 15px;
+}
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .plugin-features {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2060,6 +2063,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-mem
 }
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member .team-member-info {
   font-size: 0.9em;
+  line-height: 1;
 }
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member .team-member-info .team-member-name {
   background-color: black;
