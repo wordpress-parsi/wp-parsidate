@@ -6,7 +6,7 @@ use WPParsidate\Core\Months;
 use WPParsidate\Helper\Number;
 use WPParsidate\Settings\Settings;
 
-class fixTitle {
+class FixTitle {
   public function __construct() {
     add_filter( 'wp_title', [ $this, 'fixWpTitle' ], PHP_INT_MAX, 3 );
     add_filter( 'pre_get_document_title', [ $this, 'fixWpTitle' ], PHP_INT_MAX ); // WP 4.4+

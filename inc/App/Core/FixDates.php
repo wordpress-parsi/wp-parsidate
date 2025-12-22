@@ -6,7 +6,7 @@ use WPParsidate\App\Integration\HookDeactivator;
 use WPParsidate\Helper\WordPress;
 use WPParsidate\Settings\Settings;
 
-class fixDates {
+class FixDates {
   public function __construct() {
     // @TODO: local non-farsi is a problem
     if ( get_locale() === 'fa_IR' && Settings::get( 'persian_date' ) ) {

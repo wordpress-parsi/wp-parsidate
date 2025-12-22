@@ -4,7 +4,7 @@ namespace WPParsidate\App\Convert;
 
 use WPParsidate\Settings\Settings;
 
-class fixArabic {
+class FixArabic {
   public function __construct() {
     if ( Settings::get( 'conv_arabic', false ) ) {
       add_filter( 'the_content', [ $this, 'fixArabic' ], 1000 );

@@ -8,7 +8,7 @@ use WPParsidate\Core\Posts;
 use WPParsidate\Core\WPP_ParsiDate;
 use WPParsidate\Settings\Settings;
 
-class fixPermalink {
+class FixPermalink {
   public function __construct() {
     if ( Settings::get( 'conv_permalinks' ) ) {
       add_filter( 'posts_where', [ $this, 'postsWhere' ], 10, 2 );
