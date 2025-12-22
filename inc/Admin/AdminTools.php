@@ -18,7 +18,7 @@ class AdminTools {
 
   public function addMenu( $menus ) {
     $menus[ self::tab ] = array(
-      'title' => __( 'Tools', 'wp-parsidate' ),
+      'title' => esc_html__( 'Tools', 'wp-parsidate' ),
       'icon'  => self::icon
     );
 
@@ -34,8 +34,8 @@ class AdminTools {
   public function settings(): array {
     if ( self::$settings === null ) {
       self::$settings = array(
-        'title'    => __( 'Tools settings', 'wp-parsidate' ),
-        'desc'     => __( 'Advanced tools', 'wp-parsidate' ),
+        'title'    => esc_html__( 'Tools settings', 'wp-parsidate' ),
+        'desc'     => esc_html__( 'Advanced tools', 'wp-parsidate' ),
         'settings' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_options', [] )
       );
     }

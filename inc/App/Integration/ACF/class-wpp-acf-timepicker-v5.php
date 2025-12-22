@@ -20,9 +20,9 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
   function __construct() {
     $this->name = 'wpp_timepicker';
 
-    $this->label = __( 'Time', 'wp-parsidate' );
+    $this->label = esc_html__( 'Time', 'wp-parsidate' );
 
-    $this->category = __( 'Parsidate', 'wp-parsidate' );
+    $this->category = esc_html__( 'Parsidate', 'wp-parsidate' );
 
     $this->defaults = array(
       'time-format' => '12 hours',
@@ -30,7 +30,7 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
     );
 
     $this->l10n = array(
-      'error' => __( 'Error! Please select a valid time.', 'wp-parsidate' ),
+      'error' => esc_html__( 'Error! Please select a valid time.', 'wp-parsidate' ),
     );
 
     parent::__construct();
@@ -45,8 +45,8 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
    */
   function render_field_settings( $field ) {
     acf_render_field_setting( $field, array(
-      'label'        => __( 'Time Format', 'wp-parsidate' ),
-      'instructions' => __( 'Display time picker in 24 or 12 hours format', 'wp-parsidate' ),
+      'label'        => esc_html__( 'Time Format', 'wp-parsidate' ),
+      'instructions' => esc_html__( 'Display time picker in 24 or 12 hours format', 'wp-parsidate' ),
       'type'         => 'select',
       'name'         => 'time-format',
       'choices'      => array(
@@ -56,8 +56,8 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
     ) );
 
     acf_render_field_setting( $field, array(
-      'label'        => __( 'Placeholder', 'wp-parsidate' ),
-      'instructions' => __( 'Show custom placeholder', 'wp-parsidate' ),
+      'label'        => esc_html__( 'Placeholder', 'wp-parsidate' ),
+      'instructions' => esc_html__( 'Show custom placeholder', 'wp-parsidate' ),
       'type'         => 'text',
       'name'         => 'placeholder',
     ) );
@@ -75,7 +75,7 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
       <input type="text" id="<?php echo esc_attr( $field['key'] ) ?>"
              name="<?php echo esc_attr( $field['name'] ) ?>" dir="ltr"
              value="<?php echo esc_attr( $field['value'] ) ?>" autocomplete="off"
-             placeholder="<?php echo $field['placeholder'] ?>"/>
+             placeholder="<?php echo esc_attr( $field['placeholder'] ) ?>"/>
       <script>
         jQuery(document).ready(function ($) {
           $('#<?php echo esc_attr( $field['key'] ) ?>').timepicki({
@@ -99,7 +99,7 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
     $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
     wp_enqueue_script( 'wpp_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ),
-      array( 'acf-input' ), $pluginVersion );
+      array( 'acf-input' ), $pluginVersion, [ 'in_footer' => true ] );
     wp_enqueue_style( 'wpp_jalali_datepicker', Assets::url( 'css-admin/jalalidatepicker' . $debugName . '.css' ),
       array( 'acf-input' ), $pluginVersion );
 

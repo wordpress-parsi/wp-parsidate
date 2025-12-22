@@ -28,10 +28,10 @@ class WcGateways {
 
   public function gateways(): array {
     return array(
-      'parsian'  => __( 'Parsian Bank', 'wp-parsidate' ),
-      'pasargad' => __( 'Pasargad Bank', 'wp-parsidate' ),
-      'mellat'   => __( 'Mellat Bank (Behpardakht)', 'wp-parsidate' ),
-      'melli'    => __( 'Melli Bank (Sadad)', 'wp-parsidate' ),
+      'parsian'  => esc_html__( 'Parsian Bank', 'wp-parsidate' ),
+      'pasargad' => esc_html__( 'Pasargad Bank', 'wp-parsidate' ),
+      'mellat'   => esc_html__( 'Mellat Bank (Behpardakht)', 'wp-parsidate' ),
+      'melli'    => esc_html__( 'Melli Bank (Sadad)', 'wp-parsidate' ),
     );
   }
 
@@ -94,7 +94,7 @@ class WcGateways {
     $settings                          = array(
       'woo_gateways_start_grid' => array(
         'id'    => 'woo_product_start_grid',
-        'title' => __( 'Payment Gateways', 'wp-parsidate' ),
+        'title' => esc_html__( 'Payment Gateways', 'wp-parsidate' ),
         'type'  => 'startGrid',
       )
     );

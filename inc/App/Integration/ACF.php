@@ -56,7 +56,7 @@ class ACF extends Addon {
   public function addOptionToDatePickerSettings( $field ): void {
     if ( $field['type'] === 'date_picker' ) {
       acf_render_field_setting( $field, array(
-        'label'        => __( 'Convert to Shamsi Date', 'wp-parsidate' ),
+        'label'        => esc_html__( 'Convert to Shamsi Date', 'wp-parsidate' ),
         'instructions' => '',
         'name'         => 'jalali_date',
         'type'         => 'true_false',
@@ -127,25 +127,25 @@ class ACF extends Addon {
 
   public function addSectionSettings( $sections ) {
     $sections[ $this->addonID ] = array(
-      'title'        => __( 'Advanced Custom Fields', 'wp-parsidate' ),
-      'desc'         => __( 'ParsiDate integration for Advanced Custom Fields (ACF)', 'wp-parsidate' ),
+      'title'        => esc_html__( 'Advanced Custom Fields', 'wp-parsidate' ),
+      'desc'         => esc_html__( 'ParsiDate integration for Advanced Custom Fields (ACF)', 'wp-parsidate' ),
       'settings_key' => $this->addonID,
       'settings'     => [
         'acf_start_grid'    => array(
           'id'    => 'edd_start_grid',
-          'title' => __( 'Advanced Custom Fields', 'wp-parsidate' ),
+          'title' => esc_html__( 'Advanced Custom Fields', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),
         'fix_date'          => array(
           'id'       => 'fix_date',
-          'title'    => __( 'Jalali Datepicker', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Jalali Datepicker', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
         ),
         'save_persian_date' => array(
           'id'       => 'save_persian_date',
-          'title'    => __( 'Save dates in Jalali format (Not recommended)', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Save dates in Jalali format (Not recommended)', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
@@ -164,11 +164,11 @@ class ACF extends Addon {
 
     return array(
       'id'               => $this->addonID,
-      'title'            => __( 'Advanced Custom Fields', 'wp-parsidate' ),
-      'desc'             => __( 'ParsiDate integration for Advanced Custom Fields (ACF)', 'wp-parsidate' ),
+      'title'            => esc_html__( 'Advanced Custom Fields', 'wp-parsidate' ),
+      'desc'             => esc_html__( 'ParsiDate integration for Advanced Custom Fields (ACF)', 'wp-parsidate' ),
       'force_enable'     => true,
       'icon'             => $svg,
-      'tags'             => [ __( 'Meta', 'wp-parsidate' ) ],
+      'tags'             => [ esc_html__( 'Meta', 'wp-parsidate' ) ],
       'cat'              => 'customizations',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [

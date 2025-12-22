@@ -3,8 +3,8 @@ Contributors: lord_viper, man4toman, parselearn, yazdaniwp, saeedfard, iehsanir,
 Donate link: https://wp-parsi.com/support/
 Tags: shamsi, persian, jalali, date, woocommerce, ووکامرس, تاریخ شمسی, پارسی دیت, پارسی‌دیت
 Requires at least: 5.3
-Tested up to: 6.8
-Stable tag: 5.1.8
+Tested up to: 6.9
+Stable tag: 6.0
 License: GPLv3
 
 Persian date support for WordPress
@@ -70,7 +70,7 @@ List of some features:
 
 = 5.1.6 =
 * Some additional/unused options have been removed
-* The sponsors widget loading mechanism has been optimized 
+* The sponsors widget loading mechanism has been optimized
 
 = 5.1.5 =
 * Revert 'wpp_fix_post_time' and 'wpp_fix_post_date' to fix recent date time issue
@@ -95,15 +95,15 @@ List of some features:
 
 = 5.1.1 =
 * Fix Woo mails dates direction
-* Fix Fatal error in Woo product edit screen 
-* Fix in_array() fetal error in 8.1 
-* Remove error_log 
+* Fix Fatal error in Woo product edit screen
+* Fix in_array() fetal error in 8.1
+* Remove error_log
 
 = 5.1.0 =
 * HPOS compatible
 * Block-based gateways Woocommerce
 * Iranian cities for Woocommerce
-* Persian datepicker in Block editor 
+* Persian datepicker in Block editor
 * Fixed conflict with Jetpack.
 * Resolved dashboard page warning.
 * Addressed conflict with DATE_W3C format.
@@ -140,7 +140,7 @@ List of some features:
 * This release contains huge bug fix:
   - Conflict with jetpack
   - Dashboard page warrning
-  - Conflict with DATE_W3C format 
+  - Conflict with DATE_W3C format
   - Date problem in comments feed
   - Error while save ACF fields
   - Notice: Undefined index: date_i18n
@@ -154,17 +154,17 @@ List of some features:
   - Conflict with polylang and wpml
   - Duplicate activity date in dashbaord
   - Type error in editor datepicke
-  - Direction problem in legacy editor 
+  - Direction problem in legacy editor
   - Wrong callback in get_the_time hook
   - Default timezone problem
 * Displaying "@" instead of "at" in Jalali version
 * Persian number in WooCommerce prices
-* Better support of Persian date in WooCommerce 
-* Persian datepicker in WooCommerce 
+* Better support of Persian date in WooCommerce
+* Persian datepicker in WooCommerce
 * ACF Parsi date
 * Mini support of WMPL and Polylang
 * Update Calendar widgets
-* Update attachments filter dropdown 
+* Update attachments filter dropdown
 * New looks and feels of settings panel
 * Add Vazir font to admin area
 
@@ -287,7 +287,7 @@ List of some features:
 * update language files
 
 = 1.3.1 =
-* tested on wordpress 3.9 
+* tested on wordpress 3.9
 * added new language files
 
 = 1.3 =

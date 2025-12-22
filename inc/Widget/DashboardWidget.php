@@ -77,7 +77,7 @@ class DashboardWidget {
   public function addDashboardWidget(): void {
     add_meta_box(
       'wpp_dashboard_primary',
-      __( 'WP Parsi', 'wp-parsidate' ),
+      esc_html__( 'WP Parsi', 'wp-parsidate' ),
       [ $this, 'dashboardWidgetContent' ],
       'dashboard',
       'normal',
@@ -116,7 +116,7 @@ class DashboardWidget {
       </ul>
     </div>
     <div id="wpp_sponsorship_placeholder">
-      <img src="<?php echo WP_PARSI_URL; ?>assets/images/logo.svg"
+      <img src="<?php echo esc_url_raw( WP_PARSI_URL ); ?>assets/images/logo.svg"
            alt="<?php esc_html_e( 'Loading Sponsors', 'wp-parsidate' ); ?>">
     </div>
     <div id="wpp_sponsorship" class="keen-slider"></div>
@@ -141,9 +141,9 @@ class DashboardWidget {
       printf(
         '<a href="%1$s" target="_blank">%2$s <span class="screen-reader-text"> %3$s</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>',
         'https://wp-parsi.com/',
-        __( 'WordPress Parsi' ),
+        esc_html__( 'WordPress Parsi', 'wp-parsidate' ),
         /* translators: Hidden accessibility text. */
-        __( '(opens in a new tab)' )
+        esc_html__( '(opens in a new tab)', 'wp-parsidate' )
       );
       ?>
 
@@ -153,9 +153,9 @@ class DashboardWidget {
       printf(
         '<a href="%1$s" target="_blank">%2$s <span class="screen-reader-text"> %3$s</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>',
         'https://wp-parsi.com/about/',
-        __( 'About' ),
+        esc_html__( 'About', 'wp-parsidate' ),
         /* translators: Hidden accessibility text. */
-        __( '(opens in a new tab)' )
+        esc_html__( '(opens in a new tab)', 'wp-parsidate' )
       );
       ?>
 
@@ -165,10 +165,10 @@ class DashboardWidget {
       printf(
         '<a href="%1$s" target="_blank">%2$s <span class="screen-reader-text"> %3$s</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>',
         /* translators: If a Rosetta site exists (e.g. https://es.wordpress.org/news/), then use that. Otherwise, leave untranslated. */
-        esc_url( _x( 'https://wp-parsi.com/sponser/', 'Sponsership plans' ) ),
-        __( 'Sponser' ),
+        esc_url_raw( _x( 'https://wp-parsi.com/sponser/', 'Sponsorship plans', 'wp-parsidate' ) ),
+        esc_html__( 'Sponsor', 'wp-parsidate' ),
         /* translators: Hidden accessibility text. */
-        __( '(opens in a new tab)' )
+        esc_html__( '(opens in a new tab)', 'wp-parsidate' )
       );
       ?>
     </p>
@@ -213,7 +213,7 @@ class DashboardWidget {
          * @since 2.3.0
          *
          */
-        'title'        => apply_filters( 'dashboard_primary_title', __( 'ParsiDate', 'wp-parsidate' ) ),
+        'title'        => apply_filters( 'dashboard_primary_title', esc_html__( 'ParsiDate', 'wp-parsidate' ) ),
         'items'        => 5,
         'show_summary' => 0,
         'show_author'  => 0,
@@ -229,7 +229,7 @@ class DashboardWidget {
        * @since 2.3.0
        *
        */
-      //'link'         => __( 'https://wp-planet.ir/' ),
+      //'link'         => esc_html__( 'https://wp-planet.ir/' ),
 
       /**
        * Filters the secondary feed URL for the 'WordPress Events and News' dashboard widget.
@@ -239,7 +239,7 @@ class DashboardWidget {
        * @since 2.3.0
        *
        */
-      //'url'          => __( 'https://wp-planet.ir/feed' ),
+      //'url'          => esc_html__( 'https://wp-planet.ir/feed' ),
 
       /**
        * Filters the secondary link title for the 'WordPress Events and News' dashboard widget.
@@ -249,7 +249,7 @@ class DashboardWidget {
        * @since 2.3.0
        *
        */
-      //'title'        => apply_filters( 'dashboard_secondary_title', __( 'Other WordPress News' ) ),
+      //'title'        => apply_filters( 'dashboard_secondary_title', esc_html__( 'Other WordPress News' ) ),
 
       /**
        * Filters the number of secondary link items for the 'WordPress Events and News' dashboard widget.
@@ -331,13 +331,13 @@ class DashboardWidget {
     $all_sponsors = array(
       array(
         'image_url' => WP_PARSI_URL . 'assets/images/sponsors/mediana.jpg',
-        'image_alt' => __( 'Mediana', 'wp-parsidate' ),
+        'image_alt' => esc_html__( 'Mediana', 'wp-parsidate' ),
         'link'      => 'https://app.mediana.ir/register?utm_source=parsi_date&utm_medium=banner&utm_campaign=plugin_referral',
         'end_date'  => '2025-11-21',
       ),
       array(
         'image_url' => WP_PARSI_URL . 'assets/images/sponsors/seven.jpg',
-        'image_alt' => __( 'Seven', 'wp-parsidate' ),
+        'image_alt' => esc_html__( 'Seven', 'wp-parsidate' ),
         'link'      => 'https://7ho.st/hosting/woocommerce?utm_source=wp-parsidate&utm_medium=banner&utm_campaign=sponsorship-parsidate',
         'end_date'  => '2025-11-21',
       ),

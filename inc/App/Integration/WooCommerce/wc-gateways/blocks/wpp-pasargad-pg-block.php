@@ -55,7 +55,7 @@ if ( ! class_exists( 'WPP_WC_Pasargad_Gateway_Blocks' ) ) {
           'wp-html-entities',
           'wp-i18n',
         ),
-        false,
+        Assets::getVersion(),
         true
       );
 

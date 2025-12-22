@@ -69,14 +69,20 @@ class AdminAbout {
       </div>
       <div class="feature-item">
         <strong>
-          <?php echo Addons::icon; ?>
+          <?php
+          // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+          echo Addons::icon;
+          ?>
           هماهنگی با افزونه‌ها
         </strong>
         <div>هماهنگی با افزونه‌های کاربردی مانند ووکامرس، دانلود آسان دیجیتال، ACF، رنک‌مث، المنتور.</div>
       </div>
       <div class="feature-item">
         <strong>
-          <?php echo AdminConvert::icon; ?>
+          <?php
+          // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+          echo AdminConvert::icon;
+          ?>
           اصلاح حروف
         </strong>
         <div>اصلاح اعداد و حروف غیر فارسی</div>
@@ -177,16 +183,19 @@ class AdminAbout {
       <?php
       foreach ( $teamMembers as $member ) {
         echo '<div class="team-member">';
-        echo '<div class="team-member-image" style="background-image: url(' . $member['avatar'] . ')">';
+        echo '<div class="team-member-image" style="background-image: url(' . esc_url_raw( $member['avatar'] ) . ')">';
         echo '</div><div class="team-member-info">';
-        echo '<div class="team-member-name">' . $member['name'] . '</div>';
-        echo '<div class="team-member-role">' . $member['role'] . '</div>';
+        echo '<div class="team-member-name">' . esc_html( $member['name'] ) . '</div>';
+        echo '<div class="team-member-role">' . esc_html( $member['role'] ) . '</div>';
         echo '</div>';
         if ( ! empty( $member['social'] ) ) {
           echo '<div class="team-member-social">';
           foreach ( $member['social'] as $social => $link ) {
             if ( $icon = $this->getSocialIcon( $social ) ) {
-              echo '<a href="' . $link . '" target="_blank">' . Assets::setSvgDimensions( $icon, 15 ) . '</a>';
+              echo '<a href="' . esc_url_raw( $link ) . '" target="_blank">' .
+                   // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                   Assets::setSvgDimensions( $icon, 15 ) .
+                   '</a>';
             }
           }
           echo '</div>';
@@ -202,7 +211,7 @@ class AdminAbout {
           'wp-parsidate' ) . '</strong>';
       echo '<div class="github-contributors">';
       foreach ( $githubContributors as $contributor ) {
-        echo '<a href="' . $contributor['url'] . '" title="' . $contributor['username'] . '" target="_blank"><img src="' . $contributor['avatar'] . '"></a>';
+        echo '<a href="' . esc_url_raw( $contributor['url'] ) . '" title="' . esc_html( $contributor['username'] ) . '" target="_blank"><img src="' . esc_url_raw( $contributor['avatar'] ) . '"></a>';
       }
       echo '</div></div>';
     }
@@ -367,7 +376,7 @@ class AdminAbout {
 
   public function notice(): void {
     if ( get_locale() !== 'fa_IR' ) {
-      Notice::add( self::tab, __( 'The text of this page is in Persian.', 'wp-parsidate' ), 'warning' );
+      Notice::add( self::tab, esc_html__( 'The text of this page is in Persian.', 'wp-parsidate' ), 'warning' );
     }
   }
 

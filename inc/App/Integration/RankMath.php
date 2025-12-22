@@ -135,11 +135,11 @@ class RankMath extends Addon {
 
     return array(
       'id'               => $this->addonID,
-      'title'            => __( 'Rank Math', 'wp-parsidate' ),
-      'desc'             => __( 'ParsiDate integration for Rank Math', 'wp-parsidate' ),
+      'title'            => esc_html__( 'Rank Math', 'wp-parsidate' ),
+      'desc'             => esc_html__( 'ParsiDate integration for Rank Math', 'wp-parsidate' ),
       'force_enable'     => false,
       'icon'             => $svg,
-      'tags'             => [ __( 'SEO', 'wp-parsidate' ) ],
+      'tags'             => [ esc_html__( 'SEO', 'wp-parsidate' ) ],
       'cat'              => 'seo',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [

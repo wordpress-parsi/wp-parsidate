@@ -12,7 +12,7 @@ class Calendar {
    * @author          Parsa Kafi
    * @author          Mobin Ghasempoor
    */
-  public static function printCalendar() {
+  public static function printCalendar(): void {
     global $wpdb, $m, $monthnum, $year, $day, $posts;
 
     $wpp_months_name = Months::getNames();
@@ -47,33 +47,33 @@ class Calendar {
       }
     }
 
-    $week_begins  = intval( get_option( 'start_of_week' ) );
-    $w            = isset( $_GET['w'] ) ? intval( $_GET['w'] ) : '';
+    $week_begins  = (int) get_option( 'start_of_week' );
+    $w            = (int) sanitize_text_field( wp_unslash( $_GET['w'] ?? '' ) );
     $is_gregorian = false;
 
     if ( ! empty( $jm ) && ! empty( $jy ) ) {
-      $thismonth = '' . zeroise( (int) $jm, 2 );
-      $thisyear  = '' . (int) $jy;
+      $thisMonth = '' . zeroise( (int) $jm, 2 );
+      $thisYear  = '' . (int) $jy;
     } elseif ( ! empty( $w ) ) {
-      $thisyear  = '' . (int) substr( $m, 0, 4 );
-      $d         = ( ( $w - 1 ) * 7 ) + 6; //it seems MySQL's weeks disagree with PHP's
-      $thismonth = $wpdb->get_var(
-        "
-			SELECT DATE_FORMAT ( ( DATE_ADD( '{$thisyear}0101', INTERVAL $d DAY ) ), '%m')
-			" );
+      $thisYear = '' . (int) substr( $m, 0, 4 );
+      $d        = ( ( $w - 1 ) * 7 ) + 6; //it seems MySQL's weeks disagree with PHP's
+      $thisMonth = $wpdb->get_var(
+        $wpdb->prepare( "SELECT DATE_FORMAT ( ( DATE_ADD( %s, INTERVAL %d DAY ) ), '%%m')", $thisYear . '0101', $d )
+      );
+      //$thisMonth = $wpdb->get_var( "SELECT DATE_FORMAT ( ( DATE_ADD( '{$thisYear}0101', INTERVAL $d DAY ) ), '%m')" );
     } elseif ( ! empty( $m ) ) {
-      $thisyear = '' . (int) substr( $m, 0, 4 );
+      $thisYear = '' . (int) substr( $m, 0, 4 );
 
       if ( strlen( $m ) < 6 ) {
-        $thismonth = '01';
+        $thisMonth = '01';
       } else {
-        $thismonth = '' . zeroise( (int) substr( $m, 4, 2 ), 2 );
+        $thisMonth = '' . zeroise( (int) substr( $m, 4, 2 ), 2 );
       }
     } else {
       $is_gregorian = true;
-      $thisyear     = gmdate( 'Y', current_time( 'timestamp' ) + get_option( 'gmt_offset' ) * 3600 );
-      $thismonth    = gmdate( 'm', current_time( 'timestamp' ) + get_option( 'gmt_offset' ) * 3600 );
-      $thisday      = gmdate( 'd', current_time( 'timestamp' ) + get_option( 'gmt_offset' ) * 3600 );
+      $thisYear     = gmdate( 'Y', current_time( 'timestamp' ) + get_option( 'gmt_offset' ) * 3600 );
+      $thisMonth    = gmdate( 'm', current_time( 'timestamp' ) + get_option( 'gmt_offset' ) * 3600 );
+      $thisDay      = gmdate( 'd', current_time( 'timestamp' ) + get_option( 'gmt_offset' ) * 3600 );
     }
 
     //print_r($wp_query->query_vars);
@@ -81,14 +81,14 @@ class Calendar {
     if ( $is_gregorian ) {
       list( $jthisyear,
         $jthismonth,
-        $jthisday ) = $pd->gregorian_to_persian( $thisyear, $thismonth, $thisday );
+        $jthisday ) = $pd->gregorian_to_persian( $thisYear, $thisMonth, $thisDay );
 
       $unixmonth = $pd->gregorian_date( 'Y-m-d 00:00:00', "$jthisyear-$jthismonth-01" );
     } else {
-      $gdate      = $pd->persian_to_gregorian( $thisyear, $thismonth, 1 );
+      $gdate      = $pd->persian_to_gregorian( $thisYear, $thisMonth, 1 );
       $unixmonth  = mktime( 0, 0, 0, $gdate[1], 1, $gdate[0] );
-      $jthisyear  = $thisyear;
-      $jthismonth = $thismonth;
+      $jthisyear  = $thisYear;
+      $jthismonth = $thisMonth;
     }
 
     $jnextmonth = $jthismonth + 1;
@@ -110,7 +110,7 @@ class Calendar {
 				SELECT MONTH(post_date) AS month,
 				  	YEAR(post_date) AS year
                 FROM $wpdb->posts
-                WHERE post_date < '%s'
+                WHERE post_date < %s
                 	AND post_type = 'post'
                     AND post_status = 'publish'
                 ORDER BY post_date DESC
@@ -124,7 +124,7 @@ class Calendar {
 				SELECT MONTH(post_date) AS month,
 				  	YEAR(post_date) AS year
                 FROM $wpdb->posts
-                WHERE post_date >= '%s'
+                WHERE post_date >= %s
                 	AND post_type = 'post'
                     AND post_status = 'publish'
                 ORDER BY post_date ASC
@@ -193,8 +193,8 @@ class Calendar {
 			  	MONTH ( post_date ),
 			  	YEAR ( post_date )
         	FROM $wpdb->posts
-       		WHERE post_date > '%s'
-       		    AND post_date < '%s'
+       		WHERE post_date > %s
+       		    AND post_date < %s
         		AND post_type = 'post'
         		AND post_status = 'publish'
         	",
@@ -212,9 +212,11 @@ class Calendar {
       $daywithpost = array();
     }
 
-    if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'MSIE' ) !== false
-         || stripos( $_SERVER['HTTP_USER_AGENT'], 'camino' ) !== false
-         || stripos( $_SERVER['HTTP_USER_AGENT'], 'safari' ) !== false ) {
+    $userAgent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ?? '' ) );
+
+    if ( strpos( $userAgent, 'MSIE' ) !== false
+         || stripos( $userAgent, 'camino' ) !== false
+         || stripos( $userAgent, 'safari' ) !== false ) {
       $ak_title_separator = "\n";
     } else {
       $ak_title_separator = ', ';
@@ -230,8 +232,8 @@ class Calendar {
 				  	MONTH ( post_date ) AS month,
 				  	YEAR ( post_date ) AS year
 				FROM $wpdb->posts
-				WHERE post_date >= '%s'
-				    AND post_date <= '%s'
+				WHERE post_date >= %s
+				    AND post_date <= %s
 				    AND post_type = 'post'
 				    AND post_status = 'publish'
 				",
@@ -270,9 +272,9 @@ class Calendar {
     $daysinmonth = (int) $pd->persian_date( 't', $unixmonth, 'eng' );
 
     for ( $day = 1; $day <= $daysinmonth; ++ $day ) {
-      list( $thiyear,
-        $thismonth,
-        $thisday ) = $pd->persian_to_gregorian( $jthisyear, $jthismonth, $day );
+      list( $thisYear,
+        $thisMonth,
+        $thisDay ) = $pd->persian_to_gregorian( $jthisyear, $jthismonth, $day );
 
       if ( isset( $newrow ) && $newrow ) {
         $calendar_output .= "\n\t</tr>\n\t<tr>\n\t\t";
@@ -280,9 +282,9 @@ class Calendar {
 
       $newrow = false;
 
-      if ( $thisday == gmdate( 'j', ( time() + ( get_option( 'gmt_offset' ) * 3600 ) ) )
-           && $thismonth == gmdate( 'm', time() + ( get_option( 'gmt_offset' ) * 3600 ) )
-           && $thisyear == gmdate( 'Y', time() + ( get_option( 'gmt_offset' ) * 3600 ) ) ) {
+      if ( $thisDay == gmdate( 'j', ( time() + ( get_option( 'gmt_offset' ) * 3600 ) ) )
+           && $thisMonth == gmdate( 'm', time() + ( get_option( 'gmt_offset' ) * 3600 ) )
+           && $thisYear == gmdate( 'Y', time() + ( get_option( 'gmt_offset' ) * 3600 ) ) ) {
         $calendar_output .= '<td id="today">';
       } else {
         $calendar_output .= '<td>';
@@ -310,6 +312,7 @@ class Calendar {
       $calendar_output .= "\n\t\t" . '<td class="pad" colspan="' . $pad . '">&nbsp;</td>';
     }
 
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo $calendar_output . "\n\t</tr>\n\t</tbody>\n\t</table>";
   }
 }

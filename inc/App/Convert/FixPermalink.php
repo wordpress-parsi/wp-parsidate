@@ -66,7 +66,7 @@ class FixPermalink {
         $wpdb->prepare(
           "
 				SELECT post_date FROM $wpdb->posts
-				WHERE post_name = '%s'
+				WHERE post_name = %s
 				  AND post_type != 'attachment'
 				ORDER BY ID
 				",

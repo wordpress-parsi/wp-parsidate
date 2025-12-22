@@ -41,7 +41,7 @@ class Tools {
     echo '<style>
 			.wpp-admin-bar-date {
 			    color: #fff !important;
-			    background-color: ' . $bgColor . ' !important;
+			    background-color: ' . esc_html( $bgColor ) . ' !important;
 			    unicode-bidi: embed !important;
 			}
 			</style>';
@@ -51,15 +51,15 @@ class Tools {
     return array(
       // Admin bar
       'start_grid_admin_bar' => array(
-        'title' => __( 'Admin Bar', 'wp-parsidate' ),
+        'title' => esc_html__( 'Admin Bar', 'wp-parsidate' ),
         'type'  => 'startGrid',
       ),
       'date_in_admin_bar'    => array(
         'id'       => 'date_in_admin_bar',
-        'title'    => __( 'Display date in the admin bar', 'wp-parsidate' ),
+        'title'    => esc_html__( 'Display date in the admin bar', 'wp-parsidate' ),
         'type'     => 'toggle',
         'default'  => false,
-        'desc'     => __( "Display today's Jalali date in the WordPress admin bar.", 'wp-parsidate' ),
+        'desc'     => esc_html__( "Display today's Jalali date in the WordPress admin bar.", 'wp-parsidate' ),
         'sanitize' => 'bool'
       ),
       'end_grid_admin_bar'   => array(

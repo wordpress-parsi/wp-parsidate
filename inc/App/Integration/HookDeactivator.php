@@ -29,7 +29,8 @@ class HookDeactivator {
 
     $i        = 0;
     $dis_hook = self::getList();
-    $calls    = debug_backtrace();
+    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
+    $calls = debug_backtrace();
     unset( $calls[0], $calls[1], $calls[2] );
 
     foreach ( $calls as $i => $call ) {
@@ -122,14 +123,14 @@ class HookDeactivator {
   public function addSectionSettings( array $sections ): array {
     $settings = [
       'start_grid_hook_deactivator' => array(
-        'title' => __( 'Hooks', 'wp-parsidate' ),
+        'title' => esc_html__( 'Hooks', 'wp-parsidate' ),
         'type'  => 'startGrid',
       ),
       'hook_deactivator_list'       => array(
         'id'         => 'hook_deactivator_list',
-        'title'      => __( 'Hook list', 'wp-parsidate' ),
+        'title'      => esc_html__( 'Hook list', 'wp-parsidate' ),
         'type'       => 'textarea',
-        'desc'       => __( 'Enter hook,class,function to remove parsidate filter from it',
+        'desc'       => esc_html__( 'Enter hook,class,function to remove parsidate filter from it',
           'wp-parsidate' ),
         'class'      => 'ltr-field',
         'attributes' => array(
@@ -142,8 +143,8 @@ class HookDeactivator {
     ];
 
     $sections[ self::sectionID ] = array(
-      'title'    => __( 'Hook deactivator', 'wp-parsidate' ),
-      'desc'     => __( 'Disable plugin hooks', 'wp-parsidate' ),
+      'title'    => esc_html__( 'Hook deactivator', 'wp-parsidate' ),
+      'desc'     => esc_html__( 'Disable plugin hooks', 'wp-parsidate' ),
       'settings' => $settings
     );
 

@@ -144,7 +144,7 @@ class Posts {
    * @return              void
    */
   public function editPostHooks(): void {
-    add_action( 'restrict_manage_posts', [ $this, 'restrictPosts' ] );
+    add_action( 'restrict_manage_posts', [ $this, 'addMonthYearSelectPostFilter' ] );
     add_filter( 'posts_where', [ $this, 'adminPostsWhere' ] );
   }
 
@@ -172,7 +172,7 @@ class Posts {
    * @author            Parsa Kafi
    * @author            Mobin Ghasempoor
    */
-  public function restrictPosts(): void {
+  public function addMonthYearSelectPostFilter(): void {
     global $post_type, $post_status, $wpdb;
 
     if ( apply_filters( 'disable_months_dropdown', false, $post_type ) ) {
@@ -189,13 +189,10 @@ class Posts {
       $post_status_w .= " AND post_status <> 'trash'";
     }
 
-    $sql = "
-		SELECT DISTINCT date( post_date ) AS date
+    $list = $wpdb->get_col( "SELECT DISTINCT date( post_date ) AS date
         FROM $wpdb->posts
-        WHERE post_type='$post_type' $post_status_w  AND date( post_date ) <> '0000-00-00'
-        ORDER BY post_date";
-
-    $list = $wpdb->get_col( $sql );
+        WHERE post_type='$post_type' $post_status_w AND date( post_date ) <> '0000-00-00'
+        ORDER BY post_date" );
 
     if ( empty( $list ) ) {
       return;
@@ -206,7 +203,7 @@ class Posts {
     $monthsName = Months::getNames();
 
     echo '<select name="mfa">';
-    echo '<option ' . selected( $m, 0, false ) . ' value="0">' . __( 'Show All Dates',
+    echo '<option ' . selected( $m, 0, false ) . ' value="0">' . esc_html__( 'Show All Dates',
         'wp-parsidate' ) . '</option>' . PHP_EOL;
 
     foreach ( $list as $date ) {
@@ -215,9 +212,11 @@ class Posts {
       $month = substr( $date, 4, 2 );
       $month = $monthsName[ (int) $month ];
 
-      if ( $predate != $date ) {
-        echo sprintf( '<option %s value="%s">%s</option>', selected( $m, $date, false ), $date,
-          $month . ' ' . fix_number( $year ) );
+      if ( $predate !== $date ) {
+        echo sprintf( '<option %s value="%s">%s</option>',
+          selected( $m, $date, false ),
+          esc_html( $date ),
+          esc_html( $month . ' ' . fix_number( $year ) ) );
       }
 
       $predate = $date;

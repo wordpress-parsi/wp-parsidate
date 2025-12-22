@@ -32,8 +32,8 @@ class Addons {
 
   public function addDashboardLink( $links ) {
     $links[] = [
-      'title' => __( 'Addons', 'wp-parsidate' ),
-      'desc'  => __( 'Parsi Date Addons', 'wp-parsidate' ),
+      'title' => esc_html__( 'Addons', 'wp-parsidate' ),
+      'desc'  => esc_html__( 'Parsi Date Addons', 'wp-parsidate' ),
       'link'  => AdminPages::link( [
         'tab' => self::tab
       ] ),
@@ -54,7 +54,7 @@ class Addons {
 
   public function addRefreshNotice( $tab ): void {
     if ( $tab === self::tab && Cache::get( 'settings_saved' ) ) {
-      Notice::add( self::tab, __( 'To load the add-on initial hooks, the page refreshes.', 'wp-parsidate' ),
+      Notice::add( self::tab, esc_html__( 'To load the add-on initial hooks, the page refreshes.', 'wp-parsidate' ),
         'warning' );
 
       add_filter( 'wp_parsidate_settings_page_refreshed_after', static function () {
@@ -68,7 +68,7 @@ class Addons {
 
   public function addMenu( $menus ) {
     $menus[ self::tab ] = array(
-      'title' => __( 'Addons', 'wp-parsidate' ),
+      'title' => esc_html__( 'Addons', 'wp-parsidate' ),
       'icon'  => self::icon
     );
 
@@ -77,7 +77,7 @@ class Addons {
 
   public function saveMessage( $message, $tab ) {
     if ( $tab === self::tab ) {
-      $message = __( 'Addons settings saved.', 'wp-parsidate' );
+      $message = esc_html__( 'Addons settings saved.', 'wp-parsidate' );
     }
 
     return $message;
@@ -108,7 +108,7 @@ class Addons {
       $canActivate          = empty( $addon['requires_plugins'] );
       $requirePluginsActive = 0;
       $actionLink           = '';
-      $actionTitle          = __( 'Enable addon', 'wp-parsidate' );
+      $actionTitle          = esc_html__( 'Enable addon', 'wp-parsidate' );
 
       if ( ! $canActivate && ! empty( $addon['requires_plugins'] ) && is_array( $addon['requires_plugins'] ) ) {
         foreach ( $addon['requires_plugins'] as $requirePluginPath => $requirePlugin ) {
@@ -126,7 +126,7 @@ class Addons {
               self_admin_url( 'plugins.php?action=activate&plugin=' . $requirePluginPath ),
               'activate-plugin_' . $requirePluginPath
             );
-            $actionTitle = __( 'Activate required addon', 'wp-parsidate' );
+            $actionTitle = esc_html__( 'Activate required addon', 'wp-parsidate' );
 
           } elseif ( isset( $requirePlugin['is_wp_plugin'] ) && $requirePlugin['is_wp_plugin'] ) {
             $pluginSlug = WordPress::pluginPathToSlug( $requirePluginPath );
@@ -135,12 +135,12 @@ class Addons {
               self_admin_url( 'update.php?action=install-plugin&plugin=' . $pluginSlug ),
               'install-plugin_' . $pluginSlug
             );
-            $actionTitle = __( 'Install required addon', 'wp-parsidate' );
+            $actionTitle = esc_html__( 'Install required addon', 'wp-parsidate' );
 
           } elseif ( ! empty( $requirePlugin['plugin_link'] ) && Validating::isUrl( $requirePlugin['plugin_link'] ) ) {
             $actionLink  = $requirePlugin['plugin_link'];
-            $actionTitle = isset( $requirePlugin['is_free'] ) && $requirePlugin['is_free'] ? __( 'Download required addon',
-              'wp-parsidate' ) : __( 'Buy required addon', 'wp-parsidate' );
+            $actionTitle = isset( $requirePlugin['is_free'] ) && $requirePlugin['is_free'] ? esc_html__( 'Download required addon',
+              'wp-parsidate' ) : esc_html__( 'Buy required addon', 'wp-parsidate' );
 
           }
 
@@ -220,8 +220,8 @@ class Addons {
     }
 
     return array(
-      'title'    => __( 'Addons', 'wp-parsidate' ),
-      'desc'     => __( 'You can enable or disable these integrations below.', 'wp-parsidate' ),
+      'title'    => esc_html__( 'Addons', 'wp-parsidate' ),
+      'desc'     => esc_html__( 'You can enable or disable these integrations below.', 'wp-parsidate' ),
       'settings' => $elementList
     );
   }
@@ -233,20 +233,20 @@ class Addons {
     }
 
     $defaultCats = array(
-      'recommended'    => __( 'Recommended', 'wp-parsidate' ),
-      'ecommerce'      => __( 'E-commerce', 'wp-parsidate' ),
-      'tools'          => __( 'Tools', 'wp-parsidate' ),
-      'marketing'      => __( 'Marketing', 'wp-parsidate' ),
-      'customizations' => __( 'Customizations', 'wp-parsidate' ),
-      'seo'            => __( 'SEO', 'wp-parsidate' ),
-      'utility'        => __( 'Utility', 'wp-parsidate' ),
-      'page_builder'   => __( 'Page Builder', 'wp-parsidate' ),
+      'recommended'    => esc_html__( 'Recommended', 'wp-parsidate' ),
+      'ecommerce'      => esc_html__( 'E-commerce', 'wp-parsidate' ),
+      'tools'          => esc_html__( 'Tools', 'wp-parsidate' ),
+      'marketing'      => esc_html__( 'Marketing', 'wp-parsidate' ),
+      'customizations' => esc_html__( 'Customizations', 'wp-parsidate' ),
+      'seo'            => esc_html__( 'SEO', 'wp-parsidate' ),
+      'utility'        => esc_html__( 'Utility', 'wp-parsidate' ),
+      'page_builder'   => esc_html__( 'Page Builder', 'wp-parsidate' ),
     );
 
     $cats = apply_filters( 'wp_parsidate_addon_cats', array() );
     $cats = is_array( $cats ) ? $cats : [];
 
-    $cats = array_merge( $defaultCats, $cats, [ 'other' => __( 'Other addons', 'wp-parsidate' ) ] );
+    $cats = array_merge( $defaultCats, $cats, [ 'other' => esc_html__( 'Other addons', 'wp-parsidate' ) ] );
     Cache::set( 'addon_cats', $cats );
 
     return $cats;
@@ -254,7 +254,7 @@ class Addons {
 
   public function changeSubmitButtonTitle( $title, $tab ) {
     if ( $tab === self::tab ) {
-      $title = __( 'Save active addons', 'wp-parsidate' );
+      $title = esc_html__( 'Save active addons', 'wp-parsidate' );
     }
 
     return $title;

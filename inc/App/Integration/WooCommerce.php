@@ -103,7 +103,7 @@ class WooCommerce extends Addon {
     // This pattern ensures the phone number follows the specified structure for both mobile and landline numbers
     if ( ! preg_match( '/^(0|0098|\+98)?(9\d{9}|[1-8]\d{9,10})$/',
       Number::toEnglish( wc_get_post_data_by_key( 'billing_phone' ) ) ) ) {
-      $errors->add( 'validation', __( '<strong>Phone number</strong> is invalid.', 'wp-parsidate' ) );
+      $errors->add( 'validation', esc_html__( '<strong>Phone number</strong> is invalid.', 'wp-parsidate' ) );
     }
   }
 
@@ -246,15 +246,17 @@ class WooCommerce extends Addon {
    * @since           4.0.0
    */
   public function changeReportDates(): void {
-    if ( ! empty( $_GET['page'] ) && 'wc-reports' === esc_attr( $_GET['page'] ) ) {
-      if ( ! empty( $_GET['start_date'] ) ) {
-        $_GET['start_date'] = gregdate( 'Y-m-d',
-          Number::toEnglish( wc_clean( wp_unslash( $_GET['start_date'] ) ) ) );
+    $page      = sanitize_text_field( wp_unslash( $_GET['page'] ?? '' ) );
+    $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
+    $endDate   = sanitize_text_field( wp_unslash( $_GET['end_date'] ?? '' ) );
+
+    if ( ! empty( $page ) && 'wc-reports' === $page ) {
+      if ( ! empty( $startDate ) ) {
+        $_GET['start_date'] = gregdate( 'Y-m-d', Number::toEnglish( wc_clean( $startDate ) ) );
       }
 
-      if ( ! empty( $_GET['end_date'] ) ) {
-        $_GET['end_date'] = gregdate( 'Y-m-d',
-          Number::toEnglish( wc_clean( wp_unslash( $_GET['end_date'] ) ) ) );
+      if ( ! empty( $endDate ) ) {
+        $_GET['end_date'] = gregdate( 'Y-m-d', Number::toEnglish( wc_clean( $endDate ) ) );
       }
     }
   }
@@ -291,10 +293,13 @@ class WooCommerce extends Addon {
       wc_enqueue_js( '$("input[name=order_date]").val("' . $jalali_date . '")' );
 
     } elseif ( 'legacy_report' === $current_screen ) {
-      $jalali_start_date = ! empty( $_GET['start_date'] ) ? parsidate( 'Y-m-d',
-        date( 'Y-m-d', strtotime( $_GET['start_date'] ) ), 'eng' ) : '';
-      $jalali_end_date   = ! empty( $_GET['end_date'] ) ? parsidate( 'Y-m-d',
-        date( 'Y-m-d', strtotime( $_GET['end_date'] ) ), 'eng' ) : '';
+      $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
+      $endDate   = sanitize_text_field( wp_unslash( $_GET['end_date'] ?? '' ) );
+
+      $jalali_start_date = ! empty( $startDate ) ? parsidate( 'Y-m-d',
+        date( 'Y-m-d', strtotime( $startDate ) ), 'eng' ) : '';
+      $jalali_end_date   = ! empty( $endDate ) ? parsidate( 'Y-m-d',
+        date( 'Y-m-d', strtotime( $endDate ) ), 'eng' ) : '';
 
       wc_enqueue_js( '$("input[name=start_date]").val("' . $jalali_start_date . '");$("input[name=end_date]").val("' . $jalali_end_date . '");' );
 
@@ -372,7 +377,7 @@ class WooCommerce extends Addon {
   public function removeCouponExpiryDateColumn( $columns ) {
     unset( $columns['expiry_date'] );
 
-    $columns['wpp_expiry_date'] = __( 'Expiry date', 'woocommerce' );
+    $columns['wpp_expiry_date'] = esc_html__( 'Expiry date', 'wp-parsidate' );
 
     return $columns;
   }
@@ -381,15 +386,15 @@ class WooCommerce extends Addon {
    * Fill our custom date expires column value
    *
    * @param $column
-   * @param $postid
+   * @param $postID
    *
    * @since 4.0.0
    */
-  public function printCouponExpiryDateColumn( $column, $postid ) {
+  public function printCouponExpiryDateColumn( $column, $postID ): void {
     if ( $column === 'wpp_expiry_date' ) {
-      $date = get_post_meta( $postid, 'date_expires', true );
+      $date = get_post_meta( $postID, 'date_expires', true );
 
-      echo ! empty( $date ) ? parsidate( 'Y-m-d', $date ) : '&ndash;';
+      echo ! empty( $date ) ? esc_html( parsidate( 'Y-m-d', $date ) ) : '-';
     }
   }
 
@@ -409,17 +414,17 @@ class WooCommerce extends Addon {
   public function changeOrderDateAndCouponExpiresMeta( $metadata, $object_id, $meta_key, $single ) {
     global $wpdb;
 
-    $post_type = get_post_type( $object_id );
-    $action    = isset( $_GET['action'] ) && $_GET['action'] === 'edit';
+    $post_type  = get_post_type( $object_id );
+    $editAction = sanitize_text_field( wp_unslash( $_GET['action'] ?? '' ) ) === 'edit';
 
-    if ( $action && 'shop_coupon' === $post_type && 'date_expires' === $meta_key ) {
+    if ( $editAction && 'shop_coupon' === $post_type && 'date_expires' === $meta_key ) {
       $metadata = $wpdb->get_var(
         $wpdb->prepare(
           "
 						SELECT meta_value
 						From $wpdb->postmeta
 						WHERE post_id = %d
-							AND meta_key = '%s'
+							AND meta_key = %s
 					",
           $object_id,
           $meta_key
@@ -476,7 +481,7 @@ class WooCommerce extends Addon {
       $props        = array();
 
       if ( isset( $_POST['variable_sale_price_dates_from'][ $i ] ) ) {
-        $date_on_sale_from = Number::toEnglish( wc_clean( wp_unslash( $_POST['variable_sale_price_dates_from'][ $i ] ) ) );
+        $date_on_sale_from = Number::toEnglish( sanitize_text_field( wp_unslash( $_POST['variable_sale_price_dates_from'][ $i ] ) ) );
 
         if ( ! empty( $date_on_sale_from ) ) {
           $props['date_on_sale_from'] = gregdate( 'Y-m-d 00:00:00', $date_on_sale_from );
@@ -484,7 +489,7 @@ class WooCommerce extends Addon {
       }
 
       if ( isset( $_POST['variable_sale_price_dates_to'][ $i ] ) ) {
-        $date_on_sale_to = Number::toEnglish( wc_clean( wp_unslash( $_POST['variable_sale_price_dates_to'][ $i ] ) ) );
+        $date_on_sale_to = Number::toEnglish( sanitize_text_field( wp_unslash( $_POST['variable_sale_price_dates_to'][ $i ] ) ) );
 
         if ( ! empty( $date_on_sale_to ) ) {
           $props['date_on_sale_to'] = gregdate( 'Y-m-d 23:59:59', $date_on_sale_to );
@@ -514,8 +519,9 @@ class WooCommerce extends Addon {
     $props = array();
 
     if ( isset( $_POST['_sale_price_dates_from'] ) ) {
-      $date_on_sale_from = Number::toEnglish( wc_get_post_data_by_key( '_sale_price_dates_from' ) );
-      $time_on_sale_from = ! empty( $_POST['_sale_price_times_from'] ) && Date::isTimeString( $_POST['_sale_price_times_from'] ) ? Date::isTimeString( $_POST['_sale_price_times_from'] ) : '00:00:00';
+      $date_on_sale_from  = Number::toEnglish( wc_get_post_data_by_key( '_sale_price_dates_from' ) );
+      $salePriceTimesFrom = sanitize_text_field( wp_unslash( $_POST['_sale_price_times_from'] ?? '' ) );
+      $time_on_sale_from  = ! empty( $salePriceTimesFrom ) && Date::isTimeString( $salePriceTimesFrom ) ? Date::isTimeString( $salePriceTimesFrom ) : '00:00:00';
 
       if ( ! empty( $date_on_sale_from ) ) {
         $props['date_on_sale_from'] = date( 'Y-m-d ' . $time_on_sale_from,
@@ -524,8 +530,9 @@ class WooCommerce extends Addon {
     }
 
     if ( isset( $_POST['_sale_price_dates_to'] ) ) {
-      $date_on_sale_to = Number::toEnglish( wc_get_post_data_by_key( '_sale_price_dates_to' ) );
-      $time_on_sale_to = ! empty( $_POST['_sale_price_times_to'] ) && Date::isTimeString( $_POST['_sale_price_times_to'] ) ? Date::isTimeString( $_POST['_sale_price_times_to'] ) : '23:59:59';
+      $date_on_sale_to  = Number::toEnglish( wc_get_post_data_by_key( '_sale_price_dates_to' ) );
+      $salePriceTimesTo = sanitize_text_field( wp_unslash( $_POST['_sale_price_times_to'] ?? '' ) );
+      $time_on_sale_to  = ! empty( $salePriceTimesTo ) && Date::isTimeString( $salePriceTimesTo ) ? Date::isTimeString( $salePriceTimesTo ) : '23:59:59';
 
       if ( ! empty( $date_on_sale_to ) ) {
         $props['date_on_sale_to'] = date( 'Y-m-d ' . $time_on_sale_to,
@@ -596,7 +603,7 @@ class WooCommerce extends Addon {
 
     if ( in_array( $current_screen, $allowed_screens, true ) && Settings::get( 'persian_date' ) ) {
       wp_enqueue_script( 'wpp_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ),
-        array( 'jquery-ui-datepicker' ), $pluginVersion );
+        array( 'jquery-ui-datepicker' ), $pluginVersion, [ 'in_footer' => true ] );
       wp_enqueue_style( 'wpp_jalali_datepicker', Assets::url( "css-admin/jalalidatepicker$debugName.css" ),
         null, $pluginVersion );
 
@@ -651,23 +658,26 @@ class WooCommerce extends Addon {
    * @return array|mixed|string|string[]
    */
   public function fixOrderReportQueryDateCallback( $date ) {
-    if ( empty( $_GET['start_date'] ) || empty( $_GET['end_date'] ) ) {
+    $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
+    $endDate   = sanitize_text_field( wp_unslash( $_GET['end_date'] ?? '' ) );
+
+    if ( empty( $startDate ) || empty( $endDate ) ) {
       return $date[0];
     }
 
     if ( strpos( $date[0], '=' ) === false ) {
-      if ( (int) $_GET['end_date'] > 1900 ) {
+      if ( (int) $endDate > 1900 ) {
         return $date[0];
       }
 
-      $dt = gregdate( 'Y-m-d', $_GET['end_date'] );
+      $dt = gregdate( 'Y-m-d', $endDate );
       $dt = date( 'Y-m-d', strtotime( "$dt +1 day" ) );
     } else {
-      if ( (int) $_GET['start_date'] > 1900 ) {
+      if ( (int) $startDate > 1900 ) {
         return $date[0];
       }
 
-      $dt = gregdate( 'Y-m-d', $_GET['start_date'] );
+      $dt = gregdate( 'Y-m-d', $startDate );
     }
 
     return substr_replace( $date[0], $dt, - 20, 10 );
@@ -683,7 +693,9 @@ class WooCommerce extends Addon {
       global $pagenow;
 
       if ( \WPParsidate\Helper\WooCommerce::hposEnabled() ) {
-        return isset( $_POST['post_ID'] ) && 'shop_order' === get_post_type( $_POST['post_ID'] ) && ! empty( $_POST['order_date'] ) ? 'edit_order' : '';
+        $postID = (int) sanitize_text_field( wp_unslash( $_POST['post_ID'] ?? 0 ) );
+
+        return $postID && 'shop_order' === get_post_type( $postID ) ? 'edit_order' : '';
       }
 
       return is_admin() && 'post.php' === $pagenow && isset( $_POST['post_type'] ) && 'shop_order' === $_POST['post_type'] && ! empty( $_POST['order_date'] ) ? 'edit_order' : '';
@@ -709,18 +721,18 @@ class WooCommerce extends Addon {
 
   public function addTabSettings(): array {
     $settings = array(
-      'title'        => __( 'WooCommerce', 'wp-parsidate' ),
-      'desc'         => __( 'ParsiDate integration for WooCommerce', 'wp-parsidate' ),
+      'title'        => esc_html__( 'WooCommerce', 'wp-parsidate' ),
+      'desc'         => esc_html__( 'ParsiDate integration for WooCommerce', 'wp-parsidate' ),
       'settings_key' => $this->addonID,
       'settings'     => [
         'woo_product_start_grid'  => array(
           'id'    => 'woo_product_start_grid',
-          'title' => __( 'Products', 'wp-parsidate' ),
+          'title' => esc_html__( 'Products', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),
         'fix_prices'              => array(
           'id'       => 'fix_prices',
-          'title'    => __( 'Fix prices', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Fix prices', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
@@ -730,40 +742,40 @@ class WooCommerce extends Addon {
         ),
         'woo_checkout_start_grid' => array(
           'id'    => 'woo_checkout_start_grid',
-          'title' => __( 'Checkout page', 'wp-parsidate' ),
+          'title' => esc_html__( 'Checkout page', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),
         'fix_persian_postcode'    => array(
           'id'       => 'fix_persian_postcode',
-          'title'    => __( 'Fix persian postcode', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Fix persian postcode', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
         ),
         'fix_persian_phone'       => array(
           'id'       => 'fix_persian_phone',
-          'title'    => __( 'Fix persian phone', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Fix persian phone', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
         ),
         'dropdown_cities'         => array(
           'id'       => 'dropdown_cities',
-          'title'    => __( 'Display cities as a drop-down list', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Display cities as a drop-down list', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
         ),
         'validate_postcode'       => array(
           'id'       => 'validate_postcode',
-          'title'    => __( 'Postcode validation', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Postcode validation', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
         ),
         'validate_phone'          => array(
           'id'       => 'validate_phone',
-          'title'    => __( 'Phone number validation', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Phone number validation', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'

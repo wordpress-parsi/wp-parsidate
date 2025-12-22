@@ -22,7 +22,7 @@ class AdminIntegration {
     $settings = $this->settings();
     if ( ! empty( $settings['sections'] ) ) {
       $menus[ self::tab ] = array(
-        'title' => __( 'Integration', 'wp-parsidate' ),
+        'title' => esc_html__( 'Integration', 'wp-parsidate' ),
         'icon'  => self::icon
       );
     }
@@ -39,8 +39,8 @@ class AdminIntegration {
   public function settings(): array {
     if ( self::$settings === null ) {
       self::$settings = array(
-        'title'    => __( 'Integration settings', 'wp-parsidate' ),
-        'desc'     => __( 'Global plugin settings', 'wp-parsidate' ),
+        'title'    => esc_html__( 'Integration settings', 'wp-parsidate' ),
+        'desc'     => esc_html__( 'Global plugin settings', 'wp-parsidate' ),
         'sections' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_sections', [] )
       );
     }

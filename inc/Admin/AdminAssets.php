@@ -38,9 +38,9 @@ class AdminAssets {
       'ajaxNonce'          => Nonce::create(),
       'pageRefreshedAfter' => apply_filters( 'wp_parsidate_settings_page_refreshed_after', 0 ),
       'pageRefreshUrl'     => apply_filters( 'wp_parsidate_settings_page_refresh_url', null ),
-      'removeText'         => __( 'Remove', 'wp-parsidate' ),
-      'dtuConfirmDelete'   => __( 'Are you sure you want to delete this item(s)?', 'wp-parsidate' ),
-      'copyText'           => __( 'Click to copy this text.', 'wp-parsidate' ),
+      'removeText'         => esc_html__( 'Remove', 'wp-parsidate' ),
+      'dtuConfirmDelete'   => esc_html__( 'Are you sure you want to delete this item(s)?', 'wp-parsidate' ),
+      'copyText'           => esc_html__( 'Click to copy this text.', 'wp-parsidate' ),
     ) );
   }
 

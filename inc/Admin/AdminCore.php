@@ -18,7 +18,7 @@ class AdminCore {
 
   public function addMenu( $menus ) {
     $menus[ self::tab ] = array(
-      'title' => __( 'Core', 'wp-parsidate' ),
+      'title' => esc_html__( 'Core', 'wp-parsidate' ),
       'icon'  => self::icon
     );
 
@@ -34,8 +34,8 @@ class AdminCore {
   public function settings(): array {
     if ( self::$settings === null ) {
       self::$settings = array(
-        'title'    => __( 'Core settings', 'wp-parsidate' ),
-        'desc'     => __( 'Global plugin settings', 'wp-parsidate' ),
+        'title'    => esc_html__( 'Core settings', 'wp-parsidate' ),
+        'desc'     => esc_html__( 'Global plugin settings', 'wp-parsidate' ),
         'settings' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_options', [] )
       );
     }

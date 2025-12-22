@@ -21,16 +21,16 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
   function __construct() {
     $this->name = 'jalali_datepicker';
 
-    $this->label = __( 'Date', 'wp-parsidate' );
+    $this->label = esc_html__( 'Date', 'wp-parsidate' );
 
-    $this->category = __( 'Parsidate', 'wp-parsidate' );
+    $this->category = esc_html__( 'Parsidate', 'wp-parsidate' );
 
     $this->defaults = array(
       'placeholder' => 'YYYY-MM-DD',
     );
 
     $this->l10n = array(
-      'error' => __( 'Error! Please select a valid date.', 'wp-parsidate' ),
+      'error' => esc_html__( 'Error! Please select a valid date.', 'wp-parsidate' ),
     );
 
     parent::__construct();
@@ -45,8 +45,8 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
    */
   function render_field_settings( $field ) {
     acf_render_field_setting( $field, array(
-      'label'        => __( 'Placeholder', 'wp-parsidate' ),
-      'instructions' => __( 'Show custom placeholder', 'wp-parsidate' ),
+      'label'        => esc_html__( 'Placeholder', 'wp-parsidate' ),
+      'instructions' => esc_html__( 'Show custom placeholder', 'wp-parsidate' ),
       'type'         => 'text',
       'name'         => 'placeholder',
     ) );
@@ -62,7 +62,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
   function render_field( $field ) { ?>
     <input type="text" name="<?php echo esc_attr( $field['name'] ) ?>"
            value="<?php echo esc_attr( $field['value'] ) ?>" class="date-picker" autocomplete="off"
-           placeholder="<?php echo $field['placeholder'] ?>"/>
+           placeholder="<?php echo esc_attr( $field['placeholder'] ) ?>"/>
     <?php
   }
 
@@ -78,7 +78,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
 
     if ( ! wp_script_is( 'wpp-jalali-datepicker' ) ) {
       wp_enqueue_script( 'wpp_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ),
-        array( 'acf-input' ), $pluginVersion );
+        array( 'acf-input' ), $pluginVersion, [ 'in_footer' => true ] );
       wp_enqueue_style( 'wpp_jalali_datepicker',
         Assets::url( 'css-admin/jalalidatepicker' . $debugName . '.css' ),
         array( 'acf-input' ), $pluginVersion );

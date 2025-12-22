@@ -30,11 +30,11 @@ class Elementor extends Addon {
 
     return array(
       'id'               => $this->addonID,
-      'title'            => __( 'Elementor', 'wp-parsidate' ),
-      'desc'             => __( 'ParsiDate integration for Elementor', 'wp-parsidate' ),
+      'title'            => esc_html__( 'Elementor', 'wp-parsidate' ),
+      'desc'             => esc_html__( 'ParsiDate integration for Elementor', 'wp-parsidate' ),
       'force_enable'     => false,
       'icon'             => $svg,
-      'tags'             => [ __( 'Elementor', 'wp-parsidate' ) ],
+      'tags'             => [ esc_html__( 'Elementor', 'wp-parsidate' ) ],
       'cat'              => 'page_builder',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [

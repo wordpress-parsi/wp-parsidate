@@ -82,11 +82,11 @@ class AdminSettings {
         if ( $saved ) {
           Cache::set( 'settings_saved', true );
           Notice::add( $tab, apply_filters( 'wp_parsidate_save_settings_success_message',
-            __( 'Settings saved.', 'wp-parsidate' ), $tab ), 'success' );
+            esc_html__( 'Settings saved.', 'wp-parsidate' ), $tab ), 'success' );
           do_action( 'wp_parsidate_save_settings_success', $tab, $currentSection, $options );
         } else {
           Notice::add( $tab, apply_filters( 'wp_parsidate_save_settings_error_message',
-            __( 'Error saving settings!', 'wp-parsidate' ), $tab ), 'error' );
+            esc_html__( 'Error saving settings!', 'wp-parsidate' ), $tab ), 'error' );
         }
       }
     }
@@ -495,7 +495,7 @@ class AdminSettings {
     echo HTML::button( [
       'id'          => 'settings-submit',
       'title'       => esc_html( apply_filters( 'wp_parsidate_settings_submit_button_title',
-        __( 'Save changes', 'wp-parsidate' ), $currentTab ) ),
+        esc_html__( 'Save changes', 'wp-parsidate' ), $currentTab ) ),
       'button_type' => 'submit',
       'class'       => 'wppd-button-primary',
       'attributes'  => [
@@ -508,7 +508,7 @@ class AdminSettings {
       echo HTML::button( [
         'id'          => 'settings-reset',
         'title'       => esc_html( apply_filters( 'wp_parsidate_settings_reset_button_title',
-          __( 'Discard changes', 'wp-parsidate' ), $currentTab ) ),
+          esc_html__( 'Discard changes', 'wp-parsidate' ), $currentTab ) ),
         'button_type' => 'reset',
         'attributes'  => [
           'form' => 'wppd-settings-form'

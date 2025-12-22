@@ -20,9 +20,9 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
   function __construct() {
     $this->name = 'wpp_timepicker';
 
-    $this->label = __( 'Date', 'wp-parsidate' );
+    $this->label = esc_html__( 'Date', 'wp-parsidate' );
 
-    $this->category = __( 'Date', 'wp-parsidate' );
+    $this->category = esc_html__( 'Date', 'wp-parsidate' );
 
     $this->defaults = array(
       'placeholder' => 'YYYY-MM-DD',
@@ -41,10 +41,10 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
   function create_options( $field ) {
     $key = $field['name'];
     ?>
-    <tr class="field_option field_option_<?php echo $this->name; ?>">
+    <tr class="field_option field_option_<?php echo esc_html( $this->name ); ?>">
       <td class="label">
-        <label><?php _e( "Preview Size", 'TEXTDOMAIN' ); ?></label>
-        <p class="description"><?php _e( "Thumbnail is advised", 'TEXTDOMAIN' ); ?></p>
+        <label><?php esc_html_e( "Preview Size", 'wp-parsidate' ); ?></label>
+        <p class="description"><?php esc_html_e( "Thumbnail is advised", 'wp-parsidate' ); ?></p>
       </td>
       <td>
         <?php
@@ -72,7 +72,7 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
     <div>
       <input type="text" name="<?php echo esc_attr( $field['name'] ) ?>"
              value="<?php echo esc_attr( $field['value'] ) ?>" class="date-picker" autocomplete="off"
-             placeholder="<?php echo $field['placeholder'] ?>"/>
+             placeholder="<?php echo esc_attr( $field['placeholder'] ) ?>"/>
     </div>
     <?php
   }
@@ -88,7 +88,7 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
     $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
     wp_enqueue_script( 'wpp_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ),
-      array( 'acf-input' ), $pluginVersion );
+      array( 'acf-input' ), $pluginVersion, [ 'in_footer' => true ] );
     wp_enqueue_style( 'wpp_jalali_datepicker', Assets::url( 'css-admin/jalalidatepicker' . $debugName . '.css' ),
       array( 'acf-input' ), $pluginVersion );
 

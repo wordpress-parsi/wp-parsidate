@@ -20,9 +20,9 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
   public function __construct() {
     $this->name = 'jalali_datepicker';
 
-    $this->label = __( 'Date', 'wp-parsidate' );
+    $this->label = esc_html__( 'Date', 'wp-parsidate' );
 
-    $this->category = __( 'Parsidate', 'wp-parsidate' );
+    $this->category = esc_html__( 'Parsidate', 'wp-parsidate' );
 
     $this->defaults = array(
       'placeholder' => 'YYYY-MM-DD',
@@ -41,10 +41,10 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
   public function create_options( $field ) {
     $key = $field['name'];
     ?>
-    <tr class="field_option field_option_<?php echo $this->name; ?>">
+    <tr class="field_option field_option_<?php echo esc_html( $this->name ); ?>">
       <td class="label">
-        <label><?php __( 'Placeholder', 'wp-parsidate' ); ?></label>
-        <p class="description"><?php _e( 'Show custom placeholder', 'wp-parsidate' ); ?></p>
+        <label><?php esc_html__( 'Placeholder', 'wp-parsidate' ); ?></label>
+        <p class="description"><?php esc_html_e( 'Show custom placeholder', 'wp-parsidate' ); ?></p>
       </td>
       <td>
         <?php
@@ -72,7 +72,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
     <div>
       <input type="text" name="<?php echo esc_attr( $field['name'] ) ?>"
              value="<?php echo esc_attr( $field['value'] ) ?>" class="date-picker" autocomplete="off"
-             placeholder="<?php echo $field['placeholder'] ?>"/>
+             placeholder="<?php echo esc_attr( $field['placeholder'] ) ?>"/>
     </div>
     <?php
   }
@@ -88,7 +88,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
     $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
     wp_enqueue_script( 'wpp_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ),
-      array( 'acf-input' ), $pluginVersion );
+      array( 'acf-input' ), $pluginVersion, [ 'in_footer' => true ] );
     wp_enqueue_style( 'wpp_jalali_datepicker', Assets::url( 'css-admin/jalalidatepicker' . $debugName . '.css' ),
       array( 'acf-input' ), $pluginVersion );
 

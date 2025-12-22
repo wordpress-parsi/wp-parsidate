@@ -40,7 +40,7 @@ class Archive {
 				    COUNT( ID ) AS count
 				FROM $wpdb->posts
 				WHERE post_date < NOW()
-					AND post_type = '%s'
+					AND post_type = %s
 					AND post_status = 'publish'
 				group by date
 				ORDER BY post_date DESC

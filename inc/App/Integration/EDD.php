@@ -46,7 +46,7 @@ class EDD extends Addon {
   }
 
   public function addTomanCurrency( $currencies ) {
-    $currencies['TOMAN'] = __( 'Iran Toman (Toman)', 'wp-parsidate' );
+    $currencies['TOMAN'] = esc_html__( 'Iran Toman (Toman)', 'wp-parsidate' );
 
     return $currencies;
   }
@@ -67,25 +67,25 @@ class EDD extends Addon {
 
   public function addSectionSettings( $sections ) {
     $sections[ $this->addonID ] = array(
-      'title'        => __( 'Easy Digital Downloads', 'wp-parsidate' ),
-      'desc'         => __( 'ParsiDate integration for Easy Digital Downloads', 'wp-parsidate' ),
+      'title'        => esc_html__( 'Easy Digital Downloads', 'wp-parsidate' ),
+      'desc'         => esc_html__( 'ParsiDate integration for Easy Digital Downloads', 'wp-parsidate' ),
       'settings_key' => $this->addonID,
       'settings'     => [
         'edd_price_start_grid'    => array(
           'id'    => 'edd_start_grid',
-          'title' => __( 'Price', 'wp-parsidate' ),
+          'title' => esc_html__( 'Price', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),
         'fix_prices'              => array(
           'id'       => 'fix_prices',
-          'title'    => __( 'Fix prices', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Fix prices', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
         ),
         'remove_decimals'         => array(
           'id'       => 'remove_decimals',
-          'title'    => __( 'Remove decimals', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Remove decimals', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
@@ -95,19 +95,19 @@ class EDD extends Addon {
         ),
         'edd_currency_start_grid' => array(
           'id'    => 'edd_start_grid',
-          'title' => __( 'Currency', 'wp-parsidate' ),
+          'title' => esc_html__( 'Currency', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),
         'add_toman_currency'      => array(
           'id'       => 'add_toman_currency',
-          'title'    => __( 'Add "Toman" currency', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Add "Toman" currency', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
         ),
         'fix_currency'            => array(
           'id'       => 'fix_currency',
-          'title'    => __( 'Replace currency name', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Replace currency name', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
@@ -126,11 +126,11 @@ class EDD extends Addon {
 
     return array(
       'id'               => $this->addonID,
-      'title'            => __( 'Easy Digital Downloads', 'wp-parsidate' ),
-      'desc'             => __( 'ParsiDate integration for Easy Digital Downloads', 'wp-parsidate' ),
+      'title'            => esc_html__( 'Easy Digital Downloads', 'wp-parsidate' ),
+      'desc'             => esc_html__( 'ParsiDate integration for Easy Digital Downloads', 'wp-parsidate' ),
       'force_enable'     => true,
       'icon'             => $svg,
-      'tags'             => [ __( 'Download', 'wp-parsidate' ) ],
+      'tags'             => [ esc_html__( 'Download', 'wp-parsidate' ) ],
       'cat'              => 'ecommerce',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [

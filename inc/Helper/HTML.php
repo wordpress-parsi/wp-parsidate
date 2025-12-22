@@ -364,14 +364,14 @@ class HTML {
     }
 
     $id                                           = self::prefix . $data['type'] . '-' . $data['id'];
-    $placeholder                                  = $data['placeholder'] ?? __( 'Select Media(s)', 'wp-parsidate' );
+    $placeholder                                  = $data['placeholder'] ?? esc_html__( 'Select Media(s)', 'wp-parsidate' );
     $selectButton                                 = $data['select_button'] ?? $placeholder;
-    $removeAllButton                              = $data['remove_all_button'] ?? __( 'Remove all media',
+    $removeAllButton                              = $data['remove_all_button'] ?? esc_html__( 'Remove all media',
       'wp-parsidate' );
     $maxNumber                                    = $data['media_max_number'] ?? 1;
-    $data['attributes']['data-title']             = $data['media_title'] ?? __( 'Select or Upload Media',
+    $data['attributes']['data-title']             = $data['media_title'] ?? esc_html__( 'Select or Upload Media',
       'wp-parsidate' );
-    $data['attributes']['data-button']            = $data['media_button'] ?? __( 'Use this media', 'wp-parsidate' );
+    $data['attributes']['data-button']            = $data['media_button'] ?? esc_html__( 'Use this media', 'wp-parsidate' );
     $data['attributes']['data-type']              = $data['media_type'] ?? ''; // image, video, audio
     $data['attributes']['data-multi-selection']   = (int) ( $data['upload_multi_selection'] ?? true );
     $data['attributes']['data-accept-extensions'] = $data['upload_accept_extensions'] ?? '';  // Separate with comma (,), example: pdf,doc,docx
@@ -752,7 +752,7 @@ class HTML {
 
     $addon .= '</div><div class="' . self::prefix . 'title-desc"><strong class="' . self::prefix . 'title">' . $data['title'] . '</strong>' .
               ( ! empty( $data['desc'] ) ? '<p class="' . self::prefix . 'desc">' . $data['desc'] . '</p>' : '' ) .
-              ( ! empty( $data['more_info_link'] ) ? '<a href="' . $data['more_info_link'] . '" target="_blank" class="' . self::prefix . 'more-info-link"><i class="wppd-icon-chevron-right"></i><span>' . __( 'More info',
+              ( ! empty( $data['more_info_link'] ) ? '<a href="' . $data['more_info_link'] . '" target="_blank" class="' . self::prefix . 'more-info-link"><i class="wppd-icon-chevron-right"></i><span>' . esc_html__( 'More info',
                   'wp-parsidate' ) . '</span></a>' : '' ) .
               '</div><div class="' . self::prefix . 'action-wrap">';
 
@@ -922,7 +922,7 @@ class HTML {
 
     $field .= self::wpcolorpicker( array(
       'id'            => $data['id'] . '_color_picker',
-      'title'         => __( 'Color', 'wp-parsidate' ),
+      'title'         => esc_html__( 'Color', 'wp-parsidate' ),
       'type'          => 'wpcolorpicker',
       'class'         => 'wppd-gradient-select-color',
       'setting_value' => $firstColor,
@@ -930,33 +930,33 @@ class HTML {
 
     $field .= self::radioinline( array(
       'id'            => $data['id'] . '_type',
-      'title'         => __( 'Type', 'wp-parsidate' ),
+      'title'         => esc_html__( 'Type', 'wp-parsidate' ),
       'type'          => 'radioinline',
       'setting_value' => $function,
       'not_equal'     => true,
       'class'         => 'wppd-gradient-color-type',
       'options'       => array(
-        'linear-gradient' => __( 'Linear', 'wp-parsidate' ),
-        'radial-gradient' => __( 'Radial', 'wp-parsidate' ),
+        'linear-gradient' => esc_html__( 'Linear', 'wp-parsidate' ),
+        'radial-gradient' => esc_html__( 'Radial', 'wp-parsidate' ),
       )
     ) );
 
     $field .= self::radioinline( array(
       'id'            => $data['id'] . '_shape',
-      'title'         => __( 'Shape', 'wp-parsidate' ),
+      'title'         => esc_html__( 'Shape', 'wp-parsidate' ),
       'type'          => 'radioinline',
       'setting_value' => $shape,
       'class'         => 'wppd-gradient-color-shape wppd-gradient-color-variant',
       'wrap_style'    => $function !== 'radial-gradient' ? 'display:none' : '',
       'options'       => array(
-        'ellipse' => __( 'Ellipse', 'wp-parsidate' ),
-        'circle'  => __( 'Circle', 'wp-parsidate' ),
+        'ellipse' => esc_html__( 'Ellipse', 'wp-parsidate' ),
+        'circle'  => esc_html__( 'Circle', 'wp-parsidate' ),
       )
     ) );
 
     $field .= self::range( array(
       'id'            => $data['id'] . '_range',
-      'title'         => __( 'Rotation °', 'wp-parsidate' ),
+      'title'         => esc_html__( 'Rotation °', 'wp-parsidate' ),
       'type'          => 'range',
       'setting_value' => $rotate,
       'display_value' => true,
@@ -1066,7 +1066,7 @@ class HTML {
         $requiredText = $data['required_text'];
       }
 
-      $data['required_text'] = ' <abbr class="required" title="' . __( 'Required',
+      $data['required_text'] = ' <abbr class="required" title="' . esc_html__( 'Required',
           'wp-parsidate' ) . '">' . $requiredText . '</abbr>';
     }
 

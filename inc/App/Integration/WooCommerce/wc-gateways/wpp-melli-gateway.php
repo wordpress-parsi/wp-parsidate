@@ -26,9 +26,9 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
 
         public function __construct() {
           $this->id                 = 'melli';
-          $this->gateway_name       = __( 'Melli Bank', 'wp-parsidate' );
+          $this->gateway_name       = esc_html__( 'Melli Bank', 'wp-parsidate' );
           $this->method_title       = $this->gateway_name;
-          $this->method_description = $this->gateway_name . ' ' . __( 'payment gateway (By WP-Parsidate)',
+          $this->method_description = $this->gateway_name . ' ' . esc_html__( 'payment gateway (By WP-Parsidate)',
               'wp-parsidate' );
           $this->has_fields         = true;
           $this->icon               = apply_filters( $this->id . '_logo',
@@ -59,54 +59,54 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         public function init_form_fields() {
           $this->form_fields = apply_filters( 'wpp_wc_' . $this->id . '_gateway_config', array(
               'enabled'        => array(
-                'title'       => __( 'Enabled/Disabled', 'wp-parsidate' ),
+                'title'       => esc_html__( 'Enabled/Disabled', 'wp-parsidate' ),
                 'type'        => 'checkbox',
                 /* translators: %s: Bank name */
-                'label'       => sprintf( __( 'Activate or deactivate %s gateway', 'wp-parsidate' ),
+                'label'       => sprintf( esc_html__( 'Activate or deactivate %s gateway', 'wp-parsidate' ),
                   $this->gateway_name ),
                 'default'     => 'no',
                 'description' => ( $this->is_enable_open_ssl() === false ? '<span style="color: red;">توجه: جهت فعال سازی درگاه می بایست ماژول OpenSSL در تنظیمات PHP هاست شما فعال باشد</span>' : '' ),
               ),
               'terminal_id'    => array(
-                'title'    => __( 'Terminal No.', 'wp-parsidate' ),
+                'title'    => esc_html__( 'Terminal No.', 'wp-parsidate' ),
                 'type'     => 'text',
                 'default'  => '',
                 'desc_tip' => false
               ),
               'merchant_id'    => array(
-                'title'    => __( 'Merchant ID', 'wp-parsidate' ),
+                'title'    => esc_html__( 'Merchant ID', 'wp-parsidate' ),
                 'type'     => 'text',
                 'default'  => '',
                 'desc_tip' => false
               ),
               'key'            => array(
-                'title'    => __( 'Gateway Key', 'wp-parsidate' ),
+                'title'    => esc_html__( 'Gateway Key', 'wp-parsidate' ),
                 'type'     => 'text',
                 'default'  => '',
                 'desc_tip' => false
               ),
               'title'          => array(
-                'title'       => __( 'Gateway title', 'wp-parsidate' ),
+                'title'       => esc_html__( 'Gateway title', 'wp-parsidate' ),
                 'type'        => 'text',
-                'description' => __( 'This name is displayed to the customer during the purchase process',
+                'description' => esc_html__( 'This name is displayed to the customer during the purchase process',
                   'wp-parsidate' ),
                 'default'     => $this->gateway_name
               ),
               'description'    => array(
-                'title'       => __( 'Gateway description', 'wp-parsidate' ),
+                'title'       => esc_html__( 'Gateway description', 'wp-parsidate' ),
                 'type'        => 'textarea',
-                'description' => __( 'The description that will be displayed during the purchase process for the gateway',
+                'description' => esc_html__( 'The description that will be displayed during the purchase process for the gateway',
                   'wp-parsidate' ),
                 /* translators: %s: Bank name */
-                'default'     => sprintf( __( "Secure payment by all Shetab's cards through %s",
+                'default'     => sprintf( esc_html__( "Secure payment by all Shetab's cards through %s",
                   'wp-parsidate' ), $this->gateway_name )
               ),
               'failed_massage' => array(
-                'title'       => __( 'Payment failed message', 'wp-parsidate' ),
+                'title'       => esc_html__( 'Payment failed message', 'wp-parsidate' ),
                 'type'        => 'textarea',
-                'description' => __( 'Enter the text of the message you want to display to the user after an unsuccessful payment.',
+                'description' => esc_html__( 'Enter the text of the message you want to display to the user after an unsuccessful payment.',
                   'wp-parsidate' ),
-                'default'     => __( 'Your payment has failed. Please try again or contact us in case of problems.',
+                'default'     => esc_html__( 'Your payment has failed. Please try again or contact us in case of problems.',
                   'wp-parsidate' )
               )
             )
@@ -114,7 +114,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         }
 
         public function get_icon() {
-          $icon = $this->icon ? '<img src="' . esc_url( WC_HTTPS::force_https_url( $this->icon ) ) . '" alt="' . esc_attr( $this->get_title() ) . '" />' : '';
+          $icon = $this->icon ? '<img src="' . esc_url_raw( WC_HTTPS::force_https_url( $this->icon ) ) . '" alt="' . esc_attr( $this->get_title() ) . '" />' : '';
 
           return apply_filters( 'woocommerce_gateway_icon', $icon, $this->id );
         }
@@ -237,19 +237,17 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         }
 
         public function handle_gateway_response() {
-          $action   = $_GET['action'] ?? '';
-          $order_id = isset( $_GET['order_id'] ) ? intval( $_GET['order_id'] ) : 0;
+          $action   = sanitize_text_field( wp_unslash( $_GET['action'] ?? '' ) );
+          $order_id = (int) sanitize_text_field( wp_unslash( $_GET['order_id'] ?? 0 ) );
           $order    = wc_get_order( $order_id );
 
-          switch ( $action ) {
-            case 'redirect':
-              $this->redirect_to_gateway( $order );
-              break;
+          if ( $action === 'redirect' ) {
+            $this->redirect_to_gateway( $order );
 
-            default:
-              $this->verify_payment( $order );
-              break;
+            return;
           }
+
+          $this->verify_payment( $order );
         }
 
         public function redirect_to_gateway( $order ) {
@@ -257,9 +255,9 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         }
 
         public function verify_payment( $order ) {
-          $OrderId = $_POST["OrderId"] ?? '';
-          $Token   = $_POST["token"] ?? '';
-          $ResCode = $_POST["ResCode"] ?? '';
+          $OrderId = sanitize_text_field( wp_unslash( $_POST["OrderId"] ?? '' ) );
+          $Token   = sanitize_text_field( wp_unslash( $_POST["token"] ?? '' ) );
+          $ResCode = sanitize_text_field( wp_unslash( $_POST["ResCode"] ?? '' ) );
 
           if ( $ResCode == 0 ) {
 
@@ -289,7 +287,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
               ] );
 
               // Redirect
-              wp_redirect( $this->get_return_url( $order ) );
+              wp_safe_redirect( esc_url_raw( $this->get_return_url( $order ) ) );
               exit;
             }
           }
@@ -300,7 +298,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         public function get_amount( $order ) {
           $currency    = $order->get_currency();
           $order_total = $order->get_total();
-          $amount      = intval( $order_total );
+          $amount      = (int) $order_total;
           $currency    = strtolower( $currency );
 
           if ( in_array( $currency, array(
@@ -313,11 +311,11 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
             'تومان',
             'تومان ایران'
           ) ) ) {
-            $amount = $amount * 10;
+            $amount *= 10;
           } elseif ( 'irht' === $currency ) {
-            $amount = $amount * 1000 * 10;
+            $amount *= 1000 * 10;
           } elseif ( 'irhr' === $currency ) {
-            $amount = $amount * 1000;
+            $amount *= 1000;
           }
 
           return $amount;
@@ -326,10 +324,9 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         public function set_failed_payment( $order ) {
           wc_add_notice( $this->failed_massage, 'error' );
           do_action( 'wpp_wc_' . $this->id . '_gateway_failed_payment', $order );
-          wp_redirect( wc_get_checkout_url() );
+          wp_safe_redirect( esc_url_raw( wc_get_checkout_url() ) );
           exit;
         }
-
       }
     }
   }

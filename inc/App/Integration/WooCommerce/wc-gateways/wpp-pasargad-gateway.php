@@ -29,9 +29,9 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
 
         public function __construct() {
           $this->id                 = 'pasargad';
-          $this->gateway_name       = __( 'Pasargad Bank', 'wp-parsidate' );
+          $this->gateway_name       = esc_html__( 'Pasargad Bank', 'wp-parsidate' );
           $this->method_title       = $this->gateway_name;
-          $this->method_description = $this->gateway_name . ' ' . __( 'payment gateway (By WP-Parsidate)',
+          $this->method_description = $this->gateway_name . ' ' . esc_html__( 'payment gateway (By WP-Parsidate)',
               'wp-parsidate' );
           $this->has_fields         = false;
           $this->icon               = apply_filters( $this->id . '_logo',
@@ -58,63 +58,63 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
         public function init_form_fields() {
           $this->form_fields = apply_filters( 'wpp_wc_' . $this->id . '_gateway_config', array(
               'enabled'              => array(
-                'title'   => __( 'Enabled/Disabled', 'wp-parsidate' ),
+                'title'   => esc_html__( 'Enabled/Disabled', 'wp-parsidate' ),
                 'type'    => 'checkbox',
                 /* translators: %s: Bank name */
-                'label'   => sprintf( __( 'Activate or deactivate %s gateway', 'wp-parsidate' ),
+                'label'   => sprintf( esc_html__( 'Activate or deactivate %s gateway', 'wp-parsidate' ),
                   $this->gateway_name ),
                 'default' => 'no'
               ),
               'pasargad_terminal_id' => array(
-                'title'    => __( 'Terminal No.', 'wp-parsidate' ),
+                'title'    => esc_html__( 'Terminal No.', 'wp-parsidate' ),
                 'type'     => 'text',
                 'required' => true,
                 'desc_tip' => true,
               ),
               'pasargad_merchant_id' => array(
-                'title'    => __( 'Store No.', 'wp-parsidate' ),
+                'title'    => esc_html__( 'Store No.', 'wp-parsidate' ),
                 'type'     => 'text',
                 'required' => true,
                 'desc_tip' => true,
               ),
               'title'                => array(
-                'title'       => __( 'Gateway title', 'wp-parsidate' ),
+                'title'       => esc_html__( 'Gateway title', 'wp-parsidate' ),
                 'type'        => 'text',
-                'description' => __( 'This name is displayed to the customer during the purchase process',
+                'description' => esc_html__( 'This name is displayed to the customer during the purchase process',
                   'wp-parsidate' ),
                 'default'     => $this->gateway_name
               ),
               'description'          => array(
-                'title'       => __( 'Gateway description', 'wp-parsidate' ),
+                'title'       => esc_html__( 'Gateway description', 'wp-parsidate' ),
                 'type'        => 'textarea',
-                'description' => __( 'The description that will be displayed during the purchase process for the gateway',
+                'description' => esc_html__( 'The description that will be displayed during the purchase process for the gateway',
                   'wp-parsidate' ),
                 /* translators: %s: Bank name */
-                'default'     => sprintf( __( "Secure payment by all Shatab's cards through %s",
+                'default'     => sprintf( esc_html__( "Secure payment by all Shatab's cards through %s",
                   'wp-parsidate' ), $this->gateway_name )
               ),
               'success_massage'      => array(
-                'title'       => __( 'Successful payment message', 'wp-parsidate' ),
+                'title'       => esc_html__( 'Successful payment message', 'wp-parsidate' ),
                 'type'        => 'textarea',
-                'description' => __( 'Enter the text of the message you want to display to the user after successful payment.',
+                'description' => esc_html__( 'Enter the text of the message you want to display to the user after successful payment.',
                   'wp-parsidate' ),
-                'default'     => __( 'Thank you for your purchase. Your order has been successfully placed.',
+                'default'     => esc_html__( 'Thank you for your purchase. Your order has been successfully placed.',
                   'wp-parsidate' )
               ),
               'failed_massage'       => array(
-                'title'       => __( 'Payment failed message', 'wp-parsidate' ),
+                'title'       => esc_html__( 'Payment failed message', 'wp-parsidate' ),
                 'type'        => 'textarea',
-                'description' => __( 'Enter the text of the message you want to display to the user after an unsuccessful payment.',
+                'description' => esc_html__( 'Enter the text of the message you want to display to the user after an unsuccessful payment.',
                   'wp-parsidate' ),
-                'default'     => __( 'Your payment has failed. Please try again or contact us in case of problems.',
+                'default'     => esc_html__( 'Your payment has failed. Please try again or contact us in case of problems.',
                   'wp-parsidate' )
               ),
               'cancelled_massage'    => array(
-                'title'       => __( 'Payment cancellation message', 'wp-parsidate' ),
+                'title'       => esc_html__( 'Payment cancellation message', 'wp-parsidate' ),
                 'type'        => 'textarea',
-                'description' => __( 'Enter the text of the message you want to display after the user cancels the payment. This message will be displayed after returning from the bank.',
+                'description' => esc_html__( 'Enter the text of the message you want to display after the user cancels the payment. This message will be displayed after returning from the bank.',
                   'wp-parsidate' ),
-                'default'     => __( 'The payment remained incomplete due to your cancellation.',
+                'default'     => esc_html__( 'The payment remained incomplete due to your cancellation.',
                   'wp-parsidate' )
               )
             )
@@ -435,8 +435,8 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
           $desc_style       = 'style="text-align:center;font-size:12px;margin:15px 0 20px;line-height:25px"';
           $back_to_checkout = sprintf(
             '<a href="%s" style="text-decoration:none">%s</a><br/>',
-            esc_url( wc_get_checkout_url() ),
-            __( 'Back to checkout', 'wp-parsidate' )
+            esc_url_raw( wc_get_checkout_url() ),
+            esc_html__( 'Back to checkout', 'wp-parsidate' )
           );
 
           if ( 'retry' === $pay_status ) {
@@ -555,13 +555,14 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
             $order->add_order_note( $order_note );
           }
 
+          // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
           wp_die( $page_html, $page_title );
         }
 
         public static function redirect_to_bank( $url = '' ) {
-          if ( $url != '' ) {
+          if ( ! empty( $url ) ) {
             if ( headers_sent() ) {
-              echo '<script type="text/javascript">window.location.assign("' . $url . '")</script>';
+              echo '<script type="text/javascript">window.location.assign("' . esc_url_raw( $url ) . '")</script>';
             } else {
               header( "Location: $url" );
             }
@@ -595,17 +596,17 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
               'تومان',
               'تومان ایران'
             ) ) ) {
-              $amount = $amount * 10;
+              $amount *= 10;
             } elseif ( 'irht' === $currency ) {
-              $amount = $amount * 1000 * 10;
+              $amount *= 1000 * 10;
             } elseif ( 'irhr' === $currency ) {
-              $amount = $amount * 1000;
+              $amount *= 1000;
             }
 
             $terminal_id  = $this->pasargad_terminal_id;
             $merchant_id  = $this->pasargad_merchant_id;
             $callback_url = $this->redirect_uri . "?order_id=" . $order_id;
-            $order_id     = $order_id . mt_rand( 10, 100 );
+            $order_id     .= wp_rand( 10, 100 );
             $request      = self::send_pay_request( $order_id, $terminal_id, $merchant_id, $amount,
               $callback_url );
 
@@ -613,10 +614,9 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
               self::redirect_to_bank( 'https://pep.shaparak.ir/payment.aspx?n=' . $request->Token );
 
               exit;
-            } else {
-
-              self::display_error( '', '', $order_id, 0 );
             }
+
+            self::display_error( '', '', $order_id, 0 );
           } else {
             self::display_error( 'error_creating_order', '', $order_id, 0 );
           }
@@ -625,10 +625,10 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
         }
 
         public function callback() {
-          $order_id           = $_GET['order_id'] ?? '';
-          $transaction_ref_id = $_REQUEST['tref'] ?? '';
-          $invoice_number     = $_REQUEST['iN'] ?? '';
-          $invoice_date       = $_REQUEST['iD'] ?? '';
+          $order_id           = sanitize_text_field( wp_unslash( $_GET['order_id'] ?? '' ) );
+          $transaction_ref_id = sanitize_text_field( wp_unslash( $_REQUEST['tref'] ?? '' ) );
+          $invoice_number     = sanitize_text_field( wp_unslash( $_REQUEST['iN'] ?? '' ) );
+          $invoice_date       = sanitize_text_field( wp_unslash( $_REQUEST['iD'] ?? '' ) );
           $terminal_id        = $this->pasargad_terminal_id;
           $merchant_id        = $this->pasargad_merchant_id;
 

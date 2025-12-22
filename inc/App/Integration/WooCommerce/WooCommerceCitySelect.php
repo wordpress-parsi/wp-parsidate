@@ -94,8 +94,9 @@ class WooCommerceCitySelect {
     // Required markup
     if ( $args['required'] ) {
       $args['class'][] = 'validate-required';
-      $required        = ' <abbr class="required" title="' . esc_attr__( 'required',
-          'woocommerce' ) . '">*</abbr>';
+      $required        = ' <abbr class="required" title="' .
+                         esc_attr__( 'required', 'wp-parsidate' ) .
+                         '">*</abbr>';
     } else {
       $required = '';
     }
@@ -138,7 +139,7 @@ class WooCommerceCitySelect {
       $field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="city_select ' . esc_attr( implode( ' ',
           $args['input_class'] ) ) . '" ' . implode( ' ',
           $custom_attributes ) . ' placeholder="' . esc_attr( $args['placeholder'] ) . '">
-					<option value="">' . __( 'Select an option&hellip;', 'woocommerce' ) . '</option>';
+					<option value="">' . esc_html__( 'Select an option&hellip;', 'wp-parsidate' ) . '</option>';
 
       if ( $current_sc && $cities[ $current_sc ] ) {
         $this->dropdown_cities = $cities[ $current_sc ];
@@ -184,7 +185,7 @@ class WooCommerceCitySelect {
         'wc_city_select_params',
         array(
           'cities'                => $cities,
-          'i18n_select_city_text' => esc_attr__( 'Select an option&hellip;', 'woocommerce' )
+          'i18n_select_city_text' => esc_attr__( 'Select an option&hellip;', 'wp-parsidate' )
         )
       );
     }

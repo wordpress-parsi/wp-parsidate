@@ -52,7 +52,8 @@ class AppAssets {
         'wp-data',
         'wp-date'
       ),
-      $pluginVersion
+      $pluginVersion,
+      [ 'in_footer' => true ]
     );
 
     wp_enqueue_style(
@@ -119,7 +120,7 @@ class AppAssets {
     }
 
     wp_enqueue_script( WP_PARSI_KEY_SLUG . '-admin', Assets::url( 'js-admin/admin' . $debugName . '.js' ), false,
-      $pluginVersion );
+      $pluginVersion, [ 'in_footer' => true ] );
     wp_localize_script(
       WP_PARSI_KEY_SLUG . '-admin',
       'WPP_I18N',

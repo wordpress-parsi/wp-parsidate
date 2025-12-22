@@ -18,7 +18,7 @@ class AdminConvert {
 
   public function addMenu( $menus ) {
     $menus[ self::tab ] = array(
-      'title' => __( 'Convert', 'wp-parsidate' ),
+      'title' => esc_html__( 'Convert', 'wp-parsidate' ),
       'icon'  => self::icon
     );
 
@@ -34,8 +34,8 @@ class AdminConvert {
   public function settings(): array {
     if ( self::$settings === null ) {
       self::$settings = array(
-        'title'    => __( 'Convert settings', 'wp-parsidate' ),
-        'desc'     => __( 'Convert Persian letters and numbers', 'wp-parsidate' ),
+        'title'    => esc_html__( 'Convert settings', 'wp-parsidate' ),
+        'desc'     => esc_html__( 'Convert Persian letters and numbers', 'wp-parsidate' ),
         'settings' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_options', [] )
       );
     }

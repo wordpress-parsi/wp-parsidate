@@ -114,7 +114,7 @@ class WordPress {
       return true;
     }
 
-    $path = $_SERVER['REQUEST_URI'];
+    $path = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) );
     $ext  = pathinfo( $path, PATHINFO_EXTENSION );
 
     return in_array( $ext, array( 'xml', 'gz', 'xsl' ) );
@@ -126,7 +126,9 @@ class WordPress {
    * @return boolean
    */
   public static function isSitemap(): bool {
-    return ( isset( $_SERVER['REQUEST_URI'] ) and strpos( $_SERVER['REQUEST_URI'], 'wp-sitemap' ) !== false );
+    $path = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) );
+
+    return ! empty( $path ) and strpos( $path, 'wp-sitemap' ) !== false;
   }
 
   /**
