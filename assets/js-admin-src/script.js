@@ -113,6 +113,8 @@ jQuery(document).ready(function ($) {
         settingsSubmitActive = false;
 
         if (settingsFooter) settingsFooter.classList.add('wppd-submit-inactive');
+
+        window.removeEventListener("beforeunload", wppdSettingsFormChangeAlert);
       });
     }
   }
