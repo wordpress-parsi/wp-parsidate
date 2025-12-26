@@ -88,6 +88,13 @@ jQuery(document).ready(function ($) {
     settingsSubmitActive = true;
 
     if (settingsFooter) settingsFooter.classList.remove('wppd-submit-inactive');
+
+    window.addEventListener("beforeunload", wppdSettingsFormChangeAlert);
+  }
+
+  const wppdSettingsFormChangeAlert = (event) => {
+    event.preventDefault();
+    event.returnValue = true;
   }
 
   if (settingsForm) {
@@ -95,6 +102,10 @@ jQuery(document).ready(function ($) {
 
     settingsForm.addEventListener('change', function () {
       wppdActiveSettingsForm();
+    });
+
+    settingsForm.addEventListener('submit', function () {
+      window.removeEventListener("beforeunload", wppdSettingsFormChangeAlert);
     });
 
     if (settingsResetButton) {
