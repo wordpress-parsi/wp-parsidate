@@ -14,7 +14,40 @@ class FixPermalink {
       add_filter( 'posts_where', [ $this, 'postsWhere' ], 10, 2 );
       add_action( 'pre_get_posts', [ $this, 'changeQuery' ] );
       add_filter( 'post_link', [ $this, 'getPostLink' ], 10, 3 );
+      add_filter( 'day_link', [ $this, 'getDayLink' ], 10, 4 );
     }
+  }
+
+  /**
+   * Filters the day archive permalink.
+   *
+   * @param  string  $link  Permalink for the day archive.
+   * @param  int  $year  Year for the archive.
+   * @param  int  $month  Month for the archive.
+   * @param  int  $day  The day for the archive.
+   *
+   * @return string Archive link
+   */
+  public function getDayLink( $link, $year, $month, $day ): string {
+    global $wp_rewrite;
+
+    $jDate = parsidate( "Y-m-d", "$year-$month-$day", false );
+
+    [ $jYear, $jMonth, $jDay ] = explode( '-', $jDate );
+
+    $dayLink = $wp_rewrite->get_day_permastruct();
+    if ( ! empty( $dayLink ) ) {
+      $dayLink = str_replace(
+        array( '%year%', '%monthnum%', '%day%' ),
+        array( $jYear, zeroise( (int) $jMonth, 2 ), zeroise( (int) $jDay, 2 ) ),
+        $dayLink
+      );
+      $dayLink = home_url( user_trailingslashit( $dayLink, 'day' ) );
+    } else {
+      $dayLink = home_url( '?m=' . $jYear . zeroise( $jMonth, 2 ) . zeroise( $jDay, 2 ) );
+    }
+
+    return $dayLink;
   }
 
   /**
