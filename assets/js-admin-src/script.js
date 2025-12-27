@@ -133,8 +133,6 @@ jQuery(document).ready(function ($) {
             wppdPickerContainer.append('<button type="button" class="wppd-remove-color"><i class="wppd-icon-cross"></i></button>');
           }
         });
-
-        wppdColorPaletteInit();
       }, 500);
     }
   }
