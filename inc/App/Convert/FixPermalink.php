@@ -32,7 +32,6 @@ class FixPermalink {
     global $wp_rewrite;
 
     $jDate = parsidate( "Y-m-d", "$year-$month-$day", false );
-
     [ $jYear, $jMonth, $jDay ] = explode( '-', $jDate );
 
     $dayLink = $wp_rewrite->get_day_permastruct();
