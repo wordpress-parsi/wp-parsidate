@@ -333,13 +333,13 @@ class DashboardWidget {
         'image_url' => WP_PARSI_URL . 'assets/images/sponsors/mediana.jpg',
         'image_alt' => esc_html__( 'Mediana', 'wp-parsidate' ),
         'link'      => 'https://app.mediana.ir/register?utm_source=parsi_date&utm_medium=banner&utm_campaign=plugin_referral',
-        'end_date'  => '2025-11-21',
+        'end_date'  => '2026-11-21',
       ),
       array(
         'image_url' => WP_PARSI_URL . 'assets/images/sponsors/seven.jpg',
         'image_alt' => esc_html__( 'Seven', 'wp-parsidate' ),
         'link'      => 'https://7ho.st/hosting/woocommerce?utm_source=wp-parsidate&utm_medium=banner&utm_campaign=sponsorship-parsidate',
-        'end_date'  => '2025-11-21',
+        'end_date'  => '2026-11-21',
       ),
     );
     $today        = date( 'Y-m-d' );
