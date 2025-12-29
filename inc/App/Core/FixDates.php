@@ -8,12 +8,12 @@ use WPParsidate\Settings\Settings;
 
 class FixDates {
   public function __construct() {
-    // @TODO: local non-farsi is a problem
+    // @TODO: locale non-farsi is a problem
     if ( get_locale() === 'fa_IR' && Settings::get( 'persian_date' ) ) {
       add_filter( 'the_time', [ $this, 'fixPostTime' ], 10, 2 );
-      add_filter( 'get_the_time', [ $this, 'fixPostTime' ], 10, 2 );
+      add_filter( 'get_the_time', [ $this, 'fixPostTime' ], 10, 3 );
 
-      add_filter( 'the_date', [ $this, 'fixPostDate' ], 10, 3 );
+      add_filter( 'the_date', [ $this, 'fixPostDate' ], 10, 2 );
       add_filter( 'get_the_date', [ $this, 'fixPostDate' ], 100, 3 );
 
       add_filter( 'get_the_modified_date', [ $this, 'fixModifiedDate' ], 10, 3 );
