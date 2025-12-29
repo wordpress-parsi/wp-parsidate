@@ -37,6 +37,7 @@ body {
   background: transparent var(--wppd-btn-close-bg) center/1em auto no-repeat;
   border: 0;
   border-radius: .375rem;
+  corner-shape: squircle;
   opacity: var(--wppd-btn-close-opacity);
 
   &:hover {

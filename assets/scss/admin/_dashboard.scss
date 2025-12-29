@@ -11,6 +11,7 @@
     flex-direction: column;
     gap: 15px;
     border-radius: 10px;
+    corner-shape: squircle;
     margin-bottom: 30px;
 
     p {
@@ -35,6 +36,7 @@
       // #F6F5F9
       background-image: linear-gradient(to right top, #ffffff, #fdfdfe, #fcfcfd, #fafafc, #f8f9fb, #f8f9fb, #f8f9fb, #f8f9fb, #fafafc, #fcfcfd, #fdfdfe, #ffffff);
       border-radius: 10px;
+      corner-shape: squircle;
       overflow: hidden;
       padding: 15px;
       color: variables.$text !important;
@@ -65,6 +67,7 @@
     padding: 15px;
     border: 1px solid variables.$border_color;
     border-radius: 10px;
+    corner-shape: squircle;
     background-color: variables.$background_light;
 
     .wppd-dashboard-feed-head {

@@ -11,6 +11,7 @@
     display: flex;
     flex-direction: column;
     border-radius: var(--wppd-element-border-radius, 0);
+    corner-shape: squircle;
     overflow: hidden;
     transition: all 0.3s ease;
 

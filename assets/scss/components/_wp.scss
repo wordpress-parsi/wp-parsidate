@@ -31,6 +31,7 @@
       border-color: variables.$border_color;
       color: variables.$text;
       border-radius: 10px;
+      corner-shape: squircle;
       overflow: hidden;
       box-shadow: none;
       margin: 0;
@@ -49,6 +50,7 @@
 
     .iris-picker {
       border-radius: 10px;
+      corner-shape: squircle;
       border-color: variables.$border_color;
       background-color: variables.$background_side;
 

@@ -23,6 +23,7 @@
         background-color: variables.$background_side;
         padding: 20px;
         border-radius: 10px;
+        corner-shape: squircle;
         border: 1px solid variables.$border_color;
         display: flex;
         flex-direction: column;
@@ -52,6 +53,7 @@
       background-color: variables.$background_light;
       padding: 15px;
       border-radius: 10px;
+      corner-shape: squircle;
       gap: 10px;
 
       div {
@@ -78,6 +80,7 @@
       .team-member {
         border: 1px solid variables.$border_color;
         border-radius: 10px;
+        corner-shape: squircle;
         overflow: hidden;
 
         .team-member-image {
@@ -115,6 +118,7 @@
       background-color: variables.$background_light;
       padding: 15px;
       border-radius: 10px;
+      corner-shape: squircle;
 
       .github-contributors {
         display: grid;

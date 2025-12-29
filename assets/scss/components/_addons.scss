@@ -24,6 +24,7 @@
       justify-content: space-between;
       border: 1px solid variables.$border_color;
       border-radius: 10px;
+      corner-shape: squircle;
       overflow: hidden;
       // max-width: 600px;
 
@@ -59,6 +60,7 @@
           background-color: variables.$border_color;
           color: variables.$gray;
           border-radius: 5px;
+          corner-shape: squircle;
           font-size: 12px;
           line-height: 1;
           cursor: default;
@@ -132,6 +134,7 @@
           text-align: center;
           background-color: white;
           border-radius: 10px;
+          corner-shape: squircle;
           padding: 10px;
           color: variables.$text;
         }

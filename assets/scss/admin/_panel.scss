@@ -77,6 +77,7 @@ body.toplevel_page_#{variables.$plugin_key} {
       background: white;
       border: 1px solid variables.$border_color;
       border-radius: 20px;
+      corner-shape: squircle;
       display: grid;
       grid-template-columns: 250px auto;
       overflow: hidden;
@@ -164,6 +165,7 @@ body.toplevel_page_#{variables.$plugin_key} {
           gap: 5px;
           padding: 10px 12px;
           border-radius: 10px;
+          corner-shape: squircle;
           color: variables.$gray;
           border: 1px solid transparent;
 
@@ -323,6 +325,7 @@ body.toplevel_page_#{variables.$plugin_key} {
           display: inline-block;
           padding: 5px 10px;
           border-radius: 5px;
+          corner-shape: squircle;
           backdrop-filter: sepia(90%);
         }
       }

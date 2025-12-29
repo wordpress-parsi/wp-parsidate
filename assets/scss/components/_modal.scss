@@ -7,6 +7,7 @@
   --wppd-modal-border-color: #D3D3D3; // variables.$gray_light_two
   --wppd-modal-bg-color: var(--wppd-bg-color, #fff); // variables.$white
   --wppd-modal-border-radius: var(--wppd-element-border-radius, 0);
+  corner-shape: squircle;
   --wppd-modal-font-size: 15px;
 
   display: none;
@@ -57,6 +58,7 @@
     background-clip: padding-box;
     border: var(--wppd-modal-border-width) solid var(--wppd-modal-border-color);
     border-radius: var(--wppd-modal-border-radius);
+    corner-shape: squircle;
     overflow: hidden;
     outline: 0;
   }

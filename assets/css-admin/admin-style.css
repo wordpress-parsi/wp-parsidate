@@ -32,6 +32,7 @@ body *[class^=wppd-] {
   background: transparent var(--wppd-btn-close-bg) center/1em auto no-repeat;
   border: 0;
   border-radius: 0.375rem;
+  corner-shape: squircle;
   opacity: var(--wppd-btn-close-opacity);
 }
 .wppd-button-close:hover {
@@ -66,6 +67,7 @@ body *[class^=wppd-] {
   color: #2B2B2B;
   background-color: #f3f3f3;
   border-radius: 10px;
+  corner-shape: squircle;
   padding: 10px;
   display: flex;
   flex-direction: row;
@@ -228,6 +230,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   border: 1px solid transparent;
   padding: 8px 14px;
   border-radius: 10px;
+  corner-shape: squircle;
   font-weight: 500;
   cursor: pointer;
   -webkit-transition: 0.2s;
@@ -280,6 +283,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   border: 1px solid rgb(218.7, 218.7, 218.7);
   padding: 8px 12px;
   border-radius: 10px;
+  corner-shape: squircle;
   font-weight: 400;
   -webkit-transition: 0.2s;
   transition: 0.2s;
@@ -331,6 +335,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   border: 1px solid rgb(218.7, 218.7, 218.7);
   padding: 12px;
   border-radius: 10px;
+  corner-shape: squircle;
   font-weight: 400;
   -webkit-transition: 0.2s;
   transition: 0.2s;
@@ -435,6 +440,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   border: 2px solid #f3f3f3;
   background-color: white;
   border-radius: 10px;
+  corner-shape: squircle;
   height: 3.5rem;
   width: 3.5rem;
   padding: 7px 20px;
@@ -547,6 +553,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   background-color: #f0f7fd;
   padding: 4px 8px;
   border-radius: 4px;
+  corner-shape: squircle;
   display: inline-block;
   text-align: center;
   cursor: default;
@@ -569,6 +576,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
 .wp-parsidate-wrap input[type=range]::-webkit-slider-runnable-track {
   background-color: #f0f7fd;
   border-radius: 0.5rem;
+  corner-shape: squircle;
   height: 10px;
 }
 .wp-parsidate-wrap input[type=range] {
@@ -583,6 +591,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   height: 15px;
   width: 10px;
   border-radius: 10px;
+  corner-shape: squircle;
 }
 .wp-parsidate-wrap input[type=range]:focus::-webkit-slider-thumb {
   border: 1px solid rgb(218.7, 218.7, 218.7);
@@ -596,6 +605,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
 .wp-parsidate-wrap input[type=range]::-moz-range-track {
   background-color: #f0f7fd;
   border-radius: 0.5rem;
+  corner-shape: squircle;
   height: 10px;
 }
 .wp-parsidate-wrap input[type=range] {
@@ -604,6 +614,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
 .wp-parsidate-wrap input[type=range]::-moz-range-thumb {
   border: none; /*Removes extra border that FF applies*/
   border-radius: 10px; /*Removes default border-radius that FF applies*/
+  corner-shape: squircle;
   /*custom styles*/
   background-color: #2577d7;
   height: 15px;
@@ -619,6 +630,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   border: 1px solid rgb(218.7, 218.7, 218.7);
   padding: 8px 12px;
   border-radius: 10px;
+  corner-shape: squircle;
   font-weight: 400;
   width: 100%;
   max-width: 500px;
@@ -671,6 +683,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   justify-content: space-between;
   border: 1px solid #f3f3f3;
   border-radius: 10px;
+  corner-shape: squircle;
   overflow: hidden;
 }
 .wp-parsidate-wrap .wppd-addons-wrap .wppd-addon-wrap.wppd-addon-inactive .wppd-image-wrap img, .wp-parsidate-wrap .wppd-addons-wrap .wppd-addon-wrap.wppd-addon-inactive .wppd-image-wrap svg {
@@ -697,6 +710,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   background-color: #f3f3f3;
   color: #525252;
   border-radius: 5px;
+  corner-shape: squircle;
   font-size: 12px;
   line-height: 1;
   cursor: default;
@@ -759,6 +773,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   text-align: center;
   background-color: white;
   border-radius: 10px;
+  corner-shape: squircle;
   padding: 10px;
   color: #2B2B2B;
 }
@@ -787,6 +802,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   border-color: #f3f3f3;
   color: #2B2B2B;
   border-radius: 10px;
+  corner-shape: squircle;
   overflow: hidden;
   box-shadow: none;
   margin: 0;
@@ -802,6 +818,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
 }
 .wp-parsidate-wrap .wp-picker-container .iris-picker {
   border-radius: 10px;
+  corner-shape: squircle;
   border-color: #f3f3f3;
   background-color: #f5f7f9;
 }
@@ -816,6 +833,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   max-width: 500px;
   padding: 15px;
   border-radius: 10px;
+  corner-shape: squircle;
   counter-reset: repeatable;
 }
 .wp-parsidate-wrap .wppd-repeatable > .wppd-title {
@@ -846,6 +864,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   background-color: white;
   padding: 10px;
   border-radius: 10px;
+  corner-shape: squircle;
   position: relative;
 }
 .wp-parsidate-wrap .wppd-repeatable .wppd-repeatable-fields-wrap .wppd-repeatable-actions {
@@ -907,6 +926,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
 .wp-parsidate-wrap .wppd-color-palette {
   width: 100%;
   border-radius: 10px;
+  corner-shape: squircle;
   border: 1px solid #f3f3f3;
 }
 .wp-parsidate-wrap .wppd-color-palette .wppd-color-palette-items {
@@ -916,6 +936,9 @@ body.rtl.wp-parsidate-notices .wppd-notice {
 }
 .wp-parsidate-wrap .wppd-color-palette .wppd-color-palette-items .wp-picker-container {
   position: relative;
+}
+.wp-parsidate-wrap .wppd-color-palette .wppd-color-palette-items .wp-picker-container .wp-color-result {
+  corner-shape: squircle;
 }
 .wp-parsidate-wrap .wppd-color-palette .wppd-color-palette-items .wp-picker-container:first-child .wp-color-result {
   border-radius: 10px 10px 0 0;
@@ -1082,6 +1105,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
 .wp-parsidate-wrap .wppd-gradient-color-picker-wrap {
   width: 100%;
   border-radius: 10px;
+  corner-shape: squircle;
   background-color: #fafbfc;
   border: 1px solid #f3f3f3;
   padding: 15px;
@@ -1097,12 +1121,14 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   max-width: 100%;
   height: 100px;
   border-radius: 10px;
+  corner-shape: squircle;
   border: 1px solid #f3f3f3;
   position: relative;
 }
 .wp-parsidate-wrap .wppd-gradient-color-picker-wrap .wppd-gradient-color-picker .wppd-gradient-color-point {
   background: white;
   border-radius: 15px;
+  corner-shape: squircle;
   box-shadow: rgba(0, 0, 0, 0.15) 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 10px 10px -5px, inset #fff 0 0 0 6px;
   cursor: move;
   width: 30px;
@@ -1176,6 +1202,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   border: 1px solid #f3f3f3;
   padding: 15px;
   border-radius: 10px;
+  corner-shape: squircle;
   position: relative;
 }
 .wp-parsidate-wrap .wppd-data-table-ui .wppd-dtu-head {
@@ -1382,6 +1409,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
 .wppd-badge {
   padding: 7px 10px;
   border-radius: 5px;
+  corner-shape: squircle;
   color: white;
   line-height: 1;
   font-size: 0.9em;
@@ -1441,6 +1469,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   background-color: #fafbfc;
   border: 1px dashed rgb(218.7, 218.7, 218.7);
   border-radius: 10px;
+  corner-shape: squircle;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1462,6 +1491,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   background-color: #fafbfc;
   border: 1px solid rgb(218.7, 218.7, 218.7);
   border-radius: 10px;
+  corner-shape: squircle;
   padding: 15px;
   min-height: 200px;
 }
@@ -1527,6 +1557,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
 }
 .wppd-media-wrap img {
   border-radius: 5px;
+  corner-shape: squircle;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1593,6 +1624,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap.wp-parsidate-wrapper {
   background: white;
   border: 1px solid #f3f3f3;
   border-radius: 20px;
+  corner-shape: squircle;
   display: grid;
   grid-template-columns: 250px auto;
   overflow: hidden;
@@ -1668,6 +1700,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-sidebar .menu-items .me
   gap: 5px;
   padding: 10px 12px;
   border-radius: 10px;
+  corner-shape: squircle;
   color: #525252;
   border: 1px solid transparent;
 }
@@ -1796,6 +1829,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-header.wppd-has-header-
   display: inline-block;
   padding: 5px 10px;
   border-radius: 5px;
+  corner-shape: squircle;
   backdrop-filter: sepia(90%);
 }
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-header h1 {
@@ -1944,6 +1978,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-dashboard-welcome {
   flex-direction: column;
   gap: 15px;
   border-radius: 10px;
+  corner-shape: squircle;
   margin-bottom: 30px;
 }
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-dashboard-welcome p {
@@ -1965,6 +2000,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-dashboard-links-wrap a 
   background-color: #f5f7f9;
   background-image: linear-gradient(to right top, #ffffff, #fdfdfe, #fcfcfd, #fafafc, #f8f9fb, #f8f9fb, #f8f9fb, #f8f9fb, #fafafc, #fcfcfd, #fdfdfe, #ffffff);
   border-radius: 10px;
+  corner-shape: squircle;
   overflow: hidden;
   padding: 15px;
   color: #2B2B2B !important;
@@ -1987,6 +2023,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-dashboard-feed-news {
   padding: 15px;
   border: 1px solid #f3f3f3;
   border-radius: 10px;
+  corner-shape: squircle;
   background-color: #fafbfc;
 }
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-dashboard-feed-news .wppd-dashboard-feed-head {
@@ -2011,6 +2048,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .plugin-f
   background-color: #f5f7f9;
   padding: 20px;
   border-radius: 10px;
+  corner-shape: squircle;
   border: 1px solid #f3f3f3;
   display: flex;
   flex-direction: column;
@@ -2035,6 +2073,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .social-n
   background-color: #fafbfc;
   padding: 15px;
   border-radius: 10px;
+  corner-shape: squircle;
   gap: 10px;
 }
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .social-networks div {
@@ -2055,6 +2094,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-mem
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member {
   border: 1px solid #f3f3f3;
   border-radius: 10px;
+  corner-shape: squircle;
   overflow: hidden;
 }
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member .team-member-image {
@@ -2085,6 +2125,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-c
   background-color: #fafbfc;
   padding: 15px;
   border-radius: 10px;
+  corner-shape: squircle;
 }
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-contributors-wrapper .github-contributors {
   display: grid;

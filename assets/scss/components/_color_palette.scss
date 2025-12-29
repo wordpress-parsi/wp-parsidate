@@ -5,6 +5,7 @@
   .wppd-color-palette {
     width: 100%;
     border-radius: 10px;
+    corner-shape: squircle;
     border: 1px solid variables.$border_color;
 
     .wppd-color-palette-items {
@@ -14,6 +15,10 @@
 
       .wp-picker-container {
         position: relative;
+
+        .wp-color-result {
+          corner-shape: squircle;
+        }
 
         &:first-child {
           .wp-color-result {
