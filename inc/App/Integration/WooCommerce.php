@@ -4,12 +4,10 @@ namespace WPParsidate\App\Integration;
 
 defined( 'ABSPATH' ) || exit;
 
+use Automattic\WooCommerce\Utilities\FeaturesUtil;
 use WPParsidate\Addons\Addon;
-use WPParsidate\App\Integration\WooCommerce\WcGateways;
-use WPParsidate\App\Integration\WooCommerce\WooCommerceCitySelect;
-use WPParsidate\Helper\Assets;
-use WPParsidate\Helper\Date;
-use WPParsidate\Helper\Number;
+use WPParsidate\App\Integration\WooCommerce\{WcGateways, WooCommerceCitySelect};
+use WPParsidate\Helper\{Assets, Date, Number};
 use WPParsidate\Settings\Settings;
 
 class WooCommerce extends Addon {
@@ -87,8 +85,10 @@ class WooCommerce extends Addon {
       new WooCommerceCitySelect();
     }
 
-    if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-      \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables',
+    if ( class_exists( FeaturesUtil::class ) ) {
+      FeaturesUtil::declare_compatibility( 'custom_order_tables',
+        WP_PARSI_ROOT, true );
+      FeaturesUtil::declare_compatibility( 'product_instance_caching',
         WP_PARSI_ROOT, true );
     }
   }
@@ -168,7 +168,7 @@ class WooCommerce extends Addon {
 
     foreach ( $supported_persian_fields as $field ) {
       if ( isset( $data[ $field ] ) ) {
-        $data[ $field ] = $this->fixPersianCharacters( $data[ $field ] );
+        $data[ $field ] = self::fixPersianCharacters( $data[ $field ] );
       }
     }
 
