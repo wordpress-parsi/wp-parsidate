@@ -290,7 +290,7 @@ class WooCommerce extends Addon {
         }
       }
 
-      wc_enqueue_js( '$("input[name=order_date]").val("' . $jalali_date . '")' );
+      wp_add_inline_script( 'wpp_order_jalali_date', '$("input[name=order_date]").val("' . $jalali_date . '")' );
 
     } elseif ( 'legacy_report' === $current_screen ) {
       $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
@@ -301,7 +301,8 @@ class WooCommerce extends Addon {
       $jalali_end_date   = ! empty( $endDate ) ? parsidate( 'Y-m-d',
         date( 'Y-m-d', strtotime( $endDate ) ), 'eng' ) : '';
 
-      wc_enqueue_js( '$("input[name=start_date]").val("' . $jalali_start_date . '");$("input[name=end_date]").val("' . $jalali_end_date . '");' );
+      wp_add_inline_script( 'wpp_start_end_jalali_dates',
+        '$("input[name=start_date]").val("' . $jalali_start_date . '");$("input[name=end_date]").val("' . $jalali_end_date . '");' );
 
     } elseif ( 'product' === $current_screen ) {
       global $post;
@@ -325,7 +326,8 @@ class WooCommerce extends Addon {
         $sale_price_dates_to   = $sale_price_dates_to_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
           $sale_price_dates_to_timestamp ) ) : '';
 
-        wc_enqueue_js( '$("#_sale_price_dates_from").val("' . $sale_price_dates_from . '");$("#_sale_price_dates_to").val("' . $sale_price_dates_to . '");' );
+        wp_add_inline_script( 'wpp_sale_price_jalali_dates',
+          '$("#_sale_price_dates_from").val("' . $sale_price_dates_from . '");$("#_sale_price_dates_to").val("' . $sale_price_dates_to . '");' );
 
       } else {
         $dates                = array();
@@ -352,7 +354,7 @@ class WooCommerce extends Addon {
         }
 
         if ( ! empty( $dates ) ) {
-          wc_enqueue_js(
+          wp_add_inline_script( 'wpp_variation_jalali_dates',
             'const wppVariationsDates = ' . wp_json_encode( $dates ) . '
 						    $("#woocommerce-product-data").on("woocommerce_variations_loaded", function(e) {
 							  wppVariationsDates.forEach((date, index) => {
