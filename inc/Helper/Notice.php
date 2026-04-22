@@ -43,9 +43,9 @@ class Notice {
   public static function add(
     string $key,
     string $message,
-    string $type = null,
-    string $linkTitle = null,
-    string $link = null
+    ?string $type = null,
+    ?string $linkTitle = null,
+    ?string $link = null
   ): void {
     if ( ! $key || ! $message ) {
       return;
@@ -80,7 +80,7 @@ class Notice {
    *
    * @return string Notice(s) HTML
    */
-  public static function display( string $key, string $type = null, bool $echo = true ): string {
+  public static function display( string $key, ?string $type = null, bool $echo = true ): string {
     $type     = is_null( $type ) ? $type : self::getType( $type );
     $messages = self::$messages[ $key ] ?? [];
     $notices  = $noticeWrap = '';
@@ -117,12 +117,12 @@ class Notice {
    *
    * @param  string  $type  Type
    * @param  string  $message  Message
-   * @param  string  $linkTitle  Link title
-   * @param  string  $link  Link URL
+   * @param  string|null  $linkTitle  Link title
+   * @param  string|null  $link  Link URL
    *
    * @return string HTML of notice
    */
-  public static function html( string $type, string $message, string $linkTitle = '', string $link = '' ): string {
+  public static function html( string $type, string $message, ?string $linkTitle = '', ?string $link = '' ): string {
     $type = self::getType( $type );
 
     $link = $link && $linkTitle ? '<a href="' . $link . '" ' . ( Validating::isExternalLink( $link ) ? 'target="_blank"' : '' ) . ' class="' . TELIGRO_CLASS_PREFIX . 'notice-link">' . $linkTitle . '</a>' : '';
