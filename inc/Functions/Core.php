@@ -1,32 +1,31 @@
 <?php
 if ( ! function_exists( 'parsidate' ) ) {
   /**
-   * convert gregorian datetime to persian datetime
+   * Convert gregorian datetime to persian datetime
    *
-   * @param  mixed  $input
-   * @param  string  $dateTime
-   * @param  bool|string  $lang
+   * @param  mixed  $format  Format
+   * @param  string  $dateTime  gregorian datetime
+   * @param  bool|string  $lang  true or per: convert numbers to persian, false or eng: don't convert numbers
    *
    * @return string
    */
-  function parsidate( $input, $dateTime = 'now', $lang = 'per' ): string {
+  function parsidate( $format, $dateTime = 'now', $lang = 'per' ): string {
     $lang = is_bool( $lang ) ? ( $lang ? 'per' : 'eng' ) : $lang;
 
-    return WPParsidate\Core\WPP_ParsiDate::getInstance()->persian_date( $input, $dateTime, $lang );
+    return WPParsidate\Core\WPP_ParsiDate::getInstance()->persian_date( $format, $dateTime, $lang );
   }
 }
 
 if ( ! function_exists( 'gregdate' ) ) {
   /**
-   * gregdate()
-   * convert persian datetime to gregorian datetime
+   * Convert persian datetime to gregorian datetime
    *
-   * @param  mixed  $input
-   * @param  mixed  $datetime
+   * @param  mixed  $format  Format
+   * @param  mixed  $datetime  Shamsi datetime
    *
    * @return false|string
    */
-  function gregdate( $input, $datetime ) {
-    return WPParsidate\Core\WPP_ParsiDate::getInstance()->gregorian_date( $input, $datetime );
+  function gregdate( $format, $datetime ) {
+    return WPParsidate\Core\WPP_ParsiDate::getInstance()->gregorian_date( $format, $datetime );
   }
 }

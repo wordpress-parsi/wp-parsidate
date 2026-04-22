@@ -1,4 +1,9 @@
 <?php
+/**
+ * Core settings
+ *
+ * Fix dates, title(s), editor.
+ */
 
 namespace WPParsidate\App\Core;
 

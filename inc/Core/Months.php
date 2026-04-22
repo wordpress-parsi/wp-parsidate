@@ -1,4 +1,9 @@
 <?php
+/**
+ * Months class
+ *
+ * Get month names
+ */
 
 namespace WPParsidate\Core;
 
@@ -6,13 +11,22 @@ use WPParsidate\Helper\Cache;
 use WPParsidate\Settings\Settings;
 
 class Months {
-  public static function getNames() {
-    $cache = Cache::get( 'months_name', false );
+  /**
+   * Get month names, Months type is persian, dari, kurdish, pashto
+   *
+   * @param  string|null  $type  Type of months
+   *
+   * @return array|mixed|null
+   */
+  public static function getNames( string $type = null ) {
+    if ( is_null( $type ) ) {
+      $type = Settings::get( 'months_name_type', 'persian' );
+    }
+
+    $cache = Cache::get( 'months_name_' . $type, false );
     if ( is_array( $cache ) ) {
       return $cache;
     }
-
-    $type = Settings::get( 'months_name_type', 'persian' );
 
     if ( $type === 'dari' ) {
       $names = array(
@@ -84,7 +98,7 @@ class Months {
     }
 
     $names = apply_filters( 'wp_parsidate_name_of_months', $names, $type );
-    Cache::set( 'months_name', $names );
+    Cache::set( 'months_name_' . $type, $names );
 
     return $names;
   }

@@ -5,15 +5,35 @@ namespace WPParsidate\Helper;
 defined( 'ABSPATH' ) || exit;
 
 class FeedReader {
+  /**
+   * @var array Args
+   */
   private array $args;
+
+  /**
+   * @var array Default Args
+   */
   private array $defaultArgs;
 
+  /**
+   * @var array Feed items
+   */
   private array $feedItems = [];
+
+  /**
+   * @var \WP_Error Error
+   */
   private \WP_Error $error;
 
-  private $replaceDescText = false;
+  /**
+   * @var array Replace desc text
+   */
+  private array $replaceDescText = [];
 
-  public function __construct( $args ) {
+  /**
+   * @param  array  $args  Feed arguments
+   */
+  public function __construct( array $args ) {
     $this->args = $this->defaultArgs = array(
       'url'          => '',
       'cache_key'    => '',
@@ -24,6 +44,13 @@ class FeedReader {
     $this->setArgs( $args );
   }
 
+  /**
+   * Set feed arguments
+   *
+   * @param  array  $args  Feed Arguments
+   *
+   * @return void
+   */
   public function setArgs( array $args ): void {
     $this->args                 = wp_parse_args( $args, $this->args );
     $this->args['url']          = Validating::isUrl( $this->args['url'] ) ? $this->args['url'] : '';
@@ -33,20 +60,44 @@ class FeedReader {
     $this->args['fields']       = is_array( $this->args['fields'] ) && ! empty( $this->args['fields'] ) ? $this->args['fields'] : $this->defaultArgs['fields'];
   }
 
+  /**
+   * Get Error
+   *
+   * @return \WP_Error
+   */
   public function getError(): \WP_Error {
     return $this->error;
   }
 
+  /**
+   * Get feed Items
+   *
+   * @return array Feed items
+   */
   public function getFeedItems(): array {
     return $this->feedItems;
   }
 
-  public function replaceDescText( $replaceTexts ): FeedReader {
+  /**
+   * Set replace text value
+   *
+   * @param  array  $replaceTexts  Replace text's
+   *
+   * @return $this
+   */
+  public function replaceDescText( $replaceTexts ): self {
     $this->replaceDescText = $replaceTexts;
 
     return $this;
   }
 
+  /**
+   * Get HTML feed links
+   *
+   * @param  array  $fields  Print fields
+   *
+   * @return array Array of HTML feed links
+   */
   public function getFeedLinks( $fields = null ): array {
     $fields = $printFields = is_null( $fields ) ? $this->defaultArgs['fields'] : $fields;
     if ( empty( $this->feedItems ) ) {
@@ -92,11 +143,13 @@ class FeedReader {
   }
 
   /**
+   * Read feed
+   *
    * @param  bool  $useCache  Use Cache
    *
    * @return FeedReader
    */
-  public function read( bool $useCache = true ): FeedReader {
+  public function read( bool $useCache = true ): self {
     if ( empty( $this->args['url'] ) ) {
       return $this;
     }
@@ -174,7 +227,9 @@ class FeedReader {
       }
 
       if ( ! empty( $feedItem ) ) {
-        $feedItem    = $this->replaceText( $feedItem, $this->replaceDescText );
+        if ( ! empty( $this->replaceDescText ) ) {
+          $feedItem = $this->replaceText( $feedItem, $this->replaceDescText );
+        }
         $feedItems[] = $feedItem;
       }
     }
@@ -187,8 +242,17 @@ class FeedReader {
     return $this;
   }
 
-  private function replaceText( $feedItem, $replaceTexts, $field = 'description' ) {
-    if ( is_array( $replaceTexts ) && isset( $feedItem[ $field ] ) ) {
+  /**
+   * Replace text in feed fields
+   *
+   * @param  array  $feedItem  Feed item
+   * @param  array  $replaceTexts  Replace text's
+   * @param  string  $field  Field key
+   *
+   * @return array Feed item
+   */
+  private function replaceText( array $feedItem, array $replaceTexts, string $field = 'description' ): array {
+    if ( isset( $feedItem[ $field ] ) ) {
       foreach ( $replaceTexts as $replaceText ) {
         if ( isset( $feedItem['title'] ) && str_contains( $replaceText[0], '%title%' ) ) {
           $replaceText[0] = str_replace( '%title%', $feedItem['title'], $replaceText[0] );

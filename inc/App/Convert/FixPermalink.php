@@ -1,4 +1,10 @@
 <?php
+/**
+ * Fix Permalink
+ *
+ * Fix Permalink in post, archive, etc.
+ * Fix DB query
+ */
 
 namespace WPParsidate\App\Convert;
 

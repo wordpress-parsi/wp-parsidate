@@ -1,4 +1,9 @@
 <?php
+/**
+ * ParsiDate Calendar Widget
+ *
+ * Add calendar widget to registered sidebar
+ */
 
 namespace WPParsidate\Widget;
 

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Fix dates settings
+ *
+ * Fix dates and time in WP Hooks.
+ */
 
 namespace WPParsidate\App\Core;
 
@@ -23,6 +28,7 @@ class FixDates {
       add_filter( 'media_view_settings', [ $this, 'fixMediaViewSettings' ], 10, 2 );
 
       add_filter( 'date_i18n', [ $this, 'fixDateI18n' ], 10, 4 );
+
       if ( ! WordPress::isSitemap() ) {
         add_filter( 'wp_date', [ $this, 'fixDateI18n' ], 10, 4 );
       }
@@ -50,7 +56,7 @@ class FixDates {
       return $date;
     }
 
-    return parsidate( $format, $timestamp, Settings::get( 'conv_dates' ) ? 'per' : 'eng' );
+    return parsidate( $format, $timestamp, Settings::get( 'conv_dates' ) );
   }
 
   /**
@@ -64,7 +70,7 @@ class FixDates {
    */
   public function fixMediaViewSettings( $settings, $post ): array {
     if ( ! empty( $settings['months'] ) ) {
-      $convDates = Settings::get( 'conv_dates' ) ? 'per' : 'eng';
+      $convDates = Settings::get( 'conv_dates' );
 
       for ( $i = 0, $iMax = count( $settings['months'] ); $i < $iMax; $i ++ ) {
         if ( isset( $settings['months'][ $i ]->year, $settings['months'][ $i ]->month ) ) {
@@ -99,7 +105,7 @@ class FixDates {
       return date( $format, strtotime( $comment->comment_date ) );
     }
 
-    return parsidate( $format, $comment->comment_date, Settings::get( 'conv_dates' ) ? 'per' : 'eng' );
+    return parsidate( $format, $comment->comment_date, Settings::get( 'conv_dates' ) );
   }
 
   /**
@@ -124,7 +130,7 @@ class FixDates {
       return date( $format, strtotime( $comment->comment_date ) );
     }
 
-    return parsidate( $format, $comment->comment_date, Settings::get( 'conv_dates' ) ? 'per' : 'eng' );
+    return parsidate( $format, $comment->comment_date, Settings::get( 'conv_dates' ) );
   }
 
   /**
@@ -176,7 +182,7 @@ class FixDates {
       return date( $format, strtotime( $post->post_date ) );
     }
 
-    return parsidate( $format, $post->post_date, Settings::get( 'conv_dates' ) ? 'per' : 'eng' );
+    return parsidate( $format, $post->post_date, Settings::get( 'conv_dates' ) );
   }
 
   /**
@@ -209,7 +215,6 @@ class FixDates {
       return date( $format, strtotime( $post->post_date ) );
     }
 
-    return parsidate( $format, date( 'Y-m-d H:i:s', strtotime( $post->post_date ) ),
-      Settings::get( 'conv_dates' ) ? 'per' : 'eng' );
+    return parsidate( $format, date( 'Y-m-d H:i:s', strtotime( $post->post_date ) ), Settings::get( 'conv_dates' ) );
   }
 }

@@ -1,12 +1,15 @@
 <?php
+/**
+ * Dashboard Widget
+ *
+ * Add plugin dashboard widget to WP
+ */
 
 namespace WPParsidate\Widget;
 
 defined( 'ABSPATH' ) || exit;
 
-use WPParsidate\Helper\Assets;
-use WPParsidate\Helper\Cache;
-use WPParsidate\Helper\Param;
+use WPParsidate\Helper\{Assets, Cache, Param};
 
 class DashboardWidget {
   public function __construct() {

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Tools settings
+ *
+ * Add some tools to WP
+ */
 
 namespace WPParsidate\App\Tools;
 

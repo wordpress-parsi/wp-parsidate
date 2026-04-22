@@ -1,4 +1,9 @@
 <?php
+/**
+ * ParsiDate Archive Widget
+ *
+ * Add archive widget to registered sidebar
+ */
 
 namespace WPParsidate\Widget;
 

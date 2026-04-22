@@ -1,10 +1,7 @@
 <?php
 
 use WPParsidate\App\Integration\HookDeactivator;
-use WPParsidate\Helper\Date;
-use WPParsidate\Helper\Number;
-use WPParsidate\Helper\WooCommerce;
-use WPParsidate\Helper\WordPress;
+use WPParsidate\Helper\{Date, Number, WooCommerce, WordPress};
 use WPParsidate\Settings\Settings;
 
 if ( ! function_exists( 'wpp_is_active' ) ) {
@@ -22,37 +19,65 @@ if ( ! function_exists( 'wpp_is_active' ) ) {
 }
 
 if ( ! function_exists( 'disable_wpp' ) ) {
+  /**
+   * Check hook deactivator enable in current call back trace
+   *
+   * @return bool
+   */
   function disable_wpp(): bool {
     return HookDeactivator::checkDisable();
   }
 }
 
 if ( ! function_exists( 'wpp_date_is' ) ) {
+  /**
+   * Validate date string
+   *
+   * @param $dateString
+   * @param $format
+   *
+   * @return array
+   */
   function wpp_date_is( $dateString, $format = 'Y-m-d\TH:i:sP' ): array {
     return Date::isDateString( $dateString, $format );
   }
 }
 
 if ( ! function_exists( 'wpp_is_time_validate' ) ) {
-  function wpp_is_time_validate( $time, $default_seconds = '00' ) {
+  /**
+   * Validate time string
+   *
+   * @param  mixed  $time
+   * @param  string  $default_seconds
+   *
+   * @return false|string
+   */
+  function wpp_is_time_validate( $time, string $default_seconds = '00' ) {
     return Date::isTimeString( $time, $default_seconds );
   }
 }
 
 if ( ! function_exists( 'wpp_is_postal_code_validate' ) ) {
-  function wpp_is_postal_code_validate( $postalCode, $checkSum = false ): bool {
+  /**
+   * Check value is postal code
+   *
+   * @param  mixed  $postalCode
+   * @param  bool  $checkSum
+   *
+   * @return bool
+   */
+  function wpp_is_postal_code_validate( $postalCode, bool $checkSum = false ): bool {
     return WooCommerce::isPostalCode( $postalCode, $checkSum );
   }
 }
 
 if ( ! function_exists( 'wpp_is_sitemap' ) ) {
   /**
-   * wpp_is_sitemap()
-   * checks is WordPress sitemap
+   * Checks is WordPress sitemap
    *
    * @return boolean
    */
-  function wpp_is_sitemap() {
+  function wpp_is_sitemap(): bool {
     return WordPress::isSitemap();
   }
 }
@@ -63,14 +88,19 @@ if ( ! function_exists( 'fix_number' ) ) {
    *
    * @param  string  $content
    *
-   * @return              array|string|string[]|null
+   * @return array|string|string[]|null
    */
-  function fix_number( $content ) {
+  function fix_number( string $content ) {
     return Number::fixNumber( $content );
   }
 }
 
 if ( ! function_exists( 'wpp_is_feed' ) ) {
+  /**
+   * Detects current page is feed or not
+   *
+   * @return bool
+   */
   function wpp_is_feed(): bool {
     return WordPress::isFeed();
   }
@@ -84,7 +114,7 @@ if ( ! function_exists( 'per_number' ) ) {
    *
    * @return              string Formatted numbers
    */
-  function per_number( $number ) {
+  function per_number( string $number ): string {
     return Number::toPersian( $number );
   }
 }
@@ -97,7 +127,7 @@ if ( ! function_exists( 'eng_number' ) ) {
    *
    * @return              string Formatted numbers
    */
-  function eng_number( $number ) {
+  function eng_number( string $number ): string {
     return Number::toEnglish( $number );
   }
 }

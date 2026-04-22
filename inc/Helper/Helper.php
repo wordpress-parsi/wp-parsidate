@@ -3,6 +3,14 @@
 namespace WPParsidate\Helper;
 
 class Helper {
+  /**
+   * Reorder array list
+   *
+   * @param  array  $array  Input array
+   * @param  array  $orders  Order number lists
+   *
+   * @return array|false Reordered array
+   */
   public static function reorderArray( $array, $orders ) {
     $reorderArray = [];
     $orders       = array_map( 'intval', $orders );
@@ -20,6 +28,16 @@ class Helper {
     return $reorderArray;
   }
 
+  /**
+   * Random string
+   *
+   * @param  int  $length  String length
+   * @param  bool  $smallAlphabet  Use small alphabet
+   * @param  bool  $largeAlphabet  Use large alphabet
+   * @param  bool  $numbers  Use numbers
+   *
+   * @return false|string Random string, Otherwise return false if empty
+   */
   public static function randomString( $length, $smallAlphabet = true, $largeAlphabet = true, $numbers = true ) {
     $strings = [];
     if ( $smallAlphabet ) {
@@ -61,6 +79,15 @@ class Helper {
       array_slice( $haystack, $needle, count( $haystack ) - 1, true ) );
   }
 
+  /**
+   * URL to key
+   * Use for cache base on url string
+   *
+   * @param  string  $url
+   * @param  bool  $hostOnly
+   *
+   * @return false|string Key string, if url isn't valid return false
+   */
   public static function urlToKey( string $url, $hostOnly = false ) {
     if ( Validating::isUrl( $url ) ) {
       if ( $hostOnly ) {
@@ -74,19 +101,5 @@ class Helper {
     }
 
     return false;
-  }
-
-  public static function combineStyles( $styles ): string {
-    if ( ! is_array( $styles ) || empty( $styles ) ) {
-      return '';
-    }
-
-    $style = [];
-
-    foreach ( $styles as $key => $value ) {
-      $style[] = $key . ': ' . $value . ';';
-    }
-
-    return "\n\t" . implode( "\n\t", $style );
   }
 }

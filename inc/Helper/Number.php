@@ -8,7 +8,7 @@ class Number {
    *
    * @param  string  $content
    *
-   * @return string
+   * @return string Fixed number
    */
   public static function fixNumber( string $content ): string {
     return preg_replace_callback( '/(?:&#\d{2,4};)|(?:[0]?[a-z][\x20-\x3B=\x3F-\x7F]*)|(?<![>=<][\s*])(\b\d+\b)|<\s*[^>]+>/i',
@@ -23,9 +23,9 @@ class Number {
    *
    * @param  string  $content  Post content
    *
-   * @return              string Formatted content
+   * @return  string Formatted content
    */
-  public static function persianNumber( $content ): string {
+  public static function persianNumber( string $content ): string {
     return isset( $content[1] ) ? self::toPersian( $content[1] ) : $content[0];
   }
 
@@ -36,7 +36,7 @@ class Number {
    *
    * @return string Formatted numbers
    */
-  public static function toPersian( $number ) {
+  public static function toPersian( string $number ): string {
     return str_replace(
       range( 0, 9 ),
       array( '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹' ),
@@ -51,7 +51,7 @@ class Number {
    *
    * @return              string Formatted numbers
    */
-  public static function toEnglish( $number ) {
+  public static function toEnglish( string $number ): string {
     return str_replace(
       array( '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹' ),
       range( 0, 9 ),

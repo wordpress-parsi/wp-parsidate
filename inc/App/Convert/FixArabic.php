@@ -1,4 +1,10 @@
 <?php
+/**
+ * Fix Arabic
+ *
+ * Fix Arabic alphabet in Farsi content
+ * Replace Arabic alphabet and numbers with Persian characters
+ */
 
 namespace WPParsidate\App\Convert;
 

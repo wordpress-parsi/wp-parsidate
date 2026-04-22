@@ -162,7 +162,7 @@ final class WP_Parsidate {
    * @return          WP_Parsidate Instance of WP_Parsidate
    * @since           2.0
    */
-  public static function getInstance(): ?WP_Parsidate {
+  public static function getInstance(): ?self {
     if ( self::$instance === null ) {
       self::$instance = new WP_Parsidate();
     }

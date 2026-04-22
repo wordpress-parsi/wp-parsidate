@@ -12,6 +12,7 @@ namespace WPParsidate\App\Integration;
 defined( 'ABSPATH' ) || exit;
 
 use WPParsidate\Addons\Addon;
+use WPParsidate\Helper\Number;
 
 class RankMath extends Addon {
   public string $addonID = 'rank_math';
@@ -25,7 +26,7 @@ class RankMath extends Addon {
 
   /* @method */
   public function convert( $datetime, $format = 'c' ) {
-    return gregdate( $format, eng_number( $datetime ) );
+    return gregdate( $format, Number::toEnglish( $datetime ) );
   }
 
   /* @hook */

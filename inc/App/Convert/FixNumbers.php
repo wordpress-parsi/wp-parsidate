@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Fix Numbers
+ *
+ * Fix number in WP hooks
+ */
+
 namespace WPParsidate\App\Convert;
 
 use WPParsidate\Helper\Number;
@@ -40,10 +46,24 @@ class FixNumbers {
     }
   }
 
+  /**
+   * Fix numbers and convert them to Persian digits style
+   *
+   * @param  mixed  $content
+   *
+   * @return string
+   */
   public function fixNumbersToPersian( $content ): string {
     return Number::fixNumber( $content );
   }
 
+  /**
+   * Converts English digits to Persian digits
+   *
+   * @param  mixed  $string
+   *
+   * @return string
+   */
   public function changeNumbersToPersian( $string ): string {
     return Number::toPersian( $string );
   }

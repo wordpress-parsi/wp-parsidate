@@ -1,4 +1,9 @@
 <?php
+/**
+ * Posts class
+ *
+ * Fix post query based on Jalali date
+ */
 
 namespace WPParsidate\Core;
 
@@ -149,7 +154,7 @@ class Posts {
   }
 
   /**
-   * Limits posts to a certain date, if date setted
+   * Limits posts to a certain date, if date set
    *
    * @param  string  $where  Query pointer
    *

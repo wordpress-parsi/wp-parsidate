@@ -1,4 +1,9 @@
 <?php
+/**
+ * Plugin assets
+ *
+ * Used for fix admin and editor style
+ */
 
 namespace WPParsidate\App;
 

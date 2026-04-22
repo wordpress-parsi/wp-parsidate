@@ -1,4 +1,15 @@
 <?php
+/**
+ * Hook Deactivator settings
+ *
+ * User can disable Jalali date in some hooks
+ * Format: mainCallFunction,methodOfClass,ClassName
+ * Example: wp_date,render_field,acf_field_date_picker
+ *
+ * Without class:
+ * Format: mainCallFunction,usedFunction
+ * Example: wp_date,acf_format_date
+ */
 
 namespace WPParsidate\App\Integration;
 

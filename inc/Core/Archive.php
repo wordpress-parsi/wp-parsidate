@@ -1,4 +1,9 @@
 <?php
+/**
+ * Archive class
+ *
+ * Print post, month, year archive links
+ */
 
 namespace WPParsidate\Core;
 

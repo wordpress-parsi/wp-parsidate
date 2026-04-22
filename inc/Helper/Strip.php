@@ -3,15 +3,36 @@
 namespace WPParsidate\Helper;
 
 class Strip {
-  public static function kses( $content ) {
+  /**
+   * Filters text content and strips out disallowed HTML.
+   *
+   * @param  string  $content  Text content to filter.
+   *
+   * @return string Filtered content containing only the allowed HTML.
+   */
+  public static function kses( string $content ): string {
     return wp_kses( stripslashes_deep( $content ), wp_kses_allowed_html( 'post' ) );
   }
 
-  public static function removeHtmlComments( $html ) {
+  /**
+   * Remove HTML comments
+   *
+   * @param  string  $html
+   *
+   * @return string
+   */
+  public static function removeHtmlComments( string $html ): string {
     return preg_replace( '~<!--(.*?)-->~s', '', $html );
   }
 
-  public static function removeHtmlDoctype( $html ) {
+  /**
+   * Remove HTML Document type
+   *
+   * @param  string  $html
+   *
+   * @return string
+   */
+  public static function removeHtmlDoctype( string $html ): string {
     return preg_replace( '/^<!DOCTYPE.+?>/', '', $html );
   }
 }

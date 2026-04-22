@@ -1,4 +1,10 @@
 <?php
+/**
+ * Makes WooCommerce compatible with WP-Parsidate plugin
+ *
+ * @package                 WP-Parsidate
+ * @subpackage              Plugins/WooCommerce
+ */
 
 namespace WPParsidate\App\Integration;
 

@@ -95,6 +95,11 @@ class JSON {
   }
 
   /**
+   * Validate JSON value
+   *
+   * @param  string  $value  JSON string
+   *
+   * @return  bool True, if it hasn't error on decode JSON string
    * @throws \JsonException
    */
   public static function validate( $value ): bool {

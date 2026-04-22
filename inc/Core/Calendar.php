@@ -1,4 +1,9 @@
 <?php
+/**
+ * Calendar class
+ *
+ * Print Jalali Calendar
+ */
 
 namespace WPParsidate\Core;
 

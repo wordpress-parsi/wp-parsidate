@@ -1,4 +1,9 @@
 <?php
+/**
+ * Widget class
+ *
+ * Register plugin widgets
+ */
 
 namespace WPParsidate\Widget;
 

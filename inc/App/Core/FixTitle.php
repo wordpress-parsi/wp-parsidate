@@ -1,4 +1,9 @@
 <?php
+/**
+ * Fix title settings
+ *
+ * Fix page title
+ */
 
 namespace WPParsidate\App\Core;
 

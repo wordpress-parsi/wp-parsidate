@@ -7,7 +7,16 @@ defined( 'ABSPATH' ) || die();
 class Notice {
   private static array $messages = [];
 
-  public static function addAndDisplay( $key, $notices, $echo = true ): string {
+  /**
+   * Add notice and display immediately
+   *
+   * @param  string  $key  Notice key
+   * @param  array  $notices  Notice list
+   * @param  bool  $echo  True, print notice
+   *
+   * @return string
+   */
+  public static function addAndDisplay( string $key, array $notices, bool $echo = true ): string {
     self::clear( $key );
 
     foreach ( $notices as $notice ) {
@@ -20,7 +29,24 @@ class Notice {
     return self::display( $key, null, $echo );
   }
 
-  public static function add( $key, $message, $type = null, $linkTitle = null, $link = null ): void {
+  /**
+   * Add notice
+   *
+   * @param  string  $key  Notice key
+   * @param  string  $message  Notice message
+   * @param  string|null  $type  Notice type (default, info, success, warning, error)
+   * @param  string|null  $linkTitle  Notice link title
+   * @param  string|null  $link  Notice link url
+   *
+   * @return void
+   */
+  public static function add(
+    string $key,
+    string $message,
+    string $type = null,
+    string $linkTitle = null,
+    string $link = null
+  ): void {
     if ( ! $key || ! $message ) {
       return;
     }
@@ -34,11 +60,27 @@ class Notice {
     );
   }
 
-  public static function clear( $key ): void {
+  /**
+   * Clear notice(s) by the Key
+   *
+   * @param  string  $key  Notice key
+   *
+   * @return void
+   */
+  public static function clear( string $key ): void {
     self::$messages[ $key ] = array();
   }
 
-  public static function display( $key, $type = null, $echo = true ): string {
+  /**
+   * Display notice(s)
+   *
+   * @param  string  $key  Notice key
+   * @param  string|null  $type  Notice type, if is null display all type of notice
+   * @param  bool  $echo  Print notice
+   *
+   * @return string Notice(s) HTML
+   */
+  public static function display( string $key, string $type = null, bool $echo = true ): string {
     $type     = is_null( $type ) ? $type : self::getType( $type );
     $messages = self::$messages[ $key ] ?? [];
     $notices  = $noticeWrap = '';
@@ -70,7 +112,17 @@ class Notice {
     return '';
   }
 
-  public static function html( $type, $message, $linkTitle = '', $link = '' ): string {
+  /**
+   * Get HTML of a notice
+   *
+   * @param  string  $type  Type
+   * @param  string  $message  Message
+   * @param  string  $linkTitle  Link title
+   * @param  string  $link  Link URL
+   *
+   * @return string HTML of notice
+   */
+  public static function html( string $type, string $message, string $linkTitle = '', string $link = '' ): string {
     $type = self::getType( $type );
 
     $link = $link && $linkTitle ? '<a href="' . $link . '" ' . ( Validating::isExternalLink( $link ) ? 'target="_blank"' : '' ) . ' class="' . TELIGRO_CLASS_PREFIX . 'notice-link">' . $linkTitle . '</a>' : '';
@@ -78,6 +130,13 @@ class Notice {
     return '<div class="' . WP_PARSI_CLASS_PREFIX . 'notice ' . WP_PARSI_CLASS_PREFIX . 'notice-' . $type . '" ><div>' . self::getIcon( $type ) . '<p>' . $message . '</p></div>' . $link . '</div>';
   }
 
+  /**
+   * Get notice icon base on type
+   *
+   * @param  string  $type  Type of notice
+   *
+   * @return string HTML of Icon
+   */
   private static function getIcon( $type ): string {
     $icons = array(
       'default' => '<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -109,6 +168,13 @@ class Notice {
     return $icons[ $type ] ?? $icons['default'];
   }
 
+  /**
+   * Get type of notice
+   *
+   * @param  string  $type  Notice type
+   *
+   * @return string Notice type
+   */
   private static function getType( $type ): string {
     $types = array( 'default', 'info', 'success', 'warning', 'error' );
     $type  = strtolower( $type );

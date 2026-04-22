@@ -100,7 +100,7 @@ class Install {
   }
 
   /**
-   * Check ols setting is enable
+   * Check old setting is enable
    */
   private static function isEnable( $array, $key ): bool {
     return isset( $array[ $key ] ) && $array[ $key ] === 'enable';

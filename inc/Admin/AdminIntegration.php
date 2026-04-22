@@ -14,8 +14,8 @@ class AdminIntegration {
     add_filter( 'wp_parsidate_menus', [ $this, 'addMenu' ] );
     add_filter( 'wp_parsidate_' . self::tab . '_settings', [ $this, 'settings' ] );
     add_filter( 'wp_parsidate_settings', [ $this, 'allSettings' ] );
-    add_filter( 'woo_assistant_' . self::tab . '_tab_display_notice', '__return_false' );
-    add_filter( 'woo_assistant_' . self::tab . '_tab_content_display_notice', '__return_true' );
+    add_filter( 'wp_parsidate_' . self::tab . '_tab_display_notice', '__return_false' );
+    add_filter( 'wp_parsidate_' . self::tab . '_tab_content_display_notice', '__return_true' );
   }
 
   public function addMenu( $menus ) {

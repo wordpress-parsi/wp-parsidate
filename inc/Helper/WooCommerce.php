@@ -3,10 +3,23 @@
 namespace WPParsidate\Helper;
 
 class WooCommerce {
+  /**
+   * Check WC custom order tables are enabled or not
+   *
+   * @return bool
+   */
   public static function hposEnabled(): bool {
     return class_exists( '\Automattic\WooCommerce\Utilities\OrderUtil' ) && \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled();
   }
 
+  /**
+   * Check value is postal code
+   *
+   * @param mixed $postalCode
+   * @param bool $checkSum
+   *
+   * @return bool
+   */
   public static function isPostalCode( $postalCode, $checkSum = false ): bool {
     // Convert to english
     $postalCode = Number::toEnglish( $postalCode );
@@ -24,7 +37,6 @@ class WooCommerce {
 
     // Checksum Control
     if ( $checkSum ) {
-
       $checkDigit = (int) $cleanedCode[9];
       $sum        = 0;
       for ( $i = 0; $i < 9; $i ++ ) {
@@ -39,6 +51,11 @@ class WooCommerce {
     return true;
   }
 
+  /**
+   * Get WC order statuses
+   *
+   * @return array
+   */
   public static function getOrderStatuses(): array {
     $statuses = wc_get_order_statuses();
 

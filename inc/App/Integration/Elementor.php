@@ -1,4 +1,10 @@
 <?php
+/**
+ * Makes Elementor compatible with WP-Parsidate plugin
+ *
+ * @package                 WP-Parsidate
+ * @subpackage              Plugins/Elementor
+ */
 
 namespace WPParsidate\App\Integration;
 

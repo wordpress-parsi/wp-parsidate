@@ -1,4 +1,9 @@
 <?php
+/**
+ * Plugin hooks
+ *
+ * Load local text domain, Add starter notice, Change some links
+ */
 
 namespace WPParsidate\Plugin;
 

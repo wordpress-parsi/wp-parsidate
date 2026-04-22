@@ -5,18 +5,35 @@ namespace WPParsidate\Helper;
 use DateTime;
 
 class Date {
-  public static function changeDateFormat( $date, $dateFormat, $returnFormat ): string {
+  /**
+   * Change date format
+   *
+   * @param  string  $date  Date string
+   * @param  string  $dateFormat  Input date format
+   * @param  string  $returnFormat  Output date format
+   *
+   * @return string Date with output format
+   */
+  public static function changeDateFormat( string $date, string $dateFormat, string $returnFormat ): string {
     return DateTime::createFromFormat( $dateFormat, $date )->format( $returnFormat );
   }
 
-  public static function isDateString( $dateString, $format = 'Y-m-d\TH:i:sP' ): array {
+  /**
+   * Determines is gregorian/shamsi date string
+   *
+   * @param  string  $dateString  Date string
+   * @param  string  $format  Date format
+   *
+   * @return array
+   */
+  public static function isDateString( string $dateString, string $format = 'Y-m-d\TH:i:sP' ): array {
     $default = [
       'status' => false,
       'type'   => null,
       'value'  => ''
     ];
 
-    $dateString = eng_number( $dateString );
+    $dateString = Number::toEnglish( $dateString );
     $dateParts  = date_parse_from_format( $format, $dateString );
     if ( $dateParts['error_count'] > 0 || $dateParts['warning_count'] > 0 ) {
       return $default;
@@ -51,7 +68,15 @@ class Date {
     return $default;
   }
 
-  public static function isTimeString( $time, $seconds = '00' ) {
+  /**
+   * Determines is time string
+   *
+   * @param  mixed  $time  Time string
+   * @param  string  $seconds  Seconds string value
+   *
+   * @return false|string Return time string if is time, Otherwise false
+   */
+  public static function isTimeString( $time, string $seconds = '00' ) {
     if ( ! is_string( $time ) ) {
       return false;
     }
