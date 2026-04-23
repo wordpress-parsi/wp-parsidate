@@ -130,7 +130,7 @@ class Archive {
    * @param $r
    */
   private static function printMonthArchive( $old_date, $format, $before, $count, $show_post_count, $r ): void {
-    $wpp_months_name = Months::getNames();
+    $wpp_months_name = Names::getMonths();
     $year            = substr( $old_date, 0, 4 );
     $month           = substr( $old_date, 4, 2 );
 

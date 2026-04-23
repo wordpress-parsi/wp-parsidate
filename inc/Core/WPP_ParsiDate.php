@@ -62,7 +62,8 @@ class WPP_ParsiDate {
    * @return string
    */
   public function persian_date( $format, $date = 'now', $lang = 'per' ) {
-    $months_name = Months::getNames();
+    $months_name = Names::getMonths();
+    $day_names   = Names::getWeekDays();
     //$j_days_in_month = array( 31, 62, 93, 124, 155, 186, 216, 246, 276, 306, 336, 365 );
     $timestamp = is_numeric( $date ) && (int) $date == $date ? $date : strtotime( $date );
     $date      = getdate( $timestamp );
@@ -85,7 +86,7 @@ class WPP_ParsiDate {
           $out .= $this->persian_day_small[ $date['wday'] ];
           break;
         case'l':
-          $out .= $this->persian_day_names[ $date['wday'] ];
+          $out .= $day_names[ $date['wday'] ];
           break;
         case'j':
           $out .= $date['mday'];
@@ -191,7 +192,7 @@ class WPP_ParsiDate {
           $out = $date['year'] . '/' . $date['mon'] . '/' . $date['mday'] . ' ' . $date['hours'] . ':' . ( ( $date['minutes'] < 10 ) ? '0' . $date['minutes'] : $date['minutes'] ) . ':' . ( ( $date['seconds'] < 10 ) ? '0' . $date['seconds'] : $date['seconds'] );//2004-02-12T15:19:21+00:00
           break;
         case'r':
-          $out = $this->persian_day_names[ $date['wday'] ] . ',' . $date['mday'] . ' ' . $months_name[ $date['mon'] ] . ' ' . $date['year'] . ' ' . $date['hours'] . ':' . ( ( $date['minutes'] < 10 ) ? '0' . $date['minutes'] : $date['minutes'] ) . ':' . ( ( $date['seconds'] < 10 ) ? '0' . $date['seconds'] : $date['seconds'] );//Thu, 21 Dec 2000 16:01:07
+          $out = $day_names[ $date['wday'] ] . ',' . $date['mday'] . ' ' . $months_name[ $date['mon'] ] . ' ' . $date['year'] . ' ' . $date['hours'] . ':' . ( ( $date['minutes'] < 10 ) ? '0' . $date['minutes'] : $date['minutes'] ) . ':' . ( ( $date['seconds'] < 10 ) ? '0' . $date['seconds'] : $date['seconds'] );//Thu, 21 Dec 2000 16:01:07
           break;
         case'U':
           $out = $timestamp;

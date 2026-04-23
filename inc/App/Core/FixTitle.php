@@ -7,7 +7,7 @@
 
 namespace WPParsidate\App\Core;
 
-use WPParsidate\Core\Months;
+use WPParsidate\Core\Names;
 use WPParsidate\Helper\Number;
 use WPParsidate\Settings\Settings;
 
@@ -40,7 +40,7 @@ class FixTitle {
     }
 
     if ( isset( $query['monthnum'] ) ) {
-      $monthsName        = Months::getNames();
+      $monthsName        = Names::getMonths();
       $query['monthnum'] = $monthsName[ (int) $query['monthnum'] ];
       $title             = implode( " ", $query ) . " $sep " . get_bloginfo( "name" );
     }

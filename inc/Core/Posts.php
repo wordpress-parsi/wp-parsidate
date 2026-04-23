@@ -205,7 +205,7 @@ class Posts {
 
     $m          = isset( $_GET['mfa'] ) ? (int) $_GET['mfa'] : 0;
     $predate    = '';
-    $monthsName = Months::getNames();
+    $monthsName = Names::getMonths();
 
     echo '<select name="mfa">';
     echo '<option ' . selected( $m, 0, false ) . ' value="0">' . esc_html__( 'Show All Dates',

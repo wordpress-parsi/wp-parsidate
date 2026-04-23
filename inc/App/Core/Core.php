@@ -58,7 +58,7 @@ class Core {
       ),
       'months_name_type'     => array(
         'id'       => 'months_name_type',
-        'title'    => esc_html__( 'Months name type', 'wp-parsidate' ),
+        'title'    => esc_html__( 'Months and week days name type', 'wp-parsidate' ),
         'type'     => 'select',
         'options'  => array(
           'persian' => esc_html__( 'Persian', 'wp-parsidate' ),

@@ -69,7 +69,7 @@ class ComposerStaticInit28b7438669d760234aa27dffd45581b6
         'WPParsidate\\Core\\Archive' => __DIR__ . '/../..' . '/inc/Core/Archive.php',
         'WPParsidate\\Core\\Calendar' => __DIR__ . '/../..' . '/inc/Core/Calendar.php',
         'WPParsidate\\Core\\Core' => __DIR__ . '/../..' . '/inc/Core/Core.php',
-        'WPParsidate\\Core\\Months' => __DIR__ . '/../..' . '/inc/Core/Months.php',
+        'WPParsidate\\Core\\Names' => __DIR__ . '/../..' . '/inc/Core/Names.php',
         'WPParsidate\\Core\\Posts' => __DIR__ . '/../..' . '/inc/Core/Posts.php',
         'WPParsidate\\Core\\WPP_ParsiDate' => __DIR__ . '/../..' . '/inc/Core/WPP_ParsiDate.php',
         'WPParsidate\\Helper\\Assets' => __DIR__ . '/../..' . '/inc/Helper/Assets.php',

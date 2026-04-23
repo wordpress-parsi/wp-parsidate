@@ -9,7 +9,7 @@ namespace WPParsidate\App;
 
 defined( 'ABSPATH' ) || exit;
 
-use WPParsidate\Core\Months;
+use WPParsidate\Core\Names;
 use WPParsidate\Helper\Assets;
 use WPParsidate\Settings\Settings;
 
@@ -74,7 +74,7 @@ class AppAssets {
    * @since 4.0.1
    */
   public function localizeMonthsName(): void {
-    $months_name = Months::getNames();
+    $months_name = Names::getMonths();
 
     // Remove first item (null string) from name of months array
     array_shift( $months_name );
@@ -129,7 +129,7 @@ class AppAssets {
     wp_localize_script(
       WP_PARSI_KEY_SLUG . '-admin',
       'WPP_I18N',
-      array( 'months' => Months::getNames() )
+      array( 'months' => Names::getMonths() )
     );
   }
 }

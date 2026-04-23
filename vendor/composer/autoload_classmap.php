@@ -41,7 +41,7 @@ return array(
     'WPParsidate\\Core\\Archive' => $baseDir . '/inc/Core/Archive.php',
     'WPParsidate\\Core\\Calendar' => $baseDir . '/inc/Core/Calendar.php',
     'WPParsidate\\Core\\Core' => $baseDir . '/inc/Core/Core.php',
-    'WPParsidate\\Core\\Months' => $baseDir . '/inc/Core/Months.php',
+    'WPParsidate\\Core\\Names' => $baseDir . '/inc/Core/Names.php',
     'WPParsidate\\Core\\Posts' => $baseDir . '/inc/Core/Posts.php',
     'WPParsidate\\Core\\WPP_ParsiDate' => $baseDir . '/inc/Core/WPP_ParsiDate.php',
     'WPParsidate\\Helper\\Assets' => $baseDir . '/inc/Helper/Assets.php',

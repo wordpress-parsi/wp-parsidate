@@ -20,7 +20,7 @@ class Calendar {
   public static function printCalendar(): void {
     global $wpdb, $m, $monthnum, $year, $day, $posts;
 
-    $wpp_months_name = Months::getNames();
+    $wpp_months_name = Names::getMonths();
     $jy              = 0;
     $pd              = WPP_ParsiDate::getInstance();
     $jm              = $monthnum;

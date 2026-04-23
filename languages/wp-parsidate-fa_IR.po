@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-09 15:49+0330\n"
-"PO-Revision-Date: 2025-12-09 15:49+0330\n"
+"POT-Creation-Date: 2026-04-23 13:43+0330\n"
+"PO-Revision-Date: 2026-04-23 13:43+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Loco-Source-Locale: en_FR\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: "
 "__;_e;esc_html__;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -186,7 +186,7 @@ msgstr "بازاریابی"
 msgid "Customizations"
 msgstr "سفارشی‌سازی"
 
-#: inc/Addons/Addons.php:241 inc/App/Integration/RankMath.php:142
+#: inc/Addons/Addons.php:241 inc/App/Integration/RankMath.php:143
 msgid "SEO"
 msgstr "سئو"
 
@@ -206,57 +206,57 @@ msgstr "دیگر افزونه‌ها"
 msgid "Save active addons"
 msgstr "ذخیره افزونه‌های فعال"
 
-#: inc/Admin/AdminAbout.php:201
+#: inc/Admin/AdminAbout.php:210
 msgid "GitHub Contributors"
 msgstr "مشارکت‌کننده‌های گیت‌هاب"
 
-#: inc/Admin/AdminAbout.php:214
+#: inc/Admin/AdminAbout.php:223
 msgid "Morteza Geransayeh"
 msgstr "مرتضی گرانسایه"
 
-#: inc/Admin/AdminAbout.php:215 inc/Admin/AdminAbout.php:225
-#: inc/Admin/AdminAbout.php:235 inc/Admin/AdminAbout.php:245
-#: inc/Admin/AdminAbout.php:255
+#: inc/Admin/AdminAbout.php:224 inc/Admin/AdminAbout.php:234
+#: inc/Admin/AdminAbout.php:244 inc/Admin/AdminAbout.php:254
+#: inc/Admin/AdminAbout.php:264
 msgid "Developer"
 msgstr "توسعه‌دهنده"
 
-#: inc/Admin/AdminAbout.php:224
+#: inc/Admin/AdminAbout.php:233
 msgid "Saeed Fard"
 msgstr "سعید فرد"
 
-#: inc/Admin/AdminAbout.php:234
+#: inc/Admin/AdminAbout.php:243
 msgid "HamidReza Yazdani"
 msgstr "حمید رضا یزدانی"
 
-#: inc/Admin/AdminAbout.php:244
+#: inc/Admin/AdminAbout.php:253
 msgid "Mobin Ghasempoor"
 msgstr "مبین قاسمپور"
 
-#: inc/Admin/AdminAbout.php:254
+#: inc/Admin/AdminAbout.php:263
 msgid "Parsa Kafi"
 msgstr "پارسا کافی"
 
-#: inc/Admin/AdminAbout.php:264
+#: inc/Admin/AdminAbout.php:273
 msgid "Mohsen Ghiasi"
 msgstr "محسن قیاسی"
 
-#: inc/Admin/AdminAbout.php:265
+#: inc/Admin/AdminAbout.php:274
 msgid "DevOps"
 msgstr "دواپس"
 
-#: inc/Admin/AdminAbout.php:363
+#: inc/Admin/AdminAbout.php:372
 msgid "About Us"
 msgstr "درباره ما"
 
-#: inc/Admin/AdminAbout.php:364
+#: inc/Admin/AdminAbout.php:373
 msgid "About the WordPress Parsi team and plugin"
 msgstr "درباره تیم و افزونه وردپرس پارسی"
 
-#: inc/Admin/AdminAbout.php:370
+#: inc/Admin/AdminAbout.php:379
 msgid "The text of this page is in Persian."
 msgstr "متن این صفحه به زبان فارسی است."
 
-#: inc/Admin/AdminAbout.php:376 inc/Widget/DashboardWidget.php:156
+#: inc/Admin/AdminAbout.php:385 inc/Widget/DashboardWidget.php:159
 msgid "About"
 msgstr "درباره"
 
@@ -328,7 +328,7 @@ msgstr "هماهنگ‌سازی"
 msgid "Integration settings"
 msgstr "تنظیمات هماهنگ‌سازی"
 
-#: inc/Admin/AdminPages.php:83 inc/Widget/DashboardWidget.php:80
+#: inc/Admin/AdminPages.php:83 inc/Widget/DashboardWidget.php:83
 msgid "WP Parsi"
 msgstr "وردپرس پارسی"
 
@@ -436,11 +436,11 @@ msgstr ""
 "با فعال‌کردن این گزینه، تاریخ‌ها در پیوندهای یکتا به تاریخ خورشیدی (جلالی) تبدیل "
 "می‌شوند"
 
-#: inc/App/Core/Core.php:23
+#: inc/App/Core/Core.php:28
 msgid "Debug mode is enabled!"
 msgstr "حالت اشکال‌زدایی فعال است!"
 
-#: inc/App/Core/Core.php:43
+#: inc/App/Core/Core.php:48
 #: inc/App/Integration/ACF/class-wpp-acf-datepicker-v4.php:23
 #: inc/App/Integration/ACF/class-wpp-acf-datepicker-v5.php:24
 #: inc/App/Integration/ACF/class-wpp-acf-timepicker-v4.php:23
@@ -448,64 +448,64 @@ msgstr "حالت اشکال‌زدایی فعال است!"
 msgid "Date"
 msgstr "تاریخ شمسی"
 
-#: inc/App/Core/Core.php:48
+#: inc/App/Core/Core.php:53
 msgid "Shamsi date"
 msgstr "تاریخ خورشیدی"
 
-#: inc/App/Core/Core.php:51
+#: inc/App/Core/Core.php:56
 msgid "By enabling this, Dates will convert to Shamsi (Jalali) dates"
 msgstr "با فعال‌کردن این گزینه، تاریخ‌ها به صورت تاریخ خورشیدی (جلالی) درمی‌آیند"
 
-#: inc/App/Core/Core.php:56
-msgid "Months name type"
-msgstr "نوع اسامی ماه‌ها"
+#: inc/App/Core/Core.php:61
+msgid "Months and week days name type"
+msgstr "نوع اسامی ماه‌ها و روزهای هفته"
 
-#: inc/App/Core/Core.php:59
+#: inc/App/Core/Core.php:64
 msgid "Persian"
 msgstr "پارسی"
 
-#: inc/App/Core/Core.php:60
+#: inc/App/Core/Core.php:65
 msgid "Dari"
 msgstr "دری"
 
-#: inc/App/Core/Core.php:61
+#: inc/App/Core/Core.php:66
 msgid "Kurdish"
 msgstr "کوردی"
 
-#: inc/App/Core/Core.php:62
+#: inc/App/Core/Core.php:67
 msgid "Pashto"
 msgstr "پشتو"
 
-#: inc/App/Core/Core.php:73
+#: inc/App/Core/Core.php:78
 msgid "Admin"
 msgstr "مدیریت"
 
-#: inc/App/Core/Core.php:78
+#: inc/App/Core/Core.php:83
 msgid "Disable Widget Block"
 msgstr "غیرفعال کردن ویرایشگر بلوک ابزارک"
 
-#: inc/App/Core/Core.php:81
+#: inc/App/Core/Core.php:86
 msgid "By enabling this, Widget Block Editor disabled"
 msgstr ""
 "با فعال‌کردن این گزینه، «ویرایشگر بلوک ابزارک» در بخش ابزارک‌ها غیرفعال می‌شود"
 
-#: inc/App/Core/Core.php:86
+#: inc/App/Core/Core.php:91
 msgid "Vazir Font"
 msgstr "فونت وزیر"
 
-#: inc/App/Core/Core.php:89
+#: inc/App/Core/Core.php:94
 msgid "By enabling this option, the Vazir font will be enable in whole admin area."
 msgstr "با فعال‌کردن این گزینه، فونت وزیر در همه بخش‌های مدیریت فعال می‌شود."
 
-#: inc/App/Core/Core.php:99
+#: inc/App/Core/Core.php:104
 msgid "Plugin"
 msgstr "افزونه"
 
-#: inc/App/Core/Core.php:104
+#: inc/App/Core/Core.php:109
 msgid "Debug Mode"
 msgstr "حالت اشکال‌زادیی"
 
-#: inc/App/Core/Core.php:107
+#: inc/App/Core/Core.php:112
 msgid ""
 "By enabling this option, the uncompressed version of the JS and CSS files will "
 "be loaded."
@@ -513,23 +513,23 @@ msgstr ""
 "با فعال‌کردن این گزینه، نسخۀ فشرده‌نشدۀ پرونده‌های JS و CSS افزونۀ پارسی‌دیت "
 "بارگذاری می‌شوند."
 
-#: inc/App/Core/Core.php:113
+#: inc/App/Core/Core.php:118
 msgid "Load translate file"
 msgstr "بارگذاری فایل ترجمه"
 
-#: inc/App/Core/Core.php:116
+#: inc/App/Core/Core.php:121
 msgid "Load translate file from plugin directory."
 msgstr "بارگذاری فایل ترجمه از پوشه افزونه."
 
-#: inc/App/Core/Core.php:130
+#: inc/App/Core/Core.php:135
 msgid "Multilingual"
 msgstr "چندزبانه"
 
-#: inc/App/Core/Core.php:135
+#: inc/App/Core/Core.php:140
 msgid "Multilingual compatibility"
 msgstr "پشتیبانی از چندزبانه"
 
-#: inc/App/Core/Core.php:138
+#: inc/App/Core/Core.php:143
 msgid "By enabling this, ParsiDate options only work in persian locale"
 msgstr "با فعال کردن این گزینه، تنظیمات پارسی‌دیت فقط برای زبان فارسی اعمال می‌شود"
 
@@ -620,7 +620,7 @@ msgstr "هماهنگ‌سازی تاریخ پارسی با دانلود آسان
 msgid "Price"
 msgstr "قیمت"
 
-#: inc/App/Integration/EDD.php:81 inc/App/Integration/WooCommerce.php:723
+#: inc/App/Integration/EDD.php:81 inc/App/Integration/WooCommerce.php:743
 msgid "Fix prices"
 msgstr "تصحیح قیمت‌ها"
 
@@ -644,84 +644,84 @@ msgstr "جایگزینی نام واحد پولی"
 msgid "Download"
 msgstr "دانلود"
 
-#: inc/App/Integration/Elementor.php:33 inc/App/Integration/Elementor.php:37
+#: inc/App/Integration/Elementor.php:39 inc/App/Integration/Elementor.php:43
 msgid "Elementor"
 msgstr "المنتور"
 
-#: inc/App/Integration/Elementor.php:34
+#: inc/App/Integration/Elementor.php:40
 msgid "ParsiDate integration for Elementor"
 msgstr "هماهنگ‌سازی تاریخ پارسی با المنتور"
 
-#: inc/App/Integration/HookDeactivator.php:125
+#: inc/App/Integration/HookDeactivator.php:137
 msgid "Hooks"
 msgstr "قلاب‌ها"
 
-#: inc/App/Integration/HookDeactivator.php:130
+#: inc/App/Integration/HookDeactivator.php:142
 msgid "Hook list"
 msgstr "لیست قلاب‌ها"
 
-#: inc/App/Integration/HookDeactivator.php:132
+#: inc/App/Integration/HookDeactivator.php:144
 msgid "Enter hook,class,function to remove parsidate filter from it"
 msgstr "نام قلاب، کلاس و تابع موردنظر را جهت رفع فیلتر پارسی‌دیت وارد کنید"
 
-#: inc/App/Integration/HookDeactivator.php:145
+#: inc/App/Integration/HookDeactivator.php:157
 msgid "Hook deactivator"
 msgstr "غیرفعال کردن قلاب"
 
-#: inc/App/Integration/HookDeactivator.php:146
+#: inc/App/Integration/HookDeactivator.php:158
 msgid "Disable plugin hooks"
 msgstr "غیرفعال کردن قلابهای افزونه"
 
-#: inc/App/Integration/RankMath.php:138
+#: inc/App/Integration/RankMath.php:139
 msgid "Rank Math"
 msgstr "رنک‌مث"
 
-#: inc/App/Integration/RankMath.php:139
+#: inc/App/Integration/RankMath.php:140
 msgid "ParsiDate integration for Rank Math"
 msgstr "هماهنگ‌سازی تاریخ پارسی با رنک‌مث"
 
-#: inc/App/Integration/WooCommerce.php:106
+#: inc/App/Integration/WooCommerce.php:112
 msgid "<strong>Phone number</strong> is invalid."
 msgstr "<strong>شمارۀ تماس</strong> معتبر نیست."
 
-#: inc/App/Integration/WooCommerce.php:375
+#: inc/App/Integration/WooCommerce.php:388
 msgid "Expiry date"
 msgstr "تاریخ انقضاء"
 
-#: inc/App/Integration/WooCommerce.php:712 inc/App/Integration/WooCommerce.php:782
-#: inc/App/Integration/WooCommerce.php:796 inc/App/Integration/WooCommerce.php:800
+#: inc/App/Integration/WooCommerce.php:732 inc/App/Integration/WooCommerce.php:802
+#: inc/App/Integration/WooCommerce.php:816 inc/App/Integration/WooCommerce.php:820
 msgid "WooCommerce"
 msgstr "ووکامرس"
 
-#: inc/App/Integration/WooCommerce.php:713 inc/App/Integration/WooCommerce.php:797
+#: inc/App/Integration/WooCommerce.php:733 inc/App/Integration/WooCommerce.php:817
 msgid "ParsiDate integration for WooCommerce"
 msgstr "هماهنگ‌سازی تاریخ پارسی با ووکامرس"
 
-#: inc/App/Integration/WooCommerce.php:718
+#: inc/App/Integration/WooCommerce.php:738
 msgid "Products"
 msgstr "محصولات"
 
-#: inc/App/Integration/WooCommerce.php:733
+#: inc/App/Integration/WooCommerce.php:753
 msgid "Checkout page"
 msgstr "برگه پرداخت"
 
-#: inc/App/Integration/WooCommerce.php:738
+#: inc/App/Integration/WooCommerce.php:758
 msgid "Fix persian postcode"
 msgstr "تبدیل کد پستی فارسی در روند پرداخت"
 
-#: inc/App/Integration/WooCommerce.php:745
+#: inc/App/Integration/WooCommerce.php:765
 msgid "Fix persian phone"
 msgstr "تبدیل شماره تماس فارسی در روند پرداخت"
 
-#: inc/App/Integration/WooCommerce.php:752
+#: inc/App/Integration/WooCommerce.php:772
 msgid "Display cities as a drop-down list"
 msgstr "نمایش شهرها به‌صورت لیست کشویی"
 
-#: inc/App/Integration/WooCommerce.php:759
+#: inc/App/Integration/WooCommerce.php:779
 msgid "Postcode validation"
 msgstr "اعتبارسنجی کد پستی"
 
-#: inc/App/Integration/WooCommerce.php:766
+#: inc/App/Integration/WooCommerce.php:786
 msgid "Phone number validation"
 msgstr "اعتبارسنجی شماره تماس"
 
@@ -737,12 +737,12 @@ msgstr "بانک ملی (صداد)"
 msgid "Payment Gateways"
 msgstr "درگاه‌های پرداخت"
 
-#: inc/App/Integration/WooCommerce/WooCommerceCitySelect.php:97
+#: inc/App/Integration/WooCommerce/WooCommerceCitySelect.php:98
 msgid "required"
 msgstr "الزامی"
 
-#: inc/App/Integration/WooCommerce/WooCommerceCitySelect.php:141
-#: inc/App/Integration/WooCommerce/WooCommerceCitySelect.php:187
+#: inc/App/Integration/WooCommerce/WooCommerceCitySelect.php:142
+#: inc/App/Integration/WooCommerce/WooCommerceCitySelect.php:188
 msgid "Select an option&hellip;"
 msgstr "گزینه‌ای را انتخاب کنید&hellip;"
 
@@ -1525,31 +1525,31 @@ msgstr ""
 msgid "Store No."
 msgstr ""
 
-#: inc/App/Tools/Tools.php:29
+#: inc/App/Tools/Tools.php:34
 msgid "Today:&nbsp;"
 msgstr "امروز:&nbsp;"
 
-#: inc/App/Tools/Tools.php:54
+#: inc/App/Tools/Tools.php:59
 msgid "Admin Bar"
 msgstr "نوار مدیریت"
 
-#: inc/App/Tools/Tools.php:59
+#: inc/App/Tools/Tools.php:64
 msgid "Display date in the admin bar"
 msgstr "نمایش تاریخ در نوار مدیریت"
 
-#: inc/App/Tools/Tools.php:62
+#: inc/App/Tools/Tools.php:67
 msgid "Display today's Jalali date in the WordPress admin bar."
 msgstr "تاریخ شمسی امروز را در نوار مدیریت وردپرس نمایش دهید."
 
-#: inc/Core/Posts.php:209
+#: inc/Core/Posts.php:211
 msgid "Show All Dates"
 msgstr "نمایش همۀ تاریخ‌ها"
 
-#: inc/Helper/FeedReader.php:123
+#: inc/Helper/FeedReader.php:176
 msgid "Feed is empty."
 msgstr "خوراک خالی است."
 
-#: inc/Helper/FeedReader.php:149
+#: inc/Helper/FeedReader.php:202
 msgid "Untitled"
 msgstr "ناشناخته"
 
@@ -1613,138 +1613,147 @@ msgstr "چرخش °"
 msgid "Required"
 msgstr "الزامی"
 
-#: inc/Plugin/Plugin.php:40
-#, php-format
+#: inc/Plugin/Plugin.php:45
+#, fuzzy, php-format
+#| msgid ""
+#| "<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to "
+#| "configure it to work properly. <a href=\"%s\">Go to configuration page</a> "
+#| "&ndash; <a href=\"%s\">Dismiss</a></p></div>"
 msgid ""
 "<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to "
-"configure it to work properly. <a href=\"%s\">Go to configuration page</a> "
-"&ndash; <a href=\"%s\">Dismiss</a></p></div>"
+"configure it to work properly. <a href=\"%1$s\">Go to configuration page</a> "
+"&ndash; <a href=\"%2$s\">Dismiss</a></p></div>"
 msgstr ""
 "<div class=\"updated wpp-message\"><p>وردپرس پارسی فعال شد! برای کارکردن افزونه "
 "نیاز به پیکربندی آن دارید. <a href=\"%s\">برگه‌ی پیکربندی</a> &ndash; <a "
 "href=\"%s\">بی‌خیال</a></p></div>"
 
-#: inc/Plugin/Plugin.php:79
+#: inc/Plugin/Plugin.php:86
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: inc/Widget/DashboardWidget.php:101
+#: inc/Widget/DashboardWidget.php:104
 msgid "What is this?"
 msgstr "این چیست؟"
 
-#: inc/Widget/DashboardWidget.php:107
+#: inc/Widget/DashboardWidget.php:110
 msgid "Why are you showing me this?"
 msgstr "چرا این را به من نشان می‌دهید؟"
 
-#: inc/Widget/DashboardWidget.php:113
+#: inc/Widget/DashboardWidget.php:116
 msgid "How can I become a sponsor?"
 msgstr "چطور می‌توانم حامی مالی شوم؟"
 
-#: inc/Widget/DashboardWidget.php:120
+#: inc/Widget/DashboardWidget.php:123
 msgid "Loading Sponsors"
 msgstr "در حال بارگذاری حامیان مالی"
 
-#: inc/Widget/DashboardWidget.php:144
+#: inc/Widget/DashboardWidget.php:147
 msgid "WordPress Parsi"
 msgstr "وردپرس پارسی"
 
-#: inc/Widget/DashboardWidget.php:146 inc/Widget/DashboardWidget.php:158
-#: inc/Widget/DashboardWidget.php:171
+#: inc/Widget/DashboardWidget.php:149 inc/Widget/DashboardWidget.php:161
+#: inc/Widget/DashboardWidget.php:174
 msgid "(opens in a new tab)"
 msgstr "(در زبانۀ جدید باز می‌شود)"
 
-#: inc/Widget/DashboardWidget.php:168
-msgctxt "Sponsership plans"
+#: inc/Widget/DashboardWidget.php:171
+#, fuzzy
+#| msgctxt "Sponsership plans"
+#| msgid "https://wp-parsi.com/sponser/"
+msgctxt "Sponsorship plans"
 msgid "https://wp-parsi.com/sponser/"
 msgstr "https://wp-parsi.com/sponser/"
 
-#: inc/Widget/DashboardWidget.php:169
-msgid "Sponser"
+#: inc/Widget/DashboardWidget.php:172
+#, fuzzy
+#| msgid "Sponser"
+msgid "Sponsor"
 msgstr "حامی مالی"
 
-#: inc/Widget/DashboardWidget.php:216
+#: inc/Widget/DashboardWidget.php:219
 msgid "ParsiDate"
 msgstr "تاریخ پارسی"
 
-#: inc/Widget/DashboardWidget.php:334
+#: inc/Widget/DashboardWidget.php:337
 msgid "Mediana"
 msgstr "مدیانا"
 
-#: inc/Widget/DashboardWidget.php:340
+#: inc/Widget/DashboardWidget.php:343
 msgid "Seven"
 msgstr "هفت"
 
-#: inc/Widget/ParsiDateArchiveWidget.php:20
-#: inc/Widget/ParsiDateArchiveWidget.php:21
-#: inc/Widget/ParsiDateArchiveWidget.php:23
-#: inc/Widget/ParsiDateArchiveWidget.php:24
-#: inc/Widget/ParsiDateArchiveWidget.php:39
-#: inc/Widget/ParsiDateArchiveWidget.php:50
-#: inc/Widget/ParsiDateArchiveWidget.php:138
-#: inc/Widget/ParsiDateArchiveWidget.php:165
+#: inc/Widget/ParsiDateArchiveWidget.php:25
+#: inc/Widget/ParsiDateArchiveWidget.php:26
+#: inc/Widget/ParsiDateArchiveWidget.php:28
+#: inc/Widget/ParsiDateArchiveWidget.php:29
+#: inc/Widget/ParsiDateArchiveWidget.php:44
+#: inc/Widget/ParsiDateArchiveWidget.php:57
+#: inc/Widget/ParsiDateArchiveWidget.php:145
+#: inc/Widget/ParsiDateArchiveWidget.php:172
 msgid "Jalali Date Archives"
 msgstr "بایگانی تاریخ خورشیدی"
 
-#: inc/Widget/ParsiDateArchiveWidget.php:46
+#: inc/Widget/ParsiDateArchiveWidget.php:52
 msgid "Title"
 msgstr "عنوان"
 
-#: inc/Widget/ParsiDateArchiveWidget.php:55
+#: inc/Widget/ParsiDateArchiveWidget.php:62
 msgid "How to display"
 msgstr "نحوۀ نمایش"
 
-#: inc/Widget/ParsiDateArchiveWidget.php:61
+#: inc/Widget/ParsiDateArchiveWidget.php:68
 msgid "Yearly"
 msgstr "سالانه"
 
-#: inc/Widget/ParsiDateArchiveWidget.php:70
+#: inc/Widget/ParsiDateArchiveWidget.php:77
 msgid "Monthly"
 msgstr "ماهانه"
 
-#: inc/Widget/ParsiDateArchiveWidget.php:79
+#: inc/Widget/ParsiDateArchiveWidget.php:86
 msgid "Weekly"
 msgstr "هفتگی"
 
-#: inc/Widget/ParsiDateArchiveWidget.php:88
+#: inc/Widget/ParsiDateArchiveWidget.php:95
 msgid "Daily"
 msgstr "روزانه"
 
-#: inc/Widget/ParsiDateArchiveWidget.php:99
+#: inc/Widget/ParsiDateArchiveWidget.php:106
 msgid "Show post counts"
 msgstr "نمايش تعداد نوشته‌ها"
 
-#: inc/Widget/ParsiDateArchiveWidget.php:109
+#: inc/Widget/ParsiDateArchiveWidget.php:116
 msgid "Display as dropdown"
 msgstr "نمايش به صورت ليست بازشو"
 
-#: inc/Widget/ParsiDateArchiveWidget.php:116
-#: inc/Widget/ParsiDateCalendarWidget.php:42
+#: inc/Widget/ParsiDateArchiveWidget.php:123
+#: inc/Widget/ParsiDateCalendarWidget.php:47
 msgid "For use widget, active \"Fix permalinks dates\" option in plugin settings."
 msgstr ""
 "برای استفاده از ابزارک، گزینه \"تبدیل تاریخ در پیوندهای یکتا\" را در تنظیمات "
 "افزونه فعال کنید."
 
-#: inc/Widget/ParsiDateCalendarWidget.php:19
-#: inc/Widget/ParsiDateCalendarWidget.php:20
-#: inc/Widget/ParsiDateCalendarWidget.php:22
-#: inc/Widget/ParsiDateCalendarWidget.php:23
-#: inc/Widget/ParsiDateCalendarWidget.php:37
+#: inc/Widget/ParsiDateCalendarWidget.php:24
+#: inc/Widget/ParsiDateCalendarWidget.php:25
+#: inc/Widget/ParsiDateCalendarWidget.php:27
+#: inc/Widget/ParsiDateCalendarWidget.php:28
+#: inc/Widget/ParsiDateCalendarWidget.php:42
 msgid "Jalali Date Calender"
 msgstr "گاه‌شمار تاریخ خورشیدی"
 
-#: inc/Widget/ParsiDateCalendarWidget.php:48
+#: inc/Widget/ParsiDateCalendarWidget.php:53
 msgid "Title:"
 msgstr "عنوان:"
 
-#: inc/Widget/ParsiDateCalendarWidget.php:58
+#: inc/Widget/ParsiDateCalendarWidget.php:63
 msgid "Theme color:"
 msgstr "رنگ پوسته:"
 
-#: inc/Widget/ParsiDateCalendarWidget.php:63
+#: inc/Widget/ParsiDateCalendarWidget.php:69
 msgid "Light Mode"
 msgstr "حالت روشن"
 
-#: inc/Widget/ParsiDateCalendarWidget.php:66
+#: inc/Widget/ParsiDateCalendarWidget.php:72
 msgid "Dark Mode"
 msgstr "حالت تاریک"
 
