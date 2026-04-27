@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-23 13:43+0330\n"
-"PO-Revision-Date: 2026-04-23 13:43+0330\n"
+"POT-Creation-Date: 2026-04-27 15:04+0330\n"
+"PO-Revision-Date: 2026-04-27 15:09+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -652,23 +652,36 @@ msgstr "المنتور"
 msgid "ParsiDate integration for Elementor"
 msgstr "هماهنگ‌سازی تاریخ پارسی با المنتور"
 
+#: inc/App/Integration/HookDeactivator.php:135
+msgid "Format:"
+msgstr "قالب:"
+
 #: inc/App/Integration/HookDeactivator.php:137
+#: inc/App/Integration/HookDeactivator.php:141
+msgid "Example:"
+msgstr "نمونه:"
+
+#: inc/App/Integration/HookDeactivator.php:139
+msgid "Without class format:"
+msgstr "قالب بدون کلاس:"
+
+#: inc/App/Integration/HookDeactivator.php:146
 msgid "Hooks"
 msgstr "قلاب‌ها"
 
-#: inc/App/Integration/HookDeactivator.php:142
+#: inc/App/Integration/HookDeactivator.php:151
 msgid "Hook list"
 msgstr "لیست قلاب‌ها"
 
-#: inc/App/Integration/HookDeactivator.php:144
-msgid "Enter hook,class,function to remove parsidate filter from it"
-msgstr "نام قلاب، کلاس و تابع موردنظر را جهت رفع فیلتر پارسی‌دیت وارد کنید"
+#: inc/App/Integration/HookDeactivator.php:153
+msgid "Enter hook, function and class to remove Parsidate filter from it"
+msgstr "نام قلاب، تابع و کلاس موردنظر را جهت رفع فیلتر پارسی‌دیت وارد کنید"
 
-#: inc/App/Integration/HookDeactivator.php:157
+#: inc/App/Integration/HookDeactivator.php:167
 msgid "Hook deactivator"
 msgstr "غیرفعال کردن قلاب"
 
-#: inc/App/Integration/HookDeactivator.php:158
+#: inc/App/Integration/HookDeactivator.php:168
 msgid "Disable plugin hooks"
 msgstr "غیرفعال کردن قلابهای افزونه"
 
@@ -689,7 +702,7 @@ msgid "Expiry date"
 msgstr "تاریخ انقضاء"
 
 #: inc/App/Integration/WooCommerce.php:732 inc/App/Integration/WooCommerce.php:802
-#: inc/App/Integration/WooCommerce.php:816 inc/App/Integration/WooCommerce.php:820
+#: inc/App/Integration/WooCommerce.php:816 inc/App/Integration/WooCommerce.php:821
 msgid "WooCommerce"
 msgstr "ووکامرس"
 
@@ -1557,59 +1570,59 @@ msgstr "ناشناخته"
 msgid "Select Media(s)"
 msgstr "انتخاب رسانه(ها)"
 
-#: inc/Helper/HTML.php:369
+#: inc/Helper/HTML.php:370
 msgid "Remove all media"
 msgstr "حذف تمام رسانه‌ها"
 
-#: inc/Helper/HTML.php:372
+#: inc/Helper/HTML.php:373
 msgid "Select or Upload Media"
 msgstr "انتخاب یا آپلود رسانه"
 
-#: inc/Helper/HTML.php:374
+#: inc/Helper/HTML.php:375
 msgid "Use this media"
 msgstr "استفاده از این رسانه"
 
-#: inc/Helper/HTML.php:755
+#: inc/Helper/HTML.php:757
 msgid "More info"
 msgstr "اطلاعات بیشتر"
 
-#: inc/Helper/HTML.php:808
+#: inc/Helper/HTML.php:810
 msgid "No entries!"
 msgstr "بدون ورودی!"
 
-#: inc/Helper/HTML.php:925
+#: inc/Helper/HTML.php:927
 msgid "Color"
 msgstr "رنگ"
 
-#: inc/Helper/HTML.php:933
+#: inc/Helper/HTML.php:935
 msgid "Type"
 msgstr "نوع"
 
-#: inc/Helper/HTML.php:939
+#: inc/Helper/HTML.php:941
 msgid "Linear"
 msgstr "خطی"
 
-#: inc/Helper/HTML.php:940
+#: inc/Helper/HTML.php:942
 msgid "Radial"
 msgstr "شعاعی"
 
-#: inc/Helper/HTML.php:946
+#: inc/Helper/HTML.php:948
 msgid "Shape"
 msgstr "شکل"
 
-#: inc/Helper/HTML.php:952
+#: inc/Helper/HTML.php:954
 msgid "Ellipse"
 msgstr "بیضی"
 
-#: inc/Helper/HTML.php:953
+#: inc/Helper/HTML.php:955
 msgid "Circle"
 msgstr "دایره"
 
-#: inc/Helper/HTML.php:959
+#: inc/Helper/HTML.php:961
 msgid "Rotation °"
 msgstr "چرخش °"
 
-#: inc/Helper/HTML.php:1069
+#: inc/Helper/HTML.php:1071
 msgid "Required"
 msgstr "الزامی"
 
@@ -1676,12 +1689,8 @@ msgid "ParsiDate"
 msgstr "تاریخ پارسی"
 
 #: inc/Widget/DashboardWidget.php:337
-msgid "Mediana"
-msgstr "مدیانا"
-
-#: inc/Widget/DashboardWidget.php:343
-msgid "Seven"
-msgstr "هفت"
+msgid "Files.ir"
+msgstr ""
 
 #: inc/Widget/ParsiDateArchiveWidget.php:25
 #: inc/Widget/ParsiDateArchiveWidget.php:26
@@ -1776,6 +1785,12 @@ msgstr ""
 #: languages/common-strings.php:5
 msgid "WP-Parsi Team"
 msgstr "تیم وردپرس پارسی"
+
+#~ msgid "Mediana"
+#~ msgstr "مدیانا"
+
+#~ msgid "Seven"
+#~ msgstr "هفت"
 
 #~ msgid "Change Locale"
 #~ msgstr "تغییر زبان"
