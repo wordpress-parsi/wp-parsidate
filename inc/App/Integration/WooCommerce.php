@@ -19,7 +19,7 @@ use WPParsidate\Settings\Settings;
 class WooCommerce extends Addon {
   public string $addonID = 'woocommerce';
 
-  //public string $currentTab = 'integration';
+  public string $currentTab = 'woocommerce';
 
   public function initM1Action(): void {
     add_filter( 'wp_parsidate_menus', [ $this, 'addMenu' ], 20 );
@@ -816,6 +816,7 @@ class WooCommerce extends Addon {
       'title'            => esc_html__( 'WooCommerce', 'wp-parsidate' ),
       'desc'             => esc_html__( 'ParsiDate integration for WooCommerce', 'wp-parsidate' ),
       'force_enable'     => true,
+      'has_page'         => true,
       'icon'             => $svg,
       'tags'             => [ esc_html__( 'WooCommerce', 'wp-parsidate' ) ],
       'cat'              => 'ecommerce',
