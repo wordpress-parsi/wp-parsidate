@@ -115,15 +115,15 @@ class HookDeactivator {
     $rawList = apply_filters( 'wp_parsidate_hook_deactivator_raw_list', $rawList );
     $lists   = explode( "\n", $rawList );
 
-    foreach ( $lists as $list ) {
-      $list = explode( ',', $list );
-      $list = array_map( 'trim', $list );
+    foreach ( $lists as $item ) {
+      $item = explode( ',', $item );
+      $item = array_map( 'trim', $item );
 
-      if ( count( $list ) < 2 ) {
+      if ( count( $item ) < 2 ) {
         continue;
       }
 
-      $hooks[ $list[0] ][] = array( 'func' => $list[1], 'class' => ( $list[2] ?? '' ) );
+      $hooks[ $item[0] ][] = array( 'func' => $item[1], 'class' => ( $item[2] ?? '' ) );
     }
 
     Cache::set( 'hook_deactivator_list', $hooks );
@@ -132,20 +132,30 @@ class HookDeactivator {
   }
 
   public function addSectionSettings( array $sections ): array {
+    $listPlaceholder = esc_html__( 'Format:', 'wp-parsidate' ) . "\n" .
+                       "mainCallFunction,methodOfClass,ClassName\n" .
+                       esc_html__( 'Example:', 'wp-parsidate' ) . "\n" .
+                       "wp_date,render_field,acf_field_date_picker\n\n" .
+                       esc_html__( 'Without class format:', 'wp-parsidate' ) . "\n" .
+                       "mainCallFunction,usedFunction\n" .
+                       esc_html__( 'Example:', 'wp-parsidate' ) . "\n" .
+                       "wp_date,acf_format_date\n";
+
     $settings = [
       'start_grid_hook_deactivator' => array(
         'title' => esc_html__( 'Hooks', 'wp-parsidate' ),
         'type'  => 'startGrid',
       ),
       'hook_deactivator_list'       => array(
-        'id'         => 'hook_deactivator_list',
-        'title'      => esc_html__( 'Hook list', 'wp-parsidate' ),
-        'type'       => 'textarea',
-        'desc'       => esc_html__( 'Enter hook,class,function to remove parsidate filter from it',
-          'wp-parsidate' ),
-        'class'      => 'ltr-field',
-        'attributes' => array(
-          'rows' => 7
+        'id'          => 'hook_deactivator_list',
+        'title'       => esc_html__( 'Hook list', 'wp-parsidate' ),
+        'type'        => 'textarea',
+        'desc'        => esc_html__( 'Enter hook, function and class to remove Parsidate filter from it',
+            'wp-parsidate' ) . "\n\n" . $listPlaceholder,
+        'class'       => 'ltr-field',
+        'placeholder' => $listPlaceholder,
+        'attributes'  => array(
+          'rows' => 10
         )
       ),
       'end_grid_hook_deactivator'   => array(
