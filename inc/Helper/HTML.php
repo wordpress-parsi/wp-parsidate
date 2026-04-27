@@ -60,7 +60,7 @@ class HTML {
     $style           = isset( $data['wrap_style'] ) ? 'style="' . $data['wrap_style'] . '"' : '';
 
     return '<div class="' . self::getClass( $data,
-        self::prefix . 'field-wrap ' . self::prefix . 'field-' . $data['type'] . ( $controlDisabled ? ' ' . self::prefix . 'control-disabled' : '' ) ) . '" ' . $style . '><div class="' . self::prefix . 'field-head">' . $field . '</div>' . ( ! empty( $data['desc'] ) ? '<div class="' . self::prefix . 'description">' . $data['desc'] . '</div>' : '' ) . '</div>';
+        self::prefix . 'field-wrap ' . self::prefix . 'field-' . $data['type'] . ( $controlDisabled ? ' ' . self::prefix . 'control-disabled' : '' ) ) . '" ' . $style . '><div class="' . self::prefix . 'field-head">' . $field . '</div>' . ( ! empty( $data['desc'] ) ? '<div class="' . self::prefix . 'description">' . nl2br( $data['desc'] ) . '</div>' : '' ) . '</div>';
   }
 
   public static function textarea( $data ): string {
@@ -364,14 +364,16 @@ class HTML {
     }
 
     $id                                           = self::prefix . $data['type'] . '-' . $data['id'];
-    $placeholder                                  = $data['placeholder'] ?? esc_html__( 'Select Media(s)', 'wp-parsidate' );
+    $placeholder                                  = $data['placeholder'] ?? esc_html__( 'Select Media(s)',
+      'wp-parsidate' );
     $selectButton                                 = $data['select_button'] ?? $placeholder;
     $removeAllButton                              = $data['remove_all_button'] ?? esc_html__( 'Remove all media',
       'wp-parsidate' );
     $maxNumber                                    = $data['media_max_number'] ?? 1;
     $data['attributes']['data-title']             = $data['media_title'] ?? esc_html__( 'Select or Upload Media',
       'wp-parsidate' );
-    $data['attributes']['data-button']            = $data['media_button'] ?? esc_html__( 'Use this media', 'wp-parsidate' );
+    $data['attributes']['data-button']            = $data['media_button'] ?? esc_html__( 'Use this media',
+      'wp-parsidate' );
     $data['attributes']['data-type']              = $data['media_type'] ?? ''; // image, video, audio
     $data['attributes']['data-multi-selection']   = (int) ( $data['upload_multi_selection'] ?? true );
     $data['attributes']['data-accept-extensions'] = $data['upload_accept_extensions'] ?? '';  // Separate with comma (,), example: pdf,doc,docx
