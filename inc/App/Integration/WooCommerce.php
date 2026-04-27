@@ -128,7 +128,7 @@ class WooCommerce extends Addon {
     }
 
     return \WPParsidate\Helper\WooCommerce::isPostalCode( $postcode,
-      apply_filters( 'wpp_validate_postal_code_checksum', false ) );
+      apply_filters( 'wp_parsidate_validate_postal_code_checksum', false ) );
   }
 
   /**
