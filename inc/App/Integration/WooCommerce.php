@@ -72,6 +72,16 @@ class WooCommerce extends Addon {
       add_filter( 'woocommerce_checkout_process', [ $this, 'acceptPersianNumbersInCheckout' ], 20 );
       add_filter( 'woocommerce_checkout_posted_data', [ $this, 'convertNonPersianValuesInCheckout' ] );
 
+      add_filter( 'woocommerce_format_postcode', [ $this, 'acceptPersianNumbersInPostCode' ], 9999, 2 );
+      // add_filter( 'woocommerce_order_get_shipping_postcode', [ $this, 'fixPersianNumbersInPostCode' ], 9999, 2 );
+
+      // WC_Order class, get_address_prop method, Filter: 'woocommerce_order_get_[billing|shipping]_[prop]'
+      add_filter( 'woocommerce_order_get_shipping_phone', [ $this, 'fixPersianNumbersInPhone' ], 9999, 2 );
+      // @TODO: Sanitize or fix phone in block checkout page is a issue I cant fixed, We need add filter on phone for fix and validate in block type
+      // Footprint of phone sanitizing and validating in AbstractAddressSchema::sanitize_callback
+      // Fix persian number in phone field value in block type checkout page currently not worked
+      // WC_Validation::is_phone has error for Persian number in phone field
+
       if ( $this->getSetting( 'validate_postcode', false ) ) {
         add_filter( 'woocommerce_validate_postcode', [ $this, 'validatePostcode' ], 10, 3 );
       }
@@ -109,7 +119,7 @@ class WooCommerce extends Addon {
     // This pattern ensures the phone number follows the specified structure for both mobile and landline numbers
     if ( ! preg_match( '/^(0|0098|\+98)?(9\d{9}|[1-8]\d{9,10})$/',
       Number::toEnglish( wc_get_post_data_by_key( 'billing_phone' ) ) ) ) {
-      $errors->add( 'validation', esc_html__( '<strong>Phone number</strong> is invalid.', 'wp-parsidate' ) );
+      $errors->add( 'invalid_phone', esc_html__( '<strong>Phone number</strong> is invalid.', 'wp-parsidate' ) );
     }
   }
 
@@ -224,7 +234,7 @@ class WooCommerce extends Addon {
    *
    * @since 4.1.0
    */
-  public function acceptPersianNumbersInCheckout() {
+  public function acceptPersianNumbersInCheckout(): void {
     if ( $this->getSetting( 'fix_persian_postcode', false ) ) {
       if ( isset( $_POST['billing_postcode'] ) ) {
         $_POST['billing_postcode'] = Number::toEnglish( wc_get_post_data_by_key( 'billing_postcode' ) );
@@ -245,6 +255,36 @@ class WooCommerce extends Addon {
       }
     }
   }
+
+  /**
+   * Fix persian postal code in WooCommerce checkout
+   *
+   * @since 6.0
+   */
+  public function acceptPersianNumbersInPostCode( $postcode, $country ) {
+    if ( 'IR' === $country && $this->getSetting( 'fix_persian_postcode', false ) ) {
+      $postcode = Number::toEnglish( $postcode );
+    }
+
+    return $postcode;
+  }
+
+  /**
+   * Fix non-persian digits in checkout phone field
+   *
+   * @param  string  $phone  The address property value.
+   * @param  \WC_Order  $order  The order object being read.
+   *
+   * @since 6.0
+   */
+  public function fixPersianNumbersInPhone( $phone, $order ): string {
+    if ( $order->get_shipping_country() === 'IR' && $this->getSetting( 'fix_persian_phone', false ) ) {
+      $phone = Number::toEnglish( $phone );
+    }
+
+    return $phone;
+  }
+
 
   /**
    * Changes gregorian dates to Jalali date on wc report screen
