@@ -57,8 +57,7 @@ class WooCommerce extends Addon {
         // Convert order_date using js
         add_action( 'woocommerce_process_shop_order_meta', [ $this, 'changeOrderDateOnSave' ], 1000 );
         add_filter( 'woocommerce_process_product_meta', [ $this, 'validateNonVariableProductDates' ], 1000 );
-        add_action( 'woocommerce_ajax_save_product_variations', [ $this, 'validateVariableProductDates' ],
-          1000 );
+        add_action( 'woocommerce_ajax_save_product_variations', [ $this, 'validateVariableProductDates' ], 1000 );
         add_action( 'woocommerce_process_shop_coupon_meta', [ $this, 'validateCouponsDate' ], 1000 );
         add_filter( 'get_post_metadata', [ $this, 'changeOrderDateAndCouponExpiresMeta' ], 10, 4 );
 
@@ -334,7 +333,7 @@ class WooCommerce extends Addon {
         }
       }
 
-      wp_add_inline_script( 'wpp_order_jalali_date', '$("input[name=order_date]").val("' . $jalali_date . '")' );
+      wp_add_inline_script( 'wpp_jalali_datepicker', 'jQuery("input[name=order_date]").val("' . $jalali_date . '")' );
 
     } elseif ( 'legacy_report' === $current_screen ) {
       $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
@@ -345,8 +344,8 @@ class WooCommerce extends Addon {
       $jalali_end_date   = ! empty( $endDate ) ? parsidate( 'Y-m-d',
         date( 'Y-m-d', strtotime( $endDate ) ), 'eng' ) : '';
 
-      wp_add_inline_script( 'wpp_start_end_jalali_dates',
-        '$("input[name=start_date]").val("' . $jalali_start_date . '");$("input[name=end_date]").val("' . $jalali_end_date . '");' );
+      wp_add_inline_script( 'wpp_jalali_datepicker',
+        'jQuery("input[name=start_date]").val("' . $jalali_start_date . '");jQuery("input[name=end_date]").val("' . $jalali_end_date . '");' );
 
     } elseif ( 'product' === $current_screen ) {
       global $post;
@@ -370,8 +369,8 @@ class WooCommerce extends Addon {
         $sale_price_dates_to   = $sale_price_dates_to_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
           $sale_price_dates_to_timestamp ) ) : '';
 
-        wp_add_inline_script( 'wpp_sale_price_jalali_dates',
-          '$("#_sale_price_dates_from").val("' . $sale_price_dates_from . '");$("#_sale_price_dates_to").val("' . $sale_price_dates_to . '");' );
+        wp_add_inline_script( 'wpp_jalali_datepicker',
+          'jQuery("#_sale_price_dates_from").val("' . $sale_price_dates_from . '");jQuery("#_sale_price_dates_to").val("' . $sale_price_dates_to . '");' );
 
       } else {
         $dates                = array();
@@ -398,12 +397,12 @@ class WooCommerce extends Addon {
         }
 
         if ( ! empty( $dates ) ) {
-          wp_add_inline_script( 'wpp_variation_jalali_dates',
+          wp_add_inline_script( 'wpp_jalali_datepicker',
             'const wppVariationsDates = ' . wp_json_encode( $dates ) . '
-						    $("#woocommerce-product-data").on("woocommerce_variations_loaded", function(e) {
+						    jQuery("#woocommerce-product-data").on("woocommerce_variations_loaded", function(e) {
 							  wppVariationsDates.forEach((date, index) => {
-                                $(`input[name="variable_sale_price_dates_from[${index}]"]`).val(date.start)
-						        $(`input[name="variable_sale_price_dates_to[${index}]"]`).val(date.end)
+                                jQuery(`input[name="variable_sale_price_dates_from[${index}]"]`).val(date.start)
+						        jQuery(`input[name="variable_sale_price_dates_to[${index}]"]`).val(date.end)
 						      })
 						    })'
           );
