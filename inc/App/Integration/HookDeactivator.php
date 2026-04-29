@@ -133,13 +133,13 @@ class HookDeactivator {
 
   public function addSectionSettings( array $sections ): array {
     $listPlaceholder = esc_html__( 'Format:', 'wp-parsidate' ) . "\n" .
-                       "mainCallFunction,methodOfClass,ClassName\n" .
+                       "<code>mainCallFunction,methodOfClass,ClassName</code>\n" .
                        esc_html__( 'Example:', 'wp-parsidate' ) . "\n" .
-                       "wp_date,render_field,acf_field_date_picker\n\n" .
+                       "<code>wp_date,render_field,acf_field_date_picker</code>\n\n" .
                        esc_html__( 'Without class format:', 'wp-parsidate' ) . "\n" .
-                       "mainCallFunction,usedFunction\n" .
+                       "<code>mainCallFunction,usedFunction</code>\n" .
                        esc_html__( 'Example:', 'wp-parsidate' ) . "\n" .
-                       "wp_date,acf_format_date\n";
+                       "<code>wp_date,acf_format_date</code>\n";
 
     $settings = [
       'start_grid_hook_deactivator' => array(
@@ -153,7 +153,7 @@ class HookDeactivator {
         'desc'        => esc_html__( 'Enter hook, function and class to remove Parsidate filter from it',
             'wp-parsidate' ) . "\n\n" . $listPlaceholder,
         'class'       => 'ltr-field',
-        'placeholder' => $listPlaceholder,
+        'placeholder' => wp_strip_all_tags( $listPlaceholder ),
         'attributes'  => array(
           'rows' => 10
         )
