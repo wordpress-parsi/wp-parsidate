@@ -11,7 +11,7 @@
  * Domain Path: /languages
  * Requires at least: 5.3
  * Requires PHP: 7.4
- * WC tested up to: 9.8.5
+ * WC tested up to: 10.7.0
  * License: GPLv3
  *
  * WP-Parsidate is free software: you can redistribute it and/or modify

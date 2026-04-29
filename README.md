@@ -1,14 +1,18 @@
 # Parsi Date
 
-![Version](https://img.shields.io/badge/version-5.1.2-blue)
-![WordPress Compatible](https://img.shields.io/badge/WordPress-5.3%20to%206.7.1-blue)
+![Version](https://img.shields.io/badge/version-6.0-blue)
+![WordPress Compatible](https://img.shields.io/badge/WordPress-5.3%20to%206.9.4-blue)
 
-**Contributors:** [lord_viper](https://profiles.wordpress.org/lord_viper), [man4toman](https://profiles.wordpress.org/man4toman), [parselearn](https://profiles.wordpress.org/parselearn), [yazdaniwp](https://profiles.wordpress.org/yazdaniwp), [saeedfard](https://profiles.wordpress.org/saeedfard), [iehsanir](https://profiles.wordpress.org/iehsanir)  
-**Donate link:** [https://wp-parsi.com/support/](https://wp-parsi.com/support/)  
-**Tags:** shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, iran, iranian, parsidate, rtl, gutenberg, acf, woocommerce  
-**Requires at least:** 5.3  
-**Tested up to:** 6.7.1  
-**Stable tag:** 5.1.2  
+**Contributors:** [lord_viper](https://profiles.wordpress.org/lord_viper), [man4toman](https://profiles.wordpress.org/man4toman), [parselearn](https://profiles.wordpress.org/parselearn), [yazdaniwp](https://profiles.wordpress.org/yazdaniwp), [saeedfard](https://profiles.wordpress.org/saeedfard), [iehsanir](https://profiles.wordpress.org/iehsanir)
+
+**Donate link:** [https://wp-parsi.com/support/](https://wp-parsi.com/support/)
+
+**Tags:** shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, iran, iranian, parsidate, rtl, gutenberg, acf, woocommerce
+
+**Requires PHP:** 7.4,
+**Requires at least:** 5.3,
+**Tested up to:** 6.9.4,
+**Stable tag:** 6.0
 
 Persian date support for WordPress.
 
@@ -37,15 +41,11 @@ This package, created by Persian developers, enhances the Persian experience on 
 3. To use the archive widget, go to 'Widgets' and select 'بایگانی تاریخ خورشیدی'.
 4. For the calendar widget, go to 'Widgets' and select 'گاه‌شمار تاریخ خورشیدی'.
 
-## Screenshots
+## Contributors
 
-1. Plugin main settings
-2. Conversions settings
-3. Tools
-4. Other plugin compatibility
-5. Persian datepicker in WooCommerce
-6. Persian date type in ACF
-
+<a href = "https://github.com/wordpress-parsi/wp-parsidate/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=wordpress-parsi/wp-parsidate" alt="Contributors"/>
+</a>
 
 ## License
 
