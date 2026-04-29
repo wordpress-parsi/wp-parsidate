@@ -64,8 +64,11 @@ class AdminDashboard {
          esc_html__( 'WP Parsi news', 'wp-parsidate' ) . '</strong>';
     $feedReader = new FeedReader( [ 'url' => 'https://wp-parsi.com/parsidate/feed/' ] );
     $feedItems  = $feedReader->read()->getFeedLinks();
-
-    Templates::load( Templates::getPath( 'feed-reader/feed_list.php' ), array( 'items' => $feedItems ) );
+    $feedNone   = $feedReader->setEmptyFeedDesc( esc_html__( 'WP-Parsi website is not available.', 'wp-parsidate' ) );
+    Templates::load(
+      Templates::getPath( 'feed-reader/feed_list.php' ),
+      array( 'items' => $feedItems, 'none' => $feedNone )
+    );
     echo '</div>';
   }
 

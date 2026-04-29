@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-27 15:04+0330\n"
-"PO-Revision-Date: 2026-04-27 15:09+0330\n"
+"POT-Creation-Date: 2026-04-29 13:20+0330\n"
+"PO-Revision-Date: 2026-04-29 13:21+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -216,7 +216,7 @@ msgstr "مرتضی گرانسایه"
 
 #: inc/Admin/AdminAbout.php:224 inc/Admin/AdminAbout.php:234
 #: inc/Admin/AdminAbout.php:244 inc/Admin/AdminAbout.php:254
-#: inc/Admin/AdminAbout.php:264
+#: inc/Admin/AdminAbout.php:274
 msgid "Developer"
 msgstr "توسعه‌دهنده"
 
@@ -233,30 +233,30 @@ msgid "Mobin Ghasempoor"
 msgstr "مبین قاسمپور"
 
 #: inc/Admin/AdminAbout.php:263
-msgid "Parsa Kafi"
-msgstr "پارسا کافی"
-
-#: inc/Admin/AdminAbout.php:273
 msgid "Mohsen Ghiasi"
 msgstr "محسن قیاسی"
 
-#: inc/Admin/AdminAbout.php:274
+#: inc/Admin/AdminAbout.php:264
 msgid "DevOps"
 msgstr "دواپس"
 
-#: inc/Admin/AdminAbout.php:372
+#: inc/Admin/AdminAbout.php:273
+msgid "Parsa Kafi"
+msgstr "پارسا کافی"
+
+#: inc/Admin/AdminAbout.php:373
 msgid "About Us"
 msgstr "درباره ما"
 
-#: inc/Admin/AdminAbout.php:373
+#: inc/Admin/AdminAbout.php:374
 msgid "About the WordPress Parsi team and plugin"
 msgstr "درباره تیم و افزونه وردپرس پارسی"
 
-#: inc/Admin/AdminAbout.php:379
+#: inc/Admin/AdminAbout.php:380
 msgid "The text of this page is in Persian."
 msgstr "متن این صفحه به زبان فارسی است."
 
-#: inc/Admin/AdminAbout.php:385 inc/Widget/DashboardWidget.php:159
+#: inc/Admin/AdminAbout.php:386 inc/Widget/DashboardWidget.php:159
 msgid "About"
 msgstr "درباره"
 
@@ -319,6 +319,10 @@ msgstr ""
 #: inc/Admin/AdminDashboard.php:64
 msgid "WP Parsi news"
 msgstr "خبرهای وردپرس پارسی"
+
+#: inc/Admin/AdminDashboard.php:67
+msgid "WP-Parsi website is not available."
+msgstr "وبسایت وردپرس پارسی در دسترس نیست."
 
 #: inc/Admin/AdminIntegration.php:25
 msgid "Integration"
@@ -620,7 +624,7 @@ msgstr "هماهنگ‌سازی تاریخ پارسی با دانلود آسان
 msgid "Price"
 msgstr "قیمت"
 
-#: inc/App/Integration/EDD.php:81 inc/App/Integration/WooCommerce.php:743
+#: inc/App/Integration/EDD.php:81 inc/App/Integration/WooCommerce.php:781
 msgid "Fix prices"
 msgstr "تصحیح قیمت‌ها"
 
@@ -693,48 +697,48 @@ msgstr "رنک‌مث"
 msgid "ParsiDate integration for Rank Math"
 msgstr "هماهنگ‌سازی تاریخ پارسی با رنک‌مث"
 
-#: inc/App/Integration/WooCommerce.php:112
+#: inc/App/Integration/WooCommerce.php:120
 msgid "<strong>Phone number</strong> is invalid."
 msgstr "<strong>شمارۀ تماس</strong> معتبر نیست."
 
-#: inc/App/Integration/WooCommerce.php:388
+#: inc/App/Integration/WooCommerce.php:426
 msgid "Expiry date"
 msgstr "تاریخ انقضاء"
 
-#: inc/App/Integration/WooCommerce.php:732 inc/App/Integration/WooCommerce.php:802
-#: inc/App/Integration/WooCommerce.php:816 inc/App/Integration/WooCommerce.php:821
+#: inc/App/Integration/WooCommerce.php:770 inc/App/Integration/WooCommerce.php:840
+#: inc/App/Integration/WooCommerce.php:854 inc/App/Integration/WooCommerce.php:859
 msgid "WooCommerce"
 msgstr "ووکامرس"
 
-#: inc/App/Integration/WooCommerce.php:733 inc/App/Integration/WooCommerce.php:817
+#: inc/App/Integration/WooCommerce.php:771 inc/App/Integration/WooCommerce.php:855
 msgid "ParsiDate integration for WooCommerce"
 msgstr "هماهنگ‌سازی تاریخ پارسی با ووکامرس"
 
-#: inc/App/Integration/WooCommerce.php:738
+#: inc/App/Integration/WooCommerce.php:776
 msgid "Products"
 msgstr "محصولات"
 
-#: inc/App/Integration/WooCommerce.php:753
+#: inc/App/Integration/WooCommerce.php:791
 msgid "Checkout page"
 msgstr "برگه پرداخت"
 
-#: inc/App/Integration/WooCommerce.php:758
+#: inc/App/Integration/WooCommerce.php:796
 msgid "Fix persian postcode"
 msgstr "تبدیل کد پستی فارسی در روند پرداخت"
 
-#: inc/App/Integration/WooCommerce.php:765
+#: inc/App/Integration/WooCommerce.php:803
 msgid "Fix persian phone"
 msgstr "تبدیل شماره تماس فارسی در روند پرداخت"
 
-#: inc/App/Integration/WooCommerce.php:772
+#: inc/App/Integration/WooCommerce.php:810
 msgid "Display cities as a drop-down list"
 msgstr "نمایش شهرها به‌صورت لیست کشویی"
 
-#: inc/App/Integration/WooCommerce.php:779
+#: inc/App/Integration/WooCommerce.php:817
 msgid "Postcode validation"
 msgstr "اعتبارسنجی کد پستی"
 
-#: inc/App/Integration/WooCommerce.php:786
+#: inc/App/Integration/WooCommerce.php:824
 msgid "Phone number validation"
 msgstr "اعتبارسنجی شماره تماس"
 
@@ -1627,11 +1631,7 @@ msgid "Required"
 msgstr "الزامی"
 
 #: inc/Plugin/Plugin.php:45
-#, fuzzy, php-format
-#| msgid ""
-#| "<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to "
-#| "configure it to work properly. <a href=\"%s\">Go to configuration page</a> "
-#| "&ndash; <a href=\"%s\">Dismiss</a></p></div>"
+#, php-format
 msgid ""
 "<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to "
 "configure it to work properly. <a href=\"%1$s\">Go to configuration page</a> "
@@ -1671,16 +1671,11 @@ msgid "(opens in a new tab)"
 msgstr "(در زبانۀ جدید باز می‌شود)"
 
 #: inc/Widget/DashboardWidget.php:171
-#, fuzzy
-#| msgctxt "Sponsership plans"
-#| msgid "https://wp-parsi.com/sponser/"
 msgctxt "Sponsorship plans"
 msgid "https://wp-parsi.com/sponser/"
 msgstr "https://wp-parsi.com/sponser/"
 
 #: inc/Widget/DashboardWidget.php:172
-#, fuzzy
-#| msgid "Sponser"
 msgid "Sponsor"
 msgstr "حامی مالی"
 

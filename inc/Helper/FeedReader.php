@@ -242,6 +242,10 @@ class FeedReader {
     return $this;
   }
 
+  public function setEmptyFeedDesc( $desc ) {
+    return Templates::load( Templates::getPath( 'feed-reader/feed_none.php' ), array( 'desc' => $desc ), false, false );
+  }
+
   /**
    * Replace text in feed fields
    *

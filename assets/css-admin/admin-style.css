@@ -1969,6 +1969,10 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-list-links a .wppd-feed
   color: #525252;
   font-size: 0.8em;
 }
+body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-feed-none {
+  color: #525252;
+  font-style: italic;
+}
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-dashboard-welcome {
   background-color: #fafbfc;
   border: 1px solid #f3f3f3;
