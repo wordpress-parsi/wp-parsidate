@@ -63,8 +63,9 @@ Performance
 == Changelog ==
 
 = 6.0 =
-*
-*
+* We have major update for code and UI plugin
+* We are respect to our old versions, Backward compatibility full supported.
+* ParsiDate now supported Addon ability, You can enable addon to integration Jalali date with your plugins.
 
 = 5.1.8 =
 * Improved multilingual compatibility
