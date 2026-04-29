@@ -44,6 +44,7 @@ body.toplevel_page_#{variables.$plugin_key} {
     background-color: variables.$background_side;
     border-radius: 2px;
     padding: 5px;
+    display: inline-block;
 
     &.wppd-copy-text {
       display: inline-flex;

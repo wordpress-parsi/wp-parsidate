@@ -1600,6 +1600,7 @@ body.toplevel_page_wp-parsidate code {
   background-color: #f5f7f9;
   border-radius: 2px;
   padding: 5px;
+  display: inline-block;
 }
 body.toplevel_page_wp-parsidate code.wppd-copy-text {
   display: inline-flex;
