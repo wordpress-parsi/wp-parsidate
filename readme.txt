@@ -53,12 +53,13 @@ Performance
 
 == Screenshots ==
 
-1. Plugin main settings
-2. Conversions settings
-3. Tools
-4. Other plugin compatibility
-5. Persian date picker in WooCommerce
-6. Persian date type in ACF
+1. Dashboard tab
+2. Core settings
+3. Conversions settings
+4. Tools settings
+5. Integration and addon settings
+6. Addon tab
+7. WooCommerce settings
 
 == Changelog ==
 
