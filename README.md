@@ -20,19 +20,30 @@ Persian date support for WordPress.
 
 This package, created by Persian developers, enhances the Persian experience on WordPress by adding Shamsi (Jalali) calendar support, character issue fixes, and RTL compatibility for the WordPress back-end.
 
-### Key Features
+## ✨ Key Features
 
-- Shamsi (Jalali) day-picker in Block Editor (Gutenberg)
-- Shamsi (Jalali) jQuery UI date-picker
-- [WP-Planet.ir](https://wp-planet.ir) Widget
-- Shamsi (Jalali) dates in posts, comments, pages, archives, search, categories
-- Shamsi (Jalali) dates in permalinks
-- Shamsi (Jalali) dates in admin sections
-- Shamsi (Jalali) calendar and archive widgets
-- RTL support and tinymce editor adjustments
-- Persian features in WooCommerce and ACF
-- Functions for converting Arabic characters and numbers to Persian
-- Low resource usage
+### Date & Calendar Functionality
+- 🗓️ **Shamsi (Jalali) Calendar** - Complete Solar Hijri calendar support
+- 📅 **Date Conversion** - Automatic conversion throughout WordPress
+- 📍 **Archive Widgets** - Shamsi date-based post archives
+- 📆 **Calendar Widget** - Interactive Persian calendar widget
+- 🔗 **Permalink Support** - Shamsi dates in custom permalinks
+
+### Editor & Admin Integration
+- ✏️ **Gutenberg Support** - Shamsi date picker in Block Editor
+- 🎨 **ACF Integration** - Persian date field type for Advanced Custom Fields
+- ⚙️ **Admin Dates** - Shamsi dates throughout WordPress admin dashboard
+- 📝 **Content Dates** - Automatic Persian dates in posts, pages, comments, and archives
+
+### Commerce & E-commerce
+- 🛒 **WooCommerce Ready** - Full WooCommerce compatibility with Persian dates
+- 📦 **Product Support** - Persian dates for orders, products, and customer data
+
+### Text & Character Processing
+- 🔤 **Arabic to Persian** - Automatic character conversion (ي/ك to ی/ک)
+- 🔢 **Number Localization** - Convert Eastern Arabic and Latin numerals
+- 📖 **Full RTL Support** - Complete right-to-left text direction optimization
+- ✏️ **TinyMCE Adjustments** - RTL-optimized WordPress editor
 
 ## Installation
 
