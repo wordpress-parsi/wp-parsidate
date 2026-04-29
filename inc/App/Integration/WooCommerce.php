@@ -102,10 +102,8 @@ class WooCommerce extends Addon {
     }
 
     if ( class_exists( FeaturesUtil::class ) ) {
-      FeaturesUtil::declare_compatibility( 'custom_order_tables',
-        WP_PARSI_ROOT, true );
-      FeaturesUtil::declare_compatibility( 'product_instance_caching',
-        WP_PARSI_ROOT, true );
+      FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT, true );
+      FeaturesUtil::declare_compatibility( 'product_instance_caching', WP_PARSI_ROOT, true );
     }
   }
 
@@ -856,7 +854,7 @@ class WooCommerce extends Addon {
       'title'            => esc_html__( 'WooCommerce', 'wp-parsidate' ),
       'desc'             => esc_html__( 'ParsiDate integration for WooCommerce', 'wp-parsidate' ),
       'force_enable'     => true,
-      'has_page'         => true,
+      'has_page'         => false,
       'icon'             => $svg,
       'tags'             => [ esc_html__( 'WooCommerce', 'wp-parsidate' ) ],
       'cat'              => 'ecommerce',
