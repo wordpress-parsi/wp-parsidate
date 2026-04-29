@@ -13,21 +13,36 @@ Persian date support for WordPress
 
 ParsiDate is a powerful plugin developed by Persian contributors to enhance the WordPress experience for Farsi users. It provides full support for the Shamsi (Jalali) calendar across the WordPress dashboard and front-end, fixes character display issues, and improves Right-to-Left (RTL) compatibility. With seamless integration into core features and popular plugins like WooCommerce and Gravity Forms, ParsiDate makes managing Persian websites easier and more professional.
 
-List of some features:
+Key Features:
 
-* Shamsi (Jalali) day-picker in Block Editor (Gutenberg)
-* Shamsi (Jalali) jQuery UI date-picker
-* Shamsi (Jalali) dates in posts, pages, comments, archives, categories, search results, and permalinks
-* Full WooCommerce support (checkout fields, orders, reports, widgets, and date-pickers)
-* Shamsi (Jalali) dates in admin sections: post list, comment list, page list, and Quick Edit panels
-* Shamsi (Jalali) calendar widget and archive widget
-* RTL and fixed TinyMCE editor for a better writing experience
-* Add Persian features to WooCommerce
-* Advanced compatibility with ACF (Advanced Custom Fields)
-* Powerful and fast function for fixing Arabic (ي , ك) to Persian (ی , ک)
-* Automatic conversion of English numbers to Persian numbers
-* Lightweight and optimized for low resource usage
-* [WP-Planet.ir](https://wp-planet.ir) Widget
+Date & Calendar Functionality
+* Shamsi (Jalali) Calendar - Complete Solar Hijri calendar support
+* Date Conversion - Automatic conversion throughout WordPress
+* Archive Widgets - Shamsi date-based post archives
+* Calendar Widget - Interactive Persian calendar widget
+* Permalink Support - Shamsi dates in custom permalinks
+
+Editor & Admin Integration
+* Gutenberg Support - Shamsi date picker in Block Editor
+* ACF Integration - Persian date field type for Advanced Custom Fields
+* Admin Dates - Shamsi dates throughout WordPress admin dashboard
+* Content Dates - Automatic Persian dates in posts, pages, comments, and archives
+
+Commerce & E-commerce
+* WooCommerce Ready - Full WooCommerce compatibility with Persian dates
+* Product Support - Persian dates for orders, products, and customer data
+
+Text & Character Processing
+* Arabic to Persian - Automatic character conversion (ي/ك to ی/ک)
+* Number Localization - Convert Eastern Arabic and Latin numerals
+* Full RTL Support - Complete right-to-left text direction optimization
+* TinyMCE Adjustments - RTL-optimized WordPress editor
+
+Performance
+* Lightweight - Minimal resource usage and fast performance
+* Efficient - Optimized code for production environments
+* WP-Planet Widget - Integration with [WP-Planet.ir](https://wp-planet.ir)
+
 
 == Installation ==
 
