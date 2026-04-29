@@ -259,6 +259,16 @@ class AdminAbout {
           'github'    => 'https://github.com/lord-viper',
         )
       ),
+      'mohsengham'       => array(
+        'name'   => esc_html__( 'Mohsen Ghiasi', 'wp-parsidate' ),
+        'role'   => esc_html__( 'DevOps', 'wp-parsidate' ),
+        'avatar' => 'https://avatars.githubusercontent.com/u/652359',
+        'social' => array(
+          'x-twitter' => 'https://x.com/mohsengham',
+          'linkedin'  => 'https://www.linkedin.com/in/mohsen-ghiasi/',
+          'github'    => 'https://github.com/mohsengham',
+        ),
+      ),
       'parsakafi'        => array(
         'name'   => esc_html__( 'Parsa Kafi', 'wp-parsidate' ),
         'role'   => esc_html__( 'Developer', 'wp-parsidate' ),
@@ -268,15 +278,6 @@ class AdminAbout {
           'linkedin'  => 'https://www.linkedin.com/in/parsakafi/',
           'github'    => 'https://github.com/parsakafi',
         ),
-      ),
-      'mohsengham'       => array(
-        'name'   => esc_html__( 'Mohsen Ghiasi', 'wp-parsidate' ),
-        'role'   => esc_html__( 'DevOps', 'wp-parsidate' ),
-        'avatar' => 'https://secure.gravatar.com/avatar/64d4e212c9263a72b2fcadbe3951342f?s=300&d=mm&r=g',
-        'social' => array(
-          'x-twitter' => 'https://x.com/mohsengham',
-          'linkedin'  => 'https://www.linkedin.com/in/mohsen-ghiasi/',
-        )
       )
       // Add more team members as needed
     );
