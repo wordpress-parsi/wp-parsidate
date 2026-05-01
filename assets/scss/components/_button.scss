@@ -1,0 +1,71 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+@mixin wppd-button {
+  .wppd-button {
+    background-color: transparent;
+    color: variables.$dark;
+    border: 1px solid transparent;
+    padding: 8px 14px;
+    border-radius: 10px;
+    corner-shape: squircle;
+    font-weight: 500;
+    cursor: pointer;
+    -webkit-transition: .2s;
+    transition: .2s;
+
+    &:hover, &:focus, &:active {
+      color: variables.$gray;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    &.wppd-button-primary {
+      background-color: variables.$primary;
+      border-color: variables.$blue_50;
+      color: white;
+
+      &:hover, &:focus, &:active {
+        background-color: color.scale(variables.$primary, $lightness: -5%);
+      }
+
+      &:focus, &:active {
+        outline-offset: 2px;
+        outline: variables.$primary solid 2px;
+      }
+
+      &:disabled {
+        color: variables.$gray_light_three;
+      }
+    }
+
+    &.wppd-button-secondary {
+      background-color: white;
+      border-color: variables.$gray_light_two;
+
+      &:hover, &:focus, &:active {
+        background-color: color.scale(variables.$background_side, $lightness: 2%);
+      }
+
+      &:focus, &:active {
+        outline-offset: 2px;
+        outline: variables.$primary solid 2px;
+      }
+    }
+
+    &:disabled {
+      color: variables.$gray_light;
+      cursor: default;
+    }
+
+    &.wppd-button-primary, &.wppd-button-secondary, {
+      &:disabled {
+        background-color: variables.$gray_light_three;
+
+        &:hover, &:focus, &:active {
+          background-color: variables.$gray_light_three;
+          outline: none;
+        }
+      }
+    }
+  }
+}

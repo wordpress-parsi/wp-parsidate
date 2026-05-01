@@ -1,10 +1,11 @@
 === پارسی دیت – Parsi Date ===
 Contributors: lord_viper, man4toman, parselearn, yazdaniwp, saeedfard, iehsanir, wordpress-parsi
 Donate link: https://wp-parsi.com/support/
-Tags: shamsi, persian, jalali, date, woocommerce, ووکامرس, تاریخ شمسی, پارسی دیت, پارسی‌دیت
+Tags: shamsi, Persian, Jalali, WooCommerce, ووکامرس
 Requires at least: 5.3
-Tested up to: 6.8
-Stable tag: 5.1.8
+Tested up to: 6.9.4
+Stable tag: 6.0
+Requires PHP: 7.4
 License: GPLv3
 
 Persian date support for WordPress
@@ -13,54 +14,59 @@ Persian date support for WordPress
 
 ParsiDate is a powerful plugin developed by Persian contributors to enhance the WordPress experience for Farsi users. It provides full support for the Shamsi (Jalali) calendar across the WordPress dashboard and front-end, fixes character display issues, and improves Right-to-Left (RTL) compatibility. With seamless integration into core features and popular plugins like WooCommerce and Gravity Forms, ParsiDate makes managing Persian websites easier and more professional.
 
-Key Features:
+= Key Features: =
 
-Date & Calendar Functionality
-* Shamsi (Jalali) Calendar - Complete Solar Hijri calendar support
+= Date & Calendar Functionality =
+* Shamsi (شمسی) Calendar - Complete Solar Hijri calendar support
 * Date Conversion - Automatic conversion throughout WordPress
 * Archive Widgets - Shamsi date-based post archives
 * Calendar Widget - Interactive Persian calendar widget
 * Permalink Support - Shamsi dates in custom permalinks
 
-Editor & Admin Integration
+= Editor & Admin Integration =
 * Gutenberg Support - Shamsi date picker in Block Editor
 * ACF Integration - Persian date field type for Advanced Custom Fields
 * Admin Dates - Shamsi dates throughout WordPress admin dashboard
 * Content Dates - Automatic Persian dates in posts, pages, comments, and archives
 
-Commerce & E-commerce
-* WooCommerce Ready - Full WooCommerce compatibility with Persian dates
+= Commerce & E-commerce =
+* WooCommerce Ready - Full WooCommerce (ووکامرس) compatibility with Persian dates
 * Product Support - Persian dates for orders, products, and customer data
 
-Text & Character Processing
+= Text & Character Processing =
 * Arabic to Persian - Automatic character conversion (ي/ك to ی/ک)
 * Number Localization - Convert Eastern Arabic and Latin numerals
 * Full RTL Support - Complete right-to-left text direction optimization
 * TinyMCE Adjustments - RTL-optimized WordPress editor
 
-Performance
+= Performance =
 * Lightweight - Minimal resource usage and fast performance
 * Efficient - Optimized code for production environments
 * WP-Planet Widget - Integration with [WP-Planet.ir](https://wp-planet.ir)
-
 
 == Installation ==
 
 1. Upload plugin folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. To use the archives widget, go to 'Widgets' and choose 'بایگانی تاریخ خورشیدی'
-4. To use the calender widget, go to 'Widgets' and choose 'گاه‌شمار تاریخ خورشیدی'
+4. To use the calendar widget, go to 'Widgets' and choose 'گاه‌شمار تاریخ خورشیدی'
 
 == Screenshots ==
 
-1. Plugin main settings
-2. Conversions settings
-3. Tools
-4. Other plugin compatibility
-5. Persian date picker in WooCommerce
-6. Persian date type in ACF
+1. Dashboard tab
+2. Core settings
+3. Conversions settings
+4. Tools settings
+5. Integration and addon settings
+6. Addon tab
+7. WooCommerce settings
 
 == Changelog ==
+
+= 6.0 =
+* We have major update for code and UI of Parsi Date plugin
+* We are respect to our old versions, Backward compatibility full supported.
+* ParsiDate now supported Addon ability, You can enable addon to integration Jalali date with your plugins.
 
 = 5.1.8 =
 * Improved multilingual compatibility
@@ -85,14 +91,14 @@ Performance
 
 = 5.1.6 =
 * Some additional/unused options have been removed
-* The sponsors widget loading mechanism has been optimized 
+* The sponsors widget loading mechanism has been optimized
 
 = 5.1.5 =
 * Revert 'wpp_fix_post_time' and 'wpp_fix_post_date' to fix recent date time issue
 
 = 5.1.4 =
 * Fix NuSoap Required file Path
-* Fix wp_kses allowed html
+* Fix wp_kses allowed HTML
 * Fix the time hook
 
 = 5.1.3 =
@@ -110,15 +116,15 @@ Performance
 
 = 5.1.1 =
 * Fix Woo mails dates direction
-* Fix Fatal error in Woo product edit screen 
-* Fix in_array() fetal error in 8.1 
-* Remove error_log 
+* Fix Fatal error in Woo product edit screen
+* Fix in_array() fetal error in 8.1
+* Remove error_log
 
 = 5.1.0 =
 * HPOS compatible
-* Block-based gateways Woocommerce
-* Iranian cities for Woocommerce
-* Persian datepicker in Block editor 
+* Block-based gateways WooCommerce
+* Iranian cities for WooCommerce
+* Persian datepicker in Block editor
 * Fixed conflict with Jetpack.
 * Resolved dashboard page warning.
 * Addressed conflict with DATE_W3C format.
@@ -149,55 +155,55 @@ Performance
 * New looks and feels for the settings panel.
 * Added Vazir font to the admin area.
 * Fix convert order date to Gregorian in edit order screen.
-* Compatiblity with WordPress 6.5x and WooCommerce 8.7x.
+* Compatibility with WordPress 6.5x and WooCommerce 8.7x.
 
 = 4.0.0 =
 * This release contains huge bug fix:
   - Conflict with jetpack
   - Dashboard page warrning
-  - Conflict with DATE_W3C format 
+  - Conflict with DATE_W3C format
   - Date problem in comments feed
   - Error while save ACF fields
   - Notice: Undefined index: date_i18n
   - Notice error in archive.php pages
   - RevSlider conflicts
-  - Date convertion problem in WordPress 5.3
+  - Date conversion problem in WordPress 5.3
   - Conflict with get_the_modified_date
   - Parsi Widget error
   - Notice: Undefined index: wp_date, disable.php
   - WooCommerce order detail fix
-  - Conflict with polylang and wpml
-  - Duplicate activity date in dashbaord
-  - Type error in editor datepicke
-  - Direction problem in legacy editor 
+  - Conflict with Polylang and WPML
+  - Duplicate activity date in dashboard
+  - Type error in editor datepicker
+  - Direction problem in legacy editor
   - Wrong callback in get_the_time hook
   - Default timezone problem
 * Displaying "@" instead of "at" in Jalali version
 * Persian number in WooCommerce prices
-* Better support of Persian date in WooCommerce 
-* Persian datepicker in WooCommerce 
+* Better support of Persian date in WooCommerce
+* Persian datepicker in WooCommerce
 * ACF Parsi date
 * Mini support of WMPL and Polylang
 * Update Calendar widgets
-* Update attachments filter dropdown 
+* Update attachments filter dropdown
 * New looks and feels of settings panel
 * Add Vazir font to admin area
 
 = 3.0.3 =
 * Fix widgets fatal errors
 * Fix get_post_modified_time output
-* Replace @ with persian character in edit posts
+* Replace @ with Persian character in edit posts
 * Fix notice in disable section
 
 = 3.0.2 =
 * Now we support WordPress 5.3!
 * Replace/add wp_date instead old function
-* Small fix in Woocommerce dates
+* Small fix in WooCommerce dates
 * Fix date in media files
 * All core codes cleaned and beautified
 
 = 3.0.1 =
-* The Woocommerce hook has been temporarily disabled
+* The WooCommerce hook has been temporarily disabled
 
 = 3.0.0 =
 * Added Shamsi (Jalali) day-picker in Block Editor (Gutenberg)
@@ -227,14 +233,14 @@ Performance
 * Fix date picker's month dropdown bug in admin edit post. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/5)
 
 = 2.3.0.2 =
-* Fix set editor font css
+* Fix set editor font CSS
 
 = 2.3 =
 * Add [WP-Planet.ir](https://wp-planet.ir) widget
 * Fix some bug
 
 = 2.2.3 =
-* Conflict timezone with wordpress default timezone [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/1)
+* Conflict timezone with WordPress default timezone [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/1)
 
 = 2.2.2 =
 * Fix error in PHP 7
@@ -284,14 +290,14 @@ Performance
 * WordPress languages (Persian) files removed
 * Persian calendar widget added
 * Performance enhanced
-* Woocommerce prices problem fixed
+* WooCommerce prices problem fixed
 
 = 1.3.5 =
-* Wordpress 4.0 ready
+* WordPress 4.0 ready
 * languages updated
 
 = 1.3.4 =
-* unix timstamp problems fixed
+* Unix timestamp problems fixed
 * languages fixed
 * core functions improved
 
@@ -302,7 +308,7 @@ Performance
 * update language files
 
 = 1.3.1 =
-* tested on wordpress 3.9 
+* tested on WordPress 3.9
 * added new language files
 
 = 1.3 =
@@ -317,8 +323,8 @@ Performance
 * Fix TinyMce text direction
 * Fix sitemaps date problems
 * New features on plugin settings
-* Add persian numbers on the_excerpt function
-* Some bugfixs on core functions
+* Add Persian numbers on the_excerpt function
+* Some bugfixes on core functions
 
 = 1.0 =
 * Hello world...

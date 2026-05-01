@@ -1,0 +1,88 @@
+@use "../utilities/variables";
+
+@mixin wppd-range {
+  .wppd-range-field-wrap {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    output {
+      background-color: variables.$background_input;
+      padding: 4px 8px;
+      border-radius: 4px;
+      corner-shape: squircle;
+      //min-width: 32px;
+      display: inline-block;
+      text-align: center;
+      cursor: default;
+    }
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+
+    /* Removes default focus */
+    &:focus {
+      outline: none;
+    }
+
+    /***** Chrome, Safari, Opera and Edge Chromium styles *****/
+    /* slider track */
+    &::-webkit-slider-runnable-track {
+      background-color: variables.$background_input;
+      border-radius: 0.5rem;
+      corner-shape: squircle;
+      height: 10px;
+    }
+
+    /* slider thumb */
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none; /* Override default look */
+      appearance: none;
+      margin-top: -2px; /* Centers thumb on the track */
+
+      /*custom styles*/
+      background-color: variables.$primary;
+      height: 15px;
+      width: 10px;
+      border-radius: 10px;
+      corner-shape: squircle;
+    }
+
+    &:focus::-webkit-slider-thumb {
+      border: 1px solid variables.$input_border_color;
+      outline: 3px solid variables.$background_input;
+      outline-offset: 0.125rem;
+    }
+
+    /******** Firefox styles ********/
+    /* slider track */
+    &::-moz-range-track {
+      background-color: variables.$background_input;
+      border-radius: 0.5rem;
+      corner-shape: squircle;
+      height: 10px;
+    }
+
+    /* slider thumb */
+    &::-moz-range-thumb {
+      border: none; /*Removes extra border that FF applies*/
+      border-radius: 10px; /*Removes default border-radius that FF applies*/
+      corner-shape: squircle;
+      /*custom styles*/
+      background-color: variables.$primary;
+      height: 15px;
+      width: 10px;
+    }
+
+    &:focus::-moz-range-thumb {
+      border: 1px solid variables.$input_border_color;
+      outline: 3px solid variables.$background_input;
+      outline-offset: 0.125rem;
+    }
+  }
+}

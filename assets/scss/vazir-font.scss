@@ -1,0 +1,99 @@
+$vazirFont: Vazir, tahoma, arial, serif;
+
+@font-face {
+  font-family: Vazir;
+  src: url("../fonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url("../fonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+body,
+#order_data h2,
+.rtl #wpadminbar *:not(.ab-icon),
+.components-menu-item__item,
+.components-menu-item__info,
+.components-menu-group__label,
+.wc-addons-wrap .products li * {
+  font-family: $vazirFont !important;
+}
+
+pre,
+kbd,
+code {
+  font-family: Tahoma, Arial, sans-serif !important;
+}
+
+.rtl {
+  .editor-styles-wrapper,
+  .edit-post-visual-editor *:not(i),
+  .components-notice__content,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .media-frame,
+  .media-frame .search,
+  .media-frame input[type="email"],
+  .media-frame input[type="number"],
+  .media-frame input[type="password"],
+  .media-frame input[type="search"],
+  .media-frame input[type="tel"],
+  .media-frame input[type="text"],
+  .media-frame input[type="url"],
+  .media-frame select,
+  .media-frame textarea,
+  .media-modal {
+    font-family: $vazirFont;
+  }
+}
+
+body#tinymce.wp-editor,
+#wpseo_meta *,
+#wpbody,
+#tinymce,
+.edit-post-sidebar *,
+.woocommerce-layout *, {
+  font-family: $vazirFont;
+}
+
+.edit-post-visual-editor {
+  .components-button {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif !important;
+    font-size: 13px;
+  }
+}
+
+.wooocommerce-task-card__header p,
+.woocommerce-summary__item-label p,
+.components-card__header p,
+.rtl .quicktags-toolbar input,
+.rtl .wp-switch-editor,
+body.woocommerce_page_wc-settings .nav-tab-wrapper a {
+  font-family: $vazirFont !important;
+}
+
+// TinyMCE
+#tinymce {
+  font-size: 12px;
+}
+
+.mce-rtl {
+  .mce-text, .mce-container *:not(i) {
+    font-family: $vazirFont;
+  }
+}
+
+.mce-tooltip * {
+  font-family: $vazirFont !important;
+}

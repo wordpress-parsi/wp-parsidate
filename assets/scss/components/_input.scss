@@ -1,0 +1,68 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+@mixin wppd-input {
+  input[type="text"], input[type="email"], input[type="url"], input[type="tel"], input[type="number"], input[type="password"], input[type="search"] {
+    background-color: white;
+    color: variables.$dark;
+    border: 1px solid variables.$input_border_color;
+    padding: 8px 12px;
+    border-radius: 10px;
+    corner-shape: squircle;
+    font-weight: 400;
+    -webkit-transition: .2s;
+    transition: .2s;
+    width: 100%;
+    max-width: 500px;
+
+    &:hover {
+      border-color: color.scale(variables.$input_border_color, $lightness: -5%);
+    }
+
+    &:focus {
+      box-shadow: none;
+      //outline-offset: 2px;
+      outline: variables.$primary solid 2px;
+    }
+
+    &:disabled {
+      color: variables.$gray_light;
+      border-color: color.scale(variables.$input_border_color, $lightness: 40%);
+    }
+  }
+
+  input[type="number"] {
+    max-width: 150px;
+  }
+
+  input[type="color"] {
+    -webkit-appearance: none;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid variables.$input_border_color;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: none;
+    }
+
+    &::-moz-color-swatch {
+      border: none; /* Remove browser's border around color in color picker */
+    }
+
+    &::-moz-focus-inner {
+      border: none; /* Remove browser's padding around color in color picker */
+      padding: 0; /* Remove browser's padding around color in color picker */
+    }
+
+    &:focus {
+      box-shadow: none;
+      outline: variables.$primary solid 2px;
+    }
+  }
+}

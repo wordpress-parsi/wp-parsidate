@@ -1,0 +1,207 @@
+@use "../utilities/variables";
+
+@mixin wppd-data-table-ui {
+  .wppd-data-table-ui {
+    background-color: variables.$background_light;
+    border: 1px solid variables.$border_color;
+    padding: 15px;
+    border-radius: 10px;
+    corner-shape: squircle;
+    position: relative;
+
+    .wppd-dtu-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+
+      .wppd-dtu-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .wppd-dtu-title {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        line-height: 1;
+      }
+
+      .wppd-dtu-description {
+        font-size: 0.9em;
+        color: variables.$meta;
+      }
+
+      .wppd-dtu-row-count {
+
+      }
+
+      .wppd-dtu-add-new {
+        padding: 8px 14px;
+      }
+    }
+
+    .wppd-dtu-body {
+      position: relative;
+
+      select {
+        max-width: 200px;
+        min-width: 150px;
+        padding: 4px 14px;
+      }
+
+      > .wppd-dtu-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &.wppd-dtu-actions-top {
+          margin-bottom: 10px;
+        }
+
+        &.wppd-dtu-actions-bottom {
+          margin-top: 10px;
+        }
+      }
+    }
+
+    .wppd-dtu-bulk-actions {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    table.wppd-dtu-table {
+      border-collapse: collapse;
+      width: 100%;
+      background-color: white;
+
+      .check-column {
+        label:hover {
+          background: none;
+        }
+      }
+
+      .wppd-dtu-sortable-column {
+        width: 35px;
+        text-align: center;
+      }
+
+      tr {
+        td, th {
+          padding: 8px;
+          text-align: start;
+        }
+      }
+
+      thead {
+        tr {
+          th {
+            background-color: variables.$background_side;
+
+            &.wppd-dtu-select-all-wrap {
+              width: 35px;
+              text-align: center;
+            }
+
+            &[data-column="is_active"] {
+              width: 100px;
+              text-align: center;
+            }
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background-color: variables.$background_light;
+          }
+
+          &[data-disabled="true"] {
+            background-color: variables.$background_disabled;
+            color: variables.$meta;
+          }
+
+          td {
+            border: 1px solid variables.$border_color;
+
+            &[data-column="is_active"] {
+              text-align: center;
+
+              .wppd-toggle .wppd-toggle-slider {
+                cursor: default;
+              }
+            }
+          }
+
+          .wppd-dtu-actions-wrap {
+            width: 160px;
+
+            .wppd-dtu-actions {
+              display: flex;
+              align-items: center;
+              gap: 5px;
+
+              .wppd-button {
+                padding: 5px 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.wppd-data-table-ui-modal {
+    .wppd-modal-body {
+      min-height: 200px;
+
+      > :not(:last-child) {
+        margin-bottom: 20px;
+      }
+
+      .wppd-field-wrap .wppd-field-head {
+        max-width: 100%;
+      }
+
+      input, textarea {
+        max-width: inherit;
+      }
+
+      textarea {
+        max-height: 150px;
+      }
+
+      > .wppd-field-wrap {
+        .wppd-field-head {
+          label {
+            min-width: 150px;
+          }
+        }
+      }
+
+      .wppd-grid {
+        gap: 20px !important;
+      }
+
+      .wppd-grid-cols-2 {
+        grid-template-columns: 150px auto !important;
+      }
+
+      :is(.wppd-radio-inline, .wppd-checkbox-inline) .wppd-title {
+        height: 3.1rem;
+        padding: 7px 16px;
+      }
+    }
+
+    .wppd-modal-footer {
+      justify-content: space-between;
+
+      .wppd-field-head {
+        column-gap: 10px;
+      }
+    }
+  }
+}

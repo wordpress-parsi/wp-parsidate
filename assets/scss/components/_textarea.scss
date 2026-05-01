@@ -1,0 +1,31 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+@mixin wppd-textarea {
+  textarea {
+    background-color: white;
+    color: variables.$dark;
+    border: 1px solid variables.$input_border_color;
+    padding: 12px;
+    border-radius: 10px; corner-shape: squircle;
+    font-weight: 400;
+    -webkit-transition: .2s;
+    transition: .2s;
+    width: 100%;
+    max-width: 500px;
+    max-height: 500px;
+
+    &:hover {
+      border-color: color.scale(variables.$input_border_color, $lightness: -5%);
+    }
+
+    &:focus {
+      box-shadow: none;
+      outline: variables.$primary solid 2px;
+    }
+
+    &[resize="none"] {
+      resize: none;
+    }
+  }
+}

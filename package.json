@@ -1,0 +1,25 @@
+{
+  "name": "wp-parsidate",
+  "description": "ParsiDate Assets",
+  "version": "1.0.0",
+  "homepage": "https://parsa.ws",
+  "author": "Parsa Kafi (https://parsa.ws)",
+  "scripts": {
+    "parsidate-admin-css": "sass --watch assets/scss/admin-style.scss:assets/css-admin/admin-style.css",
+    "parsidate-admin-compressed-css": "sass --watch assets/scss/admin-style.scss:assets/css-admin/admin-style.min.css --style compressed",
+    "parsidate-vazir-font-css": "sass --watch assets/scss/vazir-font.scss:assets/css-admin/vazir-font.css",
+    "parsidate-vazir-font-compressed-css": "sass --watch assets/scss/vazir-font.scss:assets/css-admin/vazir-font.min.css --style compressed",
+    "parsidate-dashboard-css": "sass --watch assets/scss/dashboard.scss:assets/css-admin/dashboard.css",
+    "parsidate-dashboard-compressed-css": "sass --watch assets/scss/dashboard.scss:assets/css-admin/dashboard.min.css --style compressed",
+    "wa-build-js": "webpack --config webpack.config.js"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "extract-loader": "^5.1.0",
+    "sass": "^1.85.1",
+    "sass-loader": "^16.0.5",
+    "terser-webpack-plugin": "^5.3.11",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1"
+  }
+}

@@ -1,0 +1,28 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+.wppd-badge {
+  padding: 7px 10px;
+  border-radius: 5px;
+  corner-shape: squircle;
+  color: white;
+  line-height: 1;
+  font-size: 0.9em;
+  background-color: variables.$default__badge;
+
+  &.wppd-badge-info {
+    background-color: variables.$info__badge;
+  }
+
+  &.wppd-badge-success {
+    background-color: variables.$success__badge;
+  }
+
+  &.wppd-badge-warning {
+    background-color: variables.$warning__badge;
+  }
+
+  &.wppd-badge-danger {
+    background-color: variables.$danger__badge;
+  }
+}

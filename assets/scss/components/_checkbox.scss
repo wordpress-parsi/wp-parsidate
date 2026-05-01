@@ -1,0 +1,82 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+@mixin wppd-checkbox {
+  .wppd-checkbox-wrap {
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: flex;
+    gap: 7px;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+
+      &:checked {
+        &:before {
+          content: none;
+          margin: 0;
+        }
+      }
+    }
+
+    .wppd-checkmark {
+      display: block;
+      height: 18px;
+      width: 18px;
+      background-color: variables.$background_input;
+      box-shadow: 0 0 0 1px color.scale(variables.$background_input, $lightness: -3%);
+      border-radius: 4px;
+
+      &:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 7px;
+        top: 4px;
+        width: 3px;
+        height: 7px;
+        border: solid white;
+        border-width: 0 1.5px 1.5px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+    }
+
+    &:hover input:not(:checked) ~ .wppd-checkmark {
+      background-color: color.scale(variables.$background_input, $lightness: -2%);
+    }
+
+    input:checked ~ .wppd-checkmark {
+      background-color: variables.$primary;
+    }
+
+    input:checked ~ .wppd-checkmark:after {
+      display: block;
+    }
+
+    input:focus + .wppd-checkmark {
+      box-shadow: 0 0 0 2px variables.$primary;
+    }
+
+    input[disabled] + .wppd-checkmark {
+      opacity: 0.7;
+    }
+
+    /*input[disabled] + .wppd-checkmark {
+      background-color: variables.$gray_light_two;
+    }
+
+    input[disabled]:checked + .wppd-checkmark {
+      background-color: variables.$gray_light;
+    }*/
+  }
+}

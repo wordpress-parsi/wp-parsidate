@@ -1,0 +1,78 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+@mixin dashboard {
+  .wppd-dashboard-welcome {
+    background-color: variables.$background_light;
+    border: 1px solid variables.$border_color;
+    padding: 20px;
+    font-size: 1.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 10px;
+    corner-shape: squircle;
+    margin-bottom: 30px;
+
+    p {
+      font-size: 15px;
+      color: variables.$gray;
+    }
+  }
+
+  .wppd-dashboard-links-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+
+    a {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      border: 1px solid variables.$border_color;
+      background-color: variables.$background_side;
+      // #F6F5F9
+      background-image: linear-gradient(to right top, #ffffff, #fdfdfe, #fcfcfd, #fafafc, #f8f9fb, #f8f9fb, #f8f9fb, #f8f9fb, #fafafc, #fcfcfd, #fdfdfe, #ffffff);
+      border-radius: 10px;
+      corner-shape: squircle;
+      overflow: hidden;
+      padding: 15px;
+      color: variables.$text !important;
+      text-decoration: none;
+
+      &:hover, &:focus {
+        background-color: variables.$background_light;
+        // #F2EEFF
+        background-image: linear-gradient(to right top, #ffffff, #fcfcfd, #f8f8fa, #f4f5f8, #eff2f6, #eff2f6, #eff2f6, #eff2f6, #f4f5f8, #f8f8fa, #fcfcfd, #ffffff);
+        border-color: color.scale(variables.$border_color, $lightness: -5%);;
+        text-decoration: none !important;
+      }
+
+      &.wppd-link-type-addons {
+        // #FFF4F4
+        background-image: linear-gradient(to right top, #ffffff, #fdfdff, #fbfcff, #f8fafe, #f5f9fe, #f5f9fe, #f5f9fe, #f5f9fe, #f8fafe, #fbfcff, #fdfdff, #ffffff);
+
+        &:hover, &:focus {
+          // #E3ECF4
+          background-image: linear-gradient(to right top, #ffffff, #fbfbfd, #f6f7fb, #f1f3f9, #ebf0f7, #ebf0f7, #ebf0f7, #ebf0f7, #f1f3f9, #f6f7fb, #fbfbfd, #ffffff);
+        }
+      }
+    }
+  }
+
+  .wppd-dashboard-feed-news {
+    margin-top: 30px;
+    padding: 15px;
+    border: 1px solid variables.$border_color;
+    border-radius: 10px;
+    corner-shape: squircle;
+    background-color: variables.$background_light;
+
+    .wppd-dashboard-feed-head {
+      display: block;
+      margin-bottom: 20px;
+    }
+  }
+}

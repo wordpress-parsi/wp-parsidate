@@ -1,0 +1,62 @@
+@use "../utilities/variables";
+
+@mixin wppd-wp {
+  .wp-picker-container {
+    box-sizing: initial !important;
+
+    * {
+      box-sizing: initial !important;
+    }
+
+    &.wp-picker-active {
+      position: relative;
+
+      .button {
+        margin-inline-end: 5px;
+      }
+
+      .wp-picker-input-wrap {
+        display: inline-flex;
+        gap: 5px;
+      }
+
+      .wp-picker-holder {
+        position: absolute;
+        left: 0;
+        z-index: 999;
+      }
+    }
+
+    .button {
+      border-color: variables.$border_color;
+      color: variables.$text;
+      border-radius: 10px;
+      corner-shape: squircle;
+      overflow: hidden;
+      box-shadow: none;
+      margin: 0;
+
+      &:focus {
+        border-color: variables.$primary;
+        box-shadow: 0 0 0 1px variables.$primary;
+      }
+
+      .wp-color-result-text {
+        display: flex;
+        align-items: center;
+        height: 32px;
+      }
+    }
+
+    .iris-picker {
+      border-radius: 10px;
+      corner-shape: squircle;
+      border-color: variables.$border_color;
+      background-color: variables.$background_side;
+
+      .iris-square, .iris-slider, .iris-square-inner, .iris-palette {
+        box-shadow: none;
+      }
+    }
+  }
+}

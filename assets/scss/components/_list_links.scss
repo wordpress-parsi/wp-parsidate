@@ -1,0 +1,67 @@
+@use "../utilities/variables";
+
+@mixin wppd-list-links {
+  .wppd-list-links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    li {
+      display: block;
+
+      &:not(:last-child):after {
+        display: block;
+        margin-top: 20px;
+        content: "";
+        width: 100%;
+        border-bottom: 1px solid variables.$border_color;
+      }
+    }
+
+    a {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-decoration: none;
+      color: variables.$text;
+
+      &:hover {
+        text-decoration: none;
+
+        .wppd-feed-title {
+          text-decoration: underline;
+          color: variables.$link_hover;
+        }
+      }
+
+      > span {
+        display: block;
+      }
+
+      .wppd-feed-title {
+        font-weight: bold;
+        font-size: 1.2em;
+        color: variables.$link;
+      }
+
+      .wppd-feed-description {
+
+      }
+
+      .wppd-feed-author {
+        color: variables.$meta;
+        font-size: .9em;
+      }
+
+      .wppd-feed-datetime {
+        color: variables.$meta;
+        font-size: .8em;
+      }
+    }
+  }
+
+  .wppd-feed-none {
+    color: variables.$meta;
+    font-style: italic;
+  }
+}

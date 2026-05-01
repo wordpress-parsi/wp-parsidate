@@ -1,0 +1,90 @@
+@font-face {
+  font-family: Vazir;
+  src: url("../fonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Vazir;
+  src: url("../fonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+body,
+#order_data h2,
+.rtl #wpadminbar *:not(.ab-icon),
+.components-menu-item__item,
+.components-menu-item__info,
+.components-menu-group__label,
+.wc-addons-wrap .products li * {
+  font-family: Vazir, tahoma, arial, serif !important;
+}
+
+pre,
+kbd,
+code {
+  font-family: Tahoma, Arial, sans-serif !important;
+}
+
+.rtl .editor-styles-wrapper,
+.rtl .edit-post-visual-editor *:not(i),
+.rtl .components-notice__content,
+.rtl h1,
+.rtl h2,
+.rtl h3,
+.rtl h4,
+.rtl h5,
+.rtl h6,
+.rtl .media-frame,
+.rtl .media-frame .search,
+.rtl .media-frame input[type=email],
+.rtl .media-frame input[type=number],
+.rtl .media-frame input[type=password],
+.rtl .media-frame input[type=search],
+.rtl .media-frame input[type=tel],
+.rtl .media-frame input[type=text],
+.rtl .media-frame input[type=url],
+.rtl .media-frame select,
+.rtl .media-frame textarea,
+.rtl .media-modal {
+  font-family: Vazir, tahoma, arial, serif;
+}
+
+body#tinymce.wp-editor,
+#wpseo_meta *,
+#wpbody,
+#tinymce,
+.edit-post-sidebar *,
+.woocommerce-layout * {
+  font-family: Vazir, tahoma, arial, serif;
+}
+
+.edit-post-visual-editor .components-button {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif !important;
+  font-size: 13px;
+}
+
+.wooocommerce-task-card__header p,
+.woocommerce-summary__item-label p,
+.components-card__header p,
+.rtl .quicktags-toolbar input,
+.rtl .wp-switch-editor,
+body.woocommerce_page_wc-settings .nav-tab-wrapper a {
+  font-family: Vazir, tahoma, arial, serif !important;
+}
+
+#tinymce {
+  font-size: 12px;
+}
+
+.mce-rtl .mce-text, .mce-rtl .mce-container *:not(i) {
+  font-family: Vazir, tahoma, arial, serif;
+}
+
+.mce-tooltip * {
+  font-family: Vazir, tahoma, arial, serif !important;
+}
+
+/*# sourceMappingURL=vazir-font.css.map */

@@ -1,0 +1,29 @@
+{
+  "name": "wordpress-parsi/wp-parsidate",
+  "type": "project",
+  "scripts": {
+    "wp-parsidate-autload": "composer dump-autoload"
+  },
+  "autoload": {
+    "psr-4": {
+      "WPParsidate\\": "inc/"
+    },
+    "files": [
+      "inc/Functions/Core.php",
+      "inc/Functions/Old.php"
+    ]
+  },
+  "config": {
+    "optimize-autoloader": true
+  },
+  "authors": [
+    {
+      "name": "Parsa Kafi",
+      "email": "parselearn@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "enshrined/svg-sanitize": "^0.22.0"
+  }
+}

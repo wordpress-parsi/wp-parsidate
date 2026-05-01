@@ -1,0 +1,129 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+.wppd-media-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+
+  .wppd-media-placeholder {
+    background-color: variables.$background_light;
+    border: 1px dashed variables.$input_border_color;
+    border-radius: 10px;
+    corner-shape: squircle;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    -webkit-transition: .2s;
+    transition: .2s;
+    min-height: 200px;
+    color: color.scale(variables.$input_border_color, $lightness: -25%);
+
+    &:hover {
+      border-color: variables.$primary;
+      color: color.scale(variables.$input_border_color, $lightness: -35%);
+    }
+  }
+
+  .wppd-media-images, .wppd-media-buttons {
+    display: none;
+  }
+
+  &.wppd-media-selected {
+    background-color: variables.$background_light;
+    border: 1px solid variables.$input_border_color;
+    border-radius: 10px;
+    corner-shape: squircle;
+    padding: 15px;
+    min-height: 200px;
+
+    .wppd-media-placeholder {
+      display: none;
+    }
+
+    .wppd-media-images {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 15px;
+      -webkit-user-select: none; /* Safari */
+      -ms-user-select: none; /* IE 10 and IE 11 */
+      user-select: none; /* Standard syntax */
+
+      .wppd-media-image {
+        position: relative;
+        overflow: hidden;
+
+        &:after {
+          content: "×";
+          display: block;
+          position: absolute;
+          background-color: variables.$danger__badge;
+          border: 1px solid color.scale(variables.$danger__badge, $lightness: -50%);
+          color: white;
+          left: 10px;
+          top: 10px;
+          width: 24px;
+          height: 24px;
+          line-height: 1;
+          text-align: center;
+          border-radius: 50%;
+          font-size: 20px;
+          cursor: pointer;
+          opacity: 0.2;
+        }
+
+        .wppd-media-image-title {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          background-color: rgba(255, 255, 255, 0.4);
+          color: variables.$meta;
+          padding: 5px;
+          display: block;
+          width: 100%;
+          white-space: nowrap;
+          font-size: 0.8em;
+          cursor: pointer;
+        }
+
+        &:hover {
+          &:after {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    button {
+      font-size: 0.9em;
+    }
+
+    .wppd-media-buttons {
+      display: inline-flex;
+      align-items: center;
+      margin-top: auto;
+      gap: 15px;
+    }
+  }
+
+  img {
+    border-radius: 5px;
+    corner-shape: squircle;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 1px dashed transparent;
+    cursor: pointer;
+    -webkit-transition: .2s;
+    transition: .2s;
+
+    &:hover {
+      border-color: color.scale(variables.$danger__badge, $lightness: 50%);
+    }
+  }
+}

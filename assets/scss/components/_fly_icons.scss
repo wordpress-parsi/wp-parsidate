@@ -1,0 +1,105 @@
+@use "../utilities/variables";
+
+.wppd-fly-icons {
+  position: fixed;
+  z-index: 999997;
+  font-size: 18px;
+  display: flex;
+  gap: 15px;
+
+  &.wppd-fly-icons-top {
+    top: 40px;
+
+    > :is(a, div) {
+      &:hover, &:focus {
+        bottom: inherit;
+        top: 5px;
+      }
+    }
+  }
+
+  &.wppd-fly-icons-bottom {
+    bottom: 40px;
+
+    > :is(a, div) {
+      &:hover, &:focus {
+        top: inherit;
+        bottom: 5px;
+      }
+    }
+  }
+
+  &.wppd-fly-icons-left {
+    left: 40px;
+
+    .wppd-fly-icon-count {
+      right: -10px;
+    }
+  }
+
+  &.wppd-fly-icons-right {
+    right: 40px;
+
+    .wppd-fly-icon-count {
+      left: -10px;
+    }
+  }
+
+  > :is(a,div) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    line-height: 1;
+    width: 60px;
+    height: 60px;
+    top: 0;
+    bottom: 0;
+    color: var(--wppd-element-color, variables.$text);
+    background-color: var(--wppd-element-bg-color, variables.$white2);
+    border: 1.5px solid var(--wppd-element-border-color, variables.$border_color);
+    border-radius: var(--wppd-element-border-radius, 0);
+    corner-shape: squircle;
+    transition: all 0.5s;
+    box-shadow: rgba(33, 35, 38, 0.1) 0 10px 10px -10px;
+    text-decoration: none;
+    outline: none;
+
+    &:hover, &:focus {
+      text-decoration: none;
+      outline: none;
+      border-color: var(--wppd-element-hover-border-color, variables.$border_color);
+      color: var(--wppd-element-hover-color, variables.$text);
+      background-color: var(--wppd-element-hover-bg-color, variables.$white2);
+    }
+  }
+
+  svg {
+    height: 18px;
+    width: auto;
+  }
+
+  i {
+
+  }
+
+  .wppd-fly-icon-title {
+    font-size: 12px;
+  }
+
+  .wppd-fly-icon-count {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -10px;
+    height: 30px;
+    width: 30px;
+    font-size: 12px;
+    border-radius: 50%;
+    color: white;
+    background: var(--wppd-primary-color, variables.$primary);
+  }
+}

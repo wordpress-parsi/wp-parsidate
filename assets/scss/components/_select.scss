@@ -1,0 +1,57 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+@mixin wppd-select {
+  select {
+    color: variables.$dark;
+    border: 1px solid variables.$input_border_color;
+    padding: 8px 12px;
+    border-radius: 10px; corner-shape: squircle;
+    font-weight: 400;
+    width: 100%;
+    max-width: 500px;
+
+    &:not([multiple]) {
+      -webkit-appearance: none;
+      background: white url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTUgNmw1IDUgNS01IDIgMS03IDctNy03IDItMXoiIGZpbGw9IiNFNkUyRjUiLz48L3N2Zz4=") no-repeat right 10px top 55%;
+
+      &:focus {
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTUgNmw1IDUgNS01IDIgMS03IDctNy03IDItMXoiIGZpbGw9IiM0ZjhjY2YiLz48L3N2Zz4=");
+      }
+    }
+
+    &:hover {
+      color: variables.$dark;
+      border-color: color.scale(variables.$input_border_color, $lightness: -5%);
+    }
+
+    &:focus {
+      box-shadow: none;
+      //outline-offset: 2px;
+      outline: variables.$primary solid 2px;
+    }
+
+    &:disabled {
+      color: variables.$gray_light;
+      border-color: color.scale(variables.$input_border_color, $lightness: 40%);
+    }
+
+    &[multiple] {
+      &:focus {
+        &:checked {
+          background: variables.$primary;
+          color: white;
+        }
+      }
+    }
+
+    option {
+      background-color: white;
+
+      &:checked {
+        background: variables.$primary;
+        color: white;
+      }
+    }
+  }
+}

@@ -1,0 +1,132 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+$height: 100px;
+
+@mixin wppd-gradient-color-picker {
+  .wppd-gradient-color-picker-wrap {
+    width: 100%;
+    border-radius: 10px;
+    corner-shape: squircle;
+    background-color: variables.$background_light;
+    border: 1px solid variables.$border_color;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    a {
+      color: variables.$text !important;
+    }
+
+    .wppd-gradient-color-picker {
+      width: 100%;
+      max-width: 100%;
+      height: $height;
+      border-radius: 10px;
+      corner-shape: squircle;
+      border: 1px solid variables.$border_color;
+      position: relative;
+
+      .wppd-gradient-color-point {
+        background: white;
+        border-radius: 15px;
+        corner-shape: squircle;
+        box-shadow: rgba(0, 0, 0, 0.15) 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 10px 10px -5px, inset #fff 0 0 0 6px;
+        cursor: move;
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 5px;
+        transition: border 0.15s ease, box-shadow 0.15s ease;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.8;
+
+        &.is-active, &:hover {
+          opacity: 1;
+          box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 2px;
+        }
+
+        &.is-active {
+          // border: 0.5px solid ;
+        }
+
+        span {
+          border-radius: 50%;
+          width: 16px;
+          height: 16px;
+          pointer-events: none;
+          box-shadow: inset rgba(0, 0, 0, 0.15) 0 0 0 1px;
+        }
+      }
+    }
+
+    .wppd-gradient-select-color {
+      flex-direction: revert;
+      justify-content: space-between;
+      align-items: center;
+
+      .wp-picker-container {
+        .button:focus {
+          box-shadow: none;
+        }
+
+        .wp-color-picker {
+          &:focus {
+            outline-width: 1px;
+          }
+        }
+
+        .wp-picker-clear {
+          display: none;
+        }
+      }
+    }
+
+    .wppd-field-wrap {
+      .wppd-field-head {
+        flex-direction: row !important;
+        align-items: center !important;
+        column-gap: 10px;
+
+        > .wppd-input-label {
+          margin: 0;
+          width: 80px;
+        }
+      }
+    }
+
+    .wppd-radio-group {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+
+      > .wppd-title {
+        margin: 0;
+        width: 80px;
+      }
+
+      .wppd-checkmark {
+        display: none !important;
+      }
+
+      .wppd-radio-group-options {
+        .wppd-radio-inline {
+          .wppd-title {
+            height: auto;
+          }
+        }
+      }
+
+      :is(.wppd-radio-inline, .wppd-checkbox-inline) .wppd-title {
+        border-width: 1px;
+      }
+    }
+  }
+}

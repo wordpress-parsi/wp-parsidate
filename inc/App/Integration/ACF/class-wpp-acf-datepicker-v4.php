@@ -1,0 +1,153 @@
+<?php
+
+use WPParsidate\Helper\Assets;
+use WPParsidate\Settings\Settings;
+
+defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
+
+/**
+ * Adds Jalali Datepicker field to ACF
+ *
+ * @package             WP-Parsidate
+ * @subpackage          Plugins/ACF/WPP_acf_field_jalali_datepicker
+ *
+ * @since 4.0.0
+ */
+class WPP_acf_field_jalali_datepicker extends acf_field {
+  /**
+   * Hooks required tags
+   */
+  public function __construct() {
+    $this->name = 'jalali_datepicker';
+
+    $this->label = esc_html__( 'Date', 'wp-parsidate' );
+
+    $this->category = esc_html__( 'Parsidate', 'wp-parsidate' );
+
+    $this->defaults = array(
+      'placeholder' => 'YYYY-MM-DD',
+    );
+
+    parent::__construct();
+  }
+
+  /**
+   *  Create extra settings for your field. These are visible when editing a field
+   *
+   * @param           $field (array) the $field being edited
+   *
+   * @since           4.0.0
+   */
+  public function create_options( $field ) {
+    $key = $field['name'];
+    ?>
+    <tr class="field_option field_option_<?php echo esc_html( $this->name ); ?>">
+      <td class="label">
+        <label><?php esc_html__( 'Placeholder', 'wp-parsidate' ); ?></label>
+        <p class="description"><?php esc_html_e( 'Show custom placeholder', 'wp-parsidate' ); ?></p>
+      </td>
+      <td>
+        <?php
+        do_action( 'acf/create_field', array(
+          'type'   => 'text',
+          'name'   => 'fields[' . $key . '][placeholder]',
+          'value'  => $field['placeholder'],
+          'layout' => 'horizontal'
+        ) );
+        ?>
+      </td>
+    </tr>
+    <?php
+  }
+
+  /**
+   *  Create the HTML interface for your field
+   *
+   * @param           $field (array) the $field being edited
+   *
+   * @since           4.0.0
+   */
+  public function create_field( $field ) {
+    ?>
+    <div>
+      <input type="text" name="<?php echo esc_attr( $field['name'] ) ?>"
+             value="<?php echo esc_attr( $field['value'] ) ?>" class="date-picker" autocomplete="off"
+             placeholder="<?php echo esc_attr( $field['placeholder'] ) ?>"/>
+    </div>
+    <?php
+  }
+
+  /**
+   *  This action is called in the admin_enqueue_scripts action on the edit screen where your field is created.
+   *  Use this action to add CSS + JavaScript to assist your render_field() action.
+   *
+   * @since           4.0.0
+   */
+  public function input_admin_enqueue_scripts() {
+    $pluginVersion = Assets::getVersion();
+    $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
+
+    wp_enqueue_script( 'wpp_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ),
+      array( 'acf-input' ), $pluginVersion, [ 'in_footer' => true ] );
+    wp_enqueue_style( 'wpp_jalali_datepicker', Assets::url( 'css-admin/jalalidatepicker' . $debugName . '.css' ),
+      array( 'acf-input' ), $pluginVersion );
+
+    do_action( 'wpp_jalali_datepicker_enqueued', 'acf-4' );
+  }
+
+  /**
+   *  This filter is applied to the $value after it is loaded from the db
+   *
+   * @param           $value (mixed) the value found in the database
+   * @param           $post_id (mixed) the $post_id from which the value was loaded
+   * @param           $field (array) the field array holding all the field options
+   *
+   * @return          int|string $value
+   * @since           4.0.0
+   */
+  public function load_value( $value, $post_id, $field ) {
+    if ( ! Settings::get( 'save_persian_date', false, 'acf' ) ) {
+      $value = parsidate( 'Y-m-d', $value );
+    }
+
+    return apply_filters( 'wpp_acf_after_load_jalali_date', $value );
+  }
+
+  /**
+   *  This filter is applied to the $value before it is saved in the db
+   *
+   * @param           $value (mixed) the value found in the database
+   * @param           $post_id (mixed) the $post_id from which the value was loaded
+   * @param           $field (array) the field array holding all the field options
+   *
+   * @return          false|string $value
+   * @since           4.0.0
+   */
+  public function update_value( $value, $post_id, $field ) {
+    if ( ! Settings::get( 'save_persian_date', false, 'acf' ) ) {
+      $value = gregdate( 'Y-m-d', $value );
+    }
+
+    return apply_filters( 'wpp_acf_before_update_jalali_date', $value );
+  }
+
+  /**
+   *  This filter is applied to the $value after it is loaded from the db and, before it is passed back to the API functions such as the_field
+   *
+   * @param    $value  - the value which was loaded from the database
+   * @param    $post_id  - the $post_id from which the value was loaded
+   * @param    $field  - the field array holding all the field options
+   *
+   * @return   mixed|void $value    - the modified value
+   * @since    4.0.0
+   */
+  public function format_value_for_api( $value, $post_id, $field ) {
+    if ( ! Settings::get( 'save_persian_date', false, 'acf' ) ) {
+      $value = parsidate( 'Y-m-d', $value );
+    }
+
+    return apply_filters( 'wpp_acf_after_load_jalali_date', $value );
+  }
+}
+
+new WPP_acf_field_jalali_datepicker();

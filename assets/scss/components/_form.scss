@@ -1,0 +1,124 @@
+@use "../utilities/variables";
+@use "toggle";
+@use "button";
+@use "input";
+@use "textarea";
+@use "checkbox";
+@use "radio";
+@use "range";
+@use "select";
+@use "addons";
+@use "wp";
+@use "repeatable";
+@use "color_palette";
+@use "gradient_color_picker";
+@use "data_table_ui";
+
+.#{variables.$plugin_key}-wrap {
+  position: relative;
+
+  @include toggle.wppd-toggle;
+  @include button.wppd-button;
+  @include input.wppd-input;
+  @include textarea.wppd-textarea;
+  @include checkbox.wppd-checkbox;
+  @include radio.wppd-radio;
+  @include range.wppd-range;
+  @include select.wppd-select;
+  @include addons.wppd-addons;
+  @include wp.wppd-wp;
+  @include repeatable.wppd-repeatable;
+  @include color_palette.wppd-color-palette;
+  @include gradient_color_picker.wppd-gradient-color-picker;
+  @include data_table_ui.wppd-data-table-ui;
+
+  #wppd-settings-form {
+    //height: 100% !important;
+    display: flex;
+    flex-direction: column;
+
+    & > *:not(:last-child) {
+      margin-bottom: 40px;
+    }
+
+    hr {
+      margin-top: 0;
+    }
+
+    .woo-assistant-notices {
+      margin-bottom: 0;
+    }
+  }
+
+  .wppd-grid {
+    display: grid !important;
+    gap: 3rem !important;
+  }
+
+  .wppd-grid-cols-2 {
+    grid-template-columns: 200px auto !important;
+  }
+
+  .wppd-field-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .wppd-field-head {
+      display: flex;
+      column-gap: 20px;
+      row-gap: 10px;
+      align-items: center;
+      max-width: 500px;
+    }
+
+    &.ltr-field {
+      input, textarea {
+        text-align: left;
+        direction: ltr;
+      }
+    }
+  }
+
+  .wppd-fields-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    .wppd-field-wrap {
+      .wppd-field-head {
+        flex-direction: column;
+        align-items: start;
+      }
+
+      &.wppd-field-toggle {
+        .wppd-field-head {
+          flex-direction: row-reverse;
+          justify-content: space-between;
+        }
+      }
+
+      &.wppd-appearance-text-field {
+        input[type="number"] {
+          -webkit-appearance: none;
+          -moz-appearance: textfield;
+          appearance: textfield;
+        }
+      }
+    }
+
+    :is( .wppd-inline-elements-group, .wppd-radio-group, .wppd-checkbox-group) {
+      legend {
+        margin-bottom: 1em;
+      }
+
+      :is(.wppd-inline-elements-group-options, .wppd-radio-group-options, .wppd-checkbox-group-options) {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: .5rem;
+      }
+    }
+  }
+}

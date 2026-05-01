@@ -1,0 +1,168 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+@mixin about {
+  .wppd-about-content {
+    .wppd-content-body {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      p {
+        font-size: 15px;
+      }
+    }
+
+    .plugin-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 20px;
+
+      .feature-item {
+        background-color: variables.$background_side;
+        padding: 20px;
+        border-radius: 10px;
+        corner-shape: squircle;
+        border: 1px solid variables.$border_color;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+
+        &:hover {
+          background-color: variables.$background_light;
+        }
+
+        strong {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        div {
+          color: variables.$meta;
+        }
+      }
+    }
+
+    .social-networks {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: variables.$background_light;
+      padding: 15px;
+      border-radius: 10px;
+      corner-shape: squircle;
+      gap: 10px;
+
+      div {
+        display: flex;
+        gap: 10px;
+      }
+
+      a {
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+
+    .team-members {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 0.5fr));
+      gap: 20px;
+
+      &:hover .team-member:not(:hover) .team-member-name {
+        background-color: #3c3c3c;
+      }
+
+      .team-member {
+        border: 1px solid variables.$border_color;
+        border-radius: 10px;
+        corner-shape: squircle;
+        overflow: hidden;
+
+        .team-member-image {
+          height: 150px;
+          background-size: cover;
+        }
+
+        .team-member-info {
+          font-size: 0.9em;
+          line-height: 1;
+
+          .team-member-name {
+            background-color: black;
+            color: white;
+            padding: 5px;
+          }
+
+          .team-member-role {
+            background-color: variables.$background_side;
+            padding: 5px;
+          }
+        }
+
+        .team-member-social {
+          background-color: variables.$background_light;
+          display: flex;
+          gap: 7px;
+          padding: 5px;
+          max-height: 25px;
+        }
+      }
+    }
+
+    .github-contributors-wrapper {
+      background-color: variables.$background_light;
+      padding: 15px;
+      border-radius: 10px;
+      corner-shape: squircle;
+
+      .github-contributors {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(40px, 0.5fr));
+        gap: 20px;
+        margin-top: 15px;
+
+        a {
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          img {
+            border: 1px solid variables.$border_color;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+          }
+
+          &:hover img {
+            border-color: color.scale(variables.$border_color, $lightness: -20%);
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 783px) {
+      .plugin-features {
+        grid-template-columns: none;
+      }
+    }
+
+    @media only screen and (min-width: 1600px) {
+      .team-members {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+
+        .team-member {
+          .team-member-image {
+            height: 250px;
+          }
+        }
+      }
+    }
+  }
+}
+

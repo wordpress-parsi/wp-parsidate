@@ -1,0 +1,153 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+.wppd-modal {
+  --wppd-modal-color: var(--wppd-text-color, #2B2B2B); //  variables.$text
+  --wppd-modal-border-width: var(--wppd-element-border-width, 0);
+  --wppd-modal-border-color: #D3D3D3; // variables.$gray_light_two
+  --wppd-modal-bg-color: var(--wppd-bg-color, #fff); // variables.$white
+  --wppd-modal-border-radius: var(--wppd-element-border-radius, 0);
+  corner-shape: squircle;
+  --wppd-modal-font-size: 15px;
+
+  display: none;
+  position: fixed;
+  z-index: 999999;
+  padding: 0;
+  height: 100%;
+  max-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  font-size: var(--wppd-modal-font-size, 15px);
+  border: none;
+  inset: 0;
+
+  .wppd-modal-dialog {
+    position: relative;
+    width: auto;
+    max-width: 500px;
+    margin: calc(var(--wppd-admin-bar-height, 0) + 2em) auto 2em;
+    pointer-events: none;
+  }
+
+  &.wppd-modal-large {
+    .wppd-modal-dialog {
+      max-width: 700px;
+    }
+  }
+
+  &.wppd-modal-xlarge {
+    .wppd-modal-dialog {
+      max-width: 900px;
+    }
+  }
+
+  .wppd-modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--wppd-modal-color);
+    pointer-events: auto;
+    background-color: var(--wppd-modal-bg-color);
+    background-clip: padding-box;
+    border: var(--wppd-modal-border-width) solid var(--wppd-modal-border-color);
+    border-radius: var(--wppd-modal-border-radius);
+    corner-shape: squircle;
+    overflow: hidden;
+    outline: 0;
+  }
+
+  .wppd-modal-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: var(--wppd-modal-border-width) solid var(--wppd-modal-border-color);
+  }
+
+  .wppd-modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-size: 1.2em;
+    font-weight: 600;
+  }
+
+  .wppd-modal-message:not(:empty) {
+    padding: 15px;
+
+    .woo-assistant-notices {
+      margin-bottom: 0;
+    }
+  }
+
+  .wppd-modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 15px;
+    min-height: 200px;
+    max-height: calc(100vh - 250px);
+    overflow: auto;
+  }
+
+  .wppd-modal-footer {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px;
+    border-top: var(--wppd-modal-border-width) solid var(--wppd-modal-border-color);
+
+    a, button {
+      text-align: center;
+    }
+
+    .wppd-modal-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  &.wppd-fade {
+    .wppd-modal-dialog {
+      transition: transform .3s ease-out;
+      transform: translate(0, -50px);
+    }
+  }
+
+  &.wppd-active {
+    .wppd-modal-dialog {
+      transform: none;
+    }
+  }
+}
+
+.wppd-modal-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  z-index: 999998;
+  opacity: 0;
+  visibility: hidden;
+
+  &.wppd-active {
+    opacity: 1;
+    visibility: visible;
+  }
+}

@@ -1,0 +1,134 @@
+@use 'sass:color';
+@use "../utilities/variables";
+
+.#{variables.$plugin_key}-wrap {
+  .wppd-content {
+    > .#{variables.$plugin_key}-notices {
+      padding: 20px 30px 0 30px;
+    }
+
+    > .#{variables.$plugin_key}-notices + .#{variables.$plugin_key}-notices {
+      padding-top: 0;
+    }
+  }
+}
+
+.#{variables.$plugin_key}-notices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+
+  .wppd-notice {
+    color: variables.$text;
+    background-color: variables.$gray_light_three;
+    border-radius: 10px;
+    corner-shape: squircle;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    //font-weight: 600;
+    letter-spacing: 0.02em;
+
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    svg {
+      width: 22px;
+      height: 22px;
+      min-width: 22px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    code {
+      color: color.scale(variables.$default, $lightness: -5%);
+      background-color: color.scale(variables.$default_light, $lightness: -5%);
+    }
+
+    &.wppd-notice-info {
+      color: variables.$info;
+      background-color: variables.$info_light;
+
+      code {
+        color: color.scale(variables.$info, $lightness: -5%);
+        background-color: color.scale(variables.$info_light, $lightness: -5%);
+      }
+
+      a {
+        color: color.scale(variables.$info, $lightness: -30%);
+
+        &:hover, &:focus, &:active {
+          color: variables.$info;
+        }
+      }
+    }
+
+    &.wppd-notice-success {
+      color: variables.$success;
+      background-color: variables.$success_light;
+
+      code {
+        color: color.scale(variables.$success, $lightness: -5%);
+        background-color: color.scale(variables.$success_light, $lightness: -5%);
+      }
+
+      a {
+        color: color.scale(variables.$success, $lightness: -30%);
+
+        &:hover, &:focus, &:active {
+          color: variables.$success;
+        }
+      }
+    }
+
+    &.wppd-notice-warning {
+      color: variables.$warning;
+      background-color: variables.$warning_light;
+
+      code {
+        color: color.scale(variables.$warning, $lightness: -5%);
+        background-color: color.scale(variables.$warning_light, $lightness: -5%);
+      }
+
+      a {
+        color: color.scale(variables.$warning, $lightness: -30%);
+
+        &:hover, &:focus, &:active {
+          color: variables.$warning;
+        }
+      }
+    }
+
+    &.wppd-notice-error {
+      color: variables.$error;
+      background-color: variables.$error_light;
+
+      code {
+        color: color.scale(variables.$error, $lightness: -5%);
+        background-color: color.scale(variables.$error_light, $lightness: -5%);
+      }
+
+      a {
+        color: color.scale(variables.$error, $lightness: -30%);
+
+        &:hover, &:focus, &:active {
+          color: variables.$error;
+        }
+      }
+    }
+  }
+}
+
+body.rtl.#{variables.$plugin_key}-notices {
+  .wppd-notice {
+    letter-spacing: normal;
+  }
+}

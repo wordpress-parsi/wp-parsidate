@@ -23,10 +23,6 @@ A comprehensive WordPress plugin that integrates the Solar Hijri (Persian/Shamsi
 
 WP Parsidate is a feature-rich WordPress plugin designed by Persian developers to enhance the experience of Persian-speaking users. It seamlessly integrates the Shamsi (Jalali) calendar throughout WordPress while providing character and number localization, RTL optimization, and compatibility with popular plugins.
 
-Whether you're running a Persian blog, e-commerce store, or any WordPress site, WP Parsidate brings authentic Persian date and calendar functionality to improve user experience and engagement.
-
----
-
 ## ✨ Key Features
 
 ### Date & Calendar Functionality
@@ -51,6 +47,21 @@ Whether you're running a Persian blog, e-commerce store, or any WordPress site, 
 - 🔢 **Number Localization** - Convert Eastern Arabic and Latin numerals
 - 📖 **Full RTL Support** - Complete right-to-left text direction optimization
 - ✏️ **TinyMCE Adjustments** - RTL-optimized WordPress editor
+
+## ✨ Key Features
+
+### Date & Calendar Functionality
+- 🗓️ **Shamsi (Jalali) Calendar** - Complete Solar Hijri calendar support
+- 📅 **Date Conversion** - Automatic conversion throughout WordPress
+- 📍 **Archive Widgets** - Shamsi date-based post archives
+- 📆 **Calendar Widget** - Interactive Persian calendar widget
+- 🔗 **Permalink Support** - Shamsi dates in custom permalinks
+
+## Contributors
+
+<a href = "https://github.com/wordpress-parsi/wp-parsidate/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=wordpress-parsi/wp-parsidate" alt="Contributors"/>
+</a>
 
 ### Performance
 - ⚡ **Lightweight** - Minimal resource usage and fast performance
