@@ -1,6 +1,6 @@
 # WP Parsidate - افزونه پارسی دیت
 
-![Version](https://img.shields.io/badge/version-5.1.8-blue)
+![Version](https://img.shields.io/badge/version-6.0-blue)
 ![WordPress Compatible](https://img.shields.io/badge/WordPress-5.3%2B-green)
 ![License](https://img.shields.io/badge/license-GPLv2-blue)
 [![WordPress Plugin Downloads](https://img.shields.io/wordpress/plugin/dt/wp-parsidate.svg)](https://wordpress.org/plugins/wp-parsidate/)
