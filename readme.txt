@@ -1,7 +1,7 @@
 === پارسی دیت – Parsi Date ===
 Contributors: lord_viper, man4toman, parselearn, yazdaniwp, saeedfard, iehsanir, wordpress-parsi
 Donate link: https://wp-parsi.com/support/
-Tags: shamsi, Persian, Jalali, date, WooCommerce, ووکامرس, تاریخ شمسی, پارسی دیت, پارسی‌دیت
+Tags: shamsi, Persian, Jalali, WooCommerce, ووکامرس
 Requires at least: 5.3
 Tested up to: 6.9.4
 Stable tag: 6.0
@@ -17,7 +17,7 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 = Key Features: =
 
 = Date & Calendar Functionality =
-* Shamsi (Jalali) Calendar - Complete Solar Hijri calendar support
+* Shamsi (شمسی) Calendar - Complete Solar Hijri calendar support
 * Date Conversion - Automatic conversion throughout WordPress
 * Archive Widgets - Shamsi date-based post archives
 * Calendar Widget - Interactive Persian calendar widget
@@ -30,7 +30,7 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 * Content Dates - Automatic Persian dates in posts, pages, comments, and archives
 
 = Commerce & E-commerce =
-* WooCommerce Ready - Full WooCommerce compatibility with Persian dates
+* WooCommerce Ready - Full WooCommerce (ووکامرس) compatibility with Persian dates
 * Product Support - Persian dates for orders, products, and customer data
 
 = Text & Character Processing =
