@@ -11,9 +11,9 @@
 **Telegram Community:** [@parsidate](https://t.me/parsidate)  
 **Tags:** shamsi, jalali, persian, parsi, farsi, date, calendar, widget, picker, plugin, wordpress, rtl, gutenberg, acf, woocommerce, i18n, l10n  
 **Requires:** WordPress 5.3+  
-**Tested up to:** 6.7.1  
-**Stable tag:** 5.1.8  
-**License:** GPLv2 or later  
+**Tested up to:** 6.9.4  
+**Stable tag:** 6.0  
+**License:** GPLv3
 
 A comprehensive WordPress plugin that integrates the Solar Hijri (Persian/Shamsi/Jalali) calendar into your WordPress site with full RTL support.
 
