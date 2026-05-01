@@ -1,24 +1,27 @@
-# Parsi Date
+# WP Parsidate - افزونه پارسی دیت
 
-![Version](https://img.shields.io/badge/version-6.0-blue)
-![WordPress Compatible](https://img.shields.io/badge/WordPress-5.3%20to%206.9.4-blue)
+![Version](https://img.shields.io/badge/version-5.1.8-blue)
+![WordPress Compatible](https://img.shields.io/badge/WordPress-5.3%2B-green)
+![License](https://img.shields.io/badge/license-GPLv2-blue)
+[![WordPress Plugin Downloads](https://img.shields.io/wordpress/plugin/dt/wp-parsidate.svg)](https://wordpress.org/plugins/wp-parsidate/)
+![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple)
 
-**Contributors:** [lord_viper](https://profiles.wordpress.org/lord_viper), [man4toman](https://profiles.wordpress.org/man4toman), [parselearn](https://profiles.wordpress.org/parselearn), [yazdaniwp](https://profiles.wordpress.org/yazdaniwp), [saeedfard](https://profiles.wordpress.org/saeedfard), [iehsanir](https://profiles.wordpress.org/iehsanir)
+**Contributors:** [lord_viper](https://profiles.wordpress.org/lord_viper), [man4toman](https://profiles.wordpress.org/man4toman), [parselearn](https://profiles.wordpress.org/parselearn), [yazdaniwp](https://profiles.wordpress.org/yazdaniwp)  
+**Donate link:** [https://wp-parsi.com/support/](https://wp-parsi.com/support/)  
+**Telegram Community:** [@parsidate](https://t.me/parsidate)  
+**Tags:** shamsi, jalali, persian, parsi, farsi, date, calendar, widget, picker, plugin, wordpress, rtl, gutenberg, acf, woocommerce, i18n, l10n  
+**Requires:** WordPress 5.3+  
+**Tested up to:** 6.7.1  
+**Stable tag:** 5.1.8  
+**License:** GPLv2 or later  
 
-**Donate link:** [https://wp-parsi.com/support/](https://wp-parsi.com/support/)
+A comprehensive WordPress plugin that integrates the Solar Hijri (Persian/Shamsi/Jalali) calendar into your WordPress site with full RTL support.
 
-**Tags:** shamsi, wp-parsi, wpparsi, persian, parsi, farsi, jalali, date, calendar, i18n, l10n, iran, iranian, parsidate, rtl, gutenberg, acf, woocommerce
-
-**Requires PHP:** 7.4,
-**Requires at least:** 5.3,
-**Tested up to:** 6.9.4,
-**Stable tag:** 6.0
-
-Persian date support for WordPress.
+---
 
 ## Description
 
-This package, created by Persian developers, enhances the Persian experience on WordPress by adding Shamsi (Jalali) calendar support, character issue fixes, and RTL compatibility for the WordPress back-end.
+WP Parsidate is a feature-rich WordPress plugin designed by Persian developers to enhance the experience of Persian-speaking users. It seamlessly integrates the Shamsi (Jalali) calendar throughout WordPress while providing character and number localization, RTL optimization, and compatibility with popular plugins.
 
 ## ✨ Key Features
 
@@ -45,12 +48,14 @@ This package, created by Persian developers, enhances the Persian experience on 
 - 📖 **Full RTL Support** - Complete right-to-left text direction optimization
 - ✏️ **TinyMCE Adjustments** - RTL-optimized WordPress editor
 
-## Installation
+## ✨ Key Features
 
-1. Upload the plugin folder to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. To use the archive widget, go to 'Widgets' and select 'بایگانی تاریخ خورشیدی'.
-4. For the calendar widget, go to 'Widgets' and select 'گاه‌شمار تاریخ خورشیدی'.
+### Date & Calendar Functionality
+- 🗓️ **Shamsi (Jalali) Calendar** - Complete Solar Hijri calendar support
+- 📅 **Date Conversion** - Automatic conversion throughout WordPress
+- 📍 **Archive Widgets** - Shamsi date-based post archives
+- 📆 **Calendar Widget** - Interactive Persian calendar widget
+- 🔗 **Permalink Support** - Shamsi dates in custom permalinks
 
 ## Contributors
 
@@ -58,6 +63,8 @@ This package, created by Persian developers, enhances the Persian experience on 
   <img src = "https://contrib.rocks/image?repo=wordpress-parsi/wp-parsidate" alt="Contributors"/>
 </a>
 
-## License
+### Performance
+- ⚡ **Lightweight** - Minimal resource usage and fast performance
+- 🎯 **Efficient** - Optimized code for production environments
+- 📡 **WP-Planet Widget** - Integration with [WP-Planet.ir](https://wp-planet.ir)
 
-This project is licensed under the GPLv2 License - see the [LICENSE.md](LICENSE.md) file for details.
