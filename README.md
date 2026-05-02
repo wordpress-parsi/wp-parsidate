@@ -57,14 +57,13 @@ WP Parsidate is a feature-rich WordPress plugin designed by Persian developers t
 - 📆 **Calendar Widget** - Interactive Persian calendar widget
 - 🔗 **Permalink Support** - Shamsi dates in custom permalinks
 
-## Contributors
-
-<a href = "https://github.com/wordpress-parsi/wp-parsidate/graphs/contributors">
-  <img src = "https://contrib.rocks/image?repo=wordpress-parsi/wp-parsidate" alt="Contributors"/>
-</a>
-
 ### Performance
 - ⚡ **Lightweight** - Minimal resource usage and fast performance
 - 🎯 **Efficient** - Optimized code for production environments
 - 📡 **WP-Planet Widget** - Integration with [WP-Planet.ir](https://wp-planet.ir)
 
+## Contributors
+
+<a href = "https://github.com/wordpress-parsi/wp-parsidate/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=wordpress-parsi/wp-parsidate" alt="Contributors"/>
+</a>
