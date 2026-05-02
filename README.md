@@ -1,12 +1,12 @@
 # WP Parsidate - افزونه پارسی دیت
-
+# شمسی‌ساز تاریخ وردپرس و ووکامرس
 ![Version](https://img.shields.io/badge/version-6.0-blue)
 ![WordPress Compatible](https://img.shields.io/badge/WordPress-5.3%2B-green)
 ![License](https://img.shields.io/badge/license-GPLv2-blue)
 [![WordPress Plugin Downloads](https://img.shields.io/wordpress/plugin/dt/wp-parsidate.svg)](https://wordpress.org/plugins/wp-parsidate/)
 ![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple)
 
-**Contributors:** [lord_viper](https://profiles.wordpress.org/lord_viper), [man4toman](https://profiles.wordpress.org/man4toman), [parselearn](https://profiles.wordpress.org/parselearn), [yazdaniwp](https://profiles.wordpress.org/yazdaniwp)  
+**Contributors:** [lord_viper](https://profiles.wordpress.org/lord_viper), [man4toman](https://profiles.wordpress.org/man4toman), [parselearn](https://profiles.wordpress.org/parselearn), [yazdaniwp](https://profiles.wordpress.org/yazdaniwp), [SaeedFard](https://profiles.wordpress.org/saeedfard/)  
 **Donate link:** [https://wp-parsi.com/support/](https://wp-parsi.com/support/)  
 **Telegram Community:** [@parsidate](https://t.me/parsidate)  
 **Tags:** shamsi, jalali, persian, parsi, farsi, date, calendar, widget, picker, plugin, wordpress, rtl, gutenberg, acf, woocommerce, i18n, l10n  
