@@ -48,15 +48,6 @@ WP Parsidate is a feature-rich WordPress plugin designed by Persian developers t
 - 📖 **Full RTL Support** - Complete right-to-left text direction optimization
 - ✏️ **TinyMCE Adjustments** - RTL-optimized WordPress editor
 
-## ✨ Key Features
-
-### Date & Calendar Functionality
-- 🗓️ **Shamsi (Jalali) Calendar** - Complete Solar Hijri calendar support
-- 📅 **Date Conversion** - Automatic conversion throughout WordPress
-- 📍 **Archive Widgets** - Shamsi date-based post archives
-- 📆 **Calendar Widget** - Interactive Persian calendar widget
-- 🔗 **Permalink Support** - Shamsi dates in custom permalinks
-
 ### Performance
 - ⚡ **Lightweight** - Minimal resource usage and fast performance
 - 🎯 **Efficient** - Optimized code for production environments
