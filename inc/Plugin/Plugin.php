@@ -42,7 +42,7 @@ class Plugin {
       $dismiss_url = wp_nonce_url( add_query_arg( 'wpp-action', 'dismiss-active-notice' ), 'wpp_dismiss_notice' );
 
       /* translators: 1: ParsiDate settings link, 2: Dismiss notice link */
-      $message = esc_html__( '<div class="updated wpp-message"><p>ParsiDate activated, you may need to configure it to work properly. <a href="%1$s">Go to configuration page</a> &ndash; <a href="%2$s">Dismiss</a></p></div>',
+      $message = __( '<div class="updated wpp-message"><p>ParsiDate activated, you may need to configure it to work properly. <a href="%1$s">Go to configuration page</a> &ndash; <a href="%2$s">Dismiss</a></p></div>',
         'wp-parsidate' );
       // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
       echo sprintf( $message,
