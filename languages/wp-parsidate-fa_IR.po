@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-29 13:20+0330\n"
-"PO-Revision-Date: 2026-04-29 13:21+0330\n"
+"PO-Revision-Date: 2026-05-05 00:00+0200\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -461,22 +461,32 @@ msgid "By enabling this, Dates will convert to Shamsi (Jalali) dates"
 msgstr "با فعال‌کردن این گزینه، تاریخ‌ها به صورت تاریخ خورشیدی (جلالی) درمی‌آیند"
 
 #: inc/App/Core/Core.php:61
+msgid "Dual date"
+msgstr "تاریخ دوگانه"
+
+#: inc/App/Core/Core.php:64
+msgid "By enabling this, Gregorian dates will be displayed beside Shamsi (Jalali) dates."
+msgstr ""
+"با فعال‌کردن این گزینه، تاریخ میلادی در کنار تاریخ خورشیدی (جلالی) نمایش داده "
+"می‌شود."
+
+#: inc/App/Core/Core.php:70
 msgid "Months and week days name type"
 msgstr "نوع اسامی ماه‌ها و روزهای هفته"
 
-#: inc/App/Core/Core.php:64
+#: inc/App/Core/Core.php:73
 msgid "Persian"
 msgstr "پارسی"
 
-#: inc/App/Core/Core.php:65
+#: inc/App/Core/Core.php:74
 msgid "Dari"
 msgstr "دری"
 
-#: inc/App/Core/Core.php:66
+#: inc/App/Core/Core.php:75
 msgid "Kurdish"
 msgstr "کوردی"
 
-#: inc/App/Core/Core.php:67
+#: inc/App/Core/Core.php:76
 msgid "Pashto"
 msgstr "پشتو"
 
