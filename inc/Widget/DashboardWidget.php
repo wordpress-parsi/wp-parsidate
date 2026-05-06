@@ -37,7 +37,7 @@ class DashboardWidget {
       wp_send_json_success( json_decode( $sponsors_cache, true ) );
     }
 
-    $response = wp_remote_get( 'https://wp-parsi.com/wp-json/sponsorship/v1/sponsors/' );
+    $response = wp_remote_get( 'https://wp-parsi.com/wp-json/sponsorship/v1/sponsors/', [ 'timeout' => 2 ] );
 
     if ( is_wp_error( $response ) ) {
       wp_send_json_error( 'Error fetching slides' );

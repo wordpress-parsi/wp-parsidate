@@ -19,12 +19,36 @@ class Plugin {
     add_action( 'admin_notices', [ $this, 'activationAdminNotice' ] );
     add_action( 'admin_init', [ $this, 'dismissActivationNotice' ] );
     add_action( 'init', [ $this, 'loadTextDomain' ], - 1 );
+    add_filter( 'http_request_args', [ $this, 'limitWpParsiTimeout' ], 10, 2 );
   }
 
-  public function loadTextDomain(): void {
-    if ( get_locale() === 'fa_IR' && Settings::get( 'local_text_domain', false ) ) {
-      load_textdomain( 'wp-parsidate', WP_PARSI_DIR . 'languages/wp-parsidate-fa_IR.mo' );
+  /**
+   * Limits the timeout for requests to wp-parsi.com to prevent dashboard lag.
+   *
+   * @param array  $args Request arguments.
+   * @param string $url  Request URL.
+   * @return array Modified request arguments.
+   */
+  public function limitWpParsiTimeout( array $args, string $url ): array {
+    if ( str_contains( $url, 'wp-parsi.com' ) ) {
+      $args['timeout'] = 3;
     }
+
+    return $args;
+  }
+
+  /**
+   * Load plugin translations from the local languages directory.
+   *
+   * Always loads the local .mo file so that newly added/translated strings
+   * are available immediately, even before they're published on translate.wordpress.org.
+   * Uses determine_locale() instead of hardcoding 'fa_IR' for multi-locale flexibility.
+   */
+  public function loadTextDomain(): void {
+    load_textdomain(
+      'wp-parsidate',
+      WP_PARSI_DIR . 'languages/wp-parsidate-' . determine_locale() . '.mo'
+    );
   }
 
   /**
