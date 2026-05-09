@@ -45,7 +45,7 @@ class DashboardWidget {
 
     $slides = wp_remote_retrieve_body( $response );
 
-    Cache::set( 'sponsors_dashboard', $slides, DAY_IN_SECONDS );
+    Cache::set( 'sponsors_dashboard', $slides, WP_PARSI_DEBUG_MODE ? MINUTE_IN_SECONDS * 10 : DAY_IN_SECONDS );
     wp_send_json_success( json_decode( $slides, true ) );
   }
 

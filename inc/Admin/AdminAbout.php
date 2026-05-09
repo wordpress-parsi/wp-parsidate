@@ -307,7 +307,8 @@ class AdminAbout {
         );
       }
 
-      Cache::set( 'github_contributors', $githubContributors, WEEK_IN_SECONDS );
+      Cache::set( 'github_contributors', $githubContributors,
+        WP_PARSI_DEBUG_MODE ? MINUTE_IN_SECONDS * 10 : WEEK_IN_SECONDS );
     }
 
     return $githubContributors;

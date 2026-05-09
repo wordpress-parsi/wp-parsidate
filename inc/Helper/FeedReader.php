@@ -235,7 +235,8 @@ class FeedReader {
     }
 
     if ( ! empty( $feedItems ) ) {
-      Cache::set( $this->args['cache_key'], $feedItems, $this->args['cache_time'] );
+      Cache::set( $this->args['cache_key'], $feedItems,
+        WP_PARSI_DEBUG_MODE ? MINUTE_IN_SECONDS * 10 : $this->args['cache_time'] );
       $this->feedItems = $feedItems;
     }
 

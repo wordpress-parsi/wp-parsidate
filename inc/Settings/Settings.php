@@ -68,7 +68,7 @@ class Settings {
     if ( ! $useCache || ! is_array( $options ) ) {
       $options = get_option( $optionsName, [] );
       $options = is_array( $options ) ? $options : [];
-      Cache::set( 'options_' . $optionsName, $options, DAY_IN_SECONDS, false );
+      Cache::set( 'options_' . $optionsName, $options );
     }
 
     if ( $key !== null ) {
