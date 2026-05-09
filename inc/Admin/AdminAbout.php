@@ -3,10 +3,7 @@
 namespace WPParsidate\Admin;
 
 use WPParsidate\Addons\Addons;
-use WPParsidate\Helper\Assets;
-use WPParsidate\Helper\Cache;
-use WPParsidate\Helper\JSON;
-use WPParsidate\Helper\Notice;
+use WPParsidate\Helper\{Assets, Cache, JSON, Notice};
 
 defined( 'ABSPATH' ) || exit;
 

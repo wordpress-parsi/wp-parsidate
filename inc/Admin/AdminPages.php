@@ -4,10 +4,7 @@ namespace WPParsidate\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
-use WPParsidate\Helper\Assets;
-use WPParsidate\Helper\Cache;
-use WPParsidate\Helper\Notice;
-use WPParsidate\Helper\Param;
+use WPParsidate\Helper\{Assets, Cache, Notice, Param};
 
 class AdminPages {
   public function __construct() {

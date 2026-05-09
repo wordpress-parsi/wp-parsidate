@@ -13,8 +13,7 @@
 
 namespace WPParsidate\App\Integration;
 
-use WPParsidate\Helper\Cache;
-use WPParsidate\Helper\WordPress;
+use WPParsidate\Helper\{Cache, WordPress};
 use WPParsidate\Settings\Settings;
 
 class HookDeactivator {

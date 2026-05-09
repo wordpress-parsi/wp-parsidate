@@ -5,13 +5,7 @@ namespace WPParsidate\Addons;
 defined( 'ABSPATH' ) || exit;
 
 use WPParsidate\Admin\AdminPages;
-use WPParsidate\Helper\Assets;
-use WPParsidate\Helper\Cache;
-use WPParsidate\Helper\Notice;
-use WPParsidate\Helper\Param;
-use WPParsidate\Helper\Sanitizing;
-use WPParsidate\Helper\Validating;
-use WPParsidate\Helper\WordPress;
+use WPParsidate\Helper\{Assets, Cache, Notice, Param, Sanitizing, Validating, WordPress};
 
 class Addons {
   public const tab = 'addons';

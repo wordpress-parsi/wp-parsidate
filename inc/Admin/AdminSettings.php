@@ -4,13 +4,7 @@ namespace WPParsidate\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
-use WPParsidate\Helper\Cache;
-use WPParsidate\Helper\Helper;
-use WPParsidate\Helper\HTML;
-use WPParsidate\Helper\Notice;
-use WPParsidate\Helper\Param;
-use WPParsidate\Helper\Sanitizing;
-use WPParsidate\Helper\Validating;
+use WPParsidate\Helper\{Cache, HTML, Notice, Param, Sanitizing, Validating};
 use WPParsidate\Settings\Settings;
 
 class AdminSettings {

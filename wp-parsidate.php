@@ -55,8 +55,7 @@ use WPParsidate\Admin\Admin;
 use WPParsidate\App\App;
 use WPParsidate\Core\Core;
 use WPParsidate\Helper\WordPress;
-use WPParsidate\Plugin\Install;
-use WPParsidate\Plugin\Plugin;
+use WPParsidate\Plugin\{Install, Plugin};
 use WPParsidate\Settings\Settings;
 use WPParsidate\Widget\Widget;
 

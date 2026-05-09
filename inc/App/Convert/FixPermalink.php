@@ -10,8 +10,7 @@ namespace WPParsidate\App\Convert;
 
 defined( 'ABSPATH' ) || exit;
 
-use WPParsidate\Core\Posts;
-use WPParsidate\Core\WPP_ParsiDate;
+use WPParsidate\Core\{Posts, WPP_ParsiDate};
 use WPParsidate\Settings\Settings;
 
 class FixPermalink {

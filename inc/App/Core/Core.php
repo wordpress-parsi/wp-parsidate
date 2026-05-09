@@ -9,8 +9,7 @@ namespace WPParsidate\App\Core;
 
 defined( 'ABSPATH' ) || exit;
 
-use WPParsidate\Helper\Notice;
-use WPParsidate\Helper\WordPress;
+use WPParsidate\Helper\{Notice, WordPress};
 use WPParsidate\Settings\Settings;
 
 class Core {

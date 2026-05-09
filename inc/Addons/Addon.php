@@ -4,10 +4,8 @@ namespace WPParsidate\Addons;
 
 defined( 'ABSPATH' ) || exit;
 
-use WPParsidate\Admin\AdminPages;
-use WPParsidate\Admin\AdminSettings;
-use WPParsidate\Helper\Assets;
-use WPParsidate\Helper\Cache;
+use WPParsidate\Admin\{AdminPages, AdminSettings};
+use WPParsidate\Helper\{Assets, Cache};
 use WPParsidate\Settings\Settings;
 
 abstract class Addon {

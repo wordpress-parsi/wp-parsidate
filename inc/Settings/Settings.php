@@ -4,8 +4,7 @@ namespace WPParsidate\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
-use WPParsidate\Helper\Cache;
-use WPParsidate\Helper\Validating;
+use WPParsidate\Helper\{Cache, Validating};
 
 class Settings {
   public static function addToArray( $key, $value, $optionsName = null, $reverse = false ): bool {

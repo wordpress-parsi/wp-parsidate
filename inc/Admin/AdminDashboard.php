@@ -5,11 +5,7 @@ namespace WPParsidate\Admin;
 defined( 'ABSPATH' ) || exit;
 
 use WPParsidate\Addons\Addons;
-use WPParsidate\Helper\Assets;
-use WPParsidate\Helper\FeedReader;
-use WPParsidate\Helper\Notice;
-use WPParsidate\Helper\Templates;
-use WPParsidate\Helper\User;
+use WPParsidate\Helper\{Assets, FeedReader, Notice, Templates, User};
 
 class AdminDashboard {
   public const tab = 'dashboard';

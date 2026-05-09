@@ -4,8 +4,7 @@ namespace WPParsidate\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
-use WPParsidate\Helper\Assets;
-use WPParsidate\Helper\Nonce;
+use WPParsidate\Helper\{Assets, Nonce};
 
 class AdminAssets {
   public function __construct() {
