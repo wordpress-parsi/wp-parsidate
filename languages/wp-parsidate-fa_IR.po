@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-29 13:20+0330\n"
-"PO-Revision-Date: 2026-04-29 13:21+0330\n"
+"PO-Revision-Date: 2026-05-05 06:14+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -214,9 +214,8 @@ msgstr "مشارکت‌کننده‌های گیت‌هاب"
 msgid "Morteza Geransayeh"
 msgstr "مرتضی گرانسایه"
 
-#: inc/Admin/AdminAbout.php:224 inc/Admin/AdminAbout.php:234
-#: inc/Admin/AdminAbout.php:244 inc/Admin/AdminAbout.php:254
-#: inc/Admin/AdminAbout.php:274
+#: inc/Admin/AdminAbout.php:224 inc/Admin/AdminAbout.php:234 inc/Admin/AdminAbout.php:244
+#: inc/Admin/AdminAbout.php:254 inc/Admin/AdminAbout.php:274
 msgid "Developer"
 msgstr "توسعه‌دهنده"
 
@@ -310,11 +309,11 @@ msgstr "درود"
 
 #: inc/Admin/AdminDashboard.php:46
 msgid ""
-"WP Parsi is here to help you integrate Jalali date with your site, go to the "
-"Addons tab and activate the required addons."
+"WP Parsi is here to help you integrate Jalali date with your site, go to the Addons "
+"tab and activate the required addons."
 msgstr ""
-"وردپرس پارسی اینجاست تا به شما در ادغام تاریخ جلالی با سایتتان کمک کند، به تب "
-"افزونه‌ها بروید و افزونه‌های مورد نیاز را فعال کنید."
+"وردپرس پارسی اینجاست تا به شما در ادغام تاریخ جلالی با سایتتان کمک کند، به تب افزونه‌ها "
+"بروید و افزونه‌های مورد نیاز را فعال کنید."
 
 #: inc/Admin/AdminDashboard.php:64
 msgid "WP Parsi news"
@@ -423,8 +422,8 @@ msgstr "تصحیح حروف عربی"
 #: inc/App/Convert/Convert.php:99
 msgid "Fixes arabic characters caused by wrong keyboard layouts"
 msgstr ""
-"این گزینه، حروف عربی را در کل سیستم به حروف فارسی تصحیح می‌کند<br>برای مثال ٤/٥/٦ "
-"به ۴ / ۵ / ۶ و ك / ي به ک / ی"
+"این گزینه، حروف عربی را در کل سیستم به حروف فارسی تصحیح می‌کند\n"
+"برای مثال ٤/٥/٦ به ۴ / ۵ / ۶ و ك / ي به ک / ی"
 
 #: inc/App/Convert/Convert.php:108
 msgid "Permalinks"
@@ -437,15 +436,13 @@ msgstr "تبدیل تاریخ در پیوندهای یکتا"
 #: inc/App/Convert/Convert.php:116
 msgid "By enabling this, dates in permalinks converted to Shamsi (Jalali) date"
 msgstr ""
-"با فعال‌کردن این گزینه، تاریخ‌ها در پیوندهای یکتا به تاریخ خورشیدی (جلالی) تبدیل "
-"می‌شوند"
+"با فعال‌کردن این گزینه، تاریخ‌ها در پیوندهای یکتا به تاریخ خورشیدی (جلالی) تبدیل می‌شوند"
 
 #: inc/App/Core/Core.php:28
 msgid "Debug mode is enabled!"
 msgstr "حالت اشکال‌زدایی فعال است!"
 
-#: inc/App/Core/Core.php:48
-#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v4.php:23
+#: inc/App/Core/Core.php:48 inc/App/Integration/ACF/class-wpp-acf-datepicker-v4.php:23
 #: inc/App/Integration/ACF/class-wpp-acf-datepicker-v5.php:24
 #: inc/App/Integration/ACF/class-wpp-acf-timepicker-v4.php:23
 #: inc/App/Integration/ACF/class-wpp-acf-timepicker-v4.php:25
@@ -490,8 +487,7 @@ msgstr "غیرفعال کردن ویرایشگر بلوک ابزارک"
 
 #: inc/App/Core/Core.php:86
 msgid "By enabling this, Widget Block Editor disabled"
-msgstr ""
-"با فعال‌کردن این گزینه، «ویرایشگر بلوک ابزارک» در بخش ابزارک‌ها غیرفعال می‌شود"
+msgstr "با فعال‌کردن این گزینه، «ویرایشگر بلوک ابزارک» در بخش ابزارک‌ها غیرفعال می‌شود"
 
 #: inc/App/Core/Core.php:91
 msgid "Vazir Font"
@@ -511,11 +507,11 @@ msgstr "حالت اشکال‌زادیی"
 
 #: inc/App/Core/Core.php:112
 msgid ""
-"By enabling this option, the uncompressed version of the JS and CSS files will "
-"be loaded."
+"By enabling this option, the uncompressed version of the JS and CSS files will be "
+"loaded."
 msgstr ""
-"با فعال‌کردن این گزینه، نسخۀ فشرده‌نشدۀ پرونده‌های JS و CSS افزونۀ پارسی‌دیت "
-"بارگذاری می‌شوند."
+"با فعال‌کردن این گزینه، نسخۀ فشرده‌نشدۀ پرونده‌های JS و CSS افزونۀ پارسی‌دیت بارگذاری "
+"می‌شوند."
 
 #: inc/App/Core/Core.php:118
 msgid "Load translate file"
@@ -826,8 +822,7 @@ msgstr "توضیحات درگاه"
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:86
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:90
 msgid ""
-"The description that will be displayed during the purchase process for the "
-"gateway"
+"The description that will be displayed during the purchase process for the gateway"
 msgstr "توضیحی که در طول فرآیند خرید برای درگاه نمایش داده می‌شود"
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:101
@@ -848,16 +843,15 @@ msgstr "پیام پرداخت ناموفق"
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:103
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:107
 msgid ""
-"Enter the text of the message you want to display to the user after an "
-"unsuccessful payment."
+"Enter the text of the message you want to display to the user after an unsuccessful "
+"payment."
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:109
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:109
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:105
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:109
-msgid ""
-"Your payment has failed. Please try again or contact us in case of problems."
+msgid "Your payment has failed. Please try again or contact us in case of problems."
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:77
@@ -882,8 +876,7 @@ msgstr ""
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:95
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:99
 msgid ""
-"Enter the text of the message you want to display to the user after successful "
-"payment."
+"Enter the text of the message you want to display to the user after successful payment."
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:97
@@ -899,8 +892,8 @@ msgstr "پیام لغو پرداخت"
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:111
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:115
 msgid ""
-"Enter the text of the message you want to display after the user cancels the "
-"payment. This message will be displayed after returning from the bank."
+"Enter the text of the message you want to display after the user cancels the payment. "
+"This message will be displayed after returning from the bank."
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:113
@@ -1135,8 +1128,7 @@ msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:269
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:353
-msgid ""
-"The confirmation operation of this transaction has already been done successfully"
+msgid "The confirmation operation of this transaction has already been done successfully"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:271
@@ -1156,8 +1148,7 @@ msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:274
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:358
-msgid ""
-"By recognizing the identity of the card holder, the transaction is successful"
+msgid "By recognizing the identity of the card holder, the transaction is successful"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:276
@@ -1168,8 +1159,8 @@ msgstr ""
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:277
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:361
 msgid ""
-"The transaction with an amount lower than the requested amount (deficiency in "
-"the customer's account) has been accepted"
+"The transaction with an amount lower than the requested amount (deficiency in the "
+"customer's account) has been accepted"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:279
@@ -1200,23 +1191,23 @@ msgstr ""
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:284
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:368
 msgid ""
-"In a situation where the switch needs to query the card to accept the "
-"transaction, it may make a request from the card (terminal), this message "
-"indicates that the answer is invalid."
+"In a situation where the switch needs to query the card to accept the transaction, it "
+"may make a request from the card (terminal), this message indicates that the answer is "
+"invalid."
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:286
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:370
 msgid ""
-"If the response to the terminal request does not require any specific response "
-"or function, we will have this message."
+"If the response to the terminal request does not require any specific response or "
+"function, we will have this message."
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:288
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:372
 msgid ""
-"The transaction was suspected of malpractice (card, terminal, card holder), so "
-"it was not accepted"
+"The transaction was suspected of malpractice (card, terminal, card holder), so it was "
+"not accepted"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:290
@@ -1232,8 +1223,8 @@ msgstr ""
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:292
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:376
 msgid ""
-"The transaction is incompletely completed (for example, a deposit transaction "
-"that is completed from the customer's point of view, but needs to be completed)"
+"The transaction is incompletely completed (for example, a deposit transaction that is "
+"completed from the customer's point of view, but needs to be completed)"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:294
@@ -1295,8 +1286,7 @@ msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:308
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:392
-msgid ""
-"It is not allowed to perform the relevant transaction by the operator's terminal"
+msgid "It is not allowed to perform the relevant transaction by the operator's terminal"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:310
@@ -1327,8 +1317,7 @@ msgstr ""
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:316
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:400
 msgid ""
-"The response required to complete or complete the transaction has arrived too "
-"late"
+"The response required to complete or complete the transaction has arrived too late"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:318
@@ -1369,15 +1358,15 @@ msgstr ""
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:329
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:413
 msgid ""
-"In transactions that require communication with the exporter, if the exporter is "
-"not active, this message will be sent in response."
+"In transactions that require communication with the exporter, if the exporter is not "
+"active, this message will be sent in response."
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:331
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:415
 msgid ""
-"The transaction authorization system is temporarily disabled or the time set for "
-"the authorization has expired"
+"The transaction authorization system is temporarily disabled or the time set for the "
+"authorization has expired"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:333
@@ -1393,8 +1382,7 @@ msgstr ""
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:337
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:421
 msgid ""
-"The payment of the transaction was unsuccessful due to cancellation on the bank "
-"page"
+"The payment of the transaction was unsuccessful due to cancellation on the bank page"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:354
@@ -1419,8 +1407,8 @@ msgstr ""
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:363
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:448
 msgid ""
-"The server of the internet portal has temporarily encountered a problem, to "
-"complete the transaction moments later, click on the button below"
+"The server of the internet portal has temporarily encountered a problem, to complete "
+"the transaction moments later, click on the button below"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:365
@@ -1444,8 +1432,8 @@ msgstr ""
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:466
 #, php-format
 msgid ""
-"Your payment with the tracking number %s has been successfully processed at the "
-"bank, but there has been a problem with the service"
+"Your payment with the tracking number %s has been successfully processed at the bank, "
+"but there has been a problem with the service"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:383
@@ -1453,34 +1441,34 @@ msgstr ""
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:468
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:479
 msgid ""
-"The order to return the money to your account has been registered in the bank, "
-"if the payment is not returned to your account within the next few hours, "
-"contact support (the maximum time to return to the account is 72 hours)"
+"The order to return the money to your account has been registered in the bank, if the "
+"payment is not returned to your account within the next few hours, contact support "
+"(the maximum time to return to the account is 72 hours)"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:385
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:470
 msgid ""
-"The customer paid the amount, but when returning from the bank, there was a "
-"problem in providing the service, the order to return the money to the "
-"customer's account was registered in the bank."
+"The customer paid the amount, but when returning from the bank, there was a problem in "
+"providing the service, the order to return the money to the customer's account was "
+"registered in the bank."
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:392
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:477
 #, php-format
 msgid ""
-"Your payment with the tracking number %s has been successfully made in the bank, "
-"but there is a problem in providing the service!"
+"Your payment with the tracking number %s has been successfully made in the bank, but "
+"there is a problem in providing the service!"
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:396
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:481
 msgid ""
-"The customer paid the amount, but when he returned from the bank, there was a "
-"problem in providing the service, there was an error in registering the order to "
-"return the money to the customer's account, this customer should either be "
-"provided with the service or the amount should be returned to his bank account."
+"The customer paid the amount, but when he returned from the bank, there was a problem "
+"in providing the service, there was an error in registering the order to return the "
+"money to the customer's account, this customer should either be provided with the "
+"service or the amount should be returned to his bank account."
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:401
@@ -1533,9 +1521,9 @@ msgstr "پرداخت انجام نشد"
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:458
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:543
 msgid ""
-"If the payment has been deducted from your bank account, it will be "
-"automatically returned to your account by the bank (the final return time to the "
-"account is 72 hours) - contact support if needed."
+"If the payment has been deducted from your bank account, it will be automatically "
+"returned to your account by the bank (the final return time to the account is 72 "
+"hours) - contact support if needed."
 msgstr ""
 
 #: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:75
@@ -1633,13 +1621,13 @@ msgstr "الزامی"
 #: inc/Plugin/Plugin.php:45
 #, php-format
 msgid ""
-"<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to "
-"configure it to work properly. <a href=\"%1$s\">Go to configuration page</a> "
-"&ndash; <a href=\"%2$s\">Dismiss</a></p></div>"
+"<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to configure "
+"it to work properly. <a href=\"%1$s\">Go to configuration page</a> &ndash; <a "
+"href=\"%2$s\">Dismiss</a></p></div>"
 msgstr ""
-"<div class=\"updated wpp-message\"><p>وردپرس پارسی فعال شد! برای کارکردن افزونه "
-"نیاز به پیکربندی آن دارید. <a href=\"%s\">برگه‌ی پیکربندی</a> &ndash; <a "
-"href=\"%s\">بی‌خیال</a></p></div>"
+"<div class=\"updated wpp-message\"><p>وردپرس پارسی فعال شد! برای کارکردن افزونه نیاز "
+"به پیکربندی آن دارید. <a href=\"%s\">برگه‌ی پیکربندی</a> &ndash; <a href=\"%s\">بی‌خیال</"
+"a></p></div>"
 
 #: inc/Plugin/Plugin.php:86
 msgid "Settings"
@@ -1687,14 +1675,10 @@ msgstr "تاریخ پارسی"
 msgid "Files.ir"
 msgstr ""
 
-#: inc/Widget/ParsiDateArchiveWidget.php:25
-#: inc/Widget/ParsiDateArchiveWidget.php:26
-#: inc/Widget/ParsiDateArchiveWidget.php:28
-#: inc/Widget/ParsiDateArchiveWidget.php:29
-#: inc/Widget/ParsiDateArchiveWidget.php:44
-#: inc/Widget/ParsiDateArchiveWidget.php:57
-#: inc/Widget/ParsiDateArchiveWidget.php:145
-#: inc/Widget/ParsiDateArchiveWidget.php:172
+#: inc/Widget/ParsiDateArchiveWidget.php:25 inc/Widget/ParsiDateArchiveWidget.php:26
+#: inc/Widget/ParsiDateArchiveWidget.php:28 inc/Widget/ParsiDateArchiveWidget.php:29
+#: inc/Widget/ParsiDateArchiveWidget.php:44 inc/Widget/ParsiDateArchiveWidget.php:57
+#: inc/Widget/ParsiDateArchiveWidget.php:145 inc/Widget/ParsiDateArchiveWidget.php:172
 msgid "Jalali Date Archives"
 msgstr "بایگانی تاریخ خورشیدی"
 
@@ -1730,17 +1714,14 @@ msgstr "نمايش تعداد نوشته‌ها"
 msgid "Display as dropdown"
 msgstr "نمايش به صورت ليست بازشو"
 
-#: inc/Widget/ParsiDateArchiveWidget.php:123
-#: inc/Widget/ParsiDateCalendarWidget.php:47
+#: inc/Widget/ParsiDateArchiveWidget.php:123 inc/Widget/ParsiDateCalendarWidget.php:47
 msgid "For use widget, active \"Fix permalinks dates\" option in plugin settings."
 msgstr ""
-"برای استفاده از ابزارک، گزینه \"تبدیل تاریخ در پیوندهای یکتا\" را در تنظیمات "
-"افزونه فعال کنید."
+"برای استفاده از ابزارک، گزینه \"تبدیل تاریخ در پیوندهای یکتا\" را در تنظیمات افزونه "
+"فعال کنید."
 
-#: inc/Widget/ParsiDateCalendarWidget.php:24
-#: inc/Widget/ParsiDateCalendarWidget.php:25
-#: inc/Widget/ParsiDateCalendarWidget.php:27
-#: inc/Widget/ParsiDateCalendarWidget.php:28
+#: inc/Widget/ParsiDateCalendarWidget.php:24 inc/Widget/ParsiDateCalendarWidget.php:25
+#: inc/Widget/ParsiDateCalendarWidget.php:27 inc/Widget/ParsiDateCalendarWidget.php:28
 #: inc/Widget/ParsiDateCalendarWidget.php:42
 msgid "Jalali Date Calender"
 msgstr "گاه‌شمار تاریخ خورشیدی"
@@ -1767,15 +1748,14 @@ msgstr "بستۀ وردپرس پارسی"
 
 #: languages/common-strings.php:3
 msgid ""
-"Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: "
-"posts, comments, pages, archives, search, categories, permalinks and all admin "
-"sections and TinyMce editor, lists, quick editor. This package has Jalali "
-"archive widget."
+"Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: posts, "
+"comments, pages, archives, search, categories, permalinks and all admin sections and "
+"TinyMce editor, lists, quick editor. This package has Jalali archive widget."
 msgstr ""
-"بستۀ پارسی‌سازی وردپرس، اضافه‌کردن پشتیبانی کامل راست‌به‌چپ و تاریخ خورشیدی برای "
-"وردپرس. این افزونه از نوشته‌ها، دیدگاه‌ها، برگه‌ها، بایگانی‌ها، جستجو‌ها، دسته‌بندی‌ها "
-"و پیوندهای یکتا پشتیبانی می‌کند و تمام قسمت‌های مدیریت و ویرایشگر را پارسی می‌کند. "
-"این افزونه هم‌چنین یک ابزارک بایگانی شمسی نیز دارد."
+"بستۀ پارسی‌سازی وردپرس، اضافه‌کردن پشتیبانی کامل راست‌به‌چپ و تاریخ خورشیدی برای وردپرس. "
+"این افزونه از نوشته‌ها، دیدگاه‌ها، برگه‌ها، بایگانی‌ها، جستجو‌ها، دسته‌بندی‌ها و پیوندهای "
+"یکتا پشتیبانی می‌کند و تمام قسمت‌های مدیریت و ویرایشگر را پارسی می‌کند. این افزونه هم‌چنین "
+"یک ابزارک بایگانی شمسی نیز دارد."
 
 #: languages/common-strings.php:5
 msgid "WP-Parsi Team"
@@ -1837,11 +1817,9 @@ msgstr "تیم وردپرس پارسی"
 #~ msgid "Move page to submenu?"
 #~ msgstr "انتقال این برگه به زیرمنو؟"
 
-#~ msgid ""
-#~ "By enabling this option, page item will be moved to Settings menu as submenu."
+#~ msgid "By enabling this option, page item will be moved to Settings menu as submenu."
 #~ msgstr ""
-#~ "با فعال‌کردن این گزینه، صفحۀ پیکربندی پارسی‌دیت به زیرفهرست «تنظیمات» منتقل "
-#~ "می‌شود."
+#~ "با فعال‌کردن این گزینه، صفحۀ پیکربندی پارسی‌دیت به زیرفهرست «تنظیمات» منتقل می‌شود."
 
 #~ msgid "Persian digits"
 #~ msgstr "رقم‌های پارسی"
@@ -1859,11 +1837,11 @@ msgstr "تیم وردپرس پارسی"
 #~ msgstr "غیرفعال کردن کلیک راست در صفحات سایت"
 
 #~ msgid ""
-#~ "Don't worry about downloading website images and other files anymore, this "
-#~ "option prevents users from right clicking"
+#~ "Don't worry about downloading website images and other files anymore, this option "
+#~ "prevents users from right clicking"
 #~ msgstr ""
-#~ "دیگر نگران دانلود تصاویر و محتویات دیگر سایتتان نباشید، این گزینه کلیک راست "
-#~ "را غیرفعال می‌کند"
+#~ "دیگر نگران دانلود تصاویر و محتویات دیگر سایتتان نباشید، این گزینه کلیک راست را "
+#~ "غیرفعال می‌کند"
 
 #~ msgid "Upload File"
 #~ msgstr "بارگذاری پرونده"
