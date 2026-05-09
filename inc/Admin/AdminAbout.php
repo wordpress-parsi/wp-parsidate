@@ -290,13 +290,15 @@ class AdminAbout {
     }
 
     $teamMembers        = self::getTeamMembers();
+    $ignoreContributors = [ 'dependabot[bot]' ];
     $githubContributors = [];
     $response           = wp_remote_get( 'https://api.github.com/repos/wordpress-parsi/wp-parsidate/contributors' );
     if ( is_array( $response ) && ! is_wp_error( $response ) ) {
       $contributors = JSON::decode( wp_remote_retrieve_body( $response ) );
       foreach ( $contributors as $contributor ) {
         // Skip if the contributor is a team member
-        if ( array_key_exists( $contributor->login, $teamMembers ) ) {
+        if ( array_key_exists( $contributor->login, $teamMembers ) ||
+             in_array( $contributor->login, $ignoreContributors, true ) ) {
           continue;
         }
 
