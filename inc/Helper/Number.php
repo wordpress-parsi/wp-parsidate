@@ -11,7 +11,7 @@ class Number {
    * @return string Fixed number
    */
   public static function fixNumber( string $content ): string {
-    return preg_replace_callback( '/(?:&#\d{2,4};)|(?:[0]?[a-z][\x20-\x3B=\x3F-\x7F]*)|(?<![>=<][\s*])(\b\d+\b)|<\s*[^>]+>/i',
+    return preg_replace_callback( '/(?:&#\d{2,4};)|(?:[0]?[a-z][\x20-\x3B=\x3F-\x7F]*)|(\d+(?:\.\d+)?)|<\s*[^>]+>/iu',
       static function ( $content ) {
         return isset( $content[1] ) ? self::toPersian( $content[1] ) : $content[0];
       }, $content );
