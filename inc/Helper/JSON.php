@@ -42,7 +42,7 @@ class JSON {
    * <i>json</i> cannot be decoded or if the encoded
    * data is deeper than the recursion limit.
    */
-  public static function decode( string $json, bool $associative = null, int $depth = 512, int $flags = 0 ) {
+  public static function decode( string $json, ?bool $associative = null, int $depth = 512, int $flags = 0 ) {
     try {
       return json_decode( $json, $associative, $depth, JSON_THROW_ON_ERROR | $flags );
     } catch ( Throwable $e ) {
