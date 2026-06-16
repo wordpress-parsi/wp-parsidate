@@ -121,14 +121,14 @@ class Core {
           'wp-parsidate' ),
         'sanitize' => 'bool'
       ),
-      'local_text_domain'    => array(
+      /*'local_text_domain'    => array(
         'id'       => 'local_text_domain',
         'title'    => esc_html__( 'Load translate file', 'wp-parsidate' ),
         'type'     => 'toggle',
         'default'  => false,
         'desc'     => esc_html__( 'Load translate file from plugin directory.', 'wp-parsidate' ),
         'sanitize' => 'bool'
-      ),
+      ),*/
       'end_grid_plugin'      => array(
         'type' => 'endGrid',
       ),
