@@ -55,6 +55,15 @@ class Core {
         'desc'     => esc_html__( 'By enabling this, Dates will convert to Shamsi (Jalali) dates', 'wp-parsidate' ),
         'sanitize' => 'bool'
       ),
+      'dual_date'            => array(
+        'id'       => 'dual_date',
+        'title'    => esc_html__( 'Dual date', 'wp-parsidate' ),
+        'type'     => 'toggle',
+        'default'  => false,
+        'desc'     => esc_html__( 'By enabling this, Gregorian dates will be displayed beside Shamsi (Jalali) dates.',
+          'wp-parsidate' ),
+        'sanitize' => 'bool'
+      ),
       'months_name_type'     => array(
         'id'       => 'months_name_type',
         'title'    => esc_html__( 'Months and week days name type', 'wp-parsidate' ),

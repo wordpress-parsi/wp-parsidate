@@ -39,6 +39,7 @@ class FeedReader {
       'cache_key'    => '',
       'cache_time'   => DAY_IN_SECONDS,
       'items_number' => 10,
+      'timeout'      => 3,
       'fields'       => [ 'link', 'title', 'description', 'author', 'datetime' ],
     );
     $this->setArgs( $args );
@@ -57,6 +58,7 @@ class FeedReader {
     $this->args['cache_key']    = empty( $this->args['cache_key'] ) ? 'feed_' . Helper::urlToKey( $this->args['url'] ) : $this->args['cache_key'];
     $this->args['cache_time']   = is_numeric( $this->args['cache_time'] ) ? (int) $this->args['cache_time'] : DAY_IN_SECONDS;
     $this->args['items_number'] = (int) $this->args['items_number'];
+    $this->args['timeout']      = (int) $this->args['timeout'];
     $this->args['fields']       = is_array( $this->args['fields'] ) && ! empty( $this->args['fields'] ) ? $this->args['fields'] : $this->defaultArgs['fields'];
   }
 
@@ -164,7 +166,15 @@ class FeedReader {
       }
     }
 
+    $timeout = $this->args['timeout'];
+    $timeout_func = function ( $t ) use ( $timeout ) {
+      return $timeout;
+    };
+    add_filter( 'http_request_timeout', $timeout_func );
+
     $feed = fetch_feed( $this->args['url'] );
+
+    remove_filter( 'http_request_timeout', $timeout_func );
 
     if ( is_wp_error( $feed ) ) {
       $this->error = $feed;
