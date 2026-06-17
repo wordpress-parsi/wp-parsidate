@@ -108,7 +108,7 @@ class WooCommerce extends Addon {
 
   /**
    * @param $data
-   * @param  \WP_Error  $errors  WP Error
+   * @param \WP_Error $errors WP Error
    *
    * @return void
    */
@@ -142,7 +142,7 @@ class WooCommerce extends Addon {
    * Convert Non-Persian Values in checkout to Persian
    *
    * @method  convertNonPersianValuesInCheckout
-   * @param  array  $data
+   * @param array $data
    *
    * @return  array modified $data
    * @version 1.0.0
@@ -192,7 +192,7 @@ class WooCommerce extends Addon {
    * replace Arabic characters with equivalent character in Persian
    *
    * @method  fixPersianCharacters
-   * @param  string  $string
+   * @param string $string
    *
    * @return  string filtered $string
    * @version 1.0.0
@@ -269,8 +269,8 @@ class WooCommerce extends Addon {
   /**
    * Fix non-persian digits in checkout phone field
    *
-   * @param  string  $phone  The address property value.
-   * @param  \WC_Order  $order  The order object being read.
+   * @param string $phone The address property value.
+   * @param \WC_Order $order The order object being read.
    *
    * @since 6.0
    */
@@ -553,7 +553,7 @@ class WooCommerce extends Addon {
   /**
    * Convert selected Jalali dates to gregorian on woocommerce save non-variable products
    *
-   * @param  $product_id  $
+   * @param  $product_id $
    *
    * @return          void
    * @author HamidReza Yazdani

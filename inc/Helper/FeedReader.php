@@ -31,7 +31,7 @@ class FeedReader {
   private array $replaceDescText = [];
 
   /**
-   * @param  array  $args  Feed arguments
+   * @param array $args Feed arguments
    */
   public function __construct( array $args ) {
     $this->args = $this->defaultArgs = array(
@@ -48,7 +48,7 @@ class FeedReader {
   /**
    * Set feed arguments
    *
-   * @param  array  $args  Feed Arguments
+   * @param array $args Feed Arguments
    *
    * @return void
    */
@@ -83,7 +83,7 @@ class FeedReader {
   /**
    * Set replace text value
    *
-   * @param  array  $replaceTexts  Replace text's
+   * @param array $replaceTexts Replace text's
    *
    * @return $this
    */
@@ -96,7 +96,7 @@ class FeedReader {
   /**
    * Get HTML feed links
    *
-   * @param  array  $fields  Print fields
+   * @param array $fields Print fields
    *
    * @return array Array of HTML feed links
    */
@@ -147,7 +147,7 @@ class FeedReader {
   /**
    * Read feed
    *
-   * @param  bool  $useCache  Use Cache
+   * @param bool $useCache Use Cache
    *
    * @return FeedReader
    */
@@ -166,15 +166,15 @@ class FeedReader {
       }
     }
 
-    $timeout = $this->args['timeout'];
-    $timeout_func = function ( $t ) use ( $timeout ) {
+    $timeout     = $this->args['timeout'];
+    $timeoutFunc = function ( $t ) use ( $timeout ) {
       return $timeout;
     };
-    add_filter( 'http_request_timeout', $timeout_func );
+    add_filter( 'http_request_timeout', $timeoutFunc );
 
     $feed = fetch_feed( $this->args['url'] );
 
-    remove_filter( 'http_request_timeout', $timeout_func );
+    remove_filter( 'http_request_timeout', $timeoutFunc );
 
     if ( is_wp_error( $feed ) ) {
       $this->error = $feed;
@@ -260,9 +260,9 @@ class FeedReader {
   /**
    * Replace text in feed fields
    *
-   * @param  array  $feedItem  Feed item
-   * @param  array  $replaceTexts  Replace text's
-   * @param  string  $field  Field key
+   * @param array $feedItem Feed item
+   * @param array $replaceTexts Replace text's
+   * @param string $field Field key
    *
    * @return array Feed item
    */

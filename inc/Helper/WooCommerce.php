@@ -21,7 +21,7 @@ class WooCommerce {
    * @return bool
    */
   public static function isPostalCode( $postalCode, $checkSum = false ): bool {
-    // Convert to english
+    // Convert to English
     $postalCode = Number::toEnglish( $postalCode );
 
     // Remove space and special character

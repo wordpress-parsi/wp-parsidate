@@ -19,8 +19,8 @@ class Posts {
   /**
    * Converts post date pointer to Jalali pointer
    *
-   * @param  string  $where
-   * @param  \WP_Query|string  $wp_query
+   * @param string $where
+   * @param \WP_Query|string $wp_query
    *
    * @return string
    */
@@ -156,7 +156,7 @@ class Posts {
   /**
    * Limits posts to a certain date, if date set
    *
-   * @param  string  $where  Query pointer
+   * @param string $where Query pointer
    *
    * @return              string New Pointer
    */
