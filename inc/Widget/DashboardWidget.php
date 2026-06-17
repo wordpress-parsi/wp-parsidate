@@ -191,7 +191,7 @@ class DashboardWidget {
         /**
          * Filters the primary link URL for the 'WordPress Events and News' dashboard widget.
          *
-         * @param  string  $link  The widget's primary link URL.
+         * @param string $link The widget's primary link URL.
          *
          * @since 2.5.0
          *
@@ -201,7 +201,7 @@ class DashboardWidget {
         /**
          * Filters the primary feed URL for the 'WordPress Events and News' dashboard widget.
          *
-         * @param  string  $url  The widget's primary feed URL.
+         * @param string $url The widget's primary feed URL.
          *
          * @since 2.3.0
          *
@@ -211,7 +211,7 @@ class DashboardWidget {
         /**
          * Filters the primary link title for the 'WordPress Events and News' dashboard widget.
          *
-         * @param  string  $title  Title attribute for the widget's primary link.
+         * @param string $title Title attribute for the widget's primary link.
          *
          * @since 2.3.0
          *
@@ -227,7 +227,7 @@ class DashboardWidget {
       /**
        * Filters the secondary link URL for the 'WordPress Events and News' dashboard widget.
        *
-       * @param  string  $link  The widget's secondary link URL.
+       * @param string $link The widget's secondary link URL.
        *
        * @since 2.3.0
        *
@@ -237,7 +237,7 @@ class DashboardWidget {
       /**
        * Filters the secondary feed URL for the 'WordPress Events and News' dashboard widget.
        *
-       * @param  string  $url  The widget's secondary feed URL.
+       * @param string $url The widget's secondary feed URL.
        *
        * @since 2.3.0
        *
@@ -247,7 +247,7 @@ class DashboardWidget {
       /**
        * Filters the secondary link title for the 'WordPress Events and News' dashboard widget.
        *
-       * @param  string  $title  Title attribute for the widget's secondary link.
+       * @param string $title Title attribute for the widget's secondary link.
        *
        * @since 2.3.0
        *
@@ -257,7 +257,7 @@ class DashboardWidget {
       /**
        * Filters the number of secondary link items for the 'WordPress Events and News' dashboard widget.
        *
-       * @param  string  $items  How many items to show in the secondary feed.
+       * @param string $items How many items to show in the secondary feed.
        *
        * @since 4.4.0
        *
@@ -276,8 +276,8 @@ class DashboardWidget {
   /**
    * Displays the WordPress events and news feeds.
    *
-   * @param  string  $widget_id  Widget ID.
-   * @param  array  $feeds  Array of RSS feeds.
+   * @param string $widget_id Widget ID.
+   * @param array $feeds Array of RSS feeds.
    *
    * @since 3.8.0
    * @since 4.8.0 Removed popular plugins feed.
@@ -334,8 +334,14 @@ class DashboardWidget {
     $all_sponsors = array(
       array(
         'image_url' => WP_PARSI_URL . 'assets/images/sponsors/files-ir.jpg',
-        'image_alt' => esc_html__( 'Files.ir', 'wp-parsidate' ),
+        'image_alt' => 'Files.ir',
         'link'      => 'https://files.ir/?utm_source=wp-persian&utm_medium=WordPress&utm_campaign=Sponsored-Banner',
+        'end_date'  => '2026-11-21',
+      ),
+      array(
+        'image_url' => WP_PARSI_URL . 'assets/images/sponsors/hostiran-1.png',
+        'image_alt' => 'HostIran',
+        'link'      => 'https://hostiran.net/host/?utm_source=parsidate&utm_medium=banner&utm_campaign=awareness',
         'end_date'  => '2026-11-21',
       )
     );
