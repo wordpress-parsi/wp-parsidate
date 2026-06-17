@@ -26,7 +26,7 @@ class Nonce {
    *                    2 if the nonce is valid and generated between 12-24 hours ago.
    *                    False if the nonce is invalid.
    */
-  public static function verify( string $nonce = null, $action = WP_PARSI_KEY ) {
+  public static function verify( ?string $nonce = null, $action = WP_PARSI_KEY ) {
     $nonce = is_null( $nonce ) && isset( $_POST['nonce'] ) ? Sanitizing::text( wp_unslash( Param::post( 'nonce' ) ) ) : $nonce;
     if ( is_null( $nonce ) ) {
       return false;

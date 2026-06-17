@@ -80,7 +80,7 @@ class Assets {
    *
    * @return string HTML SVG string
    */
-  public static function setSvgDimensions( string $svg, int $width, int $height = null, bool $clean = true ): string {
+  public static function setSvgDimensions( string $svg, int $width, ?int $height = null, bool $clean = true ): string {
     if ( is_null( $height ) ) {
       $height = $width;
     }

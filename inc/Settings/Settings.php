@@ -60,7 +60,7 @@ class Settings {
     return update_option( $optionsName, $newOptions, false );
   }
 
-  public static function get( string $key = null, $default = null, $optionsName = null, bool $useCache = true ) {
+  public static function get( ?string $key = null, $default = null, $optionsName = null, bool $useCache = true ) {
     $optionsName = is_string( $optionsName ) ? WP_PARSI_KEY . '_' . $optionsName : WP_PARSI_KEY;
     $options     = Cache::get( 'options_' . $optionsName, false );
 
