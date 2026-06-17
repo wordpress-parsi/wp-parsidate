@@ -116,7 +116,7 @@ class WooCommerce extends Addon {
     // This pattern ensures the phone number follows the specified structure for both mobile and landline numbers
     if ( ! preg_match( '/^(0|0098|\+98)?(9\d{9}|[1-8]\d{9,10})$/',
       Number::toEnglish( wc_get_post_data_by_key( 'billing_phone' ) ) ) ) {
-      $errors->add( 'invalid_phone', esc_html__( '<strong>Phone number</strong> is invalid.', 'wp-parsidate' ) );
+      $errors->add( 'invalid_phone', __( '<strong>Phone number</strong> is invalid.', 'wp-parsidate' ) );
     }
   }
 
