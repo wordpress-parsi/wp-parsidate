@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
       $('.inline-edit-date div:eq(1)').hide();
     }
   });
-  
+
   $('#timestampdiv,.inline-edit-date').on('keyup', '#hha', function () {
     $('input[name=hh]').val($(this).val());
 
@@ -122,11 +122,11 @@ jQuery(document).ready(function ($) {
     $('select[name=mm]').val(date[1]);
     $('input[name=jj]').val(date[2]);
   });
-  
+
   /*
    * Filter on post screen dates
    */
-  $('select[name=m]').hide()
+  /*$('select[name=m]').hide()*/
   var timer;
 
   function change_date() {

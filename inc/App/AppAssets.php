@@ -10,7 +10,7 @@ namespace WPParsidate\App;
 defined( 'ABSPATH' ) || exit;
 
 use WPParsidate\Core\Names;
-use WPParsidate\Helper\Assets;
+use WPParsidate\Helper\{Assets, Param};
 use WPParsidate\Settings\Settings;
 
 class AppAssets {
@@ -116,6 +116,7 @@ class AppAssets {
   }
 
   public function adminEnqueueScripts(): void {
+    global $pagenow;
     $pluginVersion = Assets::getVersion();
     $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
@@ -131,5 +132,13 @@ class AppAssets {
       'WPP_I18N',
       array( 'months' => Names::getMonths() )
     );
+
+    if ( $pagenow == 'edit.php' ) {
+      $postType = Param::get( 'post_type', 'post' );
+
+      if ( ! apply_filters( 'disable_months_dropdown', false, $postType ) ) {
+        wp_add_inline_script( WP_PARSI_KEY_SLUG . '-admin', "jQuery(document).ready(function ($) {\$('select[name=m]').hide()})" );
+      }
+    }
   }
 }
