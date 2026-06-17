@@ -40,11 +40,11 @@ class FixDates {
   /**
    * Fixes i18n date formatting and convert them to Jalali
    *
-   * @param  string  $date  Formatted date string.
-   * @param  string  $format  Format to display the date.
-   * @param  int  $timestamp  A sum of Unix timestamp and timezone offset in seconds.
+   * @param string $date Formatted date string.
+   * @param string $format Format to display the date.
+   * @param int $timestamp A sum of Unix timestamp and timezone offset in seconds.
    *                          Might be without offset if input omitted timestamp but requested GMT.
-   * @param  bool  $gmt  Whether to use GMT timezone. Only applies if timestamp was not provided.
+   * @param bool $gmt Whether to use GMT timezone. Only applies if timestamp was not provided.
    *                          Default false.
    *
    * @return string Formatted time
@@ -64,8 +64,8 @@ class FixDates {
   /**
    * Fixes Media view Select box and returns in Jalali Format Date
    *
-   * @param  array  $settings  List of media view settings.
-   * @param  \WP_Post  $post  Post object.
+   * @param array $settings List of media view settings.
+   * @param \WP_Post $post Post object.
    *
    * @return  array _wpMediaViewsL10n localize script in WordPress
    * @author  Mehrshad Darzi
@@ -91,9 +91,9 @@ class FixDates {
   /**
    * Fixes comment date and returns in Jalali format
    *
-   * @param  string|int  $comment_date  Formatted date string or Unix timestamp.
-   * @param  string  $format  PHP date format.
-   * @param  \WP_Comment  $comment  The comment object.
+   * @param string|int $comment_date Formatted date string or Unix timestamp.
+   * @param string $format PHP date format.
+   * @param \WP_Comment $comment The comment object.
    */
   public function fixCommentDate( $comment_date, $format, $comment ) {
     if ( $comment === null ) {
@@ -113,8 +113,8 @@ class FixDates {
   /**
    * Fixes comment time and returns to Jalali format
    *
-   * @param  string  $time  Comment time
-   * @param  string  $format  Date format
+   * @param string $time Comment time
+   * @param string $format Date format
    *
    * @return          string Formatted date
    */
@@ -138,9 +138,9 @@ class FixDates {
   /**
    * Fixes post modified date and returns to Jalali format
    *
-   * @param  string  $time  Post modified time
-   * @param  string  $format  Date format
-   * @param  \WP_Post|null  $post  WP_Post object or null if no post is found.
+   * @param string $time Post modified time
+   * @param string $format Date format
+   * @param \WP_Post|null $post WP_Post object or null if no post is found.
    *
    * @return string Formatted date
    * @author Yousef Mahmoudi
@@ -160,8 +160,8 @@ class FixDates {
   /**
    * Fixes post time and returns to Jalali format
    *
-   * @param  string  $time  Post time
-   * @param  string  $format  Date format
+   * @param string $time Post time
+   * @param string $format Date format
    *
    * @return          string Formatted date
    */
@@ -190,8 +190,8 @@ class FixDates {
   /**
    * Fixes post date and returns to Jalali format
    *
-   * @param  string  $time  Post time
-   * @param  string  $format  Date format
+   * @param string $time Post time
+   * @param string $format Date format
    *
    * @return string Formatted date
    */
@@ -223,14 +223,18 @@ class FixDates {
   /**
    * Converts a date/time value to a Jalali-formatted string, optionally appending the Gregorian date.
    *
-   * @param  string  $format               PHP date format string.
-   * @param  mixed   $dateTime             Date/time value (timestamp, date string, or DateTimeInterface).
-   * @param  string  $fallbackGregorianDate Fallback Gregorian date string used when timestamp cannot be resolved.
+   * @param string $format PHP date format string.
+   * @param mixed $dateTime Date/time value (timestamp, date string, or DateTimeInterface).
+   * @param string $fallbackGregorianDate Fallback Gregorian date string used when timestamp cannot be resolved.
    *
    * @return string Jalali-formatted date string, with optional dual-date suffix.
    */
   private function formatDate( string $format, $dateTime, string $fallbackGregorianDate = '' ): string {
     $jalaliDate = parsidate( $format, $dateTime, Settings::get( 'conv_dates' ) );
+
+    if ( ! Settings::get( 'dual_date', false ) ) {
+      return $jalaliDate;
+    }
 
     return $this->appendGregorianDate( $jalaliDate, $format, $dateTime, $fallbackGregorianDate );
   }
@@ -238,20 +242,15 @@ class FixDates {
   /**
    * Appends the Gregorian date to a Jalali date string when dual-date mode is enabled.
    *
-   * @param  string  $jalaliDate           Already-formatted Jalali date string.
-   * @param  string  $format               PHP date format string used for formatting.
-   * @param  mixed   $dateTime             Original date/time value.
-   * @param  string  $fallbackGregorianDate Fallback Gregorian date string used when timestamp cannot be resolved.
+   * @param string $jalaliDate Already-formatted Jalali date string.
+   * @param string $format PHP date format string used for formatting.
+   * @param mixed $dateTime Original date/time value.
+   * @param string $fallbackGregorianDate Fallback Gregorian date string used when timestamp cannot be resolved.
    *
    * @return string Jalali date string, optionally followed by a separator and the Gregorian date.
    */
-  private function appendGregorianDate(
-    string $jalaliDate,
-    string $format,
-    $dateTime,
-    string $fallbackGregorianDate = ''
-  ): string {
-    if ( ! Settings::get( 'dual_date', false ) || ! $this->isDualDateFormat( $format ) ) {
+  private function appendGregorianDate( string $jalaliDate, string $format, $dateTime, string $fallbackGregorianDate = '' ): string {
+    if ( ! $this->isDualDateFormat( $format ) ) {
       return $jalaliDate;
     }
 
@@ -270,7 +269,7 @@ class FixDates {
    *
    * Machine-readable formats (e.g. ISO 8601, RFC, Unix timestamp) are excluded.
    *
-   * @param  string  $format  PHP date format string to evaluate.
+   * @param string $format PHP date format string to evaluate.
    *
    * @return bool True if the format contains human-readable date components, false otherwise.
    */
@@ -308,9 +307,9 @@ class FixDates {
   /**
    * Formats a date/time value as a Gregorian date string, optionally converting digits to Persian.
    *
-   * @param  string  $format               PHP date format string.
-   * @param  mixed   $dateTime             Date/time value (timestamp, date string, or DateTimeInterface).
-   * @param  string  $fallbackGregorianDate Fallback string returned when timestamp cannot be resolved.
+   * @param string $format PHP date format string.
+   * @param mixed $dateTime Date/time value (timestamp, date string, or DateTimeInterface).
+   * @param string $fallbackGregorianDate Fallback string returned when timestamp cannot be resolved.
    *
    * @return string Formatted Gregorian date string.
    */
@@ -334,8 +333,8 @@ class FixDates {
   /**
    * Replaces English month and weekday names in a formatted date string with their Persian equivalents.
    *
-   * @param  string  $date       Formatted date string containing English month/day names.
-   * @param  int     $timestamp  Unix timestamp used to determine the current month and weekday.
+   * @param string $date Formatted date string containing English month/day names.
+   * @param int $timestamp Unix timestamp used to determine the current month and weekday.
    *
    * @return string Date string with English names replaced by Persian names.
    */
@@ -345,10 +344,36 @@ class FixDates {
     $weekDays    = Names::getGregorianWeekDays();
     $shortDays   = Names::getGregorianWeekDays( null, true );
 
-    $englishMonths      = array( '', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-      'September', 'October', 'November', 'December' );
-    $englishShortMonths = array( '', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-      'Dec' );
+    $englishMonths      = array(
+      '',
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    );
+    $englishShortMonths = array(
+      '',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    );
     $englishWeekDays    = array( 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' );
     $englishShortDays   = array( 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $replacements       = [];
@@ -380,7 +405,7 @@ class FixDates {
    *
    * Accepts a DateTimeInterface object, a numeric timestamp, or a date string.
    *
-   * @param  mixed  $dateTime  Date/time value to resolve.
+   * @param mixed $dateTime Date/time value to resolve.
    *
    * @return int|null Unix timestamp, or null if the value cannot be parsed.
    */
