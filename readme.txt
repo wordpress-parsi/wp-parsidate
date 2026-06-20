@@ -1,10 +1,10 @@
 === پارسی دیت – Parsi Date ===
 Contributors: lord_viper, man4toman, parselearn, yazdaniwp, saeedfard, iehsanir, wordpress-parsi
 Donate link: https://wp-parsi.com/support/
-Tags: shamsi, Persian, Jalali, WooCommerce, ووکامرس
+Tags: Shamsi, Persian, Jalali, WooCommerce, ووکامرس
 Requires at least: 5.3
-Tested up to: 6.9.4
-Stable tag: 6.0
+Tested up to: 7.0
+Stable tag: 6.1
 Requires PHP: 7.4
 License: GPLv3
 
@@ -62,6 +62,12 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 7. WooCommerce settings
 
 == Changelog ==
+
+= 6.1 =
+* Fixed some errors
+* Add: Dual date feature [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/304)
+* Fix: Implicitly nullable parameter declarations deprecated in PHP 8.4 [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/307)
+* Fix: Resolve decimal number conversion issue in Persian text [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/303)
 
 = 6.0 =
 * We have major update for code and UI of Parsi Date plugin
