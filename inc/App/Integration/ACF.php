@@ -44,10 +44,16 @@ class ACF extends Addon {
   public function fixDatePickerScript(): void {
     wp_add_inline_script( 'wpp_jalali_datepicker', "document.addEventListener('DOMContentLoaded', function () {
           setTimeout(function () {
-            jQuery('.acf-date-picker input.hasDatepicker').on('keyup change', function () {
+            function wppdAcfJalaliDatePickerMirror() {
+            jQuery('.acf-date-picker input.hasDatepicker').unbind('keyup change').on('keyup change', function () {
               let acfDatePickerParent = jQuery(this).closest('div.acf-date-picker');
               if (acfDatePickerParent.length)
                 acfDatePickerParent.children('input[type=\"hidden\"]').val(jQuery(this).val().replaceAll('-', ''));
+            });
+            }
+            wppdAcfJalaliDatePickerMirror();
+            jQuery('.acf-button.acf-repeater-add-row').on('click', function () {
+              setTimeout(function () {wppdAcfJalaliDatePickerMirror()}, 1000);
             });
           }, 2000);
         });" );
