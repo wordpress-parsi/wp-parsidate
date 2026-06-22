@@ -291,6 +291,7 @@ class AdminSettings {
 
     if ( ! empty( $setting['sanitize'] ) && method_exists( Sanitizing::class, $setting['sanitize'] ) ) {
       $value = Sanitizing::{$setting['sanitize']}( $value );
+      $value = wp_slash( $value );
     }
 
     return $value;
