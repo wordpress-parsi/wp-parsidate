@@ -235,6 +235,7 @@ class Addons {
       'seo'            => esc_html__( 'SEO', 'wp-parsidate' ),
       'utility'        => esc_html__( 'Utility', 'wp-parsidate' ),
       'page_builder'   => esc_html__( 'Page Builder', 'wp-parsidate' ),
+      'security'       => esc_html__( 'Security', 'wp-parsidate' ),
     );
 
     $cats = apply_filters( 'wp_parsidate_addon_cats', array() );
