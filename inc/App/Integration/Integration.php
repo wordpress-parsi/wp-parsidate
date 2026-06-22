@@ -9,6 +9,7 @@ class Integration {
     new Elementor();
     new ACF();
     new RankMath();
+    new LimitLoginAttempts();
     new HookDeactivator();
   }
 }
