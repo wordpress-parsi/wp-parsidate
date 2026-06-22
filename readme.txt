@@ -64,10 +64,12 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 == Changelog ==
 
 = 6.1 =
+* Add: Limit Login Attempts Security addon. [#issue](https://wordpress.org/support/topic/plugin-conflict-454/)
+* Add: Dual date feature. [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/304)
+* Fix: Implicitly nullable parameter declarations deprecated in PHP 8.4. [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/307)
+* Fix: Resolve decimal number conversion issue in Persian text. [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/303)
+* Fix: ACF repeatable date field save error
 * Fixed some errors
-* Add: Dual date feature [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/304)
-* Fix: Implicitly nullable parameter declarations deprecated in PHP 8.4 [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/307)
-* Fix: Resolve decimal number conversion issue in Persian text [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/303)
 
 = 6.0 =
 * We have major update for code and UI of Parsi Date plugin
