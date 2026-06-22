@@ -17,19 +17,19 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 class WPP_ParsiDate {
   protected static $instance;
 
-  public $sessions = array( 'بهار', 'تابستان', 'پاییز', 'زمستان' );
+  public array $sessions = array( 'بهار', 'تابستان', 'پاییز', 'زمستان' );
 
-  public $persian_day_names = array( 'یکشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه' );
-  public $persian_day_small = array( 'ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش' );
+  public array $persian_day_names = array( 'یکشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه' );
+  public array $persian_day_small = array( 'ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش' );
 
-  public $j_days_in_month = array( 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29 );
-  private $j_days_sum_month = array( 0, 0, 31, 62, 93, 124, 155, 186, 216, 246, 276, 306, 336 );
-  private $g_days_sum_month = array( 0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 );
+  public array $j_days_in_month = array( 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29 );
+  private array $j_days_sum_month = array( 0, 0, 31, 62, 93, 124, 155, 186, 216, 246, 276, 306, 336 );
+  private array $g_days_sum_month = array( 0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 );
 
   /**
    * Check year is leaped
    *
-   * @param  mixed  $year
+   * @param mixed $year
    *
    * @return boolean
    */
@@ -43,7 +43,7 @@ class WPP_ParsiDate {
    * WPP_ParsiDate::IsLeapYear()
    * check year is leap
    *
-   * @param  mixed  $year
+   * @param mixed $year
    *
    * @return boolean
    */
@@ -55,9 +55,9 @@ class WPP_ParsiDate {
    * WPP_ParsiDate::persian_date()
    * convert gregorian datetime to persian datetime
    *
-   * @param  mixed  $format
-   * @param  string  $date
-   * @param  string  $lang
+   * @param mixed $format
+   * @param string $date
+   * @param string $lang
    *
    * @return string
    */
@@ -65,7 +65,7 @@ class WPP_ParsiDate {
     $months_name = Names::getMonths();
     $day_names   = Names::getWeekDays();
     //$j_days_in_month = array( 31, 62, 93, 124, 155, 186, 216, 246, 276, 306, 336, 365 );
-    $timestamp = is_numeric( $date ) && (int) $date == $date ? $date : strtotime( $date );
+    $timestamp = is_numeric( $date ) && (int) $date == $date ? $date : ( $date ? strtotime( $date ) : time() );
     $date      = getdate( $timestamp );
 
     list( $date['year'], $date['mon'], $date['mday'] ) = $this->gregorian_to_persian( $date['year'], $date['mon'],
@@ -222,9 +222,9 @@ class WPP_ParsiDate {
    * WPP_ParsiDate::gregorian_to_persian()
    * convert gregorian date to persian date
    *
-   * @param  mixed  $gy
-   * @param  mixed  $gm
-   * @param  mixed  $gd
+   * @param mixed $gy
+   * @param mixed $gm
+   * @param mixed $gd
    *
    * @return array
    */
@@ -265,7 +265,7 @@ class WPP_ParsiDate {
   /**
    * Get day of the week shamsi/jalali
    *
-   * @param  int  $wday
+   * @param int $wday
    *
    * @return       int
    * @author       Parsa Kafi
@@ -279,8 +279,8 @@ class WPP_ParsiDate {
    * WPP_ParsiDate::trim_number()
    * convert english number to persian number
    *
-   * @param  mixed  $num
-   * @param  string  $sp
+   * @param mixed $num
+   * @param string $sp
    *
    * @return string
    */
@@ -310,8 +310,8 @@ class WPP_ParsiDate {
    * WPP_ParsiDate::gregorian_date()
    * convert persian datetime to gregorian datetime
    *
-   * @param  mixed  $format
-   * @param  mixed  $persianDate
+   * @param mixed $format
+   * @param mixed $persianDate
    *
    * @return              false|string
    */
@@ -343,9 +343,9 @@ class WPP_ParsiDate {
    * WPP_ParsiDate::persian_to_gregorian()
    * convert persian date to gregorian date
    *
-   * @param  mixed  $jy
-   * @param  mixed  $jm
-   * @param  mixed  $jd
+   * @param mixed $jy
+   * @param mixed $jm
+   * @param mixed $jd
    *
    * @return array
    */
