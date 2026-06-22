@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-17 03:04+0330\n"
-"PO-Revision-Date: 2026-06-17 03:05+0330\n"
+"POT-Creation-Date: 2026-06-23 02:07+0330\n"
+"PO-Revision-Date: 2026-06-23 02:10+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -199,11 +199,15 @@ msgstr "ابزار مفید"
 msgid "Page Builder"
 msgstr "صفحه‌ساز"
 
-#: inc/Addons/Addons.php:243
+#: inc/Addons/Addons.php:238 inc/App/Integration/LimitLoginAttempts.php:37
+msgid "Security"
+msgstr "امنیتی"
+
+#: inc/Addons/Addons.php:244
 msgid "Other addons"
 msgstr "دیگر افزونه‌ها"
 
-#: inc/Addons/Addons.php:251
+#: inc/Addons/Addons.php:252
 msgid "Save active addons"
 msgstr "ذخیره افزونه‌های فعال"
 
@@ -353,11 +357,11 @@ msgstr "تنظیمات ذخیره شد."
 msgid "Error saving settings!"
 msgstr "خطا در ذخیره تنظیمات!"
 
-#: inc/Admin/AdminSettings.php:492
+#: inc/Admin/AdminSettings.php:493
 msgid "Save changes"
 msgstr "ذخیره تغییرات"
 
-#: inc/Admin/AdminSettings.php:505
+#: inc/Admin/AdminSettings.php:506
 msgid "Discard changes"
 msgstr "بازنشانی تغییرات"
 
@@ -529,14 +533,6 @@ msgstr ""
 "با فعال‌کردن این گزینه، نسخۀ فشرده‌نشدۀ پرونده‌های JS و CSS افزونۀ پارسی‌دیت "
 "بارگذاری می‌شوند."
 
-#: inc/App/Core/Core.php:126
-msgid "Load translate file"
-msgstr "بارگذاری فایل ترجمه"
-
-#: inc/App/Core/Core.php:129
-msgid "Load translate file from plugin directory."
-msgstr "بارگذاری فایل ترجمه از پوشه افزونه."
-
 #: inc/App/Core/Core.php:143
 msgid "Multilingual"
 msgstr "چندزبانه"
@@ -549,28 +545,28 @@ msgstr "پشتیبانی از چندزبانه"
 msgid "By enabling this, ParsiDate options only work in persian locale"
 msgstr "با فعال کردن این گزینه، تنظیمات پارسی‌دیت فقط برای زبان فارسی اعمال می‌شود"
 
-#: inc/App/Integration/ACF.php:59
+#: inc/App/Integration/ACF.php:65
 msgid "Convert to Shamsi Date"
 msgstr "تبدیل به تاریخ شمسی"
 
-#: inc/App/Integration/ACF.php:130 inc/App/Integration/ACF.php:136
-#: inc/App/Integration/ACF.php:167
+#: inc/App/Integration/ACF.php:136 inc/App/Integration/ACF.php:142
+#: inc/App/Integration/ACF.php:173
 msgid "Advanced Custom Fields"
 msgstr "زمینه‌های سفارشی"
 
-#: inc/App/Integration/ACF.php:131 inc/App/Integration/ACF.php:168
+#: inc/App/Integration/ACF.php:137 inc/App/Integration/ACF.php:174
 msgid "ParsiDate integration for Advanced Custom Fields (ACF)"
 msgstr "هماهنگ‌سازی تاریخ پارسی با زمینه‌های سفارشی (ACF)"
 
-#: inc/App/Integration/ACF.php:141
+#: inc/App/Integration/ACF.php:147
 msgid "Jalali Datepicker"
 msgstr "انتخاب‌گر تاریخ شمسی (جلالی)"
 
-#: inc/App/Integration/ACF.php:148
+#: inc/App/Integration/ACF.php:154
 msgid "Save dates in Jalali format (Not recommended)"
 msgstr "ذخیره‌سازی تاریخ بصورت شمسی (توصیه نمی‌شود)"
 
-#: inc/App/Integration/ACF.php:171
+#: inc/App/Integration/ACF.php:177
 msgid "Meta"
 msgstr "متا"
 
@@ -700,6 +696,14 @@ msgstr "غیرفعال کردن قلاب"
 #: inc/App/Integration/HookDeactivator.php:167
 msgid "Disable plugin hooks"
 msgstr "غیرفعال کردن قلابهای افزونه"
+
+#: inc/App/Integration/LimitLoginAttempts.php:33
+msgid "Limit Login Attempts Security"
+msgstr "محدود کردن تلاش‌های ورود"
+
+#: inc/App/Integration/LimitLoginAttempts.php:34
+msgid "ParsiDate integration for Limit Login Attempts Security"
+msgstr "هماهنگ‌سازی تاریخ پارسی با محدود کردن تلاش‌های ورود"
 
 #: inc/App/Integration/RankMath.php:139
 msgid "Rank Math"
@@ -1695,10 +1699,6 @@ msgstr "حامی مالی"
 msgid "ParsiDate"
 msgstr "تاریخ پارسی"
 
-#: inc/Widget/DashboardWidget.php:337
-msgid "Files.ir"
-msgstr ""
-
 #: inc/Widget/ParsiDateArchiveWidget.php:25
 #: inc/Widget/ParsiDateArchiveWidget.php:26
 #: inc/Widget/ParsiDateArchiveWidget.php:28
@@ -1792,6 +1792,12 @@ msgstr ""
 #: languages/common-strings.php:5
 msgid "WP-Parsi Team"
 msgstr "تیم وردپرس پارسی"
+
+#~ msgid "Load translate file"
+#~ msgstr "بارگذاری فایل ترجمه"
+
+#~ msgid "Load translate file from plugin directory."
+#~ msgstr "بارگذاری فایل ترجمه از پوشه افزونه."
 
 #~ msgid "Mediana"
 #~ msgstr "مدیانا"
