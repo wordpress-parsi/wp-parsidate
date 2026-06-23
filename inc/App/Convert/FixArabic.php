@@ -25,7 +25,7 @@ class FixArabic {
   /**
    * Fix arabic foreign characters
    *
-   * @param  string  $content
+   * @param string $content
    *
    * @return string Fixed string
    */

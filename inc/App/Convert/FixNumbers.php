@@ -49,7 +49,7 @@ class FixNumbers {
   /**
    * Fix numbers and convert them to Persian digits style
    *
-   * @param  mixed  $content
+   * @param mixed $content
    *
    * @return string
    */
@@ -60,7 +60,7 @@ class FixNumbers {
   /**
    * Converts English digits to Persian digits
    *
-   * @param  mixed  $string
+   * @param mixed $string
    *
    * @return string
    */

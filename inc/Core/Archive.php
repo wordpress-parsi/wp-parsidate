@@ -13,7 +13,7 @@ class Archive {
   /**
    * Create Persian Archives
    *
-   * @param  string|array  $args
+   * @param string|array $args
    */
   public static function getPostTypeArchives( $args = '' ): void {
     global $wpdb;
@@ -60,7 +60,7 @@ class Archive {
   }
 
   /**
-   * @param  string|array  $args
+   * @param string|array $args
    */
   public static function getPostArchives( $args = '' ): void {
     global $wpdb;

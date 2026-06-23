@@ -6,7 +6,7 @@ class Number {
   /**
    * Fix numbers and convert them to Persian digits style
    *
-   * @param  string  $content
+   * @param string $content
    *
    * @return string Fixed number
    */
@@ -21,7 +21,7 @@ class Number {
   /**
    * Converts English numbers to Persian numbers in post contents
    *
-   * @param  string  $content  Post content
+   * @param string $content Post content
    *
    * @return  string Formatted content
    */
@@ -32,7 +32,7 @@ class Number {
   /**
    * Converts English digits to Persian digits
    *
-   * @param  string  $number  Numbers
+   * @param string $number Numbers
    *
    * @return string Formatted numbers
    */
@@ -47,7 +47,7 @@ class Number {
   /**
    * Converts Persian digits to English digits
    *
-   * @param  string  $number  Numbers
+   * @param string $number Numbers
    *
    * @return              string Formatted numbers
    */

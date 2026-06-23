@@ -14,8 +14,8 @@ class Names {
   /**
    * Get Gregorian month names, Months type is persian, dari, kurdish, pashto
    *
-   * @param  string|null  $type  Type of months name
-   * @param  bool  $short  Return short month names
+   * @param string|null $type Type of months name
+   * @param bool $short Return short month names
    *
    * @return array|mixed|null
    */
@@ -115,7 +115,7 @@ class Names {
   /**
    * Get month names, Months type is persian, dari, kurdish, pashto
    *
-   * @param  string|null  $type  Type of months name
+   * @param string|null $type Type of months name
    *
    * @return array|mixed|null
    */
@@ -207,7 +207,7 @@ class Names {
   /**
    * Get week day names, Week day type is persian, dari, kurdish, pashto
    *
-   * @param  string|null  $type  Type of week day name
+   * @param string|null $type Type of week day name
    *
    * @return array|mixed|null
    */
@@ -265,8 +265,8 @@ class Names {
   /**
    * Get Gregorian week day names, Week day type is persian, dari, kurdish, pashto
    *
-   * @param  string|null  $type  Type of week day name
-   * @param  bool  $short  Return short week day names
+   * @param string|null $type Type of week day name
+   * @param bool $short Return short week day names
    *
    * @return array|mixed|null
    */

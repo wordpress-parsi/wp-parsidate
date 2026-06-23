@@ -134,9 +134,9 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
   /**
    *  This filter is applied to the $value after it is loaded from the db and, before it is passed back to the API functions such as the_field
    *
-   * @param    $value  - the value which was loaded from the database
-   * @param    $post_id  - the $post_id from which the value was loaded
-   * @param    $field  - the field array holding all the field options
+   * @param    $value - the value which was loaded from the database
+   * @param    $post_id - the $post_id from which the value was loaded
+   * @param    $field - the field array holding all the field options
    *
    * @return   mixed|void $value    - the modified value
    * @since    4.0.0

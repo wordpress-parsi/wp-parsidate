@@ -312,7 +312,7 @@ class nusoap_base {
   /**
    * sets the global debug level, which applies to future instances
    *
-   * @param  int  $level  Debug level 0-9, where 0 turns off
+   * @param int $level Debug level 0-9, where 0 turns off
    *
    * @access    public
    */
@@ -333,7 +333,7 @@ class nusoap_base {
   /**
    * sets the debug level for this instance
    *
-   * @param  int  $level  Debug level 0-9, where 0 turns off
+   * @param int $level Debug level 0-9, where 0 turns off
    *
    * @access    public
    */
@@ -344,7 +344,7 @@ class nusoap_base {
   /**
    * adds debug data to the instance debug string with formatting
    *
-   * @param  string  $string  debug data
+   * @param string $string debug data
    *
    * @access   private
    */
@@ -357,7 +357,7 @@ class nusoap_base {
   /**
    * adds debug data to the instance debug string without formatting
    *
-   * @param  string  $string  debug data
+   * @param string $string debug data
    *
    * @access   public
    */
@@ -413,7 +413,7 @@ class nusoap_base {
   /**
    * expands entities, e.g. changes '<' to '&lt;'.
    *
-   * @param  string  $val  The string in which to expand entities.
+   * @param string $val The string in which to expand entities.
    *
    * @access    private
    */
@@ -456,7 +456,7 @@ class nusoap_base {
   /**
    * detect if array is a simple array or a struct (associative array)
    *
-   * @param  mixed  $val  The PHP array
+   * @param mixed $val The PHP array
    *
    * @return    string    (arraySimple|arrayStruct)
    * @access    private
@@ -476,14 +476,14 @@ class nusoap_base {
    * serializes PHP values in accordance w/ section 5. Type information is
    * not serialized if $use == 'literal'.
    *
-   * @param  mixed  $val  The value to serialize
-   * @param  string  $name  The name (local part) of the XML element
-   * @param  string  $type  The XML schema type (local part) for the element
-   * @param  string  $name_ns  The namespace for the name of the XML element
-   * @param  string  $type_ns  The namespace for the type of the element
-   * @param  array  $attributes  The attributes to serialize as name=>value pairs
-   * @param  string  $use  The WSDL "use" (encoded|literal)
-   * @param  boolean  $soapval  Whether this is called from soapval.
+   * @param mixed $val The value to serialize
+   * @param string $name The name (local part) of the XML element
+   * @param string $type The XML schema type (local part) for the element
+   * @param string $name_ns The namespace for the name of the XML element
+   * @param string $type_ns The namespace for the type of the element
+   * @param array $attributes The attributes to serialize as name=>value pairs
+   * @param string $use The WSDL "use" (encoded|literal)
+   * @param boolean $soapval Whether this is called from soapval.
    *
    * @return    string    The serialized element, possibly with child elements
    * @access    public
@@ -758,12 +758,12 @@ class nusoap_base {
   /**
    * serializes a message
    *
-   * @param  string  $body  the XML of the SOAP body
-   * @param  mixed  $headers  optional string of XML with SOAP header content, or array of soapval objects for SOAP headers, or associative array
-   * @param  array  $namespaces  optional the namespaces used in generating the body and headers
-   * @param  string  $style  optional (rpc|document)
-   * @param  string  $use  optional (encoded|literal)
-   * @param  string  $encodingStyle  optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
+   * @param string $body the XML of the SOAP body
+   * @param mixed $headers optional string of XML with SOAP header content, or array of soapval objects for SOAP headers, or associative array
+   * @param array $namespaces optional the namespaces used in generating the body and headers
+   * @param string $style optional (rpc|document)
+   * @param string $use optional (encoded|literal)
+   * @param string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
    *
    * @return string the message
    * @access public
@@ -827,7 +827,7 @@ class nusoap_base {
   /**
    * formats a string to be inserted into an HTML stream
    *
-   * @param  string  $str  The string to format
+   * @param string $str The string to format
    *
    * @return string The formatted string
    * @access public
@@ -842,7 +842,7 @@ class nusoap_base {
   /**
    * contracts (changes namespace to prefix) a qualified name
    *
-   * @param  string  $qname  qname
+   * @param string $qname qname
    *
    * @return    string contracted qname
    * @access   private
@@ -867,7 +867,7 @@ class nusoap_base {
   /**
    * expands (changes prefix to namespace) a qualified name
    *
-   * @param  string  $qname  qname
+   * @param string $qname qname
    *
    * @return    string expanded qname
    * @access   private
@@ -893,7 +893,7 @@ class nusoap_base {
    * returns the local part of a prefixed string
    * returns the original string, if not prefixed
    *
-   * @param  string  $str  The prefixed string
+   * @param string $str The prefixed string
    *
    * @return string The local part
    * @access public
@@ -911,7 +911,7 @@ class nusoap_base {
    * returns the prefix part of a prefixed string
    * returns false, if not prefixed
    *
-   * @param  string  $str  The prefixed string
+   * @param string $str The prefixed string
    *
    * @return false|string The prefix or false if there is no prefix
    * @access public
@@ -928,7 +928,7 @@ class nusoap_base {
   /**
    * pass it a prefix, it returns a namespace
    *
-   * @param  string  $prefix  The prefix
+   * @param string $prefix The prefix
    *
    * @return mixed The namespace, false if no namespace has the specified prefix
    * @access public
@@ -946,7 +946,7 @@ class nusoap_base {
    * returns the prefix for a given namespace (or prefix)
    * or false if no prefixes registered for the given namespace
    *
-   * @param  string  $ns  The namespace
+   * @param string $ns The namespace
    *
    * @return false|string The prefix, false if the namespace has no prefixes
    * @access public
@@ -987,7 +987,7 @@ class nusoap_base {
   /**
    * Returns a string with the output of var_dump
    *
-   * @param  mixed  $data  The variable to var_dump
+   * @param mixed $data The variable to var_dump
    *
    * @return string The output of var_dump
    * @access public
@@ -1019,8 +1019,8 @@ class nusoap_base {
 /**
  * convert unix timestamp to ISO 8601 compliant date string
  *
- * @param  int  $timestamp  Unix time stamp
- * @param  boolean  $utc  Whether the time stamp is UTC or local
+ * @param int $timestamp Unix time stamp
+ * @param boolean $utc Whether the time stamp is UTC or local
  *
  * @return   false|string ISO 8601 date string or false
  * @access   public
@@ -1061,7 +1061,7 @@ function timestamp_to_iso8601( $timestamp, $utc = true ) {
 /**
  * convert ISO 8601 compliant date string to unix timestamp
  *
- * @param  string  $datestr  ISO 8601 compliant date string
+ * @param string $datestr ISO 8601 compliant date string
  *
  * @return   false|int Unix timestamp (int) or false
  * @access   public
@@ -1102,7 +1102,7 @@ function iso8601_to_timestamp( $datestr ) {
 /**
  * sleeps some number of microseconds
  *
- * @param  string  $usec  the number of microseconds to sleep
+ * @param string $usec the number of microseconds to sleep
  *
  * @access   public
  * @deprecated
@@ -1160,10 +1160,10 @@ class nusoap_fault extends nusoap_base {
   /**
    * constructor
    *
-   * @param  string  $faultcode  (SOAP-ENV:Client | SOAP-ENV:Server)
-   * @param  string  $faultactor  only used when msg routed between multiple actors
-   * @param  string  $faultstring  human readable error message
-   * @param  mixed  $faultdetail  detail, typically a string or array of string
+   * @param string $faultcode (SOAP-ENV:Client | SOAP-ENV:Server)
+   * @param string $faultactor only used when msg routed between multiple actors
+   * @param string $faultstring human readable error message
+   * @param mixed $faultdetail detail, typically a string or array of string
    */
   function __construct( $faultcode, $faultactor = '', $faultstring = '', $faultdetail = '' ) {
     parent::__construct();
@@ -1250,9 +1250,9 @@ class nusoap_xmlschema extends nusoap_base {
   /**
    * constructor
    *
-   * @param  string  $schema  schema document URI
-   * @param  string  $xml  xml document URI
-   * @param  string  $namespaces  namespaces defined in enclosing XML
+   * @param string $schema schema document URI
+   * @param string $xml xml document URI
+   * @param string $namespaces namespaces defined in enclosing XML
    *
    * @access   public
    */
@@ -1284,8 +1284,8 @@ class nusoap_xmlschema extends nusoap_base {
   /**
    * parse an XML file
    *
-   * @param  string  $xml  path/URL to XML file
-   * @param  string  $type  (schema | xml)
+   * @param string $xml path/URL to XML file
+   * @param string $type (schema | xml)
    *
    * @return boolean
    * @access public
@@ -1315,8 +1315,8 @@ class nusoap_xmlschema extends nusoap_base {
   /**
    * parse an XML string
    *
-   * @param  string  $xml  path or URL
-   * @param  string  $type  (schema|xml)
+   * @param string $xml path or URL
+   * @param string $type (schema|xml)
    *
    * @access   private
    */
@@ -1364,7 +1364,7 @@ class nusoap_xmlschema extends nusoap_base {
   /**
    * gets a type name for an unnamed type
    *
-   * @param  string  $ename  Element name
+   * @param string $ename Element name
    *
    * @return    string    A type name for an unnamed type
    * @access    private
@@ -1381,9 +1381,9 @@ class nusoap_xmlschema extends nusoap_base {
   /**
    * start-element handler
    *
-   * @param  string  $parser  XML parser object
-   * @param  string  $name  element name
-   * @param  array  $attrs  associative array of attributes
+   * @param string $parser XML parser object
+   * @param string $name element name
+   * @param array $attrs associative array of attributes
    *
    * @access   private
    */
@@ -1700,8 +1700,8 @@ class nusoap_xmlschema extends nusoap_base {
   /**
    * end-element handler
    *
-   * @param  string  $parser  XML parser object
-   * @param  string  $name  element name
+   * @param string $parser XML parser object
+   * @param string $name element name
    *
    * @access   private
    */
@@ -1734,8 +1734,8 @@ class nusoap_xmlschema extends nusoap_base {
   /**
    * element content handler
    *
-   * @param  string  $parser  XML parser object
-   * @param  string  $data  element content
+   * @param string $parser XML parser object
+   * @param string $data element content
    *
    * @access   private
    */
@@ -1864,7 +1864,7 @@ class nusoap_xmlschema extends nusoap_base {
   /**
    * adds debug data to the clas level debug string
    *
-   * @param  string  $string  debug data
+   * @param string $string debug data
    *
    * @access   private
    */
@@ -1878,8 +1878,8 @@ class nusoap_xmlschema extends nusoap_base {
    * returns false if no type exists, or not w/ the given namespace
    * else returns a string that is either a native php type, or 'struct'
    *
-   * @param  string  $type  name of defined type
-   * @param  string  $ns  namespace of type
+   * @param string $type name of defined type
+   * @param string $ns namespace of type
    *
    * @return mixed
    * @access public
@@ -1912,7 +1912,7 @@ class nusoap_xmlschema extends nusoap_base {
    *
    *   For simpleType or element, the array has different keys.
    *
-   * @param  string  $type
+   * @param string $type
    *
    * @return mixed
    * @access public
@@ -2000,7 +2000,7 @@ class nusoap_xmlschema extends nusoap_base {
   /**
    * returns a sample serialization of a given type, or false if no type by the given name
    *
-   * @param  string  $type  name of type
+   * @param string $type name of type
    *
    * @return false|string
    * @access public
@@ -2038,8 +2038,8 @@ class nusoap_xmlschema extends nusoap_base {
    * returns HTML form elements that allow a user
    * to enter values for creating an instance of the given type.
    *
-   * @param  string  $name  name for type instance
-   * @param  string  $type  name of type
+   * @param string $name name for type instance
+   * @param string $type name of type
    *
    * @return string
    * @access public
@@ -2097,19 +2097,19 @@ class nusoap_xmlschema extends nusoap_base {
    *    array('myVar'=> array('name'=>'myVar','type'=>'string')
    * );
    *
-   * @param  string  $name
-   * @param  string  $typeClass  (complexType|simpleType|attribute)
-   * @param  string  $phpType  : currently supported are array and struct (php assoc array)
-   * @param  string  $compositor  (all|sequence|choice)
-   * @param  string  $restrictionBase  namespace:name (http://schemas.xmlsoap.org/soap/encoding/:Array)
-   * @param  array  $elements  = array ( name = array(name=>'',type=>'') )
-   * @param  array  $attrs  = array(
+   * @param string $name
+   * @param string $typeClass (complexType|simpleType|attribute)
+   * @param string $phpType : currently supported are array and struct (php assoc array)
+   * @param string $compositor (all|sequence|choice)
+   * @param string $restrictionBase namespace:name (http://schemas.xmlsoap.org/soap/encoding/:Array)
+   * @param array $elements = array ( name = array(name=>'',type=>'') )
+   * @param array $attrs = array(
    *    array(
    *        'ref' => "http://schemas.xmlsoap.org/soap/encoding/:arrayType",
    *        "http://schemas.xmlsoap.org/wsdl/:arrayType" => "string[]"
    *    )
    * )
-   * @param  array  $arrayType  : namespace:name (http://www.w3.org/2001/XMLSchema:string)
+   * @param array $arrayType : namespace:name (http://www.w3.org/2001/XMLSchema:string)
    *
    * @access public
    * @see getTypeDef
@@ -2142,11 +2142,11 @@ class nusoap_xmlschema extends nusoap_base {
   /**
    * adds a simple type to the schema
    *
-   * @param  string  $name
-   * @param  string  $restrictionBase  namespace:name (http://schemas.xmlsoap.org/soap/encoding/:Array)
-   * @param  string  $typeClass  (should always be simpleType)
-   * @param  string  $phpType  (should always be scalar)
-   * @param  array  $enumeration  array of values
+   * @param string $name
+   * @param string $restrictionBase namespace:name (http://schemas.xmlsoap.org/soap/encoding/:Array)
+   * @param string $typeClass (should always be simpleType)
+   * @param string $phpType (should always be scalar)
+   * @param array $enumeration array of values
    *
    * @access public
    * @see nusoap_xmlschema
@@ -2174,7 +2174,7 @@ class nusoap_xmlschema extends nusoap_base {
   /**
    * adds an element to the schema
    *
-   * @param  array  $attrs  attributes that must include name and type
+   * @param array $attrs attributes that must include name and type
    *
    * @see nusoap_xmlschema
    * @access public
@@ -2259,12 +2259,12 @@ class soapval extends nusoap_base {
   /**
    * constructor
    *
-   * @param  string  $name  optional name
-   * @param  mixed  $type  optional type name
-   * @param  mixed  $value  optional value
-   * @param  mixed  $element_ns  optional namespace of value
-   * @param  mixed  $type_ns  optional namespace of type
-   * @param  mixed  $attributes  associative array of attributes to add to element serialization
+   * @param string $name optional name
+   * @param mixed $type optional type name
+   * @param mixed $value optional value
+   * @param mixed $element_ns optional namespace of value
+   * @param mixed $type_ns optional namespace of type
+   * @param mixed $attributes associative array of attributes to add to element serialization
    *
    * @access   public
    */
@@ -2288,7 +2288,7 @@ class soapval extends nusoap_base {
   /**
    * return serialized value
    *
-   * @param  string  $use  The WSDL use value (encoded|literal)
+   * @param string $use The WSDL use value (encoded|literal)
    *
    * @return    string XML data
    * @access   public
@@ -2365,9 +2365,9 @@ class soap_transport_http extends nusoap_base {
   /**
    * constructor
    *
-   * @param  string  $url  The URL to which to connect
-   * @param  array  $curl_options  User-specified cURL options
-   * @param  boolean  $use_curl  Whether to try to force cURL use
+   * @param string $url The URL to which to connect
+   * @param array $curl_options User-specified cURL options
+   * @param boolean $use_curl Whether to try to force cURL use
    *
    * @access public
    */
@@ -2387,8 +2387,8 @@ class soap_transport_http extends nusoap_base {
   /**
    * sets a cURL option
    *
-   * @param  mixed  $option  The cURL option (always integer?)
-   * @param  mixed  $value  The cURL option value
+   * @param mixed $option The cURL option (always integer?)
+   * @param mixed $value The cURL option value
    *
    * @access   private
    */
@@ -2401,8 +2401,8 @@ class soap_transport_http extends nusoap_base {
   /**
    * sets an HTTP header
    *
-   * @param  string  $name  The name of the header
-   * @param  string  $value  The value of the header
+   * @param string $name The name of the header
+   * @param string $value The value of the header
    *
    * @access private
    */
@@ -2414,7 +2414,7 @@ class soap_transport_http extends nusoap_base {
   /**
    * unsets an HTTP header
    *
-   * @param  string  $name  The name of the header
+   * @param string $name The name of the header
    *
    * @access private
    */
@@ -2428,7 +2428,7 @@ class soap_transport_http extends nusoap_base {
   /**
    * sets the URL to which to connect
    *
-   * @param  string  $url  The URL to which to connect
+   * @param string $url The URL to which to connect
    *
    * @access private
    */
@@ -2490,8 +2490,8 @@ class soap_transport_http extends nusoap_base {
   /**
    * establish an HTTP connection
    *
-   * @param  integer  $connection_timeout  set connection timeout in seconds
-   * @param  integer  $response_timeout  set response timeout in seconds
+   * @param integer $connection_timeout set connection timeout in seconds
+   * @param integer $response_timeout set response timeout in seconds
    *
    * @return    boolean true if connected, false if not
    * @access   private
@@ -2735,10 +2735,10 @@ class soap_transport_http extends nusoap_base {
   /**
    * sends the SOAP request and gets the SOAP response via HTTP[S]
    *
-   * @param  string  $data  message data
-   * @param  integer  $timeout  set connection timeout in seconds
-   * @param  integer  $response_timeout  set response timeout in seconds
-   * @param  array  $cookies  cookies to send
+   * @param string $data message data
+   * @param integer $timeout set connection timeout in seconds
+   * @param integer $response_timeout set response timeout in seconds
+   * @param array $cookies cookies to send
    *
    * @return    string data
    * @access   public
@@ -2777,10 +2777,10 @@ class soap_transport_http extends nusoap_base {
   /**
    * sends the SOAP request and gets the SOAP response via HTTPS using CURL
    *
-   * @param  string  $data  message data
-   * @param  integer  $timeout  set connection timeout in seconds
-   * @param  integer  $response_timeout  set response timeout in seconds
-   * @param  array  $cookies  cookies to send
+   * @param string $data message data
+   * @param integer $timeout set connection timeout in seconds
+   * @param integer $response_timeout set response timeout in seconds
+   * @param array $cookies cookies to send
    *
    * @return    string data
    * @access   public
@@ -2792,11 +2792,11 @@ class soap_transport_http extends nusoap_base {
   /**
    * if authenticating, set user credentials here
    *
-   * @param  string  $username
-   * @param  string  $password
-   * @param  string  $authtype  (basic|digest|certificate|ntlm)
-   * @param  array  $digestRequest  (keys must be nonce, nc, realm, qop)
-   * @param  array  $certRequest  (keys must be cainfofile (optional), sslcertfile, sslkeyfile, passphrase, certpassword (optional), verifypeer (optional), verifyhost (optional): see corresponding options in cURL docs)
+   * @param string $username
+   * @param string $password
+   * @param string $authtype (basic|digest|certificate|ntlm)
+   * @param array $digestRequest (keys must be nonce, nc, realm, qop)
+   * @param array $certRequest (keys must be cainfofile (optional), sslcertfile, sslkeyfile, passphrase, certpassword (optional), verifypeer (optional), verifyhost (optional): see corresponding options in cURL docs)
    *
    * @access   public
    */
@@ -2880,7 +2880,7 @@ class soap_transport_http extends nusoap_base {
   /**
    * set the soapaction value
    *
-   * @param  string  $soapaction
+   * @param string $soapaction
    *
    * @access   public
    */
@@ -2891,7 +2891,7 @@ class soap_transport_http extends nusoap_base {
   /**
    * use http encoding
    *
-   * @param  string  $enc  encoding style. supported values: gzip, deflate, or both
+   * @param string $enc encoding style. supported values: gzip, deflate, or both
    *
    * @access   public
    */
@@ -2912,11 +2912,11 @@ class soap_transport_http extends nusoap_base {
   /**
    * set proxy info here
    *
-   * @param  string  $proxyhost  use an empty string to remove proxy
-   * @param  string  $proxyport
-   * @param  string  $proxyusername
-   * @param  string  $proxypassword
-   * @param  string  $proxyauthtype  (basic|ntlm)
+   * @param string $proxyhost use an empty string to remove proxy
+   * @param string $proxyport
+   * @param string $proxyusername
+   * @param string $proxypassword
+   * @param string $proxyauthtype (basic|ntlm)
    *
    * @access   public
    */
@@ -2943,7 +2943,7 @@ class soap_transport_http extends nusoap_base {
    * Test if the given string starts with a header that is to be skipped.
    * Skippable headers result from chunked transfer and proxy requests.
    *
-   * @param  string  $data  The string to check.
+   * @param string $data The string to check.
    *
    * @returns    boolean    Whether a skippable header was found.
    * @access    private
@@ -2974,8 +2974,8 @@ class soap_transport_http extends nusoap_base {
    * decode a string that is encoded w/ "chunked' transfer encoding
    * as defined in RFC2068 19.4.6
    *
-   * @param  string  $buffer
-   * @param  string  $lb
+   * @param string $buffer
+   * @param string $lb
    *
    * @returns    string
    * @access   public
@@ -3031,8 +3031,8 @@ class soap_transport_http extends nusoap_base {
   /**
    * Writes the payload, including HTTP headers, to $this->outgoing_payload.
    *
-   * @param  string  $data  HTTP body
-   * @param  string  $cookie_str  data for HTTP Cookie header
+   * @param string $data HTTP body
+   * @param string $cookie_str data for HTTP Cookie header
    *
    * @return    void
    * @access    private
@@ -3081,8 +3081,8 @@ class soap_transport_http extends nusoap_base {
   /**
    * sends the SOAP request via HTTP[S]
    *
-   * @param  string  $data  message data
-   * @param  array  $cookies  cookies to send
+   * @param string $data message data
+   * @param array $cookies cookies to send
    *
    * @return    boolean    true if OK, false if problem
    * @access   private
@@ -3538,8 +3538,8 @@ class soap_transport_http extends nusoap_base {
   /**
    * sets the content-type for the SOAP message to be sent
    *
-   * @param  string  $type  the content type, MIME style
-   * @param  mixed  $charset  character set used for encoding (or false)
+   * @param string $type the content type, MIME style
+   * @param mixed $charset character set used for encoding (or false)
    *
    * @access    public
    */
@@ -3567,7 +3567,7 @@ class soap_transport_http extends nusoap_base {
   /**
    * parse an incoming Cookie into it's parts
    *
-   * @param  string  $cookie_str  content of cookie
+   * @param string $cookie_str content of cookie
    *
    * @return    array with data of that cookie
    * @access    private
@@ -3636,8 +3636,8 @@ class soap_transport_http extends nusoap_base {
   /**
    * sort out cookies for the current request
    *
-   * @param  array  $cookies  array with all cookies
-   * @param  boolean  $secure  is the send-content secure or not?
+   * @param array $cookies array with all cookies
+   * @param boolean $secure is the send-content secure or not?
    *
    * @return    string for Cookie-HTTP-Header
    * @access    private
@@ -3889,7 +3889,7 @@ class nusoap_server extends nusoap_base {
    * constructor
    * the optional parameter is a path to a WSDL file that you'd like to bind the server instance to.
    *
-   * @param  mixed  $wsdl  file path or URL (string), or wsdl instance (object)
+   * @param mixed $wsdl file path or URL (string), or wsdl instance (object)
    *
    * @access   public
    */
@@ -3953,7 +3953,7 @@ class nusoap_server extends nusoap_base {
   /**
    * processes request and returns response
    *
-   * @param  string  $data  usually is the value of $HTTP_RAW_POST_DATA
+   * @param string $data usually is the value of $HTTP_RAW_POST_DATA
    *
    * @access   public
    */
@@ -4165,7 +4165,7 @@ class nusoap_server extends nusoap_base {
    *
    * This sets the fault field on error
    *
-   * @param  string  $data  XML string
+   * @param string $data XML string
    *
    * @access   private
    */
@@ -4566,8 +4566,8 @@ class nusoap_server extends nusoap_base {
    * takes the value that was created by parsing the request
    * and compares to the method's signature, if available.
    *
-   * @param  string  $operation  The operation to be invoked
-   * @param  array  $request  The array of parameter values
+   * @param string $operation The operation to be invoked
+   * @param array $request The array of parameter values
    *
    * @return    boolean    Whether the operation was found
    * @access   private
@@ -4587,8 +4587,8 @@ class nusoap_server extends nusoap_base {
   /**
    * processes SOAP message received from client
    *
-   * @param  array  $headers  The HTTP headers
-   * @param  string  $data  unprocessed request data from client
+   * @param array $headers The HTTP headers
+   * @param string $data unprocessed request data from client
    *
    * @return   false|void void or false on error
    * @access   private
@@ -4653,7 +4653,7 @@ class nusoap_server extends nusoap_base {
   /**
    * gets the HTTP body for the current response.
    *
-   * @param  string  $soapmsg  The SOAP payload
+   * @param string $soapmsg The SOAP payload
    *
    * @return string The HTTP body, which includes the SOAP payload
    * @access private
@@ -4690,9 +4690,9 @@ class nusoap_server extends nusoap_base {
   /**
    * add a method to the dispatch map (this has been replaced by the register method)
    *
-   * @param  string  $methodname
-   * @param  string  $in  array of input values
-   * @param  string  $out  array of output values
+   * @param string $methodname
+   * @param string $in array of input values
+   * @param string $out array of output values
    *
    * @access   public
    * @deprecated
@@ -4704,16 +4704,16 @@ class nusoap_server extends nusoap_base {
   /**
    * register a service function with the server
    *
-   * @param  string  $name  the name of the PHP function, class.method or class..method
-   * @param  array  $in  assoc array of input values: key = param name, value = param type
-   * @param  array  $out  assoc array of output values: key = param name, value = param type
-   * @param  mixed  $namespace  the element namespace for the method or false
-   * @param  mixed  $soapaction  the soapaction for the method or false
-   * @param  mixed  $style  optional (rpc|document) or false Note: when 'document' is specified, parameter and return wrappers are created for you automatically
-   * @param  mixed  $use  optional (encoded|literal) or false
-   * @param  string  $documentation  optional Description to include in WSDL
-   * @param  string  $encodingStyle  optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
-   * @param  string  $customResponseTagName  optional Name of the outgoing response, default $name . 'Response'
+   * @param string $name the name of the PHP function, class.method or class..method
+   * @param array $in assoc array of input values: key = param name, value = param type
+   * @param array $out assoc array of output values: key = param name, value = param type
+   * @param mixed $namespace the element namespace for the method or false
+   * @param mixed $soapaction the soapaction for the method or false
+   * @param mixed $style optional (rpc|document) or false Note: when 'document' is specified, parameter and return wrappers are created for you automatically
+   * @param mixed $use optional (encoded|literal) or false
+   * @param string $documentation optional Description to include in WSDL
+   * @param string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
+   * @param string $customResponseTagName optional Name of the outgoing response, default $name . 'Response'
    *
    * @access   public
    */
@@ -4799,10 +4799,10 @@ class nusoap_server extends nusoap_base {
    * Specify a fault to be returned to the client.
    * This also acts as a flag to the server that a fault has occured.
    *
-   * @param  string  $faultcode
-   * @param  string  $faultstring
-   * @param  string  $faultactor
-   * @param  string  $faultdetail
+   * @param string $faultcode
+   * @param string $faultstring
+   * @param string $faultactor
+   * @param string $faultdetail
    *
    * @access   public
    */
@@ -4818,12 +4818,12 @@ class nusoap_server extends nusoap_base {
    * Sets up wsdl object.
    * Acts as a flag to enable internal WSDL generation
    *
-   * @param  string  $serviceName  , name of the service
-   * @param  mixed  $namespace  optional 'tns' service namespace or false
-   * @param  mixed  $endpoint  optional URL of service endpoint or false
-   * @param  string  $style  optional (rpc|document) WSDL style (also specified by operation)
-   * @param  string  $transport  optional SOAP transport
-   * @param  mixed  $schemaTargetNamespace  optional 'types' targetNamespace for service schema or false
+   * @param string $serviceName , name of the service
+   * @param mixed $namespace optional 'tns' service namespace or false
+   * @param mixed $endpoint optional URL of service endpoint or false
+   * @param string $style optional (rpc|document) WSDL style (also specified by operation)
+   * @param string $transport optional SOAP transport
+   * @param mixed $schemaTargetNamespace optional 'types' targetNamespace for service schema or false
    */
   function configureWSDL(
     $serviceName,
@@ -4986,15 +4986,15 @@ class wsdl extends nusoap_base {
   /**
    * constructor
    *
-   * @param  string  $wsdl  WSDL document URL
-   * @param  string  $proxyhost
-   * @param  string  $proxyport
-   * @param  string  $proxyusername
-   * @param  string  $proxypassword
-   * @param  integer  $timeout  set the connection timeout
-   * @param  integer  $response_timeout  set the response timeout
-   * @param  array  $curl_options  user-specified cURL options
-   * @param  boolean  $use_curl  try to use cURL
+   * @param string $wsdl WSDL document URL
+   * @param string $proxyhost
+   * @param string $proxyport
+   * @param string $proxyusername
+   * @param string $proxypassword
+   * @param integer $timeout set the connection timeout
+   * @param integer $response_timeout set the response timeout
+   * @param array $curl_options user-specified cURL options
+   * @param boolean $use_curl try to use cURL
    *
    * @access public
    */
@@ -5132,7 +5132,7 @@ class wsdl extends nusoap_base {
   /**
    * parses the wsdl document
    *
-   * @param  string  $wsdl  path or URL
+   * @param string $wsdl path or URL
    *
    * @access private
    */
@@ -5243,9 +5243,9 @@ class wsdl extends nusoap_base {
   /**
    * start-element handler
    *
-   * @param  string  $parser  XML parser object
-   * @param  string  $name  element name
-   * @param  array  $attrs  associative array of attributes
+   * @param string $parser XML parser object
+   * @param string $name element name
+   * @param array $attrs associative array of attributes
    *
    * @access private
    */
@@ -5466,8 +5466,8 @@ class wsdl extends nusoap_base {
   /**
    * end-element handler
    *
-   * @param  string  $parser  XML parser object
-   * @param  string  $name  element name
+   * @param string $parser XML parser object
+   * @param string $name element name
    *
    * @access private
    */
@@ -5499,8 +5499,8 @@ class wsdl extends nusoap_base {
   /**
    * element content handler
    *
-   * @param  string  $parser  XML parser object
-   * @param  string  $data  element content
+   * @param string $parser XML parser object
+   * @param string $data element content
    *
    * @access private
    */
@@ -5517,10 +5517,10 @@ class wsdl extends nusoap_base {
   /**
    * if authenticating, set user credentials here
    *
-   * @param  string  $username
-   * @param  string  $password
-   * @param  string  $authtype  (basic|digest|certificate|ntlm)
-   * @param  array  $certRequest  (keys must be cainfofile (optional), sslcertfile, sslkeyfile, passphrase, certpassword (optional), verifypeer (optional), verifyhost (optional): see corresponding options in cURL docs)
+   * @param string $username
+   * @param string $password
+   * @param string $authtype (basic|digest|certificate|ntlm)
+   * @param array $certRequest (keys must be cainfofile (optional), sslcertfile, sslkeyfile, passphrase, certpassword (optional), verifypeer (optional), verifyhost (optional): see corresponding options in cURL docs)
    *
    * @access   public
    */
@@ -5544,8 +5544,8 @@ class wsdl extends nusoap_base {
   /**
    * returns an assoc array of operation names => operation data
    *
-   * @param  string  $portName  WSDL port name
-   * @param  string  $bindingType  eg: soap, smtp, dime (only soap and soap12 are currently supported)
+   * @param string $portName WSDL port name
+   * @param string $bindingType eg: soap, smtp, dime (only soap and soap12 are currently supported)
    *
    * @return array
    * @access public
@@ -5586,8 +5586,8 @@ class wsdl extends nusoap_base {
   /**
    * returns an associative array of data necessary for calling an operation
    *
-   * @param  string  $operation  name of operation
-   * @param  string  $bindingType  type of binding eg: soap, soap12
+   * @param string $operation name of operation
+   * @param string $bindingType type of binding eg: soap, soap12
    *
    * @return array
    * @access public
@@ -5617,8 +5617,8 @@ class wsdl extends nusoap_base {
   /**
    * returns an associative array of data necessary for calling an operation
    *
-   * @param  string  $soapAction  soapAction for operation
-   * @param  string  $bindingType  type of binding eg: soap, soap12
+   * @param string $soapAction soapAction for operation
+   * @param string $bindingType type of binding eg: soap, soap12
    *
    * @return array
    * @access public
@@ -5656,8 +5656,8 @@ class wsdl extends nusoap_base {
    *    'attrs' => array() // refs to attributes array
    *    )
    *
-   * @param  string  $type  the type
-   * @param  string  $ns  namespace (not prefix) of the type
+   * @param string $type the type
+   * @param string $ns namespace (not prefix) of the type
    *
    * @return false
    * @access public
@@ -5857,7 +5857,7 @@ class wsdl extends nusoap_base {
   /**
    * serialize the parsed wsdl
    *
-   * @param  mixed  $debug  whether to put debug=1 in endpoint URL
+   * @param mixed $debug whether to put debug=1 in endpoint URL
    *
    * @return string serialization of WSDL
    * @access public
@@ -5996,8 +5996,8 @@ class wsdl extends nusoap_base {
    * determine whether a set of parameters are unwrapped
    * when they are expect to be wrapped, Microsoft-style.
    *
-   * @param  string  $type  the type (element name) of the wrapper
-   * @param  array  $parameters  the parameter values for the SOAP call
+   * @param string $type the type (element name) of the wrapper
+   * @param array $parameters the parameter values for the SOAP call
    *
    * @return boolean whether they parameters are unwrapped (and should be wrapped)
    * @access private
@@ -6082,10 +6082,10 @@ class wsdl extends nusoap_base {
    * - multi-ref serialization
    * - validate PHP values against type definitions, return errors if invalid
    *
-   * @param  string  $operation  operation name
-   * @param  string  $direction  (input|output)
-   * @param  mixed  $parameters  parameter value(s)
-   * @param  string  $bindingType  (soap|soap12)
+   * @param string $operation operation name
+   * @param string $direction (input|output)
+   * @param mixed $parameters parameter value(s)
+   * @param string $bindingType (soap|soap12)
    *
    * @return false|string parameters serialized as XML or false on error (e.g. operation not found)
    * @access public
@@ -6185,9 +6185,9 @@ class wsdl extends nusoap_base {
    * - multi-ref serialization
    * - validate PHP values against type definitions, return errors if invalid
    *
-   * @param  string  $operation  operation name
-   * @param  string  $direction  (input|output)
-   * @param  mixed  $parameters  parameter value(s)
+   * @param string $operation operation name
+   * @param string $direction (input|output)
+   * @param mixed $parameters parameter value(s)
    *
    * @return false|string parameters serialized as XML or false on error (e.g. operation not found)
    * @access public
@@ -6264,12 +6264,12 @@ class wsdl extends nusoap_base {
   /**
    * serializes a PHP value according a given type definition
    *
-   * @param  string  $name  name of value (part or element)
-   * @param  string  $type  XML schema type of value (type or element)
-   * @param  mixed  $value  a native PHP value (parameter value)
-   * @param  string  $use  use for part (encoded|literal)
-   * @param  string  $encodingStyle  SOAP encoding style for the value (if different than the enclosing style)
-   * @param  boolean  $unqualified  a kludge for what should be XML namespace form handling
+   * @param string $name name of value (part or element)
+   * @param string $type XML schema type of value (type or element)
+   * @param mixed $value a native PHP value (parameter value)
+   * @param string $use use for part (encoded|literal)
+   * @param string $encodingStyle SOAP encoding style for the value (if different than the enclosing style)
+   * @param boolean $unqualified a kludge for what should be XML namespace form handling
    *
    * @return string value serialized as an XML string
    * @access private
@@ -6594,10 +6594,10 @@ class wsdl extends nusoap_base {
   /**
    * serializes the attributes for a complexType
    *
-   * @param  array  $typeDef  our internal representation of an XML schema type (or element)
-   * @param  mixed  $value  a native PHP value (parameter value)
-   * @param  string  $ns  the namespace of the type
-   * @param  string  $uqType  the local part of the type
+   * @param array $typeDef our internal representation of an XML schema type (or element)
+   * @param mixed $value a native PHP value (parameter value)
+   * @param string $ns the namespace of the type
+   * @param string $uqType the local part of the type
    *
    * @return string value serialized as an XML string
    * @access private
@@ -6657,12 +6657,12 @@ class wsdl extends nusoap_base {
   /**
    * serializes the elements for a complexType
    *
-   * @param  array  $typeDef  our internal representation of an XML schema type (or element)
-   * @param  mixed  $value  a native PHP value (parameter value)
-   * @param  string  $ns  the namespace of the type
-   * @param  string  $uqType  the local part of the type
-   * @param  string  $use  use for part (encoded|literal)
-   * @param  string  $encodingStyle  SOAP encoding style for the value (if different than the enclosing style)
+   * @param array $typeDef our internal representation of an XML schema type (or element)
+   * @param mixed $value a native PHP value (parameter value)
+   * @param string $ns the namespace of the type
+   * @param string $uqType the local part of the type
+   * @param string $use use for part (encoded|literal)
+   * @param string $encodingStyle SOAP encoding style for the value (if different than the enclosing style)
    *
    * @return string value serialized as an XML string
    * @access private
@@ -6770,14 +6770,14 @@ class wsdl extends nusoap_base {
   /**
    * adds an XML Schema complex type to the WSDL types
    *
-   * @param  string  $name
-   * @param  string  $typeClass  (complexType|simpleType|attribute)
-   * @param  string  $phpType  currently supported are array and struct (php assoc array)
-   * @param  string  $compositor  (all|sequence|choice)
-   * @param  string  $restrictionBase  namespace:name (http://schemas.xmlsoap.org/soap/encoding/:Array)
-   * @param  array  $elements  e.g. array ( name => array(name=>'',type=>'') )
-   * @param  array  $attrs  e.g. array(array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'xsd:string[]'))
-   * @param  string  $arrayType  as namespace:name (xsd:string)
+   * @param string $name
+   * @param string $typeClass (complexType|simpleType|attribute)
+   * @param string $phpType currently supported are array and struct (php assoc array)
+   * @param string $compositor (all|sequence|choice)
+   * @param string $restrictionBase namespace:name (http://schemas.xmlsoap.org/soap/encoding/:Array)
+   * @param array $elements e.g. array ( name => array(name=>'',type=>'') )
+   * @param array $attrs e.g. array(array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'xsd:string[]'))
+   * @param string $arrayType as namespace:name (xsd:string)
    *
    * @see nusoap_xmlschema
    * @access public
@@ -6833,11 +6833,11 @@ class wsdl extends nusoap_base {
   /**
    * adds an XML Schema simple type to the WSDL types
    *
-   * @param  string  $name
-   * @param  string  $restrictionBase  namespace:name (http://schemas.xmlsoap.org/soap/encoding/:Array)
-   * @param  string  $typeClass  (should always be simpleType)
-   * @param  string  $phpType  (should always be scalar)
-   * @param  array  $enumeration  array of values
+   * @param string $name
+   * @param string $restrictionBase namespace:name (http://schemas.xmlsoap.org/soap/encoding/:Array)
+   * @param string $typeClass (should always be simpleType)
+   * @param string $phpType (should always be scalar)
+   * @param array $enumeration array of values
    *
    * @see nusoap_xmlschema
    * @access public
@@ -6858,7 +6858,7 @@ class wsdl extends nusoap_base {
   /**
    * adds an element to the WSDL types
    *
-   * @param  array  $attrs  attributes that must include name and type
+   * @param array $attrs attributes that must include name and type
    *
    * @see nusoap_xmlschema
    * @access public
@@ -6871,16 +6871,16 @@ class wsdl extends nusoap_base {
   /**
    * register an operation with the server
    *
-   * @param  string  $name  operation (method) name
-   * @param  array  $in  assoc array of input values: key = param name, value = param type
-   * @param  array  $out  assoc array of output values: key = param name, value = param type
-   * @param  string  $namespace  optional The namespace for the operation
-   * @param  string  $soapaction  optional The soapaction for the operation
-   * @param  string  $style  (rpc|document) optional The style for the operation Note: when 'document' is specified, parameter and return wrappers are created for you automatically
-   * @param  string  $use  (encoded|literal) optional The use for the parameters (cannot mix right now)
-   * @param  string  $documentation  optional The description to include in the WSDL
-   * @param  string  $encodingStyle  optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
-   * @param  string  $customResponseTagName  optional Name of the outgoing response
+   * @param string $name operation (method) name
+   * @param array $in assoc array of input values: key = param name, value = param type
+   * @param array $out assoc array of output values: key = param name, value = param type
+   * @param string $namespace optional The namespace for the operation
+   * @param string $soapaction optional The soapaction for the operation
+   * @param string $style (rpc|document) optional The style for the operation Note: when 'document' is specified, parameter and return wrappers are created for you automatically
+   * @param string $use (encoded|literal) optional The use for the parameters (cannot mix right now)
+   * @param string $documentation optional The description to include in the WSDL
+   * @param string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
+   * @param string $customResponseTagName optional Name of the outgoing response
    *
    * @access public
    */
@@ -7028,10 +7028,10 @@ class nusoap_parser extends nusoap_base {
   /**
    * constructor that actually does the parsing
    *
-   * @param  string  $xml  SOAP message
-   * @param  string  $encoding  character encoding scheme of message
-   * @param  string  $method  method for which XML is parsed (unused?)
-   * @param  string  $decode_utf8  whether to decode UTF-8 to ISO-8859-1
+   * @param string $xml SOAP message
+   * @param string $encoding character encoding scheme of message
+   * @param string $method method for which XML is parsed (unused?)
+   * @param string $decode_utf8 whether to decode UTF-8 to ISO-8859-1
    *
    * @access   public
    */
@@ -7206,9 +7206,9 @@ class nusoap_parser extends nusoap_base {
   /**
    * start-element handler
    *
-   * @param  resource  $parser  XML parser object
-   * @param  string  $name  element name
-   * @param  array  $attrs  associative array of attributes
+   * @param resource $parser XML parser object
+   * @param string $name element name
+   * @param array $attrs associative array of attributes
    *
    * @access   private
    */
@@ -7361,8 +7361,8 @@ class nusoap_parser extends nusoap_base {
   /**
    * end-element handler
    *
-   * @param  resource  $parser  XML parser object
-   * @param  string  $name  element name
+   * @param resource $parser XML parser object
+   * @param string $name element name
    *
    * @access   private
    */
@@ -7476,8 +7476,8 @@ class nusoap_parser extends nusoap_base {
   /**
    * element content handler
    *
-   * @param  resource  $parser  XML parser object
-   * @param  string  $data  element content
+   * @param resource $parser XML parser object
+   * @param string $data element content
    *
    * @access   private
    */
@@ -7545,9 +7545,9 @@ class nusoap_parser extends nusoap_base {
   /**
    * decodes simple types into PHP variables
    *
-   * @param  string  $value  value to decode
-   * @param  string  $type  XML type to decode
-   * @param  string  $typens  XML type namespace to decode
+   * @param string $value value to decode
+   * @param string $type XML type to decode
+   * @param string $typens XML type namespace to decode
    *
    * @return    mixed PHP value
    * @access   private
@@ -7596,7 +7596,7 @@ class nusoap_parser extends nusoap_base {
    * builds response structures for compound values (arrays/structs)
    * and scalars
    *
-   * @param  integer  $pos  position in node tree
+   * @param integer $pos position in node tree
    *
    * @return    mixed    PHP value
    * @access   private
@@ -7814,15 +7814,15 @@ class nusoap_client extends nusoap_base {
   /**
    * constructor
    *
-   * @param  mixed  $endpoint  SOAP server or WSDL URL (string), or wsdl instance (object)
-   * @param  mixed  $wsdl  optional, set to 'wsdl' or true if using WSDL
-   * @param  string  $proxyhost  optional
-   * @param  string  $proxyport  optional
-   * @param  string  $proxyusername  optional
-   * @param  string  $proxypassword  optional
-   * @param  integer  $timeout  set the connection timeout
-   * @param  integer  $response_timeout  set the response timeout
-   * @param  string  $portName  optional portName in WSDL document
+   * @param mixed $endpoint SOAP server or WSDL URL (string), or wsdl instance (object)
+   * @param mixed $wsdl optional, set to 'wsdl' or true if using WSDL
+   * @param string $proxyhost optional
+   * @param string $proxyport optional
+   * @param string $proxyusername optional
+   * @param string $proxypassword optional
+   * @param integer $timeout set the connection timeout
+   * @param integer $response_timeout set the response timeout
+   * @param string $portName optional portName in WSDL document
    *
    * @access   public
    */
@@ -7873,8 +7873,8 @@ class nusoap_client extends nusoap_base {
   /**
    * calls method, returns PHP native type
    *
-   * @param  string  $operation  SOAP server URL or path
-   * @param  mixed  $params  An array, associative or simple, of the parameters
+   * @param string $operation SOAP server URL or path
+   * @param mixed $params An array, associative or simple, of the parameters
    *                          for the method call, or a string that is the XML
    *                          for the call.  For rpc style, this call will
    *                          wrap the XML in a tag named after the method, as
@@ -7886,12 +7886,12 @@ class nusoap_client extends nusoap_base {
    *                         used in the call, which encloses what programmers
    *                         normally think of parameters.  A parameter array
    *                         *must* include the wrapper.
-   * @param  string  $namespace  optional method namespace (WSDL can override)
-   * @param  string  $soapAction  optional SOAPAction value (WSDL can override)
-   * @param  mixed  $headers  optional string of XML with SOAP header content, or array of soapval objects for SOAP headers, or associative array
-   * @param  boolean  $rpcParams  optional (no longer used)
-   * @param  string  $style  optional (rpc|document) the style to use when serializing parameters (WSDL can override)
-   * @param  string  $use  optional (encoded|literal|literal wrapped) the use when serializing parameters (WSDL can override)
+   * @param string $namespace optional method namespace (WSDL can override)
+   * @param string $soapAction optional SOAPAction value (WSDL can override)
+   * @param mixed $headers optional string of XML with SOAP header content, or array of soapval objects for SOAP headers, or associative array
+   * @param boolean $rpcParams optional (no longer used)
+   * @param string $style optional (rpc|document) the style to use when serializing parameters (WSDL can override)
+   * @param string $use optional (encoded|literal|literal wrapped) the use when serializing parameters (WSDL can override)
    *
    * @return    mixed    response from SOAP call, normally an associative array mirroring the structure of the XML response, false for certain fatal errors
    * @access   public
@@ -8175,7 +8175,7 @@ class nusoap_client extends nusoap_base {
   /**
    * get available data pertaining to an operation
    *
-   * @param  string  $operation  operation name
+   * @param string $operation operation name
    *
    * @return   array|false array of data pertaining to the operation, false on error or no data
    * @access   public
@@ -8202,10 +8202,10 @@ class nusoap_client extends nusoap_base {
    * the return value of this method will be an array
    * of those values.
    *
-   * @param  string  $msg  a SOAPx4 soapmsg object
-   * @param  string  $soapaction  SOAPAction value
-   * @param  integer  $timeout  set connection timeout in seconds
-   * @param  integer  $response_timeout  set response timeout in seconds
+   * @param string $msg a SOAPx4 soapmsg object
+   * @param string $soapaction SOAPAction value
+   * @param integer $timeout set connection timeout in seconds
+   * @param integer $response_timeout set response timeout in seconds
    *
    * @return    mixed native PHP types.
    * @access   private
@@ -8285,8 +8285,8 @@ class nusoap_client extends nusoap_base {
   /**
    * processes SOAP message returned from server
    *
-   * @param  array  $headers  The HTTP headers
-   * @param  string  $data  unprocessed response data from server
+   * @param array $headers The HTTP headers
+   * @param string $data unprocessed response data from server
    *
    * @return    mixed    value of the message, decoded into a PHP type
    * @access   private
@@ -8349,8 +8349,8 @@ class nusoap_client extends nusoap_base {
   /**
    * sets user-specified cURL options
    *
-   * @param  mixed  $option  The cURL option (always integer?)
-   * @param  mixed  $value  The cURL option value
+   * @param mixed $option The cURL option (always integer?)
+   * @param mixed $value The cURL option value
    *
    * @access   public
    */
@@ -8363,7 +8363,7 @@ class nusoap_client extends nusoap_base {
   /**
    * sets the SOAP endpoint, which can override WSDL
    *
-   * @param  string  $endpoint  The endpoint URL to use, or empty string or false to prevent override
+   * @param string $endpoint The endpoint URL to use, or empty string or false to prevent override
    *
    * @access   public
    */
@@ -8375,7 +8375,7 @@ class nusoap_client extends nusoap_base {
   /**
    * set the SOAP headers
    *
-   * @param  mixed  $headers  String of XML with SOAP header content, or array of soapval objects for SOAP headers
+   * @param mixed $headers String of XML with SOAP header content, or array of soapval objects for SOAP headers
    *
    * @access   public
    */
@@ -8408,10 +8408,10 @@ class nusoap_client extends nusoap_base {
   /**
    * set proxy info here
    *
-   * @param  string  $proxyhost
-   * @param  string  $proxyport
-   * @param  string  $proxyusername
-   * @param  string  $proxypassword
+   * @param string $proxyhost
+   * @param string $proxyport
+   * @param string $proxyusername
+   * @param string $proxypassword
    *
    * @access   public
    */
@@ -8425,10 +8425,10 @@ class nusoap_client extends nusoap_base {
   /**
    * if authenticating, set user credentials here
    *
-   * @param  string  $username
-   * @param  string  $password
-   * @param  string  $authtype  (basic|digest|certificate|ntlm)
-   * @param  array  $certRequest  (keys must be cainfofile (optional), sslcertfile, sslkeyfile, passphrase, verifypeer (optional), verifyhost (optional): see corresponding options in cURL docs)
+   * @param string $username
+   * @param string $password
+   * @param string $authtype (basic|digest|certificate|ntlm)
+   * @param array $certRequest (keys must be cainfofile (optional), sslcertfile, sslkeyfile, passphrase, verifypeer (optional), verifyhost (optional): see corresponding options in cURL docs)
    *
    * @access   public
    */
@@ -8444,7 +8444,7 @@ class nusoap_client extends nusoap_base {
   /**
    * use HTTP encoding
    *
-   * @param  string  $enc  HTTP encoding
+   * @param string $enc HTTP encoding
    *
    * @access   public
    */
@@ -8456,7 +8456,7 @@ class nusoap_client extends nusoap_base {
   /**
    * Set whether to try to use cURL connections if possible
    *
-   * @param  boolean  $use  Whether to try to use cURL
+   * @param boolean $use Whether to try to use cURL
    *
    * @access   public
    */
@@ -8497,7 +8497,7 @@ class nusoap_client extends nusoap_base {
    *
    * This is no longer used.
    *
-   * @param  boolean  $rpcParams
+   * @param boolean $rpcParams
    *
    * @access public
    * @deprecated
@@ -8630,7 +8630,7 @@ class nusoap_client extends nusoap_base {
   /**
    * gets the HTTP body for the current request.
    *
-   * @param  string  $soapmsg  The SOAP payload
+   * @param string $soapmsg The SOAP payload
    *
    * @return string The HTTP body, which includes the SOAP payload
    * @access private
@@ -8654,7 +8654,7 @@ class nusoap_client extends nusoap_base {
   /**
    * allows you to change the HTTP ContentType of the request.
    *
-   * @param  string  $contentTypeNew
+   * @param string $contentTypeNew
    *
    * @return  void
    */
@@ -8690,8 +8690,8 @@ class nusoap_client extends nusoap_base {
   /**
    * adds a new Cookie into $this->cookies array
    *
-   * @param  string  $name  Cookie Name
-   * @param  string  $value  Cookie Value
+   * @param string $name Cookie Name
+   * @param string $value Cookie Value
    *
    * @return    boolean if cookie-set was successful returns true, else false
    * @access    public
@@ -8751,7 +8751,7 @@ class nusoap_client extends nusoap_base {
   /**
    * updates the current cookies with a new set
    *
-   * @param  array  $cookies  new cookies with which to update current ones
+   * @param array $cookies new cookies with which to update current ones
    *
    * @return    boolean always return true
    * @access    private
@@ -8859,8 +8859,8 @@ class nusoap_wsdlcache {
   /**
    * constructor
    *
-   * @param  string  $cache_dir  directory for cache-files
-   * @param  integer  $cache_lifetime  lifetime for caching-files in seconds or 0 for unlimited
+   * @param string $cache_dir directory for cache-files
+   * @param integer $cache_lifetime lifetime for caching-files in seconds or 0 for unlimited
    *
    * @access public
    */
@@ -8873,7 +8873,7 @@ class nusoap_wsdlcache {
   /**
    * creates the filename used to cache a wsdl instance
    *
-   * @param  string  $wsdl  The URL of the wsdl instance
+   * @param string $wsdl The URL of the wsdl instance
    *
    * @return string The filename used to cache the instance
    * @access private
@@ -8885,7 +8885,7 @@ class nusoap_wsdlcache {
   /**
    * adds debug data to the class level debug string
    *
-   * @param  string  $string  debug data
+   * @param string $string debug data
    *
    * @access   private
    */
@@ -8896,7 +8896,7 @@ class nusoap_wsdlcache {
   /**
    * gets a wsdl instance from the cache
    *
-   * @param  string  $wsdl  The URL of the wsdl instance
+   * @param string $wsdl The URL of the wsdl instance
    *
    * @return object wsdl The cached wsdl instance, null if the instance is not in the cache
    * @access public
@@ -8943,8 +8943,8 @@ class nusoap_wsdlcache {
   /**
    * obtains the local mutex
    *
-   * @param  string  $filename  The Filename of the Cache to lock
-   * @param  string  $mode  The open-mode ("r" or "w") or the file - affects lock-mode
+   * @param string $filename The Filename of the Cache to lock
+   * @param string $mode The open-mode ("r" or "w") or the file - affects lock-mode
    *
    * @return boolean Lock successfully obtained ?!
    * @access private
@@ -8966,7 +8966,7 @@ class nusoap_wsdlcache {
   /**
    * adds a wsdl instance to the cache
    *
-   * @param  wsdl  $wsdl_instance  The wsdl instance to add
+   * @param wsdl $wsdl_instance The wsdl instance to add
    *
    * @return boolean WSDL successfully cached
    * @access public
@@ -8998,7 +8998,7 @@ class nusoap_wsdlcache {
   /**
    * releases the local mutex
    *
-   * @param  string  $filename  The Filename of the Cache to lock
+   * @param string $filename The Filename of the Cache to lock
    *
    * @return boolean Lock successfully released
    * @access private
@@ -9017,7 +9017,7 @@ class nusoap_wsdlcache {
   /**
    * removes a wsdl instance from the cache
    *
-   * @param  string  $wsdl  The URL of the wsdl instance
+   * @param string $wsdl The URL of the wsdl instance
    *
    * @return boolean Whether there was an instance to remove
    * @access public

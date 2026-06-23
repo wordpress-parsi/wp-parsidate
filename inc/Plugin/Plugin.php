@@ -25,8 +25,9 @@ class Plugin {
   /**
    * Limits the timeout for requests to wp-parsi.com to prevent dashboard lag.
    *
-   * @param array  $args Request arguments.
-   * @param string $url  Request URL.
+   * @param array $args Request arguments.
+   * @param string $url Request URL.
+   *
    * @return array Modified request arguments.
    */
   public function limitWpParsiTimeout( array $args, string $url ): array {
@@ -101,7 +102,7 @@ class Plugin {
   /**
    * Add setting link to admin plugins
    *
-   * @param  array  $links
+   * @param array $links
    *
    * @return          array
    */

@@ -10,8 +10,8 @@ class Cache {
   /**
    * Determines cache is existing
    *
-   * @param  string  $key  Cache key
-   * @param  bool  $useDBCache  Use DB Cache
+   * @param string $key Cache key
+   * @param bool $useDBCache Use DB Cache
    *
    * @return bool True, if cache exist
    */
@@ -22,10 +22,10 @@ class Cache {
   /**
    * Set cache value
    *
-   * @param  string  $key  Cache key
-   * @param  mixed  $value  Cache value
-   * @param  int  $expireTime  Expire time base on second's
-   * @param  bool  $useDBCache  Use DB Cache
+   * @param string $key Cache key
+   * @param mixed $value Cache value
+   * @param int $expireTime Expire time base on second's
+   * @param bool $useDBCache Use DB Cache
    *
    * @return bool True, if cache exist
    */
@@ -42,8 +42,8 @@ class Cache {
   /**
    * Get cache value
    *
-   * @param  string  $key  Cache key
-   * @param  bool  $useDBCache  Use DB Cache
+   * @param string $key Cache key
+   * @param bool $useDBCache Use DB Cache
    *
    * @return mixed Cache value, Return false if not exists
    */
@@ -63,8 +63,8 @@ class Cache {
   /**
    * Delete cache
    *
-   * @param  string  $key  Cache key
-   * @param  bool  $deleteDBCache  Delete DB Cache
+   * @param string $key Cache key
+   * @param bool $deleteDBCache Delete DB Cache
    *
    * @return bool True, if cache successfully deleted
    */

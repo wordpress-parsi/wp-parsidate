@@ -1050,7 +1050,7 @@ class HTML {
   /**
    * Check input data
    *
-   * @param  array  $data
+   * @param array $data
    *
    * @return bool|array
    */

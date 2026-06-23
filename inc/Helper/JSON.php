@@ -9,7 +9,7 @@ class JSON {
    * Decodes a JSON string
    * @link https://php.net/manual/en/function.json-decode.php
    *
-   * @param  string  $json  <p>
+   * @param string $json <p>
    * The <i>json</i> string being decoded.
    * </p>
    * <p>
@@ -19,14 +19,14 @@ class JSON {
    * JSON - it will also encode and decode scalar types and <b>NULL</b>. The JSON standard
    * only supports these values when they are nested inside an array or an object.
    * </p>
-   * @param  bool|null  $associative  <p>
+   * @param bool|null $associative <p>
    * When <b>TRUE</b>, returned objects will be converted into
    * associative arrays.
    * </p>
-   * @param  int  $depth  [optional] <p>
+   * @param int $depth [optional] <p>
    * User specified recursion depth.
    * </p>
-   * @param  int  $flags  [optional] <p>
+   * @param int $flags [optional] <p>
    * Bitmask of JSON decode options:<br/>
    * {@see JSON_BIGINT_AS_STRING} decodes large integers as their original string value.<br/>
    * {@see JSON_INVALID_UTF8_IGNORE} ignores invalid UTF-8 characters,<br/>
@@ -55,7 +55,7 @@ class JSON {
    * Returns the JSON representation of a value
    * @link https://php.net/manual/en/function.json-encode.php
    *
-   * @param  mixed  $value  <p>
+   * @param mixed $value <p>
    * The <i>value</i> being encoded. Can be any type except
    * a resource.
    * </p>
@@ -66,7 +66,7 @@ class JSON {
    * JSON - it will also encode and decode scalar types and <b>NULL</b>. The JSON standard
    * only supports these values when they are nested inside an array or an object.
    * </p>
-   * @param  int  $flags  [optional] <p>
+   * @param int $flags [optional] <p>
    * Bitmask consisting of <b>JSON_HEX_QUOT</b>,
    * <b>JSON_HEX_TAG</b>,
    * <b>JSON_HEX_AMP</b>,
@@ -80,7 +80,7 @@ class JSON {
    * constants is described on
    * the JSON constants page.
    * </p>
-   * @param  int  $depth  [optional] <p>
+   * @param int $depth [optional] <p>
    * Set the maximum depth. Must be greater than zero.
    * </p>
    *
@@ -97,7 +97,7 @@ class JSON {
   /**
    * Validate JSON value
    *
-   * @param  string  $value  JSON string
+   * @param string $value JSON string
    *
    * @return  bool True, if it hasn't error on decode JSON string
    * @throws \JsonException

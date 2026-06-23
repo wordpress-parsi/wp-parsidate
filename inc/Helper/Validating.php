@@ -8,7 +8,7 @@ class Validating {
   /**
    * Validating timestamp number
    *
-   * @param  mixed  $timestamp
+   * @param mixed $timestamp
    *
    * @return bool
    */
@@ -21,7 +21,7 @@ class Validating {
   /**
    * Validating URL
    *
-   * @param  mixed  $url
+   * @param mixed $url
    *
    * @return bool
    */
@@ -32,7 +32,7 @@ class Validating {
   /**
    * Check is external url from current website
    *
-   * @param  mixed  $url
+   * @param mixed $url
    *
    * @return bool
    */

@@ -72,7 +72,7 @@ class WcGateways {
   /**
    * Adds settings for toggle fixing
    *
-   * @param  array  $wooSettings  WooCommerce section settings
+   * @param array $wooSettings WooCommerce section settings
    *
    * @return          array New settings
    * @since 4.0.0

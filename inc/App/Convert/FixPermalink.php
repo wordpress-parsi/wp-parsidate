@@ -26,10 +26,10 @@ class FixPermalink {
   /**
    * Filters the day archive permalink.
    *
-   * @param  string  $link  Permalink for the day archive.
-   * @param  int  $year  Year for the archive.
-   * @param  int  $month  Month for the archive.
-   * @param  int  $day  The day for the archive.
+   * @param string $link Permalink for the day archive.
+   * @param int $year Year for the archive.
+   * @param int $month Month for the archive.
+   * @param int $day The day for the archive.
    *
    * @return string Archive link
    */
@@ -57,8 +57,8 @@ class FixPermalink {
   /**
    * Converts post date pointer to Jalali pointer
    *
-   * @param  string  $where
-   * @param  \WP_Query|string  $wp_query
+   * @param string $where
+   * @param \WP_Query|string $wp_query
    *
    * @return string
    */
@@ -69,7 +69,7 @@ class FixPermalink {
   /**
    * Converts post dates to Georgian dates for preventing errors
    *
-   * @param  \WP_Query  $query
+   * @param \WP_Query $query
    */
   public function changeQuery( $query ): void {
     global $wpdb;
@@ -213,9 +213,9 @@ class FixPermalink {
   /**
    * Convert permalink structure to Jalali format
    *
-   * @param  mixed  $perma
-   * @param  \WP_Post  $post
-   * @param  bool  $leavename
+   * @param mixed $perma
+   * @param \WP_Post $post
+   * @param bool $leavename
    *
    * @return string New permalink
    */
@@ -289,9 +289,9 @@ class FixPermalink {
               /**
                * Filters the category that gets used in the %category% permalink token.
                *
-               * @param  \WP_Term  $cat  The category to use in the permalink.
-               * @param  array  $cats  Array of all categories (WP_Term objects) associated with the post.
-               * @param  \WP_Post  $post  The post in question.
+               * @param \WP_Term $cat The category to use in the permalink.
+               * @param array $cats Array of all categories (WP_Term objects) associated with the post.
+               * @param \WP_Post $post The post in question.
                *
                * @since 3.5.0
                *

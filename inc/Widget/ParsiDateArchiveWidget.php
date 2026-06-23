@@ -33,7 +33,7 @@ class ParsiDateArchiveWidget extends \WP_Widget {
   /**
    * Outputs the settings update form.
    *
-   * @param  array  $instance  Current settings.
+   * @param array $instance Current settings.
    *
    * @return void Default return is 'noform'.
    * @return void
@@ -132,9 +132,9 @@ class ParsiDateArchiveWidget extends \WP_Widget {
    * value of `$instance` should be returned. If false is returned, the instance won't be
    * saved/updated.
    *
-   * @param  array  $new_instance  New settings for this instance as input by the user via
+   * @param array $new_instance New settings for this instance as input by the user via
    *                            WP_Widget::form().
-   * @param  array  $old_instance  Old settings for this instance.
+   * @param array $old_instance Old settings for this instance.
    *
    * @return array Settings to save or bool false to cancel saving.
    * @since 2.8.0
@@ -156,9 +156,9 @@ class ParsiDateArchiveWidget extends \WP_Widget {
    *
    * Subclasses should override this function to generate their widget code.
    *
-   * @param  array  $args  Display arguments including 'before_title', 'after_title',
+   * @param array $args Display arguments including 'before_title', 'after_title',
    *                        'before_widget', and 'after_widget'.
-   * @param  array  $instance  The settings for the particular instance of the widget.
+   * @param array $instance The settings for the particular instance of the widget.
    *
    * @since 2.8.0
    *

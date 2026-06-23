@@ -20,9 +20,9 @@ class FixTitle {
   /**
    * Fixes titles for archives
    *
-   * @param  string  $title  Archive title
-   * @param  string  $sep  Separator
-   * @param  string  $seplocation  Separator location
+   * @param string $title Archive title
+   * @param string $sep Separator
+   * @param string $seplocation Separator location
    *
    * @return                  string New archive title
    */

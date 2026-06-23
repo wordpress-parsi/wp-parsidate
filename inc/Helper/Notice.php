@@ -10,9 +10,9 @@ class Notice {
   /**
    * Add notice and display immediately
    *
-   * @param  string  $key  Notice key
-   * @param  array  $notices  Notice list
-   * @param  bool  $echo  True, print notice
+   * @param string $key Notice key
+   * @param array $notices Notice list
+   * @param bool $echo True, print notice
    *
    * @return string
    */
@@ -32,11 +32,11 @@ class Notice {
   /**
    * Add notice
    *
-   * @param  string  $key  Notice key
-   * @param  string  $message  Notice message
-   * @param  string|null  $type  Notice type (default, info, success, warning, error)
-   * @param  string|null  $linkTitle  Notice link title
-   * @param  string|null  $link  Notice link url
+   * @param string $key Notice key
+   * @param string $message Notice message
+   * @param string|null $type Notice type (default, info, success, warning, error)
+   * @param string|null $linkTitle Notice link title
+   * @param string|null $link Notice link url
    *
    * @return void
    */
@@ -63,7 +63,7 @@ class Notice {
   /**
    * Clear notice(s) by the Key
    *
-   * @param  string  $key  Notice key
+   * @param string $key Notice key
    *
    * @return void
    */
@@ -74,9 +74,9 @@ class Notice {
   /**
    * Display notice(s)
    *
-   * @param  string  $key  Notice key
-   * @param  string|null  $type  Notice type, if is null display all type of notice
-   * @param  bool  $echo  Print notice
+   * @param string $key Notice key
+   * @param string|null $type Notice type, if is null display all type of notice
+   * @param bool $echo Print notice
    *
    * @return string Notice(s) HTML
    */
@@ -115,10 +115,10 @@ class Notice {
   /**
    * Get HTML of a notice
    *
-   * @param  string  $type  Type
-   * @param  string  $message  Message
-   * @param  string|null  $linkTitle  Link title
-   * @param  string|null  $link  Link URL
+   * @param string $type Type
+   * @param string $message Message
+   * @param string|null $linkTitle Link title
+   * @param string|null $link Link URL
    *
    * @return string HTML of notice
    */
@@ -133,7 +133,7 @@ class Notice {
   /**
    * Get notice icon base on type
    *
-   * @param  string  $type  Type of notice
+   * @param string $type Type of notice
    *
    * @return string HTML of Icon
    */
@@ -171,7 +171,7 @@ class Notice {
   /**
    * Get type of notice
    *
-   * @param  string  $type  Notice type
+   * @param string $type Notice type
    *
    * @return string Notice type
    */

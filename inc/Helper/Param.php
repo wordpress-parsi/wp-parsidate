@@ -12,10 +12,10 @@ class Param {
   /**
    * Get field from query string.
    *
-   * @param  string  $id  Field id to get.
-   * @param  mixed  $default  Default value to return if field is not found.
-   * @param  int  $filter  The ID of the filter to apply.
-   * @param  int  $flag  The ID of the flag to apply.
+   * @param string $id Field id to get.
+   * @param mixed $default Default value to return if field is not found.
+   * @param int $filter The ID of the filter to apply.
+   * @param int $flag The ID of the flag to apply.
    *
    * @return mixed
    */
@@ -28,10 +28,10 @@ class Param {
   /**
    * Get field from FORM post.
    *
-   * @param  string  $id  Field id to get.
-   * @param  mixed  $default  Default value to return if field is not found.
-   * @param  int  $filter  The ID of the filter to apply.
-   * @param  int  $flag  The ID of the flag to apply.
+   * @param string $id Field id to get.
+   * @param mixed $default Default value to return if field is not found.
+   * @param int $filter The ID of the filter to apply.
+   * @param int $flag The ID of the flag to apply.
    *
    * @return mixed
    */
@@ -51,10 +51,10 @@ class Param {
   /**
    * Get field from request.
    *
-   * @param  string  $id  Field id to get.
-   * @param  mixed  $default  Default value to return if field is not found.
-   * @param  int  $filter  The ID of the filter to apply.
-   * @param  int  $flag  The ID of the flag to apply.
+   * @param string $id Field id to get.
+   * @param mixed $default Default value to return if field is not found.
+   * @param int $filter The ID of the filter to apply.
+   * @param int $flag The ID of the flag to apply.
    *
    * @return mixed
    */
@@ -67,10 +67,10 @@ class Param {
   /**
    * Get field from FORM server.
    *
-   * @param  string  $id  Field id to get.
-   * @param  mixed  $default  Default value to return if field is not found.
-   * @param  int  $filter  The ID of the filter to apply.
-   * @param  int  $flag  The ID of the flag to apply.
+   * @param string $id Field id to get.
+   * @param mixed $default Default value to return if field is not found.
+   * @param int $filter The ID of the filter to apply.
+   * @param int $flag The ID of the flag to apply.
    *
    * @return mixed
    */

@@ -6,10 +6,10 @@ class Templates {
   /**
    * Load template file
    *
-   * @param  string  $file  Path to template file
-   * @param  array  $args  array of args pass to template file
-   * @param  bool  $loadOnce  Load once
-   * @param  bool  $echo  Print template output
+   * @param string $file Path to template file
+   * @param array $args array of args pass to template file
+   * @param bool $loadOnce Load once
+   * @param bool $echo Print template output
    *
    * @return false|string|void
    */

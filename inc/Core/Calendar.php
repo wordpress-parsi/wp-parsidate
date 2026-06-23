@@ -60,8 +60,8 @@ class Calendar {
       $thisMonth = '' . zeroise( (int) $jm, 2 );
       $thisYear  = '' . (int) $jy;
     } elseif ( ! empty( $w ) ) {
-      $thisYear = '' . (int) substr( $m, 0, 4 );
-      $d        = ( ( $w - 1 ) * 7 ) + 6; //it seems MySQL's weeks disagree with PHP's
+      $thisYear  = '' . (int) substr( $m, 0, 4 );
+      $d         = ( ( $w - 1 ) * 7 ) + 6; //it seems MySQL's weeks disagree with PHP's
       $thisMonth = $wpdb->get_var(
         $wpdb->prepare( "SELECT DATE_FORMAT ( ( DATE_ADD( %s, INTERVAL %d DAY ) ), '%%m')", $thisYear . '0101', $d )
       );

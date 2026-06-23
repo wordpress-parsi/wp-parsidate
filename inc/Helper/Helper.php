@@ -6,8 +6,8 @@ class Helper {
   /**
    * Reorder array list
    *
-   * @param  array  $array  Input array
-   * @param  array  $orders  Order number lists
+   * @param array $array Input array
+   * @param array $orders Order number lists
    *
    * @return array|false Reordered array
    */
@@ -31,10 +31,10 @@ class Helper {
   /**
    * Random string
    *
-   * @param  int  $length  String length
-   * @param  bool  $smallAlphabet  Use small alphabet
-   * @param  bool  $largeAlphabet  Use large alphabet
-   * @param  bool  $numbers  Use numbers
+   * @param int $length String length
+   * @param bool $smallAlphabet Use small alphabet
+   * @param bool $largeAlphabet Use large alphabet
+   * @param bool $numbers Use numbers
    *
    * @return false|string Random string, Otherwise return false if empty
    */
@@ -68,9 +68,9 @@ class Helper {
    * Modifies $haystack in place.
    * https://stackoverflow.com/a/7257599/3224296
    *
-   * @param  array &$haystack  the associative array to search. This will be modified by the function
-   * @param  int  $needle  the key to search for
-   * @param  array  $stuff  one or more arrays or scalars to be inserted into $haystack
+   * @param array &$haystack the associative array to search. This will be modified by the function
+   * @param int $needle the key to search for
+   * @param array $stuff one or more arrays or scalars to be inserted into $haystack
    *
    * @return array the index at which $needle was found
    */
@@ -83,8 +83,8 @@ class Helper {
    * URL to key
    * Use for cache base on url string
    *
-   * @param  string  $url
-   * @param  bool  $hostOnly
+   * @param string $url
+   * @param bool $hostOnly
    *
    * @return false|string Key string, if url isn't valid return false
    */

@@ -6,7 +6,7 @@ class Nonce {
   /**
    * Create nonce
    *
-   * @param  string  $action  Scalar value to add context to the nonce.
+   * @param string $action Scalar value to add context to the nonce.
    *
    * @return string The token.
    */
@@ -19,8 +19,8 @@ class Nonce {
    *
    *  A nonce is valid for between 12 and 24 hours (by default).
    *
-   * @param  string|null  $nonce  Nonce value that was used for verification, usually via a form field.
-   * @param  string|int  $action  Should give context to what is taking place and be the same when nonce was created.
+   * @param string|null $nonce Nonce value that was used for verification, usually via a form field.
+   * @param string|int $action Should give context to what is taking place and be the same when nonce was created.
    *
    * @return int|false 1 if the nonce is valid and generated between 0-12 hours ago,
    *                    2 if the nonce is valid and generated between 12-24 hours ago.

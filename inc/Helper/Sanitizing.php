@@ -10,7 +10,7 @@ class Sanitizing {
   /**
    * Sanitize SVG
    *
-   * @param  string  $svg  SVG HTML
+   * @param string $svg SVG HTML
    *
    * @return string SVG HTML
    */
@@ -25,7 +25,7 @@ class Sanitizing {
   /**
    * Clean scalar value
    *
-   * @param  mixed  $value
+   * @param mixed $value
    *
    * @return array|mixed|string
    */
@@ -40,7 +40,7 @@ class Sanitizing {
   /**
    * JSON to Array
    *
-   * @param  string  $value  JSON string
+   * @param string $value JSON string
    *
    * @return array
    * @throws \JsonException
@@ -58,7 +58,7 @@ class Sanitizing {
   /**
    * Object to array
    *
-   * @param  mixed  $value
+   * @param mixed $value
    *
    * @return array
    */
@@ -69,7 +69,7 @@ class Sanitizing {
   /**
    * Convert to bool value
    *
-   * @param  mixed  $value
+   * @param mixed $value
    *
    * @return bool
    */
@@ -82,7 +82,7 @@ class Sanitizing {
   /**
    * Converts a value to non-negative integer.
    *
-   * @param  mixed  $value  Data you wish to have converted to a non-negative integer.
+   * @param mixed $value Data you wish to have converted to a non-negative integer.
    *
    * @return int A non-negative integer.
    */
@@ -93,7 +93,7 @@ class Sanitizing {
   /**
    * Converts a value to integer
    *
-   * @param  mixed  $value  Data you wish to have converted to an integer.
+   * @param mixed $value Data you wish to have converted to an integer.
    *
    * @return int An integer
    */
@@ -104,7 +104,7 @@ class Sanitizing {
   /**
    * Converts a value to float
    *
-   * @param  mixed  $value  Data you wish to have converted to an float.
+   * @param mixed $value Data you wish to have converted to an float.
    *
    * @return float An float
    */
@@ -115,7 +115,7 @@ class Sanitizing {
   /**
    * Sanitizes a string into a slug, which can be used in URLs or HTML attributes.
    *
-   * @param  string  $value  The string to be sanitized.
+   * @param string $value The string to be sanitized.
    *
    * @return string The sanitized string.
    */
@@ -137,7 +137,7 @@ class Sanitizing {
   /**
    * Sanitizes a hex color without a hash. Use sanitize_hex_color() when possible.
    *
-   * @param  string  $value  The color value to sanitize. Can be with or without a #.
+   * @param string $value The color value to sanitize. Can be with or without a #.
    *
    * @return string|null The sanitized hex color without the hash prefix,
    *                     empty string if input is empty, or null if invalid.
@@ -149,7 +149,7 @@ class Sanitizing {
   /**
    * Sanitizes a string from user input or from the database.
    *
-   * @param  string  $value  String to sanitize.
+   * @param string $value String to sanitize.
    *
    * @return string Sanitized string.
    */
@@ -160,7 +160,7 @@ class Sanitizing {
   /**
    * Strips out all characters that are not allowable in an email.
    *
-   * @param  string  $value  Email address to filter.
+   * @param string $value Email address to filter.
    *
    * @return string Filtered email address.
    */
@@ -171,7 +171,7 @@ class Sanitizing {
   /**
    * Sanitizes a filename, replacing whitespace with dashes.
    *
-   * @param  string  $value  The filename to be sanitized.
+   * @param string $value The filename to be sanitized.
    *
    * @return string The sanitized filename.
    */
@@ -182,7 +182,7 @@ class Sanitizing {
   /**
    * Sanitizes a URL for database or redirect usage.
    *
-   * @param  string  $value  The URL to be cleaned.
+   * @param string $value The URL to be cleaned.
    *
    * @return string The cleaned URL after esc_url() is run with the 'db' context.
    */
@@ -193,7 +193,7 @@ class Sanitizing {
   /**
    * Sanitizes a multiline string from user input or from the database.
    *
-   * @param  string  $value  String to sanitize.
+   * @param string $value String to sanitize.
    *
    * @return string Sanitized string.
    */
@@ -204,7 +204,7 @@ class Sanitizing {
   /**
    * Sanitizes an HTML classname to ensure it only contains valid characters.
    *
-   * @param  string  $value  The classname to be sanitized.
+   * @param string $value The classname to be sanitized.
    *
    * @return string The sanitized value.
    */
@@ -215,7 +215,7 @@ class Sanitizing {
   /**
    * Sanitizes a mime type
    *
-   * @param  string  $value  Mime type.
+   * @param string $value Mime type.
    *
    * @return string Sanitized mime type.
    */
@@ -226,7 +226,7 @@ class Sanitizing {
   /**
    * Ensures a string is a valid SQL 'order by' clause.
    *
-   * @param  string  $value  Order by clause to be validated.
+   * @param string $value Order by clause to be validated.
    *
    * @return string|false Returns $orderby if valid, false otherwise.
    */
@@ -237,7 +237,7 @@ class Sanitizing {
   /**
    * Sanitizes a username, stripping out unsafe characters.
    *
-   * @param  string  $value  The username to be sanitized.
+   * @param string $value The username to be sanitized.
    *
    * @return string The sanitized username, after passing through filters.
    */

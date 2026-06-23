@@ -8,8 +8,8 @@ class User {
   /**
    * Get user data
    *
-   * @param  string  $field  User data field
-   * @param  int  $userID  User ID. if not set, get current user logged-in ID
+   * @param string $field User data field
+   * @param int $userID User ID. if not set, get current user logged-in ID
    *
    * @return false|int|mixed|string|\WP_User
    */

@@ -8,9 +8,9 @@ class Date {
   /**
    * Change date format
    *
-   * @param  string  $date  Date string
-   * @param  string  $dateFormat  Input date format
-   * @param  string  $returnFormat  Output date format
+   * @param string $date Date string
+   * @param string $dateFormat Input date format
+   * @param string $returnFormat Output date format
    *
    * @return string Date with output format
    */
@@ -21,8 +21,8 @@ class Date {
   /**
    * Determines is gregorian/shamsi date string
    *
-   * @param  string  $dateString  Date string
-   * @param  string  $format  Date format
+   * @param string $dateString Date string
+   * @param string $format Date format
    *
    * @return array
    */
@@ -71,8 +71,8 @@ class Date {
   /**
    * Determines is time string
    *
-   * @param  mixed  $time  Time string
-   * @param  string  $seconds  Seconds string value
+   * @param mixed $time Time string
+   * @param string $seconds Seconds string value
    *
    * @return false|string Return time string if is time, Otherwise false
    */

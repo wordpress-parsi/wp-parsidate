@@ -6,7 +6,7 @@ class Strip {
   /**
    * Filters text content and strips out disallowed HTML.
    *
-   * @param  string  $content  Text content to filter.
+   * @param string $content Text content to filter.
    *
    * @return string Filtered content containing only the allowed HTML.
    */
@@ -17,7 +17,7 @@ class Strip {
   /**
    * Remove HTML comments
    *
-   * @param  string  $html
+   * @param string $html
    *
    * @return string
    */
@@ -28,7 +28,7 @@ class Strip {
   /**
    * Remove HTML Document type
    *
-   * @param  string  $html
+   * @param string $html
    *
    * @return string
    */

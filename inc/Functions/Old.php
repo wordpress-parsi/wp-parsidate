@@ -47,8 +47,8 @@ if ( ! function_exists( 'wpp_is_time_validate' ) ) {
   /**
    * Validate time string
    *
-   * @param  mixed  $time
-   * @param  string  $default_seconds
+   * @param mixed $time
+   * @param string $default_seconds
    *
    * @return false|string
    */
@@ -61,8 +61,8 @@ if ( ! function_exists( 'wpp_is_postal_code_validate' ) ) {
   /**
    * Check value is postal code
    *
-   * @param  mixed  $postalCode
-   * @param  bool  $checkSum
+   * @param mixed $postalCode
+   * @param bool $checkSum
    *
    * @return bool
    */
@@ -86,7 +86,7 @@ if ( ! function_exists( 'fix_number' ) ) {
   /**
    * Fix numbers and convert them to Persian digits style
    *
-   * @param  string  $content
+   * @param string $content
    *
    * @return array|string|string[]|null
    */
@@ -110,7 +110,7 @@ if ( ! function_exists( 'per_number' ) ) {
   /**
    * Converts English digits to Persian digits
    *
-   * @param  string  $number  Numbers
+   * @param string $number Numbers
    *
    * @return              string Formatted numbers
    */
@@ -123,7 +123,7 @@ if ( ! function_exists( 'eng_number' ) ) {
   /**
    * Converts Persian digits to English digits
    *
-   * @param  string  $number  Numbers
+   * @param string $number Numbers
    *
    * @return              string Formatted numbers
    */

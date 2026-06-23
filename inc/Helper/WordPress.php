@@ -92,8 +92,8 @@ class WordPress {
   /**
    * Retrieves information about the current site.
    *
-   * @param  string  $show  Optional. Site info to retrieve. Default empty (site name).
-   * @param  string  $filter  Optional. How to filter what is retrieved. Default 'raw'.
+   * @param string $show Optional. Site info to retrieve. Default empty (site name).
+   * @param string $filter Optional. How to filter what is retrieved. Default 'raw'.
    *
    * @return string Mostly string values, might be empty.
    */
@@ -143,7 +143,7 @@ class WordPress {
   /**
    * Determines whether the query is for an existing single post.
    *
-   * @param  int|string|int[]|string[]  $post  Optional. Post ID, title, slug, or array of such
+   * @param int|string|int[]|string[] $post Optional. Post ID, title, slug, or array of such
    * *                                        to check against. Default empty.
    * * @return bool Whether the query is for an existing single post.
    */
@@ -155,7 +155,7 @@ class WordPress {
    * Determines whether the query is for an existing single post of any post type
    * * (post, attachment, page, custom post types).
    *
-   * @param  string|string[]  $postTypes  Optional. Post type or array of post types
+   * @param string|string[] $postTypes Optional. Post type or array of post types
    * *                                    to check against. Default empty.
    * * @return bool Whether the query is for an existing single post
    * *              or any of the given post types.
@@ -176,7 +176,7 @@ class WordPress {
   /**
    * Determines whether the query is for an existing single page.
    *
-   * @param  int|string|int[]|string[]  $page  Optional. Page ID, title, slug, or array of such
+   * @param int|string|int[]|string[] $page Optional. Page ID, title, slug, or array of such
    *                                         to check against. Default empty.
    *
    * @return bool Whether the query is for an existing single page.
@@ -188,7 +188,7 @@ class WordPress {
   /**
    * Determines whether the query is for an existing category archive page.
    *
-   * @param  int|string|int[]|string[]  $category  Optional. Category ID, name, slug, or array of such
+   * @param int|string|int[]|string[] $category Optional. Category ID, name, slug, or array of such
    * *                                            to check against. Default empty.
    * * @return bool Whether the query is for an existing category archive page.
    */
@@ -199,7 +199,7 @@ class WordPress {
   /**
    * Determines whether the query is for an existing tag archive page.
    *
-   * @param  int|string|int[]|string[]  $tag  Optional. Tag ID, name, slug, or array of such
+   * @param int|string|int[]|string[] $tag Optional. Tag ID, name, slug, or array of such
    * *                                       to check against. Default empty.
    * * @return bool Whether the query is for an existing tag archive page.
    */
@@ -244,7 +244,7 @@ class WordPress {
   /**
    * Converts a plugin filepath to a slug.
    *
-   * @param  string  $pluginFile  The plugin's filepath, relative to the plugins directory.
+   * @param string $pluginFile The plugin's filepath, relative to the plugins directory.
    *
    * @return string The plugin's slug.
    */
@@ -261,7 +261,7 @@ class WordPress {
    *
    * Since 5.0.1
    *
-   * @param  string  $plugin  Path to the plugin file relative to the plugins' directory.
+   * @param string $plugin Path to the plugin file relative to the plugins' directory.
    *
    * @return bool  True, if in the active plugins list. False, not in the list.
    */

@@ -3,9 +3,9 @@ if ( ! function_exists( 'parsidate' ) ) {
   /**
    * Convert gregorian datetime to persian datetime
    *
-   * @param  mixed  $format  Format
-   * @param  string  $dateTime  gregorian datetime
-   * @param  bool|string  $lang  true or per: convert numbers to persian, false or eng: don't convert numbers
+   * @param mixed $format Format
+   * @param string $dateTime gregorian datetime
+   * @param bool|string $lang true or per: convert numbers to persian, false or eng: don't convert numbers
    *
    * @return string
    */
@@ -20,8 +20,8 @@ if ( ! function_exists( 'gregdate' ) ) {
   /**
    * Convert persian datetime to gregorian datetime
    *
-   * @param  mixed  $format  Format
-   * @param  mixed  $datetime  Shamsi datetime
+   * @param mixed $format Format
+   * @param mixed $datetime Shamsi datetime
    *
    * @return false|string
    */

@@ -17,7 +17,7 @@ class Assets {
   /**
    * Get asset url
    *
-   * @param  string  $path  Assets path
+   * @param string $path Assets path
    *
    * @return string Asset url
    */
@@ -28,7 +28,7 @@ class Assets {
   /**
    * Determines whether the string is HTML image string
    *
-   * @param  string  $string  HTML image string
+   * @param string $string HTML image string
    *
    * @return bool
    */
@@ -39,8 +39,8 @@ class Assets {
   /**
    * Determines whether the string is HTML image string
    *
-   * @param  string  $string  HTML image string
-   * @param  bool  $clean  Clean HTML string before check
+   * @param string $string HTML image string
+   * @param bool $clean Clean HTML string before check
    *
    * @return bool
    */
@@ -55,7 +55,7 @@ class Assets {
   /**
    * Clean HTML SVG string
    *
-   * @param  string  $svg  HTML SVG string
+   * @param string $svg HTML SVG string
    *
    * @return string
    */
@@ -73,10 +73,10 @@ class Assets {
   /**
    * Set HTML SVG image string width and height
    *
-   * @param  string  $svg
-   * @param  int  $width  SVG width
-   * @param  int|null  $height  SVG height, If not set equal to width
-   * @param  bool  $clean  Clean HTML string before check
+   * @param string $svg
+   * @param int $width SVG width
+   * @param int|null $height SVG height, If not set equal to width
+   * @param bool $clean Clean HTML string before check
    *
    * @return string HTML SVG string
    */
