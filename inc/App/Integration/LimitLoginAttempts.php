@@ -3,7 +3,7 @@
  * Makes Limit Login Attempts Security compatible with WP-Parsidate plugin
  *
  * @package                 WP-Parsidate
- * @subpackage              Plugins/Elementor
+ * @subpackage              Plugins/LimitLoginAttemptsSecurity
  */
 
 namespace WPParsidate\App\Integration;

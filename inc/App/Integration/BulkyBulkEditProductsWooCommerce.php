@@ -3,7 +3,7 @@
  * Makes Bulky (Bulk Edit Products for WooCommerce) compatible with WP-Parsidate plugin
  *
  * @package                 WP-Parsidate
- * @subpackage              Plugins/Elementor
+ * @subpackage              Plugins/BulkyBulkEditProductsWooCommerce
  */
 
 namespace WPParsidate\App\Integration;
