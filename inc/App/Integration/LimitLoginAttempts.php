@@ -20,7 +20,7 @@ class LimitLoginAttempts extends Addon {
   }
 
   public function addDateHooksToDeactivator( $rawList ): string {
-    $rawList .= "\ndate_i18n,dashboard_widgets_content,LLAR\Core\LimitLoginAttempts\ndate_i18n,options_page,LLAR\Core\LimitLoginAttempts";
+    $rawList .= "\ndate_i18n,dashboard_widgets_content,LLAR\Core\LimitLoginAttempts\ndate_i18n,options_page,LLAR\Core\LimitLoginAttempts\nwp_date,dashboard_widgets_content,LLAR\Core\LimitLoginAttempts\nwp_date,options_page,LLAR\Core\LimitLoginAttempts";
 
     return $rawList;
   }
