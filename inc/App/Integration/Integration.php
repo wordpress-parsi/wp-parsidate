@@ -4,12 +4,24 @@ namespace WPParsidate\App\Integration;
 
 class Integration {
   public function __construct() {
+    // E-commerce
     new WooCommerce();
     new EDD();
-    new Elementor();
+    new BulkyBulkEditProductsWooCommerce();
+
+    // Customizations
     new ACF();
+
+    // SEO
     new RankMath();
+
+    // Page Builder
+    new Elementor();
+
+    // Security
     new LimitLoginAttempts();
+
+    // Builtin integration
     new HookDeactivator();
   }
 }
