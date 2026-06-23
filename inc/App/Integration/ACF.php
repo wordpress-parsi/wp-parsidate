@@ -19,7 +19,7 @@ class ACF extends Addon {
   public string $addonID = 'acf';
   public string $currentTab = 'integration';
 
-  public function registerInitM1Action(): void {
+  public function initM1Action(): void {
     if ( $this->getSetting( 'fix_date', false ) ) {
       add_action( 'acf/include_field_types', [ $this, 'includeField' ] ); // v5
       add_action( 'acf/register_fields', [ $this, 'includeField' ] ); // v4
@@ -174,6 +174,7 @@ class ACF extends Addon {
       'desc'             => esc_html__( 'ParsiDate integration for Advanced Custom Fields (ACF)', 'wp-parsidate' ),
       'force_enable'     => true,
       'icon'             => $svg,
+      'image_link'       => 'https://wordpress.org/plugins/advanced-custom-fields/',
       'tags'             => [ esc_html__( 'Meta', 'wp-parsidate' ) ],
       'cat'              => 'customizations',
       'settings_key'     => $this->addonID,
