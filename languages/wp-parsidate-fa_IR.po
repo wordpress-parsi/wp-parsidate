@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 02:07+0330\n"
-"PO-Revision-Date: 2026-06-23 02:10+0330\n"
+"POT-Creation-Date: 2026-06-23 04:33+0330\n"
+"PO-Revision-Date: 2026-06-23 04:34+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -187,7 +187,7 @@ msgstr "بازاریابی"
 msgid "Customizations"
 msgstr "سفارشی‌سازی"
 
-#: inc/Addons/Addons.php:235 inc/App/Integration/RankMath.php:143
+#: inc/Addons/Addons.php:235 inc/App/Integration/RankMath.php:144
 msgid "SEO"
 msgstr "سئو"
 
@@ -199,7 +199,7 @@ msgstr "ابزار مفید"
 msgid "Page Builder"
 msgstr "صفحه‌ساز"
 
-#: inc/Addons/Addons.php:238 inc/App/Integration/LimitLoginAttempts.php:37
+#: inc/Addons/Addons.php:238 inc/App/Integration/LimitLoginAttempts.php:38
 msgid "Security"
 msgstr "امنیتی"
 
@@ -357,11 +357,11 @@ msgstr "تنظیمات ذخیره شد."
 msgid "Error saving settings!"
 msgstr "خطا در ذخیره تنظیمات!"
 
-#: inc/Admin/AdminSettings.php:493
+#: inc/Admin/AdminSettings.php:492
 msgid "Save changes"
 msgstr "ذخیره تغییرات"
 
-#: inc/Admin/AdminSettings.php:506
+#: inc/Admin/AdminSettings.php:505
 msgid "Discard changes"
 msgstr "بازنشانی تغییرات"
 
@@ -566,7 +566,7 @@ msgstr "انتخاب‌گر تاریخ شمسی (جلالی)"
 msgid "Save dates in Jalali format (Not recommended)"
 msgstr "ذخیره‌سازی تاریخ بصورت شمسی (توصیه نمی‌شود)"
 
-#: inc/App/Integration/ACF.php:177
+#: inc/App/Integration/ACF.php:178
 msgid "Meta"
 msgstr "متا"
 
@@ -616,6 +616,20 @@ msgstr "قالب زمان"
 msgid "Display time picker in 24 or 12 hours format"
 msgstr "نمایش انتخاب‌گر زمان بصورت 24 یا 12 ساعته"
 
+#: inc/App/Integration/BulkyBulkEditProductsWooCommerce.php:31
+msgid "Bulky – Bulk Edit Products for WooCommerce"
+msgstr "بالکی – ویرایش انبوه محصولات ووکامرس"
+
+#: inc/App/Integration/BulkyBulkEditProductsWooCommerce.php:32
+msgid "ParsiDate integration for Bulky (Bulk Edit Products for WooCommerce)"
+msgstr "هماهنگ‌سازی تاریخ پارسی با بالکی (ویرایش انبوه محصولات ووکامرس)"
+
+#: inc/App/Integration/BulkyBulkEditProductsWooCommerce.php:35
+#: inc/App/Integration/WooCommerce.php:769 inc/App/Integration/WooCommerce.php:839
+#: inc/App/Integration/WooCommerce.php:853 inc/App/Integration/WooCommerce.php:859
+msgid "WooCommerce"
+msgstr "ووکامرس"
+
 #: inc/App/Integration/EDD.php:49
 msgid "Iran Toman (Toman)"
 msgstr "تومان ایران (تومان)"
@@ -652,11 +666,11 @@ msgstr "افزودن واحد پولی «تومان»"
 msgid "Replace currency name"
 msgstr "جایگزینی نام واحد پولی"
 
-#: inc/App/Integration/EDD.php:133
+#: inc/App/Integration/EDD.php:134
 msgid "Download"
 msgstr "دانلود"
 
-#: inc/App/Integration/Elementor.php:39 inc/App/Integration/Elementor.php:43
+#: inc/App/Integration/Elementor.php:39 inc/App/Integration/Elementor.php:44
 msgid "Elementor"
 msgstr "المنتور"
 
@@ -720,11 +734,6 @@ msgstr "<strong>شمارۀ تماس</strong> معتبر نیست."
 #: inc/App/Integration/WooCommerce.php:425
 msgid "Expiry date"
 msgstr "تاریخ انقضاء"
-
-#: inc/App/Integration/WooCommerce.php:769 inc/App/Integration/WooCommerce.php:839
-#: inc/App/Integration/WooCommerce.php:853 inc/App/Integration/WooCommerce.php:858
-msgid "WooCommerce"
-msgstr "ووکامرس"
 
 #: inc/App/Integration/WooCommerce.php:770 inc/App/Integration/WooCommerce.php:854
 msgid "ParsiDate integration for WooCommerce"
@@ -1646,7 +1655,7 @@ msgstr "چرخش °"
 msgid "Required"
 msgstr "الزامی"
 
-#: inc/Plugin/Plugin.php:69
+#: inc/Plugin/Plugin.php:70
 #, php-format
 msgid ""
 "<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to "
@@ -1657,7 +1666,7 @@ msgstr ""
 "نیاز به پیکربندی آن دارید. <a href=\"%s\">برگه‌ی پیکربندی</a> &ndash; <a href=\"%s"
 "\">بی‌خیال</a></p></div>"
 
-#: inc/Plugin/Plugin.php:110
+#: inc/Plugin/Plugin.php:111
 msgid "Settings"
 msgstr "تنظیمات"
 
