@@ -344,8 +344,7 @@ class AdminSettings {
           if ( isset( $field['force_value'] ) ) {
             $field['setting_value'] = $field['force_value'];
           } elseif ( isset( $field['id'] ) ) {
-            $field['setting_value'] = wp_unslash( Settings::get( $field['id'], $field['default'],
-              $optionsName ) );
+            $field['setting_value'] = Settings::get( $field['id'], $field['default'], $optionsName );
           }
 
           $field['type'] = strtolower( $field['type'] );

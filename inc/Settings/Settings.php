@@ -71,8 +71,7 @@ class Settings {
     }
 
     if ( $key !== null ) {
-      return apply_filters( 'wp_parsidate_get_setting', $options[ $key ] ?? $default, $key, $default, $options,
-        $optionsName );
+      return apply_filters( 'wp_parsidate_get_setting', wp_unslash( $options[ $key ] ?? $default ), $key, $default, $options, $optionsName );
     }
 
     return apply_filters( 'wp_parsidate_get_settings', $options ?: $default, $optionsName );
