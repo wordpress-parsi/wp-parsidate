@@ -6,6 +6,41 @@ use DateTime;
 
 class Date {
   /**
+   * Will return an offset using the WordPress timezone set by the user
+   * Example return values: -04:00, +00:00, or +5:45
+   *
+   * @source https://gist.github.com/andrewjmead/9aef80a495dc36221ff84ddfb3ac3181
+   */
+  public static function localOffset(): string {
+    // Start with the offset such as -4, 0, or 5.75
+    $offset_number = (float) get_option( 'gmt_offset' );
+
+    // Build a string to represent the offset such as -04:00, +00:00, or +5:45
+    $result = '';
+
+    // Start with either - or +
+    $result .= $offset_number < 0 ? '-' : '+';
+
+    $whole_part  = abs( $offset_number );
+    $hour_part   = floor( $whole_part );
+    $minute_part = $whole_part - $hour_part;
+
+    $hours   = strval( $hour_part );
+    $minutes = strval( $minute_part * 60 );
+
+    // Add hour part to result
+    $result .= str_pad( $hours, 2, '0', STR_PAD_LEFT );
+
+    // Add separator
+    $result .= ':';
+
+    // Add minute part to result
+    $result .= str_pad( $minutes, 2, '0', STR_PAD_LEFT );
+
+    return $result;
+  }
+
+  /**
    * Change date format
    *
    * @param string $date Date string
