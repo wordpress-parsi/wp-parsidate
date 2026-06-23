@@ -130,6 +130,7 @@ class EDD extends Addon {
       'desc'             => esc_html__( 'ParsiDate integration for Easy Digital Downloads', 'wp-parsidate' ),
       'force_enable'     => true,
       'icon'             => $svg,
+      'image_link'       => 'https://wordpress.org/plugins/easy-digital-downloads/',
       'tags'             => [ esc_html__( 'Download', 'wp-parsidate' ) ],
       'cat'              => 'ecommerce',
       'settings_key'     => $this->addonID,

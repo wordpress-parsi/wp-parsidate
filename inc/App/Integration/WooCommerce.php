@@ -855,6 +855,7 @@ class WooCommerce extends Addon {
       'force_enable'     => true,
       'has_page'         => false,
       'icon'             => $svg,
+      'image_link'       => 'https://wordpress.org/plugins/woocommerce/',
       'tags'             => [ esc_html__( 'WooCommerce', 'wp-parsidate' ) ],
       'cat'              => 'ecommerce',
       'settings_key'     => $this->addonID,

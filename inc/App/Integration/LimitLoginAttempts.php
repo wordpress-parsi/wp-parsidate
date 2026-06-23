@@ -34,6 +34,7 @@ class LimitLoginAttempts extends Addon {
       'desc'             => esc_html__( 'ParsiDate integration for Limit Login Attempts Security', 'wp-parsidate' ),
       'force_enable'     => true,
       'icon'             => $svg,
+      'image_link'       => 'https://wordpress.org/plugins/limit-login-attempts-reloaded/',
       'tags'             => [ esc_html__( 'Security', 'wp-parsidate' ) ],
       'cat'              => 'security',
       'settings_key'     => $this->addonID,

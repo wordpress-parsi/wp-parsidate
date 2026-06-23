@@ -140,6 +140,7 @@ class RankMath extends Addon {
       'desc'             => esc_html__( 'ParsiDate integration for Rank Math', 'wp-parsidate' ),
       'force_enable'     => false,
       'icon'             => $svg,
+      'image_link'       => 'https://wordpress.org/plugins/seo-by-rank-math/',
       'tags'             => [ esc_html__( 'SEO', 'wp-parsidate' ) ],
       'cat'              => 'seo',
       'settings_key'     => $this->addonID,

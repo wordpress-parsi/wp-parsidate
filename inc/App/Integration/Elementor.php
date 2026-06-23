@@ -40,6 +40,7 @@ class Elementor extends Addon {
       'desc'             => esc_html__( 'ParsiDate integration for Elementor', 'wp-parsidate' ),
       'force_enable'     => false,
       'icon'             => $svg,
+      'image_link'       => 'https://wordpress.org/plugins/elementor/',
       'tags'             => [ esc_html__( 'Elementor', 'wp-parsidate' ) ],
       'cat'              => 'page_builder',
       'settings_key'     => $this->addonID,
