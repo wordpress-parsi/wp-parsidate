@@ -104,7 +104,7 @@ class RankMath extends Addon {
     $isDate    = Date::isDateString( $datePart[0], 'Y-m-d' );
 
     if ( $isDate['type'] === 'jalali' ) {
-      $timezoneOffset = Date::localOffset();
+      $timezoneOffset = Date::getLocalOffset();
       [ $jYear, $jMonth, $jDay ] = explode( '-', $datePart[0] );
       $gregDate    = $parsiDate->persian_to_gregorian( $jYear, $jMonth, $jDay );
       $gregDate[1] = str_pad( $gregDate[1], 2, '0', STR_PAD_LEFT );

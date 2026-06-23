@@ -11,7 +11,7 @@ class Date {
    *
    * @source https://gist.github.com/andrewjmead/9aef80a495dc36221ff84ddfb3ac3181
    */
-  public static function localOffset(): string {
+  public static function getLocalOffset(): string {
     // Start with the offset such as -4, 0, or 5.75
     $offset_number = (float) get_option( 'gmt_offset' );
 
