@@ -64,7 +64,8 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 == Changelog ==
 
 = 6.1 =
-* Add: Limit Login Attempts Security addon. [#issue](https://wordpress.org/support/topic/plugin-conflict-454/)
+* Add: Limit Login Attempts Security addon. [#WP topic](https://wordpress.org/support/topic/plugin-conflict-454/)
+* Add: Bulky (Bulk Edit Products for WooCommerce). [#WP topic](https://wordpress.org/support/topic/%d9%85%d8%b4%da%a9%d9%84-%d8%a8%d8%a7-%d8%a7%d9%81%d8%b2%d9%88%d9%86%d9%87-bulky-bulk-edit-products-for-woocommerce/)
 * Add: Dual date feature. [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/304)
 * Fix: Implicitly nullable parameter declarations deprecated in PHP 8.4. [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/307)
 * Fix: Resolve decimal number conversion issue in Persian text. [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/303)
