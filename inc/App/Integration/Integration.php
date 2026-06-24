@@ -14,6 +14,7 @@ class Integration {
 
     // SEO
     new RankMath();
+    new SchemaPro();
 
     // Page Builder
     new Elementor();

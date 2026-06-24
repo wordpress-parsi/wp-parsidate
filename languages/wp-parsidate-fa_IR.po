@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 04:33+0330\n"
-"PO-Revision-Date: 2026-06-23 04:34+0330\n"
+"POT-Creation-Date: 2026-06-24 04:39+0330\n"
+"PO-Revision-Date: 2026-06-24 04:41+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -187,7 +187,7 @@ msgstr "بازاریابی"
 msgid "Customizations"
 msgstr "سفارشی‌سازی"
 
-#: inc/Addons/Addons.php:235 inc/App/Integration/RankMath.php:144
+#: inc/Addons/Addons.php:235 inc/App/Integration/RankMath.php:171
 msgid "SEO"
 msgstr "سئو"
 
@@ -719,13 +719,25 @@ msgstr "محدود کردن تلاش‌های ورود"
 msgid "ParsiDate integration for Limit Login Attempts Security"
 msgstr "هماهنگ‌سازی تاریخ پارسی با محدود کردن تلاش‌های ورود"
 
-#: inc/App/Integration/RankMath.php:139
+#: inc/App/Integration/RankMath.php:166
 msgid "Rank Math"
 msgstr "رنک‌مث"
 
-#: inc/App/Integration/RankMath.php:140
+#: inc/App/Integration/RankMath.php:167
 msgid "ParsiDate integration for Rank Math"
 msgstr "هماهنگ‌سازی تاریخ پارسی با رنک‌مث"
+
+#: inc/App/Integration/SchemaPro.php:33
+msgid "Schema Pro"
+msgstr "اسکیما پرو"
+
+#: inc/App/Integration/SchemaPro.php:34
+msgid "ParsiDate integration for Schema Pro"
+msgstr "هماهنگ‌سازی تاریخ پارسی با اسکیما پرو"
+
+#: inc/App/Integration/SchemaPro.php:38
+msgid "Schema"
+msgstr "اسکیما"
 
 #: inc/App/Integration/WooCommerce.php:119
 msgid "<strong>Phone number</strong> is invalid."
