@@ -4,8 +4,8 @@ if ( ! function_exists( 'parsidate' ) ) {
    * Convert gregorian datetime to persian datetime
    *
    * @param mixed $format Format
-   * @param string $dateTime gregorian datetime
-   * @param bool|string $lang true or per: convert numbers to persian, false or eng: don't convert numbers
+   * @param string $dateTime Gregorian datetime
+   * @param bool|string $lang true or per: convert numbers to Persian, false or eng: don't convert numbers
    *
    * @return string
    */
