@@ -20,10 +20,7 @@ class AppAssets {
     add_action( 'admin_print_styles-plugin-editor.php', [ $this, 'fixCodeEditor' ] );
     add_action( 'admin_print_styles-theme-editor.php', [ $this, 'fixCodeEditor' ] );
     add_action( 'wpp_jalali_datepicker_enqueued', [ $this, 'localizeMonthsName' ] );
-
-    if ( Settings::get( 'persian_date', false ) && version_compare( get_bloginfo( 'version' ), '5.0.0', '>=' ) ) {
-      add_action( 'enqueue_block_editor_assets', [ $this, 'blockEditorAssets' ] );
-    }
+    add_action( 'enqueue_block_editor_assets', [ $this, 'blockEditorAssets' ] );
   }
 
   /**
@@ -42,6 +39,10 @@ class AppAssets {
    * @author              Alireza Dabiri Nejad / Alirdn
    */
   public function blockEditorAssets(): void {
+    if ( get_user_locale() === 'en_US' || ! Settings::get( 'persian_date', false ) || ! version_compare( get_bloginfo( 'version' ), '5.0.0', '>=' ) ) {
+      return;
+    }
+
     $pluginVersion = Assets::getVersion();
 
     wp_enqueue_script( 'wpp_gutenberg_jalali_calendar_editor_scripts',
