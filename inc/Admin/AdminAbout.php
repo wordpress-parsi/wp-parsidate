@@ -374,7 +374,7 @@ class AdminAbout {
   }
 
   public function notice(): void {
-    if ( get_locale() !== 'fa_IR' ) {
+    if ( get_user_locale() !== 'fa_IR' ) {
       Notice::add( self::tab, esc_html__( 'The text of this page is in Persian.', 'wp-parsidate' ), 'warning' );
     }
   }
