@@ -124,6 +124,8 @@ final class NumberConverter {
    *
    * @param string $html
    * @param array<string,string> $protected
+   *
+   * @return string
    */
   private static function protectFragileBlocks( string $html, array &$protected ): string {
     $tags_pattern = implode( '|', array_map( 'preg_quote', self::PROTECTED_TAGS ) );
