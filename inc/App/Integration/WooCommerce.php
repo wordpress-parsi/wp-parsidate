@@ -76,10 +76,6 @@ class WooCommerce extends Addon {
 
       // WC_Order class, get_address_prop method, Filter: 'woocommerce_order_get_[billing|shipping]_[prop]'
       add_filter( 'woocommerce_order_get_shipping_phone', [ $this, 'fixPersianNumbersInPhone' ], 9999, 2 );
-      // @TODO: Sanitize or fix phone in block checkout page is a issue I cant fixed, We need add filter on phone for fix and validate in block type
-      // Footprint of phone sanitizing and validating in AbstractAddressSchema::sanitize_callback
-      // Fix persian number in phone field value in block type checkout page currently not worked
-      // WC_Validation::is_phone has error for Persian number in phone field
 
       if ( $this->getSetting( 'validate_postcode', false ) ) {
         add_filter( 'woocommerce_validate_postcode', [ $this, 'validatePostcode' ], 10, 3 );
@@ -87,6 +83,7 @@ class WooCommerce extends Addon {
 
       if ( $this->getSetting( 'validate_phone', false ) ) {
         add_action( 'woocommerce_after_checkout_validation', [ $this, 'validatePhoneNumber' ], 10, 2 );
+        add_filter( 'woocommerce_validate_phone', [ $this, 'validatePhone' ], 10, 3 );
       }
     }
   }
@@ -118,6 +115,23 @@ class WooCommerce extends Addon {
       Number::toEnglish( wc_get_post_data_by_key( 'billing_phone' ) ) ) ) {
       $errors->add( 'invalid_phone', __( '<strong>Phone number</strong> is invalid.', 'wp-parsidate' ) );
     }
+  }
+
+  /**
+   * Validate phone number
+   *
+   * @param bool $valid Whether the phone number passed the default validation.
+   * @param string $phone The phone number being validated.
+   * @param string|null $country The country code the phone is being validated for, or null if unknown.
+   */
+  public function validatePhone( $valid, $phone, $country ): bool {
+    if ( $valid ) {
+      return $valid;
+    }
+
+    $phone = Number::toEnglish( $phone );
+
+    return (bool) preg_match( '/^(0|0098|\+98)?(9\d{9}|[1-8]\d{9,10})$/', $phone );
   }
 
   /**
