@@ -39,7 +39,7 @@ class AppAssets {
    * @author              Alireza Dabiri Nejad / Alirdn
    */
   public function blockEditorAssets(): void {
-    if ( get_user_locale() === 'en_US' || ! Settings::get( 'persian_date', false ) || ! version_compare( get_bloginfo( 'version' ), '5.0.0', '>=' ) ) {
+    if ( ! Settings::get( 'persian_date', false ) || ! version_compare( get_bloginfo( 'version' ), '5.0.0', '>=' ) ) {
       return;
     }
 
