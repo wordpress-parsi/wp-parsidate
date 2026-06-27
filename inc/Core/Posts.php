@@ -171,6 +171,10 @@ class Posts {
     return $where;
   }
 
+  /**
+   * Restrict posts to given date
+   * @return            void
+   */
   public function addMonthYearSelectPostFilter(): void {
     global $post_type, $post_status, $wpdb;
 
