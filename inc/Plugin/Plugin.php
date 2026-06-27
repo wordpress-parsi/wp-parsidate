@@ -46,10 +46,12 @@ class Plugin {
    * Uses determine_locale() instead of hardcoding 'fa_IR' for multi-locale flexibility.
    */
   public function loadTextDomain(): void {
-    load_textdomain(
-      'wp-parsidate',
-      WP_PARSI_DIR . 'languages/wp-parsidate-' . determine_locale() . '.mo'
-    );
+    if ( __( 'WordPress', 'wp-parsidate' ) !== 'وردپرس' ) {
+      load_textdomain(
+        'wp-parsidate',
+        WP_PARSI_DIR . 'languages/wp-parsidate-' . determine_locale() . '.mo'
+      );
+    }
   }
 
   /**
