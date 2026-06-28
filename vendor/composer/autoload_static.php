@@ -12,22 +12,22 @@ class ComposerStaticInit28b7438669d760234aa27dffd45581b6
     );
 
     public static $prefixLengthsPsr4 = array (
-        'e' => 
+        'e' =>
         array (
             'enshrined\\svgSanitize\\' => 22,
         ),
-        'W' => 
+        'W' =>
         array (
             'WPParsidate\\' => 12,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'enshrined\\svgSanitize\\' => 
+        'enshrined\\svgSanitize\\' =>
         array (
             0 => __DIR__ . '/..' . '/enshrined/svg-sanitize/src',
         ),
-        'WPParsidate\\' => 
+        'WPParsidate\\' =>
         array (
             0 => __DIR__ . '/../..' . '/inc',
         ),
@@ -57,11 +57,14 @@ class ComposerStaticInit28b7438669d760234aa27dffd45581b6
         'WPParsidate\\App\\Core\\FixDates' => __DIR__ . '/../..' . '/inc/App/Core/FixDates.php',
         'WPParsidate\\App\\Core\\FixTitle' => __DIR__ . '/../..' . '/inc/App/Core/FixTitle.php',
         'WPParsidate\\App\\Integration\\ACF' => __DIR__ . '/../..' . '/inc/App/Integration/ACF.php',
+        'WPParsidate\\App\\Integration\\BulkyBulkEditProductsWooCommerce' => __DIR__ . '/../..' . '/inc/App/Integration/BulkyBulkEditProductsWooCommerce.php',
         'WPParsidate\\App\\Integration\\EDD' => __DIR__ . '/../..' . '/inc/App/Integration/EDD.php',
         'WPParsidate\\App\\Integration\\Elementor' => __DIR__ . '/../..' . '/inc/App/Integration/Elementor.php',
         'WPParsidate\\App\\Integration\\HookDeactivator' => __DIR__ . '/../..' . '/inc/App/Integration/HookDeactivator.php',
         'WPParsidate\\App\\Integration\\Integration' => __DIR__ . '/../..' . '/inc/App/Integration/Integration.php',
+        'WPParsidate\\App\\Integration\\LimitLoginAttempts' => __DIR__ . '/../..' . '/inc/App/Integration/LimitLoginAttempts.php',
         'WPParsidate\\App\\Integration\\RankMath' => __DIR__ . '/../..' . '/inc/App/Integration/RankMath.php',
+        'WPParsidate\\App\\Integration\\SchemaPro' => __DIR__ . '/../..' . '/inc/App/Integration/SchemaPro.php',
         'WPParsidate\\App\\Integration\\WooCommerce' => __DIR__ . '/../..' . '/inc/App/Integration/WooCommerce.php',
         'WPParsidate\\App\\Integration\\WooCommerce\\WcGateways' => __DIR__ . '/../..' . '/inc/App/Integration/WooCommerce/WcGateways.php',
         'WPParsidate\\App\\Integration\\WooCommerce\\WooCommerceCitySelect' => __DIR__ . '/../..' . '/inc/App/Integration/WooCommerce/WooCommerceCitySelect.php',
@@ -82,6 +85,7 @@ class ComposerStaticInit28b7438669d760234aa27dffd45581b6
         'WPParsidate\\Helper\\Nonce' => __DIR__ . '/../..' . '/inc/Helper/Nonce.php',
         'WPParsidate\\Helper\\Notice' => __DIR__ . '/../..' . '/inc/Helper/Notice.php',
         'WPParsidate\\Helper\\Number' => __DIR__ . '/../..' . '/inc/Helper/Number.php',
+        'WPParsidate\\Helper\\NumberConverter' => __DIR__ . '/../..' . '/inc/Helper/NumberConverter.php',
         'WPParsidate\\Helper\\Param' => __DIR__ . '/../..' . '/inc/Helper/Param.php',
         'WPParsidate\\Helper\\Sanitizing' => __DIR__ . '/../..' . '/inc/Helper/Sanitizing.php',
         'WPParsidate\\Helper\\Strip' => __DIR__ . '/../..' . '/inc/Helper/Strip.php',
