@@ -14,7 +14,7 @@
     "wa-build-js": "webpack --config webpack.config.js"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2",
+    "concurrently": "^9.2.3",
     "extract-loader": "^4.0.3",
     "sass": "^1.85.1",
     "sass-loader": "^16.0.5",
