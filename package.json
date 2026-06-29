@@ -11,10 +11,9 @@
     "parsidate-vazir-font-compressed-css": "sass --watch assets/scss/vazir-font.scss:assets/css-admin/vazir-font.min.css --style compressed",
     "parsidate-dashboard-css": "sass --watch assets/scss/dashboard.scss:assets/css-admin/dashboard.css",
     "parsidate-dashboard-compressed-css": "sass --watch assets/scss/dashboard.scss:assets/css-admin/dashboard.min.css --style compressed",
-    "wa-build-js": "webpack --config webpack.config.js"
+    "parsidate-build-js": "webpack --config webpack.config.js"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2",
     "extract-loader": "^4.0.3",
     "sass": "^1.85.1",
     "sass-loader": "^16.0.5",
