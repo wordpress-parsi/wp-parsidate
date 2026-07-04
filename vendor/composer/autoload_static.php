@@ -7,6 +7,8 @@ namespace Composer\Autoload;
 class ComposerStaticInit28b7438669d760234aa27dffd45581b6
 {
     public static $files = array (
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
+        '23c18046f52bef3eea034657bafda50f' => __DIR__ . '/..' . '/symfony/polyfill-php81/bootstrap.php',
         '3e1df44de4f7879e6b10df590e5da5e8' => __DIR__ . '/../..' . '/inc/Functions/Core.php',
         'eb3ec05cc67ff2c8e2ab86e17065d234' => __DIR__ . '/../..' . '/inc/Functions/Old.php',
     );
@@ -20,6 +22,11 @@ class ComposerStaticInit28b7438669d760234aa27dffd45581b6
         array (
             'WPParsidate\\' => 12,
         ),
+        'S' =>
+        array (
+            'Symfony\\Polyfill\\Php81\\' => 23,
+            'Symfony\\Polyfill\\Php80\\' => 23,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -31,10 +38,28 @@ class ComposerStaticInit28b7438669d760234aa27dffd45581b6
         array (
             0 => __DIR__ . '/../..' . '/inc',
         ),
+        'Symfony\\Polyfill\\Php81\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php81',
+        ),
+        'Symfony\\Polyfill\\Php80\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
+        ),
     );
 
     public static $classMap = array (
+        'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
+        'CURLStringFile' => __DIR__ . '/..' . '/symfony/polyfill-php81/Resources/stubs/CURLStringFile.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
+        'ReturnTypeWillChange' => __DIR__ . '/..' . '/symfony/polyfill-php81/Resources/stubs/ReturnTypeWillChange.php',
+        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'Symfony\\Polyfill\\Php80\\Php80' => __DIR__ . '/..' . '/symfony/polyfill-php80/Php80.php',
+        'Symfony\\Polyfill\\Php80\\PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/PhpToken.php',
+        'Symfony\\Polyfill\\Php81\\Php81' => __DIR__ . '/..' . '/symfony/polyfill-php81/Php81.php',
+        'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+        'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'WPParsidate\\Addons\\Addon' => __DIR__ . '/../..' . '/inc/Addons/Addon.php',
         'WPParsidate\\Addons\\Addons' => __DIR__ . '/../..' . '/inc/Addons/Addons.php',
         'WPParsidate\\Admin\\Admin' => __DIR__ . '/../..' . '/inc/Admin/Admin.php',

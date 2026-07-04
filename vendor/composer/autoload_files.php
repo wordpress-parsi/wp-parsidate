@@ -6,6 +6,8 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'a4a119a56e50fbb293281d9a48007e0e' => $vendorDir . '/symfony/polyfill-php80/bootstrap.php',
+    '23c18046f52bef3eea034657bafda50f' => $vendorDir . '/symfony/polyfill-php81/bootstrap.php',
     '3e1df44de4f7879e6b10df590e5da5e8' => $baseDir . '/inc/Functions/Core.php',
     'eb3ec05cc67ff2c8e2ab86e17065d234' => $baseDir . '/inc/Functions/Old.php',
 );
