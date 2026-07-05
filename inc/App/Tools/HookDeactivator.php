@@ -11,7 +11,7 @@
  * Example: wp_date,acf_format_date
  */
 
-namespace WPParsidate\App\Integration;
+namespace WPParsidate\App\Tools;
 
 use WPParsidate\Helper\{Cache, WordPress};
 use WPParsidate\Settings\Settings;
@@ -20,7 +20,7 @@ class HookDeactivator {
   private const sectionID = 'hook-deactivator';
 
   public function __construct() {
-    add_filter( 'wp_parsidate_integration_settings_sections', [ $this, 'addSectionSettings' ] );
+    add_filter( 'wp_parsidate_tools_settings_sections', [ $this, 'addSectionSettings' ] );
   }
 
   /**

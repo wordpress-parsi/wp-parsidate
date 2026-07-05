@@ -1,6 +1,6 @@
 <?php
 
-use WPParsidate\App\Integration\HookDeactivator;
+use WPParsidate\App\Tools\HookDeactivator;
 use WPParsidate\Helper\{Date, Number, WooCommerce, WordPress};
 use WPParsidate\Settings\Settings;
 

@@ -7,7 +7,7 @@
 
 namespace WPParsidate\App\Core;
 
-use WPParsidate\App\Integration\HookDeactivator;
+use WPParsidate\App\Tools\HookDeactivator;
 use WPParsidate\Core\Names;
 use WPParsidate\Helper\Number;
 use WPParsidate\Helper\WordPress;

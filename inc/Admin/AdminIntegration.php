@@ -40,7 +40,7 @@ class AdminIntegration {
     if ( self::$settings === null ) {
       self::$settings = array(
         'title'    => esc_html__( 'Integration settings', 'wp-parsidate' ),
-        'desc'     => esc_html__( 'Global plugin settings', 'wp-parsidate' ),
+        'desc'     => esc_html__( 'ParsiDate integration settings', 'wp-parsidate' ),
         'sections' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_sections', [] )
       );
     }

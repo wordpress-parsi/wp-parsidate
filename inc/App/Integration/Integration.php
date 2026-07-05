@@ -21,8 +21,5 @@ class Integration {
 
     // Security
     new LimitLoginAttempts();
-
-    // Builtin integration
-    new HookDeactivator();
   }
 }

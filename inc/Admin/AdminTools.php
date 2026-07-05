@@ -14,6 +14,8 @@ class AdminTools {
     add_filter( 'wp_parsidate_menus', [ $this, 'addMenu' ] );
     add_filter( 'wp_parsidate_' . self::tab . '_settings', [ $this, 'settings' ] );
     add_filter( 'wp_parsidate_settings', [ $this, 'allSettings' ] );
+    add_filter( 'wp_parsidate_' . self::tab . '_tab_display_notice', '__return_false' );
+    add_filter( 'wp_parsidate_' . self::tab . '_tab_content_display_notice', '__return_true' );
   }
 
   public function addMenu( $menus ) {
@@ -36,7 +38,8 @@ class AdminTools {
       self::$settings = array(
         'title'    => esc_html__( 'Tools settings', 'wp-parsidate' ),
         'desc'     => esc_html__( 'Advanced tools', 'wp-parsidate' ),
-        'settings' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_options', [] )
+        'sections' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_sections', [] )
+        //'settings' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_options', [] )
       );
     }
 
