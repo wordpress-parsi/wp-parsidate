@@ -9,7 +9,7 @@ namespace WPParsidate\Widget;
 
 defined( 'ABSPATH' ) || exit;
 
-use WPParsidate\Helper\{Assets, Cache, Param};
+use WPParsidate\Helper\{Assets, Cache, JSON, Param, Templates};
 
 class DashboardWidget {
   public function __construct() {
@@ -20,7 +20,7 @@ class DashboardWidget {
     add_action( 'wp_dashboard_setup', [ $this, 'addDashboardWidget' ], 1 );
     add_action( 'wp_ajax_wpp-dashboard-widgets', [ $this, 'ajaxDashboardWidgets' ] );
     //@TODO Change ajax action to unique name
-    add_action( 'wp_ajax_fetch_sponsorship_slides', [ $this, 'fetchSponsorshipSlides' ] );
+    //add_action( 'wp_ajax_fetch_sponsorship_slides', [ $this, 'fetchSponsorshipSlides' ] );
     add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
   }
 
@@ -98,7 +98,7 @@ class DashboardWidget {
    */
   public function dashboardWidgetContent(): void {
     ?>
-    <div id="sponsorship-guide">
+    <div id="wpp-sponsorship-guide">
       <div class="question">
         <span class="dashicons dashicons-info-outline"></span>
         <span><?php esc_html_e( 'What is this?', 'wp-parsidate' ); ?></span>
@@ -318,7 +318,7 @@ class DashboardWidget {
     wp_enqueue_script( 'wpp_dashboard', WP_PARSI_URL . "assets/js-admin/dashboard$debugName.js",
       array( 'jquery', 'keen-slider' ), WP_PARSI_VER, true );
 
-    wp_localize_script( 'wpp_dashboard', 'sponsors', $this->getMockedSponsors() );
+    wp_localize_script( 'wpp_dashboard', 'wpp_dashboard', [ 'sponsors' => $this->getMockedSponsors() ] );
   }
 
   /**
@@ -330,8 +330,12 @@ class DashboardWidget {
    *
    */
   private function getMockedSponsors(): array {
-    $sponsors     = array();
-    $all_sponsors = array(
+    $sponsors    = array();
+    $allSponsors = $this->getRemoteSponsors();
+    if ( empty( $allSponsors ) ) {
+      $allSponsors = $this->getDataSponsors();
+    }
+    /*$all_sponsors = array(
       array(
         'image_url' => WP_PARSI_URL . 'assets/images/sponsors/files-ir.jpg',
         'image_alt' => 'Files.ir',
@@ -344,15 +348,57 @@ class DashboardWidget {
         'link'      => 'https://hostiran.net/host/?utm_source=parsidate&utm_medium=banner&utm_campaign=awareness',
         'end_date'  => '2026-11-21',
       )
-    );
-    $today        = date( 'Y-m-d' );
-    foreach ( $all_sponsors as $sponsor ) {
+    );*/
+    $today = date( 'Y-m-d' );
+    foreach ( $allSponsors as $sponsor ) {
       if ( strtotime( $sponsor['end_date'] ) > strtotime( $today ) ) {
         $sponsors[] = $sponsor;
       }
     }
 
     return $sponsors;
+  }
+
+  private function getRemoteSponsors(): array {
+    $cache = Cache::get( 'remote_dashboard_sponsors' );
+    if ( is_array( $cache ) ) {
+      return $cache;
+    }
+
+    $sponsors = [];
+    $urls     = [
+      'https://raw.githubusercontent.com/wordpress-parsi/wp-parsidate/refs/heads/master/inc/Data/sponsors.json'
+    ];
+
+    foreach ( $urls as $url ) {
+      $response = wp_remote_get( $url, [ 'timeout' => 3 ] );
+
+      if ( ! is_wp_error( $response ) ) {
+        $data = JSON::decode( wp_remote_retrieve_body( $response ), true );
+        $data = is_array( $data ) ? $data : [];
+
+        if ( ! empty( $data ) ) {
+          $sponsors = $data;
+          break;
+        }
+      }
+    }
+
+    Cache::set( 'remote_dashboard_sponsors', $sponsors, DAY_IN_SECONDS );
+
+    return $sponsors;
+  }
+
+  private function getDataSponsors(): array {
+    $path = Templates::pathCorrection( WP_PARSI_DIR . '/inc/Data/sponsors.json' );
+
+    if ( ! file_exists( $path ) ) {
+      return [];
+    }
+
+    $sponsors = JSON::decode( file_get_contents( $path ), true );
+
+    return is_array( $sponsors ) ? $sponsors : [];
   }
 
   /**

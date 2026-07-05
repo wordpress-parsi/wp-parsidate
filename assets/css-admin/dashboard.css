@@ -61,13 +61,13 @@
   width: 100%;
   height: auto;
 }
-#wpp_dashboard_primary #sponsorship-guide {
+#wpp_dashboard_primary #wpp-sponsorship-guide {
   position: absolute;
   z-index: 999;
   top: 5px;
   left: 5px;
 }
-#wpp_dashboard_primary #sponsorship-guide .question {
+#wpp_dashboard_primary #wpp-sponsorship-guide .question {
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -84,26 +84,26 @@
   position: absolute;
   left: 0;
 }
-#wpp_dashboard_primary #sponsorship-guide .question span:nth-child(2) {
+#wpp_dashboard_primary #wpp-sponsorship-guide .question span:nth-child(2) {
   width: 0;
   transition: ease-in-out 0.3s;
   margin: 0;
   overflow: hidden;
 }
-#wpp_dashboard_primary #sponsorship-guide .question:hover {
+#wpp_dashboard_primary #wpp-sponsorship-guide .question:hover {
   width: auto;
   height: auto;
   padding: 3px 0 3px 10px;
   border-radius: 36px;
   corner-shape: squircle;
 }
-#wpp_dashboard_primary #sponsorship-guide .question:hover span {
+#wpp_dashboard_primary #wpp-sponsorship-guide .question:hover span {
   display: inline;
   width: auto;
   margin-right: 5px;
   white-space: nowrap;
 }
-#wpp_dashboard_primary #sponsorship-guide ul {
+#wpp_dashboard_primary #wpp-sponsorship-guide ul {
   display: none;
   position: relative;
   list-style: none;
@@ -116,7 +116,7 @@
   corner-shape: squircle;
   box-shadow: 0 0 8px #444;
 }
-#wpp_dashboard_primary #sponsorship-guide ul:before {
+#wpp_dashboard_primary #wpp-sponsorship-guide ul:before {
   content: "";
   position: absolute;
   border-color: rgba(194, 225, 245, 0);
@@ -128,15 +128,15 @@
   left: 14px;
   z-index: 1;
 }
-#wpp_dashboard_primary #sponsorship-guide ul.show {
+#wpp_dashboard_primary #wpp-sponsorship-guide ul.show {
   display: block;
   opacity: 1;
 }
-#wpp_dashboard_primary #sponsorship-guide ul li {
+#wpp_dashboard_primary #wpp-sponsorship-guide ul li {
   margin: 0;
   padding: 5px 0;
 }
-#wpp_dashboard_primary #sponsorship-guide ul li a {
+#wpp_dashboard_primary #wpp-sponsorship-guide ul li a {
   text-decoration: none;
   background: #fff;
   padding: 5px 10px;
@@ -144,7 +144,7 @@
   corner-shape: squircle;
   transition: background 0.3s;
 }
-#wpp_dashboard_primary #sponsorship-guide ul li a:hover {
+#wpp_dashboard_primary #wpp-sponsorship-guide ul li a:hover {
   background: #f0f0f0;
 }
 #wpp_dashboard_primary .navigation-wrapper {
