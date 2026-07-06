@@ -36,7 +36,8 @@ class AdminCore {
       self::$settings = array(
         'title'    => esc_html__( 'Core settings', 'wp-parsidate' ),
         'desc'     => esc_html__( 'Global plugin settings', 'wp-parsidate' ),
-        'settings' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_options', [] )
+        'sections' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_sections', [] )
+        //'settings' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_options', [] )
       );
     }
 
