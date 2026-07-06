@@ -140,7 +140,7 @@ abstract class Addon {
 
   public function registerMenu(): void {
     if ( $this->getInfo( 'has_page', false ) && $this->isActivated() ) {
-      add_filter( 'wp_parsidate_menus', [ $this, 'addMenu' ] );
+      add_filter( 'wp_parsidate_menus', [ $this, 'addMenu' ], 12 );
 
       if ( $this->getInfo( 'content_header', false ) ) {
         add_action( 'wp_parsidate_' . $this->addonID . '_tab_header',
