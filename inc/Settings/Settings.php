@@ -50,10 +50,9 @@ class Settings {
     $savedOptions = is_array( $savedOptions ) ? $savedOptions : [];
     $now          = current_time( 'timestamp' );
 
+    $newOptions = wp_parse_args( $options, $savedOptions );
     // Prevent from save option error
-    $savedOptions['save_options_time_123456'] = ( Validating::isTimeStamp( $now ) ? $now : time() ) + random_int( 999,
-        9999 );
-    $newOptions                               = wp_parse_args( $options, $savedOptions );
+    $newOptions['save_options_time_123456'] = ( Validating::isTimeStamp( $now ) ? $now : time() ) + random_int( 999, 9999 );
 
     Cache::delete( 'options_' . $optionsName );
 
