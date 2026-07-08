@@ -37,7 +37,7 @@ class Posts {
 
     $pd = WPP_ParsiDate::getInstance();
 
-    $m      = $wp_query->query_vars['m'] ?? '';
+    $m      = sanitize_text_field( $wp_query->query_vars['m'] ?? '' );
     $hour   = $wp_query->query_vars['hour'] ?? '';
     $minute = $wp_query->query_vars['minute'] ?? '';
     $second = $wp_query->query_vars['second'] ?? '';
@@ -68,6 +68,13 @@ class Posts {
         $second = substr( $m, 12, 2 );
       }
     }
+
+    $hour   = (int) $hour;
+    $minute = (int) $minute;
+    $second = (int) $second;
+    $year   = (int) $year;
+    $month  = (int) $month;
+    $day    = (int) $day;
 
     if ( empty( $year ) || $year > 1700 ) {
       return $where;
@@ -164,7 +171,7 @@ class Posts {
     global $wp_query;
 
     if ( isset( $_GET['mfa'] ) && Param::get( 'mfa' ) !== '0' ) {
-      $wp_query->query_vars['m'] = Param::get( 'mfa' );
+      $wp_query->query_vars['m'] = Param::get( 'mfa', 0, FILTER_SANITIZE_NUMBER_INT );
       $where                     = self::getPostsWhere( $where, $wp_query );
     }
 
