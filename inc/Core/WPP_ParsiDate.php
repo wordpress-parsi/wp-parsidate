@@ -228,7 +228,7 @@ class WPP_ParsiDate {
    *
    * @return array
    */
-  function gregorian_to_persian( $gy, $gm, $gd ) {
+  public function gregorian_to_persian( $gy, $gm, $gd ): array {
     $dayOfYear = $this->g_days_sum_month[ (int) $gm ] + $gd;
 
     if ( $this->IsLeapYear( $gy ) and $gm > 2 ) {
