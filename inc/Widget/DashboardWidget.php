@@ -19,34 +19,7 @@ class DashboardWidget {
     add_filter( 'dashboard_secondary_feed', [ $this, 'changeDashboardSecondaryFeedUrl' ], 999 );
     add_action( 'wp_dashboard_setup', [ $this, 'addDashboardWidget' ], 1 );
     add_action( 'wp_ajax_wpp-dashboard-widgets', [ $this, 'ajaxDashboardWidgets' ] );
-    //@TODO Change ajax action to unique name
-    //add_action( 'wp_ajax_fetch_sponsorship_slides', [ $this, 'fetchSponsorshipSlides' ] );
     add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
-  }
-
-  /**
-   * Fetch the sponsors banners
-   *
-   * @sicne 5.1.0
-   * @return void
-   */
-  public function fetchSponsorshipSlides(): void {
-    $sponsors_cache = Cache::get( 'sponsors_dashboard' );
-
-    if ( $sponsors_cache ) {
-      wp_send_json_success( json_decode( $sponsors_cache, true ) );
-    }
-
-    $response = wp_remote_get( 'https://wp-parsi.com/wp-json/sponsorship/v1/sponsors/', [ 'timeout' => 2 ] );
-
-    if ( is_wp_error( $response ) ) {
-      wp_send_json_error( 'Error fetching slides' );
-    }
-
-    $slides = wp_remote_retrieve_body( $response );
-
-    Cache::set( 'sponsors_dashboard', $slides, WP_PARSI_DEBUG_MODE ? MINUTE_IN_SECONDS * 10 : DAY_IN_SECONDS );
-    wp_send_json_success( json_decode( $slides, true ) );
   }
 
   /**
