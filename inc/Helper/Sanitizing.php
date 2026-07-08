@@ -31,7 +31,7 @@ class Sanitizing {
    */
   public static function clean( $value ) {
     if ( is_array( $value ) ) {
-      return array_map( array( 'Sanitizing', 'clean' ), $value );
+      return array_map( array( '\WPParsidate\Helper\Sanitizing', 'clean' ), $value );
     }
 
     return is_scalar( $value ) ? sanitize_text_field( $value ) : $value;
