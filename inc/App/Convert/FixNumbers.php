@@ -22,7 +22,7 @@ class FixNumbers {
     }
 
     if ( Settings::get( 'conv_title', false ) ) {
-      add_filter( 'the_title', [ $this, 'changeNumbersToPersian' ], 1000 );
+      add_filter( 'the_title', [ $this, 'changeNumbersToPersian' ], 0 );
     }
 
     if ( Settings::get( 'conv_contents', false ) ) {
