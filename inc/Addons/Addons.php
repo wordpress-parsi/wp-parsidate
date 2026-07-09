@@ -40,7 +40,7 @@ class Addons {
 
   public function flushRewriteRules(): void {
     if ( AdminPages::isSettingPage() && Param::get( 'tab' ) === self::tab && Param::get( 'addons-refreshed' ) === '1' ) {
-      flush_rewrite_rules();
+      //flush_rewrite_rules();
       wp_safe_redirect( AdminPages::link( [ 'tab' => self::tab ] ) );
       exit();
     }

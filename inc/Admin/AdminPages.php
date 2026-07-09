@@ -16,7 +16,7 @@ class AdminPages {
     add_action( 'wp_parsidate_header', [ $this, 'pageHeader' ] );
     add_action( 'wp_parsidate_content', [ $this, 'pageContent' ] );
     add_action( 'wp_parsidate_footer', [ $this, 'pageFooter' ] );
-    add_action( 'admin_footer', [ $this, 'flushRewriteRules' ] );
+    //add_action( 'admin_footer', [ $this, 'flushRewriteRules' ] );
   }
 
   public function flushRewriteRules(): void {
