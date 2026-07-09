@@ -11,6 +11,7 @@ class Integration {
 
     // Customizations
     new ACF();
+    new JetEngine();
 
     // SEO
     new RankMath();
