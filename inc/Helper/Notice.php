@@ -125,7 +125,7 @@ class Notice {
   public static function html( string $type, string $message, ?string $linkTitle = '', ?string $link = '' ): string {
     $type = self::getType( $type );
 
-    $link = $link && $linkTitle ? '<a href="' . $link . '" ' . ( Validating::isExternalLink( $link ) ? 'target="_blank"' : '' ) . ' class="' . TELIGRO_CLASS_PREFIX . 'notice-link">' . $linkTitle . '</a>' : '';
+    $link = $link && $linkTitle ? '<a href="' . $link . '" ' . ( Validating::isExternalLink( $link ) ? 'target="_blank"' : '' ) . ' class="' . WP_PARSI_CLASS_PREFIX . 'notice-link">' . $linkTitle . '</a>' : '';
 
     return '<div class="' . WP_PARSI_CLASS_PREFIX . 'notice ' . WP_PARSI_CLASS_PREFIX . 'notice-' . $type . '" ><div>' . self::getIcon( $type ) . '<p>' . $message . '</p></div>' . $link . '</div>';
   }
