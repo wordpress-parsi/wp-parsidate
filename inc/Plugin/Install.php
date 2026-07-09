@@ -96,6 +96,11 @@ class Install {
       }
     }
 
+    // Delete old setting option in DB
+    if ( ! empty( $oldSettings ) ) {
+      delete_option( 'wpp_settings' );
+    }
+
     update_option( WP_PARSI_KEY . '_plugin_version', $currentVersion, false );
   }
 
