@@ -264,6 +264,10 @@ final class NumberConverter {
 
     while ( $parent instanceof DOMNode ) {
       if ( $parent instanceof DOMElement ) {
+        if ( ! is_string( $parent->tagName ) ) {
+          return true;
+        }
+
         $tag = strtolower( $parent->tagName );
 
         if ( in_array( $tag, self::SKIP_TEXT_INSIDE_TAGS, true ) ) {
