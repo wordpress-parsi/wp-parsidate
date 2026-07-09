@@ -172,6 +172,17 @@ class FeedReader {
     };
     add_filter( 'http_request_timeout', $timeoutFunc );
 
+    $requestUrl = $this->args['url'];
+    add_action( 'wp_feed_cache_transient_lifetime',
+      function ( $cacheTime, $url ) use ( $requestUrl ) {
+        if ( $url === $requestUrl || ! Validating::isUrl( $url ) ) {
+          return 1;
+        }
+
+        return $cacheTime;
+      }
+      , 10, 2 );
+
     $feed = fetch_feed( $this->args['url'] );
 
     remove_filter( 'http_request_timeout', $timeoutFunc );
