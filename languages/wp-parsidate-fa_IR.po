@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-10 00:15+0330\n"
-"PO-Revision-Date: 2026-07-10 00:21+0330\n"
+"POT-Creation-Date: 2026-07-10 14:16+0330\n"
+"PO-Revision-Date: 2026-07-10 14:17+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -586,7 +586,7 @@ msgstr "انتخاب‌گر تاریخ شمسی (جلالی)"
 msgid "Save dates in Jalali format (Not recommended)"
 msgstr "ذخیره‌سازی تاریخ بصورت شمسی (توصیه نمی‌شود)"
 
-#: inc/App/Integration/ACF.php:178
+#: inc/App/Integration/ACF.php:178 inc/App/Integration/JetEngine.php:149
 msgid "Meta"
 msgstr "متا"
 
@@ -698,41 +698,37 @@ msgstr "المنتور"
 msgid "ParsiDate integration for Elementor"
 msgstr "هماهنگ‌سازی تاریخ پارسی با المنتور"
 
-#: inc/App/Integration/JetEngine.php:85 inc/App/Integration/JetEngine.php:146
+#: inc/App/Integration/JetEngine.php:83 inc/App/Integration/JetEngine.php:144
 msgid "Jet Engine"
 msgstr "جت‌انجین"
 
-#: inc/App/Integration/JetEngine.php:86 inc/App/Integration/JetEngine.php:147
+#: inc/App/Integration/JetEngine.php:84 inc/App/Integration/JetEngine.php:145
 msgid "ParsiDate integration for Jet Engine"
 msgstr "هماهنگ‌سازی تاریخ پارسی با جت‌انجین"
 
-#: inc/App/Integration/JetEngine.php:91
+#: inc/App/Integration/JetEngine.php:89
 msgid "Meta date field conversion"
 msgstr "تبدیل فیلد متای تاریخ"
 
-#: inc/App/Integration/JetEngine.php:98
+#: inc/App/Integration/JetEngine.php:96
 msgid "Currently only \"Dynamic Field\" is supported."
 msgstr "در حال حاضر فقط «Dynamic Field» پشتیبانی می‌شود."
 
-#: inc/App/Integration/JetEngine.php:106
+#: inc/App/Integration/JetEngine.php:104
 msgid "Date field to Shamsi"
 msgstr "فیلد تاریخ به خورشیدی"
 
-#: inc/App/Integration/JetEngine.php:113
+#: inc/App/Integration/JetEngine.php:111
 msgid "Date format"
 msgstr "قالب تاریخ"
 
-#: inc/App/Integration/JetEngine.php:120
+#: inc/App/Integration/JetEngine.php:118
 msgid "Datetime field to Shamsi"
 msgstr "فیلد تاریخ-زمان به خورشیدی"
 
-#: inc/App/Integration/JetEngine.php:127
+#: inc/App/Integration/JetEngine.php:125
 msgid "Datetime format"
 msgstr "قالب تاریخ-زمان"
-
-#: inc/App/Integration/JetEngine.php:151 inc/App/Integration/SchemaPro.php:38
-msgid "Schema"
-msgstr "اسکیما"
 
 #: inc/App/Integration/LimitLoginAttempts.php:33
 msgid "Limit Login Attempts Security"
@@ -757,6 +753,22 @@ msgstr "اسکیما پرو"
 #: inc/App/Integration/SchemaPro.php:34
 msgid "ParsiDate integration for Schema Pro"
 msgstr "هماهنگ‌سازی تاریخ پارسی با اسکیما پرو"
+
+#: inc/App/Integration/SchemaPro.php:38
+msgid "Schema"
+msgstr "اسکیما"
+
+#: inc/App/Integration/UltimateMember.php:33
+msgid "Ultimate Member"
+msgstr "Ultimate Member"
+
+#: inc/App/Integration/UltimateMember.php:34
+msgid "ParsiDate integration for Ultimate Member"
+msgstr "هماهنگ‌سازی تاریخ پارسی با Ultimate Member"
+
+#: inc/App/Integration/UltimateMember.php:38
+msgid "User"
+msgstr "کاربر"
 
 #: inc/App/Integration/WooCommerce.php:115
 msgid "<strong>Phone number</strong> is invalid."
