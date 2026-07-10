@@ -19,8 +19,8 @@ class JetEngine extends Addon {
   public string $currentTab = 'integration';
 
   public function initAction(): void {
-//    add_filter( 'cx_term_meta/date', [ $this, 'metaToDate' ], 10, 3 );
-//    add_filter( 'jet-engine/custom-content-types/date', [ $this, 'metaToDate' ], 10, 3 );
+    //add_filter( 'cx_term_meta/date', [ $this, 'metaToDate' ], 10, 3 );
+    //add_filter( 'jet-engine/custom-content-types/date', [ $this, 'metaToDate' ], 10, 3 );
     add_filter( 'jet-engine/listings/dynamic-field/custom-value', [ $this, 'convertDateMeta' ], 10, 3 );
   }
 
@@ -62,8 +62,6 @@ class JetEngine extends Addon {
         $value = parsidate( $this->getSetting( 'datetime_format', 'j F Y, g:i a' ), $result, true );
       }
     }
-
-    //$value = parsidate();
 
     return $value;
   }
@@ -152,7 +150,7 @@ class JetEngine extends Addon {
       'cat'              => 'customizations',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [
-        'wp-schema-pro/wp-schema-pro.php' => array(
+        'jet-engine/jet-engine.php' => array(
           'is_wp_plugin'   => false,
           'is_free'        => false,
           'plugin_link'    => 'https://crocoblock.com/plugins/jetengine/',
