@@ -68,4 +68,12 @@
       }
     }
   }
+
+  a.wppd-button {
+    text-decoration: none !important;
+
+    &:hover, &:focus, &:active {
+      text-decoration: none !important;
+    }
+  }
 }
