@@ -42,6 +42,7 @@ class HTML {
     'currencyselect',
     'media',
     'addon',
+    'tinyaddon',
     'wpcolorpicker'
   ];
   // FAQ
@@ -718,6 +719,45 @@ class HTML {
     return '<h2 class="' . self::prefix . 'heading-2">' . $data['title'] . '</h2>';
   }
 
+  public static function tinyaddon( $data ): string {
+    if ( ! $data = self::checkData( $data ) ) {
+      return '';
+    }
+
+    $canActivate = isset( $data['can_activate'] ) && $data['can_activate'];
+    $class       = self::getclass( $data );
+    if ( ! $canActivate ) {
+      $class .= ' ' . self::prefix . 'addon-inactive';
+    }
+
+    $addon = '<div class="' . self::prefix . 'tiny-addon-wrap' . $class . '"><div class="' . self::prefix . 'title-image">';
+
+    if ( ! empty( $data['icon'] ) ) {
+      $addon .= '<div class="' . self::prefix . 'image-wrap">' . $data['icon'] . '</div>';
+    }
+
+    $addon .= '<span class="' . self::prefix . 'title">' . $data['title'] . '</span></div>';
+
+    if ( $canActivate ) {
+      $addon .= self::toggle( array(
+        'id'            => $data['id'],
+        'type'          => 'toggle',
+        'title'         => '',
+        'value'         => $data['force_enable'] ?: $data['value'],
+        'setting_value' => $data['force_enable'] ?: $data['setting_value'],
+        'attributes'    => $data['force_enable'] ? [ 'disabled' => 'disabled' ] : [],
+      ) );
+
+    } elseif ( ! empty( $data['action_link'] ) ) {
+      $addon .= '<a href="' . $data['action_link'] . '" ' . ( $data['action_link_external'] ? 'target="_blank"' : '' ) . ' class="' . self::prefix . 'action-link ' . self::prefix . 'button ' . self::prefix . 'button-secondary">' . $data['action_title'] . '</a>';
+
+    }
+
+    $addon .= '</div>';
+
+    return $addon;
+  }
+
   public static function addon( $data ): string {
     if ( ! $data = self::checkData( $data ) ) {
       return '';
@@ -750,7 +790,6 @@ class HTML {
         $addon .= $image;
       }
     }
-
 
     $addon .= '</div><div class="' . self::prefix . 'title-desc"><strong class="' . self::prefix . 'title">' . $data['title'] . '</strong>' .
               ( ! empty( $data['desc'] ) ? '<p class="' . self::prefix . 'desc">' . $data['desc'] . '</p>' : '' ) .

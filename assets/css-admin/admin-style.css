@@ -277,6 +277,12 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   background-color: #f3f3f3;
   outline: none;
 }
+.wp-parsidate-wrap a.wppd-button {
+  text-decoration: none !important;
+}
+.wp-parsidate-wrap a.wppd-button:hover, .wp-parsidate-wrap a.wppd-button:focus, .wp-parsidate-wrap a.wppd-button:active {
+  text-decoration: none !important;
+}
 .wp-parsidate-wrap input[type=text], .wp-parsidate-wrap input[type=email], .wp-parsidate-wrap input[type=url], .wp-parsidate-wrap input[type=tel], .wp-parsidate-wrap input[type=number], .wp-parsidate-wrap input[type=password], .wp-parsidate-wrap input[type=search] {
   background-color: white;
   color: #2B2B2B;
@@ -676,6 +682,48 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 0.5fr));
   gap: 20px;
+}
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap {
+  display: flex;
+  gap: 5px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #f3f3f3;
+  border-radius: 10px;
+  corner-shape: squircle;
+  overflow: hidden;
+  padding: 5px;
+}
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap.wppd-addon-inactive .wppd-image-wrap img, .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap.wppd-addon-inactive .wppd-image-wrap svg {
+  opacity: 0.5;
+  filter: grayscale(80%);
+}
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-image-wrap {
+  background-color: #f5f7f9;
+  background-image: linear-gradient(to right top, #ffffff, #fdfdfe, #fcfcfd, #fafafc, #f8f9fb, #f8f9fb, #f8f9fb, #f8f9fb, #fafafc, #fcfcfd, #fdfdfe, #ffffff);
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 5px;
+  corner-shape: squircle;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-title-image {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  min-width: 0;
+}
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-title-image .wppd-title {
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .wp-parsidate-wrap .wppd-addons-wrap .wppd-addon-wrap {
   display: flex;

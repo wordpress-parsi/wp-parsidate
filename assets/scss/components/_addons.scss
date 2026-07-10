@@ -18,6 +18,59 @@
       gap: 20px;
     }
 
+    // Tiny Addon
+    .wppd-tiny-addon-wrap {
+      display: flex;
+      gap: 5px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid variables.$border_color;
+      border-radius: 10px;
+      corner-shape: squircle;
+      overflow: hidden;
+      padding: 5px;
+
+      &.wppd-addon-inactive {
+        .wppd-image-wrap {
+          img, svg {
+            opacity: 0.5;
+            filter: grayscale(80%);
+          }
+        }
+      }
+
+      .wppd-image-wrap {
+        background-color: variables.$background_side;
+        background-image: linear-gradient(to right top, #ffffff, #fdfdfe, #fcfcfd, #fafafc, #f8f9fb, #f8f9fb, #f8f9fb, #f8f9fb, #fafafc, #fcfcfd, #fdfdfe, #ffffff);
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        border-radius: 5px;
+        corner-shape: squircle;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .wppd-title-image {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
+        min-width: 0;
+
+        .wppd-title {
+          display: inline-block;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+    }
+
+    // Addon
     .wppd-addon-wrap {
       display: flex;
       flex-direction: column;

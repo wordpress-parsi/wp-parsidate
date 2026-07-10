@@ -20,6 +20,7 @@ class Addons {
     add_filter( 'wp_parsidate_settings_submit_button_title', [ $this, 'changeSubmitButtonTitle' ], 10, 2 );
     add_filter( 'wp_parsidate_save_settings_success_message', [ $this, 'saveMessage' ], 10, 2 );
     add_filter( 'wp_parsidate_dashboard_custom_links', [ $this, 'addDashboardLink' ] );
+    add_filter( 'wp_parsidate_addons_page_cat_title', [ $this, 'changeAddonCatTitle' ], 10, 2 );
     add_action( 'wp_parsidate_admin_init', [ $this, 'addRefreshNotice' ], 25 );
     add_action( 'admin_init', [ $this, 'flushRewriteRules' ] );
   }
@@ -77,6 +78,14 @@ class Addons {
     return $message;
   }
 
+  public function changeAddonCatTitle( $title, $cat ) {
+    if ( $cat === 'integration' ) {
+      $title = esc_html__( 'Integration Addons', 'wp-parsidate' );
+    }
+
+    return $title;
+  }
+
   public function settings(): array {
     $addons    = apply_filters( 'wp_parsidate_addons', array() );
     $addonList = array();
@@ -92,9 +101,10 @@ class Addons {
         continue;
       }
 
+      $isRecommended        = $cat === 'recommended';
+      $iconSize             = $isRecommended ? 50 : 25;
       $tags                 = is_array( $addon['tags'] ) ? $addon['tags'] : [];
-      $icon                 = ! empty( $addon['icon'] ) && Assets::isSvgImageString( $addon['icon'] ) ? Assets::setSvgDimensions( $addon['icon'],
-        50 ) : '';
+      $icon                 = ! empty( $addon['icon'] ) && Assets::isSvgImageString( $addon['icon'] ) ? Assets::setSvgDimensions( $addon['icon'], $iconSize ) : '';
       $image                = ! empty( $addon['image'] ) && Validating::isUrl( $addon['image'] ) ? $addon['image'] : '';
       $imageLink            = ! empty( $addon['image_link'] ) && Validating::isUrl( $addon['image_link'] ) ? $addon['image_link'] : '';
       $moreInfo             = ! empty( $addon['more_info_link'] ) && Validating::isUrl( $addon['more_info_link'] ) ? $addon['more_info_link'] : '';
@@ -102,7 +112,7 @@ class Addons {
       $canActivate          = empty( $addon['requires_plugins'] );
       $requirePluginsActive = 0;
       $actionLink           = '';
-      $actionTitle          = esc_html__( 'Enable addon', 'wp-parsidate' );
+      $actionTitle          = $isRecommended ? esc_html__( 'Enable addon', 'wp-parsidate' ) : esc_html__( 'Activate', 'wp-parsidate' );
 
       if ( ! $canActivate && ! empty( $addon['requires_plugins'] ) && is_array( $addon['requires_plugins'] ) ) {
         foreach ( $addon['requires_plugins'] as $requirePluginPath => $requirePlugin ) {
@@ -120,7 +130,7 @@ class Addons {
               self_admin_url( 'plugins.php?action=activate&plugin=' . $requirePluginPath ),
               'activate-plugin_' . $requirePluginPath
             );
-            $actionTitle = esc_html__( 'Activate required addon', 'wp-parsidate' );
+            $actionTitle = $isRecommended ? esc_html__( 'Activate required addon', 'wp-parsidate' ) : esc_html__( 'Activate', 'wp-parsidate' );
 
           } elseif ( isset( $requirePlugin['is_wp_plugin'] ) && $requirePlugin['is_wp_plugin'] ) {
             $pluginSlug = WordPress::pluginPathToSlug( $requirePluginPath );
@@ -129,12 +139,16 @@ class Addons {
               self_admin_url( 'update.php?action=install-plugin&plugin=' . $pluginSlug ),
               'install-plugin_' . $pluginSlug
             );
-            $actionTitle = esc_html__( 'Install required addon', 'wp-parsidate' );
+            $actionTitle = $isRecommended ? esc_html__( 'Install required addon', 'wp-parsidate' ) : esc_html__( 'Install', 'wp-parsidate' );
 
           } elseif ( ! empty( $requirePlugin['plugin_link'] ) && Validating::isUrl( $requirePlugin['plugin_link'] ) ) {
-            $actionLink  = $requirePlugin['plugin_link'];
-            $actionTitle = isset( $requirePlugin['is_free'] ) && $requirePlugin['is_free'] ? esc_html__( 'Download required addon',
-              'wp-parsidate' ) : esc_html__( 'Buy required addon', 'wp-parsidate' );
+            $actionLink = $requirePlugin['plugin_link'];
+
+            if ( $isRecommended ) {
+              $actionTitle = isset( $requirePlugin['is_free'] ) && $requirePlugin['is_free'] ? esc_html__( 'Download', 'wp-parsidate' ) : esc_html__( 'Buy', 'wp-parsidate' );
+            } else {
+              $actionTitle = isset( $requirePlugin['is_free'] ) && $requirePlugin['is_free'] ? esc_html__( 'Download required addon', 'wp-parsidate' ) : esc_html__( 'Buy required addon', 'wp-parsidate' );
+            }
 
           }
 
@@ -149,7 +163,7 @@ class Addons {
       }
 
       if ( empty( $icon ) && empty( $image ) ) {
-        $icon = self::icon;
+        $icon = Assets::setSvgDimensions( self::icon, $iconSize );
       }
 
       $addonList[ $cat ][ $addon['id'] ] = array(
@@ -189,13 +203,13 @@ class Addons {
 
         $elementList[ $cat . '_startaddons' ] = array(
           'type'  => 'startaddons',
-          'title' => $addonCats[ $cat ],
+          'title' => apply_filters( 'wp_parsidate_addons_page_cat_title', $addonCats[ $cat ], $cat ),
         );
 
         foreach ( $addons as $addonID => $pluginOptions ) {
           $elementList[ $addonID . '_plugin' ] = array_merge(
             $pluginOptions, [
-              'type' => 'addon',
+              'type' => $pluginOptions['cat'] === 'recommended' ? 'addon' : 'tinyAddon',
               'name' => 'active_plugins[' . $addonID . ']'
             ]
           );
@@ -215,7 +229,7 @@ class Addons {
 
     return array(
       'title'    => esc_html__( 'Addons', 'wp-parsidate' ),
-      'desc'     => esc_html__( 'You can enable or disable these integrations below.', 'wp-parsidate' ),
+      'desc'     => sprintf( __( 'Parsidate is integrated with the following plugins, and if you use any of them, you can enable it. If you are using a plugin that is not integrated with Parsidate, please submit a <a href="%s" target="_blank">request</a>.', 'wp-parsidate' ), 'https://github.com/wordpress-parsi/wp-parsidate/issues' ),
       'settings' => $elementList
     );
   }
