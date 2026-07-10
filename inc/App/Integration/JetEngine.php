@@ -147,7 +147,7 @@ class JetEngine extends Addon {
       'icon'             => $svg,
       'image_link'       => 'https://crocoblock.com/plugins/jetengine/',
       'tags'             => [ esc_html__( 'Meta', 'wp-parsidate' ) ],
-      'cat'              => 'customizations',
+      'cat'              => 'integration',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [
         'jet-engine/jet-engine.php' => array(

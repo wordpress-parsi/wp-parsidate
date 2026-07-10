@@ -169,7 +169,7 @@ class RankMath extends Addon {
       'icon'             => $svg,
       'image_link'       => 'https://wordpress.org/plugins/seo-by-rank-math/',
       'tags'             => [ esc_html__( 'SEO', 'wp-parsidate' ) ],
-      'cat'              => 'seo',
+      'cat'              => 'integration',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [
         'seo-by-rank-math/rank-math.php' => array(

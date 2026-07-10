@@ -33,7 +33,7 @@ class BulkyBulkEditProductsWooCommerce extends Addon {
       'force_enable'     => true,
       'image_link'       => 'https://wordpress.org/plugins/bulky-bulk-edit-products-for-woo/',
       'tags'             => [ esc_html__( 'WooCommerce', 'wp-parsidate' ) ],
-      'cat'              => 'ecommerce',
+      'cat'              => 'integration',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [
         'bulky-bulk-edit-products-for-woo/bulky-bulk-edit-products-for-woo.php' => array(

@@ -36,7 +36,7 @@ class LimitLoginAttempts extends Addon {
       'icon'             => $svg,
       'image_link'       => 'https://wordpress.org/plugins/limit-login-attempts-reloaded/',
       'tags'             => [ esc_html__( 'Security', 'wp-parsidate' ) ],
-      'cat'              => 'security',
+      'cat'              => 'integration',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [
         'limit-login-attempts-reloaded/limit-login-attempts-reloaded.php' => array(

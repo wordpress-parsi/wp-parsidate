@@ -176,7 +176,7 @@ class ACF extends Addon {
       'icon'             => $svg,
       'image_link'       => 'https://wordpress.org/plugins/advanced-custom-fields/',
       'tags'             => [ esc_html__( 'Meta', 'wp-parsidate' ) ],
-      'cat'              => 'customizations',
+      'cat'              => 'integration',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [
         'advanced-custom-fields/acf.php' => array(

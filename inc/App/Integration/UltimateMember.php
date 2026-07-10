@@ -36,7 +36,7 @@ class UltimateMember extends Addon {
       'icon'             => $svg,
       'image_link'       => 'https://wordpress.org/plugins/ultimate-member/',
       'tags'             => [ esc_html__( 'User', 'wp-parsidate' ) ],
-      'cat'              => 'customizations',
+      'cat'              => 'integration',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [
         'ultimate-member/ultimate-member.php' => array(

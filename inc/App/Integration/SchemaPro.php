@@ -36,7 +36,7 @@ class SchemaPro extends Addon {
       'icon'             => $svg,
       'image_link'       => 'https://wpschema.com',
       'tags'             => [ esc_html__( 'Schema', 'wp-parsidate' ) ],
-      'cat'              => 'seo',
+      'cat'              => 'integration',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [
         'wp-schema-pro/wp-schema-pro.php' => array(

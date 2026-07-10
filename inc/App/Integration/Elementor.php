@@ -42,7 +42,7 @@ class Elementor extends Addon {
       'icon'             => $svg,
       'image_link'       => 'https://wordpress.org/plugins/elementor/',
       'tags'             => [ esc_html__( 'Elementor', 'wp-parsidate' ) ],
-      'cat'              => 'page_builder',
+      'cat'              => 'integration',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [
         'elementor/elementor.php' => array(

@@ -132,7 +132,7 @@ class EDD extends Addon {
       'icon'             => $svg,
       'image_link'       => 'https://wordpress.org/plugins/easy-digital-downloads/',
       'tags'             => [ esc_html__( 'Download', 'wp-parsidate' ) ],
-      'cat'              => 'ecommerce',
+      'cat'              => 'integration',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [
         'easy-digital-downloads/easy-digital-downloads.php' => array(

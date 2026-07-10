@@ -861,7 +861,7 @@ class WooCommerce extends Addon {
       'menu_icon'        => $menuIcon,
       'image_link'       => 'https://wordpress.org/plugins/woocommerce/',
       'tags'             => [ esc_html__( 'WooCommerce', 'wp-parsidate' ) ],
-      'cat'              => 'ecommerce',
+      'cat'              => 'integration',
       'settings_key'     => $this->addonID,
       'requires_plugins' => [
         'woocommerce/woocommerce.php' => array(
