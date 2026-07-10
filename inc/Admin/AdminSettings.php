@@ -459,7 +459,7 @@ class AdminSettings {
     echo '<div class="wppd-header-title" style="' . ( $headerImage ? 'background-image: url(' . esc_url_raw( $headerImage ) . ');' : '' ) . '">';
     echo '<h1>' . esc_html( $settings['title'] ) . '</h1>';
     if ( ! empty( $settings['desc'] ) ) {
-      echo '<p class="wppd-description">' . esc_html( $settings['desc'] ) . '</p>';
+      echo '<p class="wppd-description">' . $settings['desc'] . '</p>';
     }
     echo '</div>';
     if ( ! $currentSection ) {
