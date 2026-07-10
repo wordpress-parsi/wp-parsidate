@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-10 14:16+0330\n"
-"PO-Revision-Date: 2026-07-10 14:17+0330\n"
+"POT-Creation-Date: 2026-07-11 02:04+0330\n"
+"PO-Revision-Date: 2026-07-11 02:05+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -127,87 +127,118 @@ msgstr "بانک پارسیان"
 msgid "Pasargad Bank"
 msgstr "بانک پاسارگاد"
 
-#: inc/Addons/Addons.php:29 inc/Addons/Addons.php:65 inc/Addons/Addons.php:217
+#: inc/Addons/Addons.php:30 inc/Addons/Addons.php:66 inc/Addons/Addons.php:231
 msgid "Addons"
 msgstr "افزونه‌ها"
 
-#: inc/Addons/Addons.php:30
+#: inc/Addons/Addons.php:31
 msgid "Parsi Date Addons"
 msgstr "افزونه‌های وردپرس پارسی"
 
-#: inc/Addons/Addons.php:51
+#: inc/Addons/Addons.php:52
 msgid "To load the add-on initial hooks, the page refreshes."
 msgstr "برای بارگذاری قلاب‌های اولیه افزونه، صفحه رفرش می‌شود."
 
-#: inc/Addons/Addons.php:74
+#: inc/Addons/Addons.php:75
 msgid "Addons settings saved."
 msgstr "تنظیمات افزونه‌ها ذخیره شد."
 
-#: inc/Addons/Addons.php:105
+#: inc/Addons/Addons.php:83
+msgid "Integration Addons"
+msgstr "افزونه‌های هماهنگ‌سازی"
+
+#: inc/Addons/Addons.php:115
 msgid "Enable addon"
 msgstr "فعال کردن افزونه"
 
-#: inc/Addons/Addons.php:123
+#: inc/Addons/Addons.php:115 inc/Addons/Addons.php:133
+msgid "Activate"
+msgstr "فعال‌سازی"
+
+#: inc/Addons/Addons.php:133
 msgid "Activate required addon"
 msgstr "افزونه مورد نیاز را فعال کنید"
 
-#: inc/Addons/Addons.php:132
+#: inc/Addons/Addons.php:142
 msgid "Install required addon"
 msgstr "افزونه مورد نیاز را نصب کنید"
 
-#: inc/Addons/Addons.php:136
+#: inc/Addons/Addons.php:142
+msgid "Install"
+msgstr "نصب"
+
+#: inc/Addons/Addons.php:148 inc/App/Integration/EDD.php:134
+msgid "Download"
+msgstr "دانلود"
+
+#: inc/Addons/Addons.php:148
+msgid "Buy"
+msgstr "خرید"
+
+#: inc/Addons/Addons.php:150
 msgid "Download required addon"
 msgstr "دانلود افزونه مورد نیاز"
 
-#: inc/Addons/Addons.php:137
+#: inc/Addons/Addons.php:150
 msgid "Buy required addon"
 msgstr "افزونه مورد نیاز را خریداری کنید"
 
-#: inc/Addons/Addons.php:218
-msgid "You can enable or disable these integrations below."
-msgstr "می‌توانید این ادغام‌ها را در زیر فعال یا غیرفعال کنید."
+#: inc/Addons/Addons.php:232
+#, php-format
+msgid ""
+"Parsidate is integrated with the following plugins, and if you use any of them, "
+"you can enable it. If you are using a plugin that is not integrated with "
+"Parsidate, please submit a <a href=\"%s\" target=\"_blank\">request</a>."
+msgstr ""
+"پارسی‌دیت با افزونه‌های زیر یکپارچه شده است و در صورت استفاده از هر یک از آنها، "
+"می‌توانید آن را فعال کنید. اگر از افزونه‌ای استفاده می‌کنید که با پارسی‌دیت یکپارچه "
+"نشده است، لطفاً <a href=\"%s\" target=\"_blank\">درخواست</a> خود را ارسال کنید."
 
-#: inc/Addons/Addons.php:230
+#: inc/Addons/Addons.php:244
 msgid "Recommended"
-msgstr "توصیه‌شده"
+msgstr "پیشنهادی"
 
-#: inc/Addons/Addons.php:231
+#: inc/Addons/Addons.php:245 inc/Admin/AdminIntegration.php:25
+msgid "Integration"
+msgstr "هماهنگ‌سازی"
+
+#: inc/Addons/Addons.php:246
 msgid "E-commerce"
 msgstr "تجارت الکترونیک"
 
-#: inc/Addons/Addons.php:232 inc/Admin/AdminTools.php:23
+#: inc/Addons/Addons.php:247 inc/Admin/AdminTools.php:23
 msgid "Tools"
 msgstr "ابزارها"
 
-#: inc/Addons/Addons.php:233
+#: inc/Addons/Addons.php:248
 msgid "Marketing"
 msgstr "بازاریابی"
 
-#: inc/Addons/Addons.php:234
+#: inc/Addons/Addons.php:249
 msgid "Customizations"
 msgstr "سفارشی‌سازی"
 
-#: inc/Addons/Addons.php:235 inc/App/Integration/RankMath.php:171
+#: inc/Addons/Addons.php:250 inc/App/Integration/RankMath.php:171
 msgid "SEO"
 msgstr "سئو"
 
-#: inc/Addons/Addons.php:236
+#: inc/Addons/Addons.php:251
 msgid "Utility"
 msgstr "ابزار مفید"
 
-#: inc/Addons/Addons.php:237
+#: inc/Addons/Addons.php:252
 msgid "Page Builder"
 msgstr "صفحه‌ساز"
 
-#: inc/Addons/Addons.php:238 inc/App/Integration/LimitLoginAttempts.php:38
+#: inc/Addons/Addons.php:253 inc/App/Integration/LimitLoginAttempts.php:38
 msgid "Security"
 msgstr "امنیت"
 
-#: inc/Addons/Addons.php:244
+#: inc/Addons/Addons.php:259
 msgid "Other addons"
 msgstr "دیگر افزونه‌ها"
 
-#: inc/Addons/Addons.php:252
+#: inc/Addons/Addons.php:267
 msgid "Save active addons"
 msgstr "ذخیره افزونه‌های فعال"
 
@@ -329,10 +360,6 @@ msgstr "خبرهای وردپرس پارسی"
 msgid "WP-Parsi website is not available."
 msgstr "وبسایت وردپرس پارسی در دسترس نیست."
 
-#: inc/Admin/AdminIntegration.php:25
-msgid "Integration"
-msgstr "هماهنگ‌سازی"
-
 #: inc/Admin/AdminIntegration.php:42
 msgid "Integration settings"
 msgstr "تنظیمات هماهنگ‌سازی"
@@ -345,7 +372,7 @@ msgstr "تنظیمات هماهنگ‌سازی پارسی‌دیت"
 msgid "WP Parsi"
 msgstr "وردپرس پارسی"
 
-#: inc/Admin/AdminPages.php:101 inc/Plugin/Plugin.php:49
+#: inc/Admin/AdminPages.php:101 inc/Plugin/Plugin.php:50
 msgid "WordPress"
 msgstr "وردپرس"
 
@@ -685,10 +712,6 @@ msgstr "افزودن واحد پولی «تومان»"
 #: inc/App/Integration/EDD.php:110
 msgid "Replace currency name"
 msgstr "جایگزینی نام واحد پولی"
-
-#: inc/App/Integration/EDD.php:134
-msgid "Download"
-msgstr "دانلود"
 
 #: inc/App/Integration/Elementor.php:39 inc/App/Integration/Elementor.php:44
 msgid "Elementor"
@@ -1674,67 +1697,67 @@ msgstr "خوراک خالی است."
 msgid "Untitled"
 msgstr "ناشناخته"
 
-#: inc/Helper/HTML.php:367
+#: inc/Helper/HTML.php:368
 msgid "Select Media(s)"
 msgstr "انتخاب رسانه(ها)"
 
-#: inc/Helper/HTML.php:370
+#: inc/Helper/HTML.php:371
 msgid "Remove all media"
 msgstr "حذف تمام رسانه‌ها"
 
-#: inc/Helper/HTML.php:373
+#: inc/Helper/HTML.php:374
 msgid "Select or Upload Media"
 msgstr "انتخاب یا آپلود رسانه"
 
-#: inc/Helper/HTML.php:375
+#: inc/Helper/HTML.php:376
 msgid "Use this media"
 msgstr "استفاده از این رسانه"
 
-#: inc/Helper/HTML.php:757
+#: inc/Helper/HTML.php:796
 msgid "More info"
 msgstr "اطلاعات بیشتر"
 
-#: inc/Helper/HTML.php:810
+#: inc/Helper/HTML.php:849
 msgid "No entries!"
 msgstr "بدون ورودی!"
 
-#: inc/Helper/HTML.php:927
+#: inc/Helper/HTML.php:966
 msgid "Color"
 msgstr "رنگ"
 
-#: inc/Helper/HTML.php:935
+#: inc/Helper/HTML.php:974
 msgid "Type"
 msgstr "نوع"
 
-#: inc/Helper/HTML.php:941
+#: inc/Helper/HTML.php:980
 msgid "Linear"
 msgstr "خطی"
 
-#: inc/Helper/HTML.php:942
+#: inc/Helper/HTML.php:981
 msgid "Radial"
 msgstr "شعاعی"
 
-#: inc/Helper/HTML.php:948
+#: inc/Helper/HTML.php:987
 msgid "Shape"
 msgstr "شکل"
 
-#: inc/Helper/HTML.php:954
+#: inc/Helper/HTML.php:993
 msgid "Ellipse"
 msgstr "بیضی"
 
-#: inc/Helper/HTML.php:955
+#: inc/Helper/HTML.php:994
 msgid "Circle"
 msgstr "دایره"
 
-#: inc/Helper/HTML.php:961
+#: inc/Helper/HTML.php:1000
 msgid "Rotation °"
 msgstr "چرخش °"
 
-#: inc/Helper/HTML.php:1071
+#: inc/Helper/HTML.php:1110
 msgid "Required"
 msgstr "الزامی"
 
-#: inc/Plugin/Plugin.php:72
+#: inc/Plugin/Plugin.php:75
 #, php-format
 msgid ""
 "<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to "
@@ -1745,7 +1768,7 @@ msgstr ""
 "نیاز به پیکربندی آن دارید. <a href=\"%s\">برگه‌ی پیکربندی</a> &ndash; <a href=\"%s"
 "\">بی‌خیال</a></p></div>"
 
-#: inc/Plugin/Plugin.php:113
+#: inc/Plugin/Plugin.php:116
 msgid "Settings"
 msgstr "تنظیمات"
 
@@ -1881,6 +1904,9 @@ msgstr ""
 msgid "WP-Parsi Team"
 msgstr "تیم وردپرس پارسی"
 
+#~ msgid "You can enable or disable these integrations below."
+#~ msgstr "می‌توانید این ادغام‌ها را در زیر فعال یا غیرفعال کنید."
+
 #, fuzzy
 #~| msgid "Shamsi date"
 #~ msgid "Shamsi Date"
@@ -1954,9 +1980,6 @@ msgstr "تیم وردپرس پارسی"
 
 #~ msgid "Persian digits"
 #~ msgstr "رقم‌های پارسی"
-
-#~ msgid "Active"
-#~ msgstr "فعال"
 
 #~ msgid "Prevent users from copying site content"
 #~ msgstr "جلوگیری از کپی محتوا"
