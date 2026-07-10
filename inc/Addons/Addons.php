@@ -228,6 +228,7 @@ class Addons {
 
     $defaultCats = array(
       'recommended'    => esc_html__( 'Recommended', 'wp-parsidate' ),
+      'integration'    => esc_html__( 'Integration', 'wp-parsidate' ),
       'ecommerce'      => esc_html__( 'E-commerce', 'wp-parsidate' ),
       'tools'          => esc_html__( 'Tools', 'wp-parsidate' ),
       'marketing'      => esc_html__( 'Marketing', 'wp-parsidate' ),
