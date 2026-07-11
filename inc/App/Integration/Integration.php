@@ -17,6 +17,7 @@ class Integration {
     // SEO
     new RankMath();
     new SchemaPro();
+    new MonsterInsights();
 
     // Page Builder
     new Elementor();
