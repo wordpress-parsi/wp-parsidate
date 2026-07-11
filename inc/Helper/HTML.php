@@ -733,7 +733,11 @@ class HTML {
     $addon = '<div class="' . self::prefix . 'tiny-addon-wrap' . $class . '"><div class="' . self::prefix . 'title-image">';
 
     if ( ! empty( $data['icon'] ) ) {
-      $addon .= '<div class="' . self::prefix . 'image-wrap">' . $data['icon'] . '</div>';
+      if ( ! empty( $data['image_link'] ) ) {
+        $addon .= '<a href="' . $data['image_link'] . '" target="_blank" class="' . self::prefix . 'image-link ' . self::prefix . 'image-wrap">' . $data['icon'] . '</a>';
+      } else {
+        $addon .= '<div class="' . self::prefix . 'image-wrap">' . $data['icon'] . '</div>';
+      }
     }
 
     $addon .= '<span class="' . self::prefix . 'title">' . $data['title'] . '</span></div>';

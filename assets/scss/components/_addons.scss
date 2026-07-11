@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use "../utilities/variables";
 
 @mixin wppd-addons {
@@ -40,6 +41,18 @@
         }
       }
 
+      &:hover, &:focus-within {
+        border-color: color.scale(variables.$border_color, $lightness: -10%);
+
+        .wppd-action-link {
+          border-color: variables.$gray_light_two;
+        }
+
+        .wppd-image-wrap {
+          background-image: linear-gradient(to right top, #ffffff, #fcfcfd, #f8f8fa, #f4f5f8, #eff2f6, #eff2f6, #eff2f6, #eff2f6, #f4f5f8, #f8f8fa, #fcfcfd, #ffffff);
+        }
+      }
+
       .wppd-image-wrap {
         background-color: variables.$background_side;
         background-image: linear-gradient(to right top, #ffffff, #fdfdfe, #fcfcfd, #fafafc, #f8f9fb, #f8f9fb, #f8f9fb, #f8f9fb, #fafafc, #fcfcfd, #fdfdfe, #ffffff);
@@ -67,6 +80,10 @@
           overflow: hidden;
           white-space: nowrap;
         }
+      }
+
+      .wppd-action-link {
+        border-color: transparent;
       }
     }
 

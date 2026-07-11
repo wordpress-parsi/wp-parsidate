@@ -699,6 +699,15 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   opacity: 0.5;
   filter: grayscale(80%);
 }
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap:hover, .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap:focus-within {
+  border-color: rgb(218.7, 218.7, 218.7);
+}
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap:hover .wppd-action-link, .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap:focus-within .wppd-action-link {
+  border-color: #D3D3D3;
+}
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap:hover .wppd-image-wrap, .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap:focus-within .wppd-image-wrap {
+  background-image: linear-gradient(to right top, #ffffff, #fcfcfd, #f8f8fa, #f4f5f8, #eff2f6, #eff2f6, #eff2f6, #eff2f6, #f4f5f8, #f8f8fa, #fcfcfd, #ffffff);
+}
 .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-image-wrap {
   background-color: #f5f7f9;
   background-image: linear-gradient(to right top, #ffffff, #fdfdfe, #fcfcfd, #fafafc, #f8f9fb, #f8f9fb, #f8f9fb, #f8f9fb, #fafafc, #fcfcfd, #fdfdfe, #ffffff);
@@ -724,6 +733,9 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-action-link {
+  border-color: transparent;
 }
 .wp-parsidate-wrap .wppd-addons-wrap .wppd-addon-wrap {
   display: flex;
