@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Parsi additional strings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 02:04+0330\n"
-"PO-Revision-Date: 2026-07-11 02:05+0330\n"
+"POT-Creation-Date: 2026-07-11 03:43+0330\n"
+"PO-Revision-Date: 2026-07-11 03:43+0330\n"
 "Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
 "Language-Team: Persian (Iran)\n"
 "Language: fa_IR\n"
@@ -372,7 +372,7 @@ msgstr "تنظیمات هماهنگ‌سازی پارسی‌دیت"
 msgid "WP Parsi"
 msgstr "وردپرس پارسی"
 
-#: inc/Admin/AdminPages.php:101 inc/Plugin/Plugin.php:50
+#: inc/Admin/AdminPages.php:101 inc/Plugin/Plugin.php:49
 msgid "WordPress"
 msgstr "وردپرس"
 
@@ -761,6 +761,18 @@ msgstr "محدود کردن تلاش‌های ورود"
 msgid "ParsiDate integration for Limit Login Attempts Security"
 msgstr "هماهنگ‌سازی تاریخ پارسی با محدود کردن تلاش‌های ورود"
 
+#: inc/App/Integration/MonsterInsights.php:33
+msgid "Monster Insights"
+msgstr "Monster Insights"
+
+#: inc/App/Integration/MonsterInsights.php:34
+msgid "ParsiDate integration for Monster Insights"
+msgstr "هماهنگ‌سازی تاریخ پارسی با Monster Insights"
+
+#: inc/App/Integration/MonsterInsights.php:38
+msgid "Google"
+msgstr "گوگل"
+
 #: inc/App/Integration/RankMath.php:166
 msgid "Rank Math"
 msgstr "رنک‌مث"
@@ -783,11 +795,11 @@ msgstr "اسکیما"
 
 #: inc/App/Integration/UltimateMember.php:33
 msgid "Ultimate Member"
-msgstr "Ultimate Member"
+msgstr "مدیریت کاربران"
 
 #: inc/App/Integration/UltimateMember.php:34
 msgid "ParsiDate integration for Ultimate Member"
-msgstr "هماهنگ‌سازی تاریخ پارسی با Ultimate Member"
+msgstr "هماهنگ‌سازی تاریخ پارسی با مدیریت کاربران"
 
 #: inc/App/Integration/UltimateMember.php:38
 msgid "User"
@@ -1713,51 +1725,51 @@ msgstr "انتخاب یا آپلود رسانه"
 msgid "Use this media"
 msgstr "استفاده از این رسانه"
 
-#: inc/Helper/HTML.php:796
+#: inc/Helper/HTML.php:800
 msgid "More info"
 msgstr "اطلاعات بیشتر"
 
-#: inc/Helper/HTML.php:849
+#: inc/Helper/HTML.php:853
 msgid "No entries!"
 msgstr "بدون ورودی!"
 
-#: inc/Helper/HTML.php:966
+#: inc/Helper/HTML.php:970
 msgid "Color"
 msgstr "رنگ"
 
-#: inc/Helper/HTML.php:974
+#: inc/Helper/HTML.php:978
 msgid "Type"
 msgstr "نوع"
 
-#: inc/Helper/HTML.php:980
+#: inc/Helper/HTML.php:984
 msgid "Linear"
 msgstr "خطی"
 
-#: inc/Helper/HTML.php:981
+#: inc/Helper/HTML.php:985
 msgid "Radial"
 msgstr "شعاعی"
 
-#: inc/Helper/HTML.php:987
+#: inc/Helper/HTML.php:991
 msgid "Shape"
 msgstr "شکل"
 
-#: inc/Helper/HTML.php:993
+#: inc/Helper/HTML.php:997
 msgid "Ellipse"
 msgstr "بیضی"
 
-#: inc/Helper/HTML.php:994
+#: inc/Helper/HTML.php:998
 msgid "Circle"
 msgstr "دایره"
 
-#: inc/Helper/HTML.php:1000
+#: inc/Helper/HTML.php:1004
 msgid "Rotation °"
 msgstr "چرخش °"
 
-#: inc/Helper/HTML.php:1110
+#: inc/Helper/HTML.php:1114
 msgid "Required"
 msgstr "الزامی"
 
-#: inc/Plugin/Plugin.php:75
+#: inc/Plugin/Plugin.php:72
 #, php-format
 msgid ""
 "<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to "
@@ -1768,7 +1780,7 @@ msgstr ""
 "نیاز به پیکربندی آن دارید. <a href=\"%s\">برگه‌ی پیکربندی</a> &ndash; <a href=\"%s"
 "\">بی‌خیال</a></p></div>"
 
-#: inc/Plugin/Plugin.php:116
+#: inc/Plugin/Plugin.php:113
 msgid "Settings"
 msgstr "تنظیمات"
 
