@@ -24,6 +24,8 @@ class Calendar {
     $jy              = 0;
     $pd              = WPP_ParsiDate::getInstance();
     $jm              = $monthnum;
+    // Get the site's timezone offset in seconds
+    $tzOffset = (int) ( (float) get_option( 'gmt_offset' ) ) * HOUR_IN_SECONDS;
 
     if ( $m != '' ) {
       $m  = preg_replace( "/[^0-9]/", "", $m );
@@ -76,9 +78,10 @@ class Calendar {
       }
     } else {
       $is_gregorian = true;
-      $thisYear     = gmdate( 'Y', current_time( 'timestamp' ) + get_option( 'gmt_offset' ) * 3600 );
-      $thisMonth    = gmdate( 'm', current_time( 'timestamp' ) + get_option( 'gmt_offset' ) * 3600 );
-      $thisDay      = gmdate( 'd', current_time( 'timestamp' ) + get_option( 'gmt_offset' ) * 3600 );
+      $nowTimestamp = current_time( 'timestamp' );
+      $thisYear     = gmdate( 'Y', $nowTimestamp + $tzOffset );
+      $thisMonth    = gmdate( 'm', $nowTimestamp + $tzOffset );
+      $thisDay      = gmdate( 'd', $nowTimestamp + $tzOffset );
     }
 
     //print_r($wp_query->query_vars);
@@ -287,9 +290,9 @@ class Calendar {
 
       $newrow = false;
 
-      if ( $thisDay == gmdate( 'j', ( time() + ( get_option( 'gmt_offset' ) * 3600 ) ) )
-           && $thisMonth == gmdate( 'm', time() + ( get_option( 'gmt_offset' ) * 3600 ) )
-           && $thisYear == gmdate( 'Y', time() + ( get_option( 'gmt_offset' ) * 3600 ) ) ) {
+      if ( $thisDay == gmdate( 'j', time() + $tzOffset )
+           && $thisMonth == gmdate( 'm', time() + $tzOffset )
+           && $thisYear == gmdate( 'Y', time() + $tzOffset ) ) {
         $calendar_output .= '<td id="today">';
       } else {
         $calendar_output .= '<td>';
