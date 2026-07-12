@@ -19,13 +19,36 @@ class JetEngine extends Addon {
   public string $currentTab = 'integration';
 
   public function initAction(): void {
-    //add_filter( 'cx_term_meta/date', [ $this, 'metaToDate' ], 10, 3 );
-    //add_filter( 'jet-engine/custom-content-types/date', [ $this, 'metaToDate' ], 10, 3 );
+    // Dynamic Field rendering
     add_filter( 'jet-engine/listings/dynamic-field/custom-value', [ $this, 'convertDateMeta' ], 10, 3 );
+
+    // Table Builder - Hook into meta retrieval for all sources
+    add_filter( 'jet-engine/listing/data/get-post-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
+    add_filter( 'jet-engine/listing/data/get-term-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
+    add_filter( 'jet-engine/listing/data/get-user-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
+    add_filter( 'jet-engine/listing/data/get-comment-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
   }
 
   /**
-   * Convert date/datetime meta value to Shamsi date
+   * Convert dates in Table Builder cells and metabox display
+   * Handles dates retrieved from post/term/user/comment meta
+   *
+   * @param mixed $value Meta value
+   * @param string $metaKey Meta key name
+   * @param int $objectId Object ID (post, term, user, etc)
+   *
+   * @return mixed
+   */
+  public function convertTableBuilderDateMeta( $value, $metaKey, $objectId ) {
+    if ( is_admin() || ( $this->getSetting( 'date_to_shamsi', false ) === false && $this->getSetting( 'datetime_to_shamsi', false ) === false ) ) {
+      return $value;
+    }
+
+    return $this->convertDate( $value );
+  }
+
+  /**
+   * Convert date/datetime meta value to Shamsi date in Dynamic Fields
    *
    * @param string|null $value Value
    * @param array $settings Settings
@@ -33,9 +56,9 @@ class JetEngine extends Addon {
    *
    * @return null|string
    */
-  public function convertDateMeta( ?string $value, $settings, $dynamicField ): ?string {
+  public function convertDateMeta( ?string $value, array $settings, Jet_Engine_Render_Dynamic_Field $dynamicField ): ?string {
     $source = $dynamicField->get( 'dynamic_field_source' );
-    if ( $source !== 'meta' || is_admin() || wp_doing_ajax() || ( $this->getSetting( 'date_to_shamsi', false ) === false && $this->getSetting( 'datetime_to_shamsi', false ) === false ) ) {
+    if ( $source !== 'meta' || is_admin() || ( $this->getSetting( 'date_to_shamsi', false ) === false && $this->getSetting( 'datetime_to_shamsi', false ) === false ) ) {
       return $value;
     }
 
@@ -48,18 +71,8 @@ class JetEngine extends Addon {
 
     if ( $field ) {
       $result = jet_engine()->listings->data->get_meta_by_context( $field, $objectContext );
-      if ( ! $result ) {
-        return $value;
-      }
-
-      $isDate     = Date::isDateString( $result, 'Y-m-d' );
-      $isDateTime = Date::isDateString( $result, 'Y-m-d\TH:i' );
-
-      if ( $isDate['type'] === 'gregorian' && $this->getSetting( 'date_to_shamsi', false ) ) {
-        $value = parsidate( $this->getSetting( 'date_format', 'j F Y' ), $result, true );
-
-      } else if ( $isDateTime['type'] === 'gregorian' && $this->getSetting( 'datetime_to_shamsi', false ) ) {
-        $value = parsidate( $this->getSetting( 'datetime_format', 'j F Y, g:i a' ), $result, true );
+      if ( $result ) {
+        return $this->convertDate( $value );
       }
     }
 
@@ -67,15 +80,29 @@ class JetEngine extends Addon {
   }
 
   /**
-   * Convert meta value date to formatted date according timezone settings
+   * Convert date base on input format
    *
-   * @param string $timestamp [description]
-   * @param string $raw_time [description]
+   * @param mixed $date date string
    *
-   * @return string            [description]
+   * @return string Shamsi date
    */
-  public function metaToDate( $formatted_date, $timestamp, $format ) {
-    return $formatted_date;
+  private function convertDate( $date ): string {
+    if ( ! is_string( $date ) ) {
+      return $date;
+    }
+
+    $value      = $date;
+    $isDate     = Date::isDateString( $date, 'Y-m-d' );
+    $isDateTime = Date::isDateString( $date, 'Y-m-d\TH:i' );
+
+    if ( $isDate['type'] === 'gregorian' && $this->getSetting( 'date_to_shamsi', false ) ) {
+      $value = parsidate( $this->getSetting( 'date_format', 'j F Y' ), $date, true );
+
+    } else if ( $isDateTime['type'] === 'gregorian' && $this->getSetting( 'datetime_to_shamsi', false ) ) {
+      $value = parsidate( $this->getSetting( 'datetime_format', 'j F Y, g:i a' ), $date, true );
+    }
+
+    return $value;
   }
 
   public function addSectionSettings( $sections ) {
