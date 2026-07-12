@@ -141,7 +141,7 @@ jQuery(document).ready(function ($) {
 
   /** Media methods */
   function wppdMediaInit() {
-    $('.wppd-media-image').unbind('click').on('click', function () {
+    $('.wppd-media-image').off('click', '**').on('click', function () {
       let $this = $(this),
         mediaSelectID = $this.attr('data-id'),
         mediaWrap = $this.closest('.wppd-media-wrap'),
@@ -285,7 +285,7 @@ jQuery(document).ready(function ($) {
         if ($(this).attr('title') === undefined)
           $(this).attr('title', WpParsiDate.copyText);
       })
-      wppdCopyText.unbind('click').on('click', function () {
+      wppdCopyText.off('click', '**').on('click', function () {
         let wppdCopyTextElm = $(this),
           wppdTextForCopy = wppdCopyTextElm.attr('data-text') !== undefined ? wppdCopyTextElm.attr('data-text') : wppdCopyTextElm.text();
         navigator.clipboard.writeText(wppdTextForCopy);
