@@ -320,6 +320,10 @@ class WPP_ParsiDate {
 
     $matches = $matches[0];
 
+    if ( count( $matches ) < 3 ) {
+      return $persianDate;
+    }
+
     [ $year, $mon, $day ] = $this->persian_to_gregorian(
       $matches[0],
       $matches[1],
