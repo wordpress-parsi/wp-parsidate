@@ -2,6 +2,7 @@
 
 namespace WPParsidate\App\Tools;
 
+use WPParsidate\Helper\Debug;
 use WPParsidate\Settings\Settings;
 
 class Other {
@@ -24,7 +25,9 @@ class Other {
    * @return void
    */
   public function addDateToAdminBar( $adminBar ): void {
-    $currentDate = parsidate( 'l Y/m/d', current_time( 'timestamp' ) );
+    $format = Debug::check() ? 'l Y/m/d H:i:s' : 'l Y/m/d';
+    //$currentDate = parsidate( $format, current_time( 'timestamp' ) );
+    $currentDate = wp_date( $format, time() );
 
     $args = array(
       'id'    => 'wpp_current_date',
