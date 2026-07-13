@@ -64,13 +64,17 @@ class FixDates {
 
     try {
       $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone( $timezone ?: wp_timezone() );
-      $offset   = Date::getTimeZoneOffset( $timezone );
+
+      // wp_date() passes a pure UTC Unix timestamp
+      // We need to add the timezone offset to convert to local time for date formatting
+      $offset = Date::getTimeZoneOffset( $timezone );
+
       if ( ! empty( $timestamp ) && $offset !== 0 ) {
         $tzOffset          = (int) ( $offset * HOUR_IN_SECONDS );
         $adjustedTimestamp = $timestamp + $tzOffset;
       }
     } catch ( \DateInvalidTimeZoneException $e ) {
-      // Error
+      // If timezone is invalid, use original timestamp
     }
 
     return $this->formatDate( $format, $adjustedTimestamp, $date );
