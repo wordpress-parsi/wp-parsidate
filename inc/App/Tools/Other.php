@@ -25,7 +25,7 @@ class Other {
    * @return void
    */
   public function addDateToAdminBar( $adminBar ): void {
-    $format = Debug::check() ? 'l Y/m/d H:i:s' : 'l Y/m/d';
+    $format = Debug::plugin() ? 'l Y/m/d H:i:s' : 'l Y/m/d';
     //$currentDate = parsidate( $format, current_time( 'timestamp' ) );
     $currentDate = wp_date( $format, time() );
 
