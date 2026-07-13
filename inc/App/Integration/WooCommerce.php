@@ -26,9 +26,9 @@ class WooCommerce extends Addon {
     add_filter( 'wp_parsidate_' . $this->addonID . '_tab_display_notice', '__return_false' );
     add_filter( 'wp_parsidate_' . $this->addonID . '_tab_content_display_notice', '__return_true' );
 
-    WcGateways::getInstance();
-
     add_action( 'before_woocommerce_init', [ $this, 'beforeWooCommerceInit' ] );
+
+    WcGateways::getInstance();
   }
 
   public function initAction(): void {
