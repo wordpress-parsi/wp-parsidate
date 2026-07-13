@@ -3,6 +3,10 @@
 namespace WPParsidate\Helper;
 
 class WordPress {
+  public static function debug(): bool {
+    return WP_DEBUG || wp_is_development_mode( 'plugin' );
+  }
+
   /**
    * Get current page name
    *
