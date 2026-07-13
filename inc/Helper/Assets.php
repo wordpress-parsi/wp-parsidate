@@ -11,7 +11,7 @@ class Assets {
    * @return string Assets Version string
    */
   public static function getVersion(): string {
-    return WP_PARSI_VER . ( WP_PARSI_DEBUG_MODE || wp_is_development_mode( 'plugin' ) || ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? time() : '' );
+    return WP_PARSI_VER . ( Debug::check() || SCRIPT_DEBUG ? time() : '' );
   }
 
   /**

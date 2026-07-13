@@ -3,8 +3,24 @@
 namespace WPParsidate\Helper;
 
 use DateTime;
+use DateTimeZone;
 
 class Date {
+  /**
+   * Get time zone offset base on timezone input
+   *
+   * @param DateTimeZone|string $timezone
+   *
+   * @return float|int
+   * @throws \DateInvalidTimeZoneException
+   */
+  public static function getTimeZoneOffset( $timezone ) {
+    $dtz      = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone( $timezone );
+    $datetime = new DateTime( 'now', $dtz );
+
+    return $dtz->getOffset( $datetime ) / HOUR_IN_SECONDS;
+  }
+
   /**
    * Will return an offset using the WordPress timezone set by the user
    * Example return values: -04:00, +00:00, or +5:45
