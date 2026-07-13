@@ -26,6 +26,7 @@
     "php": ">=7.4",
     "symfony/polyfill-php80": "^1.37.0",
     "symfony/polyfill-php81": "^1.38.1",
+    "symfony/polyfill-php83": "^1.38",
     "enshrined/svg-sanitize": "^0.22.0"
   }
 }
