@@ -10,7 +10,9 @@
 
 **Contributors:** [lord_viper](https://profiles.wordpress.org/lord_viper), [man4toman](https://profiles.wordpress.org/man4toman), [Parsa](https://profiles.wordpress.org/parselearn), [yazdaniwp](https://profiles.wordpress.org/yazdaniwp), [SaeedFard](https://profiles.wordpress.org/saeedfard/)
 
-**Donate link:** [https://wp-parsi.com/support/](https://wp-parsi.com/support/)
+**Download:** [https://wordpress.org/plugins/wp-parsidate](https://wordpress.org/plugins/wp-parsidate/)
+
+**Donate link:** [https://wp-parsi.com/support](https://wp-parsi.com/support/)
 
 **Telegram Community:** [@parsidate](https://t.me/parsidate)
 
@@ -19,9 +21,7 @@ woocommerce, i18n, l10n
 
 **Requires:** WordPress 5.3+
 
-**Tested up to:** 7.0
-
-**Stable tag:** 6.1
+**Requires PHP:** 7.4
 
 **License:** GPLv3
 

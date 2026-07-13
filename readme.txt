@@ -4,7 +4,7 @@ Donate link: https://wp-parsi.com/support/
 Tags: Shamsi, Persian, Jalali, WooCommerce, ووکامرس
 Requires at least: 5.3
 Tested up to: 7.0
-Stable tag: 6.1
+Stable tag: 6.2
 Requires PHP: 7.4
 License: GPLv3
 
@@ -63,6 +63,14 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 
 == Changelog ==
 
+= 6.2 =
+* Add: Jet Engine addon. [#WP topic](https://wordpress.org/support/topic/%d9%86%d8%ad%d9%88%d9%87-%d8%b3%d8%a7%d8%b2%da%af%d8%a7%d8%b1%db%8c-%d9%be%d8%a7%d8%b1%d8%b3%db%8c-%d8%af%db%8c%d8%aa-%d8%a8%d8%a7-%d9%85%d8%aa%d8%a7%d8%a8%d8%a7%da%a9%d8%b3-%d8%ac%d8%aa-%d8%a7%d9%86/)
+* Add: Ultimate Member addon. [#WP topic](https://wordpress.org/support/topic/%d8%aa%d8%af%d8%a7%d8%ae%d9%84-%d8%a8%d8%a7-%d8%a7%d9%81%d8%b2%d9%88%d9%86%d9%87-ultimate-memner/)
+* Add: MonsterInsights addon. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/189)
+* Fix: Hyphen convert to raw HTML entity in post title. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/317)
+* Fix: Convert Gregorian date to Jalali/Shamsi based on timezone in wp_date function. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/289)
+* Fixed some bugs
+
 = 6.1 =
 * Add: Limit Login Attempts Security addon. [#WP topic](https://wordpress.org/support/topic/plugin-conflict-454/)
 * Add: Bulky (Bulk Edit Products for WooCommerce) addon. [#WP topic](https://wordpress.org/support/topic/%d9%85%d8%b4%da%a9%d9%84-%d8%a8%d8%a7-%d8%a7%d9%81%d8%b2%d9%88%d9%86%d9%87-bulky-bulk-edit-products-for-woocommerce/)
@@ -72,7 +80,7 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 * Fix: Resolve decimal number conversion issue in Persian text. [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/303)
 * Fix: Validate phone number in block type checkout (WooCommerce V11.0+). [#PR](https://github.com/woocommerce/woocommerce/pull/65817)
 * Fix: ACF repeatable date field save error
-* Fixed some errors
+* Fixed some bugs
 
 = 6.0 =
 * We have major update for code and UI of Parsi Date plugin
