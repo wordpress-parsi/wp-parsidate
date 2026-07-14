@@ -286,7 +286,7 @@ msgstr "درباره ما"
 
 #: inc/Admin/AdminAbout.php:372
 msgid "About the WordPress Parsi team and plugin"
-msgstr "درباره تیم و افزونه وردپرس پارسی"
+msgstr "درباره تیم و افزونه پارسی‌دیت"
 
 #: inc/Admin/AdminAbout.php:378
 msgid "The text of this page is in Persian."
@@ -338,7 +338,7 @@ msgstr "پیشخوان"
 
 #: inc/Admin/AdminDashboard.php:30
 msgid "Welcome to WP Parsi!"
-msgstr "به وردپرس پارسی خوش آمدید!"
+msgstr "به پارسی دیت خوش آمدید!"
 
 #: inc/Admin/AdminDashboard.php:40
 msgid "Hello"
@@ -370,7 +370,7 @@ msgstr "تنظیمات هماهنگ‌سازی پارسی‌دیت"
 
 #: inc/Admin/AdminPages.php:80 inc/Widget/DashboardWidget.php:56
 msgid "WP Parsi"
-msgstr "وردپرس پارسی"
+msgstr "پارسی دیت"
 
 #: inc/Admin/AdminPages.php:101 inc/Plugin/Plugin.php:49
 msgid "WordPress"
