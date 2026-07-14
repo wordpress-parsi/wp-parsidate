@@ -730,7 +730,7 @@ class HTML {
       $class .= ' ' . self::prefix . 'addon-inactive';
     }
 
-    $addon = '<div class="' . self::prefix . 'tiny-addon-wrap' . $class . '"><div class="' . self::prefix . 'title-image">';
+    $addon = '<div class="' . self::prefix . 'tiny-addon-wrap' . $class . '" title="' . $data['desc'] . '"><div class="' . self::prefix . 'title-image">';
 
     if ( ! empty( $data['icon'] ) ) {
       if ( ! empty( $data['image_link'] ) ) {
