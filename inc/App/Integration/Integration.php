@@ -9,6 +9,10 @@ class Integration {
     new EDD();
     new BulkyBulkEditProductsWooCommerce();
 
+    // Tools
+
+    // Marketing
+
     // Customizations
     new ACF();
     new JetEngine();
@@ -19,8 +23,11 @@ class Integration {
     new SchemaPro();
     new MonsterInsights();
 
+    // Utility
+
     // Page Builder
     new Elementor();
+    new Formello();
 
     // Security
     new LimitLoginAttempts();

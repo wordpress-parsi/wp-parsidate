@@ -105,6 +105,7 @@ class ComposerStaticInit28b7438669d760234aa27dffd45581b6
         'WPParsidate\\App\\Integration\\BulkyBulkEditProductsWooCommerce' => __DIR__ . '/../..' . '/inc/App/Integration/BulkyBulkEditProductsWooCommerce.php',
         'WPParsidate\\App\\Integration\\EDD' => __DIR__ . '/../..' . '/inc/App/Integration/EDD.php',
         'WPParsidate\\App\\Integration\\Elementor' => __DIR__ . '/../..' . '/inc/App/Integration/Elementor.php',
+        'WPParsidate\\App\\Integration\\Formello' => __DIR__ . '/../..' . '/inc/App/Integration/Formello.php',
         'WPParsidate\\App\\Integration\\Integration' => __DIR__ . '/../..' . '/inc/App/Integration/Integration.php',
         'WPParsidate\\App\\Integration\\JetEngine' => __DIR__ . '/../..' . '/inc/App/Integration/JetEngine.php',
         'WPParsidate\\App\\Integration\\LimitLoginAttempts' => __DIR__ . '/../..' . '/inc/App/Integration/LimitLoginAttempts.php',

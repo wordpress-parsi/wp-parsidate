@@ -56,6 +56,7 @@ return array(
     'WPParsidate\\App\\Integration\\BulkyBulkEditProductsWooCommerce' => $baseDir . '/inc/App/Integration/BulkyBulkEditProductsWooCommerce.php',
     'WPParsidate\\App\\Integration\\EDD' => $baseDir . '/inc/App/Integration/EDD.php',
     'WPParsidate\\App\\Integration\\Elementor' => $baseDir . '/inc/App/Integration/Elementor.php',
+    'WPParsidate\\App\\Integration\\Formello' => $baseDir . '/inc/App/Integration/Formello.php',
     'WPParsidate\\App\\Integration\\Integration' => $baseDir . '/inc/App/Integration/Integration.php',
     'WPParsidate\\App\\Integration\\JetEngine' => $baseDir . '/inc/App/Integration/JetEngine.php',
     'WPParsidate\\App\\Integration\\LimitLoginAttempts' => $baseDir . '/inc/App/Integration/LimitLoginAttempts.php',
