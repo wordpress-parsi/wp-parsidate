@@ -189,25 +189,31 @@ class Posts {
       return;
     }
 
-    $cacheKey = 'post_select_months_list_' . md5( $post_type . $post_status );
+    $postType   = is_string( $post_type ) ? $post_type : '';
+    $postStatus = is_string( $post_status ) ? $post_status : ( is_array( $post_status ) ? implode( ',', $post_status ) : '' );
+
+    $cacheKey = 'post_select_months_list_' . md5( $postType . $postStatus );
     $list     = Cache::get( $cacheKey );
 
     if ( false === $list ) {
-      $post_status_w = " AND post_status IN ('publish', 'future', 'draft', 'pending', 'private')";
+      $postStatusWhere = " AND post_status IN ('publish', 'future', 'draft', 'pending', 'private')";
 
-      if ( $post_status !== "" && is_string( $post_status ) ) {
-        $post_status_w = $wpdb->prepare( " AND post_status = %s", $post_status );
+      if ( is_array( $post_status ) && ! empty( $post_status ) ) {
+        $postStatusWhere = $wpdb->prepare( " AND post_status IN ('" . implode( "','", $post_status ) . "')" );
+
+      } elseif ( $postStatus !== "" && is_string( $postStatus ) ) {
+        $postStatusWhere = $wpdb->prepare( " AND post_status = %s", $postStatus );
       }
 
       $query = $wpdb->prepare( "
             SELECT post_date
             FROM {$wpdb->posts}
             WHERE post_type = %s
-            {$post_status_w}
+            {$postStatusWhere}
             AND post_date > '1000-01-01 00:00:00'
             GROUP BY YEAR(post_date), MONTH(post_date)
             ORDER BY post_date DESC
-        ", $post_type );
+        ", $postType );
 
       $list = $wpdb->get_col( $query );
 
