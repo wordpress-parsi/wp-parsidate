@@ -6,7 +6,7 @@
  * Fix DB query
  */
 
-namespace WPParsidate\App\Convert;
+namespace WPParsidate\App\Core;
 
 defined( 'ABSPATH' ) || exit;
 

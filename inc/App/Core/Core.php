@@ -16,5 +16,6 @@ class Core {
 
     new FixTitle();
     new FixDates();
+    new FixPermalink();
   }
 }

@@ -6,7 +6,6 @@ class Convert {
   public function __construct() {
     new FixNumbers();
     new FixArabic();
-    new FixPermalink();
 
     add_filter( 'wp_parsidate_convert_settings_options', [ $this, 'settings' ] );
   }
@@ -100,24 +99,6 @@ class Convert {
         'sanitize' => 'bool'
       ),
       'end_grid_letters'           => array(
-        'type' => 'endGrid',
-      ),
-
-      // Permalinks
-      'start_grid_permalinks'      => array(
-        'title' => esc_html__( 'Permalinks', 'wp-parsidate' ),
-        'type'  => 'startGrid',
-      ),
-      'conv_permalinks'            => array(
-        'id'       => 'conv_permalinks',
-        'title'    => esc_html__( 'Fix permalinks dates', 'wp-parsidate' ),
-        'type'     => 'toggle',
-        'default'  => false,
-        'desc'     => esc_html__( 'By enabling this, dates in permalinks converted to Shamsi (Jalali) date',
-          'wp-parsidate' ),
-        'sanitize' => 'bool'
-      ),
-      'end_grid_permalinks'        => array(
         'type' => 'endGrid',
       ),
     );
