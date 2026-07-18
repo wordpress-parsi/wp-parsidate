@@ -109,7 +109,7 @@ final class WP_Parsidate {
       define( 'WP_PARSI_INPUT_PREFIX', 'wp_parsidate_' );
     }
 
-    add_action( 'init', static function () {
+    add_action( 'after_setup_theme', static function () {
       if ( ! function_exists( 'get_plugin_data' ) ) {
         require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
       }
