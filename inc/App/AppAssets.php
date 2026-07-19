@@ -98,7 +98,7 @@ class AppAssets {
     $pluginVersion = Assets::getVersion();
     $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
-    wp_enqueue_style( 'functions', Assets::url( 'css-admin/admin-fix' . $debugName . '.css' )
+    wp_enqueue_style( WP_PARSI_KEY_SLUG . '-admin-fix', Assets::url( 'css-admin/admin-fix' . $debugName . '.css' )
       , false, $pluginVersion );
   }
 
