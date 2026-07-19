@@ -16,8 +16,8 @@ use WPParsidate\Settings\Settings;
 class AppAssets {
   public function __construct() {
     add_action( 'admin_enqueue_scripts', array( $this, 'adminEnqueueScripts' ) );
-    add_filter( 'admin_init', [ $this, 'fixTinyMceFont' ], 9999999 );
     add_filter( 'admin_init', [ $this, 'fixTinyMceFont' ], PHP_INT_MAX );
+    add_filter( 'wp_theme_json_data_theme', [ $this, 'addFontToThemeJson' ] );
     add_action( 'admin_print_styles-plugin-editor.php', [ $this, 'fixCodeEditor' ] );
     add_action( 'admin_print_styles-theme-editor.php', [ $this, 'fixCodeEditor' ] );
     add_action( 'wpp_jalali_datepicker_enqueued', [ $this, 'localizeMonthsName' ] );
@@ -100,6 +100,100 @@ class AppAssets {
 
     wp_enqueue_style( WP_PARSI_KEY_SLUG . '-admin-fix', Assets::url( 'css-admin/admin-fix' . $debugName . '.css' )
       , false, $pluginVersion );
+  }
+
+  /**
+   * Change theme JSON data for global styles and settings.
+   *
+   * @param \WP_Theme_JSON_Data $themeJson Class to access and update the underlying data.
+   *
+   * @return \WP_Theme_JSON_Data
+   *
+   * @since 6.2
+   */
+  public function addFontToThemeJson( $themeJson ): \WP_Theme_JSON_Data {
+    if ( ! Settings::get( 'enable_fonts', false ) ) {
+      return $themeJson;
+    }
+
+    $data = $themeJson->get_data();
+
+    $fontFamilies = $data['settings']['typography']['fontFamilies']['theme'] ?? [];
+    $newFont      = array(
+      "name"       => "Vazirmatn",
+      "slug"       => "vazirmatn",
+      "fontFamily" => "Vazirmatn, sans-serif",
+      "fontFace"   => [
+        [
+          "src"         => [
+            Assets::url( 'fonts/Vazirmatn-VariableFont_wght.woff2' )
+          ],
+          "fontWeight"  => "100 900",
+          "fontStyle"   => "normal",
+          'fontDisplay' => 'swap',
+          "fontFamily"  => "Vazirmatn"
+        ]
+      ]
+    );
+
+    // Add new font
+//    $data['settings']['typography']['fontFamilies']          = array_merge( $fontFamilies, array( $newFont ) );
+    $data['settings']['typography']['fontFamilies']['theme'] = array_merge( $fontFamilies, array( $newFont ) );
+
+    $variableVazirmatnFont = "var:preset|font-family|vazirmatn !important";
+
+    // Body font family
+    if ( isset( $data['styles']['typography']['fontFamily'] ) ) {
+      $data['styles']['typography']['fontFamily'] = $variableVazirmatnFont;
+    } else {
+      $data['styles']['typography'] = array(
+        "fontFamily" => $variableVazirmatnFont,
+        "fontSize"   => "1.2rem",
+        "lineHeight" => "1.7",
+        "fontStyle"  => "normal",
+        "fontWeight" => "400"
+      );
+    }
+
+    // Site title
+    if ( isset( $data['styles']['blocks']['core/site-title']['typography']['fontFamily'] ) ) {
+      $data['styles']['blocks']['core/site-title']['typography']['fontFamily'] = $variableVazirmatnFont;
+    } else {
+      $data['styles']['blocks']['core/site-title'] = array(
+        "fontFamily" => $variableVazirmatnFont,
+        "fontSize"   => "1.2rem",
+        "fontStyle"  => "normal",
+        "fontWeight" => "600"
+      );
+    }
+
+    // Heading font family
+    if ( isset( $data['styles']['elements']['heading']['typography']['fontFamily'] ) ) {
+      $data['styles']['elements']['heading']['typography']['fontFamily'] = $variableVazirmatnFont;
+    } else {
+      $data['styles']['elements']['heading'] = array(
+        "fontFamily" => $variableVazirmatnFont,
+        "fontSize"   => "1.2rem",
+        "fontStyle"  => "normal",
+        "fontWeight" => "600"
+      );
+    }
+
+    // Quote font family
+    if ( isset( $data['styles']['blocks']['core/quote']['typography']['fontFamily'] ) ) {
+      $data['styles']['blocks']['core/quote']['typography']['fontFamily'] = $variableVazirmatnFont;
+    }
+    if ( isset( $data['styles']['blocks']['core/quote']['variations']['plain']['typography']['fontFamily'] ) ) {
+      $data['styles']['blocks']['core/quote']['variations']['plain']['typography']['fontFamily'] = $variableVazirmatnFont;
+    }
+    if ( isset( $data['styles']['blocks']['core/pullquote']['typography']['fontFamily'] ) ) {
+      $data['styles']['blocks']['core/pullquote']['typography']['fontFamily'] = $variableVazirmatnFont;
+    }
+    if ( isset( $data['styles']['blocks']['core/pullquote']['elements']['cite']['typography']['fontFamily'] ) ) {
+      $data['styles']['blocks']['core/pullquote']['elements']['cite']['typography']['fontFamily'] = $variableVazirmatnFont;
+    }
+
+    return $themeJson->update_with( $data );
   }
 
   /**
