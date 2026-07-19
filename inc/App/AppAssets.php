@@ -17,6 +17,7 @@ class AppAssets {
   public function __construct() {
     add_action( 'admin_enqueue_scripts', array( $this, 'adminEnqueueScripts' ) );
     add_filter( 'admin_init', [ $this, 'fixTinyMceFont' ], 9999999 );
+    add_filter( 'admin_init', [ $this, 'fixTinyMceFont' ], PHP_INT_MAX );
     add_action( 'admin_print_styles-plugin-editor.php', [ $this, 'fixCodeEditor' ] );
     add_action( 'admin_print_styles-theme-editor.php', [ $this, 'fixCodeEditor' ] );
     add_action( 'wpp_jalali_datepicker_enqueued', [ $this, 'localizeMonthsName' ] );
@@ -109,10 +110,14 @@ class AppAssets {
    */
   public function fixTinyMceFont(): void {
     if ( Settings::get( 'enable_fonts', false ) ) {
-      $pluginVersion = Assets::getVersion();
-      $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
+      //$pluginVersion = Assets::getVersion();
+      $debugName = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
-      add_editor_style( Assets::url( 'css-admin/tinymce-editor' . $debugName . '.css?v=' . $pluginVersion ) );
+      // add_editor_style may fail when used with a URL, especially if the site is running on localhost.
+      // Reference: /wp-includes/block-editor.php, get_block_editor_theme_styles function, wp_remote_get
+      // add_editor_style( Assets::url( 'css-admin/tinymce-editor' . $debugName . '.css?v=' . $pluginVersion ) );
+
+      add_editor_style( '../../plugins/wp-parsidate/assets/css-admin/tinymce-editor' . $debugName . '.css' );
     }
   }
 
