@@ -137,7 +137,6 @@ class AppAssets {
     );
 
     // Add new font
-//    $data['settings']['typography']['fontFamilies']          = array_merge( $fontFamilies, array( $newFont ) );
     $data['settings']['typography']['fontFamilies']['theme'] = array_merge( $fontFamilies, array( $newFont ) );
 
     $variableVazirmatnFont = "var:preset|font-family|vazirmatn !important";
