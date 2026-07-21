@@ -32,6 +32,15 @@ class FixTitle {
     // pre_get_document_title may return null.
     $title ??= '';
 
+    /**
+     * Filters the separator for the document title.
+     *
+     * @since WP 4.4.0
+     *
+     * @param string $sep Document title separator. Default '-'.
+     */
+    $sep = apply_filters( 'document_title_separator', $sep );
+
     $query = $wp_query->query ?? [];
 
     if ( ! is_archive() || ! Settings::get( 'persian_date', false ) ) {
