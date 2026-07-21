@@ -20,16 +20,28 @@ class FixTitle {
   /**
    * Fixes titles for archives
    *
-   * @param string $title Archive title
-   * @param string $sep Separator
-   * @param string $seplocation Separator location
+   * @param string|null $title Archive title.
+   * @param string $sep Separator.
+   * @param string $seplocation Separator location.
    *
-   * @return                  string New archive title
+   * @return string
    */
-  public function fixWpTitle( $title, $sep = '-', $seplocation = 'right' ): string {
+  public function fixWpTitle( ?string $title, $sep = '-', $seplocation = 'right' ): string {
     global $wp_query;
 
-    $query = $wp_query->query;
+    // pre_get_document_title may return null.
+    $title ??= '';
+
+    /**
+     * Filters the separator for the document title.
+     *
+     * @since WP 4.4.0
+     *
+     * @param string $sep Document title separator. Default '-'.
+     */
+    $sep = apply_filters( 'document_title_separator', $sep );
+
+    $query = $wp_query->query ?? [];
 
     if ( ! is_archive() || ! Settings::get( 'persian_date', false ) ) {
       return $title;
@@ -40,15 +52,19 @@ class FixTitle {
     }
 
     if ( isset( $query['monthnum'] ) ) {
-      $monthsName        = Names::getMonths();
-      $query['monthnum'] = $monthsName[ (int) $query['monthnum'] ];
-      $title             = implode( " ", $query ) . " $sep " . get_bloginfo( "name" );
+      $monthsName = Names::getMonths();
+
+      if ( isset( $monthsName[ (int) $query['monthnum'] ] ) ) {
+        $query['monthnum'] = $monthsName[ (int) $query['monthnum'] ];
+      }
+
+      $title = implode( ' ', $query ) . " $sep " . get_bloginfo( 'name' );
     }
 
     if ( Settings::get( 'conv_page_title', false ) ) {
       $title = Number::fixNumber( $title );
     }
 
-    return $title;
+    return (string) $title;
   }
 }
