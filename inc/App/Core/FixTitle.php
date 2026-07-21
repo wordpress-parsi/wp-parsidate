@@ -12,7 +12,6 @@ use WPParsidate\Helper\Number;
 use WPParsidate\Settings\Settings;
 
 class FixTitle {
-
     public function __construct() {
         add_filter( 'wp_title', [ $this, 'fixWpTitle' ], PHP_INT_MAX, 3 );
         add_filter( 'pre_get_document_title', [ $this, 'fixWpTitle' ], PHP_INT_MAX ); // WP 4.4+
@@ -50,7 +49,7 @@ class FixTitle {
                 $query['monthnum'] = $monthsName[ (int) $query['monthnum'] ];
             }
 
-            $title = implode( ' ', $query ) . " {$sep} " . get_bloginfo( 'name' );
+            $title = implode( ' ', $query ) . " $sep " . get_bloginfo( 'name' );
         }
 
         if ( Settings::get( 'conv_page_title', false ) ) {
