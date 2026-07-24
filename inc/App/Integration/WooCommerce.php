@@ -54,7 +54,7 @@ class WooCommerce extends Addon {
         add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueScripts' ] );
 
         // Convert order_date using js
-        add_action( 'woocommerce_process_shop_order_meta', [ $this, 'changeOrderDateOnSave' ], 1000 );
+        add_action( 'woocommerce_process_shop_order_meta', [ $this, 'changeOrderDateOnSave' ], 0 );
         add_filter( 'woocommerce_process_product_meta', [ $this, 'validateNonVariableProductDates' ], 1000 );
         add_action( 'woocommerce_ajax_save_product_variations', [ $this, 'validateVariableProductDates' ], 1000 );
         add_action( 'woocommerce_process_shop_coupon_meta', [ $this, 'validateCouponsDate' ], 1000 );
@@ -607,9 +607,9 @@ class WooCommerce extends Addon {
    * @since 5.0.2
    */
   public function changeOrderDateOnSave( $order_id ): void {
-    $order_date = wc_get_post_data_by_key( 'order_date' );
+    $orderDate = Number::toEnglish( wc_get_post_data_by_key( 'order_date' ) );
 
-    if ( empty( $order_date ) ) {
+    if ( empty( $orderDate ) ) {
       return;
     }
 
@@ -619,13 +619,14 @@ class WooCommerce extends Addon {
       return;
     }
 
-    $hour       = str_pad( (int) wc_get_post_data_by_key( 'order_date_hour' ), 2, '0', STR_PAD_LEFT );
-    $minute     = str_pad( (int) wc_get_post_data_by_key( 'order_date_minute' ), 2, '0', STR_PAD_LEFT );
-    $second     = str_pad( (int) wc_get_post_data_by_key( 'order_date_second' ), 2, '0', STR_PAD_LEFT );
-    $time_stamp = "$order_date $hour:$minute:$second";
-    $fixed_date = gregdate( 'Y-m-d H:i:s', $time_stamp );
-    $date       = gmdate( 'Y-m-d H:i:s', strtotime( $fixed_date ) );
+    $hour               = str_pad( (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_hour' ) ), 2, '0', STR_PAD_LEFT );
+    $minute             = str_pad( (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_minute' ) ), 2, '0', STR_PAD_LEFT );
+    $second             = str_pad( (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_second' ) ), 2, '0', STR_PAD_LEFT );
+    $orderDateTime      = "$orderDate $hour:$minute:$second";
+    $fixedDateTimestamp = gregdate( 'U', $orderDateTime );
+    $date               = gmdate( 'Y-m-d H:i:s', $fixedDateTimestamp );
 
+    $_POST['order_date'] = date( 'Y-m-d', $fixedDateTimestamp );
     $order->set_date_created( $date );
     $order->save();
   }
