@@ -281,7 +281,7 @@ class AdminSettings {
       } elseif ( in_array( $setting['type'], [ 'postselect', 'termselect', 'menuselect', 'userselect' ] ) ) {
         $setting['sanitize'] = 'absint';
 
-      } elseif ( $setting['type'] === 'addon' ) {
+      } elseif ( in_array( $setting['type'], [ 'addon', 'tinyaddon' ] ) ) {
         $setting['sanitize'] = 'int';
 
       } elseif ( $setting['type'] === 'gradientcolorpicker' ) {
