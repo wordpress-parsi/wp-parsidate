@@ -619,14 +619,22 @@ class WooCommerce extends Addon {
       return;
     }
 
-    $hour               = str_pad( (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_hour' ) ), 2, '0', STR_PAD_LEFT );
-    $minute             = str_pad( (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_minute' ) ), 2, '0', STR_PAD_LEFT );
-    $second             = str_pad( (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_second' ) ), 2, '0', STR_PAD_LEFT );
+    $orderDateHour      = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_hour' ) );
+    $orderDateMinute    = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_minute' ) );
+    $orderDateSecond    = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_second' ) );
+    $hour               = str_pad( $orderDateHour, 2, '0', STR_PAD_LEFT );
+    $minute             = str_pad( $orderDateMinute, 2, '0', STR_PAD_LEFT );
+    $second             = str_pad( $orderDateSecond, 2, '0', STR_PAD_LEFT );
     $orderDateTime      = "$orderDate $hour:$minute:$second";
     $fixedDateTimestamp = gregdate( 'U', $orderDateTime );
     $date               = gmdate( 'Y-m-d H:i:s', $fixedDateTimestamp );
 
-    $_POST['order_date'] = date( 'Y-m-d', $fixedDateTimestamp );
+    // Fix POST data
+    $_POST['order_date']        = date( 'Y-m-d', $fixedDateTimestamp );
+    $_POST['order_date_hour']   = $orderDateHour;
+    $_POST['order_date_minute'] = $orderDateMinute;
+    $_POST['order_date_second'] = $orderDateSecond;
+
     $order->set_date_created( $date );
     $order->save();
   }
