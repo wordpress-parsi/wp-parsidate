@@ -4,7 +4,7 @@ Donate link: https://wp-parsi.com/support/
 Tags: Shamsi, Persian, Jalali, WooCommerce, ووکامرس
 Requires at least: 5.3
 Tested up to: 7.0
-Stable tag: 6.2
+Stable tag: 6.2.1
 Requires PHP: 7.4
 License: GPLv3
 
@@ -62,6 +62,10 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 7. WooCommerce settings
 
 == Changelog ==
+
+= 6.2.1 =
+* Fix: WooCommerce legacy report datepicker. [#WP topic](https://wordpress.org/support/topic/%d8%ae%d8%aa%d9%84%d8%a7%d9%84-%da%af%d8%b2%d8%a7%d8%b1%d8%b4%d9%87%d8%a7%db%8c-%d9%88%d9%88%da%a9%d8%a7%d9%85%d8%b1%d8%b3-%d8%a8%d8%b9%d8%af-%d8%a7%d8%b2-%d8%a2%d9%be%d8%af%db%8c%d8%aa-parsi/)
+* Fix: Admin font (Vazirmatn) forced to front. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/320)
 
 = 6.2 =
 * Add: Jet Engine addon. [#WP topic](https://wordpress.org/support/topic/%d9%86%d8%ad%d9%88%d9%87-%d8%b3%d8%a7%d8%b2%da%af%d8%a7%d8%b1%db%8c-%d9%be%d8%a7%d8%b1%d8%b3%db%8c-%d8%af%db%8c%d8%aa-%d8%a8%d8%a7-%d9%85%d8%aa%d8%a7%d8%a8%d8%a7%da%a9%d8%b3-%d8%ac%d8%aa-%d8%a7%d9%86/)
