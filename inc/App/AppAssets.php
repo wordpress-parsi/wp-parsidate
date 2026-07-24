@@ -17,7 +17,7 @@ class AppAssets {
   public function __construct() {
     add_action( 'admin_enqueue_scripts', array( $this, 'adminEnqueueScripts' ) );
     add_filter( 'admin_init', [ $this, 'fixTinyMceFont' ], PHP_INT_MAX );
-    add_filter( 'wp_theme_json_data_theme', [ $this, 'addFontToThemeJson' ] );
+    //add_filter( 'wp_theme_json_data_theme', [ $this, 'addFontToThemeJson' ] );
     add_action( 'admin_print_styles-plugin-editor.php', [ $this, 'fixCodeEditor' ] );
     add_action( 'admin_print_styles-theme-editor.php', [ $this, 'fixCodeEditor' ] );
     add_action( 'wpp_jalali_datepicker_enqueued', [ $this, 'localizeMonthsName' ] );
@@ -139,7 +139,7 @@ class AppAssets {
     // Add new font
     $data['settings']['typography']['fontFamilies']['theme'] = array_merge( $fontFamilies, array( $newFont ) );
 
-    $variableVazirmatnFont = "var:preset|font-family|vazirmatn !important";
+    $variableVazirmatnFont = "var:preset|font-family|vazirmatn";
 
     // Body font family
     if ( isset( $data['styles']['typography']['fontFamily'] ) ) {
