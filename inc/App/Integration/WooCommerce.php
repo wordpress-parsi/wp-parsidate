@@ -110,8 +110,7 @@ class WooCommerce extends Addon {
    */
   public function validatePhoneNumber( $data, $errors ): void {
     // This pattern ensures the phone number follows the specified structure for both mobile and landline numbers
-    if ( ! preg_match( '/^(0|0098|\+98)?(9\d{9}|[1-8]\d{9,10})$/',
-      Number::toEnglish( wc_get_post_data_by_key( 'billing_phone' ) ) ) ) {
+    if ( ! preg_match( '/^(0|0098|\+98)?(9\d{9}|[1-8]\d{9,10})$/', Number::toEnglish( wc_get_post_data_by_key( 'billing_phone' ) ) ) ) {
       $errors->add( 'invalid_phone', __( '<strong>Phone number</strong> is invalid.', 'wp-parsidate' ) );
     }
   }
@@ -340,9 +339,7 @@ class WooCommerce extends Addon {
         if ( ! $theorder ) {
           $jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d' ), 'eng' );
         } else {
-          $jalali_date = parsidate( 'Y-m-d',
-            ! is_null( $theorder->get_date_created() ) ? $theorder->get_date_created()->getOffsetTimestamp() : '',
-            'eng' );
+          $jalali_date = parsidate( 'Y-m-d', ! is_null( $theorder->get_date_created() ) ? $theorder->get_date_created()->getOffsetTimestamp() : '', 'eng' );
         }
       }
 
@@ -357,8 +354,7 @@ class WooCommerce extends Addon {
       $jalali_end_date   = ! empty( $endDate ) ? parsidate( 'Y-m-d',
         date( 'Y-m-d', strtotime( $endDate ) ), 'eng' ) : '';
 
-      wp_add_inline_script( 'wpp_jalali_datepicker',
-        'jQuery("input[name=start_date]").val("' . $jalali_start_date . '");jQuery("input[name=end_date]").val("' . $jalali_end_date . '");' );
+      wp_add_inline_script( 'wpp_jalali_datepicker', 'jQuery("input[name=start_date]").val("' . $jalali_start_date . '");jQuery("input[name=end_date]").val("' . $jalali_end_date . '");' );
 
     } elseif ( 'product' === $current_screen ) {
       global $post;
@@ -377,13 +373,10 @@ class WooCommerce extends Addon {
         $sale_price_dates_from_timestamp = $product->get_date_on_sale_from( 'edit' ) ? $product->get_date_on_sale_from( 'edit' )->getOffsetTimestamp() : false;
         $sale_price_dates_to_timestamp   = $product->get_date_on_sale_to( 'edit' ) ? $product->get_date_on_sale_to( 'edit' )->getOffsetTimestamp() : false;
 
-        $sale_price_dates_from = $sale_price_dates_from_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
-          $sale_price_dates_from_timestamp ) ) : '';
-        $sale_price_dates_to   = $sale_price_dates_to_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
-          $sale_price_dates_to_timestamp ) ) : '';
+        $sale_price_dates_from = $sale_price_dates_from_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d', $sale_price_dates_from_timestamp ) ) : '';
+        $sale_price_dates_to   = $sale_price_dates_to_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d', $sale_price_dates_to_timestamp ) ) : '';
 
-        wp_add_inline_script( 'wpp_jalali_datepicker',
-          'jQuery("#_sale_price_dates_from").val("' . $sale_price_dates_from . '");jQuery("#_sale_price_dates_to").val("' . $sale_price_dates_to . '");' );
+        wp_add_inline_script( 'wpp_jalali_datepicker', 'jQuery("#_sale_price_dates_from").val("' . $sale_price_dates_from . '");jQuery("#_sale_price_dates_to").val("' . $sale_price_dates_to . '");' );
 
       } else {
         $dates                = array();
@@ -397,10 +390,8 @@ class WooCommerce extends Addon {
           $sale_price_dates_from_timestamp = $variation_obj->get_date_on_sale_from( 'edit' ) ? $variation_obj->get_date_on_sale_from( 'edit' )->getOffsetTimestamp() : false;
           $sale_price_dates_to_timestamp   = $variation_obj->get_date_on_sale_to( 'edit' ) ? $variation_obj->get_date_on_sale_to( 'edit' )->getOffsetTimestamp() : false;
 
-          $sale_price_dates_from = $sale_price_dates_from_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
-            $sale_price_dates_from_timestamp ) ) : '';
-          $sale_price_dates_to   = $sale_price_dates_to_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d',
-            $sale_price_dates_to_timestamp ) ) : '';
+          $sale_price_dates_from = $sale_price_dates_from_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d', $sale_price_dates_from_timestamp ) ) : '';
+          $sale_price_dates_to   = $sale_price_dates_to_timestamp ? Number::toEnglish( date_i18n( 'Y-m-d', $sale_price_dates_to_timestamp ) ) : '';
           $dates[ $loop ]        = array(
             'start' => esc_attr( $sale_price_dates_from ),
             'end'   => esc_attr( $sale_price_dates_to ),
@@ -593,8 +584,7 @@ class WooCommerce extends Addon {
       $time_on_sale_to  = ! empty( $salePriceTimesTo ) && Date::isTimeString( $salePriceTimesTo ) ? Date::isTimeString( $salePriceTimesTo ) : '23:59:59';
 
       if ( ! empty( $date_on_sale_to ) ) {
-        $props['date_on_sale_to'] = date( 'Y-m-d ' . $time_on_sale_to,
-          strtotime( gregdate( 'Y-m-d', $date_on_sale_to ) ) );
+        $props['date_on_sale_to'] = date( 'Y-m-d ' . $time_on_sale_to, strtotime( gregdate( 'Y-m-d', $date_on_sale_to ) ) );
       }
     }
 
@@ -660,10 +650,8 @@ class WooCommerce extends Addon {
     );
 
     if ( in_array( $current_screen, $allowed_screens, true ) && Settings::get( 'persian_date' ) ) {
-      wp_enqueue_script( 'wpp_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ),
-        array( 'jquery-ui-datepicker' ), $pluginVersion, [ 'in_footer' => true ] );
-      wp_enqueue_style( 'wpp_jalali_datepicker', Assets::url( "css-admin/jalalidatepicker$debugName.css" ),
-        null, $pluginVersion );
+      wp_enqueue_script( 'wpp_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ), array( 'jquery-ui-datepicker' ), $pluginVersion, [ 'in_footer' => true ] );
+      wp_enqueue_style( 'wpp_jalali_datepicker', Assets::url( "css-admin/jalalidatepicker$debugName.css" ), null, $pluginVersion );
 
       do_action( 'wpp_jalali_datepicker_enqueued', 'wc' );
     }
