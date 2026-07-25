@@ -137,6 +137,7 @@ final class WP_Parsidate {
       define( 'WP_PARSI_DEBUG_MODE', Settings::get( 'debug_mode', false ) );
     }
 
+    new Install();
     new Admin();
     new Addons();
 
@@ -171,4 +172,4 @@ final class WP_Parsidate {
 }
 
 WP_Parsidate::getInstance();
-register_activation_hook( __FILE__, array( Install::class, 'run' ) );
+register_activation_hook( __FILE__, array( Install::class, 'update' ) );

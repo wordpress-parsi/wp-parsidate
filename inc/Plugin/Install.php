@@ -12,7 +12,35 @@ namespace WPParsidate\Plugin;
 use WPParsidate\Helper\WordPress;
 
 class Install {
-  public static function run(): void {
+  public function __construct() {
+    add_action( 'plugins_loaded', [ $this, 'init' ] );
+  }
+
+  public function init() {
+    $settings = get_option( WP_PARSI_KEY, [] );
+    if ( empty( $settings ) ) {
+      self::update();
+    }
+
+    $settings = get_option( WP_PARSI_KEY, [] );
+    if ( empty( $settings ) ) {
+      self::install();
+    }
+  }
+
+  private static function install() {
+    $settings = get_option( WP_PARSI_KEY, [] );
+
+    if ( empty( $settings ) ) {
+      $pluginSettings = array(
+        'persian_date' => true,
+        'enable_fonts' => true,
+      );
+      update_option( WP_PARSI_KEY, $pluginSettings, false );
+    }
+  }
+
+  public static function update(): void {
     $pluginData     = get_plugin_data( WP_PARSI_ROOT );
     $currentVersion = $pluginData['Version'];
     $oldVersion     = get_option( WP_PARSI_KEY . '_plugin_version', '5.1.8' );
@@ -22,14 +50,13 @@ class Install {
     if ( ! empty( $oldSettings ) && empty( $settings ) && version_compare( $oldVersion, '6.0', '<' ) ) {
       $pluginSettings = array(
         // Core
-        'admin_lang'            => self::isEnable( $oldSettings, 'admin_lang' ),
-        'user_lang'             => self::isEnable( $oldSettings, 'user_lang' ),
         'persian_date'          => self::isEnable( $oldSettings, 'persian_date' ),
         'months_name_type'      => $oldSettings['months_name_type'] ?? 'persian',
         'disable_widget_block'  => self::isEnable( $oldSettings, 'disable_widget_block' ),
         'enable_fonts'          => self::isEnable( $oldSettings, 'enable_fonts' ),
         'debug_mode'            => self::isEnable( $oldSettings, 'dev_mode' ),
         'multilingual_support'  => self::isEnable( $oldSettings, 'wpp_multilingual_support' ),
+        'conv_permalinks'       => self::isEnable( $oldSettings, 'conv_permalinks' ),
 
         // Convert
         'conv_page_title'       => self::isEnable( $oldSettings, 'conv_page_title' ),
@@ -41,12 +68,9 @@ class Install {
         'conv_dates'            => self::isEnable( $oldSettings, 'conv_dates' ),
         'conv_cats'             => self::isEnable( $oldSettings, 'conv_cats' ),
         'conv_arabic'           => self::isEnable( $oldSettings, 'conv_arabic' ),
-        'conv_permalinks'       => self::isEnable( $oldSettings, 'conv_permalinks' ),
 
         // Tools
         'date_in_admin_bar'     => self::isEnable( $oldSettings, 'date_in_admin_bar' ),
-
-        // Integration
         'hook_deactivator_list' => $oldSettings['dis_input'] ?? '',
       );
       update_option( WP_PARSI_KEY, $pluginSettings, false );
