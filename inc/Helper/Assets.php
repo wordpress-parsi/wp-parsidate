@@ -25,6 +25,10 @@ class Assets {
     return WP_PARSI_URL . 'assets/' . $path;
   }
 
+  public static function path( string $path ): string {
+    return Templates::pathCorrection(WP_PARSI_DIR . '/assets/' . $path);
+  }
+
   /**
    * Determines whether the string is HTML image string
    *

@@ -16,7 +16,9 @@ use WPParsidate\Settings\Settings;
 class AppAssets {
   public function __construct() {
     add_action( 'admin_enqueue_scripts', array( $this, 'adminEnqueueScripts' ) );
+    add_action( 'after_setup_theme', [ $this, 'addThemeSupport' ] );
     add_filter( 'admin_init', [ $this, 'fixTinyMceFont' ], PHP_INT_MAX );
+    add_filter( 'theme_file_path', [ $this, 'fixThemeFilePath' ], 10, 2 );
     //add_filter( 'wp_theme_json_data_theme', [ $this, 'addFontToThemeJson' ] );
     add_action( 'admin_print_styles-plugin-editor.php', [ $this, 'fixCodeEditor' ] );
     add_action( 'admin_print_styles-theme-editor.php', [ $this, 'fixCodeEditor' ] );
@@ -196,6 +198,38 @@ class AppAssets {
   }
 
   /**
+   * Add theme support
+   *
+   * @return void
+   *
+   * @since 6.3
+   */
+  public function addThemeSupport() {
+    if ( Settings::get( 'enable_fonts', false ) ) {
+      add_theme_support( 'editor-styles' );
+    }
+  }
+
+  /**
+   * Fix theme path file when in plugin dir
+   *
+   * @param string $path The file path.
+   * @param string $file The requested file to search for.
+   *
+   * @return string Path file
+   *
+   * @since 6.3
+   *
+   */
+  public function fixThemeFilePath( $path, $file ): string {
+    if ( strpos( $file, WP_PARSI_DIR ) !== false ) {
+      return $file;
+    }
+
+    return $path;
+  }
+
+  /**
    * Fixes TinyMCE font
    *
    * @return              void
@@ -210,7 +244,11 @@ class AppAssets {
       // Reference: /wp-includes/block-editor.php, get_block_editor_theme_styles function, wp_remote_get
       // add_editor_style( Assets::url( 'css-admin/tinymce-editor' . $debugName . '.css?v=' . $pluginVersion ) );
 
+      // TinyMCE editor
       add_editor_style( '../../plugins/wp-parsidate/assets/css-admin/tinymce-editor' . $debugName . '.css' );
+
+      // Gutenberg Editor
+      add_editor_style( Assets::path( 'css-admin/tinymce-editor' . $debugName . '.css' ) );
     }
   }
 
