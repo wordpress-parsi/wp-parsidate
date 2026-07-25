@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 use WPParsidate\Addons\Addon;
 use WPParsidate\App\Integration\WooCommerce\{WcGateways, WooCommerceCitySelect};
-use WPParsidate\Helper\{Assets, Date, Number};
+use WPParsidate\Helper\{Assets, Date, Number, NumberConverter};
 use WPParsidate\Settings\Settings;
 
 class WooCommerce extends Addon {
@@ -84,7 +84,15 @@ class WooCommerce extends Addon {
         add_action( 'woocommerce_after_checkout_validation', [ $this, 'validatePhoneNumber' ], 10, 2 );
         add_filter( 'woocommerce_validate_phone', [ $this, 'validatePhone' ], 10, 3 );
       }
+
+      if ( $this->getSetting( 'fix_email_content_numbers', false ) ) {
+        add_filter( 'woocommerce_mail_content', [ $this, 'convertEmailContentNumbers' ] );
+      }
     }
+  }
+
+  public function convertEmailContentNumbers( $message ): string {
+    return NumberConverter::convertContent( $message );
   }
 
   /**
@@ -793,21 +801,22 @@ class WooCommerce extends Addon {
       'desc'         => esc_html__( 'ParsiDate integration for WooCommerce', 'wp-parsidate' ),
       'settings_key' => $this->addonID,
       'settings'     => [
-        'woo_product_start_grid'  => array(
+        'woo_product_start_grid' => array(
           'id'    => 'woo_product_start_grid',
           'title' => esc_html__( 'Products', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),
-        'fix_prices'              => array(
+        'fix_prices'             => array(
           'id'       => 'fix_prices',
           'title'    => esc_html__( 'Fix prices', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
         ),
-        'woo_product_end_grid'    => array(
+        'woo_product_end_grid'   => array(
           'type' => 'endGrid',
         ),
+
         'woo_checkout_start_grid' => array(
           'id'    => 'woo_checkout_start_grid',
           'title' => esc_html__( 'Checkout page', 'wp-parsidate' ),
@@ -815,14 +824,14 @@ class WooCommerce extends Addon {
         ),
         'fix_persian_postcode'    => array(
           'id'       => 'fix_persian_postcode',
-          'title'    => esc_html__( 'Fix persian postcode', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Fix Persian postcode', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
         ),
         'fix_persian_phone'       => array(
           'id'       => 'fix_persian_phone',
-          'title'    => esc_html__( 'Fix persian phone', 'wp-parsidate' ),
+          'title'    => esc_html__( 'Fix Persian phone', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
@@ -850,7 +859,23 @@ class WooCommerce extends Addon {
         ),
         'woo_checkout_end_grid'   => array(
           'type' => 'endGrid',
-        )
+        ),
+
+        'woo_email_start_grid' => array(
+          'id'    => 'woo_product_start_grid',
+          'title' => esc_html__( 'Email', 'wp-parsidate' ),
+          'type'  => 'startGrid',
+        ),
+        'fix_email_content_numbers'    => array(
+          'id'       => 'fix_email_content_numbers',
+          'title'    => esc_html__( 'Convert numbers in email content', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => false,
+          'sanitize' => 'bool'
+        ),
+        'woo_email_end_grid'   => array(
+          'type' => 'endGrid',
+        ),
       ]
     );
 
