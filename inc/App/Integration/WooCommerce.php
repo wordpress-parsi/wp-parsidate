@@ -637,6 +637,16 @@ class WooCommerce extends Addon {
 
     $order->set_date_created( $date );
     $order->save();
+
+    // Fix download expire date
+    $accessExpires = $_POST['access_expires'];
+    if ( ! empty( $accessExpires ) && is_array( $accessExpires ) ) {
+      foreach ( $accessExpires as $i => $expire ) {
+        $accessExpires[ $i ] = ! empty( $expire ) ? gregdate( 'Y-m-d', $expire ) : '';
+      }
+
+      $_POST['access_expires'] = $accessExpires;
+    }
   }
 
   /**

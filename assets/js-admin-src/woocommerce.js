@@ -6,12 +6,15 @@ jQuery(document).ready(function ($) {
   function wppdWcOrderDateFix() {
     if ($('body.woocommerce_page_wc-orders form#order input[name="order_date"]').length === 0) return;
 
-    let wcOrderDateFields = ['order_date', 'order_date_hour', 'order_date_minute', 'order_date_second'];
+    let wcOrderDateFields = ['input[name="order_date"]', 'input[name="order_date_hour"]', 'input[name="order_date_minute"]', 'input[name="order_date_second"]', 'input.hasDatepicker'];
 
-    wcOrderDateFields.forEach(function (fieldName) {
-      let value = $('body.woocommerce_page_wc-orders form#order input[name="' + fieldName + '"]').attr('value');
-      value = wppdWcConv2EnNum(value);
-      $('body.woocommerce_page_wc-orders form#order input[name="' + fieldName + '"]').attr('value', value).val(value).trigger('change');
+    wcOrderDateFields.forEach(function (fieldSelector) {
+      let inputField = $('body.woocommerce_page_wc-orders form#order ' + fieldSelector);
+
+      inputField.each(function (index) {
+        value = wppdWcConv2EnNum($(this).attr('value'));
+        $(this).attr('value', value).val(value).trigger('change');
+      });
     })
   }
 

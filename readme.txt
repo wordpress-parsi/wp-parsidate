@@ -63,6 +63,9 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 
 == Changelog ==
 
+= 6.3 =
+* Fix: WooCommerce order date problem when saving
+
 = 6.2.1 =
 * Fix: WooCommerce legacy report datepicker. [#WP topic](https://wordpress.org/support/topic/%d8%ae%d8%aa%d9%84%d8%a7%d9%84-%da%af%d8%b2%d8%a7%d8%b1%d8%b4%d9%87%d8%a7%db%8c-%d9%88%d9%88%da%a9%d8%a7%d9%85%d8%b1%d8%b3-%d8%a8%d8%b9%d8%af-%d8%a7%d8%b2-%d8%a2%d9%be%d8%af%db%8c%d8%aa-parsi/)
 * Fix: Admin font (Vazirmatn) forced to front. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/320)
