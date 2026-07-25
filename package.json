@@ -11,6 +11,8 @@
     "parsidate-vazir-font-compressed-css": "sass --watch assets/scss/vazir-font.scss:assets/css-admin/vazir-font.min.css --style compressed",
     "parsidate-dashboard-css": "sass --watch assets/scss/dashboard.scss:assets/css-admin/dashboard.css",
     "parsidate-dashboard-compressed-css": "sass --watch assets/scss/dashboard.scss:assets/css-admin/dashboard.min.css --style compressed",
+    "parsidate-woocommerce-css": "sass --watch assets/scss/woocommerce.scss:assets/css-admin/woocommerce.css",
+    "parsidate-woocommerce-compressed-css": "sass --watch assets/scss/woocommerce.scss:assets/css-admin/woocommerce.min.css --style compressed",
     "parsidate-build-js": "webpack --config webpack.config.js"
   },
   "devDependencies": {

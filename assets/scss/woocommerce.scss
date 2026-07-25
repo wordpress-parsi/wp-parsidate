@@ -1,0 +1,20 @@
+body.rtl.woocommerce_page_wc-orders {
+  form#order {
+    #order_data {
+      .order_data_column:first-child {
+        p.form-field:first-of-type {
+          direction: ltr;
+
+          label {
+            display: block;
+            direction: rtl;
+          }
+
+          input {
+            padding: 5px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -664,6 +664,9 @@ class WooCommerce extends Addon {
 
       do_action( 'wpp_jalali_datepicker_enqueued', 'wc' );
     }
+
+    wp_enqueue_script( WP_PARSI_KEY_SLUG . '-woocommerce-admin', Assets::url( "js-admin/woocommerce$debugName.js" ), [], $pluginVersion, [ 'in_footer' => true ] );
+    wp_enqueue_style( WP_PARSI_KEY_SLUG . '-woocommerce-admin', Assets::url( "css-admin/woocommerce$debugName.css" ), null, $pluginVersion );
   }
 
   /**

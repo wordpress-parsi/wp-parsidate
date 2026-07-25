@@ -25,7 +25,7 @@ eval("{/**\r\n * @output wp-admin/js/dashboard.js\r\n */\r\n\r\n/* global pageno
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = {};
+/******/ 	let __webpack_exports__ = {};
 /******/ 	__webpack_modules__["./assets/js-admin-src/dashboard.js"]();
 /******/ 	
 /******/ })()
