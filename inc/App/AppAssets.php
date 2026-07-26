@@ -20,8 +20,6 @@ class AppAssets {
     add_filter( 'admin_init', [ $this, 'fixTinyMceFont' ], PHP_INT_MAX );
     add_filter( 'theme_file_path', [ $this, 'fixThemeFilePath' ], 10, 2 );
     //add_filter( 'wp_theme_json_data_theme', [ $this, 'addFontToThemeJson' ] );
-    add_action( 'admin_print_styles-plugin-editor.php', [ $this, 'fixCodeEditor' ] );
-    add_action( 'admin_print_styles-theme-editor.php', [ $this, 'fixCodeEditor' ] );
     add_action( 'wpp_jalali_datepicker_enqueued', [ $this, 'localizeMonthsName' ] );
     add_action( 'enqueue_block_editor_assets', [ $this, 'blockEditorAssets' ] );
   }
@@ -88,20 +86,6 @@ class AppAssets {
         'months' => $months_name
       )
     );
-  }
-
-  /**
-   * Fixes themes and plugins RTL style, they should be LTR
-   *
-   * @return              void
-   * @since               2.0
-   */
-  public function fixCodeEditor(): void {
-    $pluginVersion = Assets::getVersion();
-    $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
-
-    wp_enqueue_style( WP_PARSI_KEY_SLUG . '-admin-fix', Assets::url( 'css-admin/admin-fix' . $debugName . '.css' )
-      , false, $pluginVersion );
   }
 
   /**
