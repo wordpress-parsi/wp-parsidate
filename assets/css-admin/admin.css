@@ -1,3 +1,11 @@
+html[dir=rtl] body.post-php .wrap #timestampdiv .timestamp-wrap.wp-parsidate-timestamp-wrap {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+html[dir=rtl] body.post-php .wrap #timestampdiv .timestamp-wrap.wp-parsidate-timestamp-wrap select {
+  background-position: left 3px top 55%;
+}
 html[dir=rtl] body.post-php .wrap #timestampdiv .timestamp-wrap.wp-parsidate-timestamp-wrap select, html[dir=rtl] body.post-php .wrap #timestampdiv .timestamp-wrap.wp-parsidate-timestamp-wrap input[type=text] {
   padding: 2px;
   min-height: 30px;

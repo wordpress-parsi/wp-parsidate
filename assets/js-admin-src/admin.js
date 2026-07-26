@@ -55,16 +55,23 @@ jQuery(document).ready(function ($) {
    * Edit inline
    */
   function create_stampdiv(year, mon, day, hour, minu) {
-    var div = '<div class="timestamp-wrap persian">' + '<select id="mma" name="mma">';
-    for (var i = 1; i < 13; i++) {
-      if (i === parseInt(mon)) div += '<option value="' + i + '" selected="selected">' + wpp_months_name[i] + '</option>'; else div += '<option value="' + i + '">' + wpp_months_name[i] + '</option>';
+    let monthSelect = '<select id="mma" name="mma">';
+    for (let i = 1; i < 13; i++) {
+      monthSelect += '<option value="' + i + '" ' + (i === parseInt(mon) ? 'selected="selected"' : '') + '>' + wpp_months_name[i] + '</option>';
     }
-    div += '</select>' + '<input type="text" id="jja" name="jja" value="' + day + '" size="2" maxlength="2" autocomplete="off" />,' + '<input type="text" id="aaa" name="aaa" value="' + year + '" size="4" maxlength="4" autocomplete="off" /> در ' + '<input type="text" id="hha" name="hha" value="' + hour + '" size="2" maxlength="2" autocomplete="off" /> : ' + '<input type="text" id="mna" name="mna" value="' + minu + '" size="2" maxlength="2" autocomplete="off" />' + '</div>';
-    return div;
+    monthSelect += '</select>';
+
+    return '<div class="timestamp-wrap wp-parsidate-timestamp-wrap">' +
+      '<input type="text" id="jja" name="jja" value="' + day + '" placeholder="روز" size="2" maxlength="2" autocomplete="off" />' +
+      monthSelect +
+      '<input type="text" id="aaa" name="aaa" value="' + year + '" placeholder="سال" size="4" maxlength="4" autocomplete="off" /> در ' +
+      '<input type="text" id="mna" name="mna" value="' + minu + '" placeholder="دقیقه" size="2" maxlength="2" autocomplete="off" /> :' +
+      '<input type="text" id="hha" name="hha" value="' + hour + '" placeholder="ساعت" size="2" maxlength="2" autocomplete="off" />' +
+      '</div>';
   }
 
   $('a.edit-timestamp').on('click', function () {
-    $('.persian').remove();
+    $('.wp-parsidate-timestamp-wrap').remove();
     var date = gregorian_to_persian($('#aa').val(), $('#mm').val(), $('#jj').val());
     var div = create_stampdiv(date[0], date[1], date[2], $('#hh').val(), $('#mn').val());
     $('#timestampdiv').prepend(div);
@@ -80,7 +87,7 @@ jQuery(document).ready(function ($) {
       var hour = tr.find('.hh').html();
       var minu = tr.find('.mn').html();
       var date = gregorian_to_persian(year, month, day);
-      $('.persian').remove();
+      $('.wp-parsidate-timestamp-wrap').remove();
       $('.inline-edit-date').prepend(create_stampdiv(date[0], date[1], date[2], hour, minu));
       $('.inline-edit-date div:eq(1)').hide();
     }

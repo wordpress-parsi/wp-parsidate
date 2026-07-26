@@ -3,6 +3,14 @@ html[dir="rtl"] {
     .wrap {
       #timestampdiv {
         .timestamp-wrap.wp-parsidate-timestamp-wrap {
+          display: flex;
+          gap: 2px;
+          align-items: center;
+
+          select {
+            background-position: left 3px top 55%;
+          }
+
           select, input[type="text"] {
             padding: 2px;
             min-height: 30px;
