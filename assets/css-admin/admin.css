@@ -1,0 +1,8 @@
+html[dir=rtl] body.post-php .wrap #timestampdiv .timestamp-wrap.wp-parsidate-timestamp-wrap select, html[dir=rtl] body.post-php .wrap #timestampdiv .timestamp-wrap.wp-parsidate-timestamp-wrap input[type=text] {
+  padding: 2px;
+  min-height: 30px;
+  max-height: 30px;
+  line-height: 1;
+}
+
+/*# sourceMappingURL=admin.css.map */

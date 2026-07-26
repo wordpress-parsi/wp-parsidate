@@ -241,11 +241,6 @@ class AppAssets {
     $pluginVersion = Assets::getVersion();
     $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
-    if ( Settings::get( 'enable_fonts', false ) ) {
-      wp_enqueue_style( WP_PARSI_KEY_SLUG . '-vazir-font',
-        Assets::url( 'css-admin/vazir-font' . $debugName . '.css' ), false, $pluginVersion );
-    }
-
     wp_enqueue_script( WP_PARSI_KEY_SLUG . '-admin', Assets::url( 'js-admin/admin' . $debugName . '.js' ), false,
       $pluginVersion, [ 'in_footer' => true ] );
     wp_localize_script(
@@ -253,6 +248,11 @@ class AppAssets {
       'WPP_I18N',
       array( 'months' => Names::getMonths() )
     );
+    wp_enqueue_style( WP_PARSI_KEY_SLUG . '-admin', Assets::url( 'css-admin/admin' . $debugName . '.css' ), false, $pluginVersion );
+
+    if ( Settings::get( 'enable_fonts', false ) ) {
+      wp_enqueue_style( WP_PARSI_KEY_SLUG . '-vazir-font', Assets::url( 'css-admin/vazir-font' . $debugName . '.css' ), false, $pluginVersion );
+    }
 
     if ( $pagenow == 'edit.php' ) {
       $postType = Param::get( 'post_type', 'post' );
