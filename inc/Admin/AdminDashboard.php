@@ -27,7 +27,7 @@ class AdminDashboard {
   }
 
   public function notice(): void {
-    Notice::add( self::tab, esc_html__( 'Welcome to WP Parsi!', 'wp-parsidate' ), 'default' );
+    Notice::add( self::tab, esc_html__( 'Welcome to Parsidate!', 'wp-parsidate' ), 'default' );
   }
 
   public function content(): void {
@@ -39,7 +39,7 @@ class AdminDashboard {
     if ( empty( $dashboardTypeLinks['addons'] ) ) {
       $message = '<strong>' . esc_html__( 'Hello',
           'wp-parsidate' ) . '، ' . User::getData( 'display_name' ) . '!</strong>';
-      $message .= '<p>' . esc_html__( 'WP Parsi is here to help you integrate Jalali date with your site, go to the Addons tab and activate the required addons.',
+      $message .= '<p>' . esc_html__( 'Parsidate is here to help you integrate Jalali date with your site, go to the Addons tab and activate the required addons.',
           'wp-parsidate' ) . '</p>';
 
       echo '<div class="wppd-dashboard-welcome">' . wp_kses( $message, [ 'strong' => [], 'p' => [] ] ) . '</div>';
@@ -57,7 +57,7 @@ class AdminDashboard {
     echo '</div>';
 
     echo '<div class="wppd-dashboard-feed-news"><strong class="wppd-dashboard-feed-head">' .
-         esc_html__( 'WP Parsi news', 'wp-parsidate' ) . '</strong>';
+         esc_html__( 'Parsidate news', 'wp-parsidate' ) . '</strong>';
     $feedReader = new FeedReader( [ 'url' => 'https://wp-parsi.com/parsidate/feed/' ] );
     $feedItems  = $feedReader->read()->getFeedLinks();
     $feedNone   = $feedReader->setEmptyFeedDesc( esc_html__( 'WP-Parsi website is not available.', 'wp-parsidate' ) );

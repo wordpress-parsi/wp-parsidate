@@ -53,7 +53,7 @@ class DashboardWidget {
   public function addDashboardWidget(): void {
     add_meta_box(
       'wpp_dashboard_primary',
-      esc_html__( 'WP Parsi', 'wp-parsidate' ),
+      esc_html__( 'Parsidate', 'wp-parsidate' ),
       [ $this, 'dashboardWidgetContent' ],
       'dashboard',
       'normal',
