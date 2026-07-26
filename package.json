@@ -5,8 +5,8 @@
   "homepage": "https://parsa.ws",
   "author": "Parsa Kafi (https://parsa.ws)",
   "scripts": {
-    "parsidate-admin-css": "sass --watch assets/scss/admin-style.scss:assets/css-admin/admin-style.css",
-    "parsidate-admin-compressed-css": "sass --watch assets/scss/admin-style.scss:assets/css-admin/admin-style.min.css --style compressed",
+    "parsidate-plugin-css": "sass --watch assets/scss/plugin.scss:assets/css-admin/plugin.css",
+    "parsidate-plugin-compressed-css": "sass --watch assets/scss/plugin.scss:assets/css-admin/plugin.min.css --style compressed",
     "parsidate-vazir-font-css": "sass --watch assets/scss/vazir-font.scss:assets/css-admin/vazir-font.css",
     "parsidate-vazir-font-compressed-css": "sass --watch assets/scss/vazir-font.scss:assets/css-admin/vazir-font.min.css --style compressed",
     "parsidate-dashboard-css": "sass --watch assets/scss/dashboard.scss:assets/css-admin/dashboard.css",
