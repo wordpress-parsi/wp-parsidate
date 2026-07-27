@@ -287,7 +287,7 @@ class WooCommerce extends Addon {
   }
 
   /**
-   * Fix non-persian digits in checkout phone field
+   * Fix non-persian numbers in checkout phone field
    *
    * @param string $phone The address property value.
    * @param \WC_Order $order The order object being read.
@@ -809,6 +809,7 @@ class WooCommerce extends Addon {
         'fix_prices'             => array(
           'id'       => 'fix_prices',
           'title'    => esc_html__( 'Fix prices', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Convert English numbers to Farsi', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
@@ -825,6 +826,7 @@ class WooCommerce extends Addon {
         'fix_persian_postcode'    => array(
           'id'       => 'fix_persian_postcode',
           'title'    => esc_html__( 'Fix Persian postcode', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Convert Farsi numbers to English', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
@@ -832,6 +834,7 @@ class WooCommerce extends Addon {
         'fix_persian_phone'       => array(
           'id'       => 'fix_persian_phone',
           'title'    => esc_html__( 'Fix Persian phone', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Convert Farsi numbers to English', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
@@ -861,19 +864,20 @@ class WooCommerce extends Addon {
           'type' => 'endGrid',
         ),
 
-        'woo_email_start_grid' => array(
+        'woo_email_start_grid'      => array(
           'id'    => 'woo_product_start_grid',
           'title' => esc_html__( 'Email', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),
-        'fix_email_content_numbers'    => array(
+        'fix_email_content_numbers' => array(
           'id'       => 'fix_email_content_numbers',
           'title'    => esc_html__( 'Convert numbers in email content', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Convert English numbers to Farsi', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
         ),
-        'woo_email_end_grid'   => array(
+        'woo_email_end_grid'        => array(
           'type' => 'endGrid',
         ),
       ]
