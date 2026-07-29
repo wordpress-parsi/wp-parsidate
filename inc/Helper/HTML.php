@@ -173,11 +173,13 @@ class HTML {
       $isList = array_is_list( $data['options'] );
 
       foreach ( $data['options'] as $key => $value ) {
-        $selected = isset( $data['multiple'] ) && $data['multiple'] && is_array( $data['setting_value'] ) ? in_array( ( $isList ? $value : $key ),
-          $data['setting_value'], true ) : $data['setting_value'] == ( $isList ? $value : $key );
+        if ( isset( $data['multiple'] ) && $data['multiple'] && is_array( $data['setting_value'] ) ) {
+          $selected = in_array( ( $isList ? $value : $key ), $data['setting_value'], true );
+        } else {
+          $selected = $data['setting_value'] == ( $isList ? $value : $key );
+        }
 
-        $field .= '<option value="' . ( $isList ? $value : $key ) . '" ' . selected( $selected, true,
-            false ) . '>' . $value . '</option>';
+        $field .= '<option value="' . ( $isList ? $value : $key ) . '" ' . selected( $selected, true, false ) . '>' . $value . '</option>';
       }
     }
 
