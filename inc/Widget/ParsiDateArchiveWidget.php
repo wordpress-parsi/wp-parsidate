@@ -10,6 +10,7 @@ namespace WPParsidate\Widget;
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
 use WPParsidate\Core\Archive;
+use WPParsidate\Helper\Posts;
 use WPParsidate\Settings\Settings;
 
 /**
@@ -35,6 +36,7 @@ class ParsiDateArchiveWidget extends \WP_Widget {
   public function form( $instance ) {
     $type                       = $instance['type'] ?? 'monthly';
     $instance['title']          = isset( $instance['title'] ) ? wp_strip_all_tags( $instance['title'] ) : esc_html__( 'Archive', 'wp-parsidate' );
+    $instance['post_type']      = $instance['post_type'] ?? 'post';
     $instance['display_count']  = $instance['display_count'] ?? 0;
     $instance['display_select'] = $instance['display_select'] ?? 0;
 
@@ -46,13 +48,19 @@ class ParsiDateArchiveWidget extends \WP_Widget {
     ?>
     <p style="text-align:right; direction:rtl">
 
-      <label
-        for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title',
-          'wp-parsidate' ) ?>:</label>
+      <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>">
+        <?php esc_html_e( 'Title', 'wp-parsidate' ) ?>:</label>
 
       <input style="width: 200px;" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"
              name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
              value="<?php echo $instance['title'] ?>"/>
+
+      <br>
+
+      <label for="<?php echo esc_attr( $this->get_field_id( 'post_type' ) ); ?>">
+        <?php esc_html_e( 'Post type', 'wp-parsidate' ) ?>:</label>
+
+      <?php echo Posts::getTypeSelect( $this->get_field_id( 'post_type' ), $this->get_field_name( 'post_type' ), $instance['post_type'] ) ?>
 
       <br><br>
 
@@ -82,7 +90,6 @@ class ParsiDateArchiveWidget extends \WP_Widget {
                value="weekly" <?php /*checked( $type, 'weekly' ); */ ?>/>
         <?php /*esc_html_e( 'Weekly', 'wp-parsidate' ) */ ?>
       </label>
-
       <br/>-->
 
       <label>
@@ -91,20 +98,8 @@ class ParsiDateArchiveWidget extends \WP_Widget {
                value="daily" <?php checked( $type, 'daily' ); ?>/>
         <?php esc_html_e( 'Daily', 'wp-parsidate' ) ?>
       </label>
-
       <br/>
       <br/>
-
-      <input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'display_count' ) ); ?>"
-             id="<?php echo esc_attr( $this->get_field_id( 'display_count' ) ); ?>"
-             value="1" <?php checked( $instance['display_count'], 1 ); ?>/>
-
-      <label for="<?php echo esc_attr( $this->get_field_id( 'display_count' ) ); ?>">
-        <?php esc_html_e( 'Show post counts', 'wp-parsidate' ) ?>
-      </label>
-
-      <br/>
-
       <input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'display_select' ) ); ?>"
              id="<?php echo esc_attr( $this->get_field_id( 'display_select' ) ); ?>"
              value="1" <?php echo checked( $instance['display_select'], 1 ); ?>/>
@@ -112,7 +107,14 @@ class ParsiDateArchiveWidget extends \WP_Widget {
       <label for="<?php echo esc_attr( $this->get_field_id( 'display_select' ) ); ?>">
         <?php esc_html_e( 'Display as dropdown', 'wp-parsidate' ) ?>
       </label>
+      <br/>
+      <input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'display_count' ) ); ?>"
+             id="<?php echo esc_attr( $this->get_field_id( 'display_count' ) ); ?>"
+             value="1" <?php checked( $instance['display_count'], 1 ); ?>/>
 
+      <label for="<?php echo esc_attr( $this->get_field_id( 'display_count' ) ); ?>">
+        <?php esc_html_e( 'Show post counts', 'wp-parsidate' ) ?>
+      </label>
     </p>
     <?php
   }
@@ -133,11 +135,11 @@ class ParsiDateArchiveWidget extends \WP_Widget {
    */
   public function update( $new_instance, $old_instance ): array {
     $instance                   = $old_instance;
-    $instance['title']          = isset( $new_instance['title'] ) ? wp_strip_all_tags( $new_instance['title'] ) : esc_html__( 'Jalali Date Archives',
-      'wp-parsidate' );
-    $instance['display_count']  = $new_instance['display_count'] ?? 0;
-    $instance['display_select'] = $new_instance['display_select'] ?? 0;
+    $instance['title']          = isset( $new_instance['title'] ) ? wp_strip_all_tags( $new_instance['title'] ) : esc_html__( 'Archive', 'wp-parsidate' );
+    $instance['post_type']      = $new_instance['post_type'] ?? 'post';
     $instance['type']           = $new_instance['type'] ?? 'monthly';
+    $instance['display_select'] = $new_instance['display_select'] ?? 0;
+    $instance['display_count']  = $new_instance['display_count'] ?? 0;
 
     return $instance;
   }
@@ -156,11 +158,11 @@ class ParsiDateArchiveWidget extends \WP_Widget {
     if ( ! Settings::get( 'conv_permalinks', false ) ) {
       return;
     }
-
-    $type       = $instance['type'] ?? 'monthly';
-    $title      = $instance['title'] ?? esc_html__( 'Archive', 'wp-parsidate' );
-    $post_count = (bool) $instance['display_count'] ?? false;
-    $isList     = (bool) $instance['display_select'] ?? false;
+    $title     = $instance['title'] ?? esc_html__( 'Archive', 'wp-parsidate' );
+    $postType  = $instance['post_type'] ?? 'post';
+    $type      = $instance['type'] ?? 'monthly';
+    $postCount = (bool) ( $instance['display_count'] ?? false );
+    $isList    = (bool) ( $instance['display_select'] ?? false );
 
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo $args['before_widget'];
@@ -176,24 +178,18 @@ class ParsiDateArchiveWidget extends \WP_Widget {
 
     if ( $isList ) {
       echo "<select name='display_select' onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value='0'>" . esc_attr( $title ) . "</option>";
-
-      Archive::getPostArchives( array(
-        'type'            => $type,
-        'format'          => 'option',
-        'show_post_count' => $post_count
-      ) );
-
-      echo '</select>';
     } else {
       echo '<ul>';
-
-      Archive::getPostTypeArchives( array(
-        'type'            => $type,
-        'show_post_count' => $post_count
-      ) );
-
-      echo '</ul>';
     }
+
+    Archive::getPostTypeArchives( array(
+      'type'            => $type,
+      'format'          => $isList ? 'option' : 'html',
+      'post_type'       => $postType,
+      'show_post_count' => $postCount
+    ) );
+
+    echo $isList ? '</select>' : '</ul>';
 
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo $args['after_widget'];

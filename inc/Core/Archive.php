@@ -102,6 +102,8 @@ class Archive {
   }
 
   /**
+   * Yearly archive
+   *
    * @param $year
    * @param $format
    * @param $before
@@ -110,14 +112,9 @@ class Archive {
    * @param $args
    */
   private static function printYearArchive( $year, $format, $before, $count, $show_post_count, $args ): void {
-    if ( $show_post_count ) {
-      $count = '&nbsp;(' . Number::toPersian( $count ) . ')';
-    } else {
-      $count = '';
-    }
+    $count = $show_post_count ? '&nbsp;(' . Number::toPersian( $count ) . ')' : '';
 
     $url = get_year_link( $year );
-
     if ( 'post' !== $args['post_type'] ) {
       $url = add_query_arg( 'post_type', $args['post_type'], $url );
     }
@@ -126,6 +123,8 @@ class Archive {
   }
 
   /**
+   * Monthly archive
+   *
    * @param $old_date
    * @param $format
    * @param $before
@@ -137,21 +136,14 @@ class Archive {
     $monthsName = Names::getMonths();
     $year       = substr( $old_date, 0, 4 );
     $month      = substr( $old_date, 4, 2 );
-
-    if ( $show_post_count ) {
-      $count = '&nbsp;(' . Number::toPersian( $count ) . ')';
-    } else {
-      $count = '';
-    }
+    $count      = $show_post_count ? '&nbsp;(' . Number::toPersian( $count ) . ')' : '';
 
     $url = get_month_link( $year, $month );
-
     if ( 'post' !== $args['post_type'] ) {
       $url = add_query_arg( 'post_type', $args['post_type'], $url );
     }
 
-    echo get_archives_link( $url, $monthsName[ (int) $month ] . ' ' . Number::toPersian( $year ), $format, $before,
-      $count );
+    echo get_archives_link( $url, $monthsName[ (int) $month ] . ' ' . Number::toPersian( $year ), $format, $before, $count );
   }
 
   /**
@@ -160,50 +152,45 @@ class Archive {
    */
   private static function printArchive( $results, $args ): void {
     if ( $args['type'] === 'yearly' ) {
-      $old_date = parsidate( 'Y', $results[0]->date, 'eng' );
-      $count    = $results[0]->count;
-      $c        = count( $results );
+      $year  = parsidate( 'Y', $results[0]->date, 'eng' );
+      $count = $results[0]->count;
+      $c     = count( $results );
 
       for ( $i = 1; $i < $c; $i ++ ) {
         $dt   = $results[ $i ];
         $date = parsidate( 'Y', $dt->date, 'eng' );
 
-        if ( $date === $old_date ) {
+        if ( $date === $year ) {
           $count += $dt->count;
         } else {
-          self::printYearArchive( $old_date, $args['format'], $args['before'], $count,
-            $args['show_post_count'],
-            $args );
+          self::printYearArchive( $year, $args['format'], $args['before'], $count, $args['show_post_count'], $args );
 
-          $old_date = $date;
-          $count    = $dt->count;
+          $year  = $date;
+          $count = $dt->count;
         }
       }
 
-      self::printYearArchive( $old_date, $args['format'], $args['before'], $count, $args['show_post_count'],
-        $args );
+      self::printYearArchive( $year, $args['format'], $args['before'], $count, $args['show_post_count'], $args );
 
     } elseif ( $args['type'] === 'monthly' ) {
-      $old_date = parsidate( 'Ym', $results[0]->date, 'eng' );
-      $count    = $results[0]->count;
-      $c        = count( $results );
+      $yearMonth = parsidate( 'Ym', $results[0]->date, 'eng' );
+      $count     = $results[0]->count;
+      $c         = count( $results );
 
       for ( $i = 1; $i < $c; $i ++ ) {
         $dt   = $results[ $i ];
         $date = parsidate( 'Ym', $dt->date, 'eng' );
 
-        if ( $date === $old_date ) {
+        if ( $date === $yearMonth ) {
           $count += $dt->count;
         } else {
-          self::printMonthArchive( $old_date, $args['format'], $args['before'], $count,
-            $args['show_post_count'],
-            $args );
-          $old_date = $date;
-          $count    = $dt->count;
+          self::printMonthArchive( $yearMonth, $args['format'], $args['before'], $count, $args['show_post_count'], $args );
+          $yearMonth = $date;
+          $count     = $dt->count;
         }
       }
 
-      self::printMonthArchive( $old_date, $args['format'], $args['before'], $count, $args['show_post_count'], $args );
+      self::printMonthArchive( $yearMonth, $args['format'], $args['before'], $count, $args['show_post_count'], $args );
 
     } elseif ( $args['type'] === 'daily' ) {
       $monthsName = Names::getMonths();
@@ -213,16 +200,14 @@ class Archive {
         $jDate = explode( ',', $jDate );
         $date  = date( 'Y,m,d', strtotime( $row->date ) );
         $date  = explode( ',', $date );
-
-        if ( $args['show_post_count'] ) {
-          $count = '&nbsp;(' . Number::toPersian( $row->count ) . ')';
-        } else {
-          $count = '';
-        }
-
-        $text = Number::toPersian( $jDate[2] ) . ' ' . $monthsName[ (int) $jDate[1] ] . ' ' . Number::toPersian( $jDate[0] );
+        $count = $args['show_post_count'] ? '&nbsp;(' . Number::toPersian( $row->count ) . ')' : '';
+        $text  = Number::toPersian( $jDate[2] ) . ' ' . $monthsName[ (int) $jDate[1] ] . ' ' . Number::toPersian( $jDate[0] );
         // get_day_link convert to Jalali in FixPermalink:getDayLink
-        echo get_archives_link( get_day_link( $date[0], $date[1], $date[2] ), $text, $args['format'], '', $count );
+        $url = get_day_link( $date[0], $date[1], $date[2] );
+        if ( 'post' !== $args['post_type'] ) {
+          $url = add_query_arg( 'post_type', $args['post_type'], $url );
+        }
+        echo get_archives_link( $url, $text, $args['format'], '', $count );
       }
     }
   }
