@@ -1,0 +1,85 @@
+.wppd-calendar-widget-table {
+  width: 100%;
+  border: none;
+
+  caption {
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  thead {
+    th {
+      text-align: center;
+      border: none;
+    }
+  }
+
+  tbody {
+    td {
+      border: none;
+      padding: 2px;
+      text-align: center;
+    }
+
+    .pad {
+      background: none;
+      border: none;
+    }
+  }
+
+  tfoot {
+    td {
+      background: none;
+      border: none;
+    }
+
+    #prev {
+      text-align: right;
+    }
+
+    #next {
+      text-align: left;
+    }
+  }
+
+  &.wppd-calendar-widget-theme-light {
+    tbody {
+      td {
+        &#today {
+          background-color: #5d5d5d;
+          color: #fff;
+          border-radius: 2px;
+        }
+      }
+
+      a {
+        background-color: #333;
+        color: #fff;
+        display: block;
+        font-weight: 700;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  &.wppd-calendar-widget-theme-dark {
+    tbody {
+      td {
+        &#today {
+          background-color: #f1f1f1;
+          color: #2a2a2a;
+          border-radius: 2px;
+        }
+      }
+
+      a {
+        background-color: #fdfdfd;
+        color: #2a2a2a;
+        display: block;
+        font-weight: 700;
+        border-radius: 2px;
+      }
+    }
+  }
+}

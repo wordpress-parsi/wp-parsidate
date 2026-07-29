@@ -11,7 +11,9 @@ class Widget {
   public function __construct() {
     new DashboardWidget();
 
-    new ParsiDateArchiveWidget();
-    new ParsiDateCalendarWidget();
+    add_action( 'widgets_init', function () {
+      register_widget( 'WPParsidate\Widget\ParsiDateArchiveWidget' );
+      register_widget( 'WPParsidate\Widget\ParsiDateCalendarWidget' );
+    } );
   }
 }

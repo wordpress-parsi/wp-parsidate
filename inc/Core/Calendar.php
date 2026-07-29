@@ -7,6 +7,8 @@
 
 namespace WPParsidate\Core;
 
+use WPParsidate\Helper\Number;
+
 defined( 'ABSPATH' ) || exit;
 
 class Calendar {
@@ -14,12 +16,13 @@ class Calendar {
    * Create Persian Calendar
    *
    * @param string $postType Post type
+   * @param string $theme Theme style
    *
    * @return          void
    * @author          Parsa Kafi
    * @author          Mobin Ghasempoor
    */
-  public static function printCalendar( string $postType = 'post' ): void {
+  public static function printCalendar( string $postType = 'post', string $theme = 'none' ): void {
     global $wpdb, $m, $monthnum, $year, $day, $posts;
 
     $monthsName = Names::getMonths();
@@ -140,7 +143,7 @@ class Calendar {
                 ", $end, $postType )
     );
 
-    $calendar_output = '<table id="wp-calendar" style="direction: rtl" class="widget_calendar">' .
+    $calendar_output = '<table id="wp-calendar" class="widget_calendar ' . WP_PARSI_CLASS_PREFIX . 'calendar-widget-table ' . WP_PARSI_CLASS_PREFIX . 'calendar-widget-theme-' . $theme . '">' .
                        '<caption>' . $monthsName[ (int) $jthismonth ] . ' ' .
                        $pd->persian_date( 'Y', $unixmonth ) . '</caption><thead><tr>';
     $myweek          = array();
@@ -211,12 +214,11 @@ class Calendar {
       ARRAY_N
     );
 
+    $daywithpost = array();
     if ( $dayswithposts ) {
       foreach ( $dayswithposts as $daywith ) {
         $daywithpost[] = $pd->persian_date( 'j', "$daywith[2]-$daywith[1]-$daywith[0]", 'eng' );
       }
-    } else {
-      $daywithpost = array();
     }
 
     $userAgent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ?? '' ) );
@@ -272,12 +274,13 @@ class Calendar {
       $calendar_output .= "\n\t\t" . '<td colspan="' . $pad . '" class="pad">&nbsp;</td>';
     }
 
-    $daysinmonth = (int) $pd->persian_date( 't', $unixmonth, 'eng' );
+    $daysInMonth  = (int) $pd->persian_date( 't', $unixmonth, 'eng' );
+    $currentDay   = gmdate( 'j', time() + $tzOffset );
+    $currentMonth = gmdate( 'm', time() + $tzOffset );
+    $currentYear  = gmdate( 'Y', time() + $tzOffset );
 
-    for ( $day = 1; $day <= $daysinmonth; ++ $day ) {
-      list( $thisYear,
-        $thisMonth,
-        $thisDay ) = $pd->persian_to_gregorian( $jthisyear, $jthismonth, $day );
+    for ( $day = 1; $day <= $daysInMonth; ++ $day ) {
+      list( $thisYear, $thisMonth, $thisDay ) = $pd->persian_to_gregorian( $jthisyear, $jthismonth, $day );
 
       if ( isset( $newrow ) && $newrow ) {
         $calendar_output .= "\n\t</tr>\n\t<tr>\n\t\t";
@@ -285,15 +288,13 @@ class Calendar {
 
       $newrow = false;
 
-      if ( $thisDay == gmdate( 'j', time() + $tzOffset )
-           && $thisMonth == gmdate( 'm', time() + $tzOffset )
-           && $thisYear == gmdate( 'Y', time() + $tzOffset ) ) {
-        $calendar_output .= '<td id="today">';
+      if ( $thisDay == $currentDay && $thisMonth == $currentMonth && $thisYear == $currentYear ) {
+        $calendar_output .= '<td id="today" title="' . esc_html__( 'Today', 'wp-parsidate' ) . '">';
       } else {
         $calendar_output .= '<td>';
       }
 
-      $p_day = ( empty( $val['sep_datesnum'] ) ? $day : per_number( $day ) );
+      $p_day = Number::toPersian( $day );
 
       if ( in_array( $day, $daywithpost ) ) {
         $dayLinkDate = $pd->gregorian_date( 'Y,m,d', "$jthisyear-$jthismonth-$day" );

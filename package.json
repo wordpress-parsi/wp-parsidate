@@ -15,6 +15,7 @@
     "parsidate-dashboard-compressed-css": "sass --watch assets/scss/dashboard.scss:assets/css-admin/dashboard.min.css --style compressed",
     "parsidate-woocommerce-css": "sass --watch assets/scss/woocommerce.scss:assets/css-admin/woocommerce.css",
     "parsidate-woocommerce-compressed-css": "sass --watch assets/scss/woocommerce.scss:assets/css-admin/woocommerce.min.css --style compressed",
+    "parsidate-calendar-wdiget-compressed-css": "sass --watch assets/scss/calendar-wdiget.scss:assets/css-admin/calendar-wdiget.min.css --style compressed",
     "parsidate-build-js": "webpack --config webpack.config.js"
   },
   "devDependencies": {
