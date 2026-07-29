@@ -10,6 +10,7 @@ namespace WPParsidate\Widget;
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
 use WPParsidate\Core\Calendar;
+use WPParsidate\Helper\Posts;
 use WPParsidate\Settings\Settings;
 
 /**
@@ -34,8 +35,9 @@ class ParsiDateCalendarWidget extends \WP_Widget {
    *
    */
   public function form( $instance ) {
-    $title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Calender', 'wp-parsidate' );
-    $theme = ! empty( $instance['theme_color'] ) ? $instance['theme_color'] : 'light-mode';
+    $title    = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Calender', 'wp-parsidate' );
+    $postType = $instance['post_type'] ?? 'post';
+    $theme    = ! empty( $instance['theme_color'] ) ? $instance['theme_color'] : 'light-mode';
 
     if ( ! Settings::get( 'conv_permalinks', false ) ) {
       echo "<p style='color: #ff8153'>" . esc_html__( 'For use widget, active "Fix permalinks dates" option in plugin settings.',
@@ -50,6 +52,13 @@ class ParsiDateCalendarWidget extends \WP_Widget {
              id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"
              name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
              value="<?php echo esc_attr( $title ); ?>"/>
+    </p>
+
+    <p style="text-align:right; direction:rtl">
+      <label for="<?php echo esc_attr( $this->get_field_id( 'post_type' ) ); ?>">
+        <?php esc_html_e( 'Post type', 'wp-parsidate' ) ?>:</label>
+
+      <?php echo Posts::getTypeSelect( $this->get_field_id( 'post_type' ), $this->get_field_name( 'post_type' ), $postType ) ?>
     </p>
 
     <p style="text-align:right; direction:rtl">
@@ -87,6 +96,7 @@ class ParsiDateCalendarWidget extends \WP_Widget {
   public function update( $new_instance, $old_instance ) {
     $instance                = $old_instance;
     $instance['title']       = esc_html( $new_instance['title'] );
+    $instance['post_type']   = $new_instance['post_type'] ?? 'post';
     $instance['theme_color'] = esc_attr( $new_instance['theme_color'] );
 
     return $instance;
@@ -107,6 +117,7 @@ class ParsiDateCalendarWidget extends \WP_Widget {
       return;
     }
 
+    $postType  = $instance['post_type'] ?? 'post';
     $theme     = ! empty( $instance['theme_color'] ) ? $instance['theme_color'] : 'light-mode';
     $widget_id = $args['widget_id'];
 
@@ -122,7 +133,7 @@ class ParsiDateCalendarWidget extends \WP_Widget {
       echo $args['after_title'];
     }
 
-    Calendar::printCalendar();
+    Calendar::printCalendar( $postType );
 
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo $args['after_widget'];

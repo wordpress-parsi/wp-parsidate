@@ -13,17 +13,19 @@ class Calendar {
   /**
    * Create Persian Calendar
    *
+   * @param string $postType Post type
+   *
    * @return          void
    * @author          Parsa Kafi
    * @author          Mobin Ghasempoor
    */
-  public static function printCalendar(): void {
+  public static function printCalendar( string $postType = 'post' ): void {
     global $wpdb, $m, $monthnum, $year, $day, $posts;
 
-    $wpp_months_name = Names::getMonths();
-    $jy              = 0;
-    $pd              = WPP_ParsiDate::getInstance();
-    $jm              = $monthnum;
+    $monthsName = Names::getMonths();
+    $jy         = 0;
+    $pd         = WPP_ParsiDate::getInstance();
+    $jm         = $monthnum;
     // Get the site's timezone offset in seconds
     $tzOffset = (int) ( (float) get_option( 'gmt_offset' ) ) * HOUR_IN_SECONDS;
 
@@ -40,13 +42,14 @@ class Calendar {
 
     if ( ! $posts ) {
       $gotsome = $wpdb->get_var(
-        "
+        $wpdb->prepare(
+          "
 					SELECT 1 AS test
 					FROM $wpdb->posts
-					WHERE post_type = 'post'
+					WHERE post_type = %s
 					  	AND post_status = 'publish'
 					LIMIT 1
-				"
+				", $postType )
       );
 
       if ( ! $gotsome ) {
@@ -59,7 +62,7 @@ class Calendar {
     $is_gregorian = false;
 
     if ( ! empty( $jm ) && ! empty( $jy ) ) {
-      $thisMonth = '' . zeroise( (int) $jm, 2 );
+      $thisMonth = zeroise( (int) $jm, 2 );
       $thisYear  = '' . (int) $jy;
     } elseif ( ! empty( $w ) ) {
       $thisYear  = '' . (int) substr( $m, 0, 4 );
@@ -111,36 +114,34 @@ class Calendar {
     $end   = $pd->gregorian_date( 'Y-m-d 23:59:59',
       "$jnextyear-$jthismonth-" . $pd->j_days_in_month[ $jthismonth - 1 ] );
 
-    $previous = $wpdb->get_row( $wpdb->prepare(
-      "
-				SELECT MONTH(post_date) AS month,
+    $previous = $wpdb->get_row(
+      $wpdb->prepare(
+        "SELECT MONTH(post_date) AS month,
 				  	YEAR(post_date) AS year
                 FROM $wpdb->posts
                 WHERE post_date < %s
-                	AND post_type = 'post'
+                	AND post_type = %s
                     AND post_status = 'publish'
                 ORDER BY post_date DESC
                 LIMIT 1
-               ",
-      $start
-    ) );
+               ", $start, $postType )
+    );
 
-    $next = $wpdb->get_row( $wpdb->prepare(
-      "
-				SELECT MONTH(post_date) AS month,
+    $next = $wpdb->get_row(
+      $wpdb->prepare(
+        "SELECT MONTH(post_date) AS month,
 				  	YEAR(post_date) AS year
                 FROM $wpdb->posts
                 WHERE post_date >= %s
-                	AND post_type = 'post'
+                	AND post_type = %s
                     AND post_status = 'publish'
                 ORDER BY post_date ASC
                 LIMIT 1
-                ",
-      $end
-    ) );
+                ", $end, $postType )
+    );
 
     $calendar_output = '<table id="wp-calendar" style="direction: rtl" class="widget_calendar">' .
-                       '<caption>' . $wpp_months_name[ (int) $jthismonth ] . ' ' .
+                       '<caption>' . $monthsName[ (int) $jthismonth ] . ' ' .
                        $pd->persian_date( 'Y', $unixmonth ) . '</caption><thead><tr>';
     $myweek          = array();
 
@@ -163,9 +164,11 @@ class Calendar {
         $previous_year --;
       }
 
-      $calendar_output .= "\n\t\t" . '<td colspan="3" id="prev"><a href="' . get_month_link( $previous_year,
-          $previous_month ) .
-                          '">&laquo; ' . $wpp_months_name[ $previous_month ] . '</a></td>';
+      $url = get_month_link( $previous_year, $previous_month );
+      if ( 'post' !== $postType ) {
+        $url = add_query_arg( 'post_type', $postType, $url );
+      }
+      $calendar_output .= "\n\t\t" . '<td colspan="3" id="prev"><a href="' . $url . '">&laquo; ' . $monthsName[ $previous_month ] . '</a></td>';
     } else {
       $calendar_output .= "\n\t\t" . '<td colspan="3" id="prev" class="pad">&nbsp;</td>';
     }
@@ -181,9 +184,11 @@ class Calendar {
         $next_year ++;
       }
 
-      $calendar_output .= "\n\t\t" . '<td colspan="3" id="next"><a href="' . get_month_link( $next_year,
-          $next_month ) .
-                          '">' . $wpp_months_name[ $next_month ] . ' &raquo;</a></td>';
+      $url = get_month_link( $next_year, $next_month );
+      if ( 'post' !== $postType ) {
+        $url = add_query_arg( 'post_type', $postType, $url );
+      }
+      $calendar_output .= "\n\t\t" . '<td colspan="3" id="next"><a href="' . $url . '">' . $monthsName[ $next_month ] . ' &raquo;</a></td>';
     } else {
       $calendar_output .= "\n\t\t" . '<td colspan="3" id="next" class="pad">&nbsp;</td>';
     }
@@ -194,19 +199,15 @@ class Calendar {
 
     $dayswithposts = $wpdb->get_results(
       $wpdb->prepare(
-        "
-			SELECT DISTINCT DAYOFMONTH ( post_date ),
+        "SELECT DISTINCT DAYOFMONTH ( post_date ),
 			  	MONTH ( post_date ),
 			  	YEAR ( post_date )
         	FROM $wpdb->posts
        		WHERE post_date > %s
        		    AND post_date < %s
-        		AND post_type = 'post'
+        		AND post_type = %s
         		AND post_status = 'publish'
-        	",
-        $start,
-        $end
-      ),
+        	", $start, $end, $postType ),
       ARRAY_N
     );
 
@@ -231,8 +232,7 @@ class Calendar {
     $ak_titles_for_day = array();
     $ak_post_titles    = $wpdb->get_results(
       $wpdb->prepare(
-        "
-				SELECT ID,
+        "SELECT ID,
 				  	post_title,
 				  	DAYOFMONTH ( post_date ) AS dom,
 				  	MONTH ( post_date ) AS month,
@@ -240,12 +240,9 @@ class Calendar {
 				FROM $wpdb->posts
 				WHERE post_date >= %s
 				    AND post_date <= %s
-				    AND post_type = 'post'
+				    AND post_type = %s
 				    AND post_status = 'publish'
-				",
-        $start,
-        $end
-      )
+				", $start, $end, $postType )
     );
 
     if ( $ak_post_titles ) {
@@ -299,10 +296,13 @@ class Calendar {
       $p_day = ( empty( $val['sep_datesnum'] ) ? $day : per_number( $day ) );
 
       if ( in_array( $day, $daywithpost ) ) {
-        $dayLinkDate     = $pd->gregorian_date( 'Y,m,d', "$jthisyear-$jthismonth-$day" );
-        $dayLinkDate     = explode( ',', $dayLinkDate );
-        $calendar_output .= '<a href="' . get_day_link( $dayLinkDate[0], $dayLinkDate[1], $dayLinkDate[2] ) .
-                            "\" title=\"$ak_titles_for_day[$day]\">$p_day</a>";
+        $dayLinkDate = $pd->gregorian_date( 'Y,m,d', "$jthisyear-$jthismonth-$day" );
+        $dayLinkDate = explode( ',', $dayLinkDate );
+        $url         = get_day_link( $dayLinkDate[0], $dayLinkDate[1], $dayLinkDate[2] );
+        if ( 'post' !== $postType ) {
+          $url = add_query_arg( 'post_type', $postType, $url );
+        }
+        $calendar_output .= '<a href="' . $url . "\" title=\"$ak_titles_for_day[$day]\">$p_day</a>";
       } else {
         $calendar_output .= $p_day;
       }
