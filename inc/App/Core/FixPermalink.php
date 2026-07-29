@@ -24,7 +24,7 @@ class FixPermalink {
   }
 
   /**
-   * Filters the day archive permalink.
+   * Change day archive permalink to Jalali
    *
    * @param string $link Permalink for the day archive.
    * @param int $year Year for the archive.
