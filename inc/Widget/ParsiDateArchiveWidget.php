@@ -55,7 +55,7 @@ class ParsiDateArchiveWidget extends \WP_Widget {
              name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
              value="<?php echo $instance['title'] ?>"/>
 
-      <br>
+      <br><br>
 
       <label for="<?php echo esc_attr( $this->get_field_id( 'post_type' ) ); ?>">
         <?php esc_html_e( 'Post type', 'wp-parsidate' ) ?>:</label>
