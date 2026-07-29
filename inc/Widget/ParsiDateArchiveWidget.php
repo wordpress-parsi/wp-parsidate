@@ -18,16 +18,11 @@ use WPParsidate\Settings\Settings;
  */
 class ParsiDateArchiveWidget extends \WP_Widget {
   public function __construct() {
-    global $wp_version;
+    parent::__construct( WP_PARSI_KEY . '_archive', esc_html__( 'Parsidate - Archive', 'wp-parsidate' ) );
 
-    // backwards compatibility
-    if ( version_compare( $wp_version, '4.3', '>=' ) ) {
-      parent::__construct( false, esc_html__( 'Jalali Date Archives', 'wp-parsidate' ),
-        'description=' . esc_html__( 'Jalali Date Archives', 'wp-parsidate' ) );
-    } else {
-      $this->WP_Widget( false, esc_html__( 'Jalali Date Archives', 'wp-parsidate' ),
-        'description=' . esc_html__( 'Jalali Date Archives', 'wp-parsidate' ) );
-    }
+    add_action( 'widgets_init', function () {
+      register_widget( 'WPParsidate\Widget\ParsiDateArchiveWidget' );
+    } );
   }
 
   /**
@@ -36,34 +31,36 @@ class ParsiDateArchiveWidget extends \WP_Widget {
    * @param array $instance Current settings.
    *
    * @return void Default return is 'noform'.
-   * @return void
-   * @since 2.8.0
    */
   public function form( $instance ) {
-    $type                                = $instance['parsidate_archive_type'] ?? 'monthly';
-    $instance['parsidate_archive_title'] = isset( $instance['parsidate_archive_title'] ) ? wp_strip_all_tags( $instance['parsidate_archive_title'] ) : esc_html__( 'Jalali Date Archives',
-      'wp-parsidate' );
-    $instance['parsidate_archive_count'] = $instance['parsidate_archive_count'] ?? 0;
-    $instance['parsidate_archive_list']  = $instance['parsidate_archive_list'] ?? 0;
+    $type                       = $instance['type'] ?? 'monthly';
+    $instance['title']          = isset( $instance['title'] ) ? wp_strip_all_tags( $instance['title'] ) : esc_html__( 'Archive', 'wp-parsidate' );
+    $instance['display_count']  = $instance['display_count'] ?? 0;
+    $instance['display_select'] = $instance['display_select'] ?? 0;
+
+    if ( ! Settings::get( 'conv_permalinks', false ) ) {
+      echo "<p style='color: #ff8153'>" .
+           esc_html__( 'For use widget, active "Fix permalinks dates" option in plugin settings.', 'wp-parsidate' ) .
+           "</p>";
+    }
     ?>
     <p style="text-align:right; direction:rtl">
 
       <label
-        for="<?php echo esc_attr( $this->get_field_id( 'parsidate_archive_title' ) ); ?>"><?php esc_html_e( 'Title',
+        for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title',
           'wp-parsidate' ) ?>:</label>
 
-      <input style="width: 200px;" id="<?php echo esc_attr( $this->get_field_id( 'parsidate_archive_title' ) ); ?>"
-             name="<?php echo esc_attr( $this->get_field_name( 'parsidate_archive_title' ) ); ?>" type="text"
-             value="<?php echo( empty( $instance['parsidate_archive_title'] ) ? esc_html__( 'Jalali Date Archives',
-               'wp-parsidate' ) : esc_html( $instance['parsidate_archive_title'] ) ) ?>"/>
+      <input style="width: 200px;" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"
+             name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
+             value="<?php echo $instance['title'] ?>"/>
 
       <br><br>
 
       <span><?php esc_html_e( 'How to display', 'wp-parsidate' ) ?>:</span><br>
 
       <label>
-        <input type="radio" id="parsidate_archive_type1"
-               name="<?php echo esc_attr( $this->get_field_name( 'parsidate_archive_type' ) ); ?>"
+        <input type="radio" id="type1"
+               name="<?php echo esc_attr( $this->get_field_name( 'type' ) ); ?>"
                value="yearly" <?php checked( $type, 'yearly' ); ?>/>
         <?php esc_html_e( 'Yearly', 'wp-parsidate' ) ?>
       </label>
@@ -71,26 +68,26 @@ class ParsiDateArchiveWidget extends \WP_Widget {
       <br/>
 
       <label>
-        <input type="radio" id="parsidate_archive_type2"
-               name="<?php echo esc_attr( $this->get_field_name( 'parsidate_archive_type' ) ); ?>"
+        <input type="radio" id="type2"
+               name="<?php echo esc_attr( $this->get_field_name( 'type' ) ); ?>"
                value="monthly" <?php checked( $type, 'monthly' ); ?>/>
         <?php esc_html_e( 'Monthly', 'wp-parsidate' ) ?>
       </label>
 
       <br/>
 
-      <label>
-        <input type="radio" id="parsidate_archive_type3"
-               name="<?php echo esc_attr( $this->get_field_name( 'parsidate_archive_type' ) ); ?>"
-               value="weekly" <?php checked( $type, 'weekly' ); ?>/>
-        <?php esc_html_e( 'Weekly', 'wp-parsidate' ) ?>
+      <!--<label>
+        <input type="radio" id="type3"
+               name="<?php /*echo esc_attr( $this->get_field_name( 'type' ) ); */ ?>"
+               value="weekly" <?php /*checked( $type, 'weekly' ); */ ?>/>
+        <?php /*esc_html_e( 'Weekly', 'wp-parsidate' ) */ ?>
       </label>
 
-      <br/>
+      <br/>-->
 
       <label>
-        <input type="radio" id="parsidate_archive_type4"
-               name="<?php echo esc_attr( $this->get_field_name( 'parsidate_archive_type' ) ); ?>"
+        <input type="radio" id="type4"
+               name="<?php echo esc_attr( $this->get_field_name( 'type' ) ); ?>"
                value="daily" <?php checked( $type, 'daily' ); ?>/>
         <?php esc_html_e( 'Daily', 'wp-parsidate' ) ?>
       </label>
@@ -98,31 +95,26 @@ class ParsiDateArchiveWidget extends \WP_Widget {
       <br/>
       <br/>
 
-      <input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'parsidate_archive_count' ) ); ?>"
-             id="<?php echo esc_attr( $this->get_field_id( 'parsidate_archive_count' ) ); ?>"
-             value="1" <?php checked( $instance['parsidate_archive_count'], 1 ); ?>/>
+      <input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'display_count' ) ); ?>"
+             id="<?php echo esc_attr( $this->get_field_id( 'display_count' ) ); ?>"
+             value="1" <?php checked( $instance['display_count'], 1 ); ?>/>
 
-      <label for="<?php echo esc_attr( $this->get_field_id( 'parsidate_archive_count' ) ); ?>">
+      <label for="<?php echo esc_attr( $this->get_field_id( 'display_count' ) ); ?>">
         <?php esc_html_e( 'Show post counts', 'wp-parsidate' ) ?>
       </label>
 
       <br/>
 
-      <input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'parsidate_archive_list' ) ); ?>"
-             id="<?php echo esc_attr( $this->get_field_id( 'parsidate_archive_list' ) ); ?>"
-             value="1" <?php echo checked( $instance['parsidate_archive_list'], 1 ); ?>/>
+      <input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'display_select' ) ); ?>"
+             id="<?php echo esc_attr( $this->get_field_id( 'display_select' ) ); ?>"
+             value="1" <?php echo checked( $instance['display_select'], 1 ); ?>/>
 
-      <label for="<?php echo esc_attr( $this->get_field_id( 'parsidate_archive_list' ) ); ?>">
+      <label for="<?php echo esc_attr( $this->get_field_id( 'display_select' ) ); ?>">
         <?php esc_html_e( 'Display as dropdown', 'wp-parsidate' ) ?>
       </label>
 
     </p>
     <?php
-    if ( ! Settings::get( 'conv_permalinks', false ) ) {
-      echo "<p style='color: #ff8153'>" .
-           esc_html__( 'For use widget, active "Fix permalinks dates" option in plugin settings.', 'wp-parsidate' ) .
-           "</p>";
-    }
   }
 
   /**
@@ -137,16 +129,15 @@ class ParsiDateArchiveWidget extends \WP_Widget {
    * @param array $old_instance Old settings for this instance.
    *
    * @return array Settings to save or bool false to cancel saving.
-   * @since 2.8.0
    *
    */
-  public function update( $new_instance, $old_instance ) {
-    $instance                            = $old_instance;
-    $instance['parsidate_archive_title'] = isset( $new_instance['parsidate_archive_title'] ) ? wp_strip_all_tags( $new_instance['parsidate_archive_title'] ) : esc_html__( 'Jalali Date Archives',
+  public function update( $new_instance, $old_instance ): array {
+    $instance                   = $old_instance;
+    $instance['title']          = isset( $new_instance['title'] ) ? wp_strip_all_tags( $new_instance['title'] ) : esc_html__( 'Jalali Date Archives',
       'wp-parsidate' );
-    $instance['parsidate_archive_count'] = $new_instance['parsidate_archive_count'] ?? 0;
-    $instance['parsidate_archive_list']  = $new_instance['parsidate_archive_list'] ?? 0;
-    $instance['parsidate_archive_type']  = $new_instance['parsidate_archive_type'] ?? 'monthly';
+    $instance['display_count']  = $new_instance['display_count'] ?? 0;
+    $instance['display_select'] = $new_instance['display_select'] ?? 0;
+    $instance['type']           = $new_instance['type'] ?? 'monthly';
 
     return $instance;
   }
@@ -160,33 +151,31 @@ class ParsiDateArchiveWidget extends \WP_Widget {
    *                        'before_widget', and 'after_widget'.
    * @param array $instance The settings for the particular instance of the widget.
    *
-   * @since 2.8.0
-   *
    */
   public function widget( $args, $instance ) {
     if ( ! Settings::get( 'conv_permalinks', false ) ) {
       return;
     }
 
-    $type       = $instance['parsidate_archive_type'] ?? 'monthly';
-    $title      = $instance['parsidate_archive_title'] ?? esc_html__( 'Jalali Date Archives',
-      'wp-parsidate' );
-    $post_count = $instance['parsidate_archive_count'] ?? false;
-    $ddl_style  = isset( $instance['parsidate_archive_list'] ) && $instance['parsidate_archive_list'];
+    $type       = $instance['type'] ?? 'monthly';
+    $title      = $instance['title'] ?? esc_html__( 'Archive', 'wp-parsidate' );
+    $post_count = (bool) $instance['display_count'] ?? false;
+    $isList     = (bool) $instance['display_select'] ?? false;
 
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo $args['before_widget'];
-    if ( ! empty( $instance['parsidate_archive_title'] ) ) {
+
+    if ( ! empty( $instance['title'] ) ) {
       // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
       echo $args['before_title'];
-      // @TODO: Escape widget_title maybe corrupted some theme add custom HTML on widget_title hook
-      echo esc_html( apply_filters( 'widget_title', $instance['parsidate_archive_title'] ) );
+      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+      echo apply_filters( 'widget_title', $instance['title'] );
       // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
       echo $args['after_title'];
     }
 
-    if ( $ddl_style ) {
-      echo "<select name='parsidate_archive_list' onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value='0'>" . esc_attr( $title ) . "</option>";
+    if ( $isList ) {
+      echo "<select name='display_select' onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value='0'>" . esc_attr( $title ) . "</option>";
 
       Archive::getPostArchives( array(
         'type'            => $type,

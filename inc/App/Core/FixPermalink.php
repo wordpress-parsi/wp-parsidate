@@ -41,17 +41,26 @@ class FixPermalink {
 
     $dayLink = $wp_rewrite->get_day_permastruct();
     if ( ! empty( $dayLink ) ) {
-      $dayLink = str_replace(
-        array( '%year%', '%monthnum%', '%day%' ),
-        array( $jYear, zeroise( (int) $jMonth, 2 ), zeroise( (int) $jDay, 2 ) ),
-        $dayLink
-      );
+      $dayLink = str_replace( '%year%', $jYear, $dayLink );
+      $dayLink = str_replace( '%monthnum%', zeroise( (int) $jMonth, 2 ), $dayLink );
+      $dayLink = str_replace( '%day%', zeroise( (int) $jDay, 2 ), $dayLink );
       $dayLink = home_url( user_trailingslashit( $dayLink, 'day' ) );
     } else {
       $dayLink = home_url( '?m=' . $jYear . zeroise( $jMonth, 2 ) . zeroise( $jDay, 2 ) );
     }
 
-    return $dayLink;
+    /**
+     * Filters the day archive permalink.
+     *
+     * @param string $dayLink Permalink for the day archive.
+     * @param int $jYear Year for the archive.
+     * @param int $jMonth Month for the archive.
+     * @param int $jDay The day for the archive.
+     *
+     * @since 6.3
+     *
+     */
+    return apply_filters( 'wp_parsidate_day_link', $dayLink, $jYear, $jMonth, $jDay );
   }
 
   /**

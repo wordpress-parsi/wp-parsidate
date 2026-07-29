@@ -18,15 +18,11 @@ use WPParsidate\Settings\Settings;
  */
 class ParsiDateCalendarWidget extends \WP_Widget {
   public function __construct() {
-    global $wp_version;
+    parent::__construct( WP_PARSI_KEY . '_calendar', esc_html__( 'Parsidate - Calender', 'wp-parsidate' ) );
 
-    if ( version_compare( $wp_version, '4.3', '>=' ) ) {
-      parent::__construct( false, esc_html__( 'Jalali Date Calender', 'wp-parsidate' ),
-        'description=' . esc_html__( 'Jalali Date Calender', 'wp-parsidate' ) );
-    } else {
-      $this->WP_Widget( false, esc_html__( 'Jalali Date Calender', 'wp-parsidate' ),
-        'description=' . esc_html__( 'Jalali Date Calender', 'wp-parsidate' ) );
-    }
+    add_action( 'widgets_init', function () {
+      register_widget( 'WPParsidate\Widget\ParsiDateCalendarWidget' );
+    } );
   }
 
   /**
@@ -35,12 +31,10 @@ class ParsiDateCalendarWidget extends \WP_Widget {
    * @param array $instance Current settings.
    *
    * @return void Default return is 'noform'.
-   * @since 2.8.0
    *
    */
   public function form( $instance ) {
-    $title = ! empty( $instance['parsidate_calendar_title'] ) ? $instance['parsidate_calendar_title'] : esc_html__( 'Jalali Date Calender',
-      'wp-parsidate' );
+    $title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Calender', 'wp-parsidate' );
     $theme = ! empty( $instance['theme_color'] ) ? $instance['theme_color'] : 'light-mode';
 
     if ( ! Settings::get( 'conv_permalinks', false ) ) {
@@ -49,22 +43,22 @@ class ParsiDateCalendarWidget extends \WP_Widget {
     }
     ?>
     <p style="text-align:right; direction:rtl">
-      <label for="<?php echo esc_attr( $this->get_field_id( 'parsidate_calendar_title' ) ); ?>">
+      <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>">
         <?php esc_html_e( 'Title:', 'wp-parsidate' ) ?></label>
 
-      <input style="width:calc(100% - 120px);float:left"
-             id="<?php echo esc_attr( $this->get_field_id( 'parsidate_calendar_title' ) ); ?>"
-             name="<?php echo esc_attr( $this->get_field_name( 'parsidate_calendar_title' ) ); ?>" type="text"
+      <input style="width:calc(100% - 120px);"
+             id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"
+             name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
              value="<?php echo esc_attr( $title ); ?>"/>
     </p>
 
     <p style="text-align:right; direction:rtl">
-      <label for="<?php echo esc_attr( $this->get_field_id( 'theme-color' ) ); ?>">
+      <label for="<?php echo esc_attr( $this->get_field_id( 'theme_color' ) ); ?>">
         <?php esc_html_e( 'Theme color:', 'wp-parsidate' ) ?></label>
 
-      <select style="width:calc(100% - 120px);float:left"
-              id="<?php echo esc_attr( $this->get_field_id( 'theme-color' ) ); ?>"
-              name="<?php echo esc_attr( $this->get_field_name( 'theme-color' ) ); ?>">
+      <select style="width:calc(100% - 120px)"
+              id="<?php echo esc_attr( $this->get_field_id( 'theme_color' ) ); ?>"
+              name="<?php echo esc_attr( $this->get_field_name( 'theme_color' ) ); ?>">
         <option value="light-mode" <?php selected( $theme, 'light-mode' ); ?>>
           <?php esc_html_e( 'Light Mode', 'wp-parsidate' ) ?>
         </option>
@@ -88,13 +82,12 @@ class ParsiDateCalendarWidget extends \WP_Widget {
    * @param array $old_instance Old settings for this instance.
    *
    * @return array Settings to save or bool false to cancel saving.
-   * @since 2.8.0
    *
    */
   public function update( $new_instance, $old_instance ) {
-    $instance                             = $old_instance;
-    $instance['parsidate_calendar_title'] = esc_html( $new_instance['parsidate_calendar_title'] );
-    $instance['theme_color']              = esc_attr( $new_instance['theme-color'] );
+    $instance                = $old_instance;
+    $instance['title']       = esc_html( $new_instance['title'] );
+    $instance['theme_color'] = esc_attr( $new_instance['theme_color'] );
 
     return $instance;
   }
@@ -108,8 +101,6 @@ class ParsiDateCalendarWidget extends \WP_Widget {
    *                        'before_widget', and 'after_widget'.
    * @param array $instance The settings for the particular instance of the widget.
    *
-   * @since 2.8.0
-   *
    */
   public function widget( $args, $instance ) {
     if ( ! Settings::get( 'conv_permalinks', false ) ) {
@@ -122,11 +113,11 @@ class ParsiDateCalendarWidget extends \WP_Widget {
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo $args['before_widget'];
 
-    if ( ! empty( $instance['parsidate_calendar_title'] ) ) {
+    if ( ! empty( $instance['title'] ) ) {
       // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
       echo $args['before_title'];
-      // @TODO: Escape widget_title maybe corrupted some theme add custom HTML on widget_title hook
-      echo esc_html( apply_filters( 'widget_title', $instance['parsidate_calendar_title'] ) );
+      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+      echo apply_filters( 'widget_title', $instance['title'] );
       // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
       echo $args['after_title'];
     }

@@ -111,8 +111,6 @@ class Calendar {
     $end   = $pd->gregorian_date( 'Y-m-d 23:59:59',
       "$jnextyear-$jthismonth-" . $pd->j_days_in_month[ $jthismonth - 1 ] );
 
-    //echo "Start Date: ".$start.", End Date: ".$end."<br>";
-
     $previous = $wpdb->get_row( $wpdb->prepare(
       "
 				SELECT MONTH(post_date) AS month,
@@ -301,7 +299,9 @@ class Calendar {
       $p_day = ( empty( $val['sep_datesnum'] ) ? $day : per_number( $day ) );
 
       if ( in_array( $day, $daywithpost ) ) {
-        $calendar_output .= '<a href="' . get_day_link( $jthisyear, $jthismonth, $day ) .
+        $dayLinkDate     = $pd->gregorian_date( 'Y,m,d', "$jthisyear-$jthismonth-$day" );
+        $dayLinkDate     = explode( ',', $dayLinkDate );
+        $calendar_output .= '<a href="' . get_day_link( $dayLinkDate[0], $dayLinkDate[1], $dayLinkDate[2] ) .
                             "\" title=\"$ak_titles_for_day[$day]\">$p_day</a>";
       } else {
         $calendar_output .= $p_day;

@@ -7,6 +7,8 @@
 
 namespace WPParsidate\Core;
 
+use WPParsidate\Helper\Number;
+
 defined( 'ABSPATH' ) || exit;
 
 class Archive {
@@ -38,7 +40,9 @@ class Archive {
     }
 
     $r['post_type'] = $post_type_object->name;
-    $results        = $wpdb->get_results(
+
+    /// TODO: This query need optimized base on input type (yearly,monthly,daily)
+    $results = $wpdb->get_results(
       $wpdb->prepare(
         "
 				SELECT date( post_date ) AS date,
@@ -103,22 +107,22 @@ class Archive {
    * @param $before
    * @param $count
    * @param $show_post_count
-   * @param $r
+   * @param $args
    */
-  private static function printYearArchive( $year, $format, $before, $count, $show_post_count, $r ): void {
+  private static function printYearArchive( $year, $format, $before, $count, $show_post_count, $args ): void {
     if ( $show_post_count ) {
-      $count = '&nbsp;(' . fix_number( $count ) . ')';
+      $count = '&nbsp;(' . Number::toPersian( $count ) . ')';
     } else {
       $count = '';
     }
 
     $url = get_year_link( $year );
 
-    if ( 'post' !== $r['post_type'] ) {
-      $url = add_query_arg( 'post_type', $r['post_type'], $url );
+    if ( 'post' !== $args['post_type'] ) {
+      $url = add_query_arg( 'post_type', $args['post_type'], $url );
     }
 
-    echo get_archives_link( $url, fix_number( $year ), $format, $before, $count );
+    echo get_archives_link( $url, Number::toPersian( $year ), $format, $before, $count );
   }
 
   /**
@@ -127,26 +131,26 @@ class Archive {
    * @param $before
    * @param $count
    * @param $show_post_count
-   * @param $r
+   * @param $args
    */
-  private static function printMonthArchive( $old_date, $format, $before, $count, $show_post_count, $r ): void {
-    $wpp_months_name = Names::getMonths();
-    $year            = substr( $old_date, 0, 4 );
-    $month           = substr( $old_date, 4, 2 );
+  private static function printMonthArchive( $old_date, $format, $before, $count, $show_post_count, $args ): void {
+    $monthsName = Names::getMonths();
+    $year       = substr( $old_date, 0, 4 );
+    $month      = substr( $old_date, 4, 2 );
 
     if ( $show_post_count ) {
-      $count = '&nbsp;(' . fix_number( $count ) . ')';
+      $count = '&nbsp;(' . Number::toPersian( $count ) . ')';
     } else {
       $count = '';
     }
 
     $url = get_month_link( $year, $month );
 
-    if ( 'post' !== $r['post_type'] ) {
-      $url = add_query_arg( 'post_type', $r['post_type'], $url );
+    if ( 'post' !== $args['post_type'] ) {
+      $url = add_query_arg( 'post_type', $args['post_type'], $url );
     }
 
-    echo get_archives_link( $url, $wpp_months_name[ (int) $month ] . ' ' . fix_number( $year ), $format, $before,
+    echo get_archives_link( $url, $monthsName[ (int) $month ] . ' ' . Number::toPersian( $year ), $format, $before,
       $count );
   }
 
@@ -155,8 +159,6 @@ class Archive {
    * @param $args
    */
   private static function printArchive( $results, $args ): void {
-    global $wpp_months_name;
-
     if ( $args['type'] === 'yearly' ) {
       $old_date = parsidate( 'Y', $results[0]->date, 'eng' );
       $count    = $results[0]->count;
@@ -201,24 +203,26 @@ class Archive {
         }
       }
 
-      self::printMonthArchive( $old_date, $args['format'], $args['before'], $count, $args['show_post_count'],
-        $args );
+      self::printMonthArchive( $old_date, $args['format'], $args['before'], $count, $args['show_post_count'], $args );
 
     } elseif ( $args['type'] === 'daily' ) {
+      $monthsName = Names::getMonths();
+
       foreach ( $results as $row ) {
-        $date = parsidate( 'Y,m,d', $row->date, 'eng' );
-        $date = explode( ',', $date );
+        $jDate = parsidate( 'Y,m,d', $row->date, false );
+        $jDate = explode( ',', $jDate );
+        $date  = date( 'Y,m,d', strtotime( $row->date ) );
+        $date  = explode( ',', $date );
 
         if ( $args['show_post_count'] ) {
-          $count = '&nbsp;(' . fix_number( $row->count ) . ')';
+          $count = '&nbsp;(' . Number::toPersian( $row->count ) . ')';
         } else {
           $count = '';
         }
 
-        $text = fix_number( $date[2] ) . ' ' . $wpp_months_name[ (int) $date[1] ] . ' ' . fix_number( $date[0] );
-
-        echo get_archives_link( get_day_link( $date[0], $date[1], $date[2] ), $text, $args['format'],
-          $args['before'], $count );
+        $text = Number::toPersian( $jDate[2] ) . ' ' . $monthsName[ (int) $jDate[1] ] . ' ' . Number::toPersian( $jDate[0] );
+        // get_day_link convert to Jalali in FixPermalink:getDayLink
+        echo get_archives_link( get_day_link( $date[0], $date[1], $date[2] ), $text, $args['format'], '', $count );
       }
     }
   }
