@@ -10,7 +10,9 @@
     "parsidate",
     "archive",
     "jalali",
-    "persian"
+    "persian",
+    "بایگانی",
+    "آرشیو"
   ],
   "textdomain": "wp-parsidate",
   "attributes": {
