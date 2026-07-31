@@ -37,6 +37,8 @@ code {
 .rtl h4,
 .rtl h5,
 .rtl h6,
+.rtl caption,
+.rtl table caption,
 .rtl .media-frame,
 .rtl .media-frame .search,
 .rtl .media-frame input[type=email],

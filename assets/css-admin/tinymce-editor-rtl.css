@@ -14,11 +14,18 @@
   font-display: swap
 }
 
+table th,
+.mce-item-table th,
+table caption,
+table td,
+.mce-item-table td,
+.wp-block-pullquote .wp-block-pullquote__citation,
 body#tinymce.wp-editor.content p,
 body#tinymce.wp-editor.content ol,
 body#tinymce.wp-editor.content ul,
 body#tinymce.wp-editor.content dl,
-body#tinymce.wp-editor.content dt {
+body#tinymce.wp-editor.content dt,
+body#tinymce.wp-editor.content table caption {
   font-family: Vazir, tahoma, arial, serif !important;
 }
 
