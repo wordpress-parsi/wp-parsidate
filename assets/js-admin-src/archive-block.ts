@@ -141,3 +141,5 @@ registerBlockType('wp-parsidate/archive', {
     return null;
   },
 });
+
+export {};
