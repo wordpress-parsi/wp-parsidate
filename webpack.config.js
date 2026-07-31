@@ -59,6 +59,7 @@ module.exports = [
   {
     name: 'site',
     mode: 'development',
+    devtool: false,
     watch: true,
     optimization: {
       minimize: false,
@@ -106,6 +107,7 @@ module.exports = [
   {
     name: 'admin',
     mode: 'development',
+    devtool: false,
     watch: true,
     optimization: {
       minimize: false,

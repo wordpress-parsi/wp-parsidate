@@ -1,32 +1,29 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./assets/js-admin-src/woocommerce.js"
 /*!********************************************!*\
   !*** ./assets/js-admin-src/woocommerce.js ***!
   \********************************************/
-() {
+jQuery(document).ready(function ($) {
+  function wppdWcConv2EnNum(str) {
+    return str.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+  }
 
-eval("{jQuery(document).ready(function ($) {\n  function wppdWcConv2EnNum(str) {\n    return str.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));\n  }\n\n  function wppdWcOrderDateFix() {\n    if ($('body.woocommerce_page_wc-orders form#order input[name=\"order_date\"]').length === 0) return;\n\n    let wcOrderDateFields = ['input[name=\"order_date\"]', 'input[name=\"order_date_hour\"]', 'input[name=\"order_date_minute\"]', 'input[name=\"order_date_second\"]', 'input.hasDatepicker'];\n\n    wcOrderDateFields.forEach(function (fieldSelector) {\n      let inputField = $('body.woocommerce_page_wc-orders form#order ' + fieldSelector);\n\n      inputField.each(function (index) {\n        value = wppdWcConv2EnNum($(this).attr('value'));\n        $(this).attr('value', value).val(value).trigger('change');\n      });\n    })\n  }\n\n  wppdWcOrderDateFix();\n});\n\n\n//# sourceURL=webpack://wp-parsidate/./assets/js-admin-src/woocommerce.js?\n}");
+  function wppdWcOrderDateFix() {
+    if ($('body.woocommerce_page_wc-orders form#order input[name="order_date"]').length === 0) return;
 
-/***/ }
+    let wcOrderDateFields = ['input[name="order_date"]', 'input[name="order_date_hour"]', 'input[name="order_date_minute"]', 'input[name="order_date_second"]', 'input.hasDatepicker'];
 
-/******/ 	});
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	let __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./assets/js-admin-src/woocommerce.js"]();
-/******/ 	
+    wcOrderDateFields.forEach(function (fieldSelector) {
+      let inputField = $('body.woocommerce_page_wc-orders form#order ' + fieldSelector);
+
+      inputField.each(function (index) {
+        value = wppdWcConv2EnNum($(this).attr('value'));
+        $(this).attr('value', value).val(value).trigger('change');
+      });
+    })
+  }
+
+  wppdWcOrderDateFix();
+});
+
 /******/ })()
 ;

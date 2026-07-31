@@ -1,32 +1,311 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./assets/js-admin-src/plugin.js"
 /*!***************************************!*\
   !*** ./assets/js-admin-src/plugin.js ***!
   \***************************************/
-() {
+jQuery(document).ready(function ($) {
+  let wpColorPickerPalettes = ['#333', '#5de0f0', '#608bf7', '#7fff3f', '#00b700', '#fff200', '#ffae63', '#e64f6f', '#ef32e3', '#d1c1ff', '#873eff'],
+    wpColorPickerOptions = {
+      defaultColor: false, change: function (event, ui) {
+        wppdActiveSettingsForm();
+      }, clear: function () {
+        wppdActiveSettingsForm();
+      }, hide: true, palettes: wpColorPickerPalettes
+    },
+    settingsSubmitActive = false,
+    wpMediaFrames = {};
 
-eval("{jQuery(document).ready(function ($) {\r\n  let wpColorPickerPalettes = ['#333', '#5de0f0', '#608bf7', '#7fff3f', '#00b700', '#fff200', '#ffae63', '#e64f6f', '#ef32e3', '#d1c1ff', '#873eff'],\r\n    wpColorPickerOptions = {\r\n      defaultColor: false, change: function (event, ui) {\r\n        wppdActiveSettingsForm();\r\n      }, clear: function () {\r\n        wppdActiveSettingsForm();\r\n      }, hide: true, palettes: wpColorPickerPalettes\r\n    },\r\n    settingsSubmitActive = false,\r\n    wpMediaFrames = {};\r\n\r\n  const wppdBody = $('body'),\r\n    wppdContentWrap = $('#wppd-content-wrap'),\r\n    wppdSettingsHeader = $('#wppd-settings-header'),\r\n    wppdSettingsSidebar = $('#wppd-sidebar'),\r\n    wppdSettingsDisplaySidebar = $('#wppd-display-sidebar'),\r\n    wppdSettingsHideSidebar = $('#wppd-hide-sidebar'),\r\n    wppdSettingsSectionLinks = $('.wppd-section-links ul'),\r\n    settingsForm = document.getElementById('wppd-settings-form'),\r\n    settingsFooter = document.getElementById('wppd-settings-footer'),\r\n    settingsResetButton = document.getElementById(\"wppd-settings-reset-button\");\r\n\r\n  let wppdContentWrapPrevScrollPos = wppdContentWrap.scrollTop(),\r\n    wppdContentWrapCurrentScrollPos = wppdContentWrapPrevScrollPos,\r\n    wppdPageRefreshedAfter = parseInt(WpParsiDate.pageRefreshedAfter);\r\n\r\n  /**\r\n   * Page refresh\r\n   * */\r\n  if (wppdPageRefreshedAfter > 0) {\r\n    setTimeout(function () {\r\n      if (WpParsiDate.pageRefreshUrl !== null)\r\n        window.location.href = WpParsiDate.pageRefreshUrl;\r\n      else\r\n        window.location.reload(true);\r\n    }, wppdPageRefreshedAfter);\r\n  }\r\n\r\n  /**\r\n   * Hide header on scroll down and sticky on scroll to top\r\n   * */\r\n  wppdContentWrap.scroll(function () {\r\n    wppdContentWrapCurrentScrollPos = $(this).scrollTop();\r\n    if (wppdContentWrapPrevScrollPos < wppdContentWrapCurrentScrollPos && wppdContentWrapCurrentScrollPos > wppdSettingsHeader.outerHeight())\r\n      wppdSettingsHeader.addClass('hide-header');\r\n    else\r\n      wppdSettingsHeader.removeClass('hide-header');\r\n\r\n    wppdContentWrapPrevScrollPos = wppdContentWrapCurrentScrollPos;\r\n  });\r\n\r\n  /**\r\n   * Sidebar menu\r\n   * */\r\n  wppdSettingsDisplaySidebar.on('click', function (e) {\r\n    e.preventDefault();\r\n    wppdSettingsSidebar.addClass('wppd-mobile-sidebar');\r\n    wppdBody.addClass('wppd-mobile-sidebar-active');\r\n  });\r\n  wppdSettingsHideSidebar.on('click', function (e) {\r\n    e.preventDefault();\r\n    wppdSettingsSidebar.removeClass('wppd-mobile-sidebar');\r\n    wppdBody.removeClass('wppd-mobile-sidebar-active');\r\n  });\r\n\r\n  /**\r\n   * Auto scroll to active section link\r\n   * */\r\n  if (wppdSettingsSectionLinks.length) {\r\n    let wppdSectionActiveLink = wppdSettingsSectionLinks.find('.wppd-section-link-current'),\r\n      wppdSectionOutsideActiveLink = wppdSettingsSectionLinks.outerWidth() - 100 < wppdSectionActiveLink.position().left,\r\n      wppdSectionScrollActiveLink = wppdSectionActiveLink.position().left - wppdSectionActiveLink.outerWidth(true) - (wppdSettingsSectionLinks.outerWidth() / 3);\r\n\r\n    if (isRtl) {\r\n      wppdSectionOutsideActiveLink = wppdSectionActiveLink.position().left - 100 < 0;\r\n    }\r\n\r\n    if (wppdSectionOutsideActiveLink) {\r\n      wppdSettingsSectionLinks.animate({\r\n        scrollLeft: wppdSectionScrollActiveLink\r\n      }, 500);\r\n    }\r\n  }\r\n\r\n  function wppdActiveSettingsForm() {\r\n    if (settingsSubmitActive) return;\r\n    settingsSubmitActive = true;\r\n\r\n    if (settingsFooter) settingsFooter.classList.remove('wppd-submit-inactive');\r\n\r\n    window.addEventListener(\"beforeunload\", wppdSettingsFormChangeAlert);\r\n  }\r\n\r\n  const wppdSettingsFormChangeAlert = (event) => {\r\n    event.preventDefault();\r\n    event.returnValue = true;\r\n  }\r\n\r\n  if (settingsForm) {\r\n    if (settingsFooter) settingsFooter.classList.add('wppd-submit-inactive');\r\n\r\n    settingsForm.addEventListener('change', function () {\r\n      wppdActiveSettingsForm();\r\n    });\r\n\r\n    settingsForm.addEventListener('submit', function () {\r\n      window.removeEventListener(\"beforeunload\", wppdSettingsFormChangeAlert);\r\n    });\r\n\r\n    if (settingsResetButton) {\r\n      settingsResetButton.addEventListener(\"click\", () => {\r\n        settingsSubmitActive = false;\r\n\r\n        if (settingsFooter) settingsFooter.classList.add('wppd-submit-inactive');\r\n\r\n        window.removeEventListener(\"beforeunload\", wppdSettingsFormChangeAlert);\r\n      });\r\n    }\r\n  }\r\n\r\n  function wpColorPickerInit() {\r\n    let wpColorPicker = $('.wppd-wp-color-picker,.wppd-color-palette').not('.wppd-gradient-select-color').find('input[type=\"text\"]');\r\n\r\n    if (wpColorPicker.length) {\r\n      wpColorPicker.wpColorPicker(wpColorPickerOptions);\r\n\r\n      setTimeout(function () {\r\n        $('.wppd-color-palette[data-removable=\"1\"]').each(function () {\r\n          let wppdPickerContainer = $(this).find('.wp-picker-container');\r\n\r\n          if (wppdPickerContainer.length > 0) {\r\n            wppdPickerContainer.append('<button type=\"button\" class=\"wppd-remove-color\"><i class=\"wppd-icon-cross\"></i></button>');\r\n          }\r\n        });\r\n      }, 500);\r\n    }\r\n  }\r\n\r\n  wpColorPickerInit();\r\n\r\n  /** Media methods */\r\n  function wppdMediaInit() {\r\n    $('.wppd-media-image').off('click', '**').on('click', function () {\r\n      let $this = $(this),\r\n        mediaSelectID = $this.attr('data-id'),\r\n        mediaWrap = $this.closest('.wppd-media-wrap'),\r\n        mediaInput = mediaWrap.find('input'),\r\n        mediaImageIDs = mediaInput.val().split(',');\r\n\r\n      const index = mediaImageIDs.indexOf(mediaSelectID);\r\n      if (index > -1) {\r\n        mediaImageIDs.splice(index, 1);\r\n      }\r\n\r\n      if (mediaImageIDs.length === 0) {\r\n        mediaWrap.removeClass('wppd-media-selected');\r\n      }\r\n\r\n      mediaInput.val(mediaImageIDs.join(','));\r\n      $this.remove();\r\n      wppdActiveSettingsForm();\r\n    });\r\n  }\r\n\r\n  $('.wppd-media-select').on('click', function () {\r\n    let $this = $(this),\r\n      mediaWrap = $this.closest('.wppd-media-wrap'),\r\n      mediaWrapperID = mediaWrap.attr('id'),\r\n      mediaTitle = mediaWrap.data('title'),\r\n      mediaButton = mediaWrap.data('button'),\r\n      mediaType = mediaWrap.data('type'),\r\n      acceptExtensions = mediaWrap.data('accept-extensions'),\r\n      multiSelection = parseInt(mediaWrap.data('multi-selection')) === 1,\r\n      mediaMaxNumber = parseInt(mediaWrap.data('max-number')),\r\n      mediaMultiple = mediaMaxNumber > 1,\r\n      mediaImageContainer = mediaWrap.find('.wppd-media-images'),\r\n      mediaInput = mediaWrap.find('input'),\r\n      mediaSelected = 1;\r\n\r\n    /*if (wpMediaFrames.hasOwnProperty(mediaWrapperID)) {\r\n        wpMediaFrames[mediaWrapperID].open();\r\n        return;\r\n    }*/\r\n\r\n    // Create a new media frame\r\n    wpMediaFrames[mediaWrapperID] = wp.media({\r\n      title: mediaTitle,\r\n      button: {\r\n        text: mediaButton\r\n      },\r\n      library: {\r\n        type: mediaType\r\n      },\r\n      multiple: mediaMultiple\r\n    });\r\n\r\n    wpMediaFrames[mediaWrapperID].once('uploader:ready', function () {\r\n      var uploader = wpMediaFrames[mediaWrapperID].uploader.uploader.uploader; // Upload manager\r\n\r\n      //Updating allowed extensions\r\n      uploader.setOption('filters',\r\n        {\r\n          mime_types: [\r\n            {extensions: acceptExtensions}\r\n          ]\r\n        }\r\n      );\r\n\r\n      //Trick to reinit field\r\n      uploader.setOption('multi_selection', multiSelection);\r\n    });\r\n\r\n    wpMediaFrames[mediaWrapperID].on('open', function () {\r\n      let selection = wpMediaFrames[mediaWrapperID].state().get('selection'),\r\n        mediaIDs = mediaInput.val().split(',');\r\n\r\n      if (mediaIDs.length > 0) {\r\n        mediaIDs.forEach(function (id) {\r\n          let attachment = wp.media.attachment(id);\r\n          attachment.fetch();\r\n          selection.add(attachment ? [attachment] : []);\r\n        });\r\n      }\r\n    });\r\n\r\n    // When an image is selected in the media frame...\r\n    wpMediaFrames[mediaWrapperID].on('select', function () {\r\n      mediaImageContainer.html('');\r\n\r\n      // Get media attachment details from the frame state\r\n      let attachments = wpMediaFrames[mediaWrapperID].state().get('selection'),\r\n        attachmentIDs = attachments.map(function (attachment) {\r\n          if (mediaSelected <= mediaMaxNumber) {\r\n            attachment = attachment.toJSON();\r\n            let attachmentUrl = attachment.url;\r\n            if (attachment.type !== 'image') {\r\n              if (attachment.hasOwnProperty('image') && attachment.image.hasOwnProperty('src') && attachment.image.src) {\r\n                attachmentUrl = attachment.image.src;\r\n              } else {\r\n                attachmentUrl = attachment.icon;\r\n              }\r\n            }\r\n            let imageTitle = attachment.id + ': ' + (attachment.caption.length > 0 ? attachment.caption : attachment.title) + ' (' + attachment.type + ')';\r\n            mediaImageContainer.append('<div class=\"wppd-media-image\" data-id=\"' + attachment.id + '\"><img src=\"' + attachmentUrl + '\" title=\"' + imageTitle + '\"/><span class=\"wppd-media-image-title\">' + imageTitle + '</span></div>');\r\n          }\r\n          mediaSelected++;\r\n          return attachment.id;\r\n        });\r\n\r\n      attachmentIDs = attachmentIDs.slice(0, mediaMaxNumber);\r\n\r\n      mediaWrap.addClass('wppd-media-selected');\r\n\r\n      // Send the attachment id to our hidden input\r\n      mediaInput.val(attachmentIDs.join(','));\r\n\r\n      wppdMediaInit();\r\n      wppdActiveSettingsForm();\r\n    });\r\n\r\n    // Finally, open the modal on click\r\n    wpMediaFrames[mediaWrapperID].open();\r\n  });\r\n\r\n  $('.wppd-media-remove-all').on('click', function () {\r\n    let $this = $(this),\r\n      mediaWrap = $this.closest('.wppd-media-wrap'),\r\n      mediaInput = mediaWrap.find('input');\r\n\r\n    mediaWrap.removeClass('wppd-media-selected');\r\n    mediaInput.val('');\r\n    wppdActiveSettingsForm();\r\n  });\r\n\r\n  wppdMediaInit();\r\n\r\n  /**\r\n   * Copy text\r\n   * */\r\n  function wppdCopyTextInit() {\r\n    let wppdCopyText = $('.wppd-copy-text');\r\n    if (navigator.clipboard) {\r\n      wppdCopyText.each(function () {\r\n        if ($(this).attr('title') === undefined)\r\n          $(this).attr('title', WpParsiDate.copyText);\r\n      })\r\n      wppdCopyText.off('click', '**').on('click', function () {\r\n        let wppdCopyTextElm = $(this),\r\n          wppdTextForCopy = wppdCopyTextElm.attr('data-text') !== undefined ? wppdCopyTextElm.attr('data-text') : wppdCopyTextElm.text();\r\n        navigator.clipboard.writeText(wppdTextForCopy);\r\n        wppdCopyTextElm.addClass('wppd-text-copied');\r\n\r\n        setTimeout(function () {\r\n          wppdCopyTextElm.removeClass('wppd-text-copied');\r\n        }, 500);\r\n      });\r\n    } else {\r\n      wppdCopyText.removeClass('wppd-copy-text');\r\n    }\r\n  }\r\n\r\n  wppdCopyTextInit();\r\n});\r\n\n\n//# sourceURL=webpack://wp-parsidate/./assets/js-admin-src/plugin.js?\n}");
+  const wppdBody = $('body'),
+    wppdContentWrap = $('#wppd-content-wrap'),
+    wppdSettingsHeader = $('#wppd-settings-header'),
+    wppdSettingsSidebar = $('#wppd-sidebar'),
+    wppdSettingsDisplaySidebar = $('#wppd-display-sidebar'),
+    wppdSettingsHideSidebar = $('#wppd-hide-sidebar'),
+    wppdSettingsSectionLinks = $('.wppd-section-links ul'),
+    settingsForm = document.getElementById('wppd-settings-form'),
+    settingsFooter = document.getElementById('wppd-settings-footer'),
+    settingsResetButton = document.getElementById("wppd-settings-reset-button");
 
-/***/ }
+  let wppdContentWrapPrevScrollPos = wppdContentWrap.scrollTop(),
+    wppdContentWrapCurrentScrollPos = wppdContentWrapPrevScrollPos,
+    wppdPageRefreshedAfter = parseInt(WpParsiDate.pageRefreshedAfter);
 
-/******/ 	});
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	let __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./assets/js-admin-src/plugin.js"]();
-/******/ 	
+  /**
+   * Page refresh
+   * */
+  if (wppdPageRefreshedAfter > 0) {
+    setTimeout(function () {
+      if (WpParsiDate.pageRefreshUrl !== null)
+        window.location.href = WpParsiDate.pageRefreshUrl;
+      else
+        window.location.reload(true);
+    }, wppdPageRefreshedAfter);
+  }
+
+  /**
+   * Hide header on scroll down and sticky on scroll to top
+   * */
+  wppdContentWrap.scroll(function () {
+    wppdContentWrapCurrentScrollPos = $(this).scrollTop();
+    if (wppdContentWrapPrevScrollPos < wppdContentWrapCurrentScrollPos && wppdContentWrapCurrentScrollPos > wppdSettingsHeader.outerHeight())
+      wppdSettingsHeader.addClass('hide-header');
+    else
+      wppdSettingsHeader.removeClass('hide-header');
+
+    wppdContentWrapPrevScrollPos = wppdContentWrapCurrentScrollPos;
+  });
+
+  /**
+   * Sidebar menu
+   * */
+  wppdSettingsDisplaySidebar.on('click', function (e) {
+    e.preventDefault();
+    wppdSettingsSidebar.addClass('wppd-mobile-sidebar');
+    wppdBody.addClass('wppd-mobile-sidebar-active');
+  });
+  wppdSettingsHideSidebar.on('click', function (e) {
+    e.preventDefault();
+    wppdSettingsSidebar.removeClass('wppd-mobile-sidebar');
+    wppdBody.removeClass('wppd-mobile-sidebar-active');
+  });
+
+  /**
+   * Auto scroll to active section link
+   * */
+  if (wppdSettingsSectionLinks.length) {
+    let wppdSectionActiveLink = wppdSettingsSectionLinks.find('.wppd-section-link-current'),
+      wppdSectionOutsideActiveLink = wppdSettingsSectionLinks.outerWidth() - 100 < wppdSectionActiveLink.position().left,
+      wppdSectionScrollActiveLink = wppdSectionActiveLink.position().left - wppdSectionActiveLink.outerWidth(true) - (wppdSettingsSectionLinks.outerWidth() / 3);
+
+    if (isRtl) {
+      wppdSectionOutsideActiveLink = wppdSectionActiveLink.position().left - 100 < 0;
+    }
+
+    if (wppdSectionOutsideActiveLink) {
+      wppdSettingsSectionLinks.animate({
+        scrollLeft: wppdSectionScrollActiveLink
+      }, 500);
+    }
+  }
+
+  function wppdActiveSettingsForm() {
+    if (settingsSubmitActive) return;
+    settingsSubmitActive = true;
+
+    if (settingsFooter) settingsFooter.classList.remove('wppd-submit-inactive');
+
+    window.addEventListener("beforeunload", wppdSettingsFormChangeAlert);
+  }
+
+  const wppdSettingsFormChangeAlert = (event) => {
+    event.preventDefault();
+    event.returnValue = true;
+  }
+
+  if (settingsForm) {
+    if (settingsFooter) settingsFooter.classList.add('wppd-submit-inactive');
+
+    settingsForm.addEventListener('change', function () {
+      wppdActiveSettingsForm();
+    });
+
+    settingsForm.addEventListener('submit', function () {
+      window.removeEventListener("beforeunload", wppdSettingsFormChangeAlert);
+    });
+
+    if (settingsResetButton) {
+      settingsResetButton.addEventListener("click", () => {
+        settingsSubmitActive = false;
+
+        if (settingsFooter) settingsFooter.classList.add('wppd-submit-inactive');
+
+        window.removeEventListener("beforeunload", wppdSettingsFormChangeAlert);
+      });
+    }
+  }
+
+  function wpColorPickerInit() {
+    let wpColorPicker = $('.wppd-wp-color-picker,.wppd-color-palette').not('.wppd-gradient-select-color').find('input[type="text"]');
+
+    if (wpColorPicker.length) {
+      wpColorPicker.wpColorPicker(wpColorPickerOptions);
+
+      setTimeout(function () {
+        $('.wppd-color-palette[data-removable="1"]').each(function () {
+          let wppdPickerContainer = $(this).find('.wp-picker-container');
+
+          if (wppdPickerContainer.length > 0) {
+            wppdPickerContainer.append('<button type="button" class="wppd-remove-color"><i class="wppd-icon-cross"></i></button>');
+          }
+        });
+      }, 500);
+    }
+  }
+
+  wpColorPickerInit();
+
+  /** Media methods */
+  function wppdMediaInit() {
+    $('.wppd-media-image').off('click', '**').on('click', function () {
+      let $this = $(this),
+        mediaSelectID = $this.attr('data-id'),
+        mediaWrap = $this.closest('.wppd-media-wrap'),
+        mediaInput = mediaWrap.find('input'),
+        mediaImageIDs = mediaInput.val().split(',');
+
+      const index = mediaImageIDs.indexOf(mediaSelectID);
+      if (index > -1) {
+        mediaImageIDs.splice(index, 1);
+      }
+
+      if (mediaImageIDs.length === 0) {
+        mediaWrap.removeClass('wppd-media-selected');
+      }
+
+      mediaInput.val(mediaImageIDs.join(','));
+      $this.remove();
+      wppdActiveSettingsForm();
+    });
+  }
+
+  $('.wppd-media-select').on('click', function () {
+    let $this = $(this),
+      mediaWrap = $this.closest('.wppd-media-wrap'),
+      mediaWrapperID = mediaWrap.attr('id'),
+      mediaTitle = mediaWrap.data('title'),
+      mediaButton = mediaWrap.data('button'),
+      mediaType = mediaWrap.data('type'),
+      acceptExtensions = mediaWrap.data('accept-extensions'),
+      multiSelection = parseInt(mediaWrap.data('multi-selection')) === 1,
+      mediaMaxNumber = parseInt(mediaWrap.data('max-number')),
+      mediaMultiple = mediaMaxNumber > 1,
+      mediaImageContainer = mediaWrap.find('.wppd-media-images'),
+      mediaInput = mediaWrap.find('input'),
+      mediaSelected = 1;
+
+    /*if (wpMediaFrames.hasOwnProperty(mediaWrapperID)) {
+        wpMediaFrames[mediaWrapperID].open();
+        return;
+    }*/
+
+    // Create a new media frame
+    wpMediaFrames[mediaWrapperID] = wp.media({
+      title: mediaTitle,
+      button: {
+        text: mediaButton
+      },
+      library: {
+        type: mediaType
+      },
+      multiple: mediaMultiple
+    });
+
+    wpMediaFrames[mediaWrapperID].once('uploader:ready', function () {
+      var uploader = wpMediaFrames[mediaWrapperID].uploader.uploader.uploader; // Upload manager
+
+      //Updating allowed extensions
+      uploader.setOption('filters',
+        {
+          mime_types: [
+            {extensions: acceptExtensions}
+          ]
+        }
+      );
+
+      //Trick to reinit field
+      uploader.setOption('multi_selection', multiSelection);
+    });
+
+    wpMediaFrames[mediaWrapperID].on('open', function () {
+      let selection = wpMediaFrames[mediaWrapperID].state().get('selection'),
+        mediaIDs = mediaInput.val().split(',');
+
+      if (mediaIDs.length > 0) {
+        mediaIDs.forEach(function (id) {
+          let attachment = wp.media.attachment(id);
+          attachment.fetch();
+          selection.add(attachment ? [attachment] : []);
+        });
+      }
+    });
+
+    // When an image is selected in the media frame...
+    wpMediaFrames[mediaWrapperID].on('select', function () {
+      mediaImageContainer.html('');
+
+      // Get media attachment details from the frame state
+      let attachments = wpMediaFrames[mediaWrapperID].state().get('selection'),
+        attachmentIDs = attachments.map(function (attachment) {
+          if (mediaSelected <= mediaMaxNumber) {
+            attachment = attachment.toJSON();
+            let attachmentUrl = attachment.url;
+            if (attachment.type !== 'image') {
+              if (attachment.hasOwnProperty('image') && attachment.image.hasOwnProperty('src') && attachment.image.src) {
+                attachmentUrl = attachment.image.src;
+              } else {
+                attachmentUrl = attachment.icon;
+              }
+            }
+            let imageTitle = attachment.id + ': ' + (attachment.caption.length > 0 ? attachment.caption : attachment.title) + ' (' + attachment.type + ')';
+            mediaImageContainer.append('<div class="wppd-media-image" data-id="' + attachment.id + '"><img src="' + attachmentUrl + '" title="' + imageTitle + '"/><span class="wppd-media-image-title">' + imageTitle + '</span></div>');
+          }
+          mediaSelected++;
+          return attachment.id;
+        });
+
+      attachmentIDs = attachmentIDs.slice(0, mediaMaxNumber);
+
+      mediaWrap.addClass('wppd-media-selected');
+
+      // Send the attachment id to our hidden input
+      mediaInput.val(attachmentIDs.join(','));
+
+      wppdMediaInit();
+      wppdActiveSettingsForm();
+    });
+
+    // Finally, open the modal on click
+    wpMediaFrames[mediaWrapperID].open();
+  });
+
+  $('.wppd-media-remove-all').on('click', function () {
+    let $this = $(this),
+      mediaWrap = $this.closest('.wppd-media-wrap'),
+      mediaInput = mediaWrap.find('input');
+
+    mediaWrap.removeClass('wppd-media-selected');
+    mediaInput.val('');
+    wppdActiveSettingsForm();
+  });
+
+  wppdMediaInit();
+
+  /**
+   * Copy text
+   * */
+  function wppdCopyTextInit() {
+    let wppdCopyText = $('.wppd-copy-text');
+    if (navigator.clipboard) {
+      wppdCopyText.each(function () {
+        if ($(this).attr('title') === undefined)
+          $(this).attr('title', WpParsiDate.copyText);
+      })
+      wppdCopyText.off('click', '**').on('click', function () {
+        let wppdCopyTextElm = $(this),
+          wppdTextForCopy = wppdCopyTextElm.attr('data-text') !== undefined ? wppdCopyTextElm.attr('data-text') : wppdCopyTextElm.text();
+        navigator.clipboard.writeText(wppdTextForCopy);
+        wppdCopyTextElm.addClass('wppd-text-copied');
+
+        setTimeout(function () {
+          wppdCopyTextElm.removeClass('wppd-text-copied');
+        }, 500);
+      });
+    } else {
+      wppdCopyText.removeClass('wppd-copy-text');
+    }
+  }
+
+  wppdCopyTextInit();
+});
+
 /******/ })()
 ;
