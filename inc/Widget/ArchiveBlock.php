@@ -47,7 +47,7 @@ class ArchiveBlock {
     wp_add_inline_script(
       self::EDITOR_SCRIPT,
       'window.wppArchiveBlockData = ' . wp_json_encode( array(
-        'postTypes'      => Posts::getTypes(),
+        'postTypes'      => self::postTypeOptions(),
         'convPermalinks' => (bool) Settings::get( 'conv_permalinks', false ),
       ) ) . ';',
       'before'
@@ -95,5 +95,15 @@ class ArchiveBlock {
     echo '</div>';
 
     return ob_get_clean();
+  }
+
+  private static function postTypeOptions(): array {
+    $options = array();
+
+    foreach ( Posts::getTypes() as $name => $label ) {
+      $options[] = array( 'label' => $label, 'value' => $name );
+    }
+
+    return $options;
   }
 }
