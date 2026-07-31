@@ -53,6 +53,7 @@ defined( 'ABSPATH' ) || exit;
 use WPParsidate\Addons\Addons;
 use WPParsidate\Admin\Admin;
 use WPParsidate\App\App;
+use WPParsidate\Block\Blocks;
 use WPParsidate\Core\Core;
 use WPParsidate\Helper\WordPress;
 use WPParsidate\Plugin\{Install, Plugin};
@@ -154,6 +155,7 @@ final class WP_Parsidate {
     new App();
     new Core();
     new Widget();
+    new Blocks();
   }
 
   /**
