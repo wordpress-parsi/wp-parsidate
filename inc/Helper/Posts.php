@@ -3,22 +3,31 @@
 namespace WPParsidate\Helper;
 
 class Posts {
+  public static function getTypes( $args = [], $ignore = [ 'attachment', 'page' ] ): array {
+    $defaultArgs = array( 'public' => true, 'show_ui' => true );
+    $args        = wp_parse_args( $args, $defaultArgs );
+    $postTypes   = array();
+    $types       = get_post_types( $args, 'objects' );
+
+    foreach ( $types as $pt ) {
+      if ( in_array( $pt->name, $ignore, true ) ) {
+        continue;
+      }
+      $postTypes[ $pt->name ] = $pt->labels->singular_name;
+    }
+
+    return $postTypes;
+  }
+
   public static function getTypeSelect(
     $id, $name, $selected, $args = [],
     $ignore = [ 'attachment', 'page' ]
   ): string {
-    $defaultArgs = array( 'public' => true, 'show_ui' => true );
-    $args        = wp_parse_args( $args, $defaultArgs );
-
-    $postTypes = get_post_types( $args, 'objects' );
+    $postTypes = self::getTypes( $args, $ignore );
 
     $select = '<select name="' . $name . '" id="' . $id . '">';
-    foreach ( $postTypes as $postType ) {
-      if ( in_array( $postType->name, $ignore ) ) {
-        continue;
-      }
-
-      $select .= '<option value="' . esc_attr( $postType->name ) . '" ' . selected( $selected, $postType->name, false ) . '>' . $postType->labels->singular_name . '</option>';
+    foreach ( $postTypes as $postType => $label ) {
+      $select .= '<option value="' . esc_attr( $postType ) . '" ' . selected( $selected, $postType, false ) . '>' . $label . '</option>';
     }
     $select .= '</select>';
 

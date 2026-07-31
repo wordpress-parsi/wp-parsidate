@@ -2,6 +2,16 @@ const fs = require('fs');
 const path = require('path');
 const TerserPlugin = require("terser-webpack-plugin");
 
+const tsRule = {
+  test: /\.tsx?$/,
+  use: 'ts-loader',
+  exclude: /node_modules/,
+};
+
+const resolve = {
+  extensions: ['.tsx', '.ts', '.js'],
+};
+
 const optimization = {
   minimize: true,
   minimizer: [
@@ -39,6 +49,8 @@ module.exports = [
     watch: true,
     optimization: optimization,
     watchOptions: watchOptions,
+    resolve: resolve,
+    module: { rules: [tsRule] },
 
     entry: (() => {
       const toReturn = {};
@@ -65,6 +77,8 @@ module.exports = [
       minimize: false,
     },
     watchOptions: watchOptions,
+    resolve: resolve,
+    module: { rules: [tsRule] },
 
     entry: (() => {
       const toReturn = {};
@@ -88,6 +102,8 @@ module.exports = [
     watch: true,
     optimization: optimization,
     watchOptions: watchOptions,
+    resolve: resolve,
+    module: { rules: [tsRule] },
 
     entry: (() => {
       const toReturn = {};
@@ -115,6 +131,8 @@ module.exports = [
       splitChunks: false
     },
     watchOptions: watchOptions,
+    resolve: resolve,
+    module: { rules: [tsRule] },
 
     entry: (() => {
       const toReturn = {};

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "wp-parsidate/archive",
+  "title": "Parsidate - Archive",
+  "category": "widgets",
+  "icon": "archive",
+  "description": "Display a Persian (Jalali) date archive of your posts",
+  "keywords": [
+    "parsidate",
+    "archive",
+    "jalali",
+    "persian"
+  ],
+  "textdomain": "wp-parsidate",
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Archive"
+    },
+    "postType": {
+      "type": "string",
+      "default": "post"
+    },
+    "type": {
+      "type": "string",
+      "default": "monthly"
+    },
+    "displaySelect": {
+      "type": "boolean",
+      "default": false
+    },
+    "displayCount": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "editorScript": "wp-parsidate-archive-editor-script"
+}
