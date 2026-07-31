@@ -18,6 +18,8 @@ use WPParsidate\Settings\Settings;
  * @copyright 2013
  */
 class CalendarWidget extends \WP_Widget {
+  public static $printStyle = false;
+
   public function __construct() {
     parent::__construct( WP_PARSI_KEY . '_calendar', esc_html__( 'Parsidate - Calendar', 'wp-parsidate' ) );
 
@@ -26,9 +28,10 @@ class CalendarWidget extends \WP_Widget {
   }
 
   public function printStyle( $title, $postType, $theme, $widgetID ) {
-    if ( $theme === 'none' ) {
+    if ( $theme === 'none' || self::$printStyle ) {
       return;
     }
+    self::$printStyle = true;
 
     $style  = file_get_contents( Assets::path( 'css-admin/calendar-wdiget.min.css' ) );
     $handle = WP_PARSI_KEY_SLUG . '-calendar-wdiget-style';
