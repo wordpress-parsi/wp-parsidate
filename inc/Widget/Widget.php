@@ -13,8 +13,8 @@ class Widget {
     new ArchiveBlock();
 
     add_action( 'widgets_init', function () {
-      register_widget( 'WPParsidate\Widget\ParsiDateArchiveWidget' );
-      register_widget( 'WPParsidate\Widget\ParsiDateCalendarWidget' );
+      register_widget( 'WPParsidate\Widget\ArchiveWidget' );
+      register_widget( 'WPParsidate\Widget\CalendarWidget' );
     } );
   }
 }

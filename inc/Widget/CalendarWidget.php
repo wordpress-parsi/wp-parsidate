@@ -17,7 +17,7 @@ use WPParsidate\Settings\Settings;
  * @author lord_viper
  * @copyright 2013
  */
-class ParsiDateCalendarWidget extends \WP_Widget {
+class CalendarWidget extends \WP_Widget {
   public function __construct() {
     parent::__construct( WP_PARSI_KEY . '_calendar', esc_html__( 'Parsidate - Calendar', 'wp-parsidate' ) );
 

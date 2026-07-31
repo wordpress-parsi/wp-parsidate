@@ -17,7 +17,7 @@ use WPParsidate\Settings\Settings;
  * @author lord_viper
  * @copyright 2013
  */
-class ParsiDateArchiveWidget extends \WP_Widget {
+class ArchiveWidget extends \WP_Widget {
   public function __construct() {
     parent::__construct( WP_PARSI_KEY . '_archive', esc_html__( 'Parsidate - Archive', 'wp-parsidate' ) );
   }
@@ -159,7 +159,7 @@ class ParsiDateArchiveWidget extends \WP_Widget {
 
     do_action( 'wp_parsidate_archive_widget_start', $title, $postType, $type, $postCount, $isList, $widgetID );
     if ( $isList ) {
-      echo "<select name='display_select' onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value='0'>" . esc_attr( $title ) . "</option>";
+      echo "<select onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value='0'>" . esc_attr( $title ) . "</option>";
     } else {
       echo '<ul>';
     }
