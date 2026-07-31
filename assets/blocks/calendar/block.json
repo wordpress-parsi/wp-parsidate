@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "wp-parsidate/calendar",
+  "title": "Parsidate - Calendar",
+  "category": "widgets",
+  "icon": "calendar-alt",
+  "description": "Display a Persian (Jalali) calendar with links to your posts",
+  "keywords": [
+    "parsidate",
+    "calendar",
+    "jalali",
+    "persian",
+    "تقویم"
+  ],
+  "textdomain": "wp-parsidate",
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Calendar"
+    },
+    "postType": {
+      "type": "string",
+      "default": "post"
+    },
+    "theme": {
+      "type": "string",
+      "default": "simple"
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "editorScript": "wp-parsidate-calendar-editor-script",
+  "style": "wp-parsidate-calendar-style"
+}

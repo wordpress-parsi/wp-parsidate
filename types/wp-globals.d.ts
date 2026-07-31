@@ -8,6 +8,11 @@ interface WPParsidateArchiveBlockData {
   convPermalinks: boolean;
 }
 
+interface WPParsidateCalendarBlockData {
+  postTypes: WPParsidateArchivePostType[];
+  convPermalinks: boolean;
+}
+
 interface Window {
   wp: {
     element: {
@@ -37,4 +42,5 @@ interface Window {
     };
   };
   wppArchiveBlockData?: WPParsidateArchiveBlockData;
+  wppCalendarBlockData?: WPParsidateCalendarBlockData;
 }

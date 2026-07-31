@@ -102,6 +102,7 @@ return array(
     'WPParsidate\\Settings\\Settings' => $baseDir . '/inc/Settings/Settings.php',
     'WPParsidate\\Widget\\ArchiveBlock' => $baseDir . '/inc/Widget/ArchiveBlock.php',
     'WPParsidate\\Widget\\ArchiveWidget' => $baseDir . '/inc/Widget/ArchiveWidget.php',
+    'WPParsidate\\Widget\\CalendarBlock' => $baseDir . '/inc/Widget/CalendarBlock.php',
     'WPParsidate\\Widget\\CalendarWidget' => $baseDir . '/inc/Widget/CalendarWidget.php',
     'WPParsidate\\Widget\\DashboardWidget' => $baseDir . '/inc/Widget/DashboardWidget.php',
     'WPParsidate\\Widget\\Widget' => $baseDir . '/inc/Widget/Widget.php',

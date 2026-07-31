@@ -22,6 +22,7 @@ class CalendarWidget extends \WP_Widget {
     parent::__construct( WP_PARSI_KEY . '_calendar', esc_html__( 'Parsidate - Calendar', 'wp-parsidate' ) );
 
     add_action( 'wp_parsidate_calendar_widget_end', [ $this, 'printStyle' ], 10, 4 );
+    add_action( 'wp_parsidate_calendar_block_end', [ $this, 'printStyle' ], 10, 4 );
   }
 
   public function printStyle( $title, $postType, $theme, $widgetID ) {

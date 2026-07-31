@@ -11,6 +11,7 @@ class Widget {
   public function __construct() {
     new DashboardWidget();
     new ArchiveBlock();
+    new CalendarBlock();
 
     add_action( 'widgets_init', function () {
       register_widget( 'WPParsidate\Widget\ArchiveWidget' );

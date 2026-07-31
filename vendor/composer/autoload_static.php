@@ -151,6 +151,7 @@ class ComposerStaticInit28b7438669d760234aa27dffd45581b6
         'WPParsidate\\Settings\\Settings' => __DIR__ . '/../..' . '/inc/Settings/Settings.php',
         'WPParsidate\\Widget\\ArchiveBlock' => __DIR__ . '/../..' . '/inc/Widget/ArchiveBlock.php',
         'WPParsidate\\Widget\\ArchiveWidget' => __DIR__ . '/../..' . '/inc/Widget/ArchiveWidget.php',
+        'WPParsidate\\Widget\\CalendarBlock' => __DIR__ . '/../..' . '/inc/Widget/CalendarBlock.php',
         'WPParsidate\\Widget\\CalendarWidget' => __DIR__ . '/../..' . '/inc/Widget/CalendarWidget.php',
         'WPParsidate\\Widget\\DashboardWidget' => __DIR__ . '/../..' . '/inc/Widget/DashboardWidget.php',
         'WPParsidate\\Widget\\Widget' => __DIR__ . '/../..' . '/inc/Widget/Widget.php',
