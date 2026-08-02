@@ -9,6 +9,17 @@ class Posts {
     $postTypes   = array();
     $types       = get_post_types( $args, 'objects' );
 
+    /**
+     * Filters post types ignore list
+     *
+     * @param array $ignore Ignore list
+     * @param array $args Input arguments
+     *
+     * @since 6.3
+     *
+     */
+    $ignore = (array) apply_filters( 'wp_parsidate_posts_types_ignore_list', $ignore, $args );
+
     foreach ( $types as $pt ) {
       if ( in_array( $pt->name, $ignore, true ) ) {
         continue;
