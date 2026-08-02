@@ -59,7 +59,6 @@ function wppdMarkOnlyDateInputs(root) {
 
   for (i = 0; i < inputs.length; i++) {
     const el = inputs[i];
-    console.log(el.getAttribute('data-jdp-only-datetime'))
 
     if (el.getAttribute('data-jdp-only-date') || el.getAttribute('data-jdp-only-datetime') || el.getAttribute('data-jdp-only-time') || wppdIsJetEngineDateTimeInput(el)) {
       continue;
