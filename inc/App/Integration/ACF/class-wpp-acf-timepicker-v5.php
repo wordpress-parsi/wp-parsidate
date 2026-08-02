@@ -95,13 +95,7 @@ class WPP_acf_field_wpp_timepicker extends acf_field {
    * @since           4.0.0
    */
   function input_admin_enqueue_scripts() {
-    $pluginVersion = Assets::getVersion();
-    $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
-
-    wp_enqueue_script( 'wpp_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ),
-      array( 'acf-input' ), $pluginVersion, [ 'in_footer' => true ] );
-    wp_enqueue_style( 'wpp_jalali_datepicker', Assets::url( 'css-admin/jalalidatepicker' . $debugName . '.css' ),
-      array( 'acf-input' ), $pluginVersion );
+    do_action( 'wp_parsidate_jalali_datepicker_enqueue', 'acf-5' );
 
     // Remove jquery time picker to avoid conflict with woocommerce
     wp_dequeue_style( 'acf-timepicker' );

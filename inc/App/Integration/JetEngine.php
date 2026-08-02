@@ -12,12 +12,71 @@ defined( 'ABSPATH' ) || exit;
 
 use Jet_Engine_Render_Dynamic_Field;
 use WPParsidate\Addons\Addon;
-use WPParsidate\Helper\Date;
+use WPParsidate\Helper\{Assets, Date};
+use WPParsidate\Settings\Settings;
 
+/**
+ * JetEngine integration addon
+ *
+ * Replaces JetEngine meta box date fields with the Jalali datepicker,
+ * converts Gregorian dates to Shamsi for admin display and frontend
+ * rendering (meta boxes, Options Pages, Dynamic Fields, Table Builder)
+ * and converts Shamsi values back to Gregorian on save, including date
+ * fields where JetEngine's is_timestamp option is disabled.
+ */
 class JetEngine extends Addon {
+  /**
+   * Addon unique identifier
+   *
+   * @var string
+   */
   public string $addonID = 'jet_engine';
+
+  /**
+   * Settings tab where the addon section is displayed
+   *
+   * @var string
+   */
   public string $currentTab = 'integration';
 
+  /**
+   * Register admin hooks: Jalali datepicker enqueue and meta box date
+   * conversion filters (display + save) when Persian date is enabled
+   */
+  public function initM1Action(): void {
+    if ( Settings::get( 'persian_date', false ) && get_locale() === 'fa_IR' ) {
+      // Jalali datepicker for JetEngine meta box date fields + Shamsi conversion
+      // in the admin edit screens (display and save).
+      if ( $this->getSetting( 'datepicker', true ) ) {
+        add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueScripts' ] );
+
+        // Convert Jalali values to Gregorian before JetEngine saves date fields.
+        // Priority 9 (JetEngine saves at 10) so non-is_timestamp fields also convert.
+        add_action( 'save_post', [ $this, 'convertMetaDateFieldsToGregorian' ], 9, 1 );
+        add_filter( 'cx_post_meta/pre_get_meta', [ $this, 'convertPreGetMetaDateToJalali' ], 20, 5 );
+
+        // Post / Term / User meta boxes
+        add_filter( 'cx_post_meta/date', [ $this, 'convertMetaDateToJalali' ], 20, 3 );
+        add_filter( 'cx_post_meta/strtotime', [ $this, 'convertMetaDateToGregorian' ], 20, 2 );
+        add_filter( 'cx_term_meta/date', [ $this, 'convertMetaDateToJalali' ], 20, 3 );
+        add_filter( 'cx_term_meta/strtotime', [ $this, 'convertMetaDateToGregorian' ], 20, 2 );
+        add_filter( 'cx_user_meta/date', [ $this, 'convertMetaDateToJalali' ], 20, 3 );
+        add_filter( 'cx_user_meta/strtotime', [ $this, 'convertMetaDateToGregorian' ], 20, 2 );
+
+        // Options Pages conversion.
+        // Priority 20 ensures we run after JetEngine's own meta_to_date/meta_to_time handlers.
+        if ( $this->getSetting( 'date_to_shamsi', false ) || $this->getSetting( 'datetime_to_shamsi', false ) ) {
+          add_filter( 'jet-engine/options-pages/date', [ $this, 'convertMetaDateToJalali' ], 20, 3 );
+          add_filter( 'jet-engine/options-pages/strtotime', [ $this, 'convertMetaDateToGregorian' ], 20, 2 );
+        }
+      }
+    }
+  }
+
+  /**
+   * Register frontend filters that convert meta dates to Shamsi in
+   * Dynamic Fields and Table Builder listings
+   */
   public function initAction(): void {
     // Dynamic Field rendering
     add_filter( 'jet-engine/listings/dynamic-field/custom-value', [ $this, 'convertDateMeta' ], 10, 3 );
@@ -27,6 +86,211 @@ class JetEngine extends Addon {
     add_filter( 'jet-engine/listing/data/get-term-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
     add_filter( 'jet-engine/listing/data/get-user-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
     add_filter( 'jet-engine/listing/data/get-comment-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
+  }
+
+  /**
+   * Enqueue Jalali datepicker for JetEngine meta box date fields
+   */
+  public function adminEnqueueScripts(): void {
+    $screen = get_current_screen();
+
+    if ( ! $screen || $screen->base !== 'post' ) {
+      return;
+    }
+
+    $pluginVersion = Assets::getVersion();
+    $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
+
+    do_action( 'wp_parsidate_jalali_datepicker_enqueue', 'jet-engine' );
+
+    // JetEngine separates the visible datepicker input from the hidden input that
+    // actually holds the field value. jet-engine.js marks date fields for the
+    // Jalali datepicker and syncs the visible Jalali value to the hidden input
+    // (Y/m/d -> Y-m-d and space -> T for datetime).
+    wp_enqueue_script(
+      WP_PARSI_KEY . '_jet_engine_datepicker',
+      Assets::url( "js-admin/jet-engine$debugName.js" ),
+      [ WP_PARSI_KEY . '_datepicker' ],
+      $pluginVersion,
+      [ 'in_footer' => true ]
+    );
+
+    $postId  = get_the_ID();
+    $posType = get_post_type( $postId );
+    if ( is_string( $posType ) ) {
+      $fields = jet_engine()->meta_boxes->get_meta_fields_for_object( $posType );
+
+      if ( ! empty( $fields ) ) {
+        $dateFields = array_filter( $fields, function ( $field ) {
+          return isset( $field['type'] ) && in_array( $field['type'], [ 'date', 'datetime-local' ], true );
+        } );
+
+        if ( ! empty( $dateFields ) ) {
+          wp_localize_script(
+            WP_PARSI_KEY . '_jet_engine_datepicker',
+            'wp_parsidate_jetengine_datepicker',
+            [
+              'dateFields' => array_map( function ( $field ) {
+                return [
+                  'name'       => $field['name'] ?? '',
+                  'input_type' => $field['type'] ?? '',
+                ];
+              }, $dateFields ),
+            ]
+          );
+        }
+      }
+    }
+  }
+
+  /**
+   * Convert Gregorian timestamp to Jalali date for admin meta box display
+   *
+   * @param string $formattedDate Formatted date
+   * @param int|string $timestamp Unix timestamp
+   * @param string $format Date format
+   *
+   * @return string
+   */
+  public function convertMetaDateToJalali( $formattedDate, $timestamp, $format ) {
+    if ( empty( $timestamp ) ) {
+      return $formattedDate;
+    }
+
+    if ( $format === 'Y-m-d' && ( $this->getSetting( 'date_to_shamsi', false ) || $this->getSetting( 'datepicker', true ) ) ) {
+      return parsidate( 'Y-m-d', $timestamp, 'eng' );
+    }
+
+    if ( $format === 'Y-m-d\TH:i' && ( $this->getSetting( 'datetime_to_shamsi', false ) || $this->getSetting( 'datepicker', true ) ) ) {
+      return parsidate( 'Y-m-d\TH:i', $timestamp, 'eng' );
+    }
+
+    return $formattedDate;
+  }
+
+  /**
+   * Convert Jalali date string to Gregorian timestamp on admin meta box save
+   *
+   * @param int|string $timestamp Result of strtotime() on the raw value
+   * @param string $value Raw date value
+   *
+   * @return int
+   */
+  public function convertMetaDateToGregorian( $timestamp, $value ) {
+    if ( ! is_string( $value ) || empty( $value ) ) {
+      return $timestamp;
+    }
+
+    $date = Date::isDateString( $value, 'Y-m-d' );
+    if ( $date['status'] && $date['type'] === 'jalali' && ( $this->getSetting( 'date_to_shamsi', false ) || $this->getSetting( 'datepicker', true ) ) ) {
+      return strtotime( gregdate( 'Y-m-d', $value ) );
+    }
+
+    $dateTime = Date::isDateString( $value, 'Y-m-d\TH:i' );
+    if ( $dateTime['status'] && $dateTime['type'] === 'jalali' && ( $this->getSetting( 'datetime_to_shamsi', false ) || $this->getSetting( 'datepicker', true ) ) ) {
+      return strtotime( gregdate( 'Y-m-d H:i', str_replace( 'T', ' ', $value ) ) );
+    }
+
+    return $timestamp;
+  }
+
+  /**
+   * Convert JetEngine meta box date default to Shamsi before it is
+   * rendered in the admin date field when no value is stored yet
+   *
+   * @param mixed $value Value passed to the filter (false when empty)
+   * @param \WP_Post $post Current post object
+   * @param string $key Meta key
+   * @param mixed $default Default value
+   * @param array $field Meta field arguments
+   *
+   * @return mixed
+   */
+  public function convertPreGetMetaDateToJalali( $value, $post, $key, $default, $field ) {
+    if ( $value === false ) {
+      $meta       = get_post_meta( $post->ID, $key, false );
+      $fieldValue = empty( $meta ) ? $default : $meta[0];
+
+      if ( $field['input_type'] === 'date' && ( $this->getSetting( 'date_to_shamsi', false ) || $this->getSetting( 'datepicker', true ) ) ) {
+        $fieldValue = parsidate( 'Y-m-d', $fieldValue, 'eng' );
+      }
+
+      if ( $field['input_type'] === 'datetime-local' && ( $this->getSetting( 'datetime_to_shamsi', false ) || $this->getSetting( 'datepicker', true ) ) ) {
+        $fieldValue = parsidate( 'Y-m-d H:i', $fieldValue, 'eng' );
+      }
+
+      return $fieldValue;
+    }
+
+    return $value;
+  }
+
+  /**
+   * Rewrite JetEngine meta box date values from Jalali to Gregorian before save.
+   * Covers date/datetime-local fields where is_timestamp is disabled and
+   * cx_post_meta/strtotime never fires.
+   *
+   * @param int $postId Post ID
+   */
+  public function convertMetaDateFieldsToGregorian( $postId ) {
+    if ( wp_is_post_autosave( $postId ) || wp_is_post_revision( $postId ) || empty( $_POST ) ) {
+      return;
+    }
+
+    if ( ! function_exists( 'jet_engine' ) || empty( jet_engine()->meta_boxes ) ) {
+      return;
+    }
+
+    $postType = get_post_type( $postId );
+
+    if ( ! $postType ) {
+      return;
+    }
+
+    $fields = jet_engine()->meta_boxes->get_meta_fields_for_object( $postType );
+
+    if ( empty( $fields ) ) {
+      return;
+    }
+
+    foreach ( $fields as $field ) {
+      $this->convertMetaDateFieldValue( $field );
+    }
+  }
+
+  /**
+   * Convert a single meta field value in $_POST from Jalali to Gregorian
+   *
+   * @param array $field Meta field arguments
+   */
+  private function convertMetaDateFieldValue( $field ) {
+    if ( empty( $field['name'] ) || empty( $field['type'] ) ) {
+      return;
+    }
+
+    $isDate     = 'date' === $field['type'] && ( $this->getSetting( 'date_to_shamsi', false ) || $this->getSetting( 'datepicker', true ) );
+    $isDateTime = 'datetime-local' === $field['type'] && ( $this->getSetting( 'datetime_to_shamsi', false ) || $this->getSetting( 'datepicker', true ) );
+
+    if ( ! $isDate && ! $isDateTime ) {
+      return;
+    }
+
+    $key = $field['name'];
+
+    if ( ! isset( $_POST[ $key ] ) || ! is_string( $_POST[ $key ] ) || '' === trim( $_POST[ $key ] ) ) {
+      return;
+    }
+
+    $value = $_POST[ $key ];
+
+    $dateString = Date::isDateString( $value, $isDate ? 'Y-m-d' : 'Y-m-d\TH:i' );
+
+    if ( $dateString['status'] && 'jalali' === $dateString['type'] ) {
+      $_POST[ $key ] = gregdate(
+        $isDate ? 'Y-m-d' : 'Y-m-d\TH:i',
+        $isDate ? $value : str_replace( 'T', ' ', $value )
+      );
+    }
   }
 
   /**
@@ -84,9 +348,9 @@ class JetEngine extends Addon {
    *
    * @param mixed $date date string
    *
-   * @return string Shamsi date
+   * @return mixed Shamsi date
    */
-  private function convertDate( $date ): string {
+  private function convertDate( $date ) {
     if ( ! is_string( $date ) ) {
       return $date;
     }
@@ -105,56 +369,69 @@ class JetEngine extends Addon {
     return $value;
   }
 
+  /**
+   * Register the JetEngine settings section in the integration tab
+   *
+   * @param array $sections Settings sections
+   *
+   * @return array
+   */
   public function addSectionSettings( $sections ) {
     $sections[ $this->addonID ] = array(
       'title'        => esc_html__( 'Jet Engine', 'wp-parsidate' ),
       'desc'         => esc_html__( 'ParsiDate integration for Jet Engine', 'wp-parsidate' ),
       'settings_key' => $this->addonID,
       'settings'     => [
-        'jetengine_start_grid' => array(
-          'id'    => 'edd_start_grid',
+        'jetengine_datepicker_start_grid' => array(
+          'id'    => 'jetengine_datepicker_start_grid',
+          'title' => esc_html__( 'Datepicker', 'wp-parsidate' ),
+          'type'  => 'startGrid',
+        ),
+        'datepicker'                      => array(
+          'id'       => 'datepicker',
+          'title'    => esc_html__( 'Jalali datepicker in admin', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Replaces JetEngine meta box date fields with the Jalali datepicker and converts their values to Shamsi in the admin edit screens. Dates are stored in Gregorian in the database.', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => true,
+          'sanitize' => 'bool'
+        ),
+        'jetengine_datepicker_end_grid'   => array(
+          'type' => 'endGrid',
+        ),
+        'jetengine_start_grid'            => array(
+          'id'    => 'jetengine_start_grid',
           'title' => esc_html__( 'Meta date field conversion', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),
-        'convert_notice'       => array(
-          'id'      => 'convert_notice',
-          'notices' => array(
-            array(
-              'message' => esc_html__( 'Currently only "Dynamic Field" is supported.', 'wp-parsidate' ),
-              'type'    => 'warning'
-            )
-          ),
-          'type'    => 'notice',
-        ),
-        'date_to_shamsi'       => array(
+        'date_to_shamsi'                  => array(
           'id'       => 'date_to_shamsi',
           'title'    => esc_html__( 'Date field to Shamsi', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
         ),
-        'date_format'          => array(
+        'date_format'                     => array(
           'id'      => 'date_format',
           'title'   => esc_html__( 'Date format', 'wp-parsidate' ),
           'type'    => 'text',
           'default' => 'j F Y',
           'class'   => 'ltr-field',
         ),
-        'datetime_to_shamsi'   => array(
+        'datetime_to_shamsi'              => array(
           'id'       => 'datetime_to_shamsi',
           'title'    => esc_html__( 'Datetime field to Shamsi', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
           'sanitize' => 'bool'
         ),
-        'datetime_format'      => array(
+        'datetime_format'                 => array(
           'id'      => 'datetime_format',
           'title'   => esc_html__( 'Datetime format', 'wp-parsidate' ),
           'type'    => 'text',
           'default' => 'j F Y, g:i a',
           'class'   => 'ltr-field',
         ),
-        'jetengine_end_grid'   => array(
+        'jetengine_end_grid'              => array(
           'type' => 'endGrid',
         )
       ]
@@ -163,6 +440,11 @@ class JetEngine extends Addon {
     return $sections;
   }
 
+  /**
+   * Addon information used by the addon registry and activation check
+   *
+   * @return array
+   */
   public function info(): array {
     $svg = '<svg width="255" height="69" viewBox="0 0 255 69" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M127.732 0.00520562C130.434 -0.14649 131.976 3.05172 130.18 5.08471L114.199 23.1808C112.327 25.2999 108.84 23.9452 108.876 21.1133L108.971 13.7711C108.984 12.8091 108.544 11.8973 107.785 11.3102L101.991 6.82848C99.7564 5.09993 100.863 1.5136 103.679 1.35547L127.732 0.00520562Z" fill="#9D64ED"></path> <path d="M6.02065 59.8968C19.315 59.8968 30.1032 49.0912 30.1032 35.7565V17.6551C30.1032 14.3138 27.4138 11.6162 24.0826 11.6162C20.7514 11.6162 18.0619 14.3138 18.0619 17.6551V35.7565C18.0619 42.4238 12.6678 47.8343 6.02065 47.8343C2.68943 47.8343 0 50.5319 0 53.8579C0 57.1839 2.68943 59.8968 6.02065 59.8968Z" fill="#0f1629"></path> <path d="M107.057 47.8343C100.41 47.8343 95.0162 42.4238 95.0162 35.7565V35.1741H99.7991C103.13 35.1741 105.835 32.4612 105.835 29.1199C105.835 25.7785 103.13 23.0656 99.7991 23.0656H95.0162V17.6551C95.0162 14.3291 92.3268 11.6162 88.9956 11.6162C85.6643 11.6162 82.9749 14.3138 82.9749 17.6551V35.7565C82.9749 49.0912 93.7632 59.8968 107.057 59.8968C110.389 59.8968 113.078 57.1992 113.078 53.8579C113.078 50.5166 110.389 47.8343 107.057 47.8343Z" fill="#0f1629"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M79.5521 27.2807C79.5521 27.2807 79.5369 27.2807 79.5216 27.296C80.1481 28.936 80.0564 30.8213 79.109 32.4613C78.3297 33.8407 77.0767 34.791 75.6708 35.2202L51.4201 46.5163C55.4696 48.7541 60.2677 48.3709 63.874 45.9339C64.9437 44.8916 66.4106 44.2632 68.0151 44.2632C71.3311 44.2632 74.0205 46.9608 74.0205 50.2868C74.0205 52.4479 72.8897 54.3485 71.1783 55.4061L71.2241 55.4674C63.7976 60.8625 53.6206 61.7209 45.1703 56.8162C33.6944 50.1488 29.7519 35.3888 36.3838 23.8474C43.0004 12.2907 57.67 8.33629 69.1612 15.0189C74.1122 17.9005 77.6573 22.284 79.5521 27.2807ZM65.1118 26.8669C64.5158 26.3457 63.874 25.8706 63.1558 25.4568C57.4102 22.1308 50.0754 24.108 46.7595 29.871C45.6287 31.8482 45.1092 34.0093 45.155 36.1398L65.1118 26.8669Z" fill="#0f1629"></path> <path d="M198.625 59.2103C198.927 59.4846 199.325 59.6218 199.818 59.6218C200.285 59.6218 200.655 59.4846 200.929 59.2103C201.231 58.9085 201.382 58.5108 201.382 58.017V38.7186C201.382 38.2248 201.231 37.8408 200.929 37.5664C200.655 37.2647 200.285 37.1138 199.818 37.1138C199.325 37.1138 198.927 37.2647 198.625 37.5664C198.351 37.8408 198.214 38.2248 198.214 38.7186V58.017C198.214 58.5108 198.351 58.9085 198.625 59.2103Z" fill="#0f1629"></path> <path d="M198.214 32.176C198.653 32.615 199.174 32.8344 199.777 32.8344C200.408 32.8344 200.943 32.615 201.382 32.176C201.821 31.7371 202.04 31.2022 202.04 30.5713C202.04 29.8855 201.807 29.3505 201.341 28.9665C200.902 28.555 200.395 28.3493 199.818 28.3493C199.215 28.3493 198.68 28.555 198.214 28.9665C197.775 29.3505 197.555 29.8855 197.555 30.5713C197.555 31.2022 197.775 31.7371 198.214 32.176Z" fill="#0f1629"></path> <path d="M144.741 59.2103C145.043 59.4846 145.441 59.6218 145.934 59.6218C146.401 59.6218 146.771 59.4846 147.045 59.2103C147.347 58.9085 147.498 58.5245 147.498 58.0582V45.8783C147.498 44.7262 147.814 43.6975 148.445 42.7922C149.075 41.887 149.926 41.1737 150.996 40.6525C152.093 40.1313 153.314 39.8707 154.658 39.8707C156.743 39.8707 158.485 40.4879 159.884 41.7224C161.31 42.9294 162.023 44.8085 162.023 47.3597V58.0582C162.023 58.4971 162.174 58.8674 162.476 59.1691C162.778 59.4709 163.162 59.6218 163.628 59.6218C164.067 59.6218 164.437 59.4709 164.739 59.1691C165.041 58.8674 165.192 58.4971 165.192 58.0582V47.3597C165.192 45.1102 164.739 43.2037 163.834 41.6401C162.956 40.0765 161.749 38.8969 160.213 38.1014C158.677 37.2784 156.935 36.8669 154.987 36.8669C153.478 36.8669 152.066 37.155 150.749 37.731C149.46 38.3071 148.376 39.1026 147.498 40.1176V38.7186C147.498 38.2248 147.347 37.8408 147.045 37.5664C146.771 37.2647 146.401 37.1138 145.934 37.1138C145.441 37.1138 145.043 37.2647 144.741 37.5664C144.467 37.8408 144.33 38.2248 144.33 38.7186V58.0582C144.33 58.5245 144.467 58.9085 144.741 59.2103Z" fill="#0f1629"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M124.568 58.3873C126.296 59.3475 128.271 59.8275 130.493 59.8275C131.783 59.8275 133.127 59.5806 134.526 59.0869C135.925 58.5656 137.077 57.921 137.982 57.1529C138.311 56.8786 138.462 56.5494 138.435 56.1653C138.435 55.7813 138.257 55.4247 137.9 55.0955C137.626 54.876 137.297 54.78 136.912 54.8075C136.528 54.8075 136.186 54.9309 135.884 55.1778C135.28 55.699 134.471 56.1379 133.456 56.4945C132.468 56.8237 131.481 56.9883 130.493 56.9883C128.957 56.9883 127.586 56.6728 126.379 56.0419C125.172 55.3835 124.198 54.492 123.457 53.3673C122.716 52.2151 122.264 50.8984 122.099 49.4171H138.723C139.162 49.4171 139.519 49.2936 139.793 49.0467C140.067 48.7724 140.204 48.4158 140.204 47.9769C140.204 45.8372 139.779 43.9307 138.929 42.2573C138.078 40.584 136.871 39.2809 135.308 38.3482C133.772 37.3881 131.961 36.9081 129.876 36.9081C127.764 36.9081 125.899 37.4018 124.28 38.3894C122.662 39.3769 121.386 40.7348 120.453 42.4631C119.548 44.1638 119.095 46.1389 119.095 48.3884C119.095 50.6104 119.575 52.5855 120.536 54.3137C121.523 56.0419 122.867 57.3998 124.568 58.3873ZM124.65 41.7224C126.022 40.4056 127.764 39.7473 129.876 39.7473C131.961 39.7473 133.648 40.4056 134.937 41.7224C136.254 43.0117 137.022 44.6988 137.242 46.7836H122.181C122.456 44.6988 123.279 43.0117 124.65 41.7224Z" fill="#0f1629"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M180.859 59.8275C178.692 59.8275 176.772 59.3475 175.098 58.3873C173.425 57.3998 172.108 56.0419 171.148 54.3137C170.216 52.5855 169.749 50.6104 169.749 48.3884C169.749 46.1389 170.243 44.1501 171.231 42.4219C172.218 40.6937 173.576 39.3495 175.304 38.3894C177.032 37.4018 178.994 36.9081 181.188 36.9081C183.41 36.9081 185.372 37.4018 187.073 38.3894C188.801 39.3495 190.145 40.6937 191.105 42.4219C192.093 44.1501 192.6 46.1389 192.628 48.3884V56.7826C192.628 59.0046 192.134 60.9934 191.146 62.749C190.159 64.5321 188.814 65.9311 187.114 66.9461C185.413 67.9885 183.465 68.5098 181.271 68.5098C179.104 68.5098 177.197 68.0983 175.551 67.2753C173.905 66.4798 172.547 65.3825 171.477 63.9835C171.176 63.6543 171.039 63.2977 171.066 62.9136C171.121 62.5296 171.327 62.2141 171.683 61.9672C172.04 61.7203 172.438 61.638 172.876 61.7203C173.315 61.8026 173.658 62.0084 173.905 62.3375C174.701 63.3251 175.716 64.1206 176.95 64.7241C178.212 65.3276 179.666 65.6294 181.312 65.6294C182.848 65.6294 184.233 65.2591 185.468 64.5184C186.702 63.7777 187.676 62.7353 188.389 61.3911C189.13 60.047 189.5 58.4696 189.5 56.6591V54.7663C188.677 56.3299 187.511 57.5644 186.003 58.4696C184.521 59.3749 182.807 59.8275 180.859 59.8275ZM181.188 56.9472C182.807 56.9472 184.233 56.5905 185.468 55.8773C186.73 55.1366 187.717 54.1217 188.43 52.8324C189.144 51.5431 189.5 50.0617 189.5 48.3884C189.5 46.715 189.144 45.2337 188.43 43.9444C187.717 42.6276 186.73 41.6127 185.468 40.8994C184.233 40.1588 182.807 39.7884 181.188 39.7884C179.57 39.7884 178.13 40.1588 176.868 40.8994C175.606 41.6127 174.618 42.6276 173.905 43.9444C173.192 45.2337 172.835 46.715 172.835 48.3884C172.835 50.0617 173.192 51.5431 173.905 52.8324C174.618 54.1217 175.606 55.1366 176.868 55.8773C178.13 56.5905 179.57 56.9472 181.188 56.9472Z" fill="#0f1629"></path> <path d="M209.82 59.6218C209.326 59.6218 208.928 59.4846 208.627 59.2103C208.352 58.9085 208.215 58.5245 208.215 58.0582V38.7186C208.215 38.2248 208.352 37.8408 208.627 37.5664C208.928 37.2647 209.326 37.1138 209.82 37.1138C210.286 37.1138 210.657 37.2647 210.931 37.5664C211.233 37.8408 211.384 38.2248 211.384 38.7186V40.1176C212.261 39.1026 213.345 38.3071 214.634 37.731C215.951 37.155 217.364 36.8669 218.873 36.8669C220.82 36.8669 222.562 37.2784 224.098 38.1014C225.635 38.8969 226.842 40.0765 227.719 41.6401C228.625 43.2037 229.077 45.1102 229.077 47.3597V58.0582C229.077 58.4971 228.926 58.8674 228.625 59.1691C228.323 59.4709 227.953 59.6218 227.514 59.6218C227.047 59.6218 226.663 59.4709 226.362 59.1691C226.06 58.8674 225.909 58.4971 225.909 58.0582V47.3597C225.909 44.8085 225.196 42.9294 223.769 41.7224C222.37 40.4879 220.628 39.8707 218.543 39.8707C217.199 39.8707 215.979 40.1313 214.881 40.6525C213.811 41.1737 212.961 41.887 212.33 42.7922C211.699 43.6975 211.384 44.7262 211.384 45.8783V58.0582C211.384 58.5245 211.233 58.9085 210.931 59.2103C210.657 59.4846 210.286 59.6218 209.82 59.6218Z" fill="#0f1629"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M239.107 58.3873C240.836 59.3475 242.811 59.8275 245.033 59.8275C246.322 59.8275 247.666 59.5806 249.065 59.0869C250.464 58.5656 251.616 57.921 252.522 57.1529C252.851 56.8786 253.002 56.5494 252.974 56.1653C252.974 55.7813 252.796 55.4247 252.439 55.0955C252.165 54.876 251.836 54.78 251.452 54.8075C251.068 54.8075 250.725 54.9309 250.423 55.1778C249.82 55.699 249.01 56.1379 247.995 56.4945C247.008 56.8237 246.02 56.9883 245.033 56.9883C243.497 56.9883 242.125 56.6728 240.918 56.0419C239.711 55.3835 238.737 54.492 237.996 53.3673C237.256 52.2151 236.803 50.8984 236.639 49.4171H253.262C253.701 49.4171 254.058 49.2936 254.332 49.0467C254.607 48.7724 254.744 48.4158 254.744 47.9769C254.744 45.8372 254.319 43.9307 253.468 42.2573C252.618 40.584 251.411 39.2809 249.847 38.3482C248.311 37.3881 246.5 36.9081 244.416 36.9081C242.303 36.9081 240.438 37.4018 238.819 38.3894C237.201 39.3769 235.925 40.7348 234.993 42.4631C234.087 44.1638 233.635 46.1389 233.635 48.3884C233.635 50.6104 234.115 52.5855 235.075 54.3137C236.062 56.0419 237.407 57.3998 239.107 58.3873ZM239.19 41.7224C240.561 40.4056 242.303 39.7473 244.416 39.7473C246.5 39.7473 248.187 40.4056 249.477 41.7224C250.793 43.0117 251.562 44.6988 251.781 46.7836H236.721C236.995 44.6988 237.818 43.0117 239.19 41.7224Z" fill="#0f1629"></path> </svg>';
 

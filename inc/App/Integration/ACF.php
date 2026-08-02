@@ -42,7 +42,7 @@ class ACF extends Addon {
   }
 
   public function fixDatePickerScript(): void {
-    wp_add_inline_script( 'wpp_jalali_datepicker', "document.addEventListener('DOMContentLoaded', function () {
+    wp_add_inline_script( WP_PARSI_KEY . '_datepicker', "document.addEventListener('DOMContentLoaded', function () {
           setTimeout(function () {
             function wppdAcfJalaliDatePickerMirror() {
             jQuery('.acf-date-picker input.hasDatepicker').off('keyup change','**').on('keyup change', function () {

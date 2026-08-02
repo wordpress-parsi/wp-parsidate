@@ -20,7 +20,8 @@ class AppAssets {
     add_filter( 'admin_init', [ $this, 'fixTinyMceFont' ], PHP_INT_MAX );
     add_filter( 'theme_file_path', [ $this, 'fixThemeFilePath' ], 10, 2 );
     //add_filter( 'wp_theme_json_data_theme', [ $this, 'addFontToThemeJson' ] );
-    add_action( 'wpp_jalali_datepicker_enqueued', [ $this, 'localizeMonthsName' ] );
+    add_action( 'wp_parsidate_jalali_datepicker_enqueue', [ $this, 'enqueueJalaliDatepicker' ], 0 );
+    add_action( 'wp_parsidate_jalali_datepicker_enqueued', [ $this, 'localizeMonthsName' ] );
     add_action( 'enqueue_block_editor_assets', [ $this, 'blockEditorAssets' ] );
   }
 
@@ -70,6 +71,20 @@ class AppAssets {
     );
   }
 
+  public function enqueueJalaliDatepicker( $moduleName ) {
+    $pluginVersion = Assets::getVersion();
+    $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
+
+    wp_enqueue_script( WP_PARSI_KEY . '_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ), array(), $pluginVersion, [ 'in_footer' => true ] );
+    wp_enqueue_script( WP_PARSI_KEY . '_datepicker', Assets::url( "js-admin/datepicker$debugName.js" ), array(
+      'jquery',
+      WP_PARSI_KEY . '_jalali_datepicker'
+    ), $pluginVersion, [ 'in_footer' => true ] );
+    wp_enqueue_style( WP_PARSI_KEY . '_jalali_datepicker', Assets::url( "css-admin/jalalidatepicker$debugName.css" ), null, $pluginVersion );
+
+    do_action( 'wp_parsidate_jalali_datepicker_enqueued', $moduleName );
+  }
+
   /**
    * Localize name of months after date picker enqueued
    *
@@ -81,7 +96,7 @@ class AppAssets {
     // Remove first item (null string) from name of months array
     array_shift( $months_name );
 
-    wp_localize_script( 'wpp_jalali_datepicker', 'WPP_I18N',
+    wp_localize_script( WP_PARSI_KEY . '_jalali_datepicker', 'WPP_I18N',
       array(
         'months' => $months_name
       )
