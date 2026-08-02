@@ -10,7 +10,7 @@ namespace WPParsidate\App;
 defined( 'ABSPATH' ) || exit;
 
 use WPParsidate\Core\Names;
-use WPParsidate\Helper\{Assets, Param};
+use WPParsidate\Helper\{Assets, Debug, Param};
 use WPParsidate\Settings\Settings;
 
 class AppAssets {
@@ -46,6 +46,39 @@ class AppAssets {
     }
 
     $pluginVersion = Assets::getVersion();
+    $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
+
+    if ( Settings::get( 'new_gutenberg_datepicker_enabled', true ) ) {
+      wp_enqueue_script(
+        WP_PARSI_KEY . '_jalali_date',
+        Assets::url( "js-admin/jalali-date$debugName.js" ),
+        array(),
+        $pluginVersion,
+        true
+      );
+
+      wp_enqueue_script(
+        WP_PARSI_KEY . '_gutenberg_datepicker',
+        Assets::url( "js-admin/gutenberg-datepicker$debugName.js" ),
+        array( WP_PARSI_KEY . '_jalali_date', 'wp-data', 'wp-i18n' ),
+        $pluginVersion,
+        true
+      );
+
+      $monthNames = Names::getMonths();
+      array_shift( $monthNames ); // Remove first item (null string) from name of
+      $settings = array(
+        'debug'            => Debug::plugin(),
+        'usePersianDigits' => true,
+        'enableOverlay'    => true,
+        'monthNames'       => $monthNames,
+        'weekdayShort'     => array( 'ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج' ),
+      );
+
+      wp_localize_script( WP_PARSI_KEY . '_gutenberg_datepicker', 'WpPdGdp_SETTINGS', $settings );
+
+      return;
+    }
 
     wp_enqueue_script( 'wpp_gutenberg_jalali_calendar_editor_scripts',
       Assets::url( 'js-admin/gutenberg-jalali-calendar.build.js' ),

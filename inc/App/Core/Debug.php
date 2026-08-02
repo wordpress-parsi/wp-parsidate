@@ -21,7 +21,7 @@ class Debug {
 
   public function addSectionSettings( array $sections ): array {
     $settings = array(
-      'start_grid_plugin' => array(
+      'debug_start_grid'  => array(
         'title' => esc_html__( 'Debug', 'wp-parsidate' ),
         'type'  => 'startGrid',
       ),
@@ -30,8 +30,7 @@ class Debug {
         'title'    => esc_html__( 'Debug Mode', 'wp-parsidate' ),
         'type'     => 'toggle',
         'default'  => false,
-        'desc'     => esc_html__( 'By enabling this option, the uncompressed version of the JS and CSS files will be loaded.',
-          'wp-parsidate' ),
+        'desc'     => esc_html__( 'By enabling this option, the uncompressed version of the JS and CSS files will be loaded.', 'wp-parsidate' ),
         'sanitize' => 'bool'
       ),
       'local_text_domain' => array(
@@ -42,9 +41,25 @@ class Debug {
         'desc'     => esc_html__( 'Load translate file from plugin directory.', 'wp-parsidate' ),
         'sanitize' => 'bool'
       ),
-      'end_grid_plugin'   => array(
+      'debug_end_grid'    => array(
         'type' => 'endGrid',
-      )
+      ),
+
+      'features_start_grid'              => array(
+        'title' => esc_html__( 'Features', 'wp-parsidate' ),
+        'type'  => 'startGrid',
+      ),
+      'new_gutenberg_datepicker_enabled' => array(
+        'id'       => 'new_gutenberg_datepicker_enabled',
+        'title'    => esc_html__( 'New Gutenberg Datepicker', 'wp-parsidate' ),
+        'type'     => 'toggle',
+        'default'  => true,
+        'desc'     => esc_html__( 'By enabling this option, New datepicker enabled in Gutenberg post editor', 'wp-parsidate' ),
+        'sanitize' => 'bool'
+      ),
+      'features_end_grid'                => array(
+        'type' => 'endGrid',
+      ),
     );
 
     $sections[ self::sectionID ] = array(
