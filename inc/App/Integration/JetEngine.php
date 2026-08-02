@@ -39,11 +39,16 @@ class JetEngine extends Addon {
    */
   public string $currentTab = 'integration';
 
-  /**
-   * Register admin hooks: Jalali datepicker enqueue and meta box date
-   * conversion filters (display + save) when Persian date is enabled
-   */
-  public function initM1Action(): void {
+  public function initAction(): void {
+    // Dynamic Field rendering
+    add_filter( 'jet-engine/listings/dynamic-field/custom-value', [ $this, 'convertDateMeta' ], 10, 3 );
+
+    // Table Builder - Hook into meta retrieval for all sources
+    add_filter( 'jet-engine/listing/data/get-post-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
+    add_filter( 'jet-engine/listing/data/get-term-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
+    add_filter( 'jet-engine/listing/data/get-user-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
+    add_filter( 'jet-engine/listing/data/get-comment-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
+
     if ( Settings::get( 'persian_date', false ) && get_locale() === 'fa_IR' ) {
       // Jalali datepicker for JetEngine meta box date fields + Shamsi conversion
       // in the admin edit screens (display and save).
@@ -64,28 +69,22 @@ class JetEngine extends Addon {
         add_filter( 'cx_user_meta/strtotime', [ $this, 'convertMetaDateToGregorian' ], 20, 2 );
 
         // Options Pages conversion.
-        // Priority 20 ensures we run after JetEngine's own meta_to_date/meta_to_time handlers.
         if ( $this->getSetting( 'date_to_shamsi', false ) || $this->getSetting( 'datetime_to_shamsi', false ) ) {
           add_filter( 'jet-engine/options-pages/date', [ $this, 'convertMetaDateToJalali' ], 20, 3 );
           add_filter( 'jet-engine/options-pages/strtotime', [ $this, 'convertMetaDateToGregorian' ], 20, 2 );
         }
       }
     }
+
+    add_filter( 'wp_parsidate_posts_types_ignore_list', [ $this, 'addJetEnginePostTypeToIgnoreList' ] );
   }
 
-  /**
-   * Register frontend filters that convert meta dates to Shamsi in
-   * Dynamic Fields and Table Builder listings
-   */
-  public function initAction(): void {
-    // Dynamic Field rendering
-    add_filter( 'jet-engine/listings/dynamic-field/custom-value', [ $this, 'convertDateMeta' ], 10, 3 );
+  public function addJetEnginePostTypeToIgnoreList( $ignore ) {
+    if ( ! in_array( 'jet-engine', $ignore ) ) {
+      $ignore[] = 'jet-engine';
+    }
 
-    // Table Builder - Hook into meta retrieval for all sources
-    add_filter( 'jet-engine/listing/data/get-post-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
-    add_filter( 'jet-engine/listing/data/get-term-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
-    add_filter( 'jet-engine/listing/data/get-user-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
-    add_filter( 'jet-engine/listing/data/get-comment-meta', [ $this, 'convertTableBuilderDateMeta' ], 10, 3 );
+    return $ignore;
   }
 
   /**
