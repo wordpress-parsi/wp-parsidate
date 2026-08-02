@@ -27,11 +27,10 @@ woocommerce, i18n, l10n
 
 افزونه شمسی ساز پارسی‌دیت یکی از ابزارهای کاربردی و مفید برای کاربران وردپرس فارسی است که امکان شمسی کردن تاریخ وردپرس
 را برای کاربرانش فراهم می‌کند. این افزونه در سال ۱۳۹۲ توسط تیم توسعه وردپرس پارسی ایجاد شد و با هدف ساده‌سازی فرآیند
-نمایش تاریخ‌ها در وب‌سایت‌های فارسی زبان به کار می‌رود.
-این افزونه در طی سال‌ها مورد استفاده محبوب‌ترین سایت‌های وردپرسی فارسی زبان بوده و افراد بسیاری در توسعه این افزونه
-مشارکت داشته‌اند. پارسی‌دیت در تمام این مدت به صورت رایگان و متن‌باز توسعه داده شده و در اختیار کاربران بوده و توسط تیم
-وردپرس پارسی پشتیبانی شده است.
-این افزونه به صورت منظم آپدیت می‌شود و همواره نیازهای کاربران وردپرس فارسی را تحت پوشش قرار می‌دهد.
+نمایش تاریخ‌ها در وب‌سایت‌های فارسی زبان به کار می‌رود. این افزونه در طی سال‌ها مورد استفاده محبوب‌ترین سایت‌های وردپرسی
+فارسی زبان بوده و افراد بسیاری در توسعه این افزونه مشارکت داشته‌اند. پارسی‌دیت در تمام این مدت به صورت رایگان و متن‌باز
+توسعه داده شده و در اختیار کاربران بوده و توسط تیم وردپرس پارسی پشتیبانی شده است. این افزونه به صورت منظم آپدیت می‌شود و
+همواره نیازهای کاربران وردپرس فارسی را تحت پوشش قرار می‌دهد.
 
 ## ویژگی‌های کلیدی
 
@@ -74,9 +73,8 @@ woocommerce, i18n, l10n
 
 WP Parsidate is a feature-rich WordPress plugin designed by Persian developers to enhance the experience of
 Persian-speaking users. It seamlessly integrates the Shamsi (Jalali) calendar throughout WordPress while providing
-character and number localization, RTL optimization, and compatibility with popular plugins.
-A comprehensive WordPress plugin that integrates the Solar Hijri (Persian/Shamsi/Jalali) calendar into your WordPress
-site with full RTL support.
+character and number localization, RTL optimization, and compatibility with popular plugins. A comprehensive WordPress
+plugin that integrates the Solar Hijri (Persian/Shamsi/Jalali) calendar into your WordPress site with full RTL support.
 
 ## ✨ Key Features
 
@@ -118,3 +116,8 @@ site with full RTL support.
 <a href = "https://github.com/wordpress-parsi/wp-parsidate/graphs/contributors">
   <img src = "https://contrib.rocks/image?repo=wordpress-parsi/wp-parsidate" alt="Contributors"/>
 </a>
+
+## OpenSource library
+
+Parsidate use [JalaliDatePicker](https://github.com/majidh1/JalaliDatePicker) as Jalali/Persian datepicker for selecting
+dates, times, or date-time values in browser forms.
