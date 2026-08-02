@@ -347,6 +347,8 @@ jdp-container {
   width: 302px !important;
   max-width: none !important;
   padding: 12px !important;
+  display: grid !important;
+  grid-template: "month year" "days-header days-header" "days days" "time-container time-container" "footer footer";
   flex-wrap: wrap;
   align-items: center;
   column-gap: 8px;
@@ -377,15 +379,19 @@ jdp-container .jdp-months, jdp-container .jdp-years {
 jdp-container .jdp-months {
   order: 1;
   flex: 1 1 0;
+  grid-area: month;
 }
 jdp-container .jdp-years {
   order: 2;
   flex: 0 0 108px;
+  grid-area: year;
 }
 jdp-container .jdp-days-header {
   display: grid !important;
   grid-template-columns: repeat(7, 1fr);
   gap: 3px;
+  order: 3;
+  grid-area: days-header;
 }
 jdp-container .jdp-days {
   order: 3;
@@ -394,9 +400,18 @@ jdp-container .jdp-days {
   grid-template-columns: repeat(7, 1fr);
   gap: 3px;
   padding: 12px 0 0 !important;
+  grid-area: days;
+}
+jdp-container .jdp-time-container {
+  order: 5;
+  grid-area: time-container;
+}
+jdp-container .jdp-time-container .jdp-time:after {
+  transform: translateY(-30%);
 }
 jdp-container .jdp-footer {
-  order: 4;
+  order: 10;
+  grid-area: footer;
   width: 100% !important;
   display: flex !important;
   gap: 8px;
