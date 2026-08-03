@@ -49,13 +49,7 @@ class AppAssets {
     $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
     if ( Settings::get( 'new_gutenberg_datepicker_enabled', true ) ) {
-      wp_enqueue_script(
-        WP_PARSI_KEY . '_jalali_date',
-        Assets::url( "js-admin/jalali-date$debugName.js" ),
-        array(),
-        $pluginVersion,
-        true
-      );
+      wp_enqueue_script( WP_PARSI_KEY . '_jalali_date', Assets::url( "js-admin/jalali-date$debugName.js" ), [], $pluginVersion, true );
 
       wp_enqueue_script(
         WP_PARSI_KEY . '_gutenberg_datepicker',
