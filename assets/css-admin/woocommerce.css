@@ -9,4 +9,23 @@ body.rtl.woocommerce_page_wc-orders form#order #order_data .order_data_column:fi
   padding: 5px;
 }
 
+.woocommerce-analytics-import-status-bar__trigger {
+  width: 138px !important;
+}
+
+.woocommerce-calendar__input-text[dir=rtl],
+.woocommerce-calendar__input input[dir=rtl] {
+  text-align: center;
+  font-variant-numeric: normal;
+  unicode-bidi: plaintext;
+}
+
+.woocommerce-pagination__page-arrows-buttons button:not(.is-active) {
+  background-color: white;
+  opacity: 0.5;
+}
+.woocommerce-pagination__page-arrows-buttons button svg {
+  transform: rotate(180deg);
+}
+
 /*# sourceMappingURL=woocommerce.css.map */

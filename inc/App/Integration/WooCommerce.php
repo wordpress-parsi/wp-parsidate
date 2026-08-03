@@ -13,7 +13,8 @@ defined( 'ABSPATH' ) || exit;
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 use WPParsidate\Addons\Addon;
 use WPParsidate\App\Integration\WooCommerce\{WcGateways, WooCommerceCitySelect};
-use WPParsidate\Helper\{Assets, Date, Number, NumberConverter};
+use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter};
+use WPParsidate\Core\Names;
 use WPParsidate\Settings\Settings;
 
 class WooCommerce extends Addon {
@@ -663,12 +664,12 @@ class WooCommerce extends Addon {
    * @since           4.0.0
    */
   public function adminEnqueueScripts(): void {
-    $screen         = get_current_screen();
-    $current_screen = is_null( $screen ) ? false : $screen->id;
-    $pluginVersion  = Assets::getVersion();
-    $debugName      = WP_PARSI_DEBUG_MODE ? '' : '.min';
+    $screen        = get_current_screen();
+    $currentScreen = is_null( $screen ) ? false : $screen->id;
+    $pluginVersion = Assets::getVersion();
+    $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
-    $allowed_screens = array(
+    $allowedScreens = array(
       'product',
       'shop_order',
       'woocommerce_page_wc-orders',
@@ -676,8 +677,34 @@ class WooCommerce extends Addon {
       'shop_coupon',
     );
 
-    if ( in_array( $current_screen, $allowed_screens, true ) && Settings::get( 'persian_date' ) ) {
+    if ( in_array( $currentScreen, $allowedScreens, true ) && Settings::get( 'persian_date' ) ) {
       do_action( 'wp_parsidate_jalali_datepicker_enqueue', 'wc' );
+    }
+
+    if ( $currentScreen === 'woocommerce_page_wc-admin' ) {
+      wp_enqueue_script( WP_PARSI_KEY . '_jalali_date', Assets::url( "js-admin/jalali-date$debugName.js" ), [], $pluginVersion, true );
+
+      wp_enqueue_script( WP_PARSI_KEY . '_woocommerce_analytics', Assets::url( "js-admin/woocommerce-analytics$debugName.js" ), [ WP_PARSI_KEY . '_jalali_date' ], $pluginVersion, true );
+
+      $monthNames = Names::getMonths();
+      array_shift( $monthNames ); // Remove first item (null string) from name of
+      $settings = array(
+        // Logs progress to the browser console (lines start with [WCASD]).
+        // Set false in production.
+        'debug'            => Debug::plugin(),
+        'usePersianDigits' => true,
+        // Master switch for the Jalali calendar overlay.
+        'enableOverlay'    => true,
+        // Format WooCommerce uses in its two range inputs. Your site shows
+        // 07/01/2026 -> month/day/year -> 'MDY'. Options: 'MDY','DMY','YMD'.
+        'inputDateOrder'   => 'MDY',
+        // If the start/end range comes out reversed, flip this to true.
+        'swapInputs'       => false,
+        'monthNames'       => $monthNames,
+        // Weekday headers, Saturday-first (Solar week starts on Saturday).
+        'weekdayShort'     => array( 'ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج' ),
+      );
+      wp_localize_script( WP_PARSI_KEY . '_woocommerce_analytics', 'WpPdWcAn_SETTINGS', $settings );
     }
 
     wp_enqueue_script( WP_PARSI_KEY_SLUG . '-woocommerce-admin', Assets::url( "js-admin/woocommerce$debugName.js" ), [], $pluginVersion, [ 'in_footer' => true ] );
