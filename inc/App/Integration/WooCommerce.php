@@ -13,7 +13,8 @@ defined( 'ABSPATH' ) || exit;
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 use WPParsidate\Addons\Addon;
 use WPParsidate\App\Integration\WooCommerce\{WcGateways, WooCommerceCitySelect};
-use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter};
+use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter, Param};
+use WPParsidate\Admin\AdminPages;
 use WPParsidate\Core\Names;
 use WPParsidate\Settings\Settings;
 
@@ -89,6 +90,44 @@ class WooCommerce extends Addon {
       if ( $this->getSetting( 'fix_email_content_numbers', false ) ) {
         add_filter( 'woocommerce_mail_content', [ $this, 'convertEmailContentNumbers' ] );
       }
+
+      add_action( 'admin_notices', [ $this, 'adminNotice' ] );
+      add_action( 'admin_init', [ $this, 'dismissNotice' ] );
+    }
+  }
+
+  /**
+   * Notice for the WooCommerce Analytics Jalali date.
+   *
+   * @return              void
+   */
+  public function adminNotice(): void {
+    $dismissed = $this->getSetting( 'analytics_shamsi_date_notice_dismissed', false );
+
+    if ( ! $dismissed && 'wc-admin' === Param::get( 'page' ) && ! $this->getSetting( 'analytics_shamsi_date', false ) ) {
+      $dismissUrl = wp_nonce_url( add_query_arg( 'wpp-action', 'dismiss-wc-shamsi-date-analytics-notice' ), 'wpp_dismiss_notice' );
+
+      /* translators: 1: ParsiDate settings link, 2: Dismiss notice link */
+      $message = __( 'If you want the date for this section to be Shamsi, enable it in the settings. <a href="%1$s">Go to configuration page</a> &ndash; <a href="%2$s">Dismiss</a>', 'wp-parsidate' );
+      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+      echo '<div class="notice notice-info is-dismissible wppd-notice"><p>' .
+           sprintf( $message,
+             esc_url_raw( AdminPages::link( [ 'tab' => $this->addonID ] ) ),
+             esc_url_raw( $dismissUrl ),
+           ) .
+           '</p></div>';
+    }
+  }
+
+  /**
+   * Dismiss the notice action
+   *
+   * @return              void
+   */
+  public function dismissNotice(): void {
+    if ( isset( $_GET['wpp-action'] ) && Param::get( 'wpp-action' ) === 'dismiss-wc-shamsi-date-analytics-notice' ) {
+      check_admin_referer( 'wpp_dismiss_notice' );
+      $this->saveSetting( 'analytics_shamsi_date_notice_dismissed', true );
     }
   }
 
@@ -681,7 +720,7 @@ class WooCommerce extends Addon {
       do_action( 'wp_parsidate_jalali_datepicker_enqueue', 'wc' );
     }
 
-    if ( $currentScreen === 'woocommerce_page_wc-admin' ) {
+    if ( $currentScreen === 'woocommerce_page_wc-admin' && $this->getSetting( 'analytics_shamsi_date', false ) ) {
       wp_enqueue_script( WP_PARSI_KEY . '_jalali_date', Assets::url( "js-admin/jalali-date$debugName.js" ), [], $pluginVersion, true );
 
       wp_enqueue_script( WP_PARSI_KEY . '_woocommerce_analytics', Assets::url( "js-admin/woocommerce-analytics$debugName.js" ), [ WP_PARSI_KEY . '_jalali_date' ], $pluginVersion, true );
@@ -885,6 +924,23 @@ class WooCommerce extends Addon {
           'sanitize' => 'bool'
         ),
         'woo_checkout_end_grid'   => array(
+          'type' => 'endGrid',
+        ),
+
+        'woo_analytics_start_grid' => array(
+          'id'    => 'woo_product_start_grid',
+          'title' => esc_html__( 'Analytics', 'wp-parsidate' ),
+          'type'  => 'startGrid',
+        ),
+        'analytics_shamsi_date'    => array(
+          'id'       => 'analytics_shamsi_date',
+          'title'    => esc_html__( 'Display Shamsi date in analytics', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Convert date to Shamsi date in WooCommerce analytics reports', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => false,
+          'sanitize' => 'bool'
+        ),
+        'woo_analytics_end_grid'   => array(
           'type' => 'endGrid',
         ),
 
