@@ -18,10 +18,6 @@ abstract class Addon {
   public function __construct() {
     add_filter( 'wp_parsidate_addons', [ $this, 'registerAddon' ] );
 
-    if ( ! $this->isActivated() ) {
-      return;
-    }
-
     add_action( 'wp_parsidate_admin_init', [ $this, 'registerMenu' ] );
     add_filter( 'wp_parsidate_settings', [ $this, 'allSettings' ] );
 
@@ -58,7 +54,7 @@ abstract class Addon {
   }
 
   public function registerAddSectionSettings( $sections ): array {
-    if ( method_exists( $this, 'addSectionSettings' ) ) {
+    if ( method_exists( $this, 'addSectionSettings' ) && $this->isActivated() ) {
       return $this->addSectionSettings( $sections );
     }
 
@@ -66,7 +62,7 @@ abstract class Addon {
   }
 
   public function registerQueryVarsFilter( $vars ) {
-    if ( method_exists( $this, 'queryVarsFilter' ) ) {
+    if ( method_exists( $this, 'queryVarsFilter' ) && $this->isActivated() ) {
       return $this->queryVarsFilter( $vars );
     }
 
@@ -74,7 +70,7 @@ abstract class Addon {
   }
 
   public function registerWooAccountMenuItemsFilter( $items ) {
-    if ( method_exists( $this, 'wooAccountMenuItemsFilter' ) ) {
+    if ( method_exists( $this, 'wooAccountMenuItemsFilter' ) && $this->isActivated() ) {
       return $this->wooAccountMenuItemsFilter( $items );
     }
 
@@ -82,7 +78,7 @@ abstract class Addon {
   }
 
   public function registerAdminBodyClassFilter( $classes ) {
-    if ( method_exists( $this, 'adminBodyClassFilter' ) ) {
+    if ( method_exists( $this, 'adminBodyClassFilter' ) && $this->isActivated() ) {
       return $this->adminBodyClassFilter( $classes );
     }
 
@@ -90,61 +86,61 @@ abstract class Addon {
   }
 
   public function registerWpFooterAction(): void {
-    if ( method_exists( $this, 'wpFooterAction' ) ) {
+    if ( method_exists( $this, 'wpFooterAction' ) && $this->isActivated() ) {
       $this->wpFooterAction();
     }
   }
 
   public function registerWpBodyOpenAction(): void {
-    if ( method_exists( $this, 'wpBodyOpenAction' ) ) {
+    if ( method_exists( $this, 'wpBodyOpenAction' ) && $this->isActivated() ) {
       $this->wpBodyOpenAction();
     }
   }
 
   public function registerAdminEnqueueScriptsAction(): void {
-    if ( method_exists( $this, 'adminEnqueueScriptsAction' ) ) {
+    if ( method_exists( $this, 'adminEnqueueScriptsAction' ) && $this->isActivated() ) {
       $this->adminEnqueueScriptsAction();
     }
   }
 
   public function registerWpEnqueueScriptsAction(): void {
-    if ( method_exists( $this, 'wpEnqueueScriptsAction' ) ) {
+    if ( method_exists( $this, 'wpEnqueueScriptsAction' ) && $this->isActivated() ) {
       $this->wpEnqueueScriptsAction();
     }
   }
 
   public function registerAdminInitAction(): void {
-    if ( method_exists( $this, 'adminInitAction' ) ) {
+    if ( method_exists( $this, 'adminInitAction' ) && $this->isActivated() ) {
       $this->adminInitAction();
     }
   }
 
   public function registerInitM1Action(): void {
-    if ( method_exists( $this, 'initM1Action' ) ) {
+    if ( method_exists( $this, 'initM1Action' ) && $this->isActivated() ) {
       $this->initM1Action();
     }
   }
 
   public function registerInitAction(): void {
-    if ( method_exists( $this, 'initAction' ) ) {
+    if ( method_exists( $this, 'initAction' ) && $this->isActivated() ) {
       $this->initAction();
     }
   }
 
   public function registerTemplateRedirectAction(): void {
-    if ( method_exists( $this, 'templateRedirectAction' ) ) {
+    if ( method_exists( $this, 'templateRedirectAction' ) && $this->isActivated() ) {
       $this->templateRedirectAction();
     }
   }
 
   public function registerWpAction(): void {
-    if ( method_exists( $this, 'wpAction' ) ) {
+    if ( method_exists( $this, 'wpAction' ) && $this->isActivated() ) {
       $this->wpAction();
     }
   }
 
   public function registerMenu(): void {
-    if ( $this->getInfo( 'has_page', false ) ) {
+    if ( $this->getInfo( 'has_page', false ) && $this->isActivated() ) {
       add_filter( 'wp_parsidate_menus', [ $this, 'addMenu' ], 12 );
 
       if ( $this->getInfo( 'content_header', false ) ) {
