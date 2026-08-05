@@ -39,7 +39,7 @@ class FeedReader {
       'cache_key'    => '',
       'cache_time'   => DAY_IN_SECONDS,
       'items_number' => 10,
-      'timeout'      => 3,
+      'timeout'      => 6,
       'fields'       => [ 'link', 'title', 'description', 'author', 'datetime' ],
     );
     $this->setArgs( $args );

@@ -32,7 +32,7 @@ class Plugin {
    */
   public function limitWpParsiTimeout( array $args, string $url ): array {
     if ( str_contains( $url, 'wp-parsi.com' ) ) {
-      $args['timeout'] = 3;
+      $args['timeout'] = 6;
     }
 
     return $args;
