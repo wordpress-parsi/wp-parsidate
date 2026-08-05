@@ -5,6 +5,7 @@ namespace WPParsidate\App\Integration;
 class Integration {
   public function __construct() {
     // E-commerce
+    new ParsigateDemo();
     new WooCommerce();
     new EDD();
     new BulkyBulkEditProductsWooCommerce();

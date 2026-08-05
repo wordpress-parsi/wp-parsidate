@@ -29,8 +29,23 @@
       border: 1px solid variables.$border_color;
       border-radius: 10px;
       corner-shape: squircle;
-      overflow: hidden;
-      padding: 5px;
+      //overflow: hidden;
+      padding: 7px;
+      position: relative;
+
+      .wppd-addon-tag {
+        position: absolute;
+        inset-inline-start: 10px;
+        top: -10px;
+        color: white;
+        background-color: variables.$gray;
+        border-radius: 5px;
+        corner-shape: squircle;
+        padding: 3px;
+        line-height: 1;
+        z-index: 999999;
+        font-size: 12px;
+      }
 
       &.wppd-addon-inactive {
         .wppd-image-wrap {
@@ -39,6 +54,12 @@
             filter: grayscale(80%);
           }
         }
+      }
+
+      a.wppd-action-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       &:hover, &:focus-within {
@@ -74,16 +95,54 @@
         align-items: center;
         min-width: 0;
 
-        .wppd-title {
+        /*.wppd-title {
           display: inline-block;
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
-        }
+        }*/
       }
 
       .wppd-action-link {
         border-color: transparent;
+      }
+
+      &.wppd-addon-suggested {
+        $suggested-color: #008000;
+        border-color: $suggested-color;
+        border-width: 1.5px;
+        background-color: color.scale($suggested-color, $lightness: 98%);
+
+        .wppd-addon-tag {
+          background-color: $suggested-color;
+        }
+
+        &:hover, &:focus-within {
+          border-color: color.scale($suggested-color, $lightness: -10%);
+
+          .wppd-action-link {
+            border-color: $suggested-color;
+          }
+        }
+      }
+
+      &.wppd-addon-sponsor {
+        $sponsor-color: #1c17d4;
+        border-color: $sponsor-color;
+        border-width: 1.5px;
+        background-color: color.scale($sponsor-color, $lightness: 98%);
+
+        .wppd-addon-tag {
+          background-color: $sponsor-color;
+        }
+
+        &:hover, &:focus-within {
+          border-color: color.scale($sponsor-color, $lightness: -10%);
+
+          .wppd-action-link {
+            border-color: $sponsor-color;
+          }
+        }
       }
     }
 

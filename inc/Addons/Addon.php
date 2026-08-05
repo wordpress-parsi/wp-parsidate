@@ -17,6 +17,11 @@ abstract class Addon {
 
   public function __construct() {
     add_filter( 'wp_parsidate_addons', [ $this, 'registerAddon' ] );
+
+    if ( ! $this->isActivated() ) {
+      return;
+    }
+
     add_action( 'wp_parsidate_admin_init', [ $this, 'registerMenu' ] );
     add_filter( 'wp_parsidate_settings', [ $this, 'allSettings' ] );
 
@@ -53,7 +58,7 @@ abstract class Addon {
   }
 
   public function registerAddSectionSettings( $sections ): array {
-    if ( method_exists( $this, 'addSectionSettings' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'addSectionSettings' ) ) {
       return $this->addSectionSettings( $sections );
     }
 
@@ -61,7 +66,7 @@ abstract class Addon {
   }
 
   public function registerQueryVarsFilter( $vars ) {
-    if ( method_exists( $this, 'queryVarsFilter' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'queryVarsFilter' ) ) {
       return $this->queryVarsFilter( $vars );
     }
 
@@ -69,7 +74,7 @@ abstract class Addon {
   }
 
   public function registerWooAccountMenuItemsFilter( $items ) {
-    if ( method_exists( $this, 'wooAccountMenuItemsFilter' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'wooAccountMenuItemsFilter' ) ) {
       return $this->wooAccountMenuItemsFilter( $items );
     }
 
@@ -77,7 +82,7 @@ abstract class Addon {
   }
 
   public function registerAdminBodyClassFilter( $classes ) {
-    if ( method_exists( $this, 'adminBodyClassFilter' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'adminBodyClassFilter' ) ) {
       return $this->adminBodyClassFilter( $classes );
     }
 
@@ -85,61 +90,61 @@ abstract class Addon {
   }
 
   public function registerWpFooterAction(): void {
-    if ( method_exists( $this, 'wpFooterAction' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'wpFooterAction' ) ) {
       $this->wpFooterAction();
     }
   }
 
   public function registerWpBodyOpenAction(): void {
-    if ( method_exists( $this, 'wpBodyOpenAction' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'wpBodyOpenAction' ) ) {
       $this->wpBodyOpenAction();
     }
   }
 
   public function registerAdminEnqueueScriptsAction(): void {
-    if ( method_exists( $this, 'adminEnqueueScriptsAction' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'adminEnqueueScriptsAction' ) ) {
       $this->adminEnqueueScriptsAction();
     }
   }
 
   public function registerWpEnqueueScriptsAction(): void {
-    if ( method_exists( $this, 'wpEnqueueScriptsAction' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'wpEnqueueScriptsAction' ) ) {
       $this->wpEnqueueScriptsAction();
     }
   }
 
   public function registerAdminInitAction(): void {
-    if ( method_exists( $this, 'adminInitAction' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'adminInitAction' ) ) {
       $this->adminInitAction();
     }
   }
 
   public function registerInitM1Action(): void {
-    if ( method_exists( $this, 'initM1Action' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'initM1Action' ) ) {
       $this->initM1Action();
     }
   }
 
   public function registerInitAction(): void {
-    if ( method_exists( $this, 'initAction' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'initAction' ) ) {
       $this->initAction();
     }
   }
 
   public function registerTemplateRedirectAction(): void {
-    if ( method_exists( $this, 'templateRedirectAction' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'templateRedirectAction' ) ) {
       $this->templateRedirectAction();
     }
   }
 
   public function registerWpAction(): void {
-    if ( method_exists( $this, 'wpAction' ) && $this->isActivated() ) {
+    if ( method_exists( $this, 'wpAction' ) ) {
       $this->wpAction();
     }
   }
 
   public function registerMenu(): void {
-    if ( $this->getInfo( 'has_page', false ) && $this->isActivated() ) {
+    if ( $this->getInfo( 'has_page', false ) ) {
       add_filter( 'wp_parsidate_menus', [ $this, 'addMenu' ], 12 );
 
       if ( $this->getInfo( 'content_header', false ) ) {
@@ -189,10 +194,8 @@ abstract class Addon {
 
     $addon     = $this->getInfo();
     $addonCats = Addons::getAddonCats();
-    $cat       = empty( $addon['cat'] ) || ! array_key_exists( $addon['cat'],
-      $addonCats ) ? 'other' : $addon['cat'];
-    $icon      = ! empty( $addon['icon'] ) && Assets::isSvgImageString( $addon['icon'] ) ? Assets::setSvgDimensions( $addon['icon'],
-      50 ) : '';
+    $cat       = empty( $addon['cat'] ) || ! array_key_exists( $addon['cat'], $addonCats ) ? 'other' : $addon['cat'];
+    $icon      = ! empty( $addon['icon'] ) && Assets::isSvgImageString( $addon['icon'] ) ? Assets::setSvgDimensions( $addon['icon'], 50 ) : '';
 
     if ( $this->getInfo( 'has_page', false ) ) {
       $link = AdminPages::link( [
@@ -217,9 +220,15 @@ abstract class Addon {
   }
 
   public function registerAddon( $addons ) {
-    $addons[] = $this->getInfo();
+    if ( $this->canDisplay() ) {
+      $addons[] = $this->getInfo();
+    }
 
     return $addons;
+  }
+
+  private function canDisplay(): bool {
+    return ! $this->getInfo( 'is_demo', false ) || ! $this->isActivated();
   }
 
   private function getInfo( $key = null, $default = null ) {

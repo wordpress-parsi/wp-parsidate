@@ -10,7 +10,8 @@ body.rtl.woocommerce_page_wc-orders form#order #order_data .order_data_column:fi
 }
 
 .woocommerce-analytics-import-status-bar__trigger {
-  width: 138px !important;
+  width: 170px !important;
+  justify-content: center;
 }
 
 .woocommerce-calendar__input-text[dir=rtl],

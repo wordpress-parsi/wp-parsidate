@@ -21,8 +21,9 @@ body.rtl.woocommerce_page_wc-orders {
 }
 
 // Analytics pages
-.woocommerce-analytics-import-status-bar__trigger{
-  width: 138px !important;
+.woocommerce-analytics-import-status-bar__trigger {
+  width: 170px !important;
+  justify-content: center;
 }
 
 .woocommerce-calendar__input-text[dir='rtl'],
