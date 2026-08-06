@@ -49,7 +49,7 @@ class Plugin {
     if ( __( 'WordPress', 'wp-parsidate' ) !== 'وردپرس' || Settings::get( 'local_text_domain', false ) ) {
       load_textdomain(
         'wp-parsidate',
-        WP_PARSI_DIR . 'languages/wp-parsidate-' . determine_locale() . '.mo'
+        WP_PARSI_DIR . '/languages/wp-parsidate-' . determine_locale() . '.mo'
       );
     }
   }

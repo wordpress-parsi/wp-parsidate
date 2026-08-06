@@ -95,7 +95,7 @@ final class WP_Parsidate {
     }
 
     if ( ! defined( 'WP_PARSI_DIR' ) ) {
-      define( 'WP_PARSI_DIR', trim( plugin_dir_path( WP_PARSI_ROOT ), '/' ) );
+      define( 'WP_PARSI_DIR', rtrim( plugin_dir_path( WP_PARSI_ROOT ), '/' ) );
     }
 
     if ( ! defined( 'WP_PARSI_URL' ) ) {

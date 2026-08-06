@@ -176,7 +176,7 @@ class FeedReader {
     add_action( 'wp_feed_cache_transient_lifetime',
       function ( $cacheTime, $url ) use ( $requestUrl ) {
         if ( $url === $requestUrl || ! Validating::isUrl( $url ) ) {
-          return 1;
+          return 5;
         }
 
         return $cacheTime;

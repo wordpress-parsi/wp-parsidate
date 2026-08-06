@@ -60,7 +60,7 @@ if ( ! class_exists( 'WPP_WC_Pasargad_Gateway_Blocks' ) ) {
       );
 
       if ( function_exists( 'wp_set_script_translations' ) ) {
-        wp_set_script_translations( $script_id, 'wp-parsidate', WP_PARSI_DIR . 'languages/' );
+        wp_set_script_translations( $script_id, 'wp-parsidate', WP_PARSI_DIR . '/languages/' );
       }
 
       return array( $script_id );
