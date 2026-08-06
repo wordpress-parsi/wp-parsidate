@@ -15,6 +15,8 @@
 
 namespace WPParsidate\App\Integration\WooCommerce;
 
+use WPParsidate\Helper\Assets;
+
 defined( 'ABSPATH' ) || exit;
 
 class WooCommerceCitySelect {
@@ -70,8 +72,8 @@ class WooCommerceCitySelect {
 
     if ( $allowed ) {
       foreach ( $allowed as $code => $country ) {
-        if ( ! isset( $cities[ $code ] ) && file_exists( $this->get_plugin_path() . '/cities/' . $code . '.php' ) ) {
-          include( $this->get_plugin_path() . '/cities/' . $code . '.php' );
+        if ( ! isset( $cities[ $code ] ) && file_exists( $this->get_plugin_path() . '/wc-cities/cities/' . $code . '.php' ) ) {
+          include( $this->get_plugin_path() . '/wc-cities/cities/' . $code . '.php' );
         }
       }
     }
@@ -174,10 +176,9 @@ class WooCommerceCitySelect {
 
   public function load_scripts() {
     if ( is_cart() || is_checkout() || is_wc_endpoint_url( 'edit-address' ) ) {
-      $city_select_path = $this->get_plugin_url() . 'assets/js/city-select.js';
+      $city_select_path = Assets::url( 'js/city-select.js' );
 
-      wp_enqueue_script( 'wc-city-select', $city_select_path, array( 'jquery', 'woocommerce' ), self::VERSION,
-        true );
+      wp_enqueue_script( 'wc-city-select', $city_select_path, array( 'jquery', 'woocommerce' ), self::VERSION, true );
 
       $cities = json_encode( $this->get_cities() );
 

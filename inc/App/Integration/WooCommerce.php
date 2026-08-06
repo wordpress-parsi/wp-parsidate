@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 use WPParsidate\Addons\Addon;
 use WPParsidate\App\Integration\WooCommerce\{WcGateways, WooCommerceCitySelect};
-use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter, Param};
+use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter, Param, Templates};
 use WPParsidate\Admin\AdminPages;
 use WPParsidate\Core\Names;
 use WPParsidate\Settings\Settings;
@@ -78,6 +78,8 @@ class WooCommerce extends Addon {
       // WC_Order class, get_address_prop method, Filter: 'woocommerce_order_get_[billing|shipping]_[prop]'
       add_filter( 'woocommerce_order_get_shipping_phone', [ $this, 'fixPersianNumbersInPhone' ], 9999, 2 );
 
+      add_action( 'wp_enqueue_scripts', [ $this, 'checkoutBlockCitySelect' ], 100 );
+
       if ( $this->getSetting( 'validate_postcode', false ) ) {
         add_filter( 'woocommerce_validate_postcode', [ $this, 'validatePostcode' ], 10, 3 );
       }
@@ -139,8 +141,8 @@ class WooCommerce extends Addon {
    * Init Before WooCommerce Loaded
    */
   public function beforeWooCommerceInit(): void {
-    // Include City Translate
-    if ( $this->getSetting( 'dropdown_cities', false ) ) {
+    // WooCommerce checkout city select in classic form
+    if ( $this->getSetting( 'dropdown_cities', false ) && ! \WPParsidate\Helper\WooCommerce::hasBlockInPage( wc_get_page_id( 'checkout' ), 'woocommerce/checkout' ) ) {
       new WooCommerceCitySelect();
     }
 
@@ -148,6 +150,74 @@ class WooCommerce extends Addon {
       FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT, true );
       FeaturesUtil::declare_compatibility( 'product_instance_caching', WP_PARSI_ROOT, true );
     }
+  }
+
+  public function checkoutBlockCitySelect() {
+    global $cities;
+
+    if ( is_admin() || ! function_exists( 'is_checkout' ) || ! $this->getSetting( 'dropdown_cities', false ) ) {
+      return;
+    }
+
+    if ( ! is_checkout() && ! is_cart() ) {
+      return;
+    }
+
+    // Only when the page actually uses the block version.
+    if ( ! \WPParsidate\Helper\WooCommerce::hasBlockInPage( wc_get_page_id( 'checkout' ), 'woocommerce/checkout' ) ) {
+      return;
+    }
+
+    if ( empty( $cities['IR'] ) ) {
+      $base  = plugin_dir_path( WP_PARSI_DIR );
+      $files = array(
+        'wp-parsidate/inc/App/Integration/WooCommerce/wc-cities/cities/IR.php', // wp-parsidate 6.x
+        'wc-city-select/cities/IR.php',           // older layouts, just in case
+      );
+
+      foreach ( $files as $rel ) {
+        $path = Templates::pathCorrection( $base . $rel );
+        if ( file_exists( $path ) ) {
+          require_once( $path );
+          break;
+        }
+      }
+    }
+
+    if ( empty( $cities['IR'] ) || ! is_array( $cities['IR'] ) ) {
+      return; // Iran cities not available
+    }
+
+    $all = apply_filters( 'wp_parsidate_wc_checkout_city_select_cities', $cities );
+    $ir  = ( isset( $all['IR'] ) && is_array( $all['IR'] ) ) ? $all['IR'] : array();
+
+    if ( empty( $ir ) ) {
+      return;
+    }
+
+    $pluginVersion = Assets::getVersion();
+    $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
+
+    $payload = array(
+      'cities' => $ir,
+      'i18n'   => array(
+        'select' => esc_html__( 'Select your city', 'wp-parsidate' ),
+        'first'  => esc_html__( 'Select a province first', 'wp-parsidate' ),
+      ),
+    );
+
+    $css = '.wppd-wc-city-select{box-sizing: border-box;flex: 1 0 calc(50% - 12px);}
+.wppd-wc-city-select select,.wppd-wc-city-select .wc-block-components-select__select { width: 100%; }
+.wppd-wc-city-select.has-error select,.wppd-wc-city-select.has-error .wc-block-components-select__select { border-color: #cc1818; }
+.wppd-wc-city-select select:disabled { opacity: .6; }';
+
+    wp_register_script( WP_PARSI_KEY . '_wc_checkout_city_select', Assets::url( "js/woocommerce-checkout-block-city$debugName.js" ), [ 'wp-data' ], $pluginVersion, true );
+    wp_enqueue_script( WP_PARSI_KEY . '_wc_checkout_city_select' );
+    wp_localize_script( WP_PARSI_KEY . '_wc_checkout_city_select', 'WpPdWcBlockCityData', $payload );
+
+    wp_register_style( WP_PARSI_KEY . '_wc_checkout_city_select', false, [], $pluginVersion );
+    wp_enqueue_style( WP_PARSI_KEY . '_wc_checkout_city_select' );
+    wp_add_inline_style( WP_PARSI_KEY . '_wc_checkout_city_select', $css );
   }
 
   /**

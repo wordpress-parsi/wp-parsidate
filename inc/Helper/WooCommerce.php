@@ -4,6 +4,33 @@ namespace WPParsidate\Helper;
 
 class WooCommerce {
   /**
+   * Check page has block
+   * https://stackoverflow.com/a/77950175/3224296
+   *
+   * WooCommerce blocks: woocommerce/checkout, woocommerce/cart
+   *
+   * @param int $page Page ID
+   * @param string $block block name
+   *
+   * @return bool
+   */
+  public static function hasBlockInPage( $page, $block ): bool {
+    $cacheKey     = 'has_block_in_page_' . $page . '_' . $block;
+    $cacheValue = Cache::get( $cacheKey, false );
+    if ( $cacheValue !== false ) {
+      return (bool) $cacheValue;
+    }
+    if ( class_exists( 'WC_Blocks_Utils' ) && method_exists( 'WC_Blocks_Utils', 'has_block_in_page' ) ) {
+      $cacheValue = \WC_Blocks_Utils::has_block_in_page( $page, $block );
+      Cache::set( $cacheKey, (int) $cacheValue );
+
+      return $cacheValue;
+    }
+
+    return false;
+  }
+
+  /**
    * Check WC custom order tables are enabled or not
    *
    * @return bool
