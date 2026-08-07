@@ -298,6 +298,10 @@ body.toplevel_page_#{variables.$plugin_key} {
         display: flex;
         flex-direction: column;
         gap: 10px;
+
+        > *:not(h1.wppd-header-tab-title, p.wppd-description) {
+          display: none !important;
+        }
       }
 
       &.wppd-has-header-image {

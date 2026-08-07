@@ -1914,6 +1914,9 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-header .wppd-header-tit
   flex-direction: column;
   gap: 10px;
 }
+body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-header .wppd-header-title > *:not(h1.wppd-header-tab-title, p.wppd-description) {
+  display: none !important;
+}
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-header.wppd-has-header-image {
   margin: -30px -30px 30px -30px;
 }

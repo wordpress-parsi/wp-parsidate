@@ -457,7 +457,7 @@ class AdminSettings {
 
     echo '<header id="wppd-settings-header" class="wppd-header ' . ( $headerImage ? 'wppd-has-header-image' : '' ) . '">';
     echo '<div class="wppd-header-title" style="' . ( $headerImage ? 'background-image: url(' . esc_url_raw( $headerImage ) . ');' : '' ) . '">';
-    echo '<h1>' . esc_html( $settings['title'] ) . '</h1>';
+    echo '<h1 class="wppd-header-tab-title">' . esc_html( $settings['title'] ) . '</h1>';
     if ( ! empty( $settings['desc'] ) ) {
       echo '<p class="wppd-description">' . $settings['desc'] . '</p>';
     }
