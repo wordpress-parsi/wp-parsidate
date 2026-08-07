@@ -780,7 +780,7 @@ class WooCommerce extends Addon {
     if ( $currentScreen === 'woocommerce_page_wc-admin' && $this->getSetting( 'analytics_shamsi_date', false ) ) {
       wp_enqueue_script( WP_PARSI_KEY . '_jalali_date', Assets::url( "js-admin/jalali-date$debugName.js" ), [], $pluginVersion, true );
 
-      wp_enqueue_script( WP_PARSI_KEY . '_woocommerce_analytics', Assets::url( "js-admin/woocommerce-analytics$debugName.js" ), [ WP_PARSI_KEY . '_jalali_date' ], $pluginVersion, true );
+      wp_enqueue_script( WP_PARSI_KEY . '_woocommerce_analytics', Assets::url( "js-admin/woocommerce-analytics-new$debugName.js" ), [ WP_PARSI_KEY . '_jalali_date' ], $pluginVersion, true );
 
       $monthNames = Names::getMonths();
       array_shift( $monthNames ); // Remove first item (null string) from name of
