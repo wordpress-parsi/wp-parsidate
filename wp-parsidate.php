@@ -56,7 +56,7 @@ use WPParsidate\App\App;
 use WPParsidate\Block\Blocks;
 use WPParsidate\Core\Core;
 use WPParsidate\Helper\WordPress;
-use WPParsidate\Plugin\{Install, Plugin};
+use WPParsidate\Plugin\{Install, Plugin, WpNotice};
 use WPParsidate\Settings\Settings;
 use WPParsidate\Widget\Widget;
 
@@ -151,6 +151,7 @@ final class WP_Parsidate {
       }
     }
 
+    new WpNotice();
     new Plugin();
     new App();
     new Core();

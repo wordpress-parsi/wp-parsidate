@@ -9,15 +9,14 @@ namespace WPParsidate\Plugin;
 
 defined( 'ABSPATH' ) || exit;
 
-use WPParsidate\Helper\Param;
+use WPParsidate\Admin\AdminPages;
 use WPParsidate\Settings\Settings;
 
 class Plugin {
   public function __construct() {
     add_filter( 'plugin_action_links_' . plugin_basename( WP_PARSI_ROOT ), [ $this, 'pluginActionLink' ] );
     add_filter( 'login_headerurl', [ $this, 'changeLoginLink' ], 10, 2 );
-    add_action( 'admin_notices', [ $this, 'activationAdminNotice' ] );
-    add_action( 'admin_init', [ $this, 'dismissActivationNotice' ] );
+    add_filter( 'wp_parsidate_wp_admin_notice', [ $this, 'adminNotice' ] );
     add_action( 'init', [ $this, 'loadTextDomain' ], - 1 );
     add_filter( 'http_request_args', [ $this, 'limitWpParsiTimeout' ], 10, 2 );
   }
@@ -56,40 +55,27 @@ class Plugin {
 
   /**
    * Notice for the activation.
-   * Added dismiss feature.
    *
-   * @return              void
-   * @author              Ehsaan
+   * @param array $notices Notice array list
+   *
+   * @return array Notice array list
    */
-  public function activationAdminNotice(): void {
-    $dismissed = Settings::get( 'activation_admin_notice_dismissed', false );
-
-    if ( ! $dismissed && ( ! isset( $_GET['page'] ) || WP_PARSI_KEY_SLUG !== Param::get( 'page' ) ) &&
-         ! Settings::get( 'persian_date', false ) ) {
-      $dismiss_url = wp_nonce_url( add_query_arg( 'wpp-action', 'dismiss-active-notice' ), 'wpp_dismiss_notice' );
-
-      /* translators: 1: ParsiDate settings link, 2: Dismiss notice link */
-      $message = __( '<div class="updated wpp-message"><p>ParsiDate activated, you may need to configure it to work properly. <a href="%1$s">Go to configuration page</a> &ndash; <a href="%2$s">Dismiss</a></p></div>',
-        'wp-parsidate' );
-      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-      echo sprintf( $message,
-        esc_url_raw( menu_page_url( WP_PARSI_KEY_SLUG, false ) ),
-        esc_url_raw( $dismiss_url ),
+  public function adminNotice( array $notices ): array {
+    if ( ! Settings::get( 'persian_date', false ) ) {
+      $notices[] = array(
+        'id'           => 'persian_date_activation',
+        'message'      => sprintf(
+          __( 'ParsiDate activated, you may need to configure it to work properly. <a href="%s">Go to configuration page</a>', 'wp-parsidate' ),
+          esc_url_raw( AdminPages::link( [ 'tab' => 'core' ] ) )
+        ),
+        'type'         => 'warning',
+        'dismissible'  => true,
+        'dismiss_time' => MONTH_IN_SECONDS,
+        'not_page'     => WP_PARSI_KEY_SLUG
       );
     }
-  }
 
-  /**
-   * Dismiss the notice action
-   *
-   * @return              void
-   * @author              Ehsaan
-   */
-  public function dismissActivationNotice(): void {
-    if ( isset( $_GET['wpp-action'] ) && Param::get( 'wpp-action' ) === 'dismiss-active-notice' ) {
-      check_admin_referer( 'wpp_dismiss_notice' );
-      Settings::save( 'activation_admin_notice_dismissed', true );
-    }
+    return $notices;
   }
 
   /**

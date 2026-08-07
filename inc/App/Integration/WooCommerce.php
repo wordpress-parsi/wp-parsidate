@@ -53,7 +53,7 @@ class WooCommerce extends Addon {
         add_filter( 'woocommerce_email_styles', [ $this, 'fixEmailTime' ], 9999, 2 );
 
         // Jalali datepicker
-        add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueScripts' ] );
+        add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueJalaliScripts' ] );
 
         // Convert order_date using js
         add_action( 'woocommerce_process_shop_order_meta', [ $this, 'changeOrderDateOnSave' ], 0 );
@@ -93,44 +93,31 @@ class WooCommerce extends Addon {
         add_filter( 'woocommerce_mail_content', [ $this, 'convertEmailContentNumbers' ] );
       }
 
-      add_action( 'admin_notices', [ $this, 'adminNotice' ] );
-      add_action( 'admin_init', [ $this, 'dismissNotice' ] );
+      add_filter( 'wp_parsidate_wp_admin_notice', [ $this, 'adminNotice' ] );
+      add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueScripts' ] );
     }
   }
 
   /**
    * Notice for the WooCommerce Analytics Jalali date.
    *
-   * @return              void
-   */
-  public function adminNotice(): void {
-    $dismissed = $this->getSetting( 'analytics_shamsi_date_notice_dismissed', false );
-
-    if ( ! $dismissed && 'wc-admin' === Param::get( 'page' ) && ! $this->getSetting( 'analytics_shamsi_date', false ) ) {
-      $dismissUrl = wp_nonce_url( add_query_arg( 'wpp-action', 'dismiss-wc-shamsi-date-analytics-notice' ), 'wpp_dismiss_notice' );
-
-      /* translators: 1: ParsiDate settings link, 2: Dismiss notice link */
-      $message = __( 'If you want the date for this section to be Shamsi, enable it in the settings. <a href="%1$s">Go to configuration page</a> &ndash; <a href="%2$s">Dismiss</a>', 'wp-parsidate' );
-      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-      echo '<div class="notice notice-info is-dismissible wppd-notice"><p>' .
-           sprintf( $message,
-             esc_url_raw( AdminPages::link( [ 'tab' => $this->addonID ] ) ),
-             esc_url_raw( $dismissUrl ),
-           ) .
-           '</p></div>';
-    }
-  }
-
-  /**
-   * Dismiss the notice action
+   * @param array $notices Notice array list
    *
-   * @return              void
+   * @return array Notice array list
    */
-  public function dismissNotice(): void {
-    if ( isset( $_GET['wpp-action'] ) && Param::get( 'wpp-action' ) === 'dismiss-wc-shamsi-date-analytics-notice' ) {
-      check_admin_referer( 'wpp_dismiss_notice' );
-      $this->saveSetting( 'analytics_shamsi_date_notice_dismissed', true );
-    }
+  public function adminNotice( array $notices ): array {
+    $notices[] = array(
+      'id'          => 'wc_analytics_shamsi_date',
+      'message'     => sprintf(
+        __( 'If you want the date for this section to be Shamsi, enable it in the settings. <a href="%s">Go to configuration page</a>', 'wp-parsidate' ),
+        esc_url_raw( AdminPages::link( [ 'tab' => $this->addonID ] ) )
+      ),
+      'type'        => 'info',
+      'dismissible' => true,
+      'page'        => 'wc-admin'
+    );
+
+    return $notices;
   }
 
   public function convertEmailContentNumbers( $message ): string {
@@ -772,7 +759,7 @@ class WooCommerce extends Addon {
    *
    * @since           4.0.0
    */
-  public function adminEnqueueScripts(): void {
+  public function adminEnqueueJalaliScripts(): void {
     $screen        = get_current_screen();
     $currentScreen = is_null( $screen ) ? false : $screen->id;
     $pluginVersion = Assets::getVersion();
@@ -815,6 +802,11 @@ class WooCommerce extends Addon {
       );
       wp_localize_script( WP_PARSI_KEY . '_woocommerce_analytics', 'WpPdWcAn_SETTINGS', $settings );
     }
+  }
+
+  public function adminEnqueueScripts(): void {
+    $pluginVersion = Assets::getVersion();
+    $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
     wp_enqueue_script( WP_PARSI_KEY_SLUG . '-woocommerce-admin', Assets::url( "js-admin/woocommerce$debugName.js" ), [], $pluginVersion, [ 'in_footer' => true ] );
     wp_enqueue_style( WP_PARSI_KEY_SLUG . '-woocommerce-admin', Assets::url( "css-admin/woocommerce$debugName.css" ), null, $pluginVersion );

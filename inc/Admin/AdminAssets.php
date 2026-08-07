@@ -12,11 +12,21 @@ class AdminAssets {
   }
 
   public function enqueueScripts(): void {
+    $pluginVersion = Assets::getVersion();
+    $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
+
+    wp_enqueue_script( WP_PARSI_KEY_SLUG . '-plugin-admin',
+      Assets::url( 'js-admin/plugin-admin' . $debugName . '.js' ), [], $pluginVersion, [ 'in_footer' => true ] );
+
+    wp_localize_script( WP_PARSI_KEY_SLUG . '-plugin-admin', WP_PARSI_KEY_CAP . 'Admin',
+      array(
+        'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
+        'ajaxNonce' => Nonce::create(),
+      ) );
+
     if ( ! AdminPages::isSettingPage() ) {
       return;
     }
-    $pluginVersion = Assets::getVersion();
-    $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
     //wp_enqueue_media();
     //wp_enqueue_style( 'wp-color-picker' );
@@ -26,7 +36,7 @@ class AdminAssets {
       Assets::url( 'css-admin/plugin' . $debugName . '.css' ), false, $pluginVersion );
 
     wp_enqueue_script( WP_PARSI_KEY_SLUG . '-plugin',
-      Assets::url( 'js-admin/plugin.min.js' ),
+      Assets::url( 'js-admin/plugin' . $debugName . '.js' ),
       [
         'jquery',
         'jquery-ui-sortable',
