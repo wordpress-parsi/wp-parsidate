@@ -1457,7 +1457,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
 .wp-parsidate-wrap #wppd-settings-form hr {
   margin-top: 0;
 }
-.wp-parsidate-wrap #wppd-settings-form .woo-assistant-notices {
+.wp-parsidate-wrap #wppd-settings-form .wppd-notices {
   margin-bottom: 0;
 }
 .wp-parsidate-wrap .wppd-grid {
@@ -1869,7 +1869,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-content {
   max-height: calc(100vh - 40px - var(--wp-admin--admin-bar--height, 0));
   overflow-y: auto;
 }
-body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-content > .woo-assistant-notices {
+body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-content > .wppd-notices {
   padding: 20px 30px;
   margin-bottom: 0;
 }

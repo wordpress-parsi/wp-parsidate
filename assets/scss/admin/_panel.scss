@@ -245,7 +245,7 @@ body.toplevel_page_#{variables.$plugin_key} {
       max-height: calc(100vh - 40px - var(--wp-admin--admin-bar--height, 0));
       overflow-y: auto;
 
-      > .woo-assistant-notices {
+      > .wppd-notices {
         padding: 20px 30px;
         margin-bottom: 0;
       }
