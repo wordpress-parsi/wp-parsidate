@@ -32,6 +32,7 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 = Commerce & E-commerce =
 * WooCommerce Ready - Full WooCommerce (ووکامرس) compatibility with Persian dates
 * Product Support - Persian dates for orders, products, and customer data
+* Support for Iranian payment gateways with [ParsiGate](https://wordpress.org/plugins/parsigate/) addon
 
 = Text & Character Processing =
 * Arabic to Persian - Automatic character conversion (ي/ك to ی/ک)
