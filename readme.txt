@@ -64,7 +64,15 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 == Changelog ==
 
 = 6.3 =
+* Add: New Gutenberg editor Jalali datepicker.
+* Add: Archive and Calendar block widgets for Gutenberg editor.
+* Add: JetEngine date/datetime datepicker for Jalali date.
+* Add: WooCommerce analytics Jalali date converter.
+* Add: WooCommerce checkout block city selector for Iran cities. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/285)
+* Add: WooCommerce new option for convert numbers in email content.
+* Fix: Archive and Calendar classic widgets.
 * Fix: WooCommerce order date problem when saving. [#WP topic](https://wordpress.org/support/topic/%d9%85%d8%b4%da%a9%d9%84-%d8%a8%d8%a7-%d9%88%d9%88%da%a9%d8%a7%d9%85%d8%b1%d8%b3-%d9%88-%d8%ac%d8%aa-%d8%a7%d9%86%d8%ac%db%8c%d9%86/)
+* Fixed some bugs
 
 = 6.2.1 =
 * Fix: WooCommerce legacy report datepicker. [#WP topic](https://wordpress.org/support/topic/%d8%ae%d8%aa%d9%84%d8%a7%d9%84-%da%af%d8%b2%d8%a7%d8%b1%d8%b4%d9%87%d8%a7%db%8c-%d9%88%d9%88%da%a9%d8%a7%d9%85%d8%b1%d8%b3-%d8%a8%d8%b9%d8%af-%d8%a7%d8%b2-%d8%a2%d9%be%d8%af%db%8c%d8%aa-parsi/)
