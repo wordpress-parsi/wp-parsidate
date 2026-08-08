@@ -2,7 +2,22 @@
 
 use WPParsidate\App\Tools\HookDeactivator;
 use WPParsidate\Helper\{Date, Number, WooCommerce, WordPress};
+use WPParsidate\Core\Archive;
 use WPParsidate\Settings\Settings;
+
+if ( ! function_exists( 'wp_get_parchives' ) ) {
+  /**
+   * Displays Jalali archive links based on type and format.
+   *
+   * @param string|array $args See Archive::getPostTypeArchives() doc
+   *
+   * @return void|string Void if 'echo' argument is true, archive links if 'echo' is false.
+   *
+   */
+  function wp_get_parchives( $args = '' ) {
+    return Archive::getPostTypeArchives( $args );
+  }
+}
 
 if ( ! function_exists( 'wpp_is_active' ) ) {
   /**
