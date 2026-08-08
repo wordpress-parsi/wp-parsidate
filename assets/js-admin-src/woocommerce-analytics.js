@@ -19,7 +19,7 @@
     return;
   }
 
-  class WpPdWoocommerceAnalytics {
+  class WpPdWoocommerceAnalyticsNew {
     constructor() {
       const s = window.WpPdWcAn_SETTINGS || {};
       this.DEBUG = s.debug === true;
@@ -105,6 +105,11 @@
 
       this.onDocEvent = this.onDocEvent.bind(this);
 
+      // Solar PRESET-range handling is installed immediately - before the
+      // app issues its first Analytics request - so the very first render
+      // already queries the Solar range.
+      this.initNetworkHandling();
+
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => this.start());
       } else {
@@ -116,7 +121,7 @@
 
     log() {
       if (this.DEBUG && window.console) {
-        window.console.log.apply(window.console, ['[WPParsiDateWoocommerceAnalytics]'].concat([].slice.call(arguments)));
+        window.console.log.apply(window.console, ['[WpPdWoocommerceAnalyticsNew]'].concat([].slice.call(arguments)));
       }
     }
 
@@ -294,6 +299,13 @@
       const v = node.nodeValue;
       if (!v || v.indexOf(this.MARK) !== -1 || !/[0-9۰-۹]{4}/.test(v)) {
         return;
+      }
+      try {
+        const host = node.parentElement;
+        if (host && host.closest && host.closest('[data-wcasd-skip]')) {
+          return;
+        }
+      } catch (e) {
       }
       const conv = this.convertDatesString(v);
       if (conv === null || conv === v) {
@@ -762,6 +774,529 @@
       }
     }
 
+    // ---- Solar PRESET ranges via apiFetch / network middleware ----------
+    // The URL keeps the real preset (period=last_month). WooCommerce turns
+    // it into GREGORIAN boundaries on each Analytics REST request; we
+    // recognise those and swap them for the true SOLAR boundaries - the
+    // primary range AND the comparison range - so the data moves onto the
+    // Solar calendar without touching the URL. The preset stays selected;
+    // captions are rewritten to the Solar preset range.
+
+    PRESET_UNITS() {
+      return {
+        today: ['day', 'todate'],
+        yesterday: ['day', 'last'],
+        week: ['week', 'todate'],
+        last_week: ['week', 'last'],
+        month: ['month', 'todate'],
+        last_month: ['month', 'last'],
+        quarter: ['quarter', 'todate'],
+        last_quarter: ['quarter', 'last'],
+        year: ['year', 'todate'],
+        last_year: ['year', 'last'],
+      };
+    }
+
+    presetUnit(key) {
+      return this.PRESET_UNITS()[key];
+    }
+
+    pQuery(search) {
+      const params = {};
+      String(search || '').replace(/^\?/, '').split('&').forEach((pair) => {
+        if (!pair) {
+          return;
+        }
+        const i = pair.indexOf('=');
+        const k = i === -1 ? pair : pair.slice(0, i);
+        const v = i === -1 ? '' : pair.slice(i + 1);
+        try {
+          params[decodeURIComponent(k)] = decodeURIComponent(v.replace(/\+/g, ' '));
+        } catch (e) {
+          params[k] = v;
+        }
+      });
+      return params;
+    }
+
+    bQuery(params) {
+      const parts = [];
+      for (const k in params) {
+        if (!Object.prototype.hasOwnProperty.call(params, k)) {
+          continue;
+        }
+        if (params[k] === undefined || params[k] === null) {
+          continue;
+        }
+        parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(params[k]));
+      }
+      return parts.join('&');
+    }
+
+    isAnalyticsScreen(p) {
+      if (p.page !== 'wc-admin') {
+        return false;
+      }
+      const path = p.path || '';
+      return path.indexOf('analytics') !== -1 || path.indexOf('customers') !== -1;
+    }
+
+    addDays(d, n) {
+      return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+    }
+
+    daysBetween(a, b) {
+      return Math.round((b.getTime() - a.getTime()) / 86400000);
+    }
+
+    isoDay(d) {
+      return d.getFullYear() + '-' + this.pad2(d.getMonth() + 1) + '-' + this.pad2(d.getDate());
+    }
+
+    // Gregorian mirror of WooCommerce's own preset math (Sunday-start
+    // weeks), used only to RECOGNISE which range an outgoing request
+    // represents.
+    gStartOf(d, unit) {
+      const y = d.getFullYear(), m = d.getMonth(), dd = d.getDate();
+      switch (unit) {
+        case 'week':
+          return this.addDays(new Date(y, m, dd), -(new Date(y, m, dd).getDay()));
+        case 'month':
+          return new Date(y, m, 1);
+        case 'quarter':
+          return new Date(y, Math.floor(m / 3) * 3, 1);
+        case 'year':
+          return new Date(y, 0, 1);
+        default:
+          return new Date(y, m, dd);
+      }
+    }
+
+    gEndOf(d, unit) {
+      const s = this.gStartOf(d, unit);
+      switch (unit) {
+        case 'week':
+          return this.addDays(s, 6);
+        case 'month':
+          return new Date(s.getFullYear(), s.getMonth() + 1, 0);
+        case 'quarter':
+          return new Date(s.getFullYear(), s.getMonth() + 3, 0);
+        case 'year':
+          return new Date(s.getFullYear(), 11, 31);
+        default:
+          return s;
+      }
+    }
+
+    gShift(d, n, unit) {
+      const y = d.getFullYear(), m = d.getMonth(), dd = d.getDate();
+      switch (unit) {
+        case 'day':
+          return this.addDays(d, n);
+        case 'week':
+          return this.addDays(d, n * 7);
+        case 'month':
+          return new Date(y, m + n, dd);
+        case 'quarter':
+          return new Date(y, m + n * 3, dd);
+        case 'year':
+          return new Date(y + n, m, dd);
+        default:
+          return d;
+      }
+    }
+
+    gregorianPresetRanges(key, compare, now) {
+      const spec = this.presetUnit(key);
+      if (!spec) {
+        return null;
+      }
+      const unit = spec[0], running = spec[1] === 'todate';
+      let pStart, pEnd, sStart, sEnd, span;
+      if (running) {
+        pStart = this.gStartOf(now, unit);
+        pEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        span = this.daysBetween(pStart, pEnd);
+        if (compare === 'previous_period') {
+          sStart = this.gShift(pStart, -1, unit);
+          sEnd = this.gShift(pEnd, -1, unit);
+        } else {
+          sStart = this.gShift(pStart, -1, 'year');
+          sEnd = this.addDays(sStart, span);
+        }
+      } else {
+        pStart = this.gShift(this.gStartOf(now, unit), -1, unit);
+        pEnd = this.gEndOf(pStart, unit);
+        span = this.daysBetween(pStart, pEnd);
+        if (compare === 'previous_period') {
+          if (unit === 'year') {
+            sStart = this.gShift(this.gStartOf(now, unit), -2, unit);
+            sEnd = this.gEndOf(sStart, unit);
+          } else {
+            sEnd = this.addDays(pStart, -1);
+            sStart = this.addDays(sEnd, -span);
+          }
+        } else if (unit === 'week') {
+          sStart = this.gShift(pStart, -1, 'year');
+          sEnd = this.gShift(pEnd, -1, 'year');
+        } else {
+          sStart = this.gShift(pStart, -1, 'year');
+          sEnd = this.gEndOf(sStart, unit);
+        }
+      }
+      return {primaryStart: pStart, primaryEnd: pEnd, secondaryStart: sStart, secondaryEnd: sEnd};
+    }
+
+    // Solar equivalents (dates as [jy, jm, jd] triples).
+
+    jToGa(jy, jm, jd) {
+      const g = window.WpPdJalaliDate.toGregorian(jy, jm, jd);
+      return [g.gy, g.gm, g.gd];
+    }
+
+    tripleFromDate(d) {
+      const j = window.WpPdJalaliDate.toJalaali(d.getFullYear(), d.getMonth() + 1, d.getDate());
+      return [j.jy, j.jm, j.jd];
+    }
+
+    tripleToDate(t) {
+      const g = this.jToGa(t[0], t[1], t[2]);
+      return new Date(g[0], g[1] - 1, g[2]);
+    }
+
+    tripleToIso(t) {
+      const g = this.jToGa(t[0], t[1], t[2]);
+      return g[0] + '-' + this.pad2(g[1]) + '-' + this.pad2(g[2]);
+    }
+
+    shiftJMonths(t, delta) {
+      const total = t[0] * 12 + (t[1] - 1) + delta;
+      const jy = Math.floor(total / 12);
+      const jm = total - jy * 12 + 1;
+      return [jy, jm, Math.min(t[2], this.daysInJMonth(jy, jm))];
+    }
+
+    jShift(t, n, unit) {
+      switch (unit) {
+        case 'day':
+          return this.tripleFromDate(this.addDays(this.tripleToDate(t), n));
+        case 'week':
+          return this.tripleFromDate(this.addDays(this.tripleToDate(t), n * 7));
+        case 'month':
+          return this.shiftJMonths(t, n);
+        case 'quarter':
+          return this.shiftJMonths(t, n * 3);
+        case 'year':
+          return this.shiftJMonths(t, n * 12);
+        default:
+          return t;
+      }
+    }
+
+    jEndOf(t, unit) {
+      const jy = t[0], jm = t[1];
+      switch (unit) {
+        case 'week':
+          return this.tripleFromDate(this.addDays(this.tripleToDate(t), 6));
+        case 'month':
+          return [jy, jm, this.daysInJMonth(jy, jm)];
+        case 'quarter':
+          return [jy, jm + 2, this.daysInJMonth(jy, jm + 2)];
+        case 'year':
+          return [jy, 12, this.daysInJMonth(jy, 12)];
+        default:
+          return t;
+      }
+    }
+
+    jalaliPresetBounds(key, now) {
+      const today = this.tripleFromDate(now);
+      const jy = today[0], jm = today[1];
+      let qs, pqs, pqm, pm, py, dow, start, end;
+      switch (key) {
+        case 'month':
+          return [[jy, jm, 1], today];
+        case 'last_month':
+          pm = jm - 1;
+          py = jy;
+          if (pm < 1) {
+            pm = 12;
+            py--;
+          }
+          return [[py, pm, 1], [py, pm, this.daysInJMonth(py, pm)]];
+        case 'quarter':
+          qs = Math.floor((jm - 1) / 3) * 3 + 1;
+          return [[jy, qs, 1], today];
+        case 'last_quarter':
+          qs = Math.floor((jm - 1) / 3) * 3 + 1;
+          pqs = qs - 3;
+          py = jy;
+          if (pqs < 1) {
+            pqs += 12;
+            py--;
+          }
+          pqm = pqs + 2;
+          return [[py, pqs, 1], [py, pqm, this.daysInJMonth(py, pqm)]];
+        case 'year':
+          return [[jy, 1, 1], today];
+        case 'last_year':
+          return [[jy - 1, 1, 1], [jy - 1, 12, this.daysInJMonth(jy - 1, 12)]];
+        case 'week':
+          dow = (now.getDay() + 1) % 7;
+          start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dow);
+          return [this.tripleFromDate(start), today];
+        case 'last_week':
+          dow = (now.getDay() + 1) % 7;
+          start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dow - 7);
+          end = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dow - 1);
+          return [this.tripleFromDate(start), this.tripleFromDate(end)];
+        default:
+          return null;
+      }
+    }
+
+    jalaliPresetRanges(key, compare, now) {
+      const spec = this.presetUnit(key);
+      const primary = this.jalaliPresetBounds(key, now);
+      if (!spec || !primary) {
+        return null;
+      }
+      const unit = spec[0], running = spec[1] === 'todate';
+      const span = this.daysBetween(this.tripleToDate(primary[0]), this.tripleToDate(primary[1]));
+      let sStart, sEnd;
+      if (running) {
+        sStart = compare === 'previous_period' ? this.jShift(primary[0], -1, unit) : this.jShift(primary[0], -1, 'year');
+        sEnd = this.tripleFromDate(this.addDays(this.tripleToDate(sStart), span));
+      } else if (compare === 'previous_period') {
+        sEnd = this.tripleFromDate(this.addDays(this.tripleToDate(primary[0]), -1));
+        sStart = this.tripleFromDate(this.addDays(this.tripleToDate(sEnd), -span));
+      } else {
+        sStart = this.jShift(primary[0], -1, 'year');
+        sEnd = unit === 'week' ? this.tripleFromDate(this.addDays(this.tripleToDate(sStart), span)) : this.jEndOf(sStart, unit);
+      }
+      return {primary: primary, secondary: [sStart, sEnd]};
+    }
+
+    // --- The middleware: swap request boundaries Gregorian -> Solar ------
+
+    swapDatePart(value, iso) {
+      return iso + String(value).slice(10);
+    }
+
+    rewriteAnalyticsPath(path) {
+      if (!path || path.indexOf('wc-analytics/') === -1) {
+        return path;
+      }
+      const split = path.indexOf('?');
+      if (split === -1) {
+        return path;
+      }
+      const params = this.pQuery(path.slice(split + 1));
+      if (!params.after || !params.before) {
+        return path;
+      }
+      const urlParams = this.pQuery(window.location.search);
+      if (!this.isAnalyticsScreen(urlParams)) {
+        return path;
+      }
+      const preset = urlParams.period || 'month';
+      if (preset === 'custom' || !this.presetUnit(preset)) {
+        return path;
+      }
+      const compare = urlParams.compare || 'previous_year';
+      const now = new Date();
+      const greg = this.gregorianPresetRanges(preset, compare, now);
+      const jal = this.jalaliPresetRanges(preset, compare, now);
+      if (!greg || !jal) {
+        return path;
+      }
+      const after = String(params.after).slice(0, 10);
+      const before = String(params.before).slice(0, 10);
+      let target = null;
+      if (after === this.isoDay(greg.primaryStart) && before === this.isoDay(greg.primaryEnd)) {
+        target = jal.primary;
+      } else if (after === this.isoDay(greg.secondaryStart) && before === this.isoDay(greg.secondaryEnd)) {
+        target = jal.secondary;
+      }
+      if (!target) {
+        return path;
+      }
+      params.after = this.swapDatePart(params.after, this.tripleToIso(target[0]));
+      params.before = this.swapDatePart(params.before, this.tripleToIso(target[1]));
+      this.log('preset', preset, 'swap ->', params.after, params.before);
+      return path.slice(0, split) + '?' + this.bQuery(params);
+    }
+
+    installFetchMiddleware() {
+      const apiFetch = window.wp && window.wp.apiFetch;
+      if (!apiFetch || !apiFetch.use) {
+        return false;
+      }
+      if (apiFetch.wcasdPatched) {
+        return true;
+      }
+      apiFetch.use((options, next) => {
+        try {
+          if (options && typeof options.path === 'string') {
+            options.path = this.rewriteAnalyticsPath(options.path);
+          } else if (options && typeof options.url === 'string') {
+            options.url = this.rewriteAnalyticsPath(options.url);
+          }
+        } catch (e) {
+        }
+        return next(options);
+      });
+      apiFetch.wcasdPatched = true;
+      return true;
+    }
+
+    ensureFetchMiddleware() {
+      if (this.installFetchMiddleware()) {
+        return;
+      }
+      try {
+        window.wp = window.wp || {};
+        if (!window.wp.wcasdApiFetchHooked && !Object.getOwnPropertyDescriptor(window.wp, 'apiFetch')) {
+          let stored;
+          Object.defineProperty(window.wp, 'apiFetch', {
+            configurable: true,
+            enumerable: true,
+            get: () => stored,
+            set: (v) => {
+              stored = v;
+              try {
+                this.installFetchMiddleware();
+              } catch (e) {
+              }
+            },
+          });
+          window.wp.wcasdApiFetchHooked = true;
+        }
+      } catch (e) {
+      }
+      let tries = 0;
+      const timer = setInterval(() => {
+        tries++;
+        let done = false;
+        try {
+          done = this.installFetchMiddleware();
+        } catch (e) {
+        }
+        if (done || tries > 200) {
+          clearInterval(timer);
+        }
+      }, 25);
+    }
+
+    initNetworkHandling() {
+      try {
+        // NOTE: the global fetch()/XMLHttpRequest patch (patchNetworkLayer)
+        // is intentionally NOT installed here - it wrapped every request
+        // containing "wc-analytics/" and made WooCommerce's API calls fail
+        // with fetch_error, breaking the analytics charts. The apiFetch
+        // middleware below handles the Analytics requests this feature needs.
+        this.ensureFetchMiddleware();
+        this.watchHistory();
+      } catch (e) {
+      }
+    }
+
+    // --- Captions: rewrite the bracketed range to the Solar preset range --
+
+    tripleObj(t) {
+      return {jy: t[0], jm: t[1], jd: t[2]};
+    }
+
+    replaceBracket(span, replacement) {
+      if (!span || !replacement) {
+        return false;
+      }
+      const text = span.textContent || '';
+      const open = text.indexOf('(');
+      const close = text.lastIndexOf(')');
+      if (open === -1 || close <= open + 1) {
+        return false;
+      }
+      if (!/[0-9۰-۹]/.test(text.slice(open + 1, close))) {
+        return false;
+      }
+      const next = text.slice(0, open + 1) + replacement + text.slice(close);
+      if (span.textContent !== next) {
+        span.textContent = next;
+      }
+      return true;
+    }
+
+    restorePresetLabel() {
+      const params = this.pQuery(window.location.search);
+      if (!this.isAnalyticsScreen(params)) {
+        return;
+      }
+      const preset = params.period || 'month';
+      if (preset === 'custom' || !this.presetUnit(preset)) {
+        return;
+      }
+      const ranges = this.jalaliPresetRanges(preset, params.compare || 'previous_year', new Date());
+      if (!ranges) {
+        return;
+      }
+      const texts = [
+        this.MARK + this.fmtJRange(this.tripleObj(ranges.primary[0]), this.tripleObj(ranges.primary[1])),
+        this.MARK + this.fmtJRange(this.tripleObj(ranges.secondary[0]), this.tripleObj(ranges.secondary[1])),
+      ];
+      const groups = document.querySelectorAll('.woocommerce-dropdown-button__labels');
+      Array.prototype.forEach.call(groups, (group) => {
+        const spans = group.querySelectorAll('span');
+        const limit = Math.min(spans.length, texts.length);
+        let touched = false;
+        for (let i = 0; i < limit; i++) {
+          if (this.replaceBracket(spans[i], texts[i])) {
+            touched = true;
+          }
+        }
+        if (touched) {
+          group.setAttribute('data-wcasd-skip', '1');
+        }
+      });
+      const lists = document.querySelectorAll('.woocommerce-legend__list');
+      Array.prototype.forEach.call(lists, (list) => {
+        const items = list.querySelectorAll('.woocommerce-legend__item');
+        Array.prototype.forEach.call(items, (item, index) => {
+          const id = item.getAttribute('id') || '';
+          let which = index;
+          if (id.indexOf('__secondary') !== -1) {
+            which = 1;
+          } else if (id.indexOf('__primary') !== -1) {
+            which = 0;
+          }
+          if (which > 1 || !texts[which]) {
+            return;
+          }
+          const title = item.querySelector('.woocommerce-legend__item-title');
+          if (this.replaceBracket(title, texts[which])) {
+            title.setAttribute('data-wcasd-skip', '1');
+          }
+        });
+      });
+    }
+
+    watchHistory() {
+      if (!window.history || !window.history.pushState || window.history.wcasdWatched) {
+        return;
+      }
+      const restore = () => this.restorePresetLabel();
+      ['pushState', 'replaceState'].forEach((m) => {
+        const orig = window.history[m];
+        window.history[m] = function () {
+          const r = orig.apply(this, arguments);
+          setTimeout(restore, 0);
+          return r;
+        };
+      });
+      window.addEventListener('popstate', restore);
+      window.history.wcasdWatched = true;
+    }
+
     // ---- main loop ------------------------------------------------------
 
     tick() {
@@ -771,6 +1306,12 @@
       // not the picker is open.
       try {
         this.convertDates();
+      } catch (err) {
+      }
+
+      // Keep preset captions on the Solar preset range.
+      try {
+        this.restorePresetLabel();
       } catch (err) {
       }
 
@@ -819,6 +1360,10 @@
       // Convert dates the instant they appear (chart tooltips, new rows,
       // re-rendered labels) - runs before paint, so no Gregorian flash.
       new MutationObserver((mutations) => {
+        try {
+          this.restorePresetLabel();
+        } catch (e) {
+        }
         for (let i = 0; i < mutations.length; i++) {
           const mu = mutations[i];
           if (mu.type === 'characterData') {
@@ -840,5 +1385,5 @@
     }
   }
 
-  new WpPdWoocommerceAnalytics();
+  new WpPdWoocommerceAnalyticsNew();
 })();
