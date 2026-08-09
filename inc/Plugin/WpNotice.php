@@ -41,13 +41,19 @@ class WpNotice {
       $class      .= isset( $notice['dismissible'] ) && $notice['dismissible'] ? ' is-dismissible' : '';
       $class      .= ' wppd-admin-notice';
       $class      .= isset( $notice['class'] ) ? ' ' . esc_attr( $notice['class'] ) : '';
-      $message    = wp_kses_post( $notice['message'] );
+      $message    = $notice['message'];
 
       if ( isset( $notice['dismissible'], $notice['dismiss_time'] ) ) {
         $attributes .= ' data-notice-dismiss-time="' . esc_attr( $notice['dismiss_time'] ) . '"';
       }
 
-      echo "<div class='$class' $attributes><p>$message</p></div>";
+      if ( isset( $notice['inside_tag'] ) ) {
+        $insideTag = $notice['inside_tag'] ?: false;
+      } else {
+        $insideTag = 'p';
+      }
+
+      echo "<div class='$class' $attributes>" . ( $insideTag ? "<$insideTag>" : "" ) . "$message" . ( $insideTag ? "</$insideTag>" : "" ) . "</div>";
     }
   }
 
