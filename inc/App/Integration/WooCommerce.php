@@ -22,6 +22,12 @@ class WooCommerce extends Addon {
 
   public string $currentTab = 'woocommerce';
 
+  public function __construct() {
+    parent::__construct();
+
+    add_action( 'before_woocommerce_init', [ $this, 'declareCompatibility' ] );
+  }
+
   public function initM1Action(): void {
     add_filter( 'wp_parsidate_' . $this->addonID . '_settings', [ $this, 'addTabSettings' ] );
     add_filter( 'wp_parsidate_' . $this->addonID . '_tab_display_notice', '__return_false' );
@@ -121,6 +127,18 @@ class WooCommerce extends Addon {
 
   public function convertEmailContentNumbers( $message ): string {
     return NumberConverter::convertContent( $message );
+  }
+
+  /**
+   * Declare WooCommerce feature compatibility
+   *
+   * @return void
+   */
+  public function declareCompatibility() {
+    if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+      \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT, true );
+      \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'product_instance_caching', WP_PARSI_ROOT, true );
+    }
   }
 
   /**

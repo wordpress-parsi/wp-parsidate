@@ -69,7 +69,6 @@ final class WP_Parsidate {
   public function __construct() {
     $this->define();
     $this->include();
-    $this->compatibility();
     $this->instance();
   }
 
@@ -127,28 +126,6 @@ final class WP_Parsidate {
    */
   private function include(): void {
     require_once __DIR__ . '/vendor/autoload.php';
-  }
-
-  /**
-   * Declare WooCommerce feature compatibility
-   *
-   * This has to run unconditionally, outside of the addon system.
-   * Addon::isActivated() gates initM1Action(), which is where the
-   * 'before_woocommerce_init' listener used to be registered. When the
-   * WooCommerce addon was disabled the declaration was therefore never made,
-   * WooCommerce reported the plugin as "uncertain" and refused to enable HPOS.
-   *
-   * @return void
-   */
-  private function compatibility(): void {
-    add_action( 'before_woocommerce_init', static function () {
-      if ( ! class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
-        return;
-      }
-
-      \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT, true );
-      \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'product_instance_caching', WP_PARSI_ROOT, true );
-    } );
   }
 
   /**
