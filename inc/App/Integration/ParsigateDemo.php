@@ -9,11 +9,51 @@
 namespace WPParsidate\App\Integration;
 
 use WPParsidate\Addons\Addon;
+use WPParsidate\Admin\AdminPages;
+use WPParsidate\Helper\WordPress;
 
 defined( 'ABSPATH' ) || exit;
 
 class ParsigateDemo extends Addon {
   public string $addonID = 'parsigate_demo';
+
+  public function __construct() {
+    parent::__construct();
+
+    add_filter( 'wp_parsidate_wp_admin_notice', [ $this, 'adminNotice' ] );
+  }
+
+  /**
+   * Notice for the activation.
+   *
+   * @param array $notices Notice array list
+   *
+   * @return array Notice array list
+   */
+  public function adminNotice( array $notices ): array {
+    if ( get_locale() === 'fa_IR' && WordPress::isPluginActivated( 'woocommerce/woocommerce.php' ) && ! WordPress::isPluginActivated( 'parsigate/ParsiGate.php' ) ) {
+      $cartIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" viewBox="0 -4 32 32"><path fill="url(#a)" d="M29.09 0H2.91A2.91 2.91 0 0 0 0 2.91v17.454a2.91 2.91 0 0 0 2.91 2.909h26.18a2.91 2.91 0 0 0 2.91-2.91V2.91A2.91 2.91 0 0 0 29.09 0"/><path fill="#000" d="M32 4.364H0v5.818h32z" style="mix-blend-mode:soft-light"/><path fill="#fff" d="M26.909 16h-4.364a.727.727 0 0 0-.727.727v1.455c0 .402.325.727.727.727h4.364a.727.727 0 0 0 .727-.727v-1.455A.727.727 0 0 0 26.91 16" style="mix-blend-mode:soft-light"/><path fill="#fff" fill-rule="evenodd" d="M8 19.379a2.9 2.9 0 0 1-2.182.985 2.92 2.92 0 0 1-1.845-.66 2.92 2.92 0 0 1-1.008-2.817A2.907 2.907 0 0 1 6.43 14.61a2.9 2.9 0 0 1 1.57.92 2.9 2.9 0 0 1 2.182-.985 2.92 2.92 0 0 1 2.057.853 2.9 2.9 0 0 1 .796 1.489 2.9 2.9 0 0 1-.07 1.412 2.92 2.92 0 0 1-.938 1.404 2.9 2.9 0 0 1-2.457.596 2.9 2.9 0 0 1-1.57-.92" clip-rule="evenodd" style="mix-blend-mode:soft-light"/><defs><radialGradient id="a" cx="0" cy="0" r="1" gradientTransform="rotate(143.02 -3.344 11.82)scale(38.6884 53.1966)" gradientUnits="userSpaceOnUse"><stop stop-color="#5e22cd"/><stop offset="1" stop-color="#ae76ff"/></radialGradient></defs></svg>';
+      $message  = "<strong>$cartIcon درگاه پرداخت فروشگاهتان را فعال کنید</strong><br/>";
+      $message  .= "ووکامرس روی سایت شما فعال است. ";
+      $message  .= "با <span class='plugin-name'>پارسی‌گیت</span> می توانید درگاه‌های پرداخت بانکی ایرانی را به فروشگاهتان اضافه کنید.<br><br>";
+      $message  .= '<div class="wppd-admin-notice-actions">';
+      $message  .= '<a href="' . AdminPages::link( [ 'tab' => 'addons' ] ) . '" class="wppd-button wppd-button-primary">فعال‌سازی پارسی‌گیت</a> ';
+      $message  .= "<a href='https://fa.wordpress.org/plugins/parsigate/' class='wppd-button wppd-button-secondary' target='_blank'>بیشتر بدانید</a>";
+      $message  .= '</div>';
+
+      $notices[] = array(
+        'id'           => 'parsigate_demo_install',
+        'message'      => $message,
+        'dismissible'  => true,
+        'dismiss_time' => MONTH_IN_SECONDS,
+        'not_page'     => WP_PARSI_KEY_SLUG,
+        'class'        => 'wppd-parsigate-install-notice',
+        'inside_tag'   => 'div'
+      );
+    }
+
+    return $notices;
+  }
 
   public function info(): array {
     $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 839 892" width="839" height="892"><path d="M838.87 72.79C838.87 307.39 838.87 541.99 838.87 776.58C837.6 779.49 837.36 783.25 836.53 786.42C834.6 793.84 830.99 800.97 826.59 807.24C811.8 828.36 785.27 840.14 759.76 834.78C754.4 833.66 747.29 832.67 742.94 829.12C742.09 810.5 742.81 791.68 742.79 773.03C742.77 737.22 742.78 701.41 742.78 665.59C742.78 557.1 742.88 448.6 742.73 340.1C742.68 306.66 742.66 273.21 742.73 239.77C742.8 204.38 744.61 173.79 720.73 144.74C705.19 125.83 682.91 112.83 658.46 109.99C649.35 108.92 639.98 109.49 630.83 109.49C620.56 109.48 610.29 109.51 600.02 109.54C596.03 109.54 590.14 110.64 586.36 109.3C583.28 108.21 576.88 98.04 574.44 95.08C565.68 84.44 556.27 74.32 546.34 64.77C527.87 47.01 507.14 31.66 485.31 18.3C478.7 14.25 471.81 10.56 464.84 7.18C461.16 5.39 456.43 3.94 453.46 1.19C462.74 0.56 472.21 1.04 481.52 1.04C498.9 1.03 516.28 1.04 533.66 1.04C586.06 1.04 638.47 1.02 690.87 1.04C707.99 1.05 725.11 1.03 742.22 1.04C763.5 1.05 780.56 0.66 799.68 11.31C815.24 19.98 827.48 34.94 833.71 51.54C836.27 58.36 836.47 66.65 838.87 72.79ZM0.13 36.22C6.87 35.32 14.12 35.97 20.94 35.97C34.1 35.98 47.27 35.96 60.44 35.96C100.46 35.96 140.49 36.01 180.52 35.96C216.6 35.92 252.67 35.98 288.75 35.97C318.94 35.95 348.99 35.28 378.73 41.33C442.76 54.35 499.65 94.23 537.94 146.63C557.13 172.89 571.32 202.83 580.13 234.09C591.84 275.62 593.91 318.69 586.63 361.21C570.83 453.56 504.11 536.38 416.51 570.1C382.54 583.18 347.22 589.08 310.87 589.08C294.55 589.07 278.22 589.14 261.89 589.09C254.55 589.06 245.21 590.58 238.19 588.6C238.19 528.85 238.19 469.1 238.19 409.35C246.84 408.03 256.28 408.92 265.05 408.94C295.71 409 327.55 412.09 355.41 396.88C421.88 360.58 420.96 257.99 350.59 226.52C327.77 216.31 302.88 218.44 278.48 218.46C244.56 218.48 210.47 217.5 176.57 218.54C175.48 223.27 176.04 228.56 176.04 233.45C176.05 242.67 176.05 251.88 176.05 261.1C176.03 290.33 176.05 319.56 176.04 348.79C176.03 441.49 176.05 534.18 176.05 626.88C176.05 656.64 176.05 686.39 176.05 716.15C176.04 739.89 177.05 763.18 164.59 784.37C152.66 804.66 133.59 815.54 113.73 826.74C96.36 836.54 78.96 846.27 61.48 855.87C47.58 863.5 33.78 871.34 19.91 879.05C14.36 882.12 6.04 888.44 0.13 889.67C0.13 605.19 0.13 320.7 0.13 36.22ZM709.83 818.82C706.31 818.74 702.53 816.86 699.23 815.68C691.39 812.89 683.4 810.46 675.51 807.79C654.38 800.61 633.12 793.65 611.89 786.75C541.94 764.01 472.33 740.36 402.4 717.52C358.58 703.2 314.93 688.15 270.99 674.24C262.92 671.69 245.16 667.12 238.61 663.17C235.02 661 233.8 656.04 235.6 652.35C238.27 646.87 244.96 647.87 250.04 647.88C262.68 647.9 275.32 647.81 287.96 647.83C306 647.85 324.5 648.84 342.46 646.9C375.02 643.38 406.25 637.71 437.05 626.22C570.46 576.48 655.15 441.43 651.25 300.6C650.11 259.58 641.13 218.4 625.92 180.35C620.71 167.32 613.61 155.29 607.72 142.6C615.05 141.25 623.36 142.23 630.83 142.23C640.29 142.23 650.28 141.39 659.59 143.44C684.03 148.82 703.16 167.93 708.5 192.41C711.08 204.29 710.31 216.63 710.33 228.71C710.35 246.62 710.37 264.52 710.35 282.43C710.3 340.1 710.32 397.77 710.32 455.45C710.32 536.29 710.32 617.14 710.32 697.98C710.32 724.32 710.31 750.65 710.32 776.98C710.32 788.81 711.89 807.88 709.83 818.82Z" fill="#3c3c3c" fill-rule="evenodd" stroke="#3c3c3c" stroke-width="0.25" stroke-linejoin="round"/></svg>';
@@ -21,7 +61,7 @@ class ParsigateDemo extends Addon {
     return array(
       'id'               => $this->addonID,
       'title'            => esc_html__( 'Parsigate', 'wp-parsidate' ),
-      'desc'             => esc_html__( 'ParsiDate integration for Parsigate', 'wp-parsidate' ),
+      'desc'             => esc_html__( 'Iranian banking gateways for WooCommerce', 'wp-parsidate' ),
       'force_enable'     => true,
       'is_demo'          => true,
       'is_suggested'     => true,

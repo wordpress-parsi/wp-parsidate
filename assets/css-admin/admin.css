@@ -13,4 +13,108 @@ html[dir=rtl] body.post-php .wrap #timestampdiv .timestamp-wrap.wp-parsidate-tim
   line-height: 1;
 }
 
+.wppd-admin-notice * {
+  box-sizing: border-box;
+}
+.wppd-admin-notice > div {
+  margin: 0.5em 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.54;
+}
+.wppd-admin-notice .wppd-admin-notice-actions {
+  display: flex;
+  gap: 20px;
+}
+.wppd-admin-notice .wppd-button {
+  background-color: transparent;
+  color: #2B2B2B;
+  border: 1px solid transparent;
+  padding: 8px 14px;
+  border-radius: 10px;
+  corner-shape: squircle;
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+.wppd-admin-notice .wppd-button:hover, .wppd-admin-notice .wppd-button:focus, .wppd-admin-notice .wppd-button:active {
+  color: #525252;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.wppd-admin-notice .wppd-button.wppd-button-primary {
+  background-color: #2577d7;
+  border-color: #2577d7;
+  color: white;
+}
+.wppd-admin-notice .wppd-button.wppd-button-primary:hover, .wppd-admin-notice .wppd-button.wppd-button-primary:focus, .wppd-admin-notice .wppd-button.wppd-button-primary:active {
+  background-color: rgb(13.7843137255%, 44.3333333333%, 80.0980392157%);
+}
+.wppd-admin-notice .wppd-button.wppd-button-primary:focus, .wppd-admin-notice .wppd-button.wppd-button-primary:active {
+  outline-offset: 2px;
+  outline: #2577d7 solid 2px;
+}
+.wppd-admin-notice .wppd-button.wppd-button-primary:disabled {
+  color: #f3f3f3;
+}
+.wppd-admin-notice .wppd-button.wppd-button-secondary {
+  background-color: white;
+  border-color: #D3D3D3;
+}
+.wppd-admin-notice .wppd-button.wppd-button-secondary:hover, .wppd-admin-notice .wppd-button.wppd-button-secondary:focus, .wppd-admin-notice .wppd-button.wppd-button-secondary:active {
+  background-color: rgb(96.1568627451%, 96.9254901961%, 97.6941176471%);
+}
+.wppd-admin-notice .wppd-button.wppd-button-secondary:focus, .wppd-admin-notice .wppd-button.wppd-button-secondary:active {
+  outline-offset: 2px;
+  outline: #2577d7 solid 2px;
+}
+.wppd-admin-notice .wppd-button:disabled {
+  color: #8A8A8A;
+  cursor: default;
+}
+.wppd-admin-notice .wppd-button.wppd-button-primary:disabled, .wppd-admin-notice .wppd-button.wppd-button-secondary:disabled {
+  background-color: #f3f3f3;
+}
+.wppd-admin-notice .wppd-button.wppd-button-primary:disabled:hover, .wppd-admin-notice .wppd-button.wppd-button-primary:disabled:focus, .wppd-admin-notice .wppd-button.wppd-button-primary:disabled:active, .wppd-admin-notice .wppd-button.wppd-button-secondary:disabled:hover, .wppd-admin-notice .wppd-button.wppd-button-secondary:disabled:focus, .wppd-admin-notice .wppd-button.wppd-button-secondary:disabled:active {
+  background-color: #f3f3f3;
+  outline: none;
+}
+.wppd-admin-notice a.wppd-button {
+  text-decoration: none !important;
+}
+.wppd-admin-notice a.wppd-button:hover, .wppd-admin-notice a.wppd-button:focus, .wppd-admin-notice a.wppd-button:active {
+  text-decoration: none !important;
+}
+.wppd-admin-notice a {
+  display: inline-block;
+}
+.wppd-admin-notice a:focus {
+  border-radius: 10px !important;
+}
+.wppd-admin-notice.wppd-parsigate-install-notice > div {
+  font-size: 15px;
+}
+.wppd-admin-notice.wppd-parsigate-install-notice strong {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 22px;
+}
+.wppd-admin-notice.wppd-parsigate-install-notice .plugin-name {
+  color: #6830cf;
+}
+.wppd-admin-notice.wppd-parsigate-install-notice .wppd-button.wppd-button-primary {
+  background-color: #6830cf;
+  border-color: #612cc2;
+  box-shadow: none;
+}
+.wppd-admin-notice.wppd-parsigate-install-notice .wppd-button.wppd-button-primary:focus {
+  outline-color: #612cc2;
+  box-shadow: none;
+}
+.wppd-admin-notice.wppd-parsigate-install-notice .wppd-button-secondary:focus, .wppd-admin-notice.wppd-parsigate-install-notice .wppd-button-secondary:active {
+  outline-color: #612cc2;
+  box-shadow: none;
+}
+
 /*# sourceMappingURL=admin.css.map */
