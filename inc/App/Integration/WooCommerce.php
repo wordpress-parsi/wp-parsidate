@@ -10,7 +10,6 @@ namespace WPParsidate\App\Integration;
 
 defined( 'ABSPATH' ) || exit;
 
-use Automattic\WooCommerce\Utilities\FeaturesUtil;
 use WPParsidate\Addons\Addon;
 use WPParsidate\App\Integration\WooCommerce\{WcGateways, WooCommerceCitySelect};
 use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter, Param, Templates};
@@ -22,6 +21,12 @@ class WooCommerce extends Addon {
   public string $addonID = 'woocommerce';
 
   public string $currentTab = 'woocommerce';
+
+  public function __construct() {
+    parent::__construct();
+
+    add_action( 'before_woocommerce_init', [ $this, 'declareCompatibility' ] );
+  }
 
   public function initM1Action(): void {
     add_filter( 'wp_parsidate_' . $this->addonID . '_settings', [ $this, 'addTabSettings' ] );
@@ -125,17 +130,24 @@ class WooCommerce extends Addon {
   }
 
   /**
+   * Declare WooCommerce feature compatibility
+   *
+   * @return void
+   */
+  public function declareCompatibility() {
+    if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+      \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT, true );
+      \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'product_instance_caching', WP_PARSI_ROOT, true );
+    }
+  }
+
+  /**
    * Init Before WooCommerce Loaded
    */
   public function beforeWooCommerceInit(): void {
     // WooCommerce checkout city select in classic form
     if ( $this->getSetting( 'dropdown_cities', false ) && ! \WPParsidate\Helper\WooCommerce::hasBlockInPage( wc_get_page_id( 'checkout' ), 'woocommerce/checkout' ) ) {
       new WooCommerceCitySelect();
-    }
-
-    if ( class_exists( FeaturesUtil::class ) ) {
-      FeaturesUtil::declare_compatibility( 'custom_order_tables', WP_PARSI_ROOT, true );
-      FeaturesUtil::declare_compatibility( 'product_instance_caching', WP_PARSI_ROOT, true );
     }
   }
 
