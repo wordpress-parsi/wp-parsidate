@@ -73,6 +73,7 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 * Add: WooCommerce new option for convert numbers in email content.
 * Fix: Archive and Calendar classic widgets.
 * Fix: WooCommerce order date problem when saving. [#WP topic](https://wordpress.org/support/topic/%d9%85%d8%b4%da%a9%d9%84-%d8%a8%d8%a7-%d9%88%d9%88%da%a9%d8%a7%d9%85%d8%b1%d8%b3-%d9%88-%d8%ac%d8%aa-%d8%a7%d9%86%d8%ac%db%8c%d9%86/)
+* fix: WooCommerce declare feature compatibility unconditionally [PR](https://github.com/wordpress-parsi/wp-parsidate/pull/327)
 * Fixed some bugs
 
 = 6.2.1 =
