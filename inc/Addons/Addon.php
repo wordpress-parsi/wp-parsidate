@@ -243,8 +243,7 @@ abstract class Addon {
   }
 
   public function isActivated(): bool {
-    if ( ! $this->getInfo( 'force_enable', false ) &&
-         Settings::get( 'internal_addon_' . $this->addonID, false ) !== 1 ) {
+    if ( ! $this->getInfo( 'force_enable', false ) && ! Settings::get( 'internal_addon_' . $this->addonID, false ) ) {
       return false;
     }
 
