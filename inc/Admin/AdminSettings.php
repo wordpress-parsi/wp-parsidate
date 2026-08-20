@@ -154,13 +154,13 @@ class AdminSettings {
     $default = ! empty( $setting['default'] ) ? $setting['default'] : null;
 
     // Set default value for toggle, checkbox, addon
-    if ( empty( $setting['default'] ) && in_array( $setting['type'], [
-        'toggle',
-        'checkbox',
-        'addon'
-      ], true ) ) {
+    if ( empty( $setting['default'] ) && in_array( $setting['type'], [ 'toggle', 'checkbox', 'addon', 'tinyaddon' ], true ) ) {
       $default = 0;
     }
+
+    /*if ( empty( $setting['default'] ) && in_array( $setting['type'], [ 'addon', 'tinyaddon' ], true ) ) {
+      $default = false;
+    }*/
 
     // Set default value for imageSizeSelect
     if ( empty( $setting['default'] ) && $setting['type'] === 'imagesizeselect' ) {
