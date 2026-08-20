@@ -47,8 +47,7 @@ class AdminSettings {
           if ( in_array( $setting['type'], [ 'checkbox', 'toggle' ] ) ) {
             // PHPCS ignore reason: Nonce check is already happening before this logic in `AdminPages` class.
             // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
-            $value = isset( $_POST[ WP_PARSI_INPUT_PREFIX . $setting['id'] ] ) ? Param::post( WP_PARSI_INPUT_PREFIX . $setting['id'],
-              $default ) : false;
+            $value = isset( $_POST[ WP_PARSI_INPUT_PREFIX . $setting['id'] ] ) ? Param::post( WP_PARSI_INPUT_PREFIX . $setting['id'], $default ) : false;
           } else {
             $value = Param::post( WP_PARSI_INPUT_PREFIX . $setting['id'], $default );
           }
@@ -75,12 +74,10 @@ class AdminSettings {
 
         if ( $saved ) {
           Cache::set( 'settings_saved', true );
-          Notice::add( $tab, apply_filters( 'wp_parsidate_save_settings_success_message',
-            esc_html__( 'Settings saved.', 'wp-parsidate' ), $tab ), 'success' );
+          Notice::add( $tab, apply_filters( 'wp_parsidate_save_settings_success_message', esc_html__( 'Settings saved.', 'wp-parsidate' ), $tab ), 'success' );
           do_action( 'wp_parsidate_save_settings_success', $tab, $currentSection, $options );
         } else {
-          Notice::add( $tab, apply_filters( 'wp_parsidate_save_settings_error_message',
-            esc_html__( 'Error saving settings!', 'wp-parsidate' ), $tab ), 'error' );
+          Notice::add( $tab, apply_filters( 'wp_parsidate_save_settings_error_message', esc_html__( 'Error saving settings!', 'wp-parsidate' ), $tab ), 'error' );
         }
       }
     }
@@ -114,8 +111,7 @@ class AdminSettings {
           ] ) ) {
           $setting['is_repeatable'] = true;
           $default                  = self::getSettingDefault( $setting );
-          $rowKey                   = str_replace( WP_PARSI_INPUT_PREFIX . $repeatableSettingId . '_', '',
-            WP_PARSI_INPUT_PREFIX . $setting['id'] );
+          $rowKey                   = str_replace( WP_PARSI_INPUT_PREFIX . $repeatableSettingId . '_', '', WP_PARSI_INPUT_PREFIX . $setting['id'] );
           $value                    = Param::post( WP_PARSI_INPUT_PREFIX . $setting['id'], $default );
 
           if ( is_array( $value ) ) {
@@ -282,7 +278,7 @@ class AdminSettings {
         $setting['sanitize'] = 'absint';
 
       } elseif ( in_array( $setting['type'], [ 'addon', 'tinyaddon' ] ) ) {
-        $setting['sanitize'] = 'int';
+        $setting['sanitize'] = 'bool';
 
       } elseif ( $setting['type'] === 'gradientcolorpicker' ) {
         $setting['sanitize'] = 'jsonArray';
