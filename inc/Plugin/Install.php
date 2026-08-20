@@ -9,6 +9,7 @@
 
 namespace WPParsidate\Plugin;
 
+use WPParsidate\Helper\Cache;
 use WPParsidate\Helper\WordPress;
 
 class Install {
@@ -17,9 +18,10 @@ class Install {
   }
 
   public function init() {
-    $settings = get_option( WP_PARSI_KEY, [] );
-    if ( empty( $settings ) ) {
+    if ( self::checkVersion() ) {
       self::update();
+
+      self::updateVersion();
     }
 
     $settings = get_option( WP_PARSI_KEY, [] );
@@ -41,11 +43,9 @@ class Install {
   }
 
   public static function update(): void {
-    $pluginData     = get_plugin_data( WP_PARSI_ROOT );
-    $currentVersion = $pluginData['Version'];
-    $oldVersion     = get_option( WP_PARSI_KEY . '_plugin_version', '5.1.8' );
-    $oldSettings    = get_option( 'wpp_settings', [] );
-    $settings       = get_option( WP_PARSI_KEY, [] );
+    $oldVersion  = get_option( WP_PARSI_KEY . '_plugin_version', '5.1.8' );
+    $oldSettings = get_option( 'wpp_settings', [] );
+    $settings    = get_option( WP_PARSI_KEY, [] );
 
     if ( ! empty( $oldSettings ) && empty( $settings ) && version_compare( $oldVersion, '6.0', '<' ) ) {
       $pluginSettings = array(
@@ -124,8 +124,31 @@ class Install {
     if ( ! empty( $oldSettings ) ) {
       delete_option( 'wpp_settings' );
     }
+  }
 
-    update_option( WP_PARSI_KEY . '_plugin_version', $currentVersion, false );
+  private static function checkVersion( $oldVersion = '5.1.8' ) {
+    $currentVersion = self::getCurrentPluginVersion();
+    $oldVersion     = get_option( WP_PARSI_KEY . '_plugin_version', $oldVersion );
+
+    return version_compare( $oldVersion, $currentVersion, '<' );
+  }
+
+  private static function updateVersion() {
+    update_option( WP_PARSI_KEY . '_plugin_version', self::getCurrentPluginVersion(), true );
+  }
+
+  private static function getCurrentPluginVersion() {
+    $version = Cache::get( 'plugin_version', false );
+
+    if ( $version ) {
+      return $version;
+    }
+
+    $pluginData     = get_plugin_data( WP_PARSI_ROOT );
+    $currentVersion = $pluginData['Version'];
+    Cache::set( 'plugin_version', $currentVersion );
+
+    return $currentVersion;
   }
 
   /**
