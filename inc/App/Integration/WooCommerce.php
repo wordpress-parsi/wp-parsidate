@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 
 use WPParsidate\Addons\Addon;
 use WPParsidate\App\Integration\WooCommerce\{WcGateways, WooCommerceCitySelect};
-use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter, Param, Templates};
+use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter, Templates};
 use WPParsidate\Admin\AdminPages;
 use WPParsidate\Core\Names;
 use WPParsidate\Settings\Settings;
