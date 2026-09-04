@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: WP-Parsidate
- * Version: 6.2.1
+ * Version: 6.3
  * Plugin URI: https://wp-parsi.com/support/
  * Description: Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: posts, comments, pages, archives, search, categories, permalinks and all admin sections and TinyMce editor, lists, quick editor. This package has Jalali archive widget.
  * Author: WP-Parsi Team
@@ -32,6 +32,12 @@
  *
  * Developers:
  *              Mobin Ghasempoor ( Developer & Founder )
+ *                Rest in peace, my friend. 🖤
+ *                You were not just a great developer, but a genuinely kind person and a wonderful friend. Your passion for technology, your creativity, and the moments we shared will always be remembered.
+ *                The world has lost a great developer, but your code, your ideas, and the memories you left behind will live on.
+ *                You may be gone, but you will never be forgotten.
+ *                RIP, my friend. 🕊️
+ *
  *              Morteza Geransayeh ( Developer & Founder )
  *              HamidReza Yazdani ( Developer )
  *              Saeed Fard ( Analyst & Developer )

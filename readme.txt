@@ -69,6 +69,7 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 == Changelog ==
 
 = 6.3 =
+* This version of the plugin is released in memory of **Mobin Ghasempoor**. Developer of the ParsiDate plugin. Rest in peace **Mobin**.
 * Add: New Gutenberg editor Jalali datepicker.
 * Add: Archive and Calendar block widgets for Gutenberg editor.
 * Add: JetEngine date/datetime datepicker for Jalali date.
