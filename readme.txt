@@ -33,6 +33,10 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 * WooCommerce Ready - Full WooCommerce (ووکامرس) compatibility with Persian dates
 * Product Support - Persian dates for orders, products, and customer data
 * Support for Iranian payment gateways with [ParsiGate](https://wordpress.org/plugins/parsigate/) addon
+  - Bank gateways: Mellat, Parsian, Pasargad, Sadaad, Melli, Behpardakht, Asan Pardakht, Saman, Saderat, Eghtesad Novin, Iran Kish, Sepehr
+  - Installment gateways: SnappPay, Tara, Digipay, Azki
+  - Intermediary gateways: Zibal, Zarinpal, PayPing, Aghayepardakht
+  - Test gateway for simulating purchases without a bank account
 
 = Text & Character Processing =
 * Arabic to Persian - Automatic character conversion (ي/ك to ی/ک)
