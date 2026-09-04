@@ -8,7 +8,7 @@ Stable tag: 6.3
 Requires PHP: 7.4
 License: GPLv3
 
-Persian date support for WordPress
+Persian date support for WordPress and Woocommerce
 
 == Description ==
 
