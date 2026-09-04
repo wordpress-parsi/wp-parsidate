@@ -3,8 +3,8 @@ Contributors: lord_viper, man4toman, parselearn, yazdaniwp, saeedfard, iehsanir,
 Donate link: https://wp-parsi.com/support/
 Tags: Shamsi, Persian, Jalali, WooCommerce, ووکامرس
 Requires at least: 5.3
-Tested up to: 7.0
-Stable tag: 6.2.1
+Tested up to: 7.1
+Stable tag: 6.3
 Requires PHP: 7.4
 License: GPLv3
 
