@@ -43,14 +43,14 @@ class WooCommerce extends Addon {
 
     if ( get_locale() === 'fa_IR' ) {
       if ( $this->getSetting( 'fix_prices', false ) ) {
-        add_filter( 'wc_price', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_get_price_html', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_cart_item_price', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_cart_item_subtotal', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_cart_subtotal', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_cart_totals_coupon_html', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_cart_shipping_method_full_label', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_cart_total', [ $this, 'fixNumbersToPersian' ] );
+        add_filter( 'wc_price', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_get_price_html', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_cart_item_price', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_cart_item_subtotal', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_cart_subtotal', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_cart_totals_coupon_html', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_cart_shipping_method_full_label', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_cart_total', [ $this, 'fixNumbersToPersian' ], 100 );
       }
 
       if ( Settings::get( 'persian_date', false ) ) {
