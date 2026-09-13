@@ -2,7 +2,7 @@
 
 namespace WPParsidate\Helper;
 
-use enshrined\svgSanitize\Sanitizer;
+use WPParsidate\Dependencies\enshrined\svgSanitize\Sanitizer;
 
 defined( 'ABSPATH' ) || exit;
 

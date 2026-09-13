@@ -2,3 +2,6 @@
 .ftpconfig
 node_modules
 .phpunit.result.cache
+
+# Composer (dev only; runtime dependencies are prefixed into packages/ by wp-scoper)
+/vendor/

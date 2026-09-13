@@ -15,7 +15,13 @@
     ]
   },
   "config": {
-    "optimize-autoloader": true
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "veronalabs/wp-scoper": true
+    },
+    "platform": {
+      "php": "7.4"
+    }
   },
   "authors": [
     {
@@ -29,5 +35,24 @@
     "symfony/polyfill-php81": "^1.38.1",
     "symfony/polyfill-php83": "^1.38",
     "enshrined/svg-sanitize": "^0.22.0"
+  },
+  "require-dev": {
+    "veronalabs/wp-scoper": "^1.4.2"
+  },
+  "extra": {
+    "wp-scoper": {
+      "namespace_prefix": "WPParsidate\\Dependencies",
+      "packages": [
+        "enshrined/svg-sanitize",
+        "symfony/polyfill-php80",
+        "symfony/polyfill-php81",
+        "symfony/polyfill-php83"
+      ],
+      "target_directory": "packages",
+      "delete_vendor_packages": true,
+      "update_call_sites": [
+        "inc"
+      ]
+    }
   }
 }

@@ -24,7 +24,8 @@ webpack.config.js
 phpunit.xml.dist
 .phpunit.result.cache
 
-# Composer (only needed for development)
+# Composer (only needed for development; runtime dependencies live in packages/)
+/vendor
 composer.json
 composer.lock
 
