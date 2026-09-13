@@ -301,12 +301,16 @@ class WooCommerce extends Addon {
     );
 
     /**
-     * here we pass those fields we want to convert from arabic to persian
+     * here we pass those fields we want to convert from Persian to English
      * other developers can hook into this filter and add their fields too
      *
      * @var array $persian_fields
      */
     $supported_persian_fields = apply_filters( "wpp_woocommerce_checkout_persian_fields", $persian_fields );
+
+    if ( ! is_array( $supported_persian_fields ) ) {
+      $supported_persian_fields = $persian_fields;
+    }
 
     foreach ( $supported_persian_fields as $field ) {
       if ( isset( $data[ $field ] ) ) {
@@ -314,7 +318,9 @@ class WooCommerce extends Addon {
       }
     }
 
-    return apply_filters( "wpp_woocommerce_checkout_modified_persian_fields", $data );
+    $modified_data = apply_filters( "wpp_woocommerce_checkout_modified_persian_fields", $data );
+
+    return is_array( $modified_data ) ? $modified_data : $data;
   }
 
   /**
