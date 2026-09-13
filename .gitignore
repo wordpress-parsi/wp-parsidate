@@ -1,3 +1,4 @@
-.idea/
-.ftpconfig
-node_modules
+/.idea
+/.ftpconfig
+/node_modules
+/.freebuff

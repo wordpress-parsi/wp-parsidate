@@ -144,7 +144,7 @@ class Install {
       return $version;
     }
 
-    $pluginData     = get_plugin_data( WP_PARSI_ROOT );
+    $pluginData     = get_plugin_data( WP_PARSI_ROOT, false, false );
     $currentVersion = $pluginData['Version'];
     Cache::set( 'plugin_version', $currentVersion );
 
