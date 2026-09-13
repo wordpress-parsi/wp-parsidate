@@ -206,7 +206,7 @@ class JetEngine extends Addon {
    * @return mixed
    */
   public function convertPreGetMetaDateToJalali( $value, $post, $key, $default, $field ) {
-    if ( $value === false ) {
+    if ( $value === false && isset( $field['input_type'] ) ) {
       $meta       = get_post_meta( $post->ID, $key, false );
       $fieldValue = empty( $meta ) ? $default : $meta[0];
 
