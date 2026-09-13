@@ -1,3 +1,4 @@
 .idea/
 .ftpconfig
 node_modules
+.phpunit.result.cache
