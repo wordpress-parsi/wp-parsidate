@@ -15,50 +15,6 @@ use DOMText;
 use DOMXPath;
 
 final class NumberConverter {
-  /**
-   * Tags to fully protect before DOM parsing.
-   * Their content is restored byte-for-byte.
-   */
-  private const PROTECTED_TAGS = [
-    'script',
-    'style',
-    'pre',
-    'code',
-    'textarea',
-    'noscript',
-    'svg',
-  ];
-
-  /**
-   * Tags whose text descendants should never be converted.
-   * Secondary safety layer after protected-block stripping.
-   */
-  private const SKIP_TEXT_INSIDE_TAGS = [
-    'script',
-    'style',
-    'pre',
-    'code',
-    'textarea',
-    'noscript',
-    'kbd',
-    'samp',
-    'svg',
-  ];
-
-  /**
-   * Common classes used by code/highlight/editor blocks.
-   */
-  private const SKIP_CLASSES = [
-    'wp-block-code',
-    'wp-block-preformatted',
-    'code',
-    'hljs',
-    'prism',
-    'highlight',
-    'syntaxhighlighter',
-    'crayon-syntax',
-  ];
-
   private const ROOT_ID = '__wp_parsidate_persian_number_root__';
 
   /**
@@ -85,11 +41,16 @@ final class NumberConverter {
     }
 
     $protected = [];
-    $working   = self::protectFragileBlocks( $content, $protected );
+    $working   = TextProtector::protectFragileBlocks( $content, $protected );
+
+    // Fail-safe: on protection failure, return original content untouched
+    if ( $working === null ) {
+      return $content;
+    }
 
     // After protection, maybe no visible digits remain.
     if ( ! self::containsAsciiDigit( $working ) ) {
-      return self::restoreFragileBlocks( $working, $protected );
+      return TextProtector::restore( $working, $protected );
     }
 
     $converted = self::convertHtmlTextNodes( $working );
@@ -99,7 +60,7 @@ final class NumberConverter {
       return $content;
     }
 
-    return self::restoreFragileBlocks( $converted, $protected );
+    return TextProtector::restore( $converted, $protected );
   }
 
   /**
@@ -117,54 +78,6 @@ final class NumberConverter {
    */
   private static function containsPersianOrArabic( string $content ): bool {
     return (bool) preg_match( '/[\x{0600}-\x{06FF}\x{0750}-\x{077F}\x{08A0}-\x{08FF}]/u', $content );
-  }
-
-  /**
-   * Replace fragile blocks with placeholders so DOM parsing never touches them.
-   *
-   * @param string $html
-   * @param array<string,string> $protected
-   *
-   * @return string
-   */
-  private static function protectFragileBlocks( string $html, array &$protected ): string {
-    $tags_pattern = implode( '|', array_map( 'preg_quote', self::PROTECTED_TAGS ) );
-
-    $pattern = '~<(' . $tags_pattern . ')\b[^>]*>.*?</\1>~isu';
-
-    return (string) preg_replace_callback(
-      $pattern,
-      static function ( array $matches ) use ( &$protected ): string {
-        $token               = self::makePlaceholder( count( $protected ) );
-        $protected[ $token ] = $matches[0];
-
-        return $token;
-      },
-      $html
-    );
-  }
-
-  /**
-   * Restore protected placeholders.
-   *
-   * @param array<string,string> $protected
-   */
-  private static function restoreFragileBlocks( string $html, array $protected ): string {
-    if ( empty( $protected ) ) {
-      return $html;
-    }
-
-    return strtr( $html, $protected );
-  }
-
-  private static function makePlaceholder( int $index ): string {
-    try {
-      $suffix = bin2hex( random_bytes( 8 ) );
-    } catch ( \Exception $e ) {
-      $suffix = md5( uniqid( (string) $index, true ) );
-    }
-
-    return '%%YPPNC_' . $index . '_' . $suffix . '%%';
   }
 
   /**
@@ -237,6 +150,7 @@ final class NumberConverter {
     }
 
     $root = $dom->getElementById( self::ROOT_ID );
+
     if ( ! $root instanceof DOMElement ) {
       libxml_clear_errors();
       libxml_use_internal_errors( $previous_errors );
@@ -270,7 +184,7 @@ final class NumberConverter {
 
         $tag = strtolower( $parent->tagName );
 
-        if ( in_array( $tag, self::SKIP_TEXT_INSIDE_TAGS, true ) ) {
+        if ( in_array( $tag, TextProtector::PROTECTED_BLOCKS, true ) ) {
           return true;
         }
 
@@ -312,6 +226,20 @@ final class NumberConverter {
 
     return false;
   }
+
+  /**
+   * Common classes used by code/highlight/editor blocks.
+   */
+  private const SKIP_CLASSES = [
+    'wp-block-code',
+    'wp-block-preformatted',
+    'code',
+    'hljs',
+    'prism',
+    'highlight',
+    'syntaxhighlighter',
+    'crayon-syntax',
+  ];
 
   /**
    * Convert only standalone numeric tokens, not digits inside identifiers.
