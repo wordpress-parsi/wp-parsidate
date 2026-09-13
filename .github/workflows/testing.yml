@@ -78,3 +78,28 @@ jobs:
             -not -path './vendor/*' \
             -not -path './node_modules/*' \
             -print0 | xargs -0 -n1 -P4 php -l > /dev/null
+
+  scoper:
+    name: Prefixed dependencies are up to date
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer
+          coverage: none
+
+      - name: Install Composer dependencies (runs wp-scoper)
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Verify packages/ and call sites match composer.lock
+        run: |
+          if ! git diff --exit-code -- packages inc; then
+            echo "::error::packages/ is out of date. Run 'composer install' locally and commit the result."
+            exit 1
+          fi

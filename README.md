@@ -127,6 +127,16 @@ composer test
 
 Tests live in `tests/unit`. Every pull request runs them automatically on PHP 7.4 to 8.4 via GitHub Actions (`.github/workflows/testing.yml`).
 
+### Third-party dependencies (wp-scoper)
+
+Composer dependencies are not loaded from `vendor/`. On `composer install`, [wp-scoper](https://github.com/veronalabs/wp-scoper) copies them into `packages/` under the `WPParsidate\Dependencies` namespace and generates `packages/autoload.php`. This keeps our copy of a library separate from the copy another plugin may ship, so two different versions of the same class can never collide.
+
+```bash
+composer install        # installs dependencies and regenerates packages/
+```
+
+`packages/` is committed; `vendor/` is git-ignored and only needed for development. After adding or updating a dependency in `composer.json`, run `composer install` and commit the changes in `packages/`. CI fails if `packages/` is out of date.
+
 ### Releasing to WordPress.org
 
 Pushing a version tag (for example `6.4`) triggers `.github/workflows/deploy.yml`, which builds the plugin and publishes it to the WordPress.org SVN repository. Files listed in `.distignore` are left out of the release. The workflow needs the `SVN_USERNAME` and `SVN_PASSWORD` repository secrets.
