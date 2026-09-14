@@ -10,8 +10,6 @@ class Integration {
     new EDD();
     new BulkyBulkEditProductsWooCommerce();
 
-    // Tools
-
     // Marketing
 
     // Customizations
@@ -32,5 +30,8 @@ class Integration {
 
     // Security
     new LimitLoginAttempts();
+
+    // Tools
+    new Booked();
   }
 }
