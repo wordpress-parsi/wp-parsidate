@@ -10,8 +10,7 @@
     "parsidate",
     "calendar",
     "jalali",
-    "persian",
-    "تقویم"
+    "persian"
   ],
   "textdomain": "wp-parsidate",
   "attributes": {
