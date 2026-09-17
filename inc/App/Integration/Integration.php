@@ -26,6 +26,9 @@ class Integration {
 
     // Page Builder
     new Elementor();
+    new Brizy();
+
+    // Form
     new Formello();
 
     // Security

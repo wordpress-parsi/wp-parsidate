@@ -102,6 +102,8 @@ class ComposerStaticInit28b7438669d760234aa27dffd45581b6
         'WPParsidate\\App\\Core\\FixTitle' => __DIR__ . '/../..' . '/inc/App/Core/FixTitle.php',
         'WPParsidate\\App\\Core\\ShamsiDate' => __DIR__ . '/../..' . '/inc/App/Core/ShamsiDate.php',
         'WPParsidate\\App\\Integration\\ACF' => __DIR__ . '/../..' . '/inc/App/Integration/ACF.php',
+        'WPParsidate\\App\\Integration\\Booked' => __DIR__ . '/../..' . '/inc/App/Integration/Booked.php',
+        'WPParsidate\\App\\Integration\\Brizy' => __DIR__ . '/../..' . '/inc/App/Integration/Brizy.php',
         'WPParsidate\\App\\Integration\\BulkyBulkEditProductsWooCommerce' => __DIR__ . '/../..' . '/inc/App/Integration/BulkyBulkEditProductsWooCommerce.php',
         'WPParsidate\\App\\Integration\\EDD' => __DIR__ . '/../..' . '/inc/App/Integration/EDD.php',
         'WPParsidate\\App\\Integration\\Elementor' => __DIR__ . '/../..' . '/inc/App/Integration/Elementor.php',

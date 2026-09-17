@@ -53,6 +53,8 @@ return array(
     'WPParsidate\\App\\Core\\FixTitle' => $baseDir . '/inc/App/Core/FixTitle.php',
     'WPParsidate\\App\\Core\\ShamsiDate' => $baseDir . '/inc/App/Core/ShamsiDate.php',
     'WPParsidate\\App\\Integration\\ACF' => $baseDir . '/inc/App/Integration/ACF.php',
+    'WPParsidate\\App\\Integration\\Booked' => $baseDir . '/inc/App/Integration/Booked.php',
+    'WPParsidate\\App\\Integration\\Brizy' => $baseDir . '/inc/App/Integration/Brizy.php',
     'WPParsidate\\App\\Integration\\BulkyBulkEditProductsWooCommerce' => $baseDir . '/inc/App/Integration/BulkyBulkEditProductsWooCommerce.php',
     'WPParsidate\\App\\Integration\\EDD' => $baseDir . '/inc/App/Integration/EDD.php',
     'WPParsidate\\App\\Integration\\Elementor' => $baseDir . '/inc/App/Integration/Elementor.php',
