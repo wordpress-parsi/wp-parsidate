@@ -694,6 +694,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   corner-shape: squircle;
   padding: 7px;
   position: relative;
+  background-color: #fafbfc;
 }
 .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-addon-tag {
   position: absolute;
