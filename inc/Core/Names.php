@@ -12,7 +12,10 @@ use WPParsidate\Settings\Settings;
 
 class Names {
   /**
-   * Get Gregorian month names, Months type is persian, dari, kurdish, pashto
+   * Get Gregorian month names, Months type is persian, dari, kurdish, pashto, english
+   *
+   * The "english" type returns the English names WordPress itself uses, which
+   * are needed to detect Gregorian dates in third party content.
    *
    * @param string|null $type Type of months name
    * @param bool $short Return short month names
@@ -24,6 +27,7 @@ class Names {
       $type = Settings::get( 'months_name_type', 'persian' );
     }
 
+    $type = strtolower($type);
     $cacheKey = 'gregorian_months_name_' . $type . ( $short ? '_short' : '' );
     $cache    = Cache::get( $cacheKey, false );
     if ( is_array( $cache ) ) {
@@ -81,6 +85,9 @@ class Names {
         'دسمبر'
       );
 
+    } elseif ( $type === 'english' ) {
+      $names = self::getEnglishGregorianMonths();
+
     } else {
       $names = array(
         '',
@@ -110,6 +117,48 @@ class Names {
     Cache::set( $cacheKey, $names );
 
     return $names;
+  }
+
+  /**
+   * Get English Gregorian month names
+   *
+   * WordPress' WP_Locale holds the month names of the active locale, so it is
+   * only a source of English names on English sites. Any other locale falls
+   * back to the plugin's own list.
+   *
+   * @return array<int,string> 1-based month names with an empty leading item
+   */
+  private static function getEnglishGregorianMonths(): array {
+    global $wp_locale;
+
+    if ( isset( $wp_locale->month ) && method_exists( $wp_locale, 'get_month' ) ) {
+      $names = array( '' );
+
+      for ( $month = 1; $month <= 12; $month ++ ) {
+        $names[] = (string) $wp_locale->get_month( $month );
+      }
+
+      // Translated locales return non-ASCII names, which can't match English dates
+      if ( ! preg_match( '/[^\x20-\x7E]/', implode( '', $names ) ) ) {
+        return $names;
+      }
+    }
+
+    return array(
+      '',
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    );
   }
 
   /**
