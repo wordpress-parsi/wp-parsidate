@@ -52,7 +52,7 @@ class EDD extends Addon {
   }
 
   /**
-   * Change english number to persian
+   * Change English number to Persian
    */
   public function fixNumbersToPersian( $content ): string {
     return Number::fixNumber( $content );

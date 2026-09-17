@@ -125,7 +125,7 @@ class ShamsiDate {
           'title'    => esc_html__( 'Multilingual compatibility', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => false,
-          'desc'     => esc_html__( 'By enabling this, ParsiDate options only work in persian locale',
+          'desc'     => esc_html__( 'By enabling this, ParsiDate options only work in Persian locale',
             'wp-parsidate' ),
           'sanitize' => 'bool'
         ),
