@@ -41,7 +41,7 @@
         background-color: variables.$gray;
         border-radius: 5px;
         corner-shape: squircle;
-        padding: 3px;
+        padding: 3px 5px;
         line-height: 1;
         z-index: 999999;
         font-size: 12px;
@@ -63,7 +63,7 @@
       }
 
       &:hover, &:focus-within {
-        border-color: color.scale(variables.$border_color, $lightness: -10%);
+        border-color: color.scale(variables.$border_color, $lightness: -30%);
 
         .wppd-action-link {
           border-color: variables.$gray_light_two;
@@ -94,6 +94,18 @@
         gap: 5px;
         align-items: center;
         min-width: 0;
+
+        a.wppd-title {
+          color: variables.$text;
+        }
+
+        a {
+          text-decoration: none;
+
+          &:hover, &:focus, &:active {
+            text-decoration: none;
+          }
+        }
 
         /*.wppd-title {
           display: inline-block;
