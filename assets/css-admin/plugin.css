@@ -2211,7 +2211,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .social-n
 }
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 0.5fr));
+  grid-template-columns: auto auto auto auto auto auto;
   gap: 20px;
 }
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members:hover .team-member:not(:hover) .team-member-name {
@@ -2274,17 +2274,36 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-c
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-contributors-wrapper .github-contributors a:hover img {
   border-color: rgb(76.2352941176%, 76.2352941176%, 76.2352941176%);
 }
+@media only screen and (max-width: 1200px) {
+  body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members {
+    grid-template-columns: auto auto auto;
+  }
+  body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member .team-member-image {
+    height: 200px;
+  }
+}
 @media only screen and (max-width: 783px) {
   body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .plugin-features {
     grid-template-columns: none;
   }
-}
-@media only screen and (min-width: 1600px) {
   body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+    grid-template-columns: auto auto;
   }
   body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member .team-member-image {
     height: 250px;
+  }
+}
+@media only screen and (max-width: 576px) {
+  body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member .team-member-image {
+    height: 150px;
+  }
+}
+@media only screen and (min-width: 1700px) {
+  body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 180px));
+  }
+  body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member .team-member-image {
+    height: 200px;
   }
 }
 
