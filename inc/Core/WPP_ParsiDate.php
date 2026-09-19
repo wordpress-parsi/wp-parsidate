@@ -324,11 +324,17 @@ class WPP_ParsiDate {
       return $persianDate;
     }
 
-    [ $year, $mon, $day ] = $this->persian_to_gregorian(
-      $matches[0],
-      $matches[1],
-      $matches[2]
-    );
+    if ( (int) $matches[0] >= 1900 ) {
+      $year = (int) $matches[0];
+      $mon  = (int) $matches[1];
+      $day  = (int) $matches[2];
+    } else {
+      [ $year, $mon, $day ] = $this->persian_to_gregorian(
+        $matches[0],
+        $matches[1],
+        $matches[2]
+      );
+    }
 
     return date(
       $format,

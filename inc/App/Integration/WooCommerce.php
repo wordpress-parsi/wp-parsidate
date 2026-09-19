@@ -59,6 +59,7 @@ class WooCommerce extends Addon {
 
         // Jalali datepicker
         add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueJalaliScripts' ] );
+        add_filter( 'woocommerce_date_input_html_pattern', [ $this, 'filterDateInputHtmlPattern' ] );
 
         // Convert order_date using js
         add_action( 'woocommerce_process_shop_order_meta', [ $this, 'changeOrderDateOnSave' ], 0 );
@@ -749,7 +750,20 @@ class WooCommerce extends Addon {
     $minute             = str_pad( $orderDateMinute, 2, '0', STR_PAD_LEFT );
     $second             = str_pad( $orderDateSecond, 2, '0', STR_PAD_LEFT );
     $orderDateTime      = "$orderDate $hour:$minute:$second";
-    $fixedDateTimestamp = gregdate( 'U', $orderDateTime );
+
+    preg_match( '/^(\d{4})/', $orderDate, $yearMatch );
+    $year = ! empty( $yearMatch[1] ) ? (int) $yearMatch[1] : 0;
+
+    if ( $year >= 1900 ) {
+      // Date is already Gregorian (e.g. 2026-09-18) — parse directly without gregdate()
+      $fixedDateTimestamp = strtotime( $orderDateTime );
+      if ( false === $fixedDateTimestamp ) {
+        return;
+      }
+    } else {
+      $fixedDateTimestamp = gregdate( 'U', $orderDateTime );
+    }
+
     $date               = gmdate( 'Y-m-d H:i:s', $fixedDateTimestamp );
 
     // Fix POST data
@@ -770,6 +784,17 @@ class WooCommerce extends Addon {
 
       $_POST['access_expires'] = $accessExpires;
     }
+  }
+
+  /**
+   * Allow Persian numerals in WooCommerce date input HTML pattern
+   *
+   * @param string $pattern
+   * @return string
+   * @since 6.3.1
+   */
+  public function filterDateInputHtmlPattern( string $pattern ): string {
+    return '[0-9۰-۹]{4}-(0[1-9]|1[012]|۰[۱-۹]|۱[۰۱۲])-(0[1-9]|1[0-9]|2[0-9]|3[01]|۰[۱-۹]|۱[۰-۹]|۲[۰-۹]|۳[۰۱])';
   }
 
   /**
