@@ -316,26 +316,31 @@ class FixDates {
    * @return bool True if the format contains human-readable date components, false otherwise.
    */
   private function isDualDateFormat( string $format ): bool {
-    $machineFormats = array_filter( [
-      'c',
-      'r',
-      'U',
-      'u',
-      'timestamp',
-      DATE_ATOM,
-      DATE_COOKIE,
-      DATE_ISO8601,
-      DATE_RFC822,
-      DATE_RFC850,
-      DATE_RFC1036,
-      DATE_RFC1123,
-      DATE_RFC2822,
-      DATE_RFC3339,
-      defined( 'DATE_RFC3339_EXTENDED' ) ? DATE_RFC3339_EXTENDED : null,
-      defined( 'DATE_RFC7231' ) ? DATE_RFC7231 : null,
-      DATE_RSS,
-      DATE_W3C,
-    ] );
+    // Built once per request: this filter runs on every rendered date.
+    static $machineFormats = null;
+
+    if ( null === $machineFormats ) {
+      $machineFormats = array_filter( [
+        'c',
+        'r',
+        'U',
+        'u',
+        'timestamp',
+        DATE_ATOM,
+        DATE_COOKIE,
+        DATE_ISO8601,
+        DATE_RFC822,
+        DATE_RFC850,
+        DATE_RFC1036,
+        DATE_RFC1123,
+        DATE_RFC2822,
+        DATE_RFC3339,
+        defined( 'DATE_RFC3339_EXTENDED' ) ? DATE_RFC3339_EXTENDED : null,
+        defined( 'DATE_RFC7231' ) ? DATE_RFC7231 : null,
+        DATE_RSS,
+        DATE_W3C,
+      ] );
+    }
 
     if ( in_array( $format, $machineFormats, true ) ) {
       return false;
@@ -386,38 +391,47 @@ class FixDates {
     $weekDays    = Names::getGregorianWeekDays();
     $shortDays   = Names::getGregorianWeekDays( null, true );
 
-    $englishMonths      = array(
-      '',
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    );
-    $englishShortMonths = array(
-      '',
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    );
-    $englishWeekDays    = array( 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' );
-    $englishShortDays   = array( 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
+    // English names never change at runtime: build once per request instead
+    // of on every rendered date.
+    static $englishMonths = null;
+    static $englishShortMonths = null;
+    static $englishWeekDays = null;
+    static $englishShortDays = null;
+
+    if ( null === $englishMonths ) {
+      $englishMonths      = array(
+        '',
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      );
+      $englishShortMonths = array(
+        '',
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec'
+      );
+      $englishWeekDays    = array( 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' );
+      $englishShortDays   = array( 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
+    }
     $replacements       = [];
 
     $month = (int) date( 'n', $timestamp );
