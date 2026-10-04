@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 
 use WPParsidate\Addons\Addon;
 use WPParsidate\App\Integration\WooCommerce\{WcGateways, WooCommerceCitySelect};
-use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter, Templates};
+use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter, Param, Templates};
 use WPParsidate\Admin\AdminPages;
 use WPParsidate\Core\Names;
 use WPParsidate\Settings\Settings;
@@ -743,13 +743,13 @@ class WooCommerce extends Addon {
       return;
     }
 
-    $orderDateHour      = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_hour' ) );
-    $orderDateMinute    = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_minute' ) );
-    $orderDateSecond    = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_second' ) );
-    $hour               = str_pad( $orderDateHour, 2, '0', STR_PAD_LEFT );
-    $minute             = str_pad( $orderDateMinute, 2, '0', STR_PAD_LEFT );
-    $second             = str_pad( $orderDateSecond, 2, '0', STR_PAD_LEFT );
-    $orderDateTime      = "$orderDate $hour:$minute:$second";
+    $orderDateHour   = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_hour' ) );
+    $orderDateMinute = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_minute' ) );
+    $orderDateSecond = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_second' ) );
+    $hour            = str_pad( $orderDateHour, 2, '0', STR_PAD_LEFT );
+    $minute          = str_pad( $orderDateMinute, 2, '0', STR_PAD_LEFT );
+    $second          = str_pad( $orderDateSecond, 2, '0', STR_PAD_LEFT );
+    $orderDateTime   = "$orderDate $hour:$minute:$second";
 
     preg_match( '/^(\d{4})/', $orderDate, $yearMatch );
     $year = ! empty( $yearMatch[1] ) ? (int) $yearMatch[1] : 0;
@@ -764,7 +764,7 @@ class WooCommerce extends Addon {
       $fixedDateTimestamp = gregdate( 'U', $orderDateTime );
     }
 
-    $date               = gmdate( 'Y-m-d H:i:s', $fixedDateTimestamp );
+    $date = gmdate( 'Y-m-d H:i:s', $fixedDateTimestamp );
 
     // Fix POST data
     $_POST['order_date']        = date( 'Y-m-d', $fixedDateTimestamp );
@@ -776,7 +776,7 @@ class WooCommerce extends Addon {
     $order->save();
 
     // Fix download expire date
-    $accessExpires = $_POST['access_expires'];
+    $accessExpires = Param::post( 'access_expires', null );
     if ( ! empty( $accessExpires ) && is_array( $accessExpires ) ) {
       foreach ( $accessExpires as $i => $expire ) {
         $accessExpires[ $i ] = ! empty( $expire ) ? gregdate( 'Y-m-d', $expire ) : '';
@@ -790,6 +790,7 @@ class WooCommerce extends Addon {
    * Allow Persian numerals in WooCommerce date input HTML pattern
    *
    * @param string $pattern
+   *
    * @return string
    * @since 6.3.1
    */
