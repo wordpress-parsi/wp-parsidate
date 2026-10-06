@@ -33,12 +33,20 @@ class WooCommerce extends Addon {
     add_filter( 'wp_parsidate_' . $this->addonID . '_tab_display_notice', '__return_false' );
     add_filter( 'wp_parsidate_' . $this->addonID . '_tab_content_display_notice', '__return_true' );
 
+    if ( ! class_exists( 'WooCommerce', false ) || ! function_exists( 'is_woocommerce' ) ) {
+      return;
+    }
+
     add_action( 'before_woocommerce_init', [ $this, 'beforeWooCommerceInit' ] );
 
     WcGateways::getInstance();
   }
 
   public function initAction(): void {
+    if ( ! class_exists( 'WooCommerce', false ) || ! function_exists( 'is_woocommerce' ) ) {
+      return;
+    }
+
     add_filter( 'woocommerce_reports_get_order_report_query', [ $this, 'fixOrderReportQueryDate' ] );
 
     if ( get_locale() === 'fa_IR' ) {
