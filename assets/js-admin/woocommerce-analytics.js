@@ -10,7 +10,14 @@
  *   range inputs.
  * - Disables future dates (WooCommerce Analytics doesn't allow them).
  * - Rewrites the selected-range summary label at the top into Solar.
+ * - Swaps preset ("Last month", ...) request boundaries for the true Solar
+ *   ones and rewrites the chart legend/caption ranges.
+ * - Localizes the D3 chart X axis (day ticks + month/year band) into Solar
+ *   (second class in this file).
  *
+ * Structure: WpPdWcAnBase holds every helper both modules share (settings,
+ * digits, Jalali math, query parsing, month maps); WpPdWoocommerceAnalyticsNew
+ * is the overlay + preset engine; WpPdWcAnChartAxis is the chart localizer.
  * The overlay lives on document.body (outside React's DOM). Clicks are
  * intercepted by a capture-phase document listener registered at page load
  * (before react-dates' own outside-click handler), so selecting a day keeps
@@ -23,14 +30,18 @@
     return;
   }
 
-  class WpPdWoocommerceAnalyticsNew {
+  // ---- shared Solar helpers (DRY base for both modules below) -----------
+  // Holds everything the overlay module and the chart-axis module both
+  // need: settings, digit conversion, Jalali math, query parsing and the
+  // unified Gregorian month-name map (English full/abbreviated + Persian
+  // spellings, including the variants from the chart localizer).
+
+  class WpPdWcAnBase {
     constructor() {
       const s = window.WpPdWcAn_SETTINGS || {};
       this.DEBUG = s.debug === true;
-      this.ENABLED = s.enableOverlay !== false;
+      this.LOG_TAG = '[WpPdWcAn]';
       this.usePersianDigits = s.usePersianDigits !== false;
-      this.inputDateOrder = s.inputDateOrder || 'MDY';
-      this.swapInputs = s.swapInputs === true;
       this.MONTHS = s.monthNames || ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند',];
       this.WD = s.weekdayShort || ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
 
@@ -38,9 +49,6 @@
       // direction RTL so Solar dates render/align correctly.
       this.MARK = '\u200f';
 
-      // Gregorian month names (English full/abbreviated + Persian
-      // spellings) -> number. The abbreviations cover dateI18n's "M"
-      // format ("Jul 22 ...") used by the import-status bar.
       this.G_MONTHS = {
         january: 1,
         february: 2,
@@ -62,20 +70,26 @@
         jul: 7,
         aug: 8,
         sep: 9,
+        sept: 9,
         oct: 10,
         nov: 11,
         dec: 12,
         'ژانویه': 1,
         'فوریه': 2,
         'مارس': 3,
+        'مارچ': 3,
         'آوریل': 4,
+        'اوریل': 4,
+        'آپریل': 4,
         'مه': 5,
         'می': 5,
         'ژوئن': 6,
         'ژوئیه': 7,
+        'ژوییه': 7,
         'جولای': 7,
         'اوت': 8,
         'آگوست': 8,
+        'اگوست': 8,
         'سپتامبر': 9,
         'اکتبر': 10,
         'نوامبر': 11,
@@ -84,48 +98,28 @@
       this.G_KEYS = Object.keys(this.G_MONTHS).sort(function (a, b) {
         return b.length - a.length;
       });
-      // Matches "<month> <d> - [<month> ]<d>، <year>" (Latin or Persian digits).
-      this.RANGE_RE = new RegExp('(' + this.G_KEYS.join('|') + ')\\s+([0-9۰-۹]{1,2})\\s*[-–]\\s*(?:(' + this.G_KEYS.join('|') + ')\\s+)?([0-9۰-۹]{1,2})\\s*[،,]\\s*([0-9۰-۹]{4})', 'g');
-      // Matches a single date "<month> <d>، <year>" (report table cells).
-      this.SINGLE_RE = new RegExp('(' + this.G_KEYS.join('|') + ')\\s+([0-9۰-۹]{1,2})\\s*[،,]\\s*([0-9۰-۹]{4})', 'g');
-      // Matches the import-status bar value, e.g. "Jul 22 14:30" or
-      // "Jul 23 at 02:00" (dateI18n "M j H:i" / "M j \a\t H:i") - month,
-      // day and a 24-hour time, but NO year. The "at" is locale-dependent,
-      // so anything between the day and the time is tolerated.
-      this.STATUS_RE = new RegExp('^(' + this.G_KEYS.join('|') + ')\\s+([0-9۰-۹]{1,2})(?:\\s+.+?\\s+|\\s+)([0-9۰-۹]{1,2}):([0-9۰-۹]{2})$', 'i');
-      // True when a text contains any known Gregorian month name - used to
-      // tell human-readable date cells (e.g. "3 آگوست 2026") apart from
-      // numeric ones (e.g. "2026-08-03").
-      this.G_MONTH_RE = new RegExp('(' + this.G_KEYS.join('|') + ')', 'i');
-
-      // ---- state ----------------------------------------------------------
-      this.cal = null;
-      this.view = null;
-      this.sel = {start: null, end: null};
-      this.phase = 'start';
-      this.inited = false;
-      this.scheduled = false;
-      this.lastScan = 0;
-
-      this.onDocEvent = this.onDocEvent.bind(this);
-
-      // Solar PRESET-range handling is installed immediately - before the
-      // app issues its first Analytics request - so the very first render
-      // already queries the Solar range.
-      this.initNetworkHandling();
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => this.start());
-      } else {
-        this.start();
-      }
     }
 
-    // ---- helpers --------------------------------------------------------
+    escapeRegExp(str) {
+      return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    // Alternation of every known month name, longest first, regex-escaped.
+    monthAlternation() {
+      return this.G_KEYS.map((k) => this.escapeRegExp(k)).join('|');
+    }
+
+    monthNumber(name) {
+      return this.G_MONTHS[String(name).toLowerCase().trim()] || 0;
+    }
+
+    jalaliMonthName(jm) {
+      return this.MONTHS[jm - 1] || '';
+    }
 
     log() {
       if (this.DEBUG && window.console) {
-        window.console.log.apply(window.console, ['[WpPdWoocommerceAnalyticsNew]'].concat([].slice.call(arguments)));
+        window.console.log.apply(window.console, [this.LOG_TAG].concat([].slice.call(arguments)));
       }
     }
 
@@ -161,6 +155,26 @@
       return window.WpPdJalaliDate.toJalaali(gy, gm, gd);
     }
 
+    jToGa(jy, jm, jd) {
+      const g = this.jToG(jy, jm, jd);
+      return [g.gy, g.gm, g.gd];
+    }
+
+    toJalaliTriple(gy, gm, gd) {
+      const j = this.gToJ(gy, gm, gd);
+      return [j.jy, j.jm, j.jd];
+    }
+
+    tripleFromDate(d) {
+      const j = this.gToJ(d.getFullYear(), d.getMonth() + 1, d.getDate());
+      return [j.jy, j.jm, j.jd];
+    }
+
+    tripleToDate(t) {
+      const g = this.jToGa(t[0], t[1], t[2]);
+      return new Date(g[0], g[1] - 1, g[2]);
+    }
+
     daysInJMonth(jy, jm) {
       if (jm <= 6) {
         return 31;
@@ -170,6 +184,104 @@
       }
       return window.WpPdJalaliDate.isLeapJalaaliYear(jy) ? 30 : 29;
     }
+
+    addDays(d, n) {
+      return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+    }
+
+    daysBetween(a, b) {
+      return Math.round((b.getTime() - a.getTime()) / 86400000);
+    }
+
+    parseQuery(search) {
+      const params = {};
+      String(search || '').replace(/^\?/, '').split('&').forEach((pair) => {
+        if (!pair) {
+          return;
+        }
+        const i = pair.indexOf('=');
+        const k = i === -1 ? pair : pair.slice(0, i);
+        const v = i === -1 ? '' : pair.slice(i + 1);
+        try {
+          params[decodeURIComponent(k)] = decodeURIComponent(v.replace(/\+/g, ' '));
+        } catch (e) {
+          params[k] = v;
+        }
+      });
+      return params;
+    }
+
+    buildQuery(params) {
+      const parts = [];
+      for (const k in params) {
+        if (!Object.prototype.hasOwnProperty.call(params, k)) {
+          continue;
+        }
+        if (params[k] === undefined || params[k] === null) {
+          continue;
+        }
+        parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(params[k]));
+      }
+      return parts.join('&');
+    }
+
+    isAnalyticsScreen(p) {
+      if (p.page !== 'wc-admin') {
+        return false;
+      }
+      const path = p.path || '';
+      return path.indexOf('analytics') !== -1 || path.indexOf('customers') !== -1;
+    }
+  }
+
+  class WpPdWoocommerceAnalyticsNew extends WpPdWcAnBase {
+    constructor() {
+      super();
+      const s = window.WpPdWcAn_SETTINGS || {};
+      this.DEBUG = s.debug === true;
+      this.LOG_TAG = '[WpPdWoocommerceAnalyticsNew]';
+      this.ENABLED = s.enableOverlay !== false;
+      this.inputDateOrder = s.inputDateOrder || 'MDY';
+      this.swapInputs = s.swapInputs === true;
+      // Matches "<month> <d> - [<month> ]<d>، <year>" (Latin or Persian digits).
+      const ALT = this.monthAlternation();
+      this.RANGE_RE = new RegExp('(' + ALT + ')\\s+([0-9۰-۹]{1,2})\\s*[-–]\\s*(?:(' + ALT + ')\\s+)?([0-9۰-۹]{1,2})\\s*[،,]\\s*([0-9۰-۹]{4})', 'g');
+      // Matches a single date "<month> <d>، <year>" (report table cells).
+      this.SINGLE_RE = new RegExp('(' + ALT + ')\\s+([0-9۰-۹]{1,2})\\s*[،,]\\s*([0-9۰-۹]{4})', 'g');
+      // Matches the import-status bar value, e.g. "Jul 22 14:30" or
+      // "Jul 23 at 02:00" (dateI18n "M j H:i" / "M j \a\t H:i") - month,
+      // day and a 24-hour time, but NO year. The "at" is locale-dependent,
+      // so anything between the day and the time is tolerated.
+      this.STATUS_RE = new RegExp('^(' + ALT + ')\\s+([0-9۰-۹]{1,2})(?:\\s+.+?\\s+|\\s+)([0-9۰-۹]{1,2}):([0-9۰-۹]{2})$', 'i');
+      // True when a text contains any known Gregorian month name - used to
+      // tell human-readable date cells (e.g. "3 آگوست 2026") apart from
+      // numeric ones (e.g. "2026-08-03").
+      this.G_MONTH_RE = new RegExp('(' + ALT + ')', 'i');
+
+      // ---- state ----------------------------------------------------------
+      this.cal = null;
+      this.view = null;
+      this.sel = {start: null, end: null};
+      this.phase = 'start';
+      this.inited = false;
+      this.scheduled = false;
+      this.lastScan = 0;
+
+      this.onDocEvent = this.onDocEvent.bind(this);
+
+      // Solar PRESET-range handling is installed immediately - before the
+      // app issues its first Analytics request - so the very first render
+      // already queries the Solar range.
+      this.initNetworkHandling();
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => this.start());
+      } else {
+        this.start();
+      }
+    }
+
+    // ---- helpers (shared date helpers + log() live on WpPdWcAnBase) ----
 
     firstColumn(jy, jm) {
       const g = this.jToG(jy, jm, 1);
@@ -805,53 +917,9 @@
       return this.PRESET_UNITS()[key];
     }
 
-    pQuery(search) {
-      const params = {};
-      String(search || '').replace(/^\?/, '').split('&').forEach((pair) => {
-        if (!pair) {
-          return;
-        }
-        const i = pair.indexOf('=');
-        const k = i === -1 ? pair : pair.slice(0, i);
-        const v = i === -1 ? '' : pair.slice(i + 1);
-        try {
-          params[decodeURIComponent(k)] = decodeURIComponent(v.replace(/\+/g, ' '));
-        } catch (e) {
-          params[k] = v;
-        }
-      });
-      return params;
-    }
-
-    bQuery(params) {
-      const parts = [];
-      for (const k in params) {
-        if (!Object.prototype.hasOwnProperty.call(params, k)) {
-          continue;
-        }
-        if (params[k] === undefined || params[k] === null) {
-          continue;
-        }
-        parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(params[k]));
-      }
-      return parts.join('&');
-    }
-
-    isAnalyticsScreen(p) {
-      if (p.page !== 'wc-admin') {
-        return false;
-      }
-      const path = p.path || '';
-      return path.indexOf('analytics') !== -1 || path.indexOf('customers') !== -1;
-    }
-
-    addDays(d, n) {
-      return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
-    }
-
-    daysBetween(a, b) {
-      return Math.round((b.getTime() - a.getTime()) / 86400000);
-    }
+    // Query parsing, building, screen check and date shifting live on
+    // WpPdWcAnBase (parseQuery/buildQuery/isAnalyticsScreen/addDays/
+    // daysBetween).
 
     isoDay(d) {
       return d.getFullYear() + '-' + this.pad2(d.getMonth() + 1) + '-' + this.pad2(d.getDate());
@@ -951,22 +1019,8 @@
       return {primaryStart: pStart, primaryEnd: pEnd, secondaryStart: sStart, secondaryEnd: sEnd};
     }
 
-    // Solar equivalents (dates as [jy, jm, jd] triples).
-
-    jToGa(jy, jm, jd) {
-      const g = window.WpPdJalaliDate.toGregorian(jy, jm, jd);
-      return [g.gy, g.gm, g.gd];
-    }
-
-    tripleFromDate(d) {
-      const j = window.WpPdJalaliDate.toJalaali(d.getFullYear(), d.getMonth() + 1, d.getDate());
-      return [j.jy, j.jm, j.jd];
-    }
-
-    tripleToDate(t) {
-      const g = this.jToGa(t[0], t[1], t[2]);
-      return new Date(g[0], g[1] - 1, g[2]);
-    }
+    // Solar equivalents (dates as [jy, jm, jd] triples) - jToGa,
+    // tripleFromDate and tripleToDate live on WpPdWcAnBase.
 
     tripleToIso(t) {
       const g = this.jToGa(t[0], t[1], t[2]);
@@ -1095,11 +1149,11 @@
       if (split === -1) {
         return path;
       }
-      const params = this.pQuery(path.slice(split + 1));
+      const params = this.parseQuery(path.slice(split + 1));
       if (!params.after || !params.before) {
         return path;
       }
-      const urlParams = this.pQuery(window.location.search);
+      const urlParams = this.parseQuery(window.location.search);
       if (!this.isAnalyticsScreen(urlParams)) {
         return path;
       }
@@ -1113,6 +1167,17 @@
       const jal = this.jalaliPresetRanges(preset, compare, now);
       if (!greg || !jal) {
         return path;
+      }
+      // Remember the effective Solar ranges actually sent to the REST API
+      // (primary + comparison + requested interval) so the chart-axis
+      // module can correlate plotted points with real dates.
+      try {
+        window.WCASD.effective = {
+          primary: [this.tripleToDate(jal.primary[0]), this.tripleToDate(jal.primary[1])],
+          secondary: [this.tripleToDate(jal.secondary[0]), this.tripleToDate(jal.secondary[1])],
+          interval: params.interval ? String(params.interval) : '',
+        };
+      } catch (e) {
       }
       const after = String(params.after).slice(0, 10);
       const before = String(params.before).slice(0, 10);
@@ -1128,7 +1193,7 @@
       params.after = this.swapDatePart(params.after, this.tripleToIso(target[0]));
       params.before = this.swapDatePart(params.before, this.tripleToIso(target[1]));
       this.log('preset', preset, 'swap ->', params.after, params.before);
-      return path.slice(0, split) + '?' + this.bQuery(params);
+      return path.slice(0, split) + '?' + this.buildQuery(params);
     }
 
     installFetchMiddleware() {
@@ -1140,15 +1205,42 @@
         return true;
       }
       apiFetch.use((options, next) => {
+        let interval = '';
         try {
-          if (options && typeof options.path === 'string') {
-            options.path = this.rewriteAnalyticsPath(options.path);
-          } else if (options && typeof options.url === 'string') {
-            options.url = this.rewriteAnalyticsPath(options.url);
+          const p = options && (typeof options.path === 'string'
+            ? options.path
+            : (typeof options.url === 'string' ? options.url : ''));
+          if (p) {
+            const np = this.rewriteAnalyticsPath(p);
+            if (options && typeof options.path === 'string') {
+              options.path = np;
+            } else if (options) {
+              options.url = np;
+            }
+            const qi = np.indexOf('?');
+            if (qi !== -1) {
+              interval = this.parseQuery(np.slice(qi + 1)).interval || '';
+            }
           }
         } catch (e) {
         }
-        return next(options);
+        const res = next(options);
+        try {
+          const rp = (options && (options.path || options.url)) || '';
+          if (typeof rp === 'string' && rp.indexOf('wc-analytics/') !== -1 &&
+            res && typeof res.then === 'function') {
+            res.then((response) => {
+              try {
+                this.rememberBuckets(response, interval);
+              } catch (e) {
+              }
+              return response;
+            }, () => {
+            });
+          }
+        } catch (e) {
+        }
+        return res;
       });
       apiFetch.wcasdPatched = true;
       return true;
@@ -1192,8 +1284,47 @@
       }, 25);
     }
 
+    // --- Chart data: expose what the Shamsi chart-axis module needs ------
+
+    // The chart-axis module (bottom of this file) reads the effective Solar
+    // ranges, the request interval and the actual bucket dates returned by
+    // the Analytics REST responses from window.WCASD.
+    exposeChartData() {
+      window.WCASD = window.WCASD || {};
+      window.WCASD.jalaliPresetRanges = (key, compare, now) => this.jalaliPresetRanges(key, compare, now);
+      window.WCASD.buckets = window.WCASD.buckets || [];
+      window.WCASD.effective = window.WCASD.effective || {primary: null, secondary: null, interval: ''};
+    }
+
+    // Capture the real bucket boundaries of an Analytics response. The D3
+    // charts label their X axis with bare day numbers that carry no date,
+    // so the axis localizer correlates tick positions with these dates.
+    rememberBuckets(response, interval) {
+      if (!window.WCASD || !response || !response.intervals || !response.intervals.length) {
+        return;
+      }
+      const dates = [];
+      for (let i = 0; i < response.intervals.length; i++) {
+        const row = response.intervals[i];
+        const raw = row && (row.date_start || row.date_start_gmt);
+        if (!raw) {
+          return;
+        }
+        const parts = String(raw).slice(0, 10).split('-');
+        if (parts.length !== 3) {
+          return;
+        }
+        dates.push(new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10)));
+      }
+      window.WCASD.buckets.unshift({dates: dates, interval: interval || ''});
+      if (window.WCASD.buckets.length > 12) {
+        window.WCASD.buckets.length = 12;
+      }
+    }
+
     initNetworkHandling() {
       try {
+        this.exposeChartData();
         // NOTE: the global fetch()/XMLHttpRequest patch (patchNetworkLayer)
         // is intentionally NOT installed here - it wrapped every request
         // containing "wc-analytics/" and made WooCommerce's API calls fail
@@ -1232,7 +1363,7 @@
     }
 
     restorePresetLabel() {
-      const params = this.pQuery(window.location.search);
+      const params = this.parseQuery(window.location.search);
       if (!this.isAnalyticsScreen(params)) {
         return;
       }
@@ -1390,6 +1521,697 @@
   }
 
   new WpPdWoocommerceAnalyticsNew();
+
+/**
+ * Shamsi chart-axis localizer.
+ *
+ * The Analytics D3 charts label their X axis with bare Gregorian day numbers
+ * and a month/year "band"; the tick itself doesn't carry its date. So we
+ * correlate each tick's X position with the real date of the nearest plotted
+ * point (from point aria-labels, or the line-chart focus grid), then relabel
+ * the ticks and the month band in Solar. Bucket dates come from the REST
+ * response (captured into window.WCASD.buckets by the main script above),
+ * with fallbacks to the effective Solar range and the URL preset range.
+ *
+ * Depends on window.WpPdJalaliDate, window.WpPdWcAn_SETTINGS, the shared
+ * WpPdWcAnBase above, and the data the main class exposes on window.WCASD.
+ */
+  class WpPdWcAnChartAxis extends WpPdWcAnBase {
+    constructor() {
+      super();
+      this.LOG_TAG = '[WpPdWcAnChartAxis]';
+      this.MONTH_PATTERN = '(' + this.monthAlternation() + ')';
+      this.DIGIT_CLASS = '[0-9\u06F0-\u06F9\u0660-\u0669]';
+      this.BUCKET_INTERVALS = ['day', 'week', 'week_sunday', 'month', 'quarter', 'year', 'hour'];
+      this.timer = null;
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => this.start());
+      } else {
+        this.start();
+      }
+    }
+
+    // ---- data the main script exposes -------------------------------------
+
+    getBuckets() {
+      return (window.WCASD && window.WCASD.buckets) || [];
+    }
+
+    getEffective() {
+      return (window.WCASD && window.WCASD.effective) ||
+        {primary: null, secondary: null, interval: ''};
+    }
+
+    presetRanges(period, compare, now) {
+      return window.WCASD && window.WCASD.jalaliPresetRanges
+        ? window.WCASD.jalaliPresetRanges(period, compare, now)
+        : null;
+    }
+
+    // ---- date/label parsing -----------------------------------------------
+
+    parseDateFromLabel(label) {
+      if (!label) {
+        return null;
+      }
+      const text = this.normalizeDigits(String(label));
+      const re = new RegExp(this.MONTH_PATTERN + '\\s+(\\d{1,2})\\s*,?\\s*(\\d{4})', 'i');
+      const m = text.match(re);
+      if (m) {
+        const mo = this.monthNumber(m[1]);
+        if (mo) {
+          return [parseInt(m[3], 10), mo, parseInt(m[2], 10)];
+        }
+      }
+      const iso = text.match(/(\d{4})-(\d{2})-(\d{2})/);
+      if (iso) {
+        return [parseInt(iso[1], 10), parseInt(iso[2], 10), parseInt(iso[3], 10)];
+      }
+      return null;
+    }
+
+    parseRangeFromLabel(label) {
+      if (!label) {
+        return null;
+      }
+      const text = this.normalizeDigits(String(label));
+      const two = text.match(new RegExp(
+        this.MONTH_PATTERN + '\\s+(\\d{1,2})\\s*[-\u2013\u2014]\\s*' +
+        this.MONTH_PATTERN + '\\s+(\\d{1,2})\\s*[,\u060C]?\\s*(\\d{4})', 'i'));
+      if (two) {
+        const sM = this.monthNumber(two[1]), eM = this.monthNumber(two[3]);
+        if (sM && eM) {
+          const eY = parseInt(two[5], 10);
+          const sY = sM > eM ? eY - 1 : eY;
+          return [
+            new Date(sY, sM - 1, parseInt(two[2], 10)),
+            new Date(eY, eM - 1, parseInt(two[4], 10)),
+          ];
+        }
+      }
+      const one = text.match(new RegExp(
+        this.MONTH_PATTERN + '\\s+(\\d{1,2})\\s*[-\u2013\u2014]\\s*(\\d{1,2})\\s*[,\u060C]?\\s*(\\d{4})', 'i'));
+      if (one) {
+        const mo = this.monthNumber(one[1]);
+        if (mo) {
+          const y = parseInt(one[4], 10);
+          return [
+            new Date(y, mo - 1, parseInt(one[2], 10)),
+            new Date(y, mo - 1, parseInt(one[3], 10)),
+          ];
+        }
+      }
+      const single = this.parseDateFromLabel(text);
+      if (single) {
+        const day = new Date(single[0], single[1] - 1, single[2]);
+        return [day, day];
+      }
+      return null;
+    }
+
+    // ---- bucketing ---------------------------------------------------------
+
+    intervalFromDates(dates) {
+      if (!dates || dates.length < 2) {
+        return 'day';
+      }
+      const gap = this.daysBetween(dates[0], dates[1]);
+      if (gap <= 0) {
+        return 'hour';
+      }
+      if (gap === 1) {
+        return 'day';
+      }
+      if (gap <= 7) {
+        return 'week';
+      }
+      if (gap <= 31) {
+        return 'month';
+      }
+      if (gap <= 120) {
+        return 'quarter';
+      }
+      return 'year';
+    }
+
+    monthStep(interval) {
+      if (interval === 'quarter') {
+        return 3;
+      }
+      if (interval === 'year') {
+        return 12;
+      }
+      return 1;
+    }
+
+    bucketStarts(start, end, interval) {
+      const out = [];
+      const total = this.daysBetween(start, end) + 1;
+      let i;
+      if (total < 1 || total > 4000) {
+        return out;
+      }
+      if (interval === 'hour') {
+        for (i = 0; i < total * 24; i++) {
+          out.push(this.addDays(start, Math.floor(i / 24)));
+        }
+        return out;
+      }
+      if (interval === 'day') {
+        for (i = 0; i < total; i++) {
+          out.push(this.addDays(start, i));
+        }
+        return out;
+      }
+    if (interval === 'week' || interval === 'week_sunday') {
+      const firstDay = interval === 'week' ? 1 : 0;
+      const cursor = this.addDays(start, 0);
+      out.push(cursor);
+      const offset = (7 + firstDay - cursor.getDay()) % 7;
+      let next = this.addDays(cursor, offset || 7);
+      while (next <= end) {
+        out.push(next);
+        next = this.addDays(next, 7);
+      }
+      return out;
+    }
+    if (interval === 'month' || interval === 'quarter' || interval === 'year') {
+      const step = this.monthStep(interval);
+      out.push(this.addDays(start, 0));
+      let year = start.getFullYear();
+      let month = start.getMonth();
+      if (interval === 'year') {
+        year += 1;
+        month = 0;
+      } else {
+        month = month - (month % step) + step;
+      }
+      let boundary = new Date(year, month, 1);
+      while (boundary <= end) {
+        out.push(boundary);
+        boundary = new Date(boundary.getFullYear(), boundary.getMonth() + step, 1);
+      }
+      return out;
+    }
+    return out;
+  }
+
+    // ---- geometry & point resolution --------------------------------------
+
+    chartPointXs(svg) {
+      const xs = [];
+      Array.prototype.forEach.call(
+        svg.querySelectorAll('g.focusspaces g.focus g.focus-grid line'),
+        function (line) {
+          const x = parseFloat(line.getAttribute('x1'));
+          if (!isNaN(x)) {
+            xs.push(x);
+          }
+        }
+      );
+      return xs;
+    }
+
+    isoToJalaliTriple(value) {
+      const m = (value || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (!m) {
+        return null;
+      }
+      return this.toJalaliTriple(parseInt(m[1], 10), parseInt(m[2], 10), parseInt(m[3], 10));
+    }
+
+    currentPrimaryRange() {
+      const params = this.parseQuery(window.location.search);
+      if (!this.isAnalyticsScreen(params)) {
+        return null;
+      }
+      const period = params.period || 'month';
+      if (period === 'custom') {
+        const after = this.isoToJalaliTriple(params.after);
+        const before = this.isoToJalaliTriple(params.before);
+        return after && before ? [after, before] : null;
+      }
+      const ranges = this.presetRanges(period, params.compare || 'previous_year', new Date());
+      return ranges ? ranges.primary : null;
+    }
+
+    resolvePlottedDates(svg) {
+      const xs = this.chartPointXs(svg);
+      if (xs.length < 2) {
+        this.log('axis: only', xs.length, 'focus-grid point(s), need 2+');
+        return null;
+      }
+
+      const buckets = this.getBuckets();
+      for (let c = 0; c < buckets.length; c++) {
+        if (buckets[c] && buckets[c].dates && buckets[c].dates.length === xs.length) {
+          this.log('axis: matched', xs.length, 'buckets');
+          return {
+            xs: xs,
+            dates: buckets[c].dates,
+            interval: buckets[c].interval || this.intervalFromDates(buckets[c].dates),
+          };
+        }
+      }
+
+      const eff = this.getEffective();
+      const ranges = [];
+      if (eff.primary) {
+        ranges.push(eff.primary);
+      }
+
+      const series = svg.querySelectorAll('g.lines g.line-g[aria-label], g.line-g[aria-label]');
+      for (let si = series.length - 1; si >= 0; si--) {
+        const parsed = this.parseRangeFromLabel(series[si].getAttribute('aria-label'));
+        if (parsed) {
+          ranges.push(parsed);
+          break;
+        }
+      }
+
+      const preset = this.currentPrimaryRange();
+      if (preset) {
+        ranges.push([this.tripleToDate(preset[0]), this.tripleToDate(preset[1])]);
+      }
+
+      if (!ranges.length) {
+        this.log('axis: no date range available (no buckets, no aria range, no preset)');
+        return null;
+      }
+
+      const intervals = [];
+      const urlInterval = this.parseQuery(window.location.search).interval;
+      if (eff.interval) {
+        intervals.push(eff.interval);
+      }
+      if (urlInterval) {
+        intervals.push(urlInterval);
+      }
+      for (let b = 0; b < this.BUCKET_INTERVALS.length; b++) {
+        if (intervals.indexOf(this.BUCKET_INTERVALS[b]) === -1) {
+          intervals.push(this.BUCKET_INTERVALS[b]);
+        }
+      }
+      if (intervals.indexOf('week_sunday') === -1) {
+        intervals.push('week_sunday');
+      }
+
+      for (let r = 0; r < ranges.length; r++) {
+        for (let k = 0; k < intervals.length; k++) {
+          const dates = this.bucketStarts(ranges[r][0], ranges[r][1], intervals[k]);
+          if (dates.length === xs.length) {
+            this.log('axis: range+interval match', intervals[k], dates.length, 'points');
+            return {xs: xs, dates: dates, interval: intervals[k]};
+          }
+        }
+      }
+      this.log('axis: no range produced', xs.length, 'buckets');
+      return null;
+    }
+
+    pointsFromLineRange(svg) {
+      const resolved = this.resolvePlottedDates(svg);
+      if (!resolved) {
+        return [];
+      }
+      const points = [];
+      for (let i = 0; i < resolved.dates.length; i++) {
+        const day = resolved.dates[i];
+        points.push({x: resolved.xs[i], date: [day.getFullYear(), day.getMonth() + 1, day.getDate()]});
+      }
+      points.wcasdInterval = resolved.interval;
+      return points;
+    }
+
+    ancestorOffsetX(el, stop) {
+      let offset = 0;
+      let node = el.parentNode;
+      while (node && node !== stop && node.getAttribute) {
+        const transform = node.getAttribute('transform');
+        if (transform) {
+          const m = transform.match(/translate\(\s*(-?[\d.]+)/);
+          if (m) {
+            offset += parseFloat(m[1]);
+          }
+        }
+        node = node.parentNode;
+      }
+      return offset;
+    }
+
+    shapeCenterX(shape, stop) {
+      const cx = parseFloat(shape.getAttribute('cx'));
+      if (!isNaN(cx)) {
+        return cx + this.ancestorOffsetX(shape, stop);
+      }
+      const rx = parseFloat(shape.getAttribute('x'));
+      if (isNaN(rx)) {
+        return NaN;
+      }
+      const group = shape.parentNode;
+      if (group && group.classList && group.classList.contains('bargroup')) {
+        const focus = group.querySelector('rect.barfocus');
+        const focusWidth = focus ? parseFloat(focus.getAttribute('width')) : NaN;
+        if (!isNaN(focusWidth)) {
+          return this.ancestorOffsetX(shape, stop) + focusWidth / 2;
+        }
+      }
+      const rw = parseFloat(shape.getAttribute('width'));
+      return rx + (isNaN(rw) ? 0 : rw / 2) + this.ancestorOffsetX(shape, stop);
+    }
+
+    compareDateTriples(a, b) {
+      return (a[0] - b[0]) || (a[1] - b[1]) || (a[2] - b[2]);
+    }
+
+    tickPosition(tick) {
+      const transform = tick.getAttribute('transform') || '';
+      const m = transform.match(/translate\(\s*(-?[\d.]+)/);
+      return m ? parseFloat(m[1]) : null;
+    }
+
+    nearestDate(points, x, tolerance) {
+      let best = null;
+      let bestDistance = tolerance > 0 ? tolerance : 4;
+      for (let i = 0; i < points.length; i++) {
+        const distance = Math.abs(points[i].x - x);
+        if (distance <= bestDistance) {
+          bestDistance = distance;
+          best = points[i].date;
+        }
+      }
+      return best;
+    }
+
+    axisLooksLikeDates(ticks) {
+      let checked = 0;
+      let dateLike = 0;
+      Array.prototype.forEach.call(ticks, (tick) => {
+        const text = tick.querySelector('text');
+        const value = text ? this.normalizeDigits((text.textContent || '').trim()) : '';
+        if (!value) {
+          return;
+        }
+        checked++;
+        if (/^\d{1,4}([\/\-:.]\d{1,2})*$/.test(value) ||
+          new RegExp('^' + this.MONTH_PATTERN, 'i').test(value)) {
+          dateLike++;
+        }
+      });
+      return checked === 0 || dateLike >= Math.ceil(checked / 2);
+    }
+
+    // ---- axis rewriting -----------------------------------------------------
+
+    // Last resort for the month/year band: a tick like "Aug 2026" carries
+    // its own year, so it can be converted without any geometry - show the
+    // Solar month in effect on that Gregorian month's first day. Bare month
+    // names ("Sep") carry no year and are left alone.
+    localizeMonthBandText(monthTick) {
+      const monthText = monthTick && monthTick.querySelector('text');
+      if (!monthText) {
+        return false;
+      }
+      const cur = monthText.textContent || '';
+      if (!cur || cur.indexOf(this.MARK) !== -1) {
+        return false;
+      }
+      const m = this.normalizeDigits(cur).match(new RegExp('^' + this.MONTH_PATTERN + '\\s+(\\d{4})\\s*$', 'i'));
+      if (!m) {
+        return false;
+      }
+      const gm = this.monthNumber(m[1]);
+      const gy = parseInt(m[2], 10);
+      if (!gm || !gy) {
+        return false;
+      }
+      let j;
+      try {
+        j = this.toJalaliTriple(gy, gm, 1);
+      } catch (e) {
+        return false;
+      }
+      const label = this.jalaliMonthName(j[1]) + ' ' + this.faDigits(j[0]);
+      if (monthText.textContent !== label) {
+        monthText.textContent = label;
+      }
+      return true;
+    }
+
+    localizeMonthBandTexts(monthTicks) {
+      let done = 0;
+      Array.prototype.forEach.call(monthTicks || [], (tick) => {
+        if (this.localizeMonthBandText(tick)) {
+          done++;
+        }
+      });
+      if (done) {
+        this.log('axis: converted', done, 'band label(s) from text');
+      }
+    }
+
+    applyAxisTicks(group, marks, labelFn) {
+      const ticks = Array.prototype.slice.call(group.querySelectorAll('g.tick'));
+      if (!ticks.length) {
+        return;
+      }
+      while (ticks.length < marks.length) {
+        const clone = ticks[0].cloneNode(true);
+        group.appendChild(clone);
+        ticks.push(clone);
+      }
+      while (ticks.length > marks.length) {
+        const extra = ticks.pop();
+        if (extra.parentNode) {
+          extra.parentNode.removeChild(extra);
+        }
+      }
+      for (let i = 0; i < marks.length; i++) {
+        const transform = 'translate(' + marks[i].x + ',0)';
+        if (ticks[i].getAttribute('transform') !== transform) {
+          ticks[i].setAttribute('transform', transform);
+        }
+        const text = ticks[i].querySelector('text');
+        const label = labelFn(marks[i], i);
+        if (text && text.textContent !== label) {
+          text.textContent = label;
+        }
+      }
+    }
+
+    localizeMonthBandAxis(svg) {
+      const dayAxis = svg.querySelector('g.axis:not(.axis-month):not(.y-axis)');
+      if (!dayAxis) {
+        return false;
+      }
+      const dayTicks = dayAxis.querySelectorAll('g.tick');
+      if (dayTicks.length < 2) {
+        return false;
+      }
+      const digits = new RegExp(this.DIGIT_CLASS);
+      for (let t = 0; t < dayTicks.length; t++) {
+        const current = (dayTicks[t].textContent || '').trim();
+        if (!current || digits.test(current)) {
+          return false;
+        }
+      }
+      const resolved = this.resolvePlottedDates(svg);
+      if (!resolved) {
+        this.log('axis: month-band mode but no plotted dates');
+        return false;
+      }
+      const marks = [];
+      let previousKey = null;
+      const daily = (resolved.interval === 'day' || resolved.interval === 'hour');
+      for (let i = 0; i < resolved.dates.length; i++) {
+        const day = resolved.dates[i];
+        const j = this.toJalaliTriple(day.getFullYear(), day.getMonth() + 1, day.getDate());
+        const key = j[0] + '-' + j[1];
+        const isBoundary = daily ? (j[2] === 1) : (key !== previousKey);
+        if (i === 0 || isBoundary) {
+          marks.push({x: resolved.xs[i], j: j});
+        }
+        previousKey = key;
+      }
+      if (!marks.length) {
+        return false;
+      }
+      this.applyAxisTicks(dayAxis, marks, (mark) => this.jalaliMonthName(mark.j[1]));
+      const monthAxis = svg.querySelector('g.axis.axis-month');
+      if (monthAxis) {
+        let lastYear = null;
+        this.applyAxisTicks(monthAxis, marks, (mark) => {
+          if (mark.j[0] === lastYear) {
+            return '';
+          }
+          lastYear = mark.j[0];
+          return this.faDigits(mark.j[0]);
+        });
+      }
+      const pipes = svg.querySelector('g.pipes');
+      if (pipes) {
+        this.applyAxisTicks(pipes, marks, function () {
+          return '';
+        });
+      }
+      return true;
+    }
+
+    localizeChartAxes(root) {
+      const scope = root && root.querySelectorAll ? root : document;
+      const containers = scope.querySelectorAll('.d3-chart__container, .woocommerce-chart');
+      if (!containers.length) {
+        this.log('axis: no chart containers found');
+        return;
+      }
+      Array.prototype.forEach.call(containers, (container) => {
+        const svg = container.querySelector('svg');
+        if (!svg) {
+          return;
+        }
+        try {
+          if (this.localizeMonthBandAxis(svg)) {
+            return;
+          }
+        } catch (e) {
+          this.log('axis: month-band error', e && e.message);
+        }
+
+        const dayAxis = svg.querySelector('g.axis:not(.axis-month):not(.y-axis)');
+        const monthAxis = svg.querySelector('g.axis.axis-month');
+        if (!dayAxis) {
+          this.log('axis: no day axis');
+          return;
+        }
+        const dayTicks = dayAxis.querySelectorAll('g.tick');
+        const monthTicks = monthAxis ? monthAxis.querySelectorAll('g.tick') : [];
+        if (!dayTicks.length) {
+          this.log('axis: day axis has no ticks');
+          return;
+        }
+        if (!this.axisLooksLikeDates(dayTicks)) {
+          this.log('axis: day ticks do not look like dates');
+          return;
+        }
+
+        const space = dayAxis.parentNode;
+        let points = [];
+        const byX = {};
+        Array.prototype.forEach.call(
+          svg.querySelectorAll('circle[aria-label], rect[aria-label]'),
+          (shape) => {
+            const date = this.parseDateFromLabel(shape.getAttribute('aria-label'));
+            if (!date) {
+              return;
+            }
+            const x = this.shapeCenterX(shape, space);
+            if (isNaN(x)) {
+              return;
+            }
+            const key = Math.round(x);
+            const current = byX[key];
+            if (!current || this.compareDateTriples(date, current.date) > 0) {
+              byX[key] = {x: x, date: date};
+            }
+          }
+        );
+        Object.keys(byX).forEach((key) => {
+          points.push(byX[key]);
+        });
+        points.sort(function (a, b) {
+          return a.x - b.x;
+        });
+
+        if (!points.length) {
+          try {
+            points = this.pointsFromLineRange(svg);
+          } catch (e) {
+            this.log('axis: line-range fallback error', e && e.message);
+          }
+        }
+        if (!points.length) {
+          this.log('axis: no plotted points (no aria shapes, no focus grid)');
+          // Geometry is unavailable, but the month band can still be
+          // converted when a tick carries its own year ("Aug 2026").
+          this.localizeMonthBandTexts(monthTicks);
+          return;
+        }
+
+        let previousMonthKey = null;
+        const spacing = points.length > 1 ? Math.abs(points[1].x - points[0].x) : 8;
+        const tolerance = Math.max(4, spacing / 2 + 1);
+        const interval = points.wcasdInterval || 'day';
+        const monthMode = (interval === 'month' || interval === 'quarter' || interval === 'year');
+
+        Array.prototype.forEach.call(dayTicks, (tick, index) => {
+          const x = this.tickPosition(tick);
+          if (null === x) {
+            return;
+          }
+          const monthTick = monthTicks[index];
+          const date = this.nearestDate(points, x, tolerance);
+          if (!date) {
+            // No correlated date for this tick (e.g. coordinate frames do
+            // not line up) - still try the self-contained band label.
+            if (monthTick) {
+              this.localizeMonthBandText(monthTick);
+            }
+            return;
+          }
+          const j = this.toJalaliTriple(date[0], date[1], date[2]);
+          const text = tick.querySelector('text');
+          if (text) {
+            const dayLabel = monthMode ? this.jalaliMonthName(j[1]) : this.faDigits(j[2]);
+            if (text.textContent !== dayLabel) {
+              text.textContent = dayLabel;
+            }
+          }
+          const monthText = monthTick.querySelector('text');
+          if (!monthText) {
+            return;
+          }
+          const key = monthMode ? String(j[0]) : (j[0] + '-' + j[1]);
+          let label = '';
+          if (key !== previousMonthKey) {
+            label = monthMode
+              ? this.faDigits(j[0])
+              : this.jalaliMonthName(j[1]) + ' ' + this.faDigits(j[0]);
+            previousMonthKey = key;
+          }
+          if (monthText.textContent !== label) {
+            monthText.textContent = label;
+          }
+        });
+      });
+    }
+
+    // ---- runner -------------------------------------------------------------
+
+    run() {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        try {
+          this.localizeChartAxes(document);
+        } catch (e) {
+        }
+      }, 60);
+    }
+
+    start() {
+      this.run();
+      new MutationObserver(() => this.run()).observe(document.body, {childList: true, subtree: true});
+      document.addEventListener('mouseover', (e) => {
+        if (e.target && e.target.closest &&
+          e.target.closest('.d3-chart__container, .woocommerce-chart')) {
+          this.run();
+        }
+      }, true);
+      window.addEventListener('resize', () => this.run());
+    }
+  }
+
+  new WpPdWcAnChartAxis();
 })();
 
 /******/ })()

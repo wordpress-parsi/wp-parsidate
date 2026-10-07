@@ -47,7 +47,7 @@ class ArchiveWidget extends \WP_Widget {
         <?php esc_html_e( 'Title', 'wp-parsidate' ) ?>:</label>
       <input style="width: 200px;" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"
              name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
-             value="<?php echo $instance['title'] ?>"/>
+             value="<?php echo esc_attr( $instance['title'] ) ?>"/>
     </p>
 
     <p>

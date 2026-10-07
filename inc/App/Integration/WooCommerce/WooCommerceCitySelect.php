@@ -72,8 +72,8 @@ class WooCommerceCitySelect {
 
     if ( $allowed ) {
       foreach ( $allowed as $code => $country ) {
-        if ( ! isset( $cities[ $code ] ) && file_exists( $this->get_plugin_path() . '/wc-cities/cities/' . $code . '.php' ) ) {
-          include( $this->get_plugin_path() . '/wc-cities/cities/' . $code . '.php' );
+        if ( ! isset( $cities[ $code ] ) && file_exists( $this->get_plugin_path() . '/cities/' . $code . '.php' ) ) {
+          include( $this->get_plugin_path() . '/cities/' . $code . '.php' );
         }
       }
     }

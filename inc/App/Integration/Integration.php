@@ -4,13 +4,14 @@ namespace WPParsidate\App\Integration;
 
 class Integration {
   public function __construct() {
-    // E-commerce
+    // Recommended
     new ParsigateDemo();
+    new TapChatDemo();
+
+    // E-commerce
     new WooCommerce();
     new EDD();
     new BulkyBulkEditProductsWooCommerce();
-
-    // Tools
 
     // Marketing
 
@@ -28,9 +29,15 @@ class Integration {
 
     // Page Builder
     new Elementor();
+    new Brizy();
+
+    // Form
     new Formello();
 
     // Security
     new LimitLoginAttempts();
+
+    // Tools
+    new Booked();
   }
 }

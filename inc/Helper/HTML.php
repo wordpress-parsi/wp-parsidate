@@ -761,7 +761,13 @@ class HTML {
       }
     }
 
-    $addon .= '<span class="' . self::prefix . 'title">' . $data['title'] . '</span></div>';
+    if ( ! empty( $data['image_link'] ) ) {
+      $addon .= '<a href="' . $data['image_link'] . '" target="_blank" class="' . self::prefix . 'title">' . $data['title'] . '</a>';
+    } else {
+      $addon .= '<span class="' . self::prefix . 'title">' . $data['title'] . '</span>';
+    }
+
+    $addon .= '</div>';
 
     if ( $canActivate ) {
       $addon .= self::toggle( array(

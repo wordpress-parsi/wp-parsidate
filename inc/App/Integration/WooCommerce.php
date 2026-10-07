@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 
 use WPParsidate\Addons\Addon;
 use WPParsidate\App\Integration\WooCommerce\{WcGateways, WooCommerceCitySelect};
-use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter, Templates};
+use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter, Param, Templates};
 use WPParsidate\Admin\AdminPages;
 use WPParsidate\Core\Names;
 use WPParsidate\Settings\Settings;
@@ -33,24 +33,32 @@ class WooCommerce extends Addon {
     add_filter( 'wp_parsidate_' . $this->addonID . '_tab_display_notice', '__return_false' );
     add_filter( 'wp_parsidate_' . $this->addonID . '_tab_content_display_notice', '__return_true' );
 
+    if ( ! class_exists( 'WooCommerce', false ) || ! function_exists( 'is_woocommerce' ) ) {
+      return;
+    }
+
     add_action( 'before_woocommerce_init', [ $this, 'beforeWooCommerceInit' ] );
 
     WcGateways::getInstance();
   }
 
   public function initAction(): void {
+    if ( ! class_exists( 'WooCommerce', false ) || ! function_exists( 'is_woocommerce' ) ) {
+      return;
+    }
+
     add_filter( 'woocommerce_reports_get_order_report_query', [ $this, 'fixOrderReportQueryDate' ] );
 
     if ( get_locale() === 'fa_IR' ) {
       if ( $this->getSetting( 'fix_prices', false ) ) {
-        add_filter( 'wc_price', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_get_price_html', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_cart_item_price', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_cart_item_subtotal', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_cart_subtotal', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_cart_totals_coupon_html', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_cart_shipping_method_full_label', [ $this, 'fixNumbersToPersian' ] );
-        add_filter( 'woocommerce_cart_total', [ $this, 'fixNumbersToPersian' ] );
+        add_filter( 'wc_price', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_get_price_html', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_cart_item_price', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_cart_item_subtotal', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_cart_subtotal', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_cart_totals_coupon_html', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_cart_shipping_method_full_label', [ $this, 'fixNumbersToPersian' ], 100 );
+        add_filter( 'woocommerce_cart_total', [ $this, 'fixNumbersToPersian' ], 100 );
       }
 
       if ( Settings::get( 'persian_date', false ) ) {
@@ -59,6 +67,7 @@ class WooCommerce extends Addon {
 
         // Jalali datepicker
         add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueJalaliScripts' ] );
+        add_filter( 'woocommerce_date_input_html_pattern', [ $this, 'filterDateInputHtmlPattern' ] );
 
         // Convert order_date using js
         add_action( 'woocommerce_process_shop_order_meta', [ $this, 'changeOrderDateOnSave' ], 0 );
@@ -301,12 +310,16 @@ class WooCommerce extends Addon {
     );
 
     /**
-     * here we pass those fields we want to convert from arabic to persian
+     * here we pass those fields we want to convert from Persian to English
      * other developers can hook into this filter and add their fields too
      *
      * @var array $persian_fields
      */
     $supported_persian_fields = apply_filters( "wpp_woocommerce_checkout_persian_fields", $persian_fields );
+
+    if ( ! is_array( $supported_persian_fields ) ) {
+      $supported_persian_fields = $persian_fields;
+    }
 
     foreach ( $supported_persian_fields as $field ) {
       if ( isset( $data[ $field ] ) ) {
@@ -314,7 +327,9 @@ class WooCommerce extends Addon {
       }
     }
 
-    return apply_filters( "wpp_woocommerce_checkout_modified_persian_fields", $data );
+    $modified_data = apply_filters( "wpp_woocommerce_checkout_modified_persian_fields", $data );
+
+    return is_array( $modified_data ) ? $modified_data : $data;
   }
 
   /**
@@ -736,15 +751,28 @@ class WooCommerce extends Addon {
       return;
     }
 
-    $orderDateHour      = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_hour' ) );
-    $orderDateMinute    = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_minute' ) );
-    $orderDateSecond    = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_second' ) );
-    $hour               = str_pad( $orderDateHour, 2, '0', STR_PAD_LEFT );
-    $minute             = str_pad( $orderDateMinute, 2, '0', STR_PAD_LEFT );
-    $second             = str_pad( $orderDateSecond, 2, '0', STR_PAD_LEFT );
-    $orderDateTime      = "$orderDate $hour:$minute:$second";
-    $fixedDateTimestamp = gregdate( 'U', $orderDateTime );
-    $date               = gmdate( 'Y-m-d H:i:s', $fixedDateTimestamp );
+    $orderDateHour   = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_hour' ) );
+    $orderDateMinute = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_minute' ) );
+    $orderDateSecond = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_second' ) );
+    $hour            = str_pad( $orderDateHour, 2, '0', STR_PAD_LEFT );
+    $minute          = str_pad( $orderDateMinute, 2, '0', STR_PAD_LEFT );
+    $second          = str_pad( $orderDateSecond, 2, '0', STR_PAD_LEFT );
+    $orderDateTime   = "$orderDate $hour:$minute:$second";
+
+    preg_match( '/^(\d{4})/', $orderDate, $yearMatch );
+    $year = ! empty( $yearMatch[1] ) ? (int) $yearMatch[1] : 0;
+
+    if ( $year >= 1900 ) {
+      // Date is already Gregorian (e.g. 2026-09-18) — parse directly without gregdate()
+      $fixedDateTimestamp = strtotime( $orderDateTime );
+      if ( false === $fixedDateTimestamp ) {
+        return;
+      }
+    } else {
+      $fixedDateTimestamp = gregdate( 'U', $orderDateTime );
+    }
+
+    $date = gmdate( 'Y-m-d H:i:s', $fixedDateTimestamp );
 
     // Fix POST data
     $_POST['order_date']        = date( 'Y-m-d', $fixedDateTimestamp );
@@ -756,7 +784,7 @@ class WooCommerce extends Addon {
     $order->save();
 
     // Fix download expire date
-    $accessExpires = $_POST['access_expires'];
+    $accessExpires = Param::post( 'access_expires', null );
     if ( ! empty( $accessExpires ) && is_array( $accessExpires ) ) {
       foreach ( $accessExpires as $i => $expire ) {
         $accessExpires[ $i ] = ! empty( $expire ) ? gregdate( 'Y-m-d', $expire ) : '';
@@ -764,6 +792,18 @@ class WooCommerce extends Addon {
 
       $_POST['access_expires'] = $accessExpires;
     }
+  }
+
+  /**
+   * Allow Persian numerals in WooCommerce date input HTML pattern
+   *
+   * @param string $pattern
+   *
+   * @return string
+   * @since 6.3.1
+   */
+  public function filterDateInputHtmlPattern( string $pattern ): string {
+    return '[0-9۰-۹]{4}-(0[1-9]|1[012]|۰[۱-۹]|۱[۰۱۲])-(0[1-9]|1[0-9]|2[0-9]|3[01]|۰[۱-۹]|۱[۰-۹]|۲[۰-۹]|۳[۰۱])';
   }
 
   /**

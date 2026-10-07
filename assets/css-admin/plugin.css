@@ -694,6 +694,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   corner-shape: squircle;
   padding: 7px;
   position: relative;
+  background-color: #fafbfc;
 }
 .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-addon-tag {
   position: absolute;
@@ -703,7 +704,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   background-color: #525252;
   border-radius: 5px;
   corner-shape: squircle;
-  padding: 3px;
+  padding: 3px 5px;
   line-height: 1;
   z-index: 999999;
   font-size: 12px;
@@ -718,7 +719,7 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   justify-content: center;
 }
 .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap:hover, .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap:focus-within {
-  border-color: rgb(85.7647058824%, 85.7647058824%, 85.7647058824%);
+  border-color: rgb(66.7058823529%, 66.7058823529%, 66.7058823529%);
 }
 .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap:hover .wppd-action-link, .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap:focus-within .wppd-action-link {
   border-color: #D3D3D3;
@@ -745,6 +746,17 @@ body.rtl.wp-parsidate-notices .wppd-notice {
   gap: 5px;
   align-items: center;
   min-width: 0;
+}
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-title-image a.wppd-title {
+  color: #2B2B2B;
+}
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-title-image a {
+  text-decoration: none;
+}
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-title-image a:hover, .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-title-image a:focus, .wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-title-image a:active {
+  text-decoration: none;
+}
+.wp-parsidate-wrap .wppd-addons-wrap .wppd-tiny-addon-wrap .wppd-title-image {
   /*.wppd-title {
     display: inline-block;
     text-overflow: ellipsis;
@@ -2199,7 +2211,7 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .social-n
 }
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 0.5fr));
+  grid-template-columns: auto auto auto auto auto auto;
   gap: 20px;
 }
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members:hover .team-member:not(:hover) .team-member-name {
@@ -2262,17 +2274,36 @@ body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-c
 body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .github-contributors-wrapper .github-contributors a:hover img {
   border-color: rgb(76.2352941176%, 76.2352941176%, 76.2352941176%);
 }
+@media only screen and (max-width: 1200px) {
+  body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members {
+    grid-template-columns: auto auto auto;
+  }
+  body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member .team-member-image {
+    height: 200px;
+  }
+}
 @media only screen and (max-width: 783px) {
   body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .plugin-features {
     grid-template-columns: none;
   }
-}
-@media only screen and (min-width: 1600px) {
   body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+    grid-template-columns: auto auto;
   }
   body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member .team-member-image {
     height: 250px;
+  }
+}
+@media only screen and (max-width: 576px) {
+  body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member .team-member-image {
+    height: 150px;
+  }
+}
+@media only screen and (min-width: 1700px) {
+  body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 180px));
+  }
+  body.toplevel_page_wp-parsidate .wp-parsidate-wrap .wppd-about-content .team-members .team-member .team-member-image {
+    height: 200px;
   }
 }
 

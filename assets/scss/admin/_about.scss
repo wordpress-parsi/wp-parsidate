@@ -70,7 +70,7 @@
 
     .team-members {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 0.5fr));
+      grid-template-columns: auto auto auto auto auto auto;
       gap: 20px;
 
       &:hover .team-member:not(:hover) .team-member-name {
@@ -146,19 +146,51 @@
       }
     }
 
+    @media only screen and (max-width: 1200px) {
+      .team-members {
+        grid-template-columns: auto auto auto;
+
+        .team-member {
+          .team-member-image {
+            height: 200px;
+          }
+        }
+      }
+    }
+
     @media only screen and (max-width: 783px) {
       .plugin-features {
         grid-template-columns: none;
       }
-    }
 
-    @media only screen and (min-width: 1600px) {
       .team-members {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+        grid-template-columns: auto auto;
 
         .team-member {
           .team-member-image {
             height: 250px;
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 576px) {
+      .team-members {
+        .team-member {
+          .team-member-image {
+            height: 150px;
+          }
+        }
+      }
+    }
+
+    @media only screen and (min-width: 1700px) {
+      .team-members {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 180px));
+
+        .team-member {
+          .team-member-image {
+            height: 200px;
           }
         }
       }
