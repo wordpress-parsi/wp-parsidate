@@ -2,7 +2,8 @@
   "name": "wordpress-parsi/wp-parsidate",
   "type": "project",
   "scripts": {
-    "wp-parsidate-autload": "composer dump-autoload"
+    "wp-parsidate-autload": "composer dump-autoload",
+    "test": "phpunit --testdox"
   },
   "autoload": {
     "psr-4": {
