@@ -111,6 +111,26 @@ plugin that integrates the Solar Hijri (Persian/Shamsi/Jalali) calendar into you
 - 🎯 **Efficient** - Optimized code for production environments
 - 📡 **WP-Planet Widget** - Integration with [WP-Planet.ir](https://wp-planet.ir)
 
+## Development
+
+### Running the tests
+
+The test suite runs on top of the official WordPress test library, so tests use real WordPress functions instead of mocks.
+
+```bash
+# 1. Install the WordPress test library (once). Needs MySQL/MariaDB and svn.
+bash bin/install-wp-tests.sh wordpress_tests root '' localhost latest
+
+# 2. Run the tests
+composer test
+```
+
+Tests live in `tests/unit`. Every pull request runs them automatically on PHP 7.4 to 8.4 via GitHub Actions (`.github/workflows/testing.yml`).
+
+### Releasing to WordPress.org
+
+Pushing a version tag (for example `6.4`) triggers `.github/workflows/deploy.yml`, which builds the plugin and publishes it to the WordPress.org SVN repository. Files listed in `.distignore` are left out of the release. The workflow needs the `SVN_USERNAME` and `SVN_PASSWORD` repository secrets.
+
 ## Contributors
 
 <a href = "https://github.com/wordpress-parsi/wp-parsidate/graphs/contributors">

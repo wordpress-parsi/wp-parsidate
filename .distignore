@@ -1,0 +1,41 @@
+# Files and directories excluded from the WordPress.org release ZIP.
+# Used by 10up/action-wordpress-plugin-deploy (see .github/workflows/deploy.yml).
+
+# Version control & CI
+/.git
+/.github
+/.wordpress-org
+/bin
+
+# Node / build tooling
+/node_modules
+/types
+package.json
+package-lock.json
+tsconfig.json
+webpack.config.js
+
+# Source files (built files are shipped instead)
+/assets/scss
+/assets/js-admin-src
+
+# Testing
+/tests
+phpunit.xml.dist
+.phpunit.result.cache
+
+# Composer (only needed for development)
+composer.json
+composer.lock
+
+# Docs
+README.md
+
+# Editor / OS files
+.distignore
+.editorconfig
+.gitignore
+.ftpconfig
+.idea
+.vscode
+.DS_Store

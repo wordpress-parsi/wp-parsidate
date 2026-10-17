@@ -1,4 +1,4 @@
-/.idea
-/.ftpconfig
-/node_modules
-/.freebuff
+.idea/
+.ftpconfig
+node_modules
+.phpunit.result.cache
