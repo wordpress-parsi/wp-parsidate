@@ -16,6 +16,13 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
        * @since 5.0.0
        */
       class WPP_WC_Melli_Gateway extends WC_Payment_Gateway {
+
+        // Order meta holding the payment tokens requested for the order
+        private const META_TOKENS = '_wpp_melli_tokens';
+
+        // Order meta holding the order id handed to the bank in the signed request
+        private const META_ORDER_ID = '_wpp_melli_order_id';
+
         private $gateway_name;
         public $terminal_id;
         public $merchant_id;
@@ -188,6 +195,11 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
             ];
           }
 
+          // Remember which token was issued for this order, so the callback can be
+          // tied back to it (see verify_payment()). Without this binding the callback
+          // has no way to tell which order the bank confirmation belongs to.
+          $this->remember_token( $order, (string) $refId['token'], (string) ( $refId['orderId'] ?? $order->get_id() ) );
+
           // Return
           return [
             'result'   => 'success',
@@ -219,20 +231,24 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
             'OrderId'       => $OrderId
           ) );
 
+          // Keep the values actually sent to the bank: the callback is validated against them.
+          $bankOrderId = (string) ( $data['OrderId'] ?? $OrderId );
+
           $result = $this->api( 'https://sadad.shaparak.ir/vpg/api/v0/Request/PaymentRequest', $data );
 
-          if ( $result->ResCode == 0 ) {
+          if ( is_object( $result ) && (int) $result->ResCode === 0 ) {
 
             return [
               'status'   => true,
               'token'    => $result->Token,
+              'orderId'  => $bankOrderId,
               'redirect' => "https://sadad.shaparak.ir/VPG/Purchase?Token=" . $result->Token
             ];
           }
 
           return [
             'status'  => false,
-            'message' => $result->Description
+            'message' => is_object( $result ) && isset( $result->Description ) ? $result->Description : $this->failed_massage
           ];
         }
 
@@ -240,6 +256,15 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
           $action   = sanitize_text_field( wp_unslash( $_GET['action'] ?? '' ) );
           $order_id = (int) sanitize_text_field( wp_unslash( $_GET['order_id'] ?? 0 ) );
           $order    = wc_get_order( $order_id );
+
+          if ( ! $order ) {
+            wp_die( 'سفارش یافت نشد' );
+          }
+
+          // Only orders created with this gateway may be completed here.
+          if ( $order->get_payment_method() !== $this->id ) {
+            wp_die( 'درخواست پرداخت نامعتبر است' );
+          }
 
           if ( $action === 'redirect' ) {
             $this->redirect_to_gateway( $order );
@@ -255,41 +280,187 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         }
 
         public function verify_payment( $order ) {
-          $OrderId = sanitize_text_field( wp_unslash( $_POST["OrderId"] ?? '' ) );
           $Token   = sanitize_text_field( wp_unslash( $_POST["token"] ?? '' ) );
           $ResCode = sanitize_text_field( wp_unslash( $_POST["ResCode"] ?? '' ) );
 
-          if ( $ResCode == 0 ) {
+          if ( $ResCode != 0 ) {
+            $this->set_failed_payment( $order );
+          }
 
-            $verifyData = [
-              'Token'    => $Token,
-              'SignData' => $this->encrypt_pkcs7( $Token, $this->key )
-            ];
-            $result     = $this->api( 'https://sadad.shaparak.ir/vpg/api/v0/Advice/Verify', $verifyData );
+          // A paid order must never be completed twice: the same callback may arrive
+          // more than once, but no other receipt may be redeemed on it.
+          if ( $order->is_paid() || $order->get_transaction_id() ) {
 
-            if ( $result->ResCode != - 1 && $result->ResCode == 0 ) {
-
-              // Set Payment Completed
-              $order->payment_complete( $result->RetrivalRefNo );
-
-              // Add Order Note
-              $order->add_order_note( sprintf( 'پرداخت با موفقیت انجام شد. کد پیگیری: %s',
-                $result->RetrivalRefNo ) );
-
-              // Remove cart.
-              WC()->cart->empty_cart();
-
-              // Action
-              do_action( 'wpp_wc_' . $this->id . '_gateway_completed_payment', $order, [
-                'RetrivalRefNo' => $result->RetrivalRefNo,
-                'SystemTraceNo' => $result->SystemTraceNo,
-                'OrderId'       => $result->OrderId,
-              ] );
-
-              // Redirect
+            if ( $Token !== '' && $this->is_issued_token( $order, $Token ) ) {
               wp_safe_redirect( esc_url_raw( $this->get_return_url( $order ) ) );
               exit;
             }
+
+            $this->reject_payment( $order, 'order is already paid' );
+          }
+
+          /**
+           * The order is taken from the query string and every value of this request
+           * is attacker controlled, so the order must never be completed on the
+           * strength of the request alone. The token is what the bank issued for this
+           * order, and the amount was part of the signed request that created it.
+           */
+          if ( $Token === '' ) {
+            $this->reject_payment( $order, 'token is missing' );
+          }
+
+          $issued_tokens = $order->get_meta( self::META_TOKENS );
+          $has_tokens    = is_array( $issued_tokens ) && ! empty( $issued_tokens );
+
+          if ( $has_tokens && ! $this->is_issued_token( $order, $Token ) ) {
+            $this->reject_payment( $order, 'token was not issued for this order' );
+          }
+
+          $verifyData = [
+            'Token'    => $Token,
+            'SignData' => $this->encrypt_pkcs7( $Token, $this->key )
+          ];
+          $result     = $this->api( 'https://sadad.shaparak.ir/vpg/api/v0/Advice/Verify', $verifyData );
+
+          // A failed or malformed answer from the bank must never complete an order.
+          if ( ! is_object( $result ) || (int) $result->ResCode !== 0 ) {
+            $this->set_failed_payment( $order );
+          }
+
+          $expectedOrderId = (string) $order->get_meta( self::META_ORDER_ID );
+
+          // Orders started before this meta existed always used the order ID.
+          if ( $expectedOrderId === '' ) {
+            $expectedOrderId = (string) $order->get_id();
+          }
+
+          // The bank reports the order id the token was issued for, so it is the only
+          // trustworthy answer to "which order did this payment confirm?".
+          $bankOrderId = isset( $result->OrderId ) ? (string) $result->OrderId : '';
+
+          if ( ! $has_tokens && $bankOrderId === '' ) {
+            $this->reject_payment( $order, 'no token is on record for this order and the bank did not report the order id' );
+          }
+
+          if ( $bankOrderId !== '' && $bankOrderId !== $expectedOrderId ) {
+            $this->reject_payment( $order, 'bank order id does not belong to this order' );
+          }
+
+          $retrieval_ref_no = isset( $result->RetrivalRefNo ) ? (string) $result->RetrivalRefNo : '';
+
+          if ( $retrieval_ref_no === '' || ! ctype_digit( $retrieval_ref_no ) ) {
+            $this->reject_payment( $order, 'RetrivalRefNo is missing or malformed' );
+          }
+
+          // A single receipt may complete a single order, ever.
+          if ( $this->receipt_in_use( $retrieval_ref_no, $order->get_id() ) ) {
+            $this->reject_payment( $order, 'RetrivalRefNo was already used by another order' );
+          }
+
+          // Set Payment Completed
+          $order->payment_complete( $retrieval_ref_no );
+
+          // Add Order Note
+          $order->add_order_note( sprintf( 'پرداخت با موفقیت انجام شد. کد پیگیری: %s',
+            $retrieval_ref_no ) );
+
+          // Remove cart.
+          WC()->cart->empty_cart();
+
+          // Action
+          do_action( 'wpp_wc_' . $this->id . '_gateway_completed_payment', $order, [
+            'RetrivalRefNo' => $retrieval_ref_no,
+            'SystemTraceNo' => isset( $result->SystemTraceNo ) ? $result->SystemTraceNo : '',
+            'OrderId'       => $bankOrderId,
+          ] );
+
+          // Redirect
+          wp_safe_redirect( esc_url_raw( $this->get_return_url( $order ) ) );
+          exit;
+        }
+
+        /**
+         * Remember a token that was requested for this order
+         *
+         * The payment page can be loaded more than once, so every token issued for the
+         * order is kept until one of them completes it.
+         *
+         * @param WC_Order $order
+         * @param string $token
+         * @param string $bank_order_id Order id handed to the bank with the token
+         *
+         * @return void
+         */
+        private function remember_token( $order, string $token, string $bank_order_id ): void {
+          $tokens = $order->get_meta( self::META_TOKENS );
+          $tokens = is_array( $tokens ) ? $tokens : array();
+          $tokens = array_values( array_unique( array_merge( $tokens, array( $token ) ) ) );
+          $tokens = array_slice( $tokens, - 10 );
+
+          $order->update_meta_data( self::META_TOKENS, $tokens );
+          $order->update_meta_data( self::META_ORDER_ID, $bank_order_id );
+          $order->save();
+        }
+
+        /**
+         * Check whether a token was requested for this order
+         *
+         * @param WC_Order $order
+         * @param string $token
+         *
+         * @return bool
+         */
+        private function is_issued_token( $order, string $token ): bool {
+          $tokens = $order->get_meta( self::META_TOKENS );
+
+          if ( $token === '' || ! is_array( $tokens ) ) {
+            return false;
+          }
+
+          return in_array( $token, array_map( 'strval', $tokens ), true );
+        }
+
+        /**
+         * Check whether a receipt already completed another order
+         *
+         * @param string $retrieval_ref_no
+         * @param int $order_id Order currently being processed
+         *
+         * @return bool
+         */
+        private function receipt_in_use( $retrieval_ref_no, $order_id ): bool {
+          if ( (string) $retrieval_ref_no === '' || ! function_exists( 'wc_get_orders' ) ) {
+            return false;
+          }
+
+          $orders = wc_get_orders( array(
+            'limit'          => 1,
+            'return'         => 'ids',
+            'payment_method' => $this->id,
+            'transaction_id' => (string) $retrieval_ref_no,
+            'exclude'        => array( (int) $order_id ),
+          ) );
+
+          return ! empty( $orders );
+        }
+
+        /**
+         * Reject a callback that cannot be proven to pay for this order
+         *
+         * The order status is never touched: an unauthenticated request must not be
+         * able to change the state of an order it has not paid for.
+         *
+         * @param WC_Order $order
+         * @param string $reason Internal reason, written to the WooCommerce log
+         *
+         * @return void
+         */
+        private function reject_payment( $order, string $reason ): void {
+          if ( function_exists( 'wc_get_logger' ) ) {
+            wc_get_logger()->warning(
+              sprintf( 'Melli callback rejected for order #%1$s (%2$s).', $order->get_id(), $reason ),
+              array( 'source' => 'wpp-' . $this->id )
+            );
           }
 
           $this->set_failed_payment( $order );

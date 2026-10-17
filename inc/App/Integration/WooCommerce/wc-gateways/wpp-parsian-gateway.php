@@ -18,6 +18,9 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
        */
       class WPP_WC_Parsian_Gateway extends WC_Payment_Gateway {
 
+        // Order meta holding the payment tokens requested for the order
+        private const META_TOKENS = '_wpp_parsian_tokens';
+
         private $gateway_name;
         public $redirect_uri;
         public $description;
@@ -522,13 +525,20 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
             $order_id      .= wp_rand( 1, 10000 );
             $request       = self::send_pay_request( $login_account, $amount, $order_id, $callback_url );
 
-            if ( $request->Status === '0' && $request->Token > 0 ) {
+            if ( is_object( $request ) && '0' === (string) $request->Status && ! empty( $request->Token ) ) {
+
+              // Remember which token was issued for this order, so the callback can be
+              // tied back to it (see callback()). The bank binds the token to the
+              // amount and the order number it was requested with, so a token issued
+              // for another order can never confirm this one.
+              $this->remember_token( $order, (string) $request->Token );
+
               self::redirect_to_bank( 'https://pec.shaparak.ir/NewIPG/?Token=' . $request->Token );
 
               exit();
             }
 
-            $error_code = $request->Status;
+            $error_code = is_object( $request ) ? (string) $request->Status : '-1';
           } else {
             $error_code = 'error_creating_order';
           }
@@ -542,54 +552,172 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
           $token    = sanitize_text_field( wp_unslash( $_REQUEST['Token'] ?? '' ) );
           $status   = sanitize_text_field( wp_unslash( $_REQUEST['status'] ?? '' ) );
           $order_id = (int) sanitize_text_field( wp_unslash( $_REQUEST['order_id'] ?? '' ) );
+          $order    = wc_get_order( $order_id );
 
-          //$order_id = isset( $_GET['order_id'] ) ? (int) $_GET['order_id'] : 0;
-          $order = wc_get_order( $order_id );
+          if ( ! $order ) {
+            self::display_error( 'order_not_exist', $token, $order_id );
+            exit;
+          }
 
-          if ( $order ) {
-            if ( $status === '0' && $token > 0 ) {
+          // Only orders created with this gateway may be completed here.
+          if ( $order->get_payment_method() !== $this->id ) {
+            self::display_error( 'order_not_for_this_person', $token, $order_id );
+            exit;
+          }
 
-              $login_account = $this->parsian_login_account;
-              $request       = self::verify_request( $login_account, $token );
+          if ( $status === '0' && $token !== '' ) {
 
-              if ( $request->Status == '0' && $request->RRN > 0 ) {
+            // A paid order must never be completed twice: the same callback may arrive
+            // more than once, but no other receipt may be redeemed on it.
+            if ( $order->is_paid() || $order->get_transaction_id() ) {
 
-                // Set Payment Completed
-                $order->payment_complete( $request->RRN );
-
-                // Add Order Note
-                $order->add_order_note( sprintf( 'پرداخت با موفقیت انجام شد. کد پیگیری: %s',
-                  $request->RRN ) );
-
-                // Remove cart.
-                WC()->cart->empty_cart();
-
-                // Action
-                do_action( 'wpp_wc_' . $this->id . '_gateway_completed_payment', $order, [
-                  'RRN'   => $request->RRN,
-                  'Token' => $token
-                ] );
-
-                // Redirect
+              if ( $this->is_issued_token( $order, $token ) ) {
                 wp_safe_redirect( esc_url_raw( $this->get_return_url( $order ) ) );
                 exit;
               }
 
-              $reversal_request = self::reversal_request( $login_account, $token );
-              if ( $reversal_request == '0' ) {
-                $error_code = 'reversal_done';
-              } else {
-                $error_code = 'reversal_error';
+              $this->reject_payment( $order, 'order is already paid' );
+            }
+
+            /**
+             * The order is taken from the query string and every value of this request
+             * is attacker controlled, so the order must never be completed on the
+             * strength of the request alone. The token is the only value the bank
+             * issued for this order: it is bound to the amount and the order number
+             * that were handed to the bank when it was requested.
+             */
+            if ( ! $this->is_issued_token( $order, $token ) ) {
+              $this->reject_payment( $order, 'token was not issued for this order' );
+            }
+
+            $login_account = $this->parsian_login_account;
+            $request       = self::verify_request( $login_account, $token );
+
+            if ( is_object( $request ) && '0' === (string) $request->Status && (int) $request->RRN > 0 ) {
+
+              // A single receipt may complete a single order, ever.
+              if ( $this->receipt_in_use( $request->RRN, $order->get_id() ) ) {
+                $this->reject_payment( $order, 'RRN was already used by another order' );
               }
+
+              // Set Payment Completed
+              $order->payment_complete( $request->RRN );
+
+              // Add Order Note
+              $order->add_order_note( sprintf( 'پرداخت با موفقیت انجام شد. کد پیگیری: %s',
+                $request->RRN ) );
+
+              // Remove cart.
+              WC()->cart->empty_cart();
+
+              // Action
+              do_action( 'wpp_wc_' . $this->id . '_gateway_completed_payment', $order, [
+                'RRN'   => $request->RRN,
+                'Token' => $token
+              ] );
+
+              // Redirect
+              wp_safe_redirect( esc_url_raw( $this->get_return_url( $order ) ) );
+              exit;
+            }
+
+            $reversal_request = self::reversal_request( $login_account, $token );
+            if ( is_object( $reversal_request ) && '0' === (string) $reversal_request->Status ) {
+              $error_code = 'reversal_done';
             } else {
-              $error_code = '-32768';
+              $error_code = 'reversal_error';
             }
           } else {
-            $error_code = 'order_not_exist';
+            $error_code = '-32768';
           }
 
           self::display_error( $error_code, $token, $order_id );
           exit;
+        }
+
+        /**
+         * Remember a payment token that was requested for this order
+         *
+         * The payment page can be loaded more than once, so every token issued for the
+         * order is kept until one of them completes it.
+         *
+         * @param WC_Order $order
+         * @param string $token
+         *
+         * @return void
+         */
+        private function remember_token( $order, string $token ): void {
+          $tokens = $order->get_meta( self::META_TOKENS );
+          $tokens = is_array( $tokens ) ? $tokens : array();
+          $tokens = array_values( array_unique( array_merge( $tokens, array( $token ) ) ) );
+          $tokens = array_slice( $tokens, - 10 );
+
+          $order->update_meta_data( self::META_TOKENS, $tokens );
+          $order->save();
+        }
+
+        /**
+         * Check whether a token was requested for this order
+         *
+         * @param WC_Order $order
+         * @param string $token
+         *
+         * @return bool
+         */
+        private function is_issued_token( $order, string $token ): bool {
+          $tokens = $order->get_meta( self::META_TOKENS );
+
+          if ( $token === '' || ! is_array( $tokens ) ) {
+            return false;
+          }
+
+          return in_array( $token, array_map( 'strval', $tokens ), true );
+        }
+
+        /**
+         * Check whether a RRN already completed another order
+         *
+         * @param string $rrn
+         * @param int $order_id Order currently being processed
+         *
+         * @return bool
+         */
+        private function receipt_in_use( $rrn, $order_id ): bool {
+          if ( (string) $rrn === '' || ! function_exists( 'wc_get_orders' ) ) {
+            return false;
+          }
+
+          $orders = wc_get_orders( array(
+            'limit'          => 1,
+            'return'         => 'ids',
+            'payment_method' => $this->id,
+            'transaction_id' => (string) $rrn,
+            'exclude'        => array( (int) $order_id ),
+          ) );
+
+          return ! empty( $orders );
+        }
+
+        /**
+         * Reject a callback that cannot be proven to pay for this order
+         *
+         * The order status is never touched: an unauthenticated request must not be
+         * able to change the state of an order it has not paid for.
+         *
+         * @param WC_Order $order
+         * @param string $reason Internal reason, written to the WooCommerce log
+         *
+         * @return void
+         */
+        private function reject_payment( $order, string $reason ): void {
+          if ( function_exists( 'wc_get_logger' ) ) {
+            wc_get_logger()->warning(
+              sprintf( 'Parsian callback rejected for order #%1$s (%2$s).', $order->get_id(), $reason ),
+              array( 'source' => 'wpp-' . $this->id )
+            );
+          }
+
+          self::display_error( '-32768', '', $order->get_id() );
         }
       }
     }

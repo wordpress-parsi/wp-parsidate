@@ -18,6 +18,12 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
        */
       class WPP_WC_Pasargad_Gateway extends WC_Payment_Gateway {
 
+        // Order meta holding the invoice number handed to the bank for the order
+        private const META_INVOICE_NUMBER = '_wpp_pasargad_invoice_number';
+
+        // Order meta holding the amount (Rial) handed to the bank for the order
+        private const META_AMOUNT = '_wpp_pasargad_amount';
+
         private $gateway_name;
         public $redirect_uri;
         public $pasargad_terminal_id;
@@ -552,7 +558,9 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
           if ( ! empty( $order_id ) && ! empty( $order_note ) && 'order_not_for_this_person' !== $pay_status ) {
             $order = wc_get_order( $order_id );
 
-            $order->add_order_note( $order_note );
+            if ( ! empty( $order ) ) {
+              $order->add_order_note( $order_note );
+            }
           }
 
           // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -582,35 +590,24 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
 
         public function receipt_page( $order_id ) {
           if ( $order_id > 0 ) {
-            $order    = wc_get_order( $order_id );
-            $currency = strtolower( $order->get_currency() );
-            $amount   = absint( $order->get_total() );
-
-            if ( in_array( $currency, array(
-              'irt',
-              'toman',
-              'iran toman',
-              'iranian toman',
-              'iran-toman',
-              'iran_toman',
-              'تومان',
-              'تومان ایران'
-            ) ) ) {
-              $amount *= 10;
-            } elseif ( 'irht' === $currency ) {
-              $amount *= 1000 * 10;
-            } elseif ( 'irhr' === $currency ) {
-              $amount *= 1000;
-            }
-
-            $terminal_id  = $this->pasargad_terminal_id;
-            $merchant_id  = $this->pasargad_merchant_id;
-            $callback_url = $this->redirect_uri . "?order_id=" . $order_id;
-            $order_id     .= wp_rand( 10, 100 );
-            $request      = self::send_pay_request( $order_id, $terminal_id, $merchant_id, $amount,
+            $order          = wc_get_order( $order_id );
+            $amount         = $this->get_amount( $order );
+            $terminal_id    = $this->pasargad_terminal_id;
+            $merchant_id    = $this->pasargad_merchant_id;
+            $callback_url   = $this->redirect_uri . "?order_id=" . $order_id;
+            $invoice_number = $order_id . wp_rand( 10, 100 );
+            $request        = self::send_pay_request( $invoice_number, $terminal_id, $merchant_id, $amount,
               $callback_url );
 
-            if ( isset( $request ) && $request->IsSuccess ) {
+            if ( is_object( $request ) && ! empty( $request->IsSuccess ) ) {
+
+              // Remember the invoice that was sent to the bank, so the callback can be
+              // tied back to it (see callback()). Without this binding the callback has
+              // no way to tell which order the bank confirmation belongs to.
+              $order->update_meta_data( self::META_INVOICE_NUMBER, (string) $invoice_number );
+              $order->update_meta_data( self::META_AMOUNT, (int) $amount );
+              $order->save();
+
               self::redirect_to_bank( 'https://pep.shaparak.ir/payment.aspx?n=' . $request->Token );
 
               exit;
@@ -631,64 +628,164 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
           $invoice_date       = sanitize_text_field( wp_unslash( $_REQUEST['iD'] ?? '' ) );
           $terminal_id        = $this->pasargad_terminal_id;
           $merchant_id        = $this->pasargad_merchant_id;
+          $order              = wc_get_order( (int) $order_id );
 
-          if ( $order_id == substr( $invoice_number, 0, - 2 ) ) {
-            $order = wc_get_order( $order_id );
-
-            if ( $order ) {
-              if ( 'wc-completed' === $order->get_status() ) {
-                $error_code = 'already_been_completed';
-              } else {
-                if ( $transaction_ref_id != '' ) {
-                  $check_result = self::check_transaction_result( $transaction_ref_id );
-                } else {
-                  $check_result = self::check_transaction_result( null, $invoice_number,
-                    $invoice_date, $terminal_id, $merchant_id );
-                }
-
-                if ( isset( $check_result ) && $check_result->IsSuccess && $check_result->InvoiceNumber == $invoice_number ) {
-                  $amount  = $check_result->Amount;
-                  $request = self::verify_request( $invoice_number, $invoice_date, $terminal_id,
-                    $merchant_id, $amount );
-
-                  if ( isset( $request ) && $request->IsSuccess ) {
-                    if ( $order->update_status( 'processing' ) ) {
-                      $order->payment_complete();
-                      $order->add_order_note( 'پرداخت شما با موفقیت با شماره پیگیری ' . $transaction_ref_id . ' انجام شد.',
-                        1 );
-
-                      WC()->cart->empty_cart();
-
-                      wp_safe_redirect( $this->get_return_url( $order ) );
-
-                      exit();
-                    } else {
-                      $reversal_request = self::reversal_request( $invoice_number, $invoice_date,
-                        $terminal_id, $merchant_id );
-
-                      if ( isset( $reversal_request ) && $reversal_request->IsSuccess ) {
-                        $error_code = 'reversal_done';
-                      } else {
-                        $error_code = 'reversal_error';
-                      }
-                    }
-                  } else {
-                    $message = $request->Message;
-                  }
-                } else {
-                  $message = 'پرداخت توسط شما انجام نشده است ، در صورت نیاز با پشتیبانی تماس بگیرید';
-                }
-              }
-            } else {
-              $error_code = 'order_not_exist';
-            }
-          } else {
-            $error_code = 'order_not_for_this_person';
+          if ( ! $order ) {
+            self::display_error( 'order_not_exist', $transaction_ref_id, $order_id );
+            exit;
           }
 
-          self::display_error( $error_code ?? null, $transaction_ref_id, 1, $message ?? '' );
+          // Only orders created with this gateway may be completed here.
+          if ( $order->get_payment_method() !== $this->id ) {
+            self::display_error( 'order_not_for_this_person', $transaction_ref_id, $order_id );
+            exit;
+          }
 
-          exit;
+          /**
+           * The order is taken from the query string and the invoice number comes from
+           * the request itself, so neither can be trusted. The invoice number that was
+           * handed to the bank for this order is the only thing that ties the two
+           * together, and the amount the bank reports for it must match the order.
+           */
+          $expected_invoice = (string) $order->get_meta( self::META_INVOICE_NUMBER );
+
+          // Orders started before this meta existed were matched by the order id prefix;
+          // the amount check below still applies to them.
+          if ( $expected_invoice === '' && $order->get_id() === (int) substr( $invoice_number, 0, - 2 ) ) {
+            $expected_invoice = $invoice_number;
+          }
+
+          if ( $invoice_number === '' || $expected_invoice !== $invoice_number ) {
+            $this->reject_payment( $order, 'invoice number does not belong to this order' );
+          }
+
+          // A paid order must never be completed twice.
+          if ( $order->is_paid() || $order->get_transaction_id() ) {
+            self::display_error( 'already_been_completed', $order->get_transaction_id(), $order_id );
+            exit;
+          }
+
+          if ( $transaction_ref_id != '' ) {
+            $check_result = self::check_transaction_result( $transaction_ref_id );
+          } else {
+            $check_result = self::check_transaction_result( null, $invoice_number,
+              $invoice_date, $terminal_id, $merchant_id );
+          }
+
+          if ( ! is_object( $check_result ) || empty( $check_result->IsSuccess ) || (string) $check_result->InvoiceNumber !== $invoice_number ) {
+            $this->reject_payment( $order, 'the bank did not confirm this invoice' );
+          }
+
+          // The amount confirmed by the bank has to match the amount requested for this order.
+          $expected_amount = (int) $order->get_meta( self::META_AMOUNT );
+
+          if ( $expected_amount <= 0 ) {
+            $expected_amount = (int) $this->get_amount( $order );
+          }
+
+          if ( (int) $check_result->Amount !== $expected_amount ) {
+            $this->reject_payment( $order, 'confirmed amount does not match the order total' );
+          }
+
+          // A single receipt may complete a single order, ever.
+          if ( $transaction_ref_id !== '' && $this->receipt_in_use( $transaction_ref_id, $order->get_id() ) ) {
+            $this->reject_payment( $order, 'transaction reference was already used by another order' );
+          }
+
+          $request = self::verify_request( $invoice_number, $invoice_date, $terminal_id, $merchant_id,
+            $check_result->Amount );
+
+          if ( ! is_object( $request ) || empty( $request->IsSuccess ) ) {
+            $this->reject_payment( $order, 'the bank did not verify this payment' );
+          }
+
+          // Set Payment Completed
+          $order->payment_complete( $transaction_ref_id );
+          $order->add_order_note( 'پرداخت شما با موفقیت با شماره پیگیری ' . $transaction_ref_id . ' انجام شد.', 1 );
+
+          // Remove cart.
+          WC()->cart->empty_cart();
+
+          wp_safe_redirect( $this->get_return_url( $order ) );
+
+          exit();
+        }
+
+        /**
+         * Amount of the order in Rial, as it is handed to the bank
+         *
+         * @param WC_Order $order
+         *
+         * @return int
+         */
+        public function get_amount( $order ): int {
+          $amount   = (int) $order->get_total();
+          $currency = strtolower( $order->get_currency() );
+
+          if ( in_array( $currency, array(
+            'irt',
+            'toman',
+            'iran toman',
+            'iranian toman',
+            'iran-toman',
+            'iran_toman',
+            'تومان',
+            'تومان ایران'
+          ) ) ) {
+            $amount *= 10;
+          } elseif ( 'irht' === $currency ) {
+            $amount *= 1000 * 10;
+          } elseif ( 'irhr' === $currency ) {
+            $amount *= 1000;
+          }
+
+          return $amount;
+        }
+
+        /**
+         * Check whether a transaction reference already completed another order
+         *
+         * @param string $transaction_ref_id
+         * @param int $order_id Order currently being processed
+         *
+         * @return bool
+         */
+        private function receipt_in_use( $transaction_ref_id, $order_id ): bool {
+          if ( (string) $transaction_ref_id === '' || ! function_exists( 'wc_get_orders' ) ) {
+            return false;
+          }
+
+          $orders = wc_get_orders( array(
+            'limit'          => 1,
+            'return'         => 'ids',
+            'payment_method' => $this->id,
+            'transaction_id' => (string) $transaction_ref_id,
+            'exclude'        => array( (int) $order_id ),
+          ) );
+
+          return ! empty( $orders );
+        }
+
+        /**
+         * Reject a callback that cannot be proven to pay for this order
+         *
+         * The order status is never touched: an unauthenticated request must not be
+         * able to change the state of an order it has not paid for.
+         *
+         * @param WC_Order $order
+         * @param string $reason Internal reason, written to the WooCommerce log
+         *
+         * @return void
+         */
+        private function reject_payment( $order, string $reason ): void {
+          if ( function_exists( 'wc_get_logger' ) ) {
+            wc_get_logger()->warning(
+              sprintf( 'Pasargad callback rejected for order #%1$s (%2$s).', $order->get_id(), $reason ),
+              array( 'source' => 'wpp-' . $this->id )
+            );
+          }
+
+          self::display_error( '-32768', '', $order->get_id() );
         }
       }
     }

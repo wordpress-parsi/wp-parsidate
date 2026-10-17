@@ -130,7 +130,7 @@ class RSA {
     while ( $div > 0 ) {
       $mod    = bcmod( $div, $base );
       $div    = bcdiv( $div, $base );
-      $result = - rsa . phpchr( $mod ) . $result;
+      $result = chr( $mod ) . $result;
     }
 
     return str_pad( $result, $blocksize, "\x00", STR_PAD_LEFT );
