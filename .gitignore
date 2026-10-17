@@ -2,3 +2,4 @@
 .ftpconfig
 node_modules
 .phpunit.result.cache
+/.freebuff
