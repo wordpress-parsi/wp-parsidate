@@ -18,6 +18,7 @@ class Integration {
     // Customizations
     new ACF();
     new JetEngine();
+    new Directories();
     new UltimateMember();
 
     // SEO

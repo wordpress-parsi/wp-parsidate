@@ -9,6 +9,10 @@ const WPP_JALALI_SELECTOR = [
   '.cx-control input.wpp-jalali-date'
 ].join(',');
 
+// Exposed so other wp-parsidate integrations (Directories, ...) can extend the
+// shared watcher instead of starting their own and dropping these selectors.
+window.WPP_JALALI_SELECTOR = WPP_JALALI_SELECTOR;
+
 let wppDatepickerInitialize = false;
 
 // jQuery UI datepicker binds `input.on("focus", this._showDatepicker)`, capturing
