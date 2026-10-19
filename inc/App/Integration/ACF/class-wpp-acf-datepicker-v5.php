@@ -1,6 +1,5 @@
 <?php
 
-use WPParsidate\Helper\Assets;
 use WPParsidate\Settings\Settings;
 
 defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
@@ -14,6 +13,41 @@ defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
  * @since 4.0.0
  */
 class WPP_acf_field_jalali_datepicker extends acf_field {
+
+  /**
+   * Field type name
+   *
+   * @var string
+   */
+  public $name = '';
+
+  /**
+   * Field type label
+   *
+   * @var string
+   */
+  public $label = '';
+
+  /**
+   * Field type category
+   *
+   * @var string
+   */
+  public $category = '';
+
+  /**
+   * Default field settings
+   *
+   * @var array
+   */
+  public $defaults = array();
+
+  /**
+   * Translated strings
+   *
+   * @var array
+   */
+  public $l10n = array();
 
   /**
    * Hooks required tags

@@ -83,6 +83,14 @@ $GLOBALS['_transient']['static']['nusoap_base']['globalDebugLevel'] = 9;
  * @version  $Id: nusoap.php,v 1.123 2010/04/26 20:15:08 snichol Exp $
  * @access   public
  */
+/*
+ * NuSOAP assigns some properties at runtime: URL parts taken from parse_url()
+ * in soap_transport_http::setURL() and SOAP fault members in
+ * nusoap_client::call(). PHP 8.2 deprecates that, so opt the hierarchy in
+ * explicitly instead of annotating every subclass. The attribute is inherited
+ * by all classes extending nusoap_base.
+ */
+#[\AllowDynamicProperties]
 class nusoap_base {
   /**
    * Identification for HTTP headers.
