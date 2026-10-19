@@ -14,7 +14,7 @@ use WPParsidate\Addons\Addon;
 use WPParsidate\App\Integration\WooCommerce\{WcGateways, WooCommerceCitySelect};
 use WPParsidate\Helper\{Assets, Date, Debug, Number, NumberConverter, Param, Templates};
 use WPParsidate\Admin\AdminPages;
-use WPParsidate\Core\Names;
+use WPParsidate\Core\{Names, WPP_ParsiDate};
 use WPParsidate\Settings\Settings;
 
 class WooCommerce extends Addon {
@@ -739,9 +739,14 @@ class WooCommerce extends Addon {
    * @since 5.0.2
    */
   public function changeOrderDateOnSave( $order_id ): void {
-    $orderDate = Number::toEnglish( wc_get_post_data_by_key( 'order_date' ) );
+    // Download expiry dates are posted with the same form but saved by another handler,
+    // so they have to be converted even when the order date itself is left alone.
+    $this->fixPostedDownloadExpires();
 
-    if ( empty( $orderDate ) ) {
+    $postedDate = wc_get_post_data_by_key( 'order_date' );
+    $orderDate  = is_string( $postedDate ) ? Number::toEnglish( trim( $postedDate ) ) : '';
+
+    if ( '' === $orderDate ) {
       return;
     }
 
@@ -754,44 +759,161 @@ class WooCommerce extends Addon {
     $orderDateHour   = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_hour' ) );
     $orderDateMinute = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_minute' ) );
     $orderDateSecond = (int) Number::toEnglish( wc_get_post_data_by_key( 'order_date_second' ) );
-    $hour            = str_pad( $orderDateHour, 2, '0', STR_PAD_LEFT );
-    $minute          = str_pad( $orderDateMinute, 2, '0', STR_PAD_LEFT );
-    $second          = str_pad( $orderDateSecond, 2, '0', STR_PAD_LEFT );
-    $orderDateTime   = "$orderDate $hour:$minute:$second";
 
-    preg_match( '/^(\d{4})/', $orderDate, $yearMatch );
-    $year = ! empty( $yearMatch[1] ) ? (int) $yearMatch[1] : 0;
+    $orderDateObject = $this->parseOrderDate( $orderDate, $orderDateHour, $orderDateMinute,
+      $orderDateSecond );
 
-    if ( $year >= 1900 ) {
-      // Date is already Gregorian (e.g. 2026-09-18) — parse directly without gregdate()
-      $fixedDateTimestamp = strtotime( $orderDateTime );
-      if ( false === $fixedDateTimestamp ) {
-        return;
-      }
-    } else {
-      $fixedDateTimestamp = gregdate( 'U', $orderDateTime );
+    if ( null === $orderDateObject ) {
+      // Not a date. Give WooCommerce back the date it already has instead of letting it
+      // store a Jalali string as if it were Gregorian.
+      $this->restorePostedOrderDate( $order );
+
+      return;
     }
 
-    $date = gmdate( 'Y-m-d H:i:s', $fixedDateTimestamp );
+    // WooCommerce saves the date itself at priority 40 from these fields, so they have to
+    // carry the converted date and not the Jalali one the screen posted.
+    $localDate = $this->fixPostedOrderDate( $orderDateObject );
 
-    // Fix POST data
-    $_POST['order_date']        = date( 'Y-m-d', $fixedDateTimestamp );
-    $_POST['order_date_hour']   = $orderDateHour;
-    $_POST['order_date_minute'] = $orderDateMinute;
-    $_POST['order_date_second'] = $orderDateSecond;
+    // The screen also posts the date that is already stored: when the order is saved
+    // again without touching the date, or when the converted value comes back a second
+    // time. Saving it here would feed the converted date into the converter again and
+    // turn 1405-07-14 (2026-10-06) into 2647-12-27.
+    $createdDate = $order->get_date_created();
 
-    $order->set_date_created( $date );
+    if ( $createdDate && $createdDate->format( 'Y-m-d H:i:s' ) === $localDate->format( 'Y-m-d H:i:s' ) ) {
+      return;
+    }
+
+    // Strings are read as a date in the site time zone, so hand it the local date.
+    $order->set_date_created( $localDate->format( 'Y-m-d H:i:s' ) );
     $order->save();
+  }
 
-    // Fix download expire date
+  /**
+   * Convert Jalali download expiry dates posted by the order edit screen
+   *
+   * @return void
+   * @since 6.4.1
+   */
+  private function fixPostedDownloadExpires(): void {
     $accessExpires = Param::post( 'access_expires', null );
-    if ( ! empty( $accessExpires ) && is_array( $accessExpires ) ) {
-      foreach ( $accessExpires as $i => $expire ) {
-        $accessExpires[ $i ] = ! empty( $expire ) ? gregdate( 'Y-m-d', $expire ) : '';
+
+    if ( empty( $accessExpires ) || ! is_array( $accessExpires ) ) {
+      return;
+    }
+
+    foreach ( $accessExpires as $i => $expire ) {
+      $expire = empty( $expire ) ? '' : Number::toEnglish( trim( $expire ) );
+
+      // A Gregorian value must not be converted again.
+      $accessExpires[ $i ] = '' !== $expire && (int) substr( $expire, 0, 4 ) < WPP_ParsiDate::GREGORIAN_YEAR_START ? gregdate( 'Y-m-d',
+        $expire ) : $expire;
+    }
+
+    $_POST['access_expires'] = $accessExpires;
+  }
+
+  /**
+   * Read a date posted by the order edit screen as a date in the site time zone
+   *
+   * Sites that show Jalali dates post a Jalali date, while WooCommerce itself only
+   * understands Gregorian ones. Both are accepted: the field may also carry a Gregorian
+   * value (Javascript disabled, or a site that only uses ParsiDate for formatting).
+   *
+   * The returned date keeps the wall clock that was entered, in the time zone of the site:
+   * that is how WooCommerce reads the order date fields.
+   *
+   * @param string $orderDate Posted date, such as 1405-07-14 or 2026-10-06
+   * @param int $hour
+   * @param int $minute
+   * @param int $second
+   *
+   * @return \DateTimeImmutable|null Null when the value is not a date in either calendar
+   * @since 6.4.1
+   */
+  private function parseOrderDate( string $orderDate, int $hour, int $minute, int $second ): ?\DateTimeImmutable {
+    $orderDate = trim( Number::toEnglish( $orderDate ) );
+
+    if ( ! preg_match( '/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/', $orderDate, $matches ) ) {
+      return null;
+    }
+
+    $year   = (int) $matches[1];
+    $month  = (int) $matches[2];
+    $day    = (int) $matches[3];
+
+    if ( $year < 1 || $month < 1 || $month > 12 || $day < 1 ) {
+      return null;
+    }
+
+    if ( $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59 || $second < 0 || $second > 59 ) {
+      return null;
+    }
+
+    if ( $year < WPP_ParsiDate::GREGORIAN_YEAR_START ) {
+      $persianDate = WPP_ParsiDate::getInstance();
+
+      if ( $day > $persianDate->j_days_in_month[ $month - 1 ] ) {
+        // Esfand has 30 days in a leap year.
+        if ( 12 !== $month || 30 !== $day || ! $persianDate->IsPerLeapYear( $year ) ) {
+          return null;
+        }
       }
 
-      $_POST['access_expires'] = $accessExpires;
+      [ $year, $month, $day ] = $persianDate->persian_to_gregorian( $year, $month, $day );
     }
+
+    // Already Gregorian (e.g. 2026-09-18), or converted just above.
+    if ( ! checkdate( (int) $month, (int) $day, (int) $year ) ) {
+      return null;
+    }
+
+    $date = sprintf( '%04d-%02d-%02d %02d:%02d:%02d', $year, $month, $day, $hour, $minute, $second );
+
+    return \DateTimeImmutable::createFromFormat( 'Y-m-d H:i:s', $date, wp_timezone() ) ?: null;
+  }
+
+  /**
+   * Write a converted timestamp back into the order save request
+   *
+   * WooCommerce reads these fields as a time in the site time zone and turns them into
+   * UTC itself, so they must hold the local date. Neither wp_date() nor date_i18n() can be
+   * used here: they are filtered to Jalali dates, and the converted date would be
+   * converted again by the next handler that reads it.
+   *
+   * @param \DateTimeImmutable $localDate Date in the site time zone
+   *
+   * @return \DateTimeImmutable The date that was written to the request
+   * @since 6.4.1
+   */
+  private function fixPostedOrderDate( \DateTimeImmutable $localDate ): \DateTimeImmutable {
+    $_POST['order_date']        = $localDate->format( 'Y-m-d' );
+    $_POST['order_date_hour']   = (int) $localDate->format( 'H' );
+    $_POST['order_date_minute'] = (int) $localDate->format( 'i' );
+    $_POST['order_date_second'] = (int) $localDate->format( 's' );
+
+    return $localDate;
+  }
+
+  /**
+   * Keep the stored date of the order when the posted date cannot be read
+   *
+   * @param \WC_Order $order
+   *
+   * @return void
+   * @since 6.4.1
+   */
+  private function restorePostedOrderDate( $order ): void {
+    $createdDate = $order->get_date_created();
+
+    if ( ! $createdDate ) {
+      unset( $_POST['order_date'], $_REQUEST['order_date'] );
+
+      return;
+    }
+
+    $this->fixPostedOrderDate( ( new \DateTimeImmutable( '@' . $createdDate->getTimestamp() ) )->setTimezone( wp_timezone() ) );
   }
 
   /**

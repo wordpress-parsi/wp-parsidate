@@ -51,6 +51,25 @@ class DateConversionTest extends WP_UnitTestCase {
   }
 
   /**
+   * A Gregorian date that reaches the converter a second time must be kept as it is.
+   * Converting it again turned 2026-10-06 into 2647-12-27 on the order screen.
+   */
+  public function test_gregdate_keeps_gregorian_input(): void {
+    $this->assertSame( '2026-10-06 07:19:24', gregdate( 'Y-m-d H:i:s', '2026-10-06 07:19:24' ) );
+  }
+
+  /**
+   * The Jalali datepicker writes Persian digits into the date fields.
+   */
+  public function test_gregdate_accepts_persian_digits(): void {
+    $this->assertSame( '2026-10-06', gregdate( 'Y-m-d', '۱۴۰۵-۰۷-۱۴' ) );
+  }
+
+  public function test_gregdate_returns_input_when_jalali_month_is_invalid(): void {
+    $this->assertSame( '1405-13-01', gregdate( 'Y-m-d', '1405-13-01' ) );
+  }
+
+  /**
    * @return array<string, array{int, bool}>
    */
   public function leap_year_provider(): array {
