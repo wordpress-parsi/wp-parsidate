@@ -147,8 +147,9 @@ class Directories extends Addon {
 
     // Ensure Directories' datepicker script (which defines DRTS.Form.field.datepicker)
     // loads before ours, so our override wrapper finds the function ready.
-    if ( wp_script_is( 'drts-form-field-datepicker', 'registered' )
-         || wp_script_is( 'drts-form-field-datepicker', 'enqueued' ) ) {
+    if ( ! in_array( 'drts-form-field-datepicker', $dependencies, true )
+         && ( wp_script_is( 'drts-form-field-datepicker', 'registered' )
+              || wp_script_is( 'drts-form-field-datepicker', 'enqueued' ) ) ) {
         $dependencies[] = 'drts-form-field-datepicker';
     }
 

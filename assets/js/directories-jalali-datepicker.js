@@ -416,21 +416,24 @@
       return true; // same DOM node already converted (ajax re-init)
     }
 
+    var options = getFieldOptions($input);
+    if (!options) {
+      return false;
+    }
+
     // Hide the Vanilla Calendar container permanently — our Jalali picker
     // creates its own popup outside this div. This also neutralizes
     // Directories' focus.sabai handler (it checks ':visible' first) so the
     // Gregorian calendar never appears alongside the Jalali picker, even
     // when Directories' DOMContentLoaded inline script ran before our
     // override was installed.
+    // NOTE: This runs only after getFieldOptions confirms a supported field
+    // type, so unsupported fields (month/year/multi-date) keep their Vanilla
+    // Calendar intact and fall back to the original Directories handler.
     var $cal = $date.find('.drts-form-datepicker-calendar');
     $cal.hide().addClass('wppd-jalali-replaced');
     // Remove Directories' jQuery focus handler that shows the calendar div.
     $input.off('focus.sabai');
-
-    var options = getFieldOptions($input);
-    if (!options) {
-      return false;
-    }
 
     // The watcher is shared with other wp-parsidate integrations and may not
     // be armed yet (AJAX injected form on a page without Directories fields).
