@@ -1,4 +1,5 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /*!**************************************************************!*\
   !*** ./assets/js-admin-src/directories-jalali-datepicker.js ***!
   \**************************************************************/
@@ -29,47 +30,38 @@
  * Requires: jalalidatepicker.min.js + jalali-date.js (WP-Parsidate),
  *           form-field-datepicker.min.js (Directories).
  */
-(function () {
-  'use strict';
 
-  // jalali-date.js (window.WpPdJalaliDate) is the single conversion engine of
-  // the plugin, enqueued as a dependency of this script. Without it nothing
-  // here can produce a value Directories accepts, so leave the original
-  // Directories datepicker in place instead of half-converting fields.
-  if (!window.jQuery || !window.WpPdJalaliDate) {
-    return;
-  }
 
-  var $ = window.jQuery;
-  var Engine = window.WpPdJalaliDate;
-  var settings = window.WpPdDrtsJalali || {};
+class DirectoriesJalaliDatepicker {
 
   // Separator used in the visible Jalali value. Must match the active
   // jalaliDatepicker separatorChars.date: "-" in wp-admin (set by
   // wp-parsidate datepicker.js), "/" on the front-end (library default).
-  var DATE_SEP = settings.dateSeparator === '-' ? '-' : '/';
-  var RANGE_SEP = ' - ';
-  var MULTI_SEP = ',';
-  var TIME_SEP = ' ';
-  var FIELD_SELECTOR = '.drts-form-datepicker-date';
-  var CONTAINER_SELECTOR = '.drts-form-datepicker-inputs';
+  static DATE_SEP = (window.WpPdDrtsJalali || {}).dateSeparator === '-' ? '-' : '/';
+  static RANGE_SEP = ' - ';
+  static MULTI_SEP = ',';
+  static TIME_SEP = ' ';
+  static FIELD_SELECTOR = '.drts-form-datepicker-date';
+  static CONTAINER_SELECTOR = '.drts-form-datepicker-inputs';
 
-  // The jalaliDatepicker library keeps a single global instance: every
-  // startWatch() call merges into the same options object and re-binds the
-  // global listener with that call's selector. Track whether we extended it.
-  var watcherArmed = false;
-  var observer = null;
-  var fieldCounter = 0;
+  constructor() {
+    this.$ = window.jQuery;
+    this.Engine = window.WpPdJalaliDate;
+    this.settings = window.WpPdDrtsJalali || {};
+    this.watcherArmed = false;
+    this.observer = null;
+    this.fieldCounter = 0;
+  }
 
   /* ------------------------------------------------------------------ *
    * Conversion helpers
    * ------------------------------------------------------------------ */
 
-  function pad2(n) {
+  pad2(n) {
     return (n < 10 ? '0' : '') + n;
   }
 
-  function normalizeDigits(str) {
+  normalizeDigits(str) {
     return String(str == null ? '' : str)
       .replace(/[۰-۹]/g, function (d) {
         return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d);
@@ -83,9 +75,9 @@
    * Run a conversion through the shared engine and normalize the result to
    * {y, m, d}. Returns null for out of range dates (the engine throws).
    */
-  function convert(method, args, keys) {
+  convert(method, args, keys) {
     try {
-      var r = Engine[method](args[0], args[1], args[2]);
+      var r = this.Engine[method](args[0], args[1], args[2]);
       return {y: r[keys[0]], m: r[keys[1]], d: r[keys[2]]};
     } catch (e) {
       return null;
@@ -93,31 +85,31 @@
   }
 
   /** Gregorian Y/M/D -> Jalali {y, m, d}. */
-  function toJalali(gy, gm, gd) {
-    return convert('toJalaali', [gy, gm, gd], ['jy', 'jm', 'jd']);
+  toJalali(gy, gm, gd) {
+    return this.convert('toJalaali', [gy, gm, gd], ['jy', 'jm', 'jd']);
   }
 
   /** Jalali Y/M/D -> Gregorian {y, m, d}. */
-  function toGregorian(jy, jm, jd) {
-    return convert('toGregorian', [jy, jm, jd], ['gy', 'gm', 'gd']);
+  toGregorian(jy, jm, jd) {
+    return this.convert('toGregorian', [jy, jm, jd], ['gy', 'gm', 'gd']);
   }
 
   /** 'Y-m-d' -> Jalali 'jY<jsep>jM<jsep>jD' (latin digits). */
-  function gregorianToJalaliString(g) {
-    var m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(normalizeDigits(g || '').trim());
+  gregorianToJalaliString(g) {
+    var m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(this.normalizeDigits(g || '').trim());
     if (!m) {
       return '';
     }
-    var j = toJalali(+m[1], +m[2], +m[3]);
+    var j = this.toJalali(+m[1], +m[2], +m[3]);
     if (!j) {
       return '';
     }
-    return j.y + DATE_SEP + pad2(j.m) + DATE_SEP + pad2(j.d);
+    return j.y + DirectoriesJalaliDatepicker.DATE_SEP + this.pad2(j.m) + DirectoriesJalaliDatepicker.DATE_SEP + this.pad2(j.d);
   }
 
   /** Jalali 'jY/jM/jD' (any digits) -> Gregorian 'Y-m-d'. */
-  function jalaliToGregorianString(s) {
-    var m = /^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/.exec(normalizeDigits(s || '').trim());
+  jalaliToGregorianString(s) {
+    var m = /^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/.exec(this.normalizeDigits(s || '').trim());
     if (!m) {
       return '';
     }
@@ -125,16 +117,16 @@
     if (jm < 1 || jm > 12 || jd < 1 || jd > 31) {
       return '';
     }
-    var g = toGregorian(jy, jm, jd);
+    var g = this.toGregorian(jy, jm, jd);
     if (!g) {
       return '';
     }
-    return g.y + '-' + pad2(g.m) + '-' + pad2(g.d);
+    return g.y + '-' + this.pad2(g.m) + '-' + this.pad2(g.d);
   }
 
   /** 'H:i', 'H:i:s' or 'h:i A' (any digits) -> 'H:i' (latin, 24h). */
-  function normalizeTime(t) {
-    t = normalizeDigits(t).trim().toUpperCase().replace(/\./g, '');
+  normalizeTime(t) {
+    t = this.normalizeDigits(t).trim().toUpperCase().replace(/\./g, '');
     var m = /^(\d{1,2}):(\d{2})(?::\d{2})?\s*([AP]M?)?$/.exec(t);
     if (!m) {
       return '';
@@ -149,7 +141,7 @@
     if (h > 23) {
       return '';
     }
-    return pad2(h) + ':' + min;
+    return this.pad2(h) + ':' + min;
   }
 
   /* ------------------------------------------------------------------ *
@@ -160,29 +152,30 @@
    * Build the hidden-input Gregorian value from the Directories calendar
    * options that PHP rendered (settings.selected.dates / settings.selected.time).
    */
-  function buildGregorianValue(selected, withTime) {
+  buildGregorianValue(selected, withTime) {
     if (!selected || !selected.dates || !selected.dates.length) {
       return '';
     }
-    var parts = normalizeDigits(String(selected.dates[0])).split(',').map(function (p) {
+    var self = this;
+    var parts = self.normalizeDigits(String(selected.dates[0])).split(',').map(function (p) {
       var m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(p.trim());
-      return m ? m[1] + '-' + pad2(+m[2]) + '-' + pad2(+m[3]) : '';
+      return m ? m[1] + '-' + self.pad2(+m[2]) + '-' + self.pad2(+m[3]) : '';
     }).filter(Boolean);
     if (!parts.length) {
       return '';
     }
     var value = parts.join(',');
     if (withTime && parts.length === 1 && selected.time) {
-      var t = normalizeTime(selected.time);
+      var t = self.normalizeTime(selected.time);
       if (t) {
-        value += TIME_SEP + t;
+        value += DirectoriesJalaliDatepicker.TIME_SEP + t;
       }
     }
     return value;
   }
 
   /** Hidden Gregorian value -> visible Jalali text. */
-  function gregorianValueToVisible(g, mode) {
+  gregorianValueToVisible(g, mode) {
     if (!g) {
       return '';
     }
@@ -190,14 +183,14 @@
     var parts = String(g).split(',');
     for (var i = 0; i < parts.length; i++) {
       var piece = parts[i].trim().split(/\s+/);
-      var j = gregorianToJalaliString(piece[0]);
+      var j = this.gregorianToJalaliString(piece[0]);
       if (!j) {
         return '';
       }
       if (piece[1]) {
-        var t = normalizeTime(piece[1]);
+        var t = this.normalizeTime(piece[1]);
         if (t) {
-          j += TIME_SEP + t;
+          j += DirectoriesJalaliDatepicker.TIME_SEP + t;
         }
       }
       // jalaliDatepicker expects latin digits in the input value (persianDigits
@@ -205,12 +198,12 @@
       // pick, so keep the text field latin to avoid unparsable initial values.
       out.push(j);
     }
-    return out.join(mode === 'range' ? RANGE_SEP : MULTI_SEP);
+    return out.join(mode === 'range' ? DirectoriesJalaliDatepicker.RANGE_SEP : DirectoriesJalaliDatepicker.MULTI_SEP);
   }
 
   /** Visible Jalali text -> hidden Gregorian value (null when unparsable). */
-  function visibleToGregorianValue(v, mode) {
-    v = normalizeDigits(v).trim();
+  visibleToGregorianValue(v, mode) {
+    v = this.normalizeDigits(v).trim();
     if (!v) {
       return '';
     }
@@ -228,14 +221,14 @@
     var out = [];
     for (var i = 0; i < rawParts.length; i++) {
       var piece = String(rawParts[i]).trim().split(/\s+/);
-      var g = jalaliToGregorianString(piece[0]);
+      var g = this.jalaliToGregorianString(piece[0]);
       if (!g) {
         return null;
       }
       if (piece[1]) {
-        var t = normalizeTime(piece[1]);
+        var t = this.normalizeTime(piece[1]);
         if (t) {
-          g += TIME_SEP + t;
+          g += DirectoriesJalaliDatepicker.TIME_SEP + t;
         }
       }
       out.push(g);
@@ -252,28 +245,28 @@
    * Every data-jdp input that is not a Directories date+time field has to opt
    * out explicitly, because the watcher shows one global time section.
    */
-  function markInputDateOnly(el) {
-    if (!watcherArmed || settings.context === 'admin' || !el || !el.hasAttribute || !el.hasAttribute('data-jdp')) {
+  markInputDateOnly = (el) => {
+    if (!this.watcherArmed || this.settings.context === 'admin' || !el || !el.hasAttribute || !el.hasAttribute('data-jdp')) {
       return;
     }
     if (el.hasAttribute('data-jdp-only-date') || el.hasAttribute('data-jdp-only-time')) {
       return;
     }
-    if (el.closest && el.closest(CONTAINER_SELECTOR)) {
+    if (el.closest && el.closest(DirectoriesJalaliDatepicker.CONTAINER_SELECTOR)) {
       return; // handled per field by setupField()
     }
     el.setAttribute('data-jdp-only-date', '');
-  }
+  };
 
-  function markOtherInputsDateOnly(root) {
-    if (settings.context === 'admin' || !root || !root.querySelectorAll) {
+  markOtherInputsDateOnly = (root) => {
+    if (this.settings.context === 'admin' || !root || !root.querySelectorAll) {
       return; // wp-admin datepicker.js already marks its own fields
     }
     var inputs = root.querySelectorAll('input[data-jdp]');
     for (var i = 0; i < inputs.length; i++) {
-      markInputDateOnly(inputs[i]);
+      this.markInputDateOnly(inputs[i]);
     }
-  }
+  };
 
   /**
    * Extend the shared jalaliDatepicker watcher with Directories inputs.
@@ -284,7 +277,7 @@
    * first integration: enable time (date-only inputs opt out per input) and
    * load the localized month names.
    */
-  function armWatcher() {
+  armWatcher = () => {
     if (!window.jalaliDatepicker) {
       return false;
     }
@@ -296,28 +289,28 @@
     options.minDate = 'attr';
     options.maxDate = 'attr';
 
-    if (settings.context === 'admin') {
+    if (this.settings.context === 'admin') {
       // wp-parsidate datepicker.js owns the admin selector (ACF, WooCommerce,
       // …). Never replace it: only extend it when it is readable.
       if (typeof window.WPP_JALALI_SELECTOR === 'string' && window.WPP_JALALI_SELECTOR) {
-        options.selector = window.WPP_JALALI_SELECTOR + ',' + FIELD_SELECTOR;
+        options.selector = window.WPP_JALALI_SELECTOR + ',' + DirectoriesJalaliDatepicker.FIELD_SELECTOR;
         selectorExtended = true;
       }
     } else {
-      options.selector = 'input[data-jdp],' + FIELD_SELECTOR;
+      options.selector = 'input[data-jdp],' + DirectoriesJalaliDatepicker.FIELD_SELECTOR;
       selectorExtended = true;
     }
 
-    if (settings.context !== 'admin') {
+    if (this.settings.context !== 'admin') {
       options.time = true;
       // Directories stores times as "H:i"; the picker input must match.
       options.hasSecond = false;
-      options.persianDigits = settings.persianDigits !== false;
+      options.persianDigits = this.settings.persianDigits !== false;
       options.zIndex = 999999999;
-      options.rangeSeparator = RANGE_SEP;
-      options.multipleSeparator = MULTI_SEP;
-      if (settings.months && settings.months.length === 12) {
-        options.months = settings.months;
+      options.rangeSeparator = DirectoriesJalaliDatepicker.RANGE_SEP;
+      options.multipleSeparator = DirectoriesJalaliDatepicker.MULTI_SEP;
+      if (this.settings.months && this.settings.months.length === 12) {
+        options.months = this.settings.months;
       }
     }
 
@@ -327,43 +320,43 @@
       return false;
     }
 
-    watcherArmed = true;
+    this.watcherArmed = true;
 
     if (!selectorExtended) {
-      bindFocusFallback();
+      this.bindFocusFallback();
     }
 
-    markOtherInputsDateOnly(document);
+    this.markOtherInputsDateOnly(document);
 
     return true;
-  }
+  };
 
   /**
    * Open the picker for Directories inputs when the shared watcher selector
    * could not be extended (wp-parsidate datepicker.js not loaded yet).
    */
-  function bindFocusFallback() {
-    $(document).off('focusin.wppdDrtsJalali').on('focusin.wppdDrtsJalali', FIELD_SELECTOR, function () {
+  bindFocusFallback = () => {
+    this.$(document).off('focusin.wppdDrtsJalali').on('focusin.wppdDrtsJalali', DirectoriesJalaliDatepicker.FIELD_SELECTOR, function () {
       if (window.jalaliDatepicker) {
         window.jalaliDatepicker.show(this);
       }
     });
-  }
+  };
 
   /** Arm the watcher when a Directories date field is already in the DOM. */
-  function armWatcherIfNeeded() {
-    if (watcherArmed || !document.querySelector(FIELD_SELECTOR)) {
+  armWatcherIfNeeded = () => {
+    if (this.watcherArmed || !document.querySelector(DirectoriesJalaliDatepicker.FIELD_SELECTOR)) {
       return;
     }
-    armWatcher();
-  }
+    this.armWatcher();
+  };
 
   /* ------------------------------------------------------------------ *
    * Per-field setup
    * ------------------------------------------------------------------ */
 
   /** Read the Directories calendar options rendered on the visible input. */
-  function getFieldOptions($input) {
+  getFieldOptions($input) {
     var params = $input.data('calendar-options');
     if (!params || typeof params !== 'object') {
       return null;
@@ -405,8 +398,9 @@
    * @param {jQuery} $date Container div rendered by Directories
    * @returns {boolean} true when handled, false to fall back to the original
    */
-  function setupField($date) {
-    var $input = $date.find(FIELD_SELECTOR);
+  setupField($date) {
+    var self = this;
+    var $input = $date.find(DirectoriesJalaliDatepicker.FIELD_SELECTOR);
     var $val = $date.find('.drts-form-datepicker-date-val');
 
     if (!$input.length || !$val.length) {
@@ -416,7 +410,7 @@
       return true; // same DOM node already converted (ajax re-init)
     }
 
-    var options = getFieldOptions($input);
+    var options = this.getFieldOptions($input);
     if (!options) {
       return false;
     }
@@ -437,8 +431,8 @@
 
     // The watcher is shared with other wp-parsidate integrations and may not
     // be armed yet (AJAX injected form on a page without Directories fields).
-    if (!watcherArmed) {
-      armWatcher();
+    if (!this.watcherArmed) {
+      this.armWatcher();
     }
 
     var gregorian = String($val.val() || '');
@@ -446,7 +440,7 @@
     // Initial value rendered by Directories (settings.selected.dates): the
     // original implementation copies it into the hidden input, we do the same.
     if (!gregorian) {
-      gregorian = buildGregorianValue(options.selected, options.withTime);
+      gregorian = this.buildGregorianValue(options.selected, options.withTime);
       if (gregorian) {
         $val.val(gregorian);
       }
@@ -470,7 +464,7 @@
 
     // Min/max dates come as Gregorian 'Y-m-d'
     [['min', 'data-jdp-min-date'], ['max', 'data-jdp-max-date']].forEach(function (pair) {
-      var j = gregorianToJalaliString(options.date[pair[0]]);
+      var j = self.gregorianToJalaliString(options.date[pair[0]]);
       if (j) {
         $input.attr(pair[1], j);
       } else {
@@ -483,7 +477,7 @@
     // (the picker joins range values with the range separator, Directories
     // expects a comma). A fresh id is required for cloned repeater rows.
     if (options.mode !== 'range') {
-      $val.attr('id', 'wppd-drts-dp-' + (++fieldCounter));
+      $val.attr('id', 'wppd-drts-dp-' + (++this.fieldCounter));
       $input.attr('data-jdp-target-value-input', '#' + $val.attr('id'));
       $input.attr('data-jdp-target-value-type', 'gregorian');
     } else {
@@ -492,7 +486,7 @@
     }
 
     // Initial Jalali display value
-    $input.val(gregorian ? gregorianValueToVisible(gregorian, options.mode) : '');
+    $input.val(gregorian ? this.gregorianValueToVisible(gregorian, options.mode) : '');
 
     // Clear button (the original handler belongs to the replaced implementation)
     var updateClear = function () {
@@ -508,7 +502,7 @@
 
     // Mirror the visible Jalali value back into the hidden Gregorian input.
     var sync = function () {
-      var g = visibleToGregorianValue($input.val(), options.mode);
+      var g = self.visibleToGregorianValue($input.val(), options.mode);
       if (g === null) {
         return; // could not parse (user is still typing) -> keep old value
       }
@@ -546,7 +540,7 @@
    * picker instead of the Gregorian Vanilla Calendar for every supported
    * field (initial render, AJAX forms and cloned repeater rows).
    */
-  function installOverride() {
+  installOverride() {
     if (!window.DRTS || !window.DRTS.Form || !window.DRTS.Form.field) {
       return false;
     }
@@ -555,10 +549,11 @@
     }
 
     var original = window.DRTS.Form.field.datepicker;
+    var self = this;
     var wrapped = function ($date) {
       var handled = false;
       try {
-        handled = setupField($date);
+        handled = self.setupField($date);
       } catch (e) { /* fall back to the original implementation */ }
       if (!handled && original) {
         return original.apply(this, arguments);
@@ -575,18 +570,18 @@
    * (AJAX modals, dynamically rendered forms) so the watcher gets armed and
    * other integrations' inputs stay date-only.
    */
-  function observeForms() {
-    if (observer || typeof MutationObserver === 'undefined' || !document.body) {
+  observeForms() {
+    if (this.observer || typeof MutationObserver === 'undefined' || !document.body) {
       return;
     }
 
-    observer = new MutationObserver(function (mutations) {
+    this.observer = new MutationObserver((mutations) => {
       for (var i = 0; i < mutations.length; i++) {
         if (mutations[i].type === 'attributes') {
           // Another integration tagged an input with data-jdp after we armed
           // the watcher: keep it date-only, otherwise it would grow a time
           // section that only Directories datetime fields need.
-          markInputDateOnly(mutations[i].target);
+          this.markInputDateOnly(mutations[i].target);
           continue;
         }
         var nodes = mutations[i].addedNodes;
@@ -595,19 +590,19 @@
           if (!node || node.nodeType !== 1) {
             continue;
           }
-          if (node.matches && node.matches(FIELD_SELECTOR)) {
-            armWatcher();
-          } else if (node.querySelector && node.querySelector(FIELD_SELECTOR)) {
-            armWatcher();
+          if (node.matches && node.matches(DirectoriesJalaliDatepicker.FIELD_SELECTOR)) {
+            this.armWatcher();
+          } else if (node.querySelector && node.querySelector(DirectoriesJalaliDatepicker.FIELD_SELECTOR)) {
+            this.armWatcher();
           }
-          if (watcherArmed) {
-            markOtherInputsDateOnly(node);
+          if (this.watcherArmed) {
+            this.markOtherInputsDateOnly(node);
           }
         }
       }
     });
 
-    observer.observe(document.body, {
+    this.observer.observe(document.body, {
       childList: true,
       subtree: true,
       attributes: true,
@@ -615,18 +610,23 @@
     });
   }
 
-  function boot() {
-    armWatcherIfNeeded();
-    observeForms();
+  /**
+   * Entry point — wires up the override, seeds the watcher, and observes
+   * late-injected forms.
+   */
+  boot = () => {
+    var self = this;
+    this.armWatcherIfNeeded();
+    this.observeForms();
 
     var tries = 0;
     (function tryInstall() {
-      if (installOverride()) {
+      if (self.installOverride()) {
         // Directories may have initialized a form before we replaced the
         // handler; convert whatever is already on the page.
-        $(CONTAINER_SELECTOR).each(function () {
+        self.$(DirectoriesJalaliDatepicker.CONTAINER_SELECTOR).each(function () {
           try {
-            setupField($(this));
+            self.setupField(self.$(this));
           } catch (e) { /* leave this field to the original implementation */ }
         });
         return;
@@ -641,25 +641,29 @@
     // run last so the selector survives other integrations' startWatch()
     if (document.readyState === 'complete') {
       setTimeout(function () {
-        if (watcherArmed) {
-          armWatcher();
+        if (self.watcherArmed) {
+          self.armWatcher();
         }
       }, 0);
     } else {
       window.addEventListener('load', function () {
-        if (watcherArmed) {
-          armWatcher();
+        if (self.watcherArmed) {
+          self.armWatcher();
         }
       });
     }
-  }
+  };
 
+}
+
+if (window.jQuery && window.WpPdJalaliDate) {
+  const instance = new DirectoriesJalaliDatepicker();
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
+    document.addEventListener('DOMContentLoaded', () => instance.boot());
   } else {
-    boot();
+    instance.boot();
   }
-})();
+}
 
 /******/ })()
 ;
