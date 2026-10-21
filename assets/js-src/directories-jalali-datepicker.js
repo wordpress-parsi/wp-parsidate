@@ -412,6 +412,17 @@
       return true; // same DOM node already converted (ajax re-init)
     }
 
+    // Hide the Vanilla Calendar container permanently — our Jalali picker
+    // creates its own popup outside this div. This also neutralizes
+    // Directories' focus.sabai handler (it checks ':visible' first) so the
+    // Gregorian calendar never appears alongside the Jalali picker, even
+    // when Directories' DOMContentLoaded inline script ran before our
+    // override was installed.
+    var $cal = $date.find('.drts-form-datepicker-calendar');
+    $cal.hide().addClass('wppd-jalali-replaced');
+    // Remove Directories' jQuery focus handler that shows the calendar div.
+    $input.off('focus.sabai');
+
     var options = getFieldOptions($input);
     if (!options) {
       return false;

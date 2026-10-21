@@ -145,6 +145,13 @@ class Directories extends Addon {
       $dependencies[] = $libraryHandle;
     }
 
+    // Ensure Directories' datepicker script (which defines DRTS.Form.field.datepicker)
+    // loads before ours, so our override wrapper finds the function ready.
+    if ( wp_script_is( 'drts-form-field-datepicker', 'registered' )
+         || wp_script_is( 'drts-form-field-datepicker', 'enqueued' ) ) {
+        $dependencies[] = 'drts-form-field-datepicker';
+    }
+
     wp_enqueue_script(
       self::assetHandle,
       Assets::url( ( $isAdmin ? 'js-admin' : 'js' ) . "/directories-jalali-datepicker$debugName.js" ),
