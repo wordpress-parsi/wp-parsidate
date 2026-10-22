@@ -22,6 +22,13 @@
  * Not supported: month/year pickers and multi-date (non-range) selection,
  * which keep the original Directories implementation.
  *
+ * The stored value is normally Gregorian, but some Directories versions render
+ * the selected date through a localized formatter (and WP-Parsidate's own
+ * date_i18n/wp_date filters localize every date), so a Jalali value can arrive
+ * in settings.selected.dates. Such values are converted back to Gregorian
+ * before they are written to the hidden input, otherwise they were converted a
+ * second time and a saved 30 Aban 1405 came back as 784-06-08 (issue #341).
+ *
  * Requires: jalalidatepicker.min.js + jalali-date.js (WP-Parsidate),
  *           form-field-datepicker.min.js (Directories).
  */
@@ -36,6 +43,12 @@ class DirectoriesJalaliDatepicker {
   static RANGE_SEP = ' - ';
   static MULTI_SEP = ',';
   static TIME_SEP = ' ';
+
+  // Years a Jalali date rendered by a server-side formatter can fall in. A
+  // Gregorian date a Directories date field can hold never does: the fields
+  // start at 1900-01-01 by default.
+  static JALALI_YEAR_MIN = 1200;
+  static JALALI_YEAR_MAX = 1599;
   static FIELD_SELECTOR = '.drts-form-datepicker-date';
   static CONTAINER_SELECTOR = '.drts-form-datepicker-inputs';
 
@@ -143,6 +156,76 @@ class DirectoriesJalaliDatepicker {
    * Value marshalling
    * ------------------------------------------------------------------ */
 
+  /** Whether a year belongs to the Jalali range of a rendered date. */
+  isJalaliYear(year) {
+    return year >= DirectoriesJalaliDatepicker.JALALI_YEAR_MIN
+      && year <= DirectoriesJalaliDatepicker.JALALI_YEAR_MAX;
+  }
+
+  /**
+   * Normalize one stored 'Y-m-d[ H:i]' piece to Gregorian 'Y-m-d[ H:i]'.
+   * Jalali pieces (rendered server-side) are converted back to Gregorian,
+   * Gregorian pieces are just zero-padded. Returns '' for non-date input.
+   *
+   * @param {string} raw One comma separated piece of a stored value
+   * @param {boolean} withTime Keep the time when one is present
+   * @returns {string}
+   */
+  normalizePiece(raw, withTime) {
+    var parts = this.normalizeDigits(raw == null ? '' : raw).trim().split(/\s+/);
+    var m = /^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/.exec(parts[0] || '');
+    if (!m) {
+      return '';
+    }
+
+    var date;
+    if (this.isJalaliYear(+m[1])) {
+      var g = this.toGregorian(+m[1], +m[2], +m[3]);
+      if (!g) {
+        return '';
+      }
+      date = g.y + '-' + this.pad2(g.m) + '-' + this.pad2(g.d);
+    } else {
+      date = m[1] + '-' + this.pad2(+m[2]) + '-' + this.pad2(+m[3]);
+    }
+
+    if (withTime && parts[1]) {
+      var t = this.normalizeTime(parts[1]);
+      // Keep an unknown time format untouched instead of dropping it.
+      date += DirectoriesJalaliDatepicker.TIME_SEP + (t || parts[1]);
+    }
+
+    return date;
+  }
+
+  /**
+   * Normalize a stored Directories value to Gregorian.
+   *
+   * Accepts the hidden input value and settings.selected.dates[0]; both join
+   * date range values with commas. Returns '' when any piece cannot be parsed
+   * so callers can fall back to their previous behaviour.
+   *
+   * @param {string} value 'Y-m-d' or 'Y-m-d,Y-m-d', optionally with a time
+   * @param {boolean} withTime Keep times
+   * @returns {string}
+   */
+  normalizeValue(value, withTime) {
+    value = this.normalizeDigits(value).trim();
+    if (!value) {
+      return '';
+    }
+    var parts = value.split(',');
+    var out = [];
+    for (var i = 0; i < parts.length; i++) {
+      var piece = this.normalizePiece(parts[i], withTime);
+      if (!piece) {
+        return '';
+      }
+      out.push(piece);
+    }
+    return out.join(',');
+  }
+
   /**
    * Build the hidden-input Gregorian value from the Directories calendar
    * options that PHP rendered (settings.selected.dates / settings.selected.time).
@@ -151,17 +234,12 @@ class DirectoriesJalaliDatepicker {
     if (!selected || !selected.dates || !selected.dates.length) {
       return '';
     }
-    var self = this;
-    var parts = self.normalizeDigits(String(selected.dates[0])).split(',').map(function (p) {
-      var m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(p.trim());
-      return m ? m[1] + '-' + self.pad2(+m[2]) + '-' + self.pad2(+m[3]) : '';
-    }).filter(Boolean);
-    if (!parts.length) {
+    var value = this.normalizeValue(selected.dates[0], false);
+    if (!value) {
       return '';
     }
-    var value = parts.join(',');
-    if (withTime && parts.length === 1 && selected.time) {
-      var t = self.normalizeTime(selected.time);
+    if (withTime && value.indexOf(',') === -1 && selected.time) {
+      var t = this.normalizeTime(selected.time);
       if (t) {
         value += DirectoriesJalaliDatepicker.TIME_SEP + t;
       }
@@ -430,11 +508,19 @@ class DirectoriesJalaliDatepicker {
       this.armWatcher();
     }
 
-    var gregorian = String($val.val() || '');
+    // The stored value may already be Jalali (Directories' own init can seed
+    // the hidden input from settings.selected.dates before our override takes
+    // over). Keep the submitted value Gregorian and never convert it twice.
+    var stored = String($val.val() || '');
+    var gregorian = this.normalizeValue(stored, true);
 
-    // Initial value rendered by Directories (settings.selected.dates): the
-    // original implementation copies it into the hidden input, we do the same.
-    if (!gregorian) {
+    if (gregorian) {
+      if (gregorian !== stored) {
+        $val.val(gregorian);
+      }
+    } else {
+      // Initial value rendered by Directories (settings.selected.dates): the
+      // original implementation copies it into the hidden input, we do the same.
       gregorian = this.buildGregorianValue(options.selected, options.withTime);
       if (gregorian) {
         $val.val(gregorian);
