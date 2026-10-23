@@ -3,6 +3,9 @@
  * Makes Elementor compatible with WP-Parsidate plugin
  *
  * Jalali date support for:
+ *  - Elementor editor controls (front-end): DATE_TIME settings such as the
+ *    Countdown widget "Due Date" use Jalali date/time pickers, while the saved
+ *    widget setting stays Gregorian.
  *  - Elementor Pro Form "Date" fields (front-end): datepicker uses Jalali dates,
  *    the submission value stays Gregorian through a hidden mirrored input.
  *  - Elementor Pro "Form Submissions" admin screen: dates display in Jalali.
@@ -32,6 +35,10 @@ class Elementor extends Addon {
 
   public function initAction(): void {
     add_action( "elementor/editor/after_enqueue_styles", [ $this, 'fixEditorStyle' ] );
+
+    if ( $this->getSetting( 'fix_editor_date_time', false ) ) {
+      add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueueEditorAssets' ], 20 );
+    }
 
     if ( $this->getSetting( 'fix_front_date_fields', false ) ) {
       add_action( 'wp_enqueue_scripts', [ $this, 'enqueueFrontAssets' ], 20 );
@@ -66,6 +73,35 @@ class Elementor extends Addon {
     );
 
     wp_localize_script( self::assetPrefix . '-jalali-date', 'WPP_Elementor_Jalali', [
+      'months'        => $this->getMonthsNames(),
+      'persianDigits' => true,
+    ] );
+  }
+
+  /**
+   * Editor assets: Jalali date & time pickers for widget settings
+   *
+   * Widget controls of type DATE_TIME (Countdown due date, ...) are rendered by
+   * Elementor as Gregorian flatpickr fields. The script below keeps Elementor's
+   * own input hidden with the Gregorian value and shows a Jalali picker instead.
+   *
+   * @return void
+   */
+  public function enqueueEditorAssets(): void {
+    $pluginVersion = Assets::getVersion();
+    $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
+
+    $this->enqueueDatepickerAssets();
+
+    wp_enqueue_script(
+      self::assetPrefix . '-jalali-date-editor',
+      Assets::url( "js-admin/elementor-jalali-editor$debugName.js" ),
+      [ WP_PARSI_KEY . '_jalali_datepicker' ],
+      $pluginVersion,
+      [ 'in_footer' => true ]
+    );
+
+    wp_localize_script( self::assetPrefix . '-jalali-date-editor', 'WPP_Elementor_Jalali_Editor', [
       'months'        => $this->getMonthsNames(),
       'persianDigits' => true,
     ] );
@@ -107,6 +143,10 @@ class Elementor extends Addon {
       }
       .tipsy-inner {
         font-size: small;
+      }
+      .wpp-jdp-editor-input {
+        width: 100%;
+        box-sizing: border-box;
       }";
     $wpp_elementor_css = apply_filters( "wpp_elementor_css", $wpp_elementor_css );
     wp_add_inline_style( "elementor-editor", $wpp_elementor_css );
@@ -188,13 +228,21 @@ class Elementor extends Addon {
   public function addSectionSettings( $sections ): array {
     $sections[ $this->addonID ] = array(
       'title'        => esc_html__( 'Elementor', 'wp-parsidate' ),
-      'desc'         => esc_html__( 'Jalali date support for Elementor Pro forms and Form Submissions', 'wp-parsidate' ),
+      'desc'         => esc_html__( 'Jalali date support for Elementor widget settings, Pro forms and Form Submissions', 'wp-parsidate' ),
       'settings_key' => $this->addonID,
       'settings'     => [
         'elementor_start_grid'  => [
           'id'    => 'elementor_start_grid',
           'title' => esc_html__( 'Elementor', 'wp-parsidate' ),
           'type'  => 'startGrid',
+        ],
+        'fix_editor_date_time'  => [
+          'id'       => 'fix_editor_date_time',
+          'title'    => esc_html__( 'Jalali datepicker in widget settings', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Convert date & time controls of the Elementor editor (such as the Countdown widget "Due Date") to a Jalali (Shamsi) picker.', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => false,
+          'sanitize' => 'bool'
         ],
         'fix_front_date_fields' => [
           'id'       => 'fix_front_date_fields',
