@@ -120,14 +120,18 @@ class Addons {
       $isSuggested          = Sanitizing::bool( $addon['is_suggested'] ?? false );
       $isSponsor            = Sanitizing::bool( $addon['is_sponsor'] ?? false );
       $isDemo               = Sanitizing::bool( $addon['is_demo'] ?? false );
-      $canActivate          = empty( $addon['requires_plugins'] );
+      $requiresPlugins      = is_array( $addon['requires_plugins'] ?? null ) ? $addon['requires_plugins'] : [];
+      $requiredPlugins      = array_filter( $requiresPlugins, static function ( $requirePlugin ) {
+        return empty( $requirePlugin['optional'] );
+      } );
+      $canActivate          = empty( $requiredPlugins );
       $requirePluginsActive = 0;
       $actionLink           = '';
       $actionIcon           = $activateIcon;
       $actionTitle          = esc_html__( 'Activate plugin', 'wp-parsidate' );
 
-      if ( ! $canActivate && ! empty( $addon['requires_plugins'] ) && is_array( $addon['requires_plugins'] ) ) {
-        foreach ( $addon['requires_plugins'] as $requirePluginPath => $requirePlugin ) {
+      if ( ! $canActivate ) {
+        foreach ( $requiredPlugins as $requirePluginPath => $requirePlugin ) {
           $fileExists = file_exists( WP_PLUGIN_DIR . '/' . $requirePluginPath );
 
           if (
@@ -137,8 +141,10 @@ class Addons {
             ( ! empty( $requirePlugin['define_check'] ) && defined( $requirePlugin['define_check'] ) )
           ) {
             $requirePluginsActive ++;
+            continue;
+          }
 
-          } elseif ( $fileExists ) {
+          if ( $fileExists ) {
             $actionLink  = wp_nonce_url(
               self_admin_url( 'plugins.php?action=activate&plugin=' . $requirePluginPath ),
               'activate-plugin_' . $requirePluginPath
@@ -163,14 +169,10 @@ class Addons {
             $actionTitle = isset( $requirePlugin['is_free'] ) && $requirePlugin['is_free'] ? esc_html__( 'Download plugin', 'wp-parsidate' ) : esc_html__( 'Buy plugin', 'wp-parsidate' );
           }
 
-          if ( ! empty( $actionLink ) ) {
-            break;
-          }
+          break;
         }
 
-        if ( $requirePluginsActive > 0 && $requirePluginsActive === count( $addon['requires_plugins'] ) ) {
-          $canActivate = true;
-        }
+        $canActivate = $requirePluginsActive === count( $requiredPlugins );
       }
 
       if ( empty( $icon ) && empty( $image ) ) {

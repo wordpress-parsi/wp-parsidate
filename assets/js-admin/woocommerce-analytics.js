@@ -240,7 +240,14 @@
       const s = window.WpPdWcAn_SETTINGS || {};
       this.DEBUG = s.debug === true;
       this.LOG_TAG = '[WpPdWoocommerceAnalyticsNew]';
-      this.ENABLED = s.enableOverlay !== false;
+      // wp_localize_script stringifies booleans, so an explicit `false`
+      // arrives as an empty string instead of a boolean.
+      this.ENABLED = !(
+        s.enableOverlay === false ||
+        s.enableOverlay === '' ||
+        s.enableOverlay === '0' ||
+        s.enableOverlay === 0
+      );
       this.inputDateOrder = s.inputDateOrder || 'MDY';
       this.swapInputs = s.swapInputs === true;
       // Matches "<month> <d> - [<month> ]<d>، <year>" (Latin or Persian digits).

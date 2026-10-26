@@ -11,6 +11,7 @@ class Integration {
     // E-commerce
     new WooCommerce();
     new EDD();
+    new Dokan();
     new BulkyBulkEditProductsWooCommerce();
 
     // Marketing

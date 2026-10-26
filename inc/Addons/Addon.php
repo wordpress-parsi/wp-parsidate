@@ -248,30 +248,45 @@ abstract class Addon {
     }
 
     $requiresPlugins = $this->getInfo( 'requires_plugins', [] );
-    $canActivate     = empty( $requiresPlugins );
 
-    if ( ! $canActivate && ! empty( $requiresPlugins ) && is_array( $requiresPlugins ) ) {
-      $requirePluginsActive = Cache::get( $this->addonID . '_requires_plugins_count', false );
-
-      if ( $requirePluginsActive === false ) {
-        $requirePluginsActive = 0;
-        foreach ( $requiresPlugins as $requirePluginPath => $requirePlugin ) {
-          if (
-            ( file_exists( WP_PLUGIN_DIR . '/' . $requirePluginPath ) && is_plugin_active( $requirePluginPath ) ) ||
-            ( ! empty( $requirePlugin['function_check'] ) && function_exists( $requirePlugin['function_check'] ) ) ||
-            ( ! empty( $requirePlugin['class_check'] ) && class_exists( $requirePlugin['class_check'] ) ) ||
-            ( ! empty( $requirePlugin['define_check'] ) && defined( $requirePlugin['define_check'] ) )
-          ) {
-            $requirePluginsActive ++;
-          }
-        }
-        Cache::set( $this->addonID . '_requires_plugins_count', $requirePluginsActive );
-      }
-
-      $canActivate = $requirePluginsActive > 0 && $requirePluginsActive === count( $requiresPlugins );
+    if ( empty( $requiresPlugins ) ) {
+      return true;
     }
 
-    return $canActivate;
+    if ( ! is_array( $requiresPlugins ) ) {
+      return false;
+    }
+
+    // Optional plugins (for example Dokan Pro on top of Dokan Lite) never
+    // block activation; the addon checks them itself for extra features.
+    $requiredPlugins = array_filter( $requiresPlugins, static function ( $requirePlugin ) {
+      return empty( $requirePlugin['optional'] );
+    } );
+
+    if ( empty( $requiredPlugins ) ) {
+      return true;
+    }
+
+    $requirePluginsActive = Cache::get( $this->addonID . '_required_plugins_count', false );
+
+    if ( $requirePluginsActive === false ) {
+      $requirePluginsActive = 0;
+
+      foreach ( $requiredPlugins as $requirePluginPath => $requirePlugin ) {
+        if (
+          ( file_exists( WP_PLUGIN_DIR . '/' . $requirePluginPath ) && is_plugin_active( $requirePluginPath ) ) ||
+          ( ! empty( $requirePlugin['function_check'] ) && function_exists( $requirePlugin['function_check'] ) ) ||
+          ( ! empty( $requirePlugin['class_check'] ) && class_exists( $requirePlugin['class_check'] ) ) ||
+          ( ! empty( $requirePlugin['define_check'] ) && defined( $requirePlugin['define_check'] ) )
+        ) {
+          $requirePluginsActive ++;
+        }
+      }
+
+      Cache::set( $this->addonID . '_required_plugins_count', $requirePluginsActive );
+    }
+
+    return $requirePluginsActive === count( $requiredPlugins );
   }
 
   public function getSettingsKey() {
