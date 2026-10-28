@@ -310,6 +310,11 @@ export class DokanJalaliDate {
   setupDateField(input) {
     if (
       !input
+      // SINGLE_SELECTOR carries the bare '#order_date', and on the orders
+      // archive that id belongs to the Date column's <th>, not to a date field.
+      // Treating it as one hid the sort header and injected a date picker into
+      // the table header row, so only real inputs are ever converted.
+      || input.tagName !== 'INPUT'
       || this.processedFields.has(input)
       || input.classList.contains(DokanJalaliDate.DISPLAY_CLASS)
       || input.type === 'hidden'
