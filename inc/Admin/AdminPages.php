@@ -28,6 +28,7 @@ class AdminPages {
   public function checkSubmitForm(): void {
     $tab = self::getActiveTab();
     if ( isset( $_POST['_form_nonce'] ) && check_admin_referer( 'settings_submit_' . $tab, '_form_nonce' ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       do_action( 'wp_parsidate_submit_settings_form', $tab );
     }
   }
@@ -39,6 +40,7 @@ class AdminPages {
   public function pageContent( $currentTab ): void {
     $settings = AdminSettings::getSettings( $currentTab );
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     if ( $settings && apply_filters( 'wp_parsidate_display_tab_settings', true, $currentTab ) ) {
       AdminSettings::printPage( $currentTab, $settings );
     }
@@ -57,17 +59,20 @@ class AdminPages {
 
   public function init(): void {
     if ( self::isSettingPage() ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       do_action( 'wp_parsidate_admin_init', self::getActiveTab() );
     }
   }
 
   public function adminMenuInit(): void {
     if ( self::isSettingPage() ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       do_action( 'wp_parsidate_admin_init_menu', self::getActiveTab() );
     }
   }
 
   public function displayNotices( $tab ): void {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     if ( apply_filters( 'wp_parsidate_' . $tab . '_tab_display_notice', true ) ) {
       Notice::display( '*' );
       Notice::display( $tab );
@@ -118,6 +123,7 @@ class AdminPages {
           </div>
           <div class="menu-items">
             <?php
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
             do_action( 'wp_parsidate_start_menus' );
             $menus    = self::getMenus();
             $addonSep = false;
@@ -130,6 +136,7 @@ class AdminPages {
               // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
               echo self::menuItem( $tab, $menu );
             }
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
             do_action( 'wp_parsidate_end_menus' );
             ?>
           </div>
@@ -146,21 +153,29 @@ class AdminPages {
         <div class="wppd-content wppd-<?php echo esc_html( $currentTab ) ?>-content" id="wppd-content-wrap">
           <?php
           // Display tab header
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wp_parsidate_' . $currentTab . '_tab_header' );
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wp_parsidate_header', $currentTab );
 
           echo '<div class="wppd-content-body">';
           // Display notice
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wp_parsidate_notice', $currentTab );
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wp_parsidate_' . $currentTab . '_tab_notice' );
 
           // Display tab content
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wp_parsidate_' . $currentTab . '_tab_content' );
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wp_parsidate_content', $currentTab );
           echo '</div>';
 
           // Display tab footer
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wp_parsidate_' . $currentTab . '_tab_footer' );
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wp_parsidate_footer', $currentTab );
           ?>
         </div>
@@ -170,6 +185,7 @@ class AdminPages {
   }
 
   public static function getMenus(): array {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wp_parsidate_menus', [] );
   }
 

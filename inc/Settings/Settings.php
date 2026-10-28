@@ -70,9 +70,11 @@ class Settings {
     }
 
     if ( $key !== null ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       return apply_filters( 'wp_parsidate_get_setting', wp_unslash( $options[ $key ] ?? $default ), $key, $default, $options, $optionsName );
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wp_parsidate_get_settings', $options ?: $default, $optionsName );
   }
 

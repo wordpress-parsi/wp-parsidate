@@ -6,6 +6,7 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
 if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
 
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function wpp_pasargad_payment_gateway_init() {
     if ( ! class_exists( 'WC_Pasargad_Gateway' ) && ! class_exists( 'WPP_WC_Pasargad_Gateway' ) ) {
 
@@ -16,6 +17,7 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
        * @subpackage              Plugins/WooCommerce/PaymentGateways
        * @since 5.0.0
        */
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Legacy class name, kept for backward compatibility.
       class WPP_WC_Pasargad_Gateway extends WC_Payment_Gateway {
 
         // Order meta holding the invoice number handed to the bank for the order
@@ -40,6 +42,7 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
           $this->method_description = $this->gateway_name . ' ' . esc_html__( 'payment gateway (By WP-Parsidate)',
               'wp-parsidate' );
           $this->has_fields         = false;
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Legacy public hook name, kept for backward compatibility.
           $this->icon               = apply_filters( $this->id . '_logo',
             Assets::url( "images/woocommerce/$this->id-logo.png" ) );
           $this->redirect_uri       = WC()->api_request_url( strtolower( get_class( $this ) ) );
@@ -62,6 +65,7 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
         }
 
         public function init_form_fields() {
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           $this->form_fields = apply_filters( 'wpp_wc_' . $this->id . '_gateway_config', array(
               'enabled'              => array(
                 'title'   => esc_html__( 'Enabled/Disabled', 'wp-parsidate' ),
@@ -138,7 +142,7 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
         ) {
           require_once( __DIR__ . '/lib/class-rsa.php' );
 
-          $processor = new RSAProcessor( __DIR__ . '/lib/pasargad-certificate.xml', RSAKeyType::XMLFile );
+          $processor = new \WPParsidate\Gateways\Pasargad\RSAProcessor( __DIR__ . '/lib/pasargad-certificate.xml', \WPParsidate\Gateways\Pasargad\RSAKeyType::XMLFile );
           $data      = array(
             'InvoiceNumber'   => $invoice_number,
             'InvoiceDate'     => parsidate( 'Y/m/d' ),
@@ -146,7 +150,7 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
             'MerchantCode'    => $MerchantCode,
             'Amount'          => $Amount,
             'RedirectAddress' => $RedirectAddress,
-            'Timestamp'       => date( 'Y/m/d H:i:s' ),
+            'Timestamp'       => gmdate( 'Y/m/d H:i:s' ),
             'Action'          => 1003,
             'Mobile'          => $Mobile,
             'Email'           => $Email
@@ -221,14 +225,14 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
         ) {
           require_once( __DIR__ . '/lib/class-rsa.php' );
 
-          $processor = new RSAProcessor( __DIR__ . '/lib/pasargad-certificate.xml', RSAKeyType::XMLFile );
+          $processor = new \WPParsidate\Gateways\Pasargad\RSAProcessor( __DIR__ . '/lib/pasargad-certificate.xml', \WPParsidate\Gateways\Pasargad\RSAKeyType::XMLFile );
           $data      = array(
             'InvoiceNumber' => $invoice_number,
             'InvoiceDate'   => $invoice_date,
             'TerminalCode'  => $TerminalCode,
             'MerchantCode'  => $MerchantCode,
             'Amount'        => $Amount,
-            'Timestamp'     => date( 'Y/m/d H:i:s' )
+            'Timestamp'     => gmdate( 'Y/m/d H:i:s' )
           );
 
           $sign_data = json_encode( $data );
@@ -264,13 +268,13 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
         ) {
           require_once( __DIR__ . '/lib/class-rsa.php' );
 
-          $processor = new RSAProcessor( __DIR__ . '/lib/pasargad-certificate.xml', RSAKeyType::XMLFile );
+          $processor = new \WPParsidate\Gateways\Pasargad\RSAProcessor( __DIR__ . '/lib/pasargad-certificate.xml', \WPParsidate\Gateways\Pasargad\RSAKeyType::XMLFile );
           $data      = array(
             'InvoiceNumber' => $invoice_number,
             'InvoiceDate'   => $invoice_date,
             'TerminalCode'  => $TerminalCode,
             'MerchantCode'  => $MerchantCode,
-            'Timestamp'     => date( 'Y/m/d H:i:s' )
+            'Timestamp'     => gmdate( 'Y/m/d H:i:s' )
           );
 
           $sign_data = json_encode( $data );
@@ -622,10 +626,12 @@ if ( ! function_exists( 'wpp_pasargad_payment_gateway_init' ) ) {
         }
 
         public function callback() {
+          // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing -- Bank callback request, it cannot carry a WordPress nonce. The payment is verified with the bank API.
           $order_id           = sanitize_text_field( wp_unslash( $_GET['order_id'] ?? '' ) );
           $transaction_ref_id = sanitize_text_field( wp_unslash( $_REQUEST['tref'] ?? '' ) );
           $invoice_number     = sanitize_text_field( wp_unslash( $_REQUEST['iN'] ?? '' ) );
           $invoice_date       = sanitize_text_field( wp_unslash( $_REQUEST['iD'] ?? '' ) );
+          // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
           $terminal_id        = $this->pasargad_terminal_id;
           $merchant_id        = $this->pasargad_merchant_id;
           $order              = wc_get_order( (int) $order_id );

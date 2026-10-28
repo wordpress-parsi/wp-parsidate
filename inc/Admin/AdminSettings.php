@@ -62,21 +62,26 @@ class AdminSettings {
             $value = array_values( $value );
           }
 
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           $value = apply_filters( 'wp_parsidate_setting_value_before_save', $value, $setting );
 
           $options[ $setting['id'] ] = $value;
         }
       }
 
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       $options = apply_filters( 'wp_parsidate_settings_before_save', $options, $tab );
       if ( count( $options ) ) {
         $saved = Settings::saves( $options, $optionsName );
 
         if ( $saved ) {
           Cache::set( 'settings_saved', true );
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           Notice::add( $tab, apply_filters( 'wp_parsidate_save_settings_success_message', esc_html__( 'Settings saved.', 'wp-parsidate' ), $tab ), 'success' );
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wp_parsidate_save_settings_success', $tab, $currentSection, $options );
         } else {
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           Notice::add( $tab, apply_filters( 'wp_parsidate_save_settings_error_message', esc_html__( 'Error saving settings!', 'wp-parsidate' ), $tab ), 'error' );
         }
       }
@@ -295,6 +300,7 @@ class AdminSettings {
 
   public static function getSettings( $tab ) {
     if ( ! isset( self::$settings[ $tab ] ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       self::$settings[ $tab ] = apply_filters( 'wp_parsidate_' . $tab . '_settings', [] );
     }
 
@@ -302,6 +308,7 @@ class AdminSettings {
   }
 
   public static function allSettings( $tab = null ) {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $settings = apply_filters( 'wp_parsidate_settings', [] );
 
     if ( ! is_null( $tab ) ) {
@@ -321,6 +328,7 @@ class AdminSettings {
       $currentSettings = $settings['sections'][ $currentSection ]['settings'] ?? [];
       $optionsName     = $settings['sections'][ $currentSection ]['settings_key'] ?? $optionsName;
 
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       do_action( 'wp_parsidate_section_content', $currentTab, $currentSection, $currentSettings );
       self::printSettings( $currentSettings, $optionsName );
     } else {
@@ -447,6 +455,7 @@ class AdminSettings {
     }
 
     $currentSection = self::getActiveSection( $settings );
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $headerImage    = apply_filters( 'wp_parsidate_settings_header_image', $settings['header_image'] ?? '',
       $currentTab, $currentSection, $settings );
     $headerImage    = ! empty( $headerImage ) && Validating::isUrl( $headerImage ) ? $headerImage : false;
@@ -455,7 +464,7 @@ class AdminSettings {
     echo '<div class="wppd-header-title" style="' . ( $headerImage ? 'background-image: url(' . esc_url_raw( $headerImage ) . ');' : '' ) . '">';
     echo '<h1 class="wppd-header-tab-title">' . esc_html( $settings['title'] ) . '</h1>';
     if ( ! empty( $settings['desc'] ) ) {
-      echo '<p class="wppd-description">' . $settings['desc'] . '</p>';
+      echo '<p class="wppd-description">' . wp_kses( $settings['desc'], HTML::allowedHtml() ) . '</p>';
     }
     echo '</div>';
     if ( ! $currentSection ) {
@@ -466,6 +475,7 @@ class AdminSettings {
     echo '</div>';
     echo '</header>';
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     if ( apply_filters( 'wp_parsidate_' . $currentTab . '_tab_content_display_notice', false ) ) {
       Notice::display( '*' );
       Notice::display( $currentTab );
@@ -473,7 +483,9 @@ class AdminSettings {
   }
 
   public static function footerSettings( $currentTab, $currentSection ): void {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     if ( ! apply_filters( 'wp_parsidate_settings_display_footer', true, $currentTab,
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
         $currentSection ) || ! apply_filters( 'wp_parsidate_' . $currentTab . '_settings_display_footer', true,
         $currentSection ) ) {
       return;
@@ -484,6 +496,7 @@ class AdminSettings {
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo HTML::button( [
       'id'          => 'settings-submit',
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       'title'       => esc_html( apply_filters( 'wp_parsidate_settings_submit_button_title',
         esc_html__( 'Save changes', 'wp-parsidate' ), $currentTab ) ),
       'button_type' => 'submit',
@@ -493,10 +506,12 @@ class AdminSettings {
       ]
     ] );
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     if ( apply_filters( 'wp_parsidate_' . $currentTab . '_settings_display_reset_button', true ) ) {
       // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
       echo HTML::button( [
         'id'          => 'settings-reset',
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
         'title'       => esc_html( apply_filters( 'wp_parsidate_settings_reset_button_title',
           esc_html__( 'Discard changes', 'wp-parsidate' ), $currentTab ) ),
         'button_type' => 'reset',
@@ -528,6 +543,7 @@ class AdminSettings {
       }
       echo '</ul>';
 
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       if ( ! empty( $sections[ $currentSection ]['desc'] ) && apply_filters( 'wp_parsidate_display_section_description',
           false, $currentTab, $currentSection ) ) {
         echo '<p class="wppd-description">' . esc_html( $sections[ $currentSection ]['desc'] ) . '</p>';

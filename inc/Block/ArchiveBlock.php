@@ -30,12 +30,13 @@ class ArchiveBlock extends Block {
 
     ob_start();
 
-    echo '<div ' . get_block_wrapper_attributes() . '>';
+    echo '<div ' . wp_kses_data( function_exists( 'get_block_wrapper_attributes' ) ? get_block_wrapper_attributes() : '' ) . '>';
 
     if ( ! empty( $title ) ) {
       echo '<h2 class="wp-block-wp-parsidate-archive__title">' . esc_html( $title ) . '</h2>';
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_archive_block_start', $title, $postType, $type, $displayCount, $isList, $blockId );
 
     if ( $isList ) {
@@ -52,6 +53,7 @@ class ArchiveBlock extends Block {
     ) );
 
     echo $isList ? '</select>' : '</ul>';
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_archive_block_end', $title, $postType, $type, $displayCount, $isList, $blockId );
 
     echo '</div>';

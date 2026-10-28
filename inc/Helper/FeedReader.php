@@ -280,7 +280,7 @@ class FeedReader {
   private function replaceText( array $feedItem, array $replaceTexts, string $field = 'description' ): array {
     if ( isset( $feedItem[ $field ] ) ) {
       foreach ( $replaceTexts as $replaceText ) {
-        if ( isset( $feedItem['title'] ) && str_contains( $replaceText[0], '%title%' ) ) {
+        if ( isset( $feedItem['title'] ) && false !== strpos( $replaceText[0], '%title%' ) ) {
           $replaceText[0] = str_replace( '%title%', $feedItem['title'], $replaceText[0] );
         }
 

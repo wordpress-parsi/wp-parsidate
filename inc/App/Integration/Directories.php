@@ -129,6 +129,7 @@ class Directories extends Addon {
     if ( $isAdmin && ! wp_script_is( WP_PARSI_KEY . '_datepicker', 'registered' ) ) {
       // Standard wp-parsidate admin chain: jalalidatepicker + datepicker.js
       // (watcher, date separator, per field opt-outs) + styles + month names.
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       do_action( 'wp_parsidate_jalali_datepicker_enqueue', 'directories' );
     }
 
@@ -139,6 +140,7 @@ class Directories extends Addon {
         wp_enqueue_script( $libraryHandle, Assets::url( 'js-admin/jalalidatepicker.min.js' ), [ $engineHandle ], $pluginVersion, [ 'in_footer' => true ] );
         wp_enqueue_style( $libraryHandle, Assets::url( "css-admin/jalalidatepicker$debugName.css" ), null, $pluginVersion );
 
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
         do_action( 'wp_parsidate_jalali_datepicker_enqueued', 'directories' );
       }
 

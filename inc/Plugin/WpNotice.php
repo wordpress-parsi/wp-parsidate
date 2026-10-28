@@ -2,6 +2,7 @@
 
 namespace WPParsidate\Plugin;
 
+use WPParsidate\Helper\HTML;
 use WPParsidate\Helper\Nonce;
 use WPParsidate\Helper\Param;
 use WPParsidate\Settings\Settings;
@@ -13,6 +14,7 @@ class WpNotice {
   }
 
   public function display() {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $notices = apply_filters( 'wp_parsidate_wp_admin_notice', [] );
 
     if ( empty( $notices ) || ! is_array( $notices ) ) {
@@ -35,17 +37,12 @@ class WpNotice {
       ) {
         continue;
       }
-      $attributes = ' data-notice-id="' . esc_attr( $notice['id'] ) . '"';
       $class      = 'notice';
-      $class      .= isset( $notice['type'] ) ? ' notice-' . esc_attr( $notice['type'] ) : '';
+      $class      .= isset( $notice['type'] ) ? ' notice-' . sanitize_html_class( $notice['type'] ) : '';
       $class      .= isset( $notice['dismissible'] ) && $notice['dismissible'] ? ' is-dismissible' : '';
       $class      .= ' wppd-admin-notice';
-      $class      .= isset( $notice['class'] ) ? ' ' . esc_attr( $notice['class'] ) : '';
+      $class      .= isset( $notice['class'] ) ? ' ' . implode( ' ', array_map( 'sanitize_html_class', explode( ' ', (string) $notice['class'] ) ) ) : '';
       $message    = $notice['message'];
-
-      if ( isset( $notice['dismissible'], $notice['dismiss_time'] ) ) {
-        $attributes .= ' data-notice-dismiss-time="' . esc_attr( $notice['dismiss_time'] ) . '"';
-      }
 
       if ( isset( $notice['inside_tag'] ) ) {
         $insideTag = $notice['inside_tag'] ?: false;
@@ -53,7 +50,17 @@ class WpNotice {
         $insideTag = 'p';
       }
 
-      echo "<div class='$class' $attributes>" . ( $insideTag ? "<$insideTag>" : "" ) . "$message" . ( $insideTag ? "</$insideTag>" : "" ) . "</div>";
+      $insideTag = $insideTag ? tag_escape( $insideTag ) : false;
+
+      printf(
+        '<div class="%1$s" data-notice-id="%2$s"%3$s>%4$s%5$s%6$s</div>',
+        esc_attr( $class ),
+        esc_attr( $notice['id'] ),
+        isset( $notice['dismissible'], $notice['dismiss_time'] ) ? ' data-notice-dismiss-time="' . esc_attr( $notice['dismiss_time'] ) . '"' : '',
+        $insideTag ? '<' . esc_html( $insideTag ) . '>' : '',
+        wp_kses( $message, HTML::allowedHtml() ),
+        $insideTag ? '</' . esc_html( $insideTag ) . '>' : ''
+      );
     }
   }
 

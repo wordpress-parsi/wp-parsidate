@@ -37,7 +37,7 @@ class Assets {
    * @return bool
    */
   public static function isImageString( string $string ): bool {
-    return str_starts_with( trim( $string ), '<img' ) !== false;
+    return 0 === strpos( trim( $string ), '<img' );
   }
 
   /**
@@ -53,7 +53,7 @@ class Assets {
       $string = self::cleanSvgImageString( $string );
     }
 
-    return str_starts_with( trim( $string ), '<svg' ) !== false;
+    return 0 === strpos( trim( $string ), '<svg' );
   }
 
   /**

@@ -69,6 +69,7 @@ class WooCommerceCitySelect {
 
     // Ensure the global city map is an array before loading country files.
     if ( ! is_array( $cities ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Global shared with the WC City Select cities format.
       $cities = array();
     }
 
@@ -83,6 +84,7 @@ class WooCommerceCitySelect {
       }
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Hook of the WC City Select format, kept for compatibility.
     $filtered_cities = apply_filters( 'wc_city_select_cities', $cities );
     $this->cities = is_array( $filtered_cities ) ? $filtered_cities : array();
   }

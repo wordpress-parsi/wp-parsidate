@@ -21,7 +21,9 @@ class App {
   }
 
   public function init(): void {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_addons_load' );
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_init' );
   }
 }

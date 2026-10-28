@@ -36,6 +36,7 @@ class AdminConvert {
       self::$settings = array(
         'title'    => esc_html__( 'Convert settings', 'wp-parsidate' ),
         'desc'     => esc_html__( 'Convert Persian letters and numbers', 'wp-parsidate' ),
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
         'settings' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_options', [] )
       );
     }

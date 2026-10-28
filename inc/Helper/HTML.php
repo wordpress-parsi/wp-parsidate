@@ -7,7 +7,109 @@ defined( 'ABSPATH' ) || exit;
 use WP_Query;
 
 class HTML {
+  /**
+   * Allowed HTML for plugin generated markup that may contain form fields and inline SVG icons.
+   *
+   * Used with wp_kses() when echoing HTML built by the plugin (notices, selects, descriptions).
+   *
+   * @return array
+   */
+  public static function allowedHtml(): array {
+    $allowed = wp_kses_allowed_html( 'post' );
+
+    $common = [
+      'class'    => true,
+      'id'       => true,
+      'name'     => true,
+      'style'    => true,
+      'disabled' => true,
+      'required' => true,
+    ];
+
+    $allowed['select']   = $common + [ 'multiple' => true, 'size' => true ];
+    $allowed['option']   = [ 'value' => true, 'selected' => true, 'disabled' => true, 'class' => true ];
+    $allowed['optgroup'] = [ 'label' => true, 'disabled' => true ];
+    $allowed['input']    = $common + [
+        'type'        => true,
+        'value'       => true,
+        'checked'     => true,
+        'placeholder' => true,
+        'min'         => true,
+        'max'         => true,
+        'step'        => true,
+        'readonly'    => true,
+        'autocomplete' => true,
+      ];
+    $allowed['textarea'] = $common + [ 'rows' => true, 'cols' => true, 'placeholder' => true, 'readonly' => true ];
+    $allowed['label']    = [ 'for' => true, 'class' => true, 'id' => true ];
+    $allowed['button']   = $common + [ 'type' => true, 'value' => true ];
+
+    $svgAttributes = [
+      'xmlns'             => true,
+      'viewbox'           => true,
+      'width'             => true,
+      'height'            => true,
+      'fill'              => true,
+      'fill-rule'         => true,
+      'clip-rule'         => true,
+      'stroke'            => true,
+      'stroke-width'      => true,
+      'stroke-linecap'    => true,
+      'stroke-linejoin'   => true,
+      'd'                 => true,
+      'x'                 => true,
+      'y'                 => true,
+      'cx'                => true,
+      'cy'                => true,
+      'r'                 => true,
+      'rx'                => true,
+      'ry'                => true,
+      'x1'                => true,
+      'x2'                => true,
+      'y1'                => true,
+      'y2'                => true,
+      'points'            => true,
+      'transform'         => true,
+      'gradienttransform' => true,
+      'gradientunits'     => true,
+      'offset'            => true,
+      'stop-color'        => true,
+      'opacity'           => true,
+      'class'             => true,
+      'id'                => true,
+      'style'             => true,
+      'aria-hidden'       => true,
+      'role'              => true,
+      'focusable'         => true,
+    ];
+
+    foreach ( [ 'svg', 'g', 'path', 'circle', 'ellipse', 'rect', 'line', 'polyline', 'polygon', 'defs', 'lineargradient', 'radialgradient', 'stop', 'title', 'use' ] as $tag ) {
+      $allowed[ $tag ] = $svgAttributes;
+    }
+
+    return $allowed;
+  }
+
+
   private const prefix = WP_PARSI_CLASS_PREFIX;
+
+  /**
+   * Whether the array keys are 0, 1, 2, ... in order (array_is_list() of PHP 8.1).
+   *
+   * @param array $array
+   *
+   * @return bool
+   */
+  private static function isList( array $array ): bool {
+    $i = 0;
+    foreach ( $array as $key => $value ) {
+      if ( $key !== $i ++ ) {
+        return false;
+      }
+    }
+
+    return true;
+  }
   private const prefixName = WP_PARSI_INPUT_PREFIX;
 
   public const saveFields = [
@@ -170,7 +272,7 @@ class HTML {
     }
 
     if ( ! empty( $data['options'] ) && is_array( $data['options'] ) ) {
-      $isList = array_is_list( $data['options'] );
+      $isList = self::isList( $data['options'] );
 
       foreach ( $data['options'] as $key => $value ) {
         if ( isset( $data['multiple'] ) && $data['multiple'] && is_array( $data['setting_value'] ) ) {
@@ -192,6 +294,7 @@ class HTML {
     if ( ! $data = self::checkData( $data ) ) {
       return '';
     }
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $data['options'] = apply_filters( 'wp_parsidate_image_sizes_select_items', Assets::getImageSizes() );
 
     return self::select( $data );
@@ -522,7 +625,7 @@ class HTML {
       return '';
     }
 
-    if ( array_is_list( $data['options'] ) ) {
+    if ( self::isList( $data['options'] ) ) {
       $data['options'] = array_combine( $data['options'], $data['options'] );
     }
 
@@ -546,7 +649,7 @@ class HTML {
       return '';
     }
 
-    $isList = array_is_list( $data['options'] );
+    $isList = self::isList( $data['options'] );
     if ( $isList ) {
       $data['options'] = array_combine( $data['options'], $data['options'] );
     }

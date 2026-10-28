@@ -109,6 +109,7 @@ class AppAssets {
     ), $pluginVersion, [ 'in_footer' => true ] );
     wp_enqueue_style( WP_PARSI_KEY . '_jalali_datepicker', Assets::url( "css-admin/jalalidatepicker$debugName.css" ), null, $pluginVersion );
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_jalali_datepicker_enqueued', $moduleName );
   }
 
@@ -299,6 +300,7 @@ class AppAssets {
     if ( $pagenow == 'edit.php' ) {
       $postType = Param::get( 'post_type', 'post' );
 
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WordPress core hook.
       if ( ! apply_filters( 'disable_months_dropdown', false, $postType ) ) {
         wp_add_inline_script( WP_PARSI_KEY_SLUG . '-admin', "jQuery(document).ready(function ($) {\$('select[name=m]').hide()})" );
       }

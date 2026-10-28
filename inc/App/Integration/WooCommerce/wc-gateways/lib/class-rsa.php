@@ -1,10 +1,15 @@
 <?php
+/**
+ * RSA signing helpers for the Pasargad gateway (pure PHP, requires bcmath).
+ */
+
+namespace WPParsidate\Gateways\Pasargad;
 
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
-const BCCOMP_LARGER = 1;
-
 class RSA {
+  public const BCCOMP_LARGER = 1;
+
   public static function rsa_encrypt( $message, $public_key, $modulus, $keylength ) {
     $padded    = RSA::add_PKCS1_padding( $message, true, $keylength / 8 );
     $number    = RSA::binary_to_number( $padded );
@@ -45,7 +50,7 @@ class RSA {
     $factors      = array();
     $div          = $q;
     $power_of_two = 0;
-    while ( bccomp( $div, "0" ) == BCCOMP_LARGER ) {
+    while ( bccomp( $div, "0" ) == self::BCCOMP_LARGER ) {
       $rem = bcmod( $div, 2 );
       $div = bcdiv( $div, 2 );
       if ( $rem ) {
@@ -79,7 +84,7 @@ class RSA {
       $block_type = "\x02";
       $padding    = "";
       for ( $i = 0; $i < $pad_length; $i ++ ) {
-        $rnd     = mt_rand( 1, 255 );
+        $rnd     = random_int( 1, 255 );
         $padding .= chr( $rnd );
       }
     } else {
@@ -93,9 +98,6 @@ class RSA {
   public static function remove_PKCS1_padding( $data, $blocksize ) {
     assert( strlen( $data ) == $blocksize );
     $data = substr( $data, 1 );
-    if ( $data[0] == '\0' ) {
-      die( "Block type 0 not implemented." );
-    }
     assert( ( $data[0] == "\x01" ) || ( $data[0] == "\x02" ) );
     $offset = strpos( $data, "\0", 1 );
 
@@ -193,61 +195,4 @@ class RSAProcessor {
 class RSAKeyType {
   const XMLFile = 0;
   const XMLString = 1;
-}
-
-function makeXMLTree( $data ) {
-  $ret    = array();
-  $parser = xml_parser_create();
-  xml_parser_set_option( $parser, XML_OPTION_CASE_FOLDING, 0 );
-  xml_parser_set_option( $parser, XML_OPTION_SKIP_WHITE, 1 );
-  xml_parse_into_struct( $parser, $data, $values, $tags );
-  xml_parser_free( $parser );
-  $hash_stack = array();
-  foreach ( $values as $key => $val ) {
-    switch ( $val['type'] ) {
-      case 'open':
-        $hash_stack[] = $val['tag'];
-        break;
-      case 'close':
-        array_pop( $hash_stack );
-        break;
-      case 'complete':
-        $hash_stack[] = $val['tag'];
-        // uncomment to see what this function is doing
-        // echo("\$ret[" . implode($hash_stack, "][") . "] = '{$val[value]}';\n");
-        eval( "\$ret[" . implode( $hash_stack, "][" ) . "] = '{$val[value]}';" );
-        array_pop( $hash_stack );
-        break;
-    }
-  }
-
-  return $ret;
-}
-
-/* ------------------------------------- CURL POST TO HTTPS --------------------------------- */
-function post2https( $fields_arr, $url ) {
-  //url-ify the data for the POST
-  foreach ( $fields_arr as $key => $value ) {
-    $fields_string .= $key . '=' . $value . '&';
-  }
-  $fields_string = substr( $fields_string, 0, - 1 );
-
-  //open connection
-  $ch = curl_init();
-
-  //set the url, number of POST vars, POST data
-  curl_setopt( $ch, CURLOPT_URL, $url );
-  curl_setopt( $ch, CURLOPT_POST, count( $fields_arr ) );
-  curl_setopt( $ch, CURLOPT_POSTFIELDS, $fields_string );
-  curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-  curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-
-
-  //execute post
-  $res = curl_exec( $ch );
-
-  //close connection
-  curl_close( $ch );
-
-  return $res;
 }

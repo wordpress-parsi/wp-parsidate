@@ -60,6 +60,7 @@ class FixNumbers {
 
     $converted = NumberConverter::convertContent( $content );
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wp_parsidate_fix_post_content_numbers', $converted, $content );
   }
 

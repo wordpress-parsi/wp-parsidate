@@ -307,6 +307,7 @@ class Dokan extends Addon {
     $dependencies = [ $engineHandle ];
 
     if ( $isAdmin && ! wp_script_is( WP_PARSI_KEY . '_datepicker', 'registered' ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       do_action( 'wp_parsidate_jalali_datepicker_enqueue', 'dokan' );
     }
 
@@ -317,6 +318,7 @@ class Dokan extends Addon {
         wp_enqueue_script( $libraryHandle, Assets::url( 'js-admin/jalalidatepicker.min.js' ), [ $engineHandle ], $pluginVersion, [ 'in_footer' => true ] );
         wp_enqueue_style( $libraryHandle, Assets::url( "css-admin/jalalidatepicker$debugName.css" ), null, $pluginVersion );
 
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
         do_action( 'wp_parsidate_jalali_datepicker_enqueued', 'dokan' );
       }
 
@@ -402,11 +404,15 @@ class Dokan extends Addon {
    * @return bool
    */
   private function isAnalyticsDashboard(): bool {
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only screen detection.
     if ( ! isset( $_GET['path'] ) || ! is_string( $_GET['path'] ) ) {
       return false;
     }
 
-    return false !== strpos( sanitize_text_field( wp_unslash( $_GET['path'] ) ), '/analytics' );
+    $path = sanitize_text_field( wp_unslash( $_GET['path'] ) );
+    // phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+    return false !== strpos( $path, '/analytics' );
   }
 
   /**
@@ -420,10 +426,12 @@ class Dokan extends Addon {
       return;
     }
 
-    // Withdraw amount
+    // Only the digits are normalized here; Dokan verifies its own nonce when it processes the request.
+    // phpcs:disable WordPress.Security.NonceVerification.Missing
     if ( isset( $_POST['withdraw_amount'] ) && is_string( $_POST['withdraw_amount'] ) ) {
-      $_POST['withdraw_amount'] = Number::toEnglish( $_POST['withdraw_amount'] );
+      $_POST['withdraw_amount'] = wp_slash( Number::toEnglish( sanitize_text_field( wp_unslash( $_POST['withdraw_amount'] ) ) ) );
     }
+    // phpcs:enable WordPress.Security.NonceVerification.Missing
   }
 
   /**
@@ -441,17 +449,20 @@ class Dokan extends Addon {
       return;
     }
 
+    // Only the date format is normalized here; Dokan verifies its own nonce when it saves the product.
+    // phpcs:disable WordPress.Security.NonceVerification.Missing
     foreach ( [ '_sale_price_dates_from', '_sale_price_dates_to' ] as $field ) {
       if ( empty( $_POST[ $field ] ) || ! is_string( $_POST[ $field ] ) ) {
         continue;
       }
 
-      $gregorian = $this->convertJalaliToGregorianDate( $_POST[ $field ] );
+      $gregorian = $this->convertJalaliToGregorianDate( sanitize_text_field( wp_unslash( $_POST[ $field ] ) ) );
 
       if ( $gregorian ) {
-        $_POST[ $field ] = $gregorian;
+        $_POST[ $field ] = wp_slash( $gregorian );
       }
     }
+    // phpcs:enable WordPress.Security.NonceVerification.Missing
   }
 
   /**
@@ -517,15 +528,23 @@ class Dokan extends Addon {
 
     global $wpdb;
 
-    $rows = $wpdb->get_results(
-      $wpdb->prepare(
-        "SELECT MIN(post_date) AS first_date, MAX(post_date) AS last_date
+    $cacheKey = 'vendor_product_months_' . $userId . ':' . wp_cache_get_last_changed( 'posts' );
+    $rows     = wp_cache_get( $cacheKey, 'wp-parsidate-dokan' );
+
+    if ( false === $rows ) {
+      // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Grouped months of the vendor products, no WordPress API for it. Cached per posts change.
+      $rows = $wpdb->get_results(
+        $wpdb->prepare(
+          "SELECT MIN(post_date) AS first_date, MAX(post_date) AS last_date
          FROM {$wpdb->posts}
          WHERE post_type = 'product' AND post_author = %d
          GROUP BY YEAR(post_date), MONTH(post_date)",
-        $userId
-      )
-    );
+          $userId
+        )
+      );
+
+      wp_cache_set( $cacheKey, $rows, 'wp-parsidate-dokan' );
+    }
 
     if ( empty( $rows ) ) {
       return $months;

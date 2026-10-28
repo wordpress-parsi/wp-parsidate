@@ -10,7 +10,7 @@ namespace WPParsidate\Widget;
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
 use WPParsidate\Core\Calendar;
-use WPParsidate\Helper\{Assets, Posts};
+use WPParsidate\Helper\{Assets, HTML, Posts};
 use WPParsidate\Settings\Settings;
 
 /**
@@ -71,7 +71,7 @@ class CalendarWidget extends \WP_Widget {
       <label for="<?php echo esc_attr( $this->get_field_id( 'post_type' ) ); ?>">
         <?php esc_html_e( 'Post type', 'wp-parsidate' ) ?>:</label>
 
-      <?php echo Posts::getTypeSelect( $this->get_field_id( 'post_type' ), $this->get_field_name( 'post_type' ), $postType ) ?>
+      <?php echo wp_kses( Posts::getTypeSelect( $this->get_field_id( 'post_type' ), $this->get_field_name( 'post_type' ), $postType ), HTML::allowedHtml() ); ?>
     </p>
 
     <p>
@@ -151,8 +151,10 @@ class CalendarWidget extends \WP_Widget {
       echo $args['after_title'];
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_calendar_widget_start', $title, $postType, $theme, $widgetID );
     Calendar::printCalendar( $postType, $theme );
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_calendar_widget_end', $title, $postType, $theme, $widgetID );
 
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

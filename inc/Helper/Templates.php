@@ -38,6 +38,7 @@ class Templates {
   public static function getPath( $template, $dir = 'plugin' ): string {
     $path = self::pathCorrection( WP_PARSI_DIR . '/inc/Templates/' . $dir . '/' . $template );
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wp_parsidate_template_path', $path, $template, $dir );
   }
 

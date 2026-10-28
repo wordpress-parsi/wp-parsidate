@@ -6,6 +6,7 @@ use Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodTyp
 use WPParsidate\Helper\Assets;
 
 if ( ! class_exists( 'WPP_WC_Parsian_Gateway_Blocks' ) ) {
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Legacy class name, kept for backward compatibility.
   final class WPP_WC_Parsian_Gateway_Blocks extends AbstractPaymentMethodType {
 
     private $gateway;

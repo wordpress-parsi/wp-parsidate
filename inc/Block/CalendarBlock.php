@@ -60,14 +60,16 @@ class CalendarBlock extends Block {
 
     ob_start();
 
-    echo '<div ' . get_block_wrapper_attributes() . '>';
+    echo '<div ' . wp_kses_data( function_exists( 'get_block_wrapper_attributes' ) ? get_block_wrapper_attributes() : '' ) . '>';
 
     if ( ! empty( $title ) ) {
       echo '<h2 class="wp-block-wp-parsidate-calendar__title">' . esc_html( $title ) . '</h2>';
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_calendar_block_start', $title, $postType, $theme, $blockId );
     Calendar::printCalendar( $postType, $theme );
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_calendar_block_end', $title, $postType, $theme, $blockId );
 
     echo '</div>';

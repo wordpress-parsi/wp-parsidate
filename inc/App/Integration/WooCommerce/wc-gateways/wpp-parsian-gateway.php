@@ -6,6 +6,7 @@ use WPParsidate\Helper\Assets;
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
 if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function wpp_parsian_payment_gateway_init() {
     if ( ! class_exists( 'WC_Parsian_Gateway' ) && ! class_exists( 'WPP_WC_Parsian_Gateway' ) ) {
 
@@ -16,6 +17,7 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
        * @subpackage              Plugins/WooCommerce/PaymentGateways
        * @since 5.0.0
        */
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Legacy class name, kept for backward compatibility.
       class WPP_WC_Parsian_Gateway extends WC_Payment_Gateway {
 
         // Order meta holding the payment tokens requested for the order
@@ -37,6 +39,7 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
           $this->method_description = $this->gateway_name . ' ' . esc_html__( 'payment gateway (By WP-Parsidate)',
               'wp-parsidate' );
           $this->has_fields         = true;
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Legacy public hook name, kept for backward compatibility.
           $this->icon               = apply_filters( $this->id . '_logo',
             Assets::url( "images/woocommerce/$this->id-logo.png" ) );
           $this->redirect_uri       = WC()->api_request_url( $this->get_class() );
@@ -62,6 +65,7 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
         }
 
         public function init_form_fields() {
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           $this->form_fields = apply_filters( 'wpp_wc_' . $this->id . '_gateway_config', array(
               'enabled'               => array(
                 'title'   => esc_html__( 'Enabled/Disabled', 'wp-parsidate' ),
@@ -549,9 +553,11 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
         }
 
         public function callback() {
+          // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing -- Bank callback request, it cannot carry a WordPress nonce. The payment is verified with the bank API.
           $token    = sanitize_text_field( wp_unslash( $_REQUEST['Token'] ?? '' ) );
           $status   = sanitize_text_field( wp_unslash( $_REQUEST['status'] ?? '' ) );
           $order_id = (int) sanitize_text_field( wp_unslash( $_REQUEST['order_id'] ?? '' ) );
+          // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
           $order    = wc_get_order( $order_id );
 
           if ( ! $order ) {
@@ -611,6 +617,7 @@ if ( ! function_exists( 'wpp_parsian_payment_gateway_init' ) ) {
               WC()->cart->empty_cart();
 
               // Action
+              // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
               do_action( 'wpp_wc_' . $this->id . '_gateway_completed_payment', $order, [
                 'RRN'   => $request->RRN,
                 'Token' => $token

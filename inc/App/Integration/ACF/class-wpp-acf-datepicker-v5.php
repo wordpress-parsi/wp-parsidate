@@ -12,6 +12,7 @@ defined( 'ABSPATH' ) || exit( 'No direct script access allowed' );
  *
  * @since 4.0.0
  */
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Legacy class name, kept for backward compatibility.
 class WPP_acf_field_jalali_datepicker extends acf_field {
 
   /**
@@ -107,6 +108,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
    * @since           4.0.0
    */
   function input_admin_enqueue_scripts() {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_jalali_datepicker_enqueue', 'acf-5' );
   }
 
@@ -125,6 +127,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
       $value = parsidate( 'Y-m-d', $value, 'en' );
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wpp_acf_after_load_jalali_date', $value );
   }
 
@@ -143,6 +146,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
       $value = gregdate( 'Y-m-d', $value );
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wpp_acf_before_update_jalali_date', $value );
   }
 
@@ -161,6 +165,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
       return $value;
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wpp_acf_before_jalali_date_render', $value );
   }
 
@@ -179,6 +184,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
    *
    */
   function validate_value( $valid, $value, $field, $input ) {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wpp_acf_validate_date_value', $valid, $value, $field, $input );
   }
 
@@ -191,6 +197,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
    * @since           4.0.0
    */
   function load_field( $field ) {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wpp_acf_after_load_date_field', $field );
   }
 
@@ -203,6 +210,7 @@ class WPP_acf_field_jalali_datepicker extends acf_field {
    * @since           4.0.0
    */
   function update_field( $field ) {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wpp_acf_before_save_date_field', $field );
   }
 }

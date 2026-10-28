@@ -46,7 +46,9 @@ class AdminAssets {
       array(
         'ajaxUrl'            => admin_url( 'admin-ajax.php' ),
         'ajaxNonce'          => Nonce::create(),
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
         'pageRefreshedAfter' => apply_filters( 'wp_parsidate_settings_page_refreshed_after', 0 ),
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
         'pageRefreshUrl'     => apply_filters( 'wp_parsidate_settings_page_refresh_url', null ),
         'removeText'         => esc_html__( 'Remove', 'wp-parsidate' ),
         'dtuConfirmDelete'   => esc_html__( 'Are you sure you want to delete this item(s)?', 'wp-parsidate' ),

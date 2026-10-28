@@ -171,6 +171,7 @@ class WcGateways {
       }
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $activeGateways = apply_filters( 'wpp_get_selected_wc_payment_gateways', $activeGateways );
     Cache::set( 'woocommerce_active_gateways', $activeGateways );
 

@@ -127,6 +127,7 @@ class WooCommerce extends Addon {
     $notices[] = array(
       'id'          => 'wc_analytics_shamsi_date',
       'message'     => sprintf(
+        /* translators: %s: URL of the plugin settings page. */
         __( 'If you want the date for this section to be Shamsi, enable it in the settings. <a href="%s">Go to configuration page</a>', 'wp-parsidate' ),
         esc_url_raw( AdminPages::link( [ 'tab' => $this->addonID ] ) )
       ),
@@ -200,6 +201,7 @@ class WooCommerce extends Addon {
       return; // Iran cities not available
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $all = apply_filters( 'wp_parsidate_wc_checkout_city_select_cities', $cities );
     $ir  = ( isset( $all['IR'] ) && is_array( $all['IR'] ) ) ? $all['IR'] : array();
 
@@ -277,6 +279,7 @@ class WooCommerce extends Addon {
     }
 
     return \WPParsidate\Helper\WooCommerce::isPostalCode( $postcode,
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       apply_filters( 'wp_parsidate_validate_postal_code_checksum', false ) );
   }
 
@@ -319,6 +322,7 @@ class WooCommerce extends Addon {
      *
      * @var array $persian_fields
      */
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $supported_persian_fields = apply_filters( "wpp_woocommerce_checkout_persian_fields", $persian_fields );
 
     if ( ! is_array( $supported_persian_fields ) ) {
@@ -331,6 +335,7 @@ class WooCommerce extends Addon {
       }
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $modified_data = apply_filters( "wpp_woocommerce_checkout_modified_persian_fields", $data );
 
     return is_array( $modified_data ) ? $modified_data : $data;
@@ -369,6 +374,7 @@ class WooCommerce extends Addon {
       '٠'  => '۰',
     );
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $characters = apply_filters( "wpp_arabic_persian_characters_list", $characters );
 
     return str_replace( array_keys( $characters ), array_values( $characters ), $string );
@@ -380,6 +386,18 @@ class WooCommerce extends Addon {
    * @since 4.1.0
    */
   public function acceptPersianNumbersInCheckout(): void {
+    // WooCommerce has already verified this nonce (same fields as WC_Checkout::process_checkout()) before firing woocommerce_checkout_process.
+    $nonce = '';
+    if ( isset( $_REQUEST['woocommerce-process-checkout-nonce'] ) ) {
+      $nonce = sanitize_text_field( wp_unslash( $_REQUEST['woocommerce-process-checkout-nonce'] ) );
+    } elseif ( isset( $_REQUEST['_wpnonce'] ) ) {
+      $nonce = sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) );
+    }
+
+    if ( ! wp_verify_nonce( $nonce, 'woocommerce-process_checkout' ) ) {
+      return;
+    }
+
     if ( $this->getSetting( 'fix_persian_postcode', false ) ) {
       if ( isset( $_POST['billing_postcode'] ) ) {
         $_POST['billing_postcode'] = Number::toEnglish( wc_get_post_data_by_key( 'billing_postcode' ) );
@@ -437,9 +455,11 @@ class WooCommerce extends Addon {
    * @since           4.0.0
    */
   public function changeReportDates(): void {
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only report filter values of the WooCommerce reports screen, which has no nonce.
     $page      = sanitize_text_field( wp_unslash( $_GET['page'] ?? '' ) );
     $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
     $endDate   = sanitize_text_field( wp_unslash( $_GET['end_date'] ?? '' ) );
+    // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
     if ( ! empty( $page ) && 'wc-reports' === $page ) {
       if ( ! empty( $startDate ) ) {
@@ -487,7 +507,8 @@ class WooCommerce extends Addon {
    * @since 6.4.2
    */
   private function isOrderEditScreen(): bool {
-    if ( ! is_admin() || ( $_GET['action'] ?? '' ) !== 'edit' ) {
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only screen detection.
+    if ( ! is_admin() || sanitize_key( wp_unslash( $_GET['action'] ?? '' ) ) !== 'edit' ) {
       return false;
     }
 
@@ -508,13 +529,15 @@ class WooCommerce extends Addon {
     $current_screen = $this->getCurrentScreen();
 
     if ( 'legacy_report' === $current_screen ) {
+      // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only report filter values of the WooCommerce reports screen, which has no nonce.
       $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
       $endDate   = sanitize_text_field( wp_unslash( $_GET['end_date'] ?? '' ) );
+      // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
       $jalali_start_date = ! empty( $startDate ) ? parsidate( 'Y-m-d',
-        date( 'Y-m-d', strtotime( $startDate ) ), 'eng' ) : '';
+        gmdate( 'Y-m-d', strtotime( $startDate ) ), 'eng' ) : '';
       $jalali_end_date   = ! empty( $endDate ) ? parsidate( 'Y-m-d',
-        date( 'Y-m-d', strtotime( $endDate ) ), 'eng' ) : '';
+        gmdate( 'Y-m-d', strtotime( $endDate ) ), 'eng' ) : '';
 
       wp_add_inline_script( WP_PARSI_KEY . '_datepicker', 'jQuery("input[name=start_date]").val("' . $jalali_start_date . '");jQuery("input[name=end_date]").val("' . $jalali_end_date . '");' );
 
@@ -623,27 +646,21 @@ class WooCommerce extends Addon {
    * @since           4.0.0
    */
   public function changeOrderDateAndCouponExpiresMeta( $metadata, $object_id, $meta_key, $single ) {
-    global $wpdb;
+    if ( 'date_expires' !== $meta_key ) {
+      return $metadata;
+    }
 
-    $post_type  = get_post_type( $object_id );
-    $editAction = sanitize_text_field( wp_unslash( $_GET['action'] ?? '' ) ) === 'edit';
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only screen detection.
+    $editAction = sanitize_key( wp_unslash( $_GET['action'] ?? '' ) ) === 'edit';
 
-    if ( $editAction && 'shop_coupon' === $post_type && 'date_expires' === $meta_key ) {
-      $metadata = $wpdb->get_var(
-        $wpdb->prepare(
-          "
-						SELECT meta_value
-						From $wpdb->postmeta
-						WHERE post_id = %d
-							AND meta_key = %s
-					",
-          $object_id,
-          $meta_key
-        )
-      );
+    if ( $editAction && 'shop_coupon' === get_post_type( $object_id ) ) {
+      // Read the raw value through the meta API without running this filter again.
+      remove_filter( 'get_post_metadata', [ $this, 'changeOrderDateAndCouponExpiresMeta' ], 10 );
+      $value = get_post_meta( $object_id, $meta_key, true );
+      add_filter( 'get_post_metadata', [ $this, 'changeOrderDateAndCouponExpiresMeta' ], 10, 4 );
 
-      if ( ! empty( $metadata ) ) {
-        return parsidate( 'Y-m-d', $metadata, 'eng' );
+      if ( ! empty( $value ) ) {
+        return parsidate( 'Y-m-d', $value, 'eng' );
       }
     }
 
@@ -672,11 +689,16 @@ class WooCommerce extends Addon {
    * @since           4.0.0
    */
   public function validateVariableProductDates( $product_id ): void {
+    // WooCommerce has already verified this nonce in its save variations ajax request.
+    if ( ! check_ajax_referer( 'save-variations', 'security', false ) ) {
+      return;
+    }
+
     if ( ! isset( $_POST['variable_post_id'] ) ) {
       return;
     }
 
-    $max_loop   = max( array_keys( wp_unslash( $_POST['variable_post_id'] ) ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+    $max_loop   = max( array_map( 'absint', array_keys( (array) wp_unslash( $_POST['variable_post_id'] ) ) ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Only the array keys are used, cast to integers.
     $parent     = wc_get_product( $product_id );
     $data_store = $parent->get_data_store();
 
@@ -727,6 +749,11 @@ class WooCommerce extends Addon {
    * @since           4.0.0
    */
   public function validateNonVariableProductDates( $product_id ) {
+    // WooCommerce has already verified this nonce before firing woocommerce_process_product_meta.
+    if ( ! isset( $_POST['woocommerce_meta_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ), 'woocommerce_save_data' ) ) {
+      return;
+    }
+
     $props = array();
 
     if ( isset( $_POST['_sale_price_dates_from'] ) ) {
@@ -735,7 +762,7 @@ class WooCommerce extends Addon {
       $time_on_sale_from  = ! empty( $salePriceTimesFrom ) && Date::isTimeString( $salePriceTimesFrom ) ? Date::isTimeString( $salePriceTimesFrom ) : '00:00:00';
 
       if ( ! empty( $date_on_sale_from ) ) {
-        $props['date_on_sale_from'] = date( 'Y-m-d ' . $time_on_sale_from,
+        $props['date_on_sale_from'] = gmdate( 'Y-m-d ' . $time_on_sale_from,
           strtotime( gregdate( 'Y-m-d', $date_on_sale_from ) ) );
       }
     }
@@ -746,7 +773,7 @@ class WooCommerce extends Addon {
       $time_on_sale_to  = ! empty( $salePriceTimesTo ) && Date::isTimeString( $salePriceTimesTo ) ? Date::isTimeString( $salePriceTimesTo ) : '23:59:59';
 
       if ( ! empty( $date_on_sale_to ) ) {
-        $props['date_on_sale_to'] = date( 'Y-m-d ' . $time_on_sale_to, strtotime( gregdate( 'Y-m-d', $date_on_sale_to ) ) );
+        $props['date_on_sale_to'] = gmdate( 'Y-m-d ' . $time_on_sale_to, strtotime( gregdate( 'Y-m-d', $date_on_sale_to ) ) );
       }
     }
 
@@ -983,6 +1010,7 @@ class WooCommerce extends Addon {
     );
 
     if ( in_array( $currentScreen, $allowedScreens, true ) && Settings::get( 'persian_date' ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       do_action( 'wp_parsidate_jalali_datepicker_enqueue', 'wc' );
     }
 
@@ -1068,8 +1096,10 @@ class WooCommerce extends Addon {
    * @return array|mixed|string|string[]
    */
   public function fixOrderReportQueryDateCallback( $date ) {
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only report filter values of the WooCommerce reports screen, which has no nonce.
     $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
     $endDate   = sanitize_text_field( wp_unslash( $_GET['end_date'] ?? '' ) );
+    // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
     if ( empty( $startDate ) || empty( $endDate ) ) {
       return $date[0];
@@ -1081,7 +1111,7 @@ class WooCommerce extends Addon {
       }
 
       $dt = gregdate( 'Y-m-d', $endDate );
-      $dt = date( 'Y-m-d', strtotime( "$dt +1 day" ) );
+      $dt = gmdate( 'Y-m-d', strtotime( "$dt +1 day" ) );
     } else {
       if ( (int) $startDate > 1900 ) {
         return $date[0];
@@ -1102,13 +1132,18 @@ class WooCommerce extends Addon {
     if ( 'woocommerce_before_order_object_save' === current_action() ) {
       global $pagenow;
 
+      // phpcs:disable WordPress.Security.NonceVerification.Missing -- Read-only screen detection while WooCommerce saves the order (WooCommerce verifies its own nonce).
+
       if ( \WPParsidate\Helper\WooCommerce::hposEnabled() ) {
         $postID = (int) sanitize_text_field( wp_unslash( $_POST['post_ID'] ?? 0 ) );
 
         return $postID && 'shop_order' === get_post_type( $postID ) ? 'edit_order' : '';
       }
 
-      return is_admin() && 'post.php' === $pagenow && isset( $_POST['post_type'] ) && 'shop_order' === $_POST['post_type'] && ! empty( $_POST['order_date'] ) ? 'edit_order' : '';
+      $isEditOrder = is_admin() && 'post.php' === $pagenow && isset( $_POST['post_type'] ) && 'shop_order' === sanitize_key( wp_unslash( $_POST['post_type'] ) ) && ! empty( $_POST['order_date'] );
+      // phpcs:enable WordPress.Security.NonceVerification.Missing
+
+      return $isEditOrder ? 'edit_order' : '';
     }
 
     if ( 'admin_footer' === current_action() ) {
@@ -1234,6 +1269,7 @@ class WooCommerce extends Addon {
       ]
     );
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wp_parsidate_' . $this->addonID . '_settings_options', $settings );
   }
 

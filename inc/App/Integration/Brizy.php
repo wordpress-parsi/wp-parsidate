@@ -190,6 +190,7 @@ class Brizy extends Addon {
       return $html;
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     if ( apply_filters( 'wp_parsidate_brizy_skip', false, $post ) || ! $this->shouldConvert() ) {
       return $html;
     }
@@ -235,6 +236,7 @@ class Brizy extends Addon {
        *
        * @since 6.3
        */
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       return apply_filters( 'wp_parsidate_brizy_content', TextProtector::restore( $working, $protected ), $post );
     }
 
@@ -244,6 +246,7 @@ class Brizy extends Addon {
     }
 
     /** This filter is documented above. */
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wp_parsidate_brizy_content', $html, $post );
   }
 
@@ -521,6 +524,7 @@ class Brizy extends Addon {
      *
      * @since 6.3
      */
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $css = apply_filters( 'wp_parsidate_brizy_editor_css', $css );
 
     if ( $css ) {

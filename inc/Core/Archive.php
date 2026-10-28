@@ -71,9 +71,14 @@ class Archive {
     $r['post_type'] = $post_type_object->name;
 
     /// TODO: This query need optimized base on input type (yearly,monthly,daily)
-    $results = $wpdb->get_results(
-      $wpdb->prepare(
-        "
+    $cacheKey = 'archive_' . md5( $r['post_type'] ) . ':' . wp_cache_get_last_changed( 'posts' );
+    $results  = wp_cache_get( $cacheKey, 'wp-parsidate-archive' );
+
+    if ( false === $results ) {
+      // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Grouped date counts, same approach as core wp_get_archives(). Cached per posts change.
+      $results = $wpdb->get_results(
+        $wpdb->prepare(
+          "
 				SELECT date( post_date ) AS date,
 				    COUNT( ID ) AS count
 				FROM $wpdb->posts
@@ -83,9 +88,12 @@ class Archive {
 				group by date
 				ORDER BY post_date DESC
 			",
-        $r['post_type']
-      )
-    );
+          $r['post_type']
+        )
+      );
+
+      wp_cache_set( $cacheKey, $results, 'wp-parsidate-archive' );
+    }
 
     if ( ! empty( $results ) ) {
       if ( ! $r['echo'] ) {
@@ -120,8 +128,13 @@ class Archive {
 
     $r = wp_parse_args( $args, $defaults );
 
-    $results = $wpdb->get_results(
-      "
+    $cacheKey = 'archive_' . md5( 'post' ) . ':' . wp_cache_get_last_changed( 'posts' );
+    $results  = wp_cache_get( $cacheKey, 'wp-parsidate-archive' );
+
+    if ( false === $results ) {
+      // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Grouped date counts, same approach as core wp_get_archives(). Cached per posts change.
+      $results = $wpdb->get_results(
+        "
 				SELECT date ( post_date ) AS date,
 				  	COUNT( ID ) AS count
 				FROM $wpdb->posts
@@ -131,7 +144,10 @@ class Archive {
 				GROUP BY date
 				ORDER BY post_date DESC
 				"
-    );
+      );
+
+      wp_cache_set( $cacheKey, $results, 'wp-parsidate-archive' );
+    }
 
     if ( ! empty( $results ) ) {
       self::printArchive( $results, $r );
@@ -235,7 +251,7 @@ class Archive {
       foreach ( $results as $row ) {
         $jDate = parsidate( 'Y,m,d', $row->date, false );
         $jDate = explode( ',', $jDate );
-        $date  = date( 'Y,m,d', strtotime( $row->date ) );
+        $date  = gmdate( 'Y,m,d', strtotime( $row->date ) );
         $date  = explode( ',', $date );
         $count = $args['show_post_count'] ? '&nbsp;(' . Number::toPersian( $row->count ) . ')' : '';
         $text  = Number::toPersian( $jDate[2] ) . ' ' . $monthsName[ (int) $jDate[1] ] . ' ' . Number::toPersian( $jDate[0] );

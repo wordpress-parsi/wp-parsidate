@@ -10,7 +10,7 @@ namespace WPParsidate\Widget;
 defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
 use WPParsidate\Core\Archive;
-use WPParsidate\Helper\Posts;
+use WPParsidate\Helper\{HTML, Posts};
 use WPParsidate\Settings\Settings;
 
 /**
@@ -53,7 +53,7 @@ class ArchiveWidget extends \WP_Widget {
     <p>
       <label for="<?php echo esc_attr( $this->get_field_id( 'post_type' ) ); ?>">
         <?php esc_html_e( 'Post type', 'wp-parsidate' ) ?>:</label>
-      <?php echo Posts::getTypeSelect( $this->get_field_id( 'post_type' ), $this->get_field_name( 'post_type' ), $instance['post_type'] ) ?>
+      <?php echo wp_kses( Posts::getTypeSelect( $this->get_field_id( 'post_type' ), $this->get_field_name( 'post_type' ), $instance['post_type'] ), HTML::allowedHtml() ); ?>
     </p>
 
     <p>
@@ -157,6 +157,7 @@ class ArchiveWidget extends \WP_Widget {
       echo $args['after_title'];
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_archive_widget_start', $title, $postType, $type, $postCount, $isList, $widgetID );
     if ( $isList ) {
       echo "<select onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value='0'>" . esc_attr( $title ) . "</option>";
@@ -172,6 +173,7 @@ class ArchiveWidget extends \WP_Widget {
     ) );
 
     echo $isList ? '</select>' : '</ul>';
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_archive_widget_end', $title, $postType, $type, $postCount, $isList, $widgetID );
 
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

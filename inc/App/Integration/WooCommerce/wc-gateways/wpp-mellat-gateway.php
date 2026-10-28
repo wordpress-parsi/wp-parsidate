@@ -6,6 +6,7 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
 if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
 
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function wpp_mellat_payment_gateway_init() {
     if ( ! class_exists( 'WPP_WC_Mellat_Gateway' ) && ! class_exists( 'WPP_WC_Mellat_Gateway' ) ) {
       /**
@@ -15,6 +16,7 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
        * @subpackage              Plugins/WooCommerce/PaymentGateways
        * @since 5.0.0
        */
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Legacy class name, kept for backward compatibility.
       class WPP_WC_Mellat_Gateway extends WC_Payment_Gateway {
 
         // Order meta holding the transaction that was started for the order
@@ -42,6 +44,7 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
           $this->method_description = $this->gateway_name . ' ' . esc_html__( 'payment gateway (By WP-Parsidate)',
               'wp-parsidate' );
           $this->has_fields         = true;
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Legacy public hook name, kept for backward compatibility.
           $this->icon               = apply_filters( $this->id . '_logo',
             Assets::url( "images/woocommerce/$this->id-logo.png" ) );
           $this->init_form_fields();
@@ -67,6 +70,7 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
         }
 
         public function init_form_fields() {
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           $this->form_fields = apply_filters( 'wpp_wc_' . $this->id . '_gateway_config', array(
               'enabled'        => array(
                 'title'   => esc_html__( 'Enabled/Disabled', 'wp-parsidate' ),
@@ -125,6 +129,7 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
         public function get_icon() {
           $icon = $this->icon ? '<img src="' . esc_url_raw( WC_HTTPS::force_https_url( $this->icon ) ) . '" alt="' . esc_attr( $this->get_title() ) . '" />' : '';
 
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce hook.
           return apply_filters( 'woocommerce_gateway_icon', $icon, $this->id );
         }
 
@@ -136,6 +141,7 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
           $refId = $this->get_ref_id_from_mellat( $order );
 
           // Action
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wpp_wc_' . $this->id . '_gateway_process_payment', $order, $refId );
 
           if ( $refId['status'] === false ) {
@@ -177,31 +183,18 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
         }
 
         public function get_ref_id_from_mellat( $order ) {
-          if ( ! class_exists( 'nusoap_client' ) ) {
-            require_once( __DIR__ . '/lib/nusoap.php' );
-          }
-
-          $client = new nusoap_client( 'https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl' );
-          $err    = $client->getError();
-          if ( $err ) {
-
-            return [
-              'status'  => false,
-              'message' => 'خطا در ارتباط با بانک ملت: ' . $err
-            ];
-          }
-
           $description = 'خرید به شماره سفارش: ' . $order->get_order_number();
           $description .= ' | خریدار: ' . $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
 
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           $parameters = apply_filters( 'wpp_wc_' . $this->id . '_gateway_request_payment', array(
             'terminalId'     => $this->terminal_id,
             'userName'       => $this->username,
             'userPassword'   => $this->password,
             'orderId'        => $order->get_id(),
             'amount'         => $this->get_amount( $order ),
-            'localDate'      => date( 'Ymd' ),
-            'localTime'      => date( 'His' ),
+            'localDate'      => gmdate( 'Ymd' ),
+            'localTime'      => gmdate( 'His' ),
             'additionalData' => $description,
             'callBackUrl'    => add_query_arg(
               array(
@@ -216,50 +209,47 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
           $saleOrderId = (string) ( $parameters['orderId'] ?? $order->get_id() );
           $amount      = (int) ( $parameters['amount'] ?? $this->get_amount( $order ) );
 
-          $result = $client->call( 'bpPayRequest', $parameters, 'http://interfaces.core.sw.bps.com/' );
+          $response = $this->soap_call( 'bpPayRequest', $parameters );
 
-          if ( $client->fault ) {
+          if ( $response['fault'] ) {
 
             return [
               'status'  => false,
               'message' => $this->failed_massage
             ];
-          } else {
-
-            $resultStr = $result;
-            $err       = $client->getError();
-            if ( $err ) {
-
-              return [
-                'status'  => false,
-                'message' => 'خطا در ارتباط با بانک ملت: ' . $err
-              ];
-            } else {
-
-              $res     = explode( ',', $resultStr );
-              $ResCode = $res[0];
-              if ( $ResCode == "0" ) {
-
-                return [
-                  'status'      => true,
-                  'refId'       => $res[1],
-                  'saleOrderId' => $saleOrderId,
-                  'amount'      => $amount
-                ];
-              } else {
-
-                return [
-                  'status'  => false,
-                  'message' => 'خطا در دریافت RefId از بانک ملت: ' . $this->get_error_message( $ResCode )
-                ];
-              }
-            }
           }
+
+          if ( ! $response['status'] ) {
+
+            return [
+              'status'  => false,
+              'message' => 'خطا در ارتباط با بانک ملت: ' . $response['message']
+            ];
+          }
+
+          $res     = explode( ',', $response['result'] );
+          $ResCode = $res[0];
+          if ( $ResCode == "0" && ! empty( $res[1] ) ) {
+
+            return [
+              'status'      => true,
+              'refId'       => $res[1],
+              'saleOrderId' => $saleOrderId,
+              'amount'      => $amount
+            ];
+          }
+
+          return [
+            'status'  => false,
+            'message' => 'خطا در دریافت RefId از بانک ملت: ' . $this->get_error_message( $ResCode )
+          ];
         }
 
         public function handle_gateway_response() {
+          // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing -- Bank callback request, it cannot carry a WordPress nonce. The payment is verified with the bank API.
           $action   = sanitize_text_field( wp_unslash( $_GET['action'] ?? '' ) );
           $order_id = (int) sanitize_text_field( wp_unslash( $_GET['order_id'] ?? 0 ) );
+          // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
           $order    = wc_get_order( $order_id );
 
           if ( ! $order ) {
@@ -315,12 +305,14 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
         }
 
         public function verify_payment( $order ) {
+          // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing -- Bank callback request, it cannot carry a WordPress nonce. The payment is verified with the bank API.
           $resCode         = sanitize_text_field( wp_unslash( $_POST['ResCode'] ?? '' ) );
           $saleOrderId     = sanitize_text_field( wp_unslash( $_POST['SaleOrderId'] ?? '' ) );
           $saleReferenceId = sanitize_text_field( wp_unslash( $_POST['SaleReferenceId'] ?? '' ) );
           $CardHolderInfo  = sanitize_text_field( wp_unslash( $_POST['CardHolderInfo'] ?? '' ) );
           $CardHolderPan   = sanitize_text_field( wp_unslash( $_POST['CardHolderPan'] ?? '' ) );
           $FinalAmount     = sanitize_text_field( wp_unslash( $_POST['FinalAmount'] ?? '' ) );
+          // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 
           $params = [
             'ResCode'         => $resCode,
@@ -335,6 +327,7 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
 
             $error_message = $this->get_error_message( $resCode );
             wc_add_notice( $error_message, 'error' );
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
             do_action( 'wpp_wc_' . $this->id . '_gateway_failed_payment', $order );
             wp_safe_redirect( esc_url_raw( wc_get_checkout_url() ) );
             exit;
@@ -428,6 +421,7 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
           }
 
           // Action
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wpp_wc_' . $this->id . '_gateway_completed_payment', $order, $params );
 
           // Redirect
@@ -463,6 +457,7 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
 
         public function set_failed_payment( $order ) {
           wc_add_notice( $this->failed_massage, 'error' );
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wpp_wc_' . $this->id . '_gateway_failed_payment', $order );
           wp_safe_redirect( esc_url_raw( wc_get_checkout_url() ) );
           exit;
@@ -515,23 +510,8 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
         }
 
         public function verify( $params, $method = 'bpVerifyRequest' ): array {
-          if ( ! class_exists( 'nusoap_client' ) ) {
-            require_once( __DIR__ . '/lib/nusoap.php' );
-          }
-
-          $client                = new nusoap_client( 'https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl' );
           $orderId               = $params["SaleOrderId"];
           $verifySaleReferenceId = $params['SaleReferenceId'];
-
-          $err = $client->getError();
-          if ( $err ) {
-
-            return [
-              'status'  => false,
-              'message' => $err,
-              'code'    => ''
-            ];
-          }
 
           $parameters = array(
             'terminalId'      => $this->terminal_id,
@@ -541,7 +521,18 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
             'saleOrderId'     => $orderId,
             'saleReferenceId' => $verifySaleReferenceId
           );
-          $result     = $client->call( $method, $parameters, 'http://interfaces.core.sw.bps.com/' );
+          $response   = $this->soap_call( $method, $parameters );
+
+          if ( ! $response['status'] ) {
+
+            return [
+              'status'  => false,
+              'message' => $response['message'] !== '' ? $response['message'] : $this->failed_massage,
+              'code'    => ''
+            ];
+          }
+
+          $result = $response['result'];
 
           // Check Success
           if ( $result == '0' ) {
@@ -566,6 +557,86 @@ if ( ! function_exists( 'wpp_mellat_payment_gateway_init' ) ) {
             'message' => $this->failed_massage,
             'code'    => ''
           ];
+        }
+
+        /**
+         * Call a method of the Mellat (Behpardakht) web service
+         *
+         * Uses the PHP SOAP extension when it is available, otherwise posts the SOAP
+         * envelope with the WordPress HTTP API.
+         *
+         * @param string $method Web service method, e.g. bpPayRequest
+         * @param array $parameters Method parameters, in the order of the WSDL
+         *
+         * @return array{status: bool, fault: bool, result: string, message: string}
+         */
+        private function soap_call( string $method, array $parameters ): array {
+          $endpoint = 'https://bpm.shaparak.ir/pgwchannel/services/pgw';
+
+          if ( class_exists( 'SoapClient' ) ) {
+            try {
+              $client = new SoapClient( $endpoint . '?wsdl', array(
+                'encoding'           => 'UTF-8',
+                'connection_timeout' => 30,
+                'exceptions'         => true,
+              ) );
+              $result = $client->__soapCall( $method, array( $parameters ) );
+
+              return array(
+                'status'  => true,
+                'fault'   => false,
+                'result'  => is_object( $result ) && isset( $result->return ) ? (string) $result->return : '',
+                'message' => '',
+              );
+            } catch ( SoapFault $e ) {
+              return array( 'status' => false, 'fault' => true, 'result' => '', 'message' => $e->getMessage() );
+            } catch ( Exception $e ) {
+              return array( 'status' => false, 'fault' => false, 'result' => '', 'message' => $e->getMessage() );
+            }
+          }
+
+          $fields = '';
+          foreach ( $parameters as $name => $value ) {
+            $name   = preg_replace( '/[^A-Za-z0-9_]/', '', (string) $name );
+            $fields .= '<' . $name . '>' . htmlspecialchars( (string) $value, ENT_XML1 | ENT_QUOTES, 'UTF-8' ) . '</' . $name . '>';
+          }
+
+          $method = preg_replace( '/[^A-Za-z0-9_]/', '', $method );
+          $body   = '<?xml version="1.0" encoding="UTF-8"?>'
+                    . '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://interfaces.core.sw.bps.com/">'
+                    . '<soapenv:Header/><soapenv:Body>'
+                    . '<int:' . $method . '>' . $fields . '</int:' . $method . '>'
+                    . '</soapenv:Body></soapenv:Envelope>';
+
+          $response = wp_remote_post( $endpoint, array(
+            'timeout' => 30,
+            'headers' => array(
+              'Content-Type' => 'text/xml; charset=utf-8',
+              'SOAPAction'   => '""',
+            ),
+            'body'    => $body,
+          ) );
+
+          if ( is_wp_error( $response ) ) {
+            return array( 'status' => false, 'fault' => false, 'result' => '', 'message' => $response->get_error_message() );
+          }
+
+          $xml = wp_remote_retrieve_body( $response );
+
+          if ( preg_match( '#<(?:[\w-]+:)?faultstring[^>]*>(.*?)</(?:[\w-]+:)?faultstring>#s', $xml, $matches ) ) {
+            return array( 'status' => false, 'fault' => true, 'result' => '', 'message' => html_entity_decode( $matches[1], ENT_QUOTES | ENT_XML1, 'UTF-8' ) );
+          }
+
+          if ( ! preg_match( '#<(?:[\w-]+:)?return[^>]*>(.*?)</(?:[\w-]+:)?return>#s', $xml, $matches ) ) {
+            return array( 'status' => false, 'fault' => false, 'result' => '', 'message' => 'Invalid response from the bank' );
+          }
+
+          return array(
+            'status'  => true,
+            'fault'   => false,
+            'result'  => trim( html_entity_decode( $matches[1], ENT_QUOTES | ENT_XML1, 'UTF-8' ) ),
+            'message' => '',
+          );
         }
 
         public function get_error_message( $resCode ) {

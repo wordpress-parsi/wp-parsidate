@@ -100,6 +100,7 @@ class JetEngine extends Addon {
     $pluginVersion = Assets::getVersion();
     $debugName     = WP_PARSI_DEBUG_MODE ? '' : '.min';
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_jalali_datepicker_enqueue', 'jet-engine' );
 
     // JetEngine separates the visible datepicker input from the hidden input that
@@ -232,6 +233,9 @@ class JetEngine extends Addon {
    * @param int $postId Post ID
    */
   public function convertMetaDateFieldsToGregorian( $postId ) {
+    // Only the date format of the request is normalized here, before JetEngine saves it.
+    // WordPress has already verified the nonce of the edit post request.
+    // phpcs:ignore WordPress.Security.NonceVerification.Missing
     if ( wp_is_post_autosave( $postId ) || wp_is_post_revision( $postId ) || empty( $_POST ) ) {
       return;
     }
@@ -276,19 +280,28 @@ class JetEngine extends Addon {
 
     $key = $field['name'];
 
-    if ( ! isset( $_POST[ $key ] ) || ! is_string( $_POST[ $key ] ) || '' === trim( $_POST[ $key ] ) ) {
+    // Only the date format of the request is normalized here, before JetEngine saves it.
+    // WordPress has already verified the nonce of the edit post request.
+    // phpcs:disable WordPress.Security.NonceVerification.Missing
+    if ( ! isset( $_POST[ $key ] ) || ! is_string( $_POST[ $key ] ) ) {
       return;
     }
 
-    $value = $_POST[ $key ];
+    $value = sanitize_text_field( wp_unslash( $_POST[ $key ] ) );
+    // phpcs:enable WordPress.Security.NonceVerification.Missing
+
+    if ( '' === trim( $value ) ) {
+      return;
+    }
 
     $dateString = Date::isDateString( $value, $isDate ? 'Y-m-d' : 'Y-m-d\TH:i' );
 
     if ( $dateString['status'] && 'jalali' === $dateString['type'] ) {
-      $_POST[ $key ] = gregdate(
+      // phpcs:ignore WordPress.Security.NonceVerification.Missing -- See above.
+      $_POST[ $key ] = wp_slash( gregdate(
         $isDate ? 'Y-m-d' : 'Y-m-d\TH:i',
         $isDate ? $value : str_replace( 'T', ' ', $value )
-      );
+      ) );
     }
   }
 

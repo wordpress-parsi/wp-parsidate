@@ -18,6 +18,7 @@ class Posts {
      * @since 6.3
      *
      */
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $ignore = (array) apply_filters( 'wp_parsidate_posts_types_ignore_list', $ignore, $args );
 
     foreach ( $types as $pt ) {
@@ -36,9 +37,9 @@ class Posts {
   ): string {
     $postTypes = self::getTypes( $args, $ignore );
 
-    $select = '<select name="' . $name . '" id="' . $id . '">';
+    $select = '<select name="' . esc_attr( $name ) . '" id="' . esc_attr( $id ) . '">';
     foreach ( $postTypes as $postType => $label ) {
-      $select .= '<option value="' . esc_attr( $postType ) . '" ' . selected( $selected, $postType, false ) . '>' . $label . '</option>';
+      $select .= '<option value="' . esc_attr( $postType ) . '" ' . selected( $selected, $postType, false ) . '>' . esc_html( $label ) . '</option>';
     }
     $select .= '</select>';
 

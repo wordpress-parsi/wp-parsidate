@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: WP-Parsidate
+ * Plugin Name: پارسی دیت – Parsi Date
  * Version: 6.4
  * Plugin URI: https://wp-parsi.com/support/
  * Description: Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: posts, comments, pages, archives, search, categories, permalinks and all admin sections and TinyMce editor, lists, quick editor. This package has Jalali archive widget.
@@ -26,8 +26,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WP-Parsidate.
- *
- *
+ */
+
+namespace WPParsidate;
+
+defined( 'ABSPATH' ) || exit;
+
+/**
  * WordPress Parsi Package, Adds Persian language & Jalali date support to your blog
  *
  * Developers:
@@ -51,10 +56,6 @@
  * @package             WP-Parsidate
  * @subpackage          Core
  */
-
-namespace WPParsidate;
-
-defined( 'ABSPATH' ) || exit;
 
 use WPParsidate\Addons\Addons;
 use WPParsidate\Admin\Admin;
@@ -85,34 +86,42 @@ final class WP_Parsidate {
    */
   private function define(): void {
     if ( ! defined( 'WP_PARSI_KEY' ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Legacy public constant, kept for backward compatibility.
       define( 'WP_PARSI_KEY', 'wp_parsidate' );
     }
 
     if ( ! defined( 'WP_PARSI_KEY_SLUG' ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Legacy public constant, kept for backward compatibility.
       define( 'WP_PARSI_KEY_SLUG', 'wp-parsidate' );
     }
 
     if ( ! defined( 'WP_PARSI_KEY_CAP' ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Legacy public constant, kept for backward compatibility.
       define( 'WP_PARSI_KEY_CAP', 'WpParsiDate' );
     }
 
     if ( ! defined( 'WP_PARSI_ROOT' ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Legacy public constant, kept for backward compatibility.
       define( 'WP_PARSI_ROOT', __FILE__ );
     }
 
     if ( ! defined( 'WP_PARSI_DIR' ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Legacy public constant, kept for backward compatibility.
       define( 'WP_PARSI_DIR', rtrim( plugin_dir_path( WP_PARSI_ROOT ), '/' ) );
     }
 
     if ( ! defined( 'WP_PARSI_URL' ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Legacy public constant, kept for backward compatibility.
       define( 'WP_PARSI_URL', plugin_dir_url( WP_PARSI_ROOT ) );
     }
 
     if ( ! defined( 'WP_PARSI_CLASS_PREFIX' ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Legacy public constant, kept for backward compatibility.
       define( 'WP_PARSI_CLASS_PREFIX', 'wppd-' );
     }
 
     if ( ! defined( 'WP_PARSI_INPUT_PREFIX' ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Legacy public constant, kept for backward compatibility.
       define( 'WP_PARSI_INPUT_PREFIX', 'wp_parsidate_' );
     }
 
@@ -121,6 +130,7 @@ final class WP_Parsidate {
         require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
       }
       $pluginData = get_plugin_data( WP_PARSI_ROOT, false, false );
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Legacy public constant, kept for backward compatibility.
       define( 'WP_PARSI_VER', $pluginData['Version'] );
     }, 0 );
   }
@@ -141,6 +151,7 @@ final class WP_Parsidate {
    */
   private function instance(): void {
     if ( ! defined( 'WP_PARSI_DEBUG_MODE' ) ) {
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Legacy public constant, kept for backward compatibility.
       define( 'WP_PARSI_DEBUG_MODE', Settings::get( 'debug_mode', false ) );
     }
 

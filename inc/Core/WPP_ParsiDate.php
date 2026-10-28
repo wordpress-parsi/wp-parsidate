@@ -357,9 +357,9 @@ class WPP_ParsiDate {
       );
     }
 
-    return date(
+    return gmdate(
       $format,
-      mktime(
+      gmmktime(
         $matches[3] ?? 0,
         $matches[4] ?? 0,
         $matches[5] ?? 0,

@@ -189,6 +189,7 @@ class DashboardWidget {
          * @since 2.3.0
          *
          */
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WordPress core hook.
         'title'        => apply_filters( 'dashboard_primary_title', esc_html__( 'ParsiDate', 'wp-parsidate' ) ),
         'items'        => 5,
         'show_summary' => 0,
@@ -322,7 +323,7 @@ class DashboardWidget {
         'end_date'  => '2026-11-21',
       )
     );*/
-    $today = date( 'Y-m-d' );
+    $today = gmdate( 'Y-m-d' );
     foreach ( $allSponsors as $sponsor ) {
       if ( strtotime( $sponsor['end_date'] ) > strtotime( $today ) ) {
         $sponsors[] = $sponsor;
@@ -340,11 +341,15 @@ class DashboardWidget {
 
     $sponsors = [];
     $urls     = [
-      'https://raw.githubusercontent.com/wordpress-parsi/wp-parsidate/refs/heads/master/inc/Data/sponsors.json'
+      // GitHub contents API, returns the raw JSON file of the repository (cached for a day).
+      'https://api.github.com/repos/wordpress-parsi/wp-parsidate/contents/inc/Data/sponsors.json?ref=master'
     ];
 
     foreach ( $urls as $url ) {
-      $response = wp_remote_get( $url, [ 'timeout' => 6 ] );
+      $response = wp_remote_get( $url, [
+        'timeout' => 6,
+        'headers' => [ 'Accept' => 'application/vnd.github.raw+json' ],
+      ] );
 
       if ( ! is_wp_error( $response ) ) {
         $data = JSON::decode( wp_remote_retrieve_body( $response ), true );

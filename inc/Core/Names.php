@@ -113,6 +113,7 @@ class Names {
       );
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $names = apply_filters( 'wp_parsidate_name_of_gregorian_months', $names, $type, $short );
     Cache::set( $cacheKey, $names );
 
@@ -247,6 +248,7 @@ class Names {
       );
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $names = apply_filters( 'wp_parsidate_name_of_months', $names, $type );
     Cache::set( 'months_name_' . $type, $names );
 
@@ -305,6 +307,7 @@ class Names {
       );
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $names = apply_filters( 'wp_parsidate_name_of_week_days', $names, $type );
     Cache::set( 'week_day_names_' . $type, $names );
 
@@ -372,6 +375,7 @@ class Names {
       );
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $names = apply_filters( 'wp_parsidate_name_of_gregorian_week_days', $names, $type, $short );
     Cache::set( $cacheKey, $names );
 

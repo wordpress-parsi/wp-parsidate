@@ -29,6 +29,7 @@ class HookDeactivator {
    * @return bool Disable status
    */
   public static function checkDisable(): bool {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     if ( apply_filters( 'wp_parsidate_hook_deactivator_check_disable', false ) ) {
       return true;
     }
@@ -111,6 +112,7 @@ class HookDeactivator {
 
     $hooks   = array();
     $rawList = Settings::get( 'hook_deactivator_list', '' );
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $rawList = apply_filters( 'wp_parsidate_hook_deactivator_raw_list', $rawList );
     $lists   = explode( "\n", $rawList );
 
@@ -127,6 +129,7 @@ class HookDeactivator {
 
     Cache::set( 'hook_deactivator_list', $hooks );
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wp_parsidate_hook_deactivator_list', $hooks );
   }
 

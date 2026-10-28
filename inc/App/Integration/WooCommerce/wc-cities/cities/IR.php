@@ -1,11 +1,14 @@
 <?php
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Iran cities
  */
 
 global $cities;
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Global shared with the WC City Select cities format.
 $cities['IR'] = array(
   'KHZ' => array(
     'آبادان',

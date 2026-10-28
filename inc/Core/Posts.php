@@ -170,7 +170,7 @@ class Posts {
   public function adminPostsWhere( $where ): string {
     global $wp_query;
 
-    if ( isset( $_GET['mfa'] ) && Param::get( 'mfa' ) !== '0' ) {
+    if ( false !== Param::get( 'mfa' ) && Param::get( 'mfa' ) !== '0' ) {
       $wp_query->query_vars['m'] = Param::get( 'mfa', 0, FILTER_SANITIZE_NUMBER_INT );
       $where                     = self::getPostsWhere( $where, $wp_query );
     }
@@ -185,6 +185,7 @@ class Posts {
   public function addMonthYearSelectPostFilter(): void {
     global $post_type, $post_status, $wpdb;
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WordPress core hook.
     if ( apply_filters( 'disable_months_dropdown', false, $post_type ) ) {
       return;
     }
@@ -196,26 +197,27 @@ class Posts {
     $list     = Cache::get( $cacheKey );
 
     if ( false === $list ) {
-      $postStatusWhere = " AND post_status IN ('publish', 'future', 'draft', 'pending', 'private')";
+      $postStatuses = [ 'publish', 'future', 'draft', 'pending', 'private' ];
 
       if ( is_array( $post_status ) && ! empty( $post_status ) ) {
-        $postStatusWhere = $wpdb->prepare( " AND post_status IN ('" . implode( "','", $post_status ) . "')" );
-
-      } elseif ( $postStatus !== "" && is_string( $postStatus ) ) {
-        $postStatusWhere = $wpdb->prepare( " AND post_status = %s", $postStatus );
+        $postStatuses = array_values( array_map( 'sanitize_key', $post_status ) );
+      } elseif ( $postStatus !== '' ) {
+        $postStatuses = [ sanitize_key( $postStatus ) ];
       }
 
-      $query = $wpdb->prepare( "
-            SELECT post_date
+      // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Result is cached with Cache::set() below.
+      $list = $wpdb->get_col(
+        $wpdb->prepare(
+          "SELECT post_date
             FROM {$wpdb->posts}
             WHERE post_type = %s
-            {$postStatusWhere}
+            AND post_status IN (" . implode( ', ', array_fill( 0, count( $postStatuses ), '%s' ) ) . ")
             AND post_date > '1000-01-01 00:00:00'
             GROUP BY YEAR(post_date), MONTH(post_date)
-            ORDER BY post_date DESC
-        ", $postType );
-
-      $list = $wpdb->get_col( $query );
+            ORDER BY post_date DESC",
+          array_merge( [ $postType ], $postStatuses )
+        )
+      );
 
       if ( ! empty( $list ) ) {
         Cache::set( $cacheKey, $list, 2 * HOUR_IN_SECONDS );

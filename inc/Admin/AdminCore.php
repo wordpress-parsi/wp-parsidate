@@ -36,6 +36,7 @@ class AdminCore {
       self::$settings = array(
         'title'    => esc_html__( 'Core settings', 'wp-parsidate' ),
         'desc'     => esc_html__( 'Global plugin settings', 'wp-parsidate' ),
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
         'sections' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_sections', [] )
         //'settings' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_options', [] )
       );

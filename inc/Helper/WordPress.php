@@ -4,7 +4,7 @@ namespace WPParsidate\Helper;
 
 class WordPress {
   public static function debug(): bool {
-    return WP_DEBUG || wp_is_development_mode( 'plugin' );
+    return WP_DEBUG || ( function_exists( 'wp_is_development_mode' ) && wp_is_development_mode( 'plugin' ) );
   }
 
   /**
@@ -257,7 +257,7 @@ class WordPress {
       return 'hello-dolly';
     }
 
-    return str_contains( $pluginFile, '/' ) ? dirname( $pluginFile ) : str_replace( '.php', '', $pluginFile );
+    return false !== strpos( $pluginFile, '/' ) ? dirname( $pluginFile ) : str_replace( '.php', '', $pluginFile );
   }
 
   /**

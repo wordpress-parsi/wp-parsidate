@@ -5,4 +5,4 @@ if ( ! isset( $args ) ) {
   return;
 }
 
-echo '<div class="wppd-feed-none">' . $args['desc'] . '</div>';
+echo '<div class="wppd-feed-none">' . wp_kses_post( $args['desc'] ) . '</div>';

@@ -5,6 +5,8 @@ use WPParsidate\Helper\{Date, Number, WooCommerce, WordPress};
 use WPParsidate\Core\Archive;
 use WPParsidate\Settings\Settings;
 
+defined( 'ABSPATH' ) || exit;
+
 if ( ! function_exists( 'wp_get_parchives' ) ) {
   /**
    * Displays Jalali archive links based on type and format.
@@ -14,6 +16,7 @@ if ( ! function_exists( 'wp_get_parchives' ) ) {
    * @return void|string Void if 'echo' argument is true, archive links if 'echo' is false.
    *
    */
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function wp_get_parchives( $args = '' ) {
     return Archive::getPostTypeArchives( $args );
   }
@@ -28,6 +31,7 @@ if ( ! function_exists( 'wpp_is_active' ) ) {
    * @return              bool
    * @since               4.0.0
    */
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function wpp_is_active( $option_name ): bool {
     return Settings::get( $option_name, false ) === true;
   }
@@ -39,6 +43,7 @@ if ( ! function_exists( 'disable_wpp' ) ) {
    *
    * @return bool
    */
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function disable_wpp(): bool {
     return HookDeactivator::checkDisable();
   }
@@ -53,6 +58,7 @@ if ( ! function_exists( 'wpp_date_is' ) ) {
    *
    * @return array
    */
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function wpp_date_is( $dateString, $format = 'Y-m-d\TH:i:sP' ): array {
     return Date::isDateString( $dateString, $format );
   }
@@ -67,6 +73,7 @@ if ( ! function_exists( 'wpp_is_time_validate' ) ) {
    *
    * @return false|string
    */
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function wpp_is_time_validate( $time, string $default_seconds = '00' ) {
     return Date::isTimeString( $time, $default_seconds );
   }
@@ -81,6 +88,7 @@ if ( ! function_exists( 'wpp_is_postal_code_validate' ) ) {
    *
    * @return bool
    */
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function wpp_is_postal_code_validate( $postalCode, bool $checkSum = false ): bool {
     return WooCommerce::isPostalCode( $postalCode, $checkSum );
   }
@@ -92,6 +100,7 @@ if ( ! function_exists( 'wpp_is_sitemap' ) ) {
    *
    * @return boolean
    */
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function wpp_is_sitemap(): bool {
     return WordPress::isSitemap();
   }
@@ -105,6 +114,7 @@ if ( ! function_exists( 'fix_number' ) ) {
    *
    * @return array|string|string[]|null
    */
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function fix_number( string $content ) {
     return Number::fixNumber( $content );
   }
@@ -116,6 +126,7 @@ if ( ! function_exists( 'wpp_is_feed' ) ) {
    *
    * @return bool
    */
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function wpp_is_feed(): bool {
     return WordPress::isFeed();
   }
@@ -129,6 +140,7 @@ if ( ! function_exists( 'per_number' ) ) {
    *
    * @return              string Formatted numbers
    */
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function per_number( string $number ): string {
     return Number::toPersian( $number );
   }
@@ -142,6 +154,7 @@ if ( ! function_exists( 'eng_number' ) ) {
    *
    * @return              string Formatted numbers
    */
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function eng_number( string $number ): string {
     return Number::toEnglish( $number );
   }

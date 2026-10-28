@@ -38,6 +38,7 @@ class AdminTools {
       self::$settings = array(
         'title'    => esc_html__( 'Tools settings', 'wp-parsidate' ),
         'desc'     => esc_html__( 'Advanced tools', 'wp-parsidate' ),
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
         'sections' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_sections', [] )
         //'settings' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_options', [] )
       );

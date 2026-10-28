@@ -89,6 +89,7 @@ class Addons {
   }
 
   public function settings(): array {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $addons    = apply_filters( 'wp_parsidate_addons', array() );
     $addonList = array();
     $addonCats = self::getAddonCats();
@@ -220,6 +221,7 @@ class Addons {
 
         $elementList[ $cat . '_startaddons' ] = array(
           'type'  => 'startaddons',
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           'title' => apply_filters( 'wp_parsidate_addons_page_cat_title', $addonCats[ $cat ], $cat ),
         );
 
@@ -246,7 +248,9 @@ class Addons {
 
     return array(
       'title'    => esc_html__( 'Addons', 'wp-parsidate' ),
-      'desc'     => sprintf( __( 'Parsidate is integrated with the following plugins, and if you use any of them, you can enable it. If you are using a plugin that is not integrated with Parsidate, please submit a <a href="%s" target="_blank">request</a>.', 'wp-parsidate' ), 'https://github.com/wordpress-parsi/wp-parsidate/issues' ),
+      'desc'     => sprintf(
+        /* translators: %s: URL of the GitHub issues page for integration requests. */
+        __( 'Parsidate is integrated with the following plugins, and if you use any of them, you can enable it. If you are using a plugin that is not integrated with Parsidate, please submit a <a href="%s" target="_blank">request</a>.', 'wp-parsidate' ), 'https://github.com/wordpress-parsi/wp-parsidate/issues' ),
       'settings' => $elementList
     );
   }
@@ -270,6 +274,7 @@ class Addons {
       'security'       => esc_html__( 'Security', 'wp-parsidate' ),
     );
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $cats = apply_filters( 'wp_parsidate_addon_cats', array() );
     $cats = is_array( $cats ) ? $cats : [];
 

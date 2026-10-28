@@ -46,6 +46,7 @@ class FixTitle {
      *
      * @param string $sep Document title separator. Default '-'.
      */
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WordPress core hook.
     $sep = apply_filters( 'document_title_separator', $sep );
 
     // Sanitized copy of the request vars. $wp_query->query is deliberately not

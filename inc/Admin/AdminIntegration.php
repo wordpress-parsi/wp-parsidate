@@ -41,6 +41,7 @@ class AdminIntegration {
       self::$settings = array(
         'title'    => esc_html__( 'Integration settings', 'wp-parsidate' ),
         'desc'     => esc_html__( 'ParsiDate integration settings', 'wp-parsidate' ),
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
         'sections' => apply_filters( 'wp_parsidate_' . self::tab . '_settings_sections', [] )
       );
     }

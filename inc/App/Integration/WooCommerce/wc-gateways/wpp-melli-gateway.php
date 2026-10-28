@@ -6,6 +6,7 @@ defined( 'ABSPATH' ) or exit( 'No direct script access allowed' );
 
 if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
 
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy public function, kept for backward compatibility.
   function wpp_melli_payment_gateway_init() {
     if ( ! class_exists( 'WPP_WC_Melli_Gateway' ) && ! class_exists( 'WPP_WC_Melli_Gateway' ) ) {
       /**
@@ -15,6 +16,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
        * @subpackage              Plugins/WooCommerce/PaymentGateways
        * @since 5.0.0
        */
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Legacy class name, kept for backward compatibility.
       class WPP_WC_Melli_Gateway extends WC_Payment_Gateway {
 
         // Order meta holding the payment tokens requested for the order
@@ -38,6 +40,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
           $this->method_description = $this->gateway_name . ' ' . esc_html__( 'payment gateway (By WP-Parsidate)',
               'wp-parsidate' );
           $this->has_fields         = true;
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Legacy public hook name, kept for backward compatibility.
           $this->icon               = apply_filters( $this->id . '_logo',
             Assets::url( "images/woocommerce/$this->id-logo.png" ) );
 
@@ -64,6 +67,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         }
 
         public function init_form_fields() {
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           $this->form_fields = apply_filters( 'wpp_wc_' . $this->id . '_gateway_config', array(
               'enabled'        => array(
                 'title'       => esc_html__( 'Enabled/Disabled', 'wp-parsidate' ),
@@ -123,6 +127,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         public function get_icon() {
           $icon = $this->icon ? '<img src="' . esc_url_raw( WC_HTTPS::force_https_url( $this->icon ) ) . '" alt="' . esc_attr( $this->get_title() ) . '" />' : '';
 
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce hook.
           return apply_filters( 'woocommerce_gateway_icon', $icon, $this->id );
         }
 
@@ -177,6 +182,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
           $refId = $this->get_ref_id_from_melli( $order );
 
           // Action
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wpp_wc_' . $this->id . '_gateway_process_payment', $order, $refId );
 
           if ( $refId['status'] === false ) {
@@ -210,11 +216,12 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         public function get_ref_id_from_melli( $order ): array {
           $Amount        = $this->get_amount( $order );
           $OrderId       = $order->get_id();
-          $LocalDateTime = date( "m/d/Y g:i:s a" );
+          $LocalDateTime = gmdate( "m/d/Y g:i:s a" );
           $TerminalId    = $this->terminal_id;
           $key           = $this->key;
           $SignData      = $this->encrypt_pkcs7( "$TerminalId;$OrderId;$Amount", "$key" );
 
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           $data = apply_filters( 'wpp_wc_' . $this->id . '_gateway_request_payment', array(
             'TerminalId'    => $this->terminal_id,
             'MerchantId'    => $this->merchant_id,
@@ -253,8 +260,10 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         }
 
         public function handle_gateway_response() {
+          // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing -- Bank callback request, it cannot carry a WordPress nonce. The payment is verified with the bank API.
           $action   = sanitize_text_field( wp_unslash( $_GET['action'] ?? '' ) );
           $order_id = (int) sanitize_text_field( wp_unslash( $_GET['order_id'] ?? 0 ) );
+          // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
           $order    = wc_get_order( $order_id );
 
           if ( ! $order ) {
@@ -280,8 +289,10 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         }
 
         public function verify_payment( $order ) {
+          // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing -- Bank callback request, it cannot carry a WordPress nonce. The payment is verified with the bank API.
           $Token   = sanitize_text_field( wp_unslash( $_POST["token"] ?? '' ) );
           $ResCode = sanitize_text_field( wp_unslash( $_POST["ResCode"] ?? '' ) );
+          // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 
           if ( $ResCode != 0 ) {
             $this->set_failed_payment( $order );
@@ -368,6 +379,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
           WC()->cart->empty_cart();
 
           // Action
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wpp_wc_' . $this->id . '_gateway_completed_payment', $order, [
             'RetrivalRefNo' => $retrieval_ref_no,
             'SystemTraceNo' => isset( $result->SystemTraceNo ) ? $result->SystemTraceNo : '',
@@ -494,6 +506,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
 
         public function set_failed_payment( $order ) {
           wc_add_notice( $this->failed_massage, 'error' );
+          // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
           do_action( 'wpp_wc_' . $this->id . '_gateway_failed_payment', $order );
           wp_safe_redirect( esc_url_raw( wc_get_checkout_url() ) );
           exit;

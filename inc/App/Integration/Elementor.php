@@ -148,6 +148,7 @@ class Elementor extends Addon {
         width: 100%;
         box-sizing: border-box;
       }";
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $wpp_elementor_css = apply_filters( "wpp_elementor_css", $wpp_elementor_css );
     wp_add_inline_style( "elementor-editor", $wpp_elementor_css );
   }
@@ -163,6 +164,7 @@ class Elementor extends Addon {
       return true;
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     return apply_filters( 'wp_parsidate_elementor_enqueue_front_assets', true );
   }
 
@@ -174,7 +176,7 @@ class Elementor extends Addon {
    * @return bool
    */
   private function isSubmissionsScreen( $hookSuffix = '' ): bool {
-    if ( str_contains( (string) $hookSuffix, 'e-form-submissions' ) ) {
+    if ( false !== strpos( (string) $hookSuffix, 'e-form-submissions' ) ) {
       return true;
     }
 
@@ -184,7 +186,7 @@ class Elementor extends Addon {
 
     $screen = get_current_screen();
 
-    return $screen && str_contains( (string) $screen->id, 'e-form-submissions' );
+    return $screen && false !== strpos( (string) $screen->id, 'e-form-submissions' );
   }
 
   /**
@@ -201,6 +203,7 @@ class Elementor extends Addon {
     wp_enqueue_script( WP_PARSI_KEY . '_jalali_datepicker', Assets::url( 'js-admin/jalalidatepicker.min.js' ), [ WP_PARSI_KEY . '_jalali_date' ], $pluginVersion, [ 'in_footer' => true ] );
     wp_enqueue_style( WP_PARSI_KEY . '_jalali_datepicker', Assets::url( "css-admin/jalalidatepicker$debugName.css" ), null, $pluginVersion );
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     do_action( 'wp_parsidate_jalali_datepicker_enqueued', 'elementor' );
   }
 

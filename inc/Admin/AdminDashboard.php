@@ -33,6 +33,7 @@ class AdminDashboard {
   public function content(): void {
     $dashboardTypeLinks = array(
       'addons' => $this->getAddons(),
+      // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
       'custom' => apply_filters( 'wp_parsidate_dashboard_custom_links', [] )
     );
 
@@ -69,6 +70,7 @@ class AdminDashboard {
   }
 
   private function getAddons(): array {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
     $addons    = apply_filters( 'wp_parsidate_dashboard_addon_links', [] );
     $addonCats = Addons::getAddonCats();
     $addonList = array();

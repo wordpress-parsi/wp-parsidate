@@ -78,6 +78,7 @@ class RankMath extends Addon {
             if ( isset( $variant['offers']['priceCurrency'] ) and strtoupper( $variant['offers']['priceCurrency'] ) === "IRT" ) {
               $data[ $key ]['hasVariant'][ $variantKey ]['offers']['priceCurrency'] = 'IRR';
               if ( ! empty( $variant['offers']['price'] ) and (float) $variant['offers']['price'] > 0 ) {
+                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
                 $data[ $key ]['hasVariant'][ $variantKey ]['offers']['price'] = apply_filters( "wpp_rank_math_product_variant_price",
                   ( $variant['offers']['price'] * 10 ), $variant );
               }
@@ -122,6 +123,7 @@ class RankMath extends Addon {
 
       $entity['offers']['priceCurrency'] = 'IRR';
       if ( ! empty( $entity['offers']['price'] ) and (float) $entity['offers']['price'] > 0 ) {
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
         $entity['offers']['price'] = apply_filters( "wpp_rank_math_product_price",
           ( $entity['offers']['price'] * 10 ), $entity );
       }
