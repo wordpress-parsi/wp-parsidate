@@ -25,6 +25,17 @@ class Calendar {
   public static function printCalendar( string $postType = 'post', string $theme = 'none' ): void {
     global $wpdb, $m, $monthnum, $year, $day, $posts;
 
+    // Both arguments can come from a Gutenberg block attribute, which anyone
+    // who can edit a post is able to set, so treat them as untrusted input.
+    // They are only ever used as a post type slug and as a CSS class suffix.
+    $postType = sanitize_key( $postType );
+
+    if ( '' === $postType ) {
+      $postType = 'post';
+    }
+
+    $theme = sanitize_html_class( $theme, 'none' );
+
     $monthsName = Names::getMonths();
     $jy         = 0;
     $pd         = WPP_ParsiDate::getInstance();
@@ -90,8 +101,6 @@ class Calendar {
       $thisDay      = gmdate( 'd', $nowTimestamp + $tzOffset );
     }
 
-    //print_r($wp_query->query_vars);
-
     if ( $is_gregorian ) {
       list( $jthisyear,
         $jthismonth,
@@ -143,9 +152,9 @@ class Calendar {
                 ", $end, $postType )
     );
 
-    $calendar_output = '<table id="wp-calendar" class="widget_calendar ' . WP_PARSI_CLASS_PREFIX . 'calendar-widget-table ' . WP_PARSI_CLASS_PREFIX . 'calendar-widget-theme-' . $theme . '">' .
-                       '<caption>' . $monthsName[ (int) $jthismonth ] . ' ' .
-                       $pd->persian_date( 'Y', $unixmonth ) . '</caption><thead><tr>';
+    $calendar_output = '<table id="wp-calendar" class="widget_calendar ' . WP_PARSI_CLASS_PREFIX . 'calendar-widget-table ' . WP_PARSI_CLASS_PREFIX . 'calendar-widget-theme-' . esc_attr( $theme ) . '">' .
+                       '<caption>' . esc_html( $monthsName[ (int) $jthismonth ] ) . ' ' .
+                       esc_html( $pd->persian_date( 'Y', $unixmonth ) ) . '</caption><thead><tr>';
     $myweek          = array();
 
     for ( $wdcount = 0; $wdcount <= 6; $wdcount ++ ) {
@@ -153,7 +162,7 @@ class Calendar {
     }
 
     foreach ( $myweek as $wd ) {
-      $calendar_output .= "\n\t\t<th scope=\"col\" title=\"$wd\">$wd</th>";
+      $calendar_output .= "\n\t\t<th scope=\"col\" title=\"" . esc_attr( $wd ) . '">' . esc_html( $wd ) . '</th>';
     }
 
     $calendar_output .= '</tr></thead><tfoot><tr>';
@@ -171,7 +180,7 @@ class Calendar {
       if ( 'post' !== $postType ) {
         $url = add_query_arg( 'post_type', $postType, $url );
       }
-      $calendar_output .= "\n\t\t" . '<td colspan="3" id="prev"><a href="' . $url . '">&laquo; ' . $monthsName[ $previous_month ] . '</a></td>';
+      $calendar_output .= "\n\t\t" . '<td colspan="3" id="prev"><a href="' . esc_url( $url ) . '">&laquo; ' . esc_html( $monthsName[ $previous_month ] ) . '</a></td>';
     } else {
       $calendar_output .= "\n\t\t" . '<td colspan="3" id="prev" class="pad">&nbsp;</td>';
     }
@@ -191,7 +200,7 @@ class Calendar {
       if ( 'post' !== $postType ) {
         $url = add_query_arg( 'post_type', $postType, $url );
       }
-      $calendar_output .= "\n\t\t" . '<td colspan="3" id="next"><a href="' . $url . '">' . $monthsName[ $next_month ] . ' &raquo;</a></td>';
+      $calendar_output .= "\n\t\t" . '<td colspan="3" id="next"><a href="' . esc_url( $url ) . '">' . esc_html( $monthsName[ $next_month ] ) . ' &raquo;</a></td>';
     } else {
       $calendar_output .= "\n\t\t" . '<td colspan="3" id="next" class="pad">&nbsp;</td>';
     }
@@ -250,8 +259,7 @@ class Calendar {
     if ( $ak_post_titles ) {
       foreach ( $ak_post_titles as $ak_post_title ) {
         /** This filter is documented in wp-includes/post-template.php */
-        $post_title         = esc_attr( apply_filters( 'the_title', $ak_post_title->post_title,
-          $ak_post_title->ID ) );
+        $post_title         = apply_filters( 'the_title', $ak_post_title->post_title, $ak_post_title->ID );
         $ak_post_title->dom = $pd->persian_date( 'j',
           "$ak_post_title->year-$ak_post_title->month-$ak_post_title->dom", 'eng' );
 
@@ -271,7 +279,7 @@ class Calendar {
     $pad = $pd->persian_date( "w", $pd->gregorian_date( "Y-m-d", $jthisyear . "-" . $jthismonth . "-01" ), "eng" );
 
     if ( 0 != $pad ) {
-      $calendar_output .= "\n\t\t" . '<td colspan="' . $pad . '" class="pad">&nbsp;</td>';
+      $calendar_output .= "\n\t\t" . '<td colspan="' . (int) $pad . '" class="pad">&nbsp;</td>';
     }
 
     $daysInMonth  = (int) $pd->persian_date( 't', $unixmonth, 'eng' );
@@ -303,9 +311,9 @@ class Calendar {
         if ( 'post' !== $postType ) {
           $url = add_query_arg( 'post_type', $postType, $url );
         }
-        $calendar_output .= '<a href="' . $url . "\" title=\"$ak_titles_for_day[$day]\">$p_day</a>";
+        $calendar_output .= '<a href="' . esc_url( $url ) . '" title="' . esc_attr( $ak_titles_for_day[ $day ] ?? '' ) . '">' . esc_html( $p_day ) . '</a>';
       } else {
-        $calendar_output .= $p_day;
+        $calendar_output .= esc_html( $p_day );
       }
 
       $calendar_output .= '</td>';
@@ -318,9 +326,11 @@ class Calendar {
     $pad = 6 - calendar_week_mod( $pd->gregorian_date( 'w', "$jthisyear-$jthismonth-" . ( $day - 1 ), 'eng' ) - $week_begins );
 
     if ( $pad != 0 && $pad != 7 ) {
-      $calendar_output .= "\n\t\t" . '<td class="pad" colspan="' . $pad . '">&nbsp;</td>';
+      $calendar_output .= "\n\t\t" . '<td class="pad" colspan="' . (int) $pad . '">&nbsp;</td>';
     }
 
+    // Every dynamic value was escaped with esc_attr()/esc_html()/esc_url()
+    // while the markup above was assembled.
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo $calendar_output . "\n\t</tr>\n\t</tbody>\n\t</table>";
   }
