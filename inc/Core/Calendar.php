@@ -100,7 +100,7 @@ class Calendar {
       $unixmonth = $pd->gregorian_date( 'Y-m-d 00:00:00', "$jthisyear-$jthismonth-01" );
     } else {
       $gdate      = $pd->persian_to_gregorian( $thisYear, $thisMonth, 1 );
-      $unixmonth  = mktime( 0, 0, 0, $gdate[1], 1, $gdate[0] );
+      $unixmonth  = mktime( 0, 0, 0, $gdate[1], $gdate[2], $gdate[0] );
       $jthisyear  = $thisYear;
       $jthismonth = $thisMonth;
     }
@@ -315,7 +315,7 @@ class Calendar {
       }
     }
 
-    $pad = 7 - calendar_week_mod( $pd->gregorian_date( 'w', "$jthisyear-$jthismonth-$day", 'eng' ) - $week_begins );
+    $pad = 6 - calendar_week_mod( $pd->gregorian_date( 'w', "$jthisyear-$jthismonth-" . ( $day - 1 ), 'eng' ) - $week_begins );
 
     if ( $pad != 0 && $pad != 7 ) {
       $calendar_output .= "\n\t\t" . '<td class="pad" colspan="' . $pad . '">&nbsp;</td>';
