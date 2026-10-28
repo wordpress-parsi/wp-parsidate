@@ -45,7 +45,7 @@ class Plugin {
    * Uses determine_locale() instead of hardcoding 'fa_IR' for multi-locale flexibility.
    */
   public function loadTextDomain(): void {
-    if ( __( 'WordPress', 'wp-parsidate' ) !== 'وردپرس' || Settings::get( 'local_text_domain', false ) ) {
+    if ( ! is_textdomain_loaded( 'wp-parsidate' ) || Settings::get( 'local_text_domain', false ) ) {
       load_textdomain(
         'wp-parsidate',
         WP_PARSI_DIR . '/languages/wp-parsidate-' . determine_locale() . '.mo'
