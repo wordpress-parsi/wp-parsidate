@@ -16,8 +16,12 @@ jQuery(document).ready(function ($) {
       let inputField = $('body.woocommerce_page_wc-orders form#order ' + fieldSelector);
 
       inputField.each(function (index) {
-        value = wppdWcConv2EnNum($(this).attr('value'));
-        $(this).attr('value', value).val(value).trigger('change');
+        // Read the live value, not the value attribute: the order screen writes latin
+        // digits into these fields, and copying the attribute back would put the
+        // Persian digits the browser cannot submit into the number inputs again.
+        const value = wppdWcConv2EnNum($(this).val() || '');
+
+        $(this).val(value).trigger('change');
       });
     })
   }

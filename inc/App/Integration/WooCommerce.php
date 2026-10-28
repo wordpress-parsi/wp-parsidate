@@ -457,25 +457,24 @@ class WooCommerce extends Addon {
     $current_screen = $this->getCurrentScreen();
 
     if ( 'edit_order' === $current_screen ) {
-      if ( ! \WPParsidate\Helper\WooCommerce::hposEnabled() ) {
-        global $post;
+      $createdDate = $this->getEditOrderCreatedDate();
 
-        if ( ! $post ) {
-          $jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d' ), 'eng' );
-        } else {
-          $jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d', strtotime( $post->post_date ) ), 'eng' );
-        }
-      } else {
-        global $theorder;
-
-        if ( ! $theorder ) {
-          $jalali_date = parsidate( 'Y-m-d', date( 'Y-m-d' ), 'eng' );
-        } else {
-          $jalali_date = parsidate( 'Y-m-d', ! is_null( $theorder->get_date_created() ) ? $theorder->get_date_created()->getOffsetTimestamp() : '', 'eng' );
-        }
+      if ( null === $createdDate ) {
+        // The order could not be resolved, so there is no date to show. Leaving the
+        // field alone keeps the value WooCommerce rendered; writing a made-up date
+        // here would be saved back on the next status change and move the order date.
+        return;
       }
 
-      wp_add_inline_script( WP_PARSI_KEY . '_datepicker', 'jQuery("input[name=order_date]").val("' . $jalali_date . '")' );
+      // The hour, minute and second fields are <input type="number">, so Persian digits
+      // make the browser submit an empty value and WooCommerce turns the time into
+      // 00:00 on every save. They are written with latin digits unconditionally.
+      wp_add_inline_script( WP_PARSI_KEY . '_datepicker',
+        'jQuery("input[name=order_date]").val("' . esc_js( $createdDate['date'] ) . '");' .
+        'jQuery("input[name=order_date_hour]").val("' . esc_js( $createdDate['hour'] ) . '");' .
+        'jQuery("input[name=order_date_minute]").val("' . esc_js( $createdDate['minute'] ) . '");' .
+        'jQuery("input[name=order_date_second]").val("' . esc_js( $createdDate['second'] ) . '");'
+      );
 
     } elseif ( 'legacy_report' === $current_screen ) {
       $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
@@ -545,6 +544,42 @@ class WooCommerce extends Addon {
         }
       }
     }
+  }
+
+  /**
+   * Creation date of the order shown on the order edit screen
+   *
+   * The date field is displayed in Jalali, while the time fields are plain numbers, so
+   * both are returned ready to be written into the form.
+   *
+   * @return array{date: string, hour: string, minute: string, second: string}|null Null when
+   *                                                                               no order date is available
+   * @since 6.4.2
+   */
+  private function getEditOrderCreatedDate(): ?array {
+    global $post, $theorder;
+
+    $timestamp = null;
+
+    if ( \WPParsidate\Helper\WooCommerce::hposEnabled() ) {
+      if ( $theorder instanceof \WC_Abstract_Order && $theorder->get_date_created() ) {
+        // Offset timestamp: the order date as the site time zone shows it.
+        $timestamp = $theorder->get_date_created()->getOffsetTimestamp();
+      }
+    } elseif ( $post instanceof \WP_Post && 'shop_order' === $post->post_type && ! empty( $post->post_date ) ) {
+      $timestamp = strtotime( $post->post_date );
+    }
+
+    if ( empty( $timestamp ) ) {
+      return null;
+    }
+
+    return array(
+      'date'   => parsidate( 'Y-m-d', $timestamp, 'eng' ),
+      'hour'   => gmdate( 'H', $timestamp ),
+      'minute' => gmdate( 'i', $timestamp ),
+      'second' => gmdate( 's', $timestamp ),
+    );
   }
 
   /**
@@ -746,13 +781,18 @@ class WooCommerce extends Addon {
     $postedDate = wc_get_post_data_by_key( 'order_date' );
     $orderDate  = is_string( $postedDate ) ? Number::toEnglish( trim( $postedDate ) ) : '';
 
-    if ( '' === $orderDate ) {
-      return;
-    }
-
     $order = wc_get_order( $order_id );
 
     if ( ! $order ) {
+      return;
+    }
+
+    if ( '' === $orderDate ) {
+      // WooCommerce replaces an empty date with time(), so an empty field (a cleared
+      // field, or a screen that does not post it) moved the order date to "now" on
+      // every status change. The stored date is kept instead.
+      $this->restorePostedOrderDate( $order );
+
       return;
     }
 
