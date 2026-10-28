@@ -68,6 +68,25 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 
 == Changelog ==
 
+= 6.5 =
+* Security: Stored XSS in the calendar block `theme` attribute (CVE-2026-97642). Block attributes are now sanitized and the calendar output escaped.
+* Security: Escape calendar links, post titles, month names, and table attributes at the point of output.
+* Security: Harden the Mellat, Parsian, and Pasargad payment gateways.
+* Add: Dokan integration. Jalali date fields in Dokan admin screens and the seller dashboard.
+* Add: Directories addon. Jalali datepicker for Directories date fields. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/341)
+* Add: Jalali date/time picker for Elementor editor widget settings, with a new "fix_editor_date_time" option.
+* Add: Optional plugins in addon requirements (e.g. Dokan Pro on top of Dokan Lite).
+* Fix: WooCommerce order date saving, including server-rendered order date fields. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/351)
+* Fix: Show the Jalali datepicker on the WooCommerce orders admin screen.
+* Fix: Prevent WooCommerce order date corruption (year 2647) and accept Persian numerals in the date input pattern.
+* Fix: Restore the WooCommerce classic city dropdown.
+* Fix: Wrong Jalali year and trailing week padding in the calendar block and widget. [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/352)
+* Fix: `_load_textdomain_just_in_time` notice on WordPress 6.7+. [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/353)
+* Fix: PHP warnings in the ACF date/time pickers and the "access_expires" array key. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/349)
+* Fix: Undefined WooCommerce function errors when WooCommerce is not loaded on a page.
+* Perf: Build static date lookup tables once per request for faster dual-date rendering.
+* Update: Dependencies, including enshrined/svg-sanitize 1.0.0.
+
 = 6.4 =
 * Add: Elementor addon. Jalali datepicker for Elementor form date fields and Jalali dates in "Form Submissions" screen.
 * Add: Brizy page builder addon. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/322)
