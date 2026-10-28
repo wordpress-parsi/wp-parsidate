@@ -3,7 +3,7 @@
         'name' => 'wordpress-parsi/wp-parsidate',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'a1e4b558503fd70e06ea43902dc6632e65d559db',
+        'reference' => '6588b68c175deab748057b8b0f3f71d85eb0f9e0',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'enshrined/svg-sanitize' => array(
-            'pretty_version' => '1.1.0',
-            'version' => '1.1.0.0',
-            'reference' => '9ba9001493f5da737759303f13bd965ebdaa778c',
+            'pretty_version' => '1.1.1',
+            'version' => '1.1.1.0',
+            'reference' => '1976ff93c8d8a234cdd3ff99626bd43ecf11bf49',
             'type' => 'library',
             'install_path' => __DIR__ . '/../enshrined/svg-sanitize',
             'aliases' => array(),
@@ -49,7 +49,7 @@
         'wordpress-parsi/wp-parsidate' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'a1e4b558503fd70e06ea43902dc6632e65d559db',
+            'reference' => '6588b68c175deab748057b8b0f3f71d85eb0f9e0',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

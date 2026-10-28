@@ -106,6 +106,7 @@ class ComposerStaticInit28b7438669d760234aa27dffd45581b6
         'WPParsidate\\App\\Integration\\Brizy' => __DIR__ . '/../..' . '/inc/App/Integration/Brizy.php',
         'WPParsidate\\App\\Integration\\BulkyBulkEditProductsWooCommerce' => __DIR__ . '/../..' . '/inc/App/Integration/BulkyBulkEditProductsWooCommerce.php',
         'WPParsidate\\App\\Integration\\Directories' => __DIR__ . '/../..' . '/inc/App/Integration/Directories.php',
+        'WPParsidate\\App\\Integration\\Dokan' => __DIR__ . '/../..' . '/inc/App/Integration/Dokan.php',
         'WPParsidate\\App\\Integration\\EDD' => __DIR__ . '/../..' . '/inc/App/Integration/EDD.php',
         'WPParsidate\\App\\Integration\\Elementor' => __DIR__ . '/../..' . '/inc/App/Integration/Elementor.php',
         'WPParsidate\\App\\Integration\\Formello' => __DIR__ . '/../..' . '/inc/App/Integration/Formello.php',

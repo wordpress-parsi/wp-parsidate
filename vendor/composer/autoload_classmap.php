@@ -57,6 +57,7 @@ return array(
     'WPParsidate\\App\\Integration\\Brizy' => $baseDir . '/inc/App/Integration/Brizy.php',
     'WPParsidate\\App\\Integration\\BulkyBulkEditProductsWooCommerce' => $baseDir . '/inc/App/Integration/BulkyBulkEditProductsWooCommerce.php',
     'WPParsidate\\App\\Integration\\Directories' => $baseDir . '/inc/App/Integration/Directories.php',
+    'WPParsidate\\App\\Integration\\Dokan' => $baseDir . '/inc/App/Integration/Dokan.php',
     'WPParsidate\\App\\Integration\\EDD' => $baseDir . '/inc/App/Integration/EDD.php',
     'WPParsidate\\App\\Integration\\Elementor' => $baseDir . '/inc/App/Integration/Elementor.php',
     'WPParsidate\\App\\Integration\\Formello' => $baseDir . '/inc/App/Integration/Formello.php',
