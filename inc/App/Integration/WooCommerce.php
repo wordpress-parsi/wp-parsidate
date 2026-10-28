@@ -69,6 +69,10 @@ class WooCommerce extends Addon {
         add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueJalaliScripts' ] );
         add_filter( 'woocommerce_date_input_html_pattern', [ $this, 'filterDateInputHtmlPattern' ] );
 
+        // The order date/time fields are form values, so their digits are kept latin
+        // in the HTML the server sends instead of being corrected afterwards by JS.
+        add_filter( 'date_i18n', [ $this, 'fixOrderDateDigits' ], 999, 2 );
+
         // Convert order_date using js
         add_action( 'woocommerce_process_shop_order_meta', [ $this, 'changeOrderDateOnSave' ], 0 );
         add_filter( 'woocommerce_process_product_meta', [ $this, 'validateNonVariableProductDates' ], 1000 );
@@ -449,34 +453,61 @@ class WooCommerce extends Addon {
   }
 
   /**
-   * Changes order_date field in "Edit order" screen using JS
+   * Keeps the digits of the WooCommerce order date/time fields latin
+   *
+   * WooCommerce builds order_date, order_date_hour, order_date_minute and
+   * order_date_second with date_i18n(), so the date filter turns their digits into
+   * Persian ones. The browser discards such a value from the number inputs and
+   * WooCommerce then reads an empty field back on save, which zeroes the order time,
+   * and an empty order_date makes it store the current time instead. The fields are
+   * printed with latin digits, so the served HTML needs no JavaScript correction.
+   *
+   * @param string $date   Formatted date string.
+   * @param string $format Format the date was built with.
+   *
+   * @return string
+   * @since 6.4.2
+   */
+  public function fixOrderDateDigits( string $date, string $format ): string {
+    // Only the four formats WooCommerce renders those fields with, and only on their
+    // screen, so no other date on the site loses its Persian digits.
+    if ( ! in_array( $format, [ 'Y-m-d', 'H', 'i', 's' ], true ) || ! $this->isOrderEditScreen() ) {
+      return $date;
+    }
+
+    return Number::toEnglish( $date );
+  }
+
+  /**
+   * Whether the WooCommerce order edit screen is being rendered
+   *
+   * The HPOS list and edit screens share an id, so the edit action is required.
+   *
+   * @return bool
+   * @since 6.4.2
+   */
+  private function isOrderEditScreen(): bool {
+    if ( ! is_admin() || ( $_GET['action'] ?? '' ) !== 'edit' ) {
+      return false;
+    }
+
+    $screen = get_current_screen();
+
+    return $screen instanceof \WP_Screen && in_array( $screen->id, [ 'shop_order', 'woocommerce_page_wc-orders' ], true );
+  }
+
+  /**
+   * Fills the report range and product sale date fields with their Jalali values
+   *
+   * The order screen is not handled here: its date/time fields are already printed
+   * with latin digits by fixOrderDateDigits().
    *
    * @since 4.0.0
    */
   public function fixShowCreatedOrderDate(): void {
     $current_screen = $this->getCurrentScreen();
 
-    if ( 'edit_order' === $current_screen ) {
-      $createdDate = $this->getEditOrderCreatedDate();
-
-      if ( null === $createdDate ) {
-        // The order could not be resolved, so there is no date to show. Leaving the
-        // field alone keeps the value WooCommerce rendered; writing a made-up date
-        // here would be saved back on the next status change and move the order date.
-        return;
-      }
-
-      // The hour, minute and second fields are <input type="number">, so Persian digits
-      // make the browser submit an empty value and WooCommerce turns the time into
-      // 00:00 on every save. They are written with latin digits unconditionally.
-      wp_add_inline_script( WP_PARSI_KEY . '_datepicker',
-        'jQuery("input[name=order_date]").val("' . esc_js( $createdDate['date'] ) . '");' .
-        'jQuery("input[name=order_date_hour]").val("' . esc_js( $createdDate['hour'] ) . '");' .
-        'jQuery("input[name=order_date_minute]").val("' . esc_js( $createdDate['minute'] ) . '");' .
-        'jQuery("input[name=order_date_second]").val("' . esc_js( $createdDate['second'] ) . '");'
-      );
-
-    } elseif ( 'legacy_report' === $current_screen ) {
+    if ( 'legacy_report' === $current_screen ) {
       $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
       $endDate   = sanitize_text_field( wp_unslash( $_GET['end_date'] ?? '' ) );
 
@@ -544,42 +575,6 @@ class WooCommerce extends Addon {
         }
       }
     }
-  }
-
-  /**
-   * Creation date of the order shown on the order edit screen
-   *
-   * The date field is displayed in Jalali, while the time fields are plain numbers, so
-   * both are returned ready to be written into the form.
-   *
-   * @return array{date: string, hour: string, minute: string, second: string}|null Null when
-   *                                                                               no order date is available
-   * @since 6.4.2
-   */
-  private function getEditOrderCreatedDate(): ?array {
-    global $post, $theorder;
-
-    $timestamp = null;
-
-    if ( \WPParsidate\Helper\WooCommerce::hposEnabled() ) {
-      if ( $theorder instanceof \WC_Abstract_Order && $theorder->get_date_created() ) {
-        // Offset timestamp: the order date as the site time zone shows it.
-        $timestamp = $theorder->get_date_created()->getOffsetTimestamp();
-      }
-    } elseif ( $post instanceof \WP_Post && 'shop_order' === $post->post_type && ! empty( $post->post_date ) ) {
-      $timestamp = strtotime( $post->post_date );
-    }
-
-    if ( empty( $timestamp ) ) {
-      return null;
-    }
-
-    return array(
-      'date'   => parsidate( 'Y-m-d', $timestamp, 'eng' ),
-      'hour'   => gmdate( 'H', $timestamp ),
-      'minute' => gmdate( 'i', $timestamp ),
-      'second' => gmdate( 's', $timestamp ),
-    );
   }
 
   /**
