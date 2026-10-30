@@ -1,313 +1,962 @@
+# Translation of Plugins - پارسی دیت – Parsi Date - Stable (latest release) in Persian
+# This file is distributed under the same license as the Plugins - پارسی دیت – Parsi Date - Stable (latest release) package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP-Parsi additional strings\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-31 17:31+0330\n"
-"PO-Revision-Date: 2026-07-31 17:34+0330\n"
-"Last-Translator: Ehsan <iehsan.ir@gmail.com>\n"
-"Language-Team: Persian (Iran)\n"
-"Language: fa_IR\n"
+"PO-Revision-Date: 2026-09-17 11:57:16+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Loco-Source-Locale: en_FR\n"
-"X-Generator: Poedit 2.2\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-KeywordsList: __;_e;esc_html__;_e;__ngettext:1,2;_n:1,2;"
-"__ngettext_noop:1,2;_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_ex:1,2c;"
-"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Loco-Parser: loco_parse_po\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: node_modules\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.1.0\n"
+"Language: fa\n"
+"Project-Id-Version: Plugins - پارسی دیت – Parsi Date - Stable (latest release)\n"
 
-#: assets/js-admin-src/dashboard.js:335 assets/js-admin/dashboard.js:339
-msgid "Attend an upcoming event near you."
+#: inc/App/Integration/TapChatDemo.php:32
+msgid "Chat"
 msgstr ""
 
-#: assets/js-admin-src/dashboard.js:365 assets/js-admin/dashboard.js:369
-#, javascript-format
-msgid "City updated. Listing events near %s."
+#: inc/App/Integration/TapChatDemo.php:26
+msgid "Floating Contact Button"
 msgstr ""
 
-#: assets/js-admin-src/dashboard.js:397 assets/js-admin/dashboard.js:401
-#, javascript-format
-msgid ""
-"We couldn’t locate %s. Please try another nearby city. For example: Kansas City; "
-"Springfield; Portland."
+#: inc/App/Integration/TapChatDemo.php:25
+msgid "Tap Chat"
 msgstr ""
 
-#: assets/js-admin-src/dashboard.js:412 assets/js-admin/dashboard.js:416
-msgid "An error occurred. Please try again."
+#: inc/App/Integration/Elementor.php:210
+msgid "Display Jalali dates in the Elementor \"Form Submissions\" admin screen"
 msgstr ""
 
-#: assets/js-admin-src/dashboard.js:417 assets/js-admin/dashboard.js:421
-msgid "Enter your closest city to find nearby events."
+#: inc/App/Integration/Elementor.php:209
+msgid "Jalali dates in Form Submissions"
 msgstr ""
 
-#: assets/js-admin-src/dashboard.js:569 assets/js-admin/dashboard.js:573
-msgctxt "Events widget offset prefix"
-msgid "GMT"
+#: inc/App/Integration/Elementor.php:202
+msgid "Convert Elementor form \"Date\" fields to a Jalali (Shamsi) datepicker. Submitted values stay in Gregorian format."
 msgstr ""
 
-#: assets/js-admin-src/dashboard.js:601 assets/js-admin/dashboard.js:605
-msgid "l, M j, Y"
+#: inc/App/Integration/Elementor.php:201
+msgid "Jalali datepicker for form date fields"
 msgstr ""
 
-#: assets/js-admin-src/dashboard.js:603 assets/js-admin/dashboard.js:607
-#, javascript-format
-msgid "%1$s %2$d–%3$d, %4$d"
+#: inc/App/Integration/Elementor.php:191
+msgid "Jalali date support for Elementor Pro forms and Form Submissions"
 msgstr ""
 
-#: assets/js-admin-src/dashboard.js:605 assets/js-admin/dashboard.js:609
-#, javascript-format
-msgid "%1$s %2$d – %3$s %4$d, %5$d"
+#: inc/App/Integration/Brizy.php:684
+msgid "ParsiDate integration for Brizy Page Builder"
 msgstr ""
 
-#: assets/js-admin-src/dashboard.js:615 assets/js-admin-src/dashboard.js:625
-#: assets/js-admin-src/dashboard.js:627 assets/js-admin/dashboard.js:619
-#: assets/js-admin/dashboard.js:629 assets/js-admin/dashboard.js:631
-msgctxt "upcoming events month format"
-msgid "F"
+#: inc/App/Integration/Brizy.php:651
+msgid "Applies the plugin Vazir font to the Brizy editor interface (admin edit screen). The site front end is never affected."
 msgstr ""
 
-#: assets/js-admin-src/dashboard.js:616 assets/js-admin-src/dashboard.js:617
-#: assets/js-admin-src/dashboard.js:626 assets/js-admin-src/dashboard.js:628
-#: assets/js-admin/dashboard.js:620 assets/js-admin/dashboard.js:621
-#: assets/js-admin/dashboard.js:630 assets/js-admin/dashboard.js:632
-msgctxt "upcoming events day format"
-msgid "j"
+#: inc/App/Integration/Brizy.php:650
+msgid "Vazir font in editor"
 msgstr ""
 
-#: assets/js-admin-src/dashboard.js:618 assets/js-admin-src/dashboard.js:629
-#: assets/js-admin/dashboard.js:622 assets/js-admin/dashboard.js:633
-msgctxt "upcoming events year format"
-msgid "Y"
+#: inc/App/Integration/Brizy.php:645
+msgid "Editor"
 msgstr ""
 
-#: assets/js-admin/parsidate-archive-block.js:17 inc/Widget/ArchiveWidget.php:65
-msgid "Yearly"
-msgstr "سالانه"
-
-#: assets/js-admin/parsidate-archive-block.js:18 inc/Widget/ArchiveWidget.php:71
-msgid "Monthly"
-msgstr "ماهانه"
-
-#: assets/js-admin/parsidate-archive-block.js:19 inc/Widget/ArchiveWidget.php:77
-msgid "Daily"
-msgstr "روزانه"
-
-#: assets/js-admin/parsidate-archive-block.js:25 inc/Plugin/Plugin.php:113
-msgid "Settings"
-msgstr "تنظیمات"
-
-#: assets/js-admin/parsidate-archive-block.js:26 inc/Widget/ArchiveWidget.php:47
-msgid "Title"
-msgstr "عنوان"
-
-#: assets/js-admin/parsidate-archive-block.js:30 inc/Widget/ArchiveWidget.php:55
-#: inc/Widget/CalendarWidget.php:68
-msgid "Post type"
-msgstr "نوع نوشته"
-
-#: assets/js-admin/parsidate-archive-block.js:35 inc/Widget/ArchiveWidget.php:60
-msgid "How to display"
-msgstr "نحوۀ نمایش"
-
-#: assets/js-admin/parsidate-archive-block.js:40 inc/Widget/ArchiveWidget.php:87
-msgid "Display as dropdown"
-msgstr "نمايش به صورت ليست بازشو"
-
-#: assets/js-admin/parsidate-archive-block.js:44 inc/Widget/ArchiveWidget.php:96
-msgid "Show post counts"
-msgstr "نمايش تعداد نوشته‌ها"
-
-#: assets/js-admin/parsidate-archive-block.js:59 inc/Widget/ArchiveBlock.php:71
-#: inc/Widget/ArchiveWidget.php:34 inc/Widget/ArchiveWidget.php:118
-#: inc/Widget/ArchiveWidget.php:141
-msgid "Archive"
+#: inc/App/Integration/Brizy.php:635
+msgid "Converts English digits inside Brizy page output to Persian digits. Requires the \"Post content\" option of the number conversion settings."
 msgstr ""
 
-#: assets/js-admin/parsidate-archive-block.js:60
-msgid "Yearly archive"
-msgstr "بایگانی سالانه"
+#: inc/App/Integration/Brizy.php:627
+msgid "Converts Gregorian dates inside Brizy page output to Jalali (Shamsi). Requires the Shamsi date setting and a Persian locale."
+msgstr ""
 
-#: assets/js-admin/parsidate-archive-block.js:62
-msgid "Daily archive"
-msgstr "بایگانی روزانه"
+#: inc/App/Integration/Brizy.php:626
+msgid "Convert dates to Shamsi"
+msgstr ""
 
-#: assets/js-admin/parsidate-archive-block.js:63
+#: inc/App/Integration/Brizy.php:621
+msgid "Content conversion"
+msgstr ""
+
+#: inc/App/Integration/Brizy.php:616
+msgid "ParsiDate integration for Brizy page builder"
+msgstr ""
+
+#: inc/App/Integration/Brizy.php:615 inc/App/Integration/Brizy.php:683
+#: inc/App/Integration/Brizy.php:688
+msgid "Brizy"
+msgstr ""
+
+#: inc/App/Integration/Booked.php:29
+msgid "Booking"
+msgstr ""
+
+#: inc/App/Integration/Booked.php:26
+msgid "ParsiDate integration for Booked"
+msgstr ""
+
+#: inc/App/Integration/Booked.php:25
+msgid "Booked"
+msgstr ""
+
+#: assets/blocks/calendar/block.json
+msgctxt "block keyword"
+msgid "calendar"
+msgstr "تقویم"
+
+#: assets/blocks/calendar/block.json
+msgctxt "block description"
+msgid "Display a Persian (Jalali) calendar with links to your posts"
+msgstr "نمایش تقویم فارسی (جلالی) همراه با لینک‌هایی به نوشته‌هایتان"
+
+#: assets/blocks/calendar/block.json
+msgctxt "block title"
+msgid "Parsidate - Calendar"
+msgstr "پارسی‌دیت - تقویم"
+
+#: assets/blocks/archive/block.json assets/blocks/calendar/block.json
+msgctxt "block keyword"
+msgid "persian"
+msgstr "فارسی"
+
+#: assets/blocks/archive/block.json assets/blocks/calendar/block.json
+msgctxt "block keyword"
+msgid "jalali"
+msgstr "جلالی"
+
+#: assets/blocks/archive/block.json
+msgctxt "block keyword"
+msgid "archive"
+msgstr "بایگانی"
+
+#: assets/blocks/archive/block.json assets/blocks/calendar/block.json
+msgctxt "block keyword"
+msgid "parsidate"
+msgstr "پارسی‌دیت"
+
+#: assets/blocks/archive/block.json
+msgctxt "block description"
+msgid "Display a Persian (Jalali) date archive of your posts"
+msgstr "نمایش بایگانی تاریخ‌های فارسی (جلالی) مطالب خود"
+
+#: assets/blocks/archive/block.json
+msgctxt "block title"
+msgid "Parsidate - Archive"
+msgstr "پارسی‌دیت - بایگانی"
+
+#: assets/js-admin/calendar-block.js:68
+msgid "Theme"
+msgstr "پوسته"
+
+#: assets/js-admin/archive-block.js:61 assets/js-admin/calendar-block.js:52
+msgid "To use this block, activate the \"Fix permalinks dates\" option in plugin settings."
+msgstr "برای استفاده از این بلوک، گزینه «اصلاح تاریخ پیوندهای یکتا» را در تنظیمات افزونه فعال کنید."
+
+#: assets/js-admin/archive-block.js:44
 msgid "Monthly archive"
 msgstr "بایگانی ماهانه"
 
-#: assets/js-admin/wc-pg-blocks/wpp-wc-mellat-pg.js:3
-#: assets/js-admin/wc-pg-blocks/wpp-wc-mellat-pg.min.js:1
-#: assets/js-admin/wc-pg-blocks/wpp-wc-mellat-pg.min.min.js:1
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:31
-msgid "Mellat Bank"
-msgstr "بانک ملت"
+#: assets/js-admin/archive-block.js:43
+msgid "Daily archive"
+msgstr "بایگانی روزانه"
 
-#: assets/js-admin/wc-pg-blocks/wpp-wc-mellat-pg.js:13
-#: assets/js-admin/wc-pg-blocks/wpp-wc-mellat-pg.min.js:1
-#: assets/js-admin/wc-pg-blocks/wpp-wc-mellat-pg.min.min.js:1
-#: assets/js-admin/wc-pg-blocks/wpp-wc-melli-pg.js:13
-#: assets/js-admin/wc-pg-blocks/wpp-wc-melli-pg.min.js:1
-#: assets/js-admin/wc-pg-blocks/wpp-wc-melli-pg.min.min.js:1
-#: assets/js-admin/wc-pg-blocks/wpp-wc-parsian-pg.js:13
-#: assets/js-admin/wc-pg-blocks/wpp-wc-parsian-pg.min.js:1
-#: assets/js-admin/wc-pg-blocks/wpp-wc-parsian-pg.min.min.js:1
-#: assets/js-admin/wc-pg-blocks/wpp-wc-pasargad-pg.js:13
-#: assets/js-admin/wc-pg-blocks/wpp-wc-pasargad-pg.min.js:1
-#: assets/js-admin/wc-pg-blocks/wpp-wc-pasargad-pg.min.min.js:1
-msgid "Continue"
-msgstr "ادامه دادن"
+#: assets/js-admin/archive-block.js:41
+msgid "Yearly archive"
+msgstr "بایگانی سالانه"
 
-#: assets/js-admin/wc-pg-blocks/wpp-wc-melli-pg.js:3
-#: assets/js-admin/wc-pg-blocks/wpp-wc-melli-pg.min.js:1
-#: assets/js-admin/wc-pg-blocks/wpp-wc-melli-pg.min.min.js:1
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:29
-msgid "Melli Bank"
-msgstr "بانک ملی"
+#: inc/Widget/CalendarWidget.php:92 assets/js-admin/calendar-block.js:38
+msgid "Dark"
+msgstr "تاریک"
 
-#: assets/js-admin/wc-pg-blocks/wpp-wc-parsian-pg.js:3
-#: assets/js-admin/wc-pg-blocks/wpp-wc-parsian-pg.min.js:1
-#: assets/js-admin/wc-pg-blocks/wpp-wc-parsian-pg.min.min.js:1
-#: inc/App/Integration/WooCommerce/WcGateways.php:31
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:32
-msgid "Parsian Bank"
-msgstr "بانک پارسیان"
+#: inc/Widget/CalendarWidget.php:89 assets/js-admin/calendar-block.js:37
+msgid "Light"
+msgstr "روشن"
 
-#: assets/js-admin/wc-pg-blocks/wpp-wc-pasargad-pg.js:3
-#: assets/js-admin/wc-pg-blocks/wpp-wc-pasargad-pg.min.js:1
-#: assets/js-admin/wc-pg-blocks/wpp-wc-pasargad-pg.min.min.js:1
-#: inc/App/Integration/WooCommerce/WcGateways.php:32
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:32
-msgid "Pasargad Bank"
-msgstr "بانک پاسارگاد"
+#: inc/Widget/CalendarWidget.php:86 assets/js-admin/calendar-block.js:36
+msgid "Simple"
+msgstr "ساده"
 
-#: inc/Addons/Addons.php:30 inc/Addons/Addons.php:66 inc/Addons/Addons.php:231
-msgid "Addons"
-msgstr "افزونه‌ها"
+#: inc/Widget/CalendarWidget.php:79
+msgid "Theme:"
+msgstr "قالب:"
 
-#: inc/Addons/Addons.php:31
-msgid "Parsi Date Addons"
-msgstr "افزونه‌های وردپرس پارسی"
+#: inc/Widget/CalendarWidget.php:52 assets/js-admin/calendar-block.js:50
+msgid "Calendar"
+msgstr "تقویم"
 
-#: inc/Addons/Addons.php:52
-msgid "To load the add-on initial hooks, the page refreshes."
-msgstr "برای بارگذاری قلاب‌های اولیه افزونه، صفحه رفرش می‌شود."
+#: inc/Widget/CalendarWidget.php:24
+msgid "Parsidate - Calendar"
+msgstr "پارسی‌دیت - تقویم"
+
+#: inc/Widget/ArchiveWidget.php:55 inc/Widget/CalendarWidget.php:72
+#: assets/js-admin/archive-block.js:72 assets/js-admin/calendar-block.js:63
+msgid "Post type"
+msgstr "نوع نوشته"
+
+#: inc/Widget/ArchiveWidget.php:22
+msgid "Parsidate - Archive"
+msgstr "پارسی‌دیت - بایگانی"
+
+#: inc/Plugin/Plugin.php:68
+msgid "ParsiDate activated, you may need to configure it to work properly. <a href=\"%s\">Go to configuration page</a>"
+msgstr "پارسی‌دیت فعال شد، ممکن است لازم باشد آن را برای عملکرد بهتر پیکربندی کنید. <a href=\"%s\">رفتن به صفحه تنظیمات</a>"
+
+#: inc/Helper/HTML.php:742
+msgid "Suggested"
+msgstr "پیشنهاد شده"
+
+#: inc/Core/Calendar.php:292
+msgid "Today"
+msgstr "امروز"
+
+#: inc/Block/ArchiveBlock.php:24 inc/Widget/ArchiveWidget.php:34
+#: inc/Widget/ArchiveWidget.php:118 inc/Widget/ArchiveWidget.php:141
+#: assets/js-admin/archive-block.js:59
+msgid "Archive"
+msgstr "بایگانی"
+
+#: inc/App/Integration/WooCommerce.php:1034
+msgid "Convert numbers in email content"
+msgstr "تبدیل اعداد در محتوای ایمیل"
+
+#: inc/App/Integration/WooCommerce.php:1029
+msgid "Email"
+msgstr "ایمیل"
+
+#: inc/App/Integration/WooCommerce.php:1018
+msgid "Convert date to Shamsi date in WooCommerce analytics reports"
+msgstr "تبدیل تاریخ به تاریخ شمسی در گزارش‌های تحلیلی ووکامرس"
+
+#: inc/App/Integration/WooCommerce.php:1017
+msgid "Display Shamsi date in analytics"
+msgstr "نمایش تاریخ شمسی در گزارش‌های تحلیلی"
+
+#: inc/App/Integration/WooCommerce.php:1012
+msgid "Analytics"
+msgstr "تجزیه و تحلیل"
+
+#: inc/App/Integration/WooCommerce.php:972
+#: inc/App/Integration/WooCommerce.php:980
+msgid "Convert Farsi numbers to English"
+msgstr "تبدیل اعداد فارسی به انگلیسی"
+
+#: inc/App/Integration/WooCommerce.php:955
+#: inc/App/Integration/WooCommerce.php:1035
+msgid "Convert English numbers to Farsi"
+msgstr "تبدیل اعداد انگلیسی به فارسی"
+
+#: inc/App/Integration/WooCommerce.php:204
+msgid "Select a province first"
+msgstr "ابتدا استان را انتخاب کنید"
+
+#: inc/App/Integration/WooCommerce.php:203
+msgid "Select your city"
+msgstr "شهر خود را انتخاب کنید"
+
+#: inc/App/Integration/WooCommerce.php:117
+msgid "If you want the date for this section to be Shamsi, enable it in the settings. <a href=\"%s\">Go to configuration page</a>"
+msgstr "اگر می‌خواهید تاریخ این بخش به شمسی باشد، آن را در تنظیمات فعال کنید. <a href=\"%s\">رفتن به صفحه تنظیمات</a>"
+
+#: inc/App/Integration/ParsigateDemo.php:70
+msgid "Payment"
+msgstr "پرداخت"
+
+#: inc/App/Integration/ParsigateDemo.php:64
+msgid "Iranian banking gateways for WooCommerce"
+msgstr "درگاه‌های بانکی ایرانی برای ووکامرس"
+
+#: inc/App/Integration/ParsigateDemo.php:63
+msgid "Parsigate"
+msgstr "پارسی‌گیت"
+
+#: inc/App/Integration/JetEngine.php:392
+msgid "Replaces JetEngine meta box date fields with the Jalali datepicker and converts their values to Shamsi in the admin edit screens. Dates are stored in Gregorian in the database."
+msgstr "فیلدهای تاریخ متاباکس جت‌انجین را با انتخابگر جلالی جایگزین می‌کند و مقادیر آنها را در صفحات ویرایش مدیریت به شمسی تبدیل می‌کند. تاریخ‌ها در پایگاه داده به میلادی ذخیره می‌شوند."
+
+#: inc/App/Integration/JetEngine.php:391
+msgid "Jalali datepicker in admin"
+msgstr "انتخابگر تاریخ جلالی در مدیریت"
+
+#: inc/App/Integration/JetEngine.php:386
+msgid "Datepicker"
+msgstr "انتخابگر تاریخ"
+
+#: inc/App/Core/Debug.php:57
+msgid "By enabling this option, New datepicker enabled in Gutenberg post editor"
+msgstr "با فعال کردن این گزینه، انتخابگر جدید در ویرایشگر پست گوتنبرگ فعال می‌شود."
+
+#: inc/App/Core/Debug.php:54
+msgid "New Gutenberg Datepicker"
+msgstr "انتخابگر تاریخ جدید گوتنبرگ"
+
+#: inc/App/Core/Debug.php:49
+msgid "Features"
+msgstr "ویژگی‌ها"
+
+#: inc/Admin/AdminDashboard.php:60
+msgid "Parsidate news"
+msgstr "اخبار پارسی‌دیت"
+
+#: inc/Admin/AdminDashboard.php:30
+msgid "Welcome to Parsidate!"
+msgstr "به پارسی‌دیت خوش آمدید!"
+
+#: inc/Addons/Addons.php:163
+msgid "Buy plugin"
+msgstr "خرید افزونه"
+
+#: inc/Addons/Addons.php:163
+msgid "Download plugin"
+msgstr "دانلود افزونه"
+
+#: inc/Addons/Addons.php:157
+msgid "Install plugin"
+msgstr "نصب افزونه"
+
+#: inc/Addons/Addons.php:127 inc/Addons/Addons.php:147
+msgid "Activate plugin"
+msgstr "فعال‌سازی افزونه"
+
+#: inc/Addons/Addons.php:85
+msgid "Recommended Addons"
+msgstr "افزودنی‌های پیشنهادی"
+
+#: inc/App/Tools/Other.php:75 inc/App/Tools/Other.php:76
+msgid "Other tools"
+msgstr "ابزارهای کاربردی"
+
+#: inc/App/Integration/UltimateMember.php:38
+msgid "User"
+msgstr "کاربر"
+
+#: inc/App/Integration/UltimateMember.php:34
+msgid "ParsiDate integration for Ultimate Member"
+msgstr "هماهنگ‌سازی پارسی دیت با Ultimate Member"
+
+#: inc/App/Integration/UltimateMember.php:33
+msgid "Ultimate Member"
+msgstr "Ultimate Member"
+
+#: inc/App/Integration/MonsterInsights.php:38
+msgid "Google"
+msgstr "گوگل"
+
+#: inc/App/Integration/MonsterInsights.php:34
+msgid "ParsiDate integration for Monster Insights"
+msgstr "یکپارچه‌سازی پارسی‌دیت با Monster Insights"
+
+#: inc/App/Integration/MonsterInsights.php:33
+msgid "Monster Insights"
+msgstr "Monster Insights"
+
+#: inc/App/Integration/JetEngine.php:428
+msgid "Datetime format"
+msgstr "ساختار تاریخ‌زمان"
+
+#: inc/App/Integration/JetEngine.php:421
+msgid "Datetime field to Shamsi"
+msgstr "فیلد تاریخ‌زمان به شمسی"
+
+#: inc/App/Integration/JetEngine.php:414
+msgid "Date format"
+msgstr "ساختار تاریخ"
+
+#: inc/App/Integration/JetEngine.php:407
+msgid "Date field to Shamsi"
+msgstr "فیلد تاریخ به شمسی"
+
+#: inc/App/Integration/JetEngine.php:402
+msgid "Meta date field conversion"
+msgstr "تبدیل فیلد تاریخ متا"
+
+#: inc/App/Integration/JetEngine.php:381 inc/App/Integration/JetEngine.php:453
+msgid "ParsiDate integration for Jet Engine"
+msgstr "یکپارچه‌سازی پارسی‌دیت با جت‌انجین"
+
+#: inc/App/Integration/JetEngine.php:380 inc/App/Integration/JetEngine.php:452
+msgid "Jet Engine"
+msgstr "جت‌انجین"
+
+#: inc/App/Integration/Formello.php:42
+msgid "Form"
+msgstr "فرم"
+
+#: inc/App/Integration/Formello.php:38
+msgid "ParsiDate integration for Formello"
+msgstr "یکپارچه‌سازی پارسی‌دیت با فرمالو"
+
+#: inc/App/Integration/Formello.php:37
+msgid "Formello"
+msgstr "فرمالو"
+
+#: inc/App/Core/ShamsiDate.php:140
+msgid "Shamsi date settings"
+msgstr "تنظیمات تاریخ شمسی"
+
+#: inc/App/Core/Debug.php:67
+msgid "Debug settings"
+msgstr "تنظیمات اشکال‌زدایی"
+
+#: inc/App/Core/Debug.php:25 inc/App/Core/Debug.php:66
+msgid "Debug"
+msgstr "حالت اشکال‌زادیی"
+
+#: inc/Admin/AdminIntegration.php:43
+msgid "ParsiDate integration settings"
+msgstr "تنظیمات یکپارچه سازی پارسی‌دیت"
+
+#: inc/Addons/Addons.php:247
+msgid "Parsidate is integrated with the following plugins, and if you use any of them, you can enable it. If you are using a plugin that is not integrated with Parsidate, please submit a <a href=\"%s\" target=\"_blank\">request</a>."
+msgstr "پارسی‌دیت با افزونه‌های زیر یکپارچه است و در صورت استفاده از آن‌ها، می‌توانید آن را فعال کنید. اگر از افزونه‌ای استفاده می‌کنید که با پارسی‌دیت یکپارچه نشده است، لطفاً <a href=\"%s\" target=\"_blank\">درخواست</a> خود را ارسال کنید. به سرعت آن را اضافه می‌کنیم."
+
+#: inc/Addons/Addons.php:83
+msgid "Integration Addons"
+msgstr "افزونه‌های سازگار"
+
+#: inc/App/Integration/SchemaPro.php:38
+msgid "Schema"
+msgstr "اسکیما"
+
+#: inc/App/Integration/SchemaPro.php:34
+msgid "ParsiDate integration for Schema Pro"
+msgstr "یکپارچه‌سازی ParsiDate برای Schema Pro"
+
+#: inc/App/Integration/SchemaPro.php:33
+msgid "Schema Pro"
+msgstr "اسکیما پرو"
+
+#: inc/App/Integration/LimitLoginAttempts.php:34
+msgid "ParsiDate integration for Limit Login Attempts Security"
+msgstr "یکپارچه‌سازی پارسی‌دیت برای محدود کردن تلاش‌های ورود با امنیت"
+
+#: inc/App/Integration/LimitLoginAttempts.php:33
+msgid "Limit Login Attempts Security"
+msgstr "امنیت محدودسازی تلاش‌های ورود"
+
+#: inc/App/Integration/BulkyBulkEditProductsWooCommerce.php:32
+msgid "ParsiDate integration for Bulky (Bulk Edit Products for WooCommerce)"
+msgstr "یکپارچه‌سازی پارسی‌دیت برای افزونه Bulky (ویرایش گروهی محصولات ووکامرس)"
+
+#: inc/App/Integration/BulkyBulkEditProductsWooCommerce.php:31
+msgid "Bulky – Bulk Edit Products for WooCommerce"
+msgstr "Bulky – ویرایش گروهی محصولات برای ووکامرس"
+
+#: inc/App/Core/ShamsiDate.php:48
+msgid "By enabling this, Gregorian dates will be displayed beside Shamsi (Jalali) dates."
+msgstr "با فعال کردن این گزینه، تاریخ‌های میلادی در کنار تاریخ‌های شمسی (جلالی) در بخش‌های مختلف سایت نمایش داده خواهند شد."
+
+#: inc/App/Core/ShamsiDate.php:45
+msgid "Dual date"
+msgstr "نمایش هم‌زمان تاریخ میلادی"
+
+#: inc/Addons/Addons.php:268 inc/App/Integration/LimitLoginAttempts.php:38
+msgid "Security"
+msgstr "امنیت"
+
+#: inc/Widget/DashboardWidget.php:192
+msgid "ParsiDate"
+msgstr "پارسی‌دیت"
+
+#: inc/Helper/HTML.php:1141
+msgid "Required"
+msgstr "الزامی"
+
+#: inc/Helper/HTML.php:1031
+msgid "Rotation °"
+msgstr "چرخش °"
+
+#: inc/Helper/HTML.php:1025
+msgid "Circle"
+msgstr "دایره"
+
+#: inc/Helper/HTML.php:1024
+msgid "Ellipse"
+msgstr "بیضی"
+
+#: inc/Helper/HTML.php:1018
+msgid "Shape"
+msgstr "شکل"
+
+#: inc/Helper/HTML.php:1012
+msgid "Radial"
+msgstr "شعاعی"
+
+#: inc/Helper/HTML.php:1011
+msgid "Linear"
+msgstr "خطی"
+
+#: inc/Helper/HTML.php:1005
+msgid "Type"
+msgstr "نوع"
+
+#: inc/Helper/HTML.php:997
+msgid "Color"
+msgstr "رنگ"
+
+#: inc/Helper/HTML.php:880
+msgid "No entries!"
+msgstr "بدون ورودی!"
+
+#: inc/Helper/HTML.php:827
+msgid "More info"
+msgstr "اطلاعات بیشتر"
+
+#: inc/Helper/HTML.php:378
+msgid "Use this media"
+msgstr "استفاده از این رسانه"
+
+#: inc/Helper/HTML.php:376
+msgid "Select or Upload Media"
+msgstr "انتخاب یا آپلود رسانه"
+
+#: inc/Helper/HTML.php:373
+msgid "Remove all media"
+msgstr "حذف تمام رسانه‌ها"
+
+#: inc/Helper/HTML.php:370
+msgid "Select Media(s)"
+msgstr "انتخاب رسانه(ها)"
+
+#: inc/Helper/FeedReader.php:223
+msgid "Untitled"
+msgstr "ناشناخته"
+
+#: inc/Helper/FeedReader.php:197
+msgid "Feed is empty."
+msgstr "خوراک خالی است."
+
+#: inc/App/Tools/Other.php:58
+msgid "Admin Bar"
+msgstr "نوار مدیریت"
+
+#: inc/App/Integration/WooCommerce.php:966
+msgid "Checkout page"
+msgstr "برگه پرداخت"
+
+#: inc/App/Integration/WooCommerce.php:949
+msgid "Products"
+msgstr "محصولات"
+
+#: inc/App/Integration/WooCommerce.php:944
+#: inc/App/Integration/WooCommerce.php:1056
+msgid "ParsiDate integration for WooCommerce"
+msgstr "هماهنگ‌سازی پارسی‌دیت با ووکامرس"
+
+#: inc/App/Integration/RankMath.php:167
+msgid "ParsiDate integration for Rank Math"
+msgstr "هماهنگ‌سازی پارسی‌دیت با رنک‌مث"
+
+#: inc/App/Integration/RankMath.php:166
+msgid "Rank Math"
+msgstr "رنک‌مث"
+
+#: inc/App/Tools/HookDeactivator.php:167
+msgid "Disable plugin hooks"
+msgstr "غیرفعال کردن قلابهای افزونه"
+
+#: inc/App/Tools/HookDeactivator.php:152
+msgid "Enter hook, function and class to remove Parsidate filter from it"
+msgstr "نام قلاب، تابع و کلاس موردنظر را جهت رفع فیلتر پارسی‌دیت وارد کنید"
+
+#: inc/App/Tools/HookDeactivator.php:145
+msgid "Hooks"
+msgstr "قلاب‌ها"
+
+#: inc/App/Tools/HookDeactivator.php:138
+msgid "Without class format:"
+msgstr "قالب بدون کلاس:"
+
+#: inc/App/Tools/HookDeactivator.php:136 inc/App/Tools/HookDeactivator.php:140
+msgid "Example:"
+msgstr "نمونه:"
+
+#: inc/App/Tools/HookDeactivator.php:134
+msgid "Format:"
+msgstr "قالب:"
+
+#: inc/App/Integration/Elementor.php:230
+msgid "ParsiDate integration for Elementor"
+msgstr "هماهنگ‌سازی تاریخ شمسی با المنتور"
+
+#: inc/App/Integration/Elementor.php:190 inc/App/Integration/Elementor.php:196
+#: inc/App/Integration/Elementor.php:229 inc/App/Integration/Elementor.php:234
+msgid "Elementor"
+msgstr "المنتور"
+
+#: inc/App/Integration/EDD.php:134
+msgid "Download"
+msgstr "دانلود"
+
+#: inc/App/Integration/EDD.php:110
+msgid "Replace currency name"
+msgstr "جایگزینی نام واحد پولی"
+
+#: inc/App/Integration/EDD.php:103
+msgid "Add \"Toman\" currency"
+msgstr "افزودن واحد پولی «تومان»"
+
+#: inc/App/Integration/EDD.php:98
+msgid "Currency"
+msgstr "واحد پولی"
+
+#: inc/App/Integration/EDD.php:88
+msgid "Remove decimals"
+msgstr "حذف اعشار"
+
+#: inc/App/Integration/EDD.php:76
+msgid "Price"
+msgstr "قیمت"
+
+#: inc/App/Integration/EDD.php:71 inc/App/Integration/EDD.php:130
+msgid "ParsiDate integration for Easy Digital Downloads"
+msgstr "هماهنگ‌سازی تاریخ شمسی با دانلود آسان دیجیتال"
+
+#: inc/App/Integration/EDD.php:49
+msgid "Iran Toman (Toman)"
+msgstr "تومان ایران (تومان)"
+
+#: inc/App/Integration/ACF.php:178 inc/App/Integration/JetEngine.php:457
+msgid "Meta"
+msgstr "متا"
+
+#: inc/App/Integration/ACF.php:137 inc/App/Integration/ACF.php:174
+msgid "ParsiDate integration for Advanced Custom Fields (ACF)"
+msgstr "هماهنگ‌سازی تاریخ شمسی با زمینه‌های سفارشی (ACF)"
+
+#: inc/App/Integration/ACF.php:136 inc/App/Integration/ACF.php:142
+#: inc/App/Integration/ACF.php:173
+msgid "Advanced Custom Fields"
+msgstr "زمینه‌های سفارشی"
+
+#: inc/App/Integration/ACF.php:65
+msgid "Convert to Shamsi Date"
+msgstr "تبدیل به تاریخ شمسی"
+
+#: inc/App/Core/ShamsiDate.php:120
+msgid "Multilingual"
+msgstr "چندزبانه"
+
+#: inc/App/Core/Debug.php:41
+msgid "Load translate file from plugin directory."
+msgstr "بارگذاری فایل ترجمه از پوشه افزونه."
+
+#: inc/App/Core/Debug.php:38
+msgid "Load translate file"
+msgstr "بارگذاری فایل ترجمه"
+
+#: inc/App/Core/ShamsiDate.php:89
+msgid "Admin"
+msgstr "مدیریت"
+
+#: inc/App/Core/ShamsiDate.php:54
+msgid "Months and week days name type"
+msgstr "نوع اسامی ماه‌ها و روزهای هفته"
+
+#: inc/App/Core/Debug.php:18
+msgid "Debug mode is enabled!"
+msgstr "حالت اشکال‌زدایی فعال است!"
+
+#: inc/App/Core/ShamsiDate.php:71
+msgid "Permalinks"
+msgstr "پیوندهای یکتا"
+
+#: inc/App/Convert/Convert.php:90
+msgid "Letters"
+msgstr "حروف"
+
+#: inc/App/Convert/Convert.php:23
+msgid "Used in menus, comments, API, media, etc."
+msgstr "در منوها، نظرات، API، رسانه و غیره استفاده می‌شود."
+
+#: inc/App/Convert/Convert.php:22
+msgid "Numbers"
+msgstr "اعداد"
+
+#: inc/App/Convert/Convert.php:17 inc/App/Integration/Brizy.php:634
+msgid "Convert numbers to Persian"
+msgstr "تبدیل اعداد به فارسی"
+
+#: inc/Admin/AdminTools.php:39
+msgid "Tools settings"
+msgstr "تنظیمات ابزارها"
+
+#: inc/Admin/AdminSettings.php:501
+msgid "Discard changes"
+msgstr "بازنشانی تغییرات"
+
+#: inc/Admin/AdminSettings.php:488
+msgid "Save changes"
+msgstr "ذخیره تغییرات"
+
+#: inc/Admin/AdminSettings.php:80
+msgid "Error saving settings!"
+msgstr "خطا در ذخیره تنظیمات!"
+
+#: inc/Admin/AdminSettings.php:77
+msgid "Settings saved."
+msgstr "تنظیمات ذخیره شد."
+
+#: inc/Admin/AdminPages.php:102
+msgid "Parsi"
+msgstr "پارسی"
+
+#: inc/Admin/AdminPages.php:101 inc/Plugin/Plugin.php:48
+msgid "WordPress"
+msgstr "وردپرس"
+
+#: inc/Admin/AdminPages.php:80
+msgid "WP Parsi"
+msgstr "پارسی دیت"
+
+#: inc/Admin/AdminIntegration.php:42
+msgid "Integration settings"
+msgstr "تنظیمات هماهنگ‌سازی"
+
+#: inc/Addons/Addons.php:260 inc/Admin/AdminIntegration.php:25
+msgid "Integration"
+msgstr "هماهنگ‌سازی"
+
+#: inc/Admin/AdminDashboard.php:63
+msgid "WP-Parsi website is not available."
+msgstr "وبسایت وردپرس پارسی در دسترس نیست."
+
+#: inc/Admin/AdminDashboard.php:42
+msgid "Parsidate is here to help you integrate Jalali date with your site, go to the Addons tab and activate the required addons."
+msgstr "وردپرس پارسی اینجاست تا به شما در ادغام تاریخ جلالی با سایتتان کمک کند، به تب افزونه‌ها بروید و افزونه‌های مورد نیاز را فعال کنید."
+
+#: inc/Admin/AdminDashboard.php:40
+msgid "Hello"
+msgstr "درود"
+
+#: inc/Admin/AdminDashboard.php:22
+msgid "Dashboard"
+msgstr "پیشخوان"
+
+#: inc/Admin/AdminCore.php:38
+msgid "Global plugin settings"
+msgstr "تنظیمات عمومی افزونه"
+
+#: inc/Admin/AdminCore.php:37
+msgid "Core settings"
+msgstr "تنظیمات تاریخ وردپرس"
+
+#: inc/Admin/AdminCore.php:21
+msgid "Core"
+msgstr "تنظیمات تاریخ"
+
+#: inc/Admin/AdminConvert.php:38
+msgid "Convert Persian letters and numbers"
+msgstr "تبدیل حروف و اعداد فارسی"
+
+#: inc/Admin/AdminConvert.php:37
+msgid "Convert settings"
+msgstr "تنظیمات تبدیل"
+
+#: inc/Admin/AdminConvert.php:21
+msgid "Convert"
+msgstr "تنظیمات تبدیل اعداد"
+
+#: inc/Admin/AdminAssets.php:53
+msgid "Click to copy this text."
+msgstr "برای کپی کردن این متن کلیک کنید."
+
+#: inc/Admin/AdminAssets.php:52
+msgid "Are you sure you want to delete this item(s)?"
+msgstr "آیا مطمئن هستید که می‌خواهید این مورد(ها) را حذف کنید؟"
+
+#: inc/Admin/AdminAssets.php:51
+msgid "Remove"
+msgstr "حذف"
+
+#: inc/Admin/AdminAbout.php:378
+msgid "The text of this page is in Persian."
+msgstr "متن این صفحه به زبان فارسی است."
+
+#: inc/Admin/AdminAbout.php:372
+msgid "About the WordPress Parsi team and plugin"
+msgstr "درباره تیم و افزونه پارسی دیت"
+
+#: inc/Addons/Addons.php:282
+msgid "Save active addons"
+msgstr "ذخیره افزونه‌های فعال"
+
+#: inc/Addons/Addons.php:274
+msgid "Other addons"
+msgstr "دیگر افزونه‌ها"
+
+#: inc/Addons/Addons.php:267
+msgid "Page Builder"
+msgstr "صفحه‌ساز"
+
+#: inc/Addons/Addons.php:266
+msgid "Utility"
+msgstr "ابزار مفید"
+
+#: inc/Addons/Addons.php:265 inc/App/Integration/RankMath.php:171
+msgid "SEO"
+msgstr "سئو"
+
+#: inc/Addons/Addons.php:264
+msgid "Customizations"
+msgstr "سفارشی‌سازی"
+
+#: inc/Addons/Addons.php:263
+msgid "Marketing"
+msgstr "بازاریابی"
+
+#: inc/Addons/Addons.php:262 inc/Admin/AdminTools.php:23
+msgid "Tools"
+msgstr "ابزارها"
+
+#: inc/Addons/Addons.php:261
+msgid "E-commerce"
+msgstr "تجارت الکترونیک"
+
+#: inc/Addons/Addons.php:259
+msgid "Recommended"
+msgstr "توصیه‌شده"
 
 #: inc/Addons/Addons.php:75
 msgid "Addons settings saved."
 msgstr "تنظیمات افزونه‌ها ذخیره شد."
 
-#: inc/Addons/Addons.php:83
-msgid "Integration Addons"
-msgstr "افزونه‌های هماهنگ‌سازی"
+#: inc/Addons/Addons.php:52
+msgid "To load the add-on initial hooks, the page refreshes."
+msgstr "برای بارگذاری قلاب‌های اولیه افزونه، صفحه رفرش می‌شود."
 
-#: inc/Addons/Addons.php:115
-msgid "Enable addon"
-msgstr "فعال کردن افزونه"
+#: inc/Addons/Addons.php:31
+msgid "Parsi Date Addons"
+msgstr "افزونه‌های وردپرس پارسی"
 
-#: inc/Addons/Addons.php:115 inc/Addons/Addons.php:133
-msgid "Activate"
-msgstr "فعال‌سازی"
+#: inc/Addons/Addons.php:30 inc/Addons/Addons.php:66 inc/Addons/Addons.php:246
+msgid "Addons"
+msgstr "افزونه‌ها"
 
-#: inc/Addons/Addons.php:133
-msgid "Activate required addon"
-msgstr "افزونه مورد نیاز را فعال کنید"
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:83
+msgid "Gateway Key"
+msgstr "کلید درگاه"
 
-#: inc/Addons/Addons.php:142
-msgid "Install required addon"
-msgstr "افزونه مورد نیاز را نصب کنید"
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:77
+msgid "Merchant ID"
+msgstr "شناسه پذیرنده"
 
-#: inc/Addons/Addons.php:142
-msgid "Install"
-msgstr "نصب"
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:29
+#: assets/js-admin/wc-pg-blocks/wpp-wc-melli-pg.js:3
+msgid "Melli Bank"
+msgstr "بانک ملی"
 
-#: inc/Addons/Addons.php:148 inc/App/Integration/EDD.php:134
-msgid "Download"
-msgstr "دانلود"
+#: inc/App/Integration/WooCommerce/WcGateways.php:34
+msgid "Melli Bank (Sadad)"
+msgstr "بانک ملی (سداد)"
 
-#: inc/Addons/Addons.php:148
-msgid "Buy"
-msgstr "خرید"
+#: inc/App/Integration/WooCommerce/WcGateways.php:33
+msgid "Mellat Bank (Behpardakht)"
+msgstr "بانک ملت (به‌پرداخت)"
 
-#: inc/Addons/Addons.php:150
-msgid "Download required addon"
-msgstr "دانلود افزونه مورد نیاز"
+#: assets/js-admin/wc-pg-blocks/wpp-wc-mellat-pg.js:13
+#: assets/js-admin/wc-pg-blocks/wpp-wc-melli-pg.js:13
+#: assets/js-admin/wc-pg-blocks/wpp-wc-parsian-pg.js:13
+#: assets/js-admin/wc-pg-blocks/wpp-wc-pasargad-pg.js:13
+msgid "Continue"
+msgstr "ادامه دادن"
 
-#: inc/Addons/Addons.php:150
-msgid "Buy required addon"
-msgstr "افزونه مورد نیاز را خریداری کنید"
+#: assets/js-admin/dashboard.js:622 assets/js-admin/dashboard.js:633
+msgctxt "upcoming events year format"
+msgid "Y"
+msgstr "Y"
 
-#: inc/Addons/Addons.php:232
-#, php-format
-msgid ""
-"Parsidate is integrated with the following plugins, and if you use any of them, "
-"you can enable it. If you are using a plugin that is not integrated with "
-"Parsidate, please submit a <a href=\"%s\" target=\"_blank\">request</a>."
-msgstr ""
-"پارسی‌دیت با افزونه‌های زیر یکپارچه شده است و در صورت استفاده از هر یک از آنها، "
-"می‌توانید آن را فعال کنید. اگر از افزونه‌ای استفاده می‌کنید که با پارسی‌دیت یکپارچه "
-"نشده است، لطفاً <a href=\"%s\" target=\"_blank\">درخواست</a> خود را ارسال کنید."
+#: assets/js-admin/dashboard.js:620 assets/js-admin/dashboard.js:621
+#: assets/js-admin/dashboard.js:630 assets/js-admin/dashboard.js:632
+msgctxt "upcoming events day format"
+msgid "j"
+msgstr "j"
 
-#: inc/Addons/Addons.php:244
-msgid "Recommended"
-msgstr "پیشنهادی"
+#: assets/js-admin/dashboard.js:619 assets/js-admin/dashboard.js:629
+#: assets/js-admin/dashboard.js:631
+msgctxt "upcoming events month format"
+msgid "F"
+msgstr "F"
 
-#: inc/Addons/Addons.php:245 inc/Admin/AdminIntegration.php:25
-msgid "Integration"
-msgstr "هماهنگ‌سازی"
+#. translators: Date string for upcoming events. 1: Starting month, 2: Starting
+#. day, 3: Ending month, 4: Ending day, 5: Ending year.
+#: assets/js-admin/dashboard.js:609
+msgid "%1$s %2$d – %3$s %4$d, %5$d"
+msgstr "%1$s %2$d – %3$s %4$d, %5$d"
 
-#: inc/Addons/Addons.php:246
-msgid "E-commerce"
-msgstr "تجارت الکترونیک"
+#. translators: Date string for upcoming events. 1: Month, 2: Starting day, 3:
+#. Ending day, 4: Year.
+#: assets/js-admin/dashboard.js:607
+msgid "%1$s %2$d–%3$d, %4$d"
+msgstr "%1$s %2$d–%3$d, %4$d"
 
-#: inc/Addons/Addons.php:247 inc/Admin/AdminTools.php:23
-msgid "Tools"
-msgstr "ابزارها"
+#. translators: Date format for upcoming events on the dashboard. Include the
+#. day of the week. See https://www.php.net/manual/datetime.format.php
+#: assets/js-admin/dashboard.js:605
+msgid "l, M j, Y"
+msgstr "l, M j, Y"
 
-#: inc/Addons/Addons.php:248
-msgid "Marketing"
-msgstr "بازاریابی"
+#. translators: Used as part of a string like `GMT+5` in the Events Widget.
+#: assets/js-admin/dashboard.js:573
+msgctxt "Events widget offset prefix"
+msgid "GMT"
+msgstr "GMT"
 
-#: inc/Addons/Addons.php:249
-msgid "Customizations"
-msgstr "سفارشی‌سازی"
+#: assets/js-admin/dashboard.js:421
+msgid "Enter your closest city to find nearby events."
+msgstr "نزدیک‌ترین شهر را وارد کنید تا رویدادهای اطراف آن را بیابید."
 
-#: inc/Addons/Addons.php:250 inc/App/Integration/RankMath.php:171
-msgid "SEO"
-msgstr "سئو"
+#: assets/js-admin/dashboard.js:416
+msgid "An error occurred. Please try again."
+msgstr "خطایی رخ داده است. لطفاً دوباره تلاش کنید."
 
-#: inc/Addons/Addons.php:251
-msgid "Utility"
-msgstr "ابزار مفید"
+#. translators: %s is the name of the city we couldn't locate. Replace the
+#. examples with cities related to your locale. Test that they match the
+#. expected location and have upcoming events before including them. If no
+#. cities related to your locale have events, then use cities related to your
+#. locale that would be recognizable to most users. Use only the city name
+#. itself, without any region or country. Use the endonym (native locale name)
+#. instead of the English name if possible.
+#: assets/js-admin/dashboard.js:401
+msgid "We couldn’t locate %s. Please try another nearby city. For example: Kansas City; Springfield; Portland."
+msgstr "نتوانستیم %s را پیدا کنیم. لطفاً شهر دیگری در همان نزدیکی را امتحان کنید. برای مثال: کانزاس‌سیتی، اسپرینگ‌فیلد، پورتلند."
 
-#: inc/Addons/Addons.php:252
-msgid "Page Builder"
-msgstr "صفحه‌ساز"
+#. translators: %s: The name of a city.
+#: assets/js-admin/dashboard.js:369
+msgid "City updated. Listing events near %s."
+msgstr "شهر به‌روز شد. در حال فهرست‌کردن رویدادهای نزدیک به %s."
 
-#: inc/Addons/Addons.php:253 inc/App/Integration/LimitLoginAttempts.php:38
-msgid "Security"
-msgstr "امنیت"
-
-#: inc/Addons/Addons.php:259
-msgid "Other addons"
-msgstr "دیگر افزونه‌ها"
-
-#: inc/Addons/Addons.php:267
-msgid "Save active addons"
-msgstr "ذخیره افزونه‌های فعال"
+#: assets/js-admin/dashboard.js:339
+msgid "Attend an upcoming event near you."
+msgstr "در یکی از رویدادهای نزدیک به خودتان شرکت کنید."
 
 #: inc/Admin/AdminAbout.php:207
 msgid "GitHub Contributors"
 msgstr "مشارکت‌کننده‌های گیت‌هاب"
 
-#: inc/Admin/AdminAbout.php:220
-msgid "Morteza Geransayeh"
-msgstr "مرتضی گرانسایه"
+#: inc/Admin/AdminAbout.php:371
+msgid "About Us"
+msgstr "درباره ما"
+
+#: inc/Admin/AdminAbout.php:261
+msgid "DevOps"
+msgstr "دواپس"
+
+#: inc/Admin/AdminAbout.php:260
+msgid "Mohsen Ghiasi"
+msgstr "محسن قیاسی"
+
+#: inc/Admin/AdminAbout.php:270
+msgid "Parsa Kafi"
+msgstr "پارسا کافی"
+
+#: inc/Admin/AdminAbout.php:250
+msgid "Mobin Ghasempoor"
+msgstr "مبین قاسمپور"
+
+#: inc/Admin/AdminAbout.php:240
+msgid "HamidReza Yazdani"
+msgstr "حمید رضا یزدانی"
+
+#: inc/Admin/AdminAbout.php:230
+msgid "Saeed Fard"
+msgstr "سعید فرد"
 
 #: inc/Admin/AdminAbout.php:221 inc/Admin/AdminAbout.php:231
 #: inc/Admin/AdminAbout.php:241 inc/Admin/AdminAbout.php:251
@@ -315,370 +964,900 @@ msgstr "مرتضی گرانسایه"
 msgid "Developer"
 msgstr "توسعه‌دهنده"
 
-#: inc/Admin/AdminAbout.php:230
-msgid "Saeed Fard"
-msgstr "سعید فرد"
+#: inc/Admin/AdminAbout.php:220
+msgid "Morteza Geransayeh"
+msgstr "مرتضی گرانسایه"
 
-#: inc/Admin/AdminAbout.php:240
-msgid "HamidReza Yazdani"
-msgstr "حمید رضا یزدانی"
+#: inc/App/Tools/Other.php:34
+msgid "Today:&nbsp;"
+msgstr "امروز:&nbsp;"
 
-#: inc/Admin/AdminAbout.php:250
-msgid "Mobin Ghasempoor"
-msgstr "مبین قاسمپور"
-
-#: inc/Admin/AdminAbout.php:260
-msgid "Mohsen Ghiasi"
-msgstr "محسن قیاسی"
-
-#: inc/Admin/AdminAbout.php:261
-msgid "DevOps"
-msgstr "دواپس"
-
-#: inc/Admin/AdminAbout.php:270
-msgid "Parsa Kafi"
-msgstr "پارسا کافی"
-
-#: inc/Admin/AdminAbout.php:371
-msgid "About Us"
-msgstr "درباره ما"
-
-#: inc/Admin/AdminAbout.php:372
-msgid "About the WordPress Parsi team and plugin"
-msgstr "درباره تیم و افزونه پارسی‌دیت"
-
-#: inc/Admin/AdminAbout.php:378
-msgid "The text of this page is in Persian."
-msgstr "متن این صفحه به زبان فارسی است."
-
-#: inc/Admin/AdminAbout.php:384 inc/Widget/DashboardWidget.php:132
-msgid "About"
-msgstr "درباره"
-
-#: inc/Admin/AdminAssets.php:41
-msgid "Remove"
-msgstr "حذف"
-
-#: inc/Admin/AdminAssets.php:42
-msgid "Are you sure you want to delete this item(s)?"
-msgstr "آیا مطمئن هستید که می‌خواهید این مورد(ها) را حذف کنید؟"
-
-#: inc/Admin/AdminAssets.php:43
-msgid "Click to copy this text."
-msgstr "برای کپی کردن این متن کلیک کنید."
-
-#: inc/Admin/AdminConvert.php:21
-msgid "Convert"
-msgstr "تبدیل"
-
-#: inc/Admin/AdminConvert.php:37
-msgid "Convert settings"
-msgstr "تنظیمات تبدیل"
-
-#: inc/Admin/AdminConvert.php:38
-msgid "Convert Persian letters and numbers"
-msgstr "تبدیل حروف و اعداد فارسی"
-
-#: inc/Admin/AdminCore.php:21
-msgid "Core"
-msgstr "هسته"
-
-#: inc/Admin/AdminCore.php:37
-msgid "Core settings"
-msgstr "تنظیمات هسته"
-
-#: inc/Admin/AdminCore.php:38
-msgid "Global plugin settings"
-msgstr "تنظیمات سراسری افزونه"
-
-#: inc/Admin/AdminDashboard.php:22
-msgid "Dashboard"
-msgstr "پیشخوان"
-
-#: inc/Admin/AdminDashboard.php:30
-#, fuzzy
-#| msgid "Welcome to WP Parsi!"
-msgid "Welcome to Parsidate!"
-msgstr "به پارسی دیت خوش آمدید!"
-
-#: inc/Admin/AdminDashboard.php:40
-msgid "Hello"
-msgstr "درود"
-
-#: inc/Admin/AdminDashboard.php:42
-#, fuzzy
-#| msgid ""
-#| "WP Parsi is here to help you integrate Jalali date with your site, go to the "
-#| "Addons tab and activate the required addons."
-msgid ""
-"Parsidate is here to help you integrate Jalali date with your site, go to the "
-"Addons tab and activate the required addons."
+#: inc/App/Core/ShamsiDate.php:128
+msgid "By enabling this, ParsiDate options only work in Persian locale"
 msgstr ""
-"وردپرس پارسی اینجاست تا به شما در ادغام تاریخ جلالی با سایتتان کمک کند، به تب "
-"افزونه‌ها بروید و افزونه‌های مورد نیاز را فعال کنید."
-
-#: inc/Admin/AdminDashboard.php:60
-#, fuzzy
-#| msgid "Parsidate"
-msgid "Parsidate news"
-msgstr "تاریخ پارسی"
-
-#: inc/Admin/AdminDashboard.php:63
-msgid "WP-Parsi website is not available."
-msgstr "وبسایت وردپرس پارسی در دسترس نیست."
-
-#: inc/Admin/AdminIntegration.php:42
-msgid "Integration settings"
-msgstr "تنظیمات هماهنگ‌سازی"
-
-#: inc/Admin/AdminIntegration.php:43
-msgid "ParsiDate integration settings"
-msgstr "تنظیمات هماهنگ‌سازی پارسی‌دیت"
-
-#: inc/Admin/AdminPages.php:80
-#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v4.php:25
-#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v5.php:26
-#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v5.php:25
-#: inc/Widget/DashboardWidget.php:56
-msgid "Parsidate"
-msgstr "تاریخ پارسی"
-
-#: inc/Admin/AdminPages.php:80
-msgid "WP Parsi"
-msgstr "پارسی دیت"
-
-#: inc/Admin/AdminPages.php:101 inc/Plugin/Plugin.php:49
-msgid "WordPress"
-msgstr "وردپرس"
-
-#: inc/Admin/AdminPages.php:102
-msgid "Parsi"
-msgstr "پارسی"
-
-#: inc/Admin/AdminSettings.php:79
-msgid "Settings saved."
-msgstr "تنظیمات ذخیره شد."
-
-#: inc/Admin/AdminSettings.php:83
-msgid "Error saving settings!"
-msgstr "خطا در ذخیره تنظیمات!"
-
-#: inc/Admin/AdminSettings.php:492
-msgid "Save changes"
-msgstr "ذخیره تغییرات"
-
-#: inc/Admin/AdminSettings.php:505
-msgid "Discard changes"
-msgstr "بازنشانی تغییرات"
-
-#: inc/Admin/AdminTools.php:39
-msgid "Tools settings"
-msgstr "تنظیمات ابزارها"
-
-#: inc/Admin/AdminTools.php:40
-msgid "Advanced tools"
-msgstr "ابزارهای پیشرفته"
-
-#: inc/App/Convert/Convert.php:17
-msgid "Convert numbers to Persian"
-msgstr "تبدیل اعداد به فارسی"
-
-#: inc/App/Convert/Convert.php:22
-msgid "Numbers"
-msgstr "اعداد"
-
-#: inc/App/Convert/Convert.php:23
-msgid "Used in menus, comments, API, media, etc."
-msgstr "در منوها، نظرات، API، رسانه و غیره استفاده می‌شود."
-
-#: inc/App/Convert/Convert.php:30
-msgid "Page title"
-msgstr "در عنوان صفحه"
-
-#: inc/App/Convert/Convert.php:37
-msgid "Post title"
-msgstr "در عنوان نوشته‌ها"
-
-#: inc/App/Convert/Convert.php:44
-msgid "Post content"
-msgstr "در محتوای نوشته‌ها"
-
-#: inc/App/Convert/Convert.php:51
-msgid "Post excerpt"
-msgstr "در خلاصه‌ی نوشته‌ها"
-
-#: inc/App/Convert/Convert.php:58
-msgid "Comments text"
-msgstr "در نوشته‌ی دیدگاه‌ها"
-
-#: inc/App/Convert/Convert.php:65
-msgid "Comments count"
-msgstr "تعداد دیدگاه‌ها"
-
-#: inc/App/Convert/Convert.php:72
-msgid "Dates"
-msgstr "تاریخ‌ها"
-
-#: inc/App/Convert/Convert.php:79
-msgid "Categories"
-msgstr "دسته‌بندی‌ها"
-
-#: inc/App/Convert/Convert.php:90
-msgid "Letters"
-msgstr "حروف"
-
-#: inc/App/Convert/Convert.php:95
-msgid "Fix arabic characters"
-msgstr "تصحیح حروف عربی"
-
-#: inc/App/Convert/Convert.php:98
-msgid "Fixes arabic characters caused by wrong keyboard layouts"
-msgstr ""
-"این گزینه، حروف عربی را در کل سیستم به حروف فارسی تصحیح می‌کند\n"
-"برای مثال ٤/٥/٦ به ۴ / ۵ / ۶ و ك / ي به ک / ی"
-
-#: inc/App/Core/Debug.php:18
-msgid "Debug mode is enabled!"
-msgstr "حالت اشکال‌زدایی فعال است!"
-
-#: inc/App/Core/Debug.php:25 inc/App/Core/Debug.php:51
-msgid "Debug"
-msgstr "اشکال‌زدایی"
-
-#: inc/App/Core/Debug.php:30
-msgid "Debug Mode"
-msgstr "حالت اشکال‌زدایی"
-
-#: inc/App/Core/Debug.php:33
-msgid ""
-"By enabling this option, the uncompressed version of the JS and CSS files will "
-"be loaded."
-msgstr ""
-"با فعال‌کردن این گزینه، نسخۀ فشرده‌نشدۀ پرونده‌های JS و CSS افزونۀ پارسی‌دیت "
-"بارگذاری می‌شوند."
-
-#: inc/App/Core/Debug.php:39
-msgid "Load translate file"
-msgstr "بارگذاری فایل ترجمه"
-
-#: inc/App/Core/Debug.php:42
-msgid "Load translate file from plugin directory."
-msgstr "بارگذاری فایل ترجمه از پوشه افزونه."
-
-#: inc/App/Core/Debug.php:52
-msgid "Debug settings"
-msgstr "تنظیمات اشکال‌زدایی"
-
-#: inc/App/Core/ShamsiDate.php:32
-#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v4.php:23
-#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v5.php:24
-#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v4.php:23
-#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v4.php:25
-msgid "Date"
-msgstr "تاریخ شمسی"
-
-#: inc/App/Core/ShamsiDate.php:37 inc/App/Core/ShamsiDate.php:139
-msgid "Shamsi date"
-msgstr "تاریخ خورشیدی"
-
-#: inc/App/Core/ShamsiDate.php:40
-msgid "By enabling this, Dates will convert to Shamsi (Jalali) dates"
-msgstr "با فعال‌کردن این گزینه، تاریخ‌ها به صورت تاریخ خورشیدی (جلالی) درمی‌آیند"
-
-#: inc/App/Core/ShamsiDate.php:45
-msgid "Dual date"
-msgstr "تاریخ دوگانه"
-
-#: inc/App/Core/ShamsiDate.php:48
-msgid ""
-"By enabling this, Gregorian dates will be displayed beside Shamsi (Jalali) dates."
-msgstr ""
-"با فعال‌کردن این گزینه، تاریخ میلادی در کنار تاریخ خورشیدی (جلالی) نمایش داده "
-"می‌شود."
-
-#: inc/App/Core/ShamsiDate.php:54
-msgid "Months and week days name type"
-msgstr "نوع اسامی ماه‌ها و روزهای هفته"
-
-#: inc/App/Core/ShamsiDate.php:57
-msgid "Persian"
-msgstr "پارسی"
-
-#: inc/App/Core/ShamsiDate.php:58
-msgid "Dari"
-msgstr "دری"
-
-#: inc/App/Core/ShamsiDate.php:59
-msgid "Kurdish"
-msgstr "کوردی"
-
-#: inc/App/Core/ShamsiDate.php:60
-msgid "Pashto"
-msgstr "پشتو"
-
-#: inc/App/Core/ShamsiDate.php:71
-msgid "Permalinks"
-msgstr "پیوندهای یکتا"
-
-#: inc/App/Core/ShamsiDate.php:76
-msgid "Fix permalinks dates"
-msgstr "تبدیل تاریخ در پیوندهای یکتا"
-
-#: inc/App/Core/ShamsiDate.php:79
-msgid "By enabling this, dates in permalinks converted to Shamsi (Jalali) date"
-msgstr ""
-"با فعال‌کردن این گزینه، تاریخ‌ها در پیوندهای یکتا به تاریخ خورشیدی (جلالی) تبدیل "
-"می‌شوند"
-
-#: inc/App/Core/ShamsiDate.php:89
-msgid "Admin"
-msgstr "مدیریت"
-
-#: inc/App/Core/ShamsiDate.php:94
-msgid "Disable Widget Block"
-msgstr "غیرفعال کردن ویرایشگر بلوک ابزارک"
-
-#: inc/App/Core/ShamsiDate.php:97
-msgid "By enabling this, Widget Block Editor disabled"
-msgstr ""
-"با فعال‌کردن این گزینه، «ویرایشگر بلوک ابزارک» در بخش ابزارک‌ها غیرفعال می‌شود"
-
-#: inc/App/Core/ShamsiDate.php:102
-msgid "Vazir Font"
-msgstr "فونت وزیر"
-
-#: inc/App/Core/ShamsiDate.php:105
-msgid "By enabling this option, the Vazir font will be enable in whole admin area."
-msgstr "با فعال‌کردن این گزینه، فونت وزیر در همه بخش‌های مدیریت فعال می‌شود."
-
-#: inc/App/Core/ShamsiDate.php:120
-msgid "Multilingual"
-msgstr "چندزبانه"
 
 #: inc/App/Core/ShamsiDate.php:125
 msgid "Multilingual compatibility"
 msgstr "پشتیبانی از چندزبانه"
 
-#: inc/App/Core/ShamsiDate.php:128
-msgid "By enabling this, ParsiDate options only work in persian locale"
-msgstr "با فعال کردن این گزینه، تنظیمات پارسی‌دیت فقط برای زبان فارسی اعمال می‌شود"
+#: inc/App/Tools/Other.php:66
+msgid "Display today's Jalali date in the WordPress admin bar."
+msgstr "تاریخ شمسی امروز را در نوار مدیریت وردپرس نمایش دهید."
 
-#: inc/App/Core/ShamsiDate.php:140
-msgid "Shamsi date settings"
-msgstr "تنظیمات تاریخ خورشیدی"
+#: inc/App/Tools/Other.php:63
+msgid "Display date in the admin bar"
+msgstr "نمایش تاریخ در نوار مدیریت"
 
-#: inc/App/Integration/ACF.php:65
-msgid "Convert to Shamsi Date"
-msgstr "تبدیل به تاریخ شمسی"
+#: inc/Admin/AdminTools.php:40
+msgid "Advanced tools"
+msgstr "ابزارهای پیشرفته"
 
-#: inc/App/Integration/ACF.php:136 inc/App/Integration/ACF.php:142
-#: inc/App/Integration/ACF.php:173
-msgid "Advanced Custom Fields"
-msgstr "زمینه‌های سفارشی"
+#: inc/App/Core/ShamsiDate.php:60
+msgid "Pashto"
+msgstr "پشتو"
 
-#: inc/App/Integration/ACF.php:137 inc/App/Integration/ACF.php:174
-msgid "ParsiDate integration for Advanced Custom Fields (ACF)"
-msgstr "هماهنگ‌سازی تاریخ پارسی با زمینه‌های سفارشی (ACF)"
+#: inc/App/Core/ShamsiDate.php:59
+msgid "Kurdish"
+msgstr "کوردی"
+
+#: inc/App/Core/ShamsiDate.php:58
+msgid "Dari"
+msgstr "دری"
+
+#: inc/App/Core/ShamsiDate.php:57
+msgid "Persian"
+msgstr "پارسی"
+
+#: inc/App/Integration/WooCommerce.php:231
+msgid "<strong>Phone number</strong> is invalid."
+msgstr "<strong>شمارۀ تماس</strong> معتبر نیست."
+
+#: inc/App/Integration/WooCommerce.php:1001
+msgid "Phone number validation"
+msgstr "اعتبارسنجی شماره تماس"
+
+#: inc/App/Integration/WooCommerce.php:994
+msgid "Postcode validation"
+msgstr "اعتبارسنجی کد پستی"
+
+#: inc/App/Integration/WooCommerce.php:979
+msgid "Fix Persian phone"
+msgstr "تبدیل شماره تماس فارسی در روند پرداخت"
+
+#: inc/App/Integration/WooCommerce.php:987
+msgid "Display cities as a drop-down list"
+msgstr "نمایش شهرها به‌صورت لیست کشویی"
+
+#: inc/App/Integration/WooCommerce.php:971
+msgid "Fix Persian postcode"
+msgstr "تبدیل کد پستی فارسی در روند پرداخت"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:75
+msgid "Store No."
+msgstr "شماره فروشگاه"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:458
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:543
+msgid "If the payment has been deducted from your bank account, it will be automatically returned to your account by the bank (the final return time to the account is 72 hours) - contact support if needed."
+msgstr "اگر مبلغ از حساب بانکی شما کسر شده است، به‌طور خودکار توسط بانک به حساب شما بازگردانده خواهد شد (زمان نهایی بازگشت وجه به حساب ۷۲ ساعت است)؛ در صورت نیاز با بخش پشتیبانی تماس بگیرید."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:449
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:450
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:534
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:535
+msgid "Payment was not made"
+msgstr "پرداخت انجام نشد"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:439
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:524
+msgid "Error sending to the bank"
+msgstr "خطا در ارسال به بانک"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:420
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:505
+msgid "There is a problem with placing an order, please contact support"
+msgstr "در ثبت سفارش مشکلی وجود دارد؛ لطفاً با پشتیبانی تماس بگیرید."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:418
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:503
+msgid "Problem with placing an order"
+msgstr "مشکل در ثبت سفارش"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:412
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:497
+msgid "The order number is incorrect; Call for support if needed"
+msgstr "شماره سفارش نادرست است؛ در صورت نیاز با بخش پشتیبانی تماس بگیرید."
+
+#. translators: %s: Tracking number
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:403
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:488
+msgid "Your order has already been successfully placed with tracking number %s"
+msgstr "سفارش شما با موفقیت ثبت شده است؛ شماره پیگیری: %s"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:401
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:486
+msgid "The order has already been paid"
+msgstr "سفارش در حال حاضر پرداخت شده است"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:396
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:481
+msgid "The customer paid the amount, but when he returned from the bank, there was a problem in providing the service, there was an error in registering the order to return the money to the customer's account, this customer should either be provided with the service or the amount should be returned to his bank account."
+msgstr "مشتری مبلغ را پرداخت کرد، اما هنگام بازگشت از بانک، در ارائه خدمت مشکلی پیش آمد و در ثبت سفارشِ بازگرداندن وجه به حساب مشتری خطایی رخ داد؛ بنابراین یا باید خدمت به این مشتری ارائه شود و یا مبلغ به حساب بانکی او بازگردانده شود."
+
+#. translators: %s: Tracking number
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:392
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:477
+msgid "Your payment with the tracking number %s has been successfully made in the bank, but there is a problem in providing the service!"
+msgstr "پرداخت شما با شماره پیگیری %s با موفقیت در بانک انجام شده است، اما در ارائه خدمات مشکلی وجود دارد!"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:385
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:470
+msgid "The customer paid the amount, but when returning from the bank, there was a problem in providing the service, the order to return the money to the customer's account was registered in the bank."
+msgstr "مشتری مبلغ را پرداخت کرد، اما هنگام بازگشت از بانک، در ارائه خدمت مشکلی پیش آمد و دستور بازگرداندن وجه به حساب مشتری در بانک ثبت شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:383
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:394
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:468
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:479
+msgid "The order to return the money to your account has been registered in the bank, if the payment is not returned to your account within the next few hours, contact support (the maximum time to return to the account is 72 hours)"
+msgstr "دستور بازگرداندن وجه به حساب شما در بانک ثبت شده است؛ چنانچه مبلغ ظرف چند ساعت آینده به حسابتان واریز نشد، با بخش پشتیبانی تماس بگیرید (حداکثر زمان بازگشت وجه به حساب ۷۲ ساعت است)."
+
+#. translators: %s: Tracking number
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:381
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:466
+msgid "Your payment with the tracking number %s has been successfully processed at the bank, but there has been a problem with the service"
+msgstr "پرداخت شما با شماره پیگیری %s با موفقیت در بانک پردازش شده است، اما مشکلی در سرویس پیش آمده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:379
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:390
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:464
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:475
+msgid "Service delivery error"
+msgstr "خطای ارائه خدمات"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:369
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:454
+msgid "Trying again please wait.."
+msgstr "در حال تلاش مجدد؛ لطفاً صبر کنید."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:365
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:450
+msgid "Try again"
+msgstr "دوباره تلاش کنید"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:363
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:448
+msgid "The server of the internet portal has temporarily encountered a problem, to complete the transaction moments later, click on the button below"
+msgstr "سرور درگاه اینترنتی موقتاً دچار مشکل شده است؛ برای تکمیل تراکنش در لحظاتی دیگر، روی دکمه زیر کلیک کنید."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:359
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:444
+msgid "When the customer returned from the bank, the bank server did not respond, the customer was asked to refresh the page"
+msgstr "هنگامی که مشتری از بانک بازگشت، سرور بانک پاسخی نداد و از مشتری خواسته شد که صفحه را تازه‌سازی (Refresh) کند."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:358
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:361
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:443
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:446
+msgid "Temporary error in payment"
+msgstr "خطای موقت در پرداخت"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:337
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:421
+msgid "The payment of the transaction was unsuccessful due to cancellation on the bank page"
+msgstr "پرداخت تراکنش به دلیل لغو در صفحه بانک ناموفق بود."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:334
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:418
+msgid "It is not possible to complete the transaction"
+msgstr "تکمیل تراکنش امکان‌پذیر نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:333
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:417
+msgid "The destination of the transaction was not found"
+msgstr "مقصد تراکنش یافت نشد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:331
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:415
+msgid "The transaction authorization system is temporarily disabled or the time set for the authorization has expired"
+msgstr "سیستم صدور مجوز تراکنش موقتاً غیرفعال است یا مهلت تعیین‌شده برای صدور مجوز به پایان رسیده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:329
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:413
+msgid "In transactions that require communication with the exporter, if the exporter is not active, this message will be sent in response."
+msgstr "در تراکنش‌هایی که نیازمند برقراری ارتباط با صادرکننده هستند، چنانچه صادرکننده فعال نباشد، این پیام در پاسخ ارسال خواهد شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:327
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:411
+msgid "The switch card service provider has not accepted the transaction"
+msgstr "ارائه‌دهنده خدمات سوئیچ کارت، تراکنش را نپذیرفته است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:326
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:410
+msgid "The card was not accepted"
+msgstr "کارت پذیرفته نشد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:325
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:409
+msgid "The transaction request has been rejected"
+msgstr "درخواست تراکنش رد شده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:323
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:407
+msgid "The account connected to the card is invalid or has errors"
+msgstr "حساب متصل به کارت نامعتبر است یا دارای خطا می‌باشد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:322
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:406
+msgid "The card is not active"
+msgstr "کارت فعال نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:320
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:404
+msgid "The number of incorrect password entries has exceeded the limit"
+msgstr "تعداد دفعات وارد کردن رمز عبور اشتباه از حد مجاز فراتر رفته است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:318
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:402
+msgid "The number of times the password has been repeated has exceeded the limit"
+msgstr "تعداد دفعات تکرار رمز عبور از حد مجاز فراتر رفته است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:316
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:400
+msgid "The response required to complete or complete the transaction has arrived too late"
+msgstr "پاسخ مورد نیاز برای تکمیل تراکنش، با تأخیر بیش از حد دریافت شده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:314
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:398
+msgid "The number of transaction requests exceeds the limit"
+msgstr "تعداد درخواست‌های تراکنش از حد مجاز فراتر رفته است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:313
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:397
+msgid "The security measures have been violated"
+msgstr "تدابیر امنیتی نقض شده‌اند."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:312
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:396
+msgid "The card is limited"
+msgstr "کارت محدود شده است"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:311
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:395
+msgid "The transaction amount is over the limit"
+msgstr "مبلغ تراکنش بیش از سقف مجاز است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:310
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:394
+msgid "The card is suspected of fraud"
+msgstr "این کارت مشکوک به کلاهبرداری است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:308
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:392
+msgid "It is not allowed to perform the relevant transaction by the operator's terminal"
+msgstr "انجام تراکنش مربوطه از طریق پایانه اپراتور مجاز نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:306
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:390
+msgid "The relevant transaction is not allowed by the card holder"
+msgstr "تراکنش مربوطه توسط دارنده کارت مجاز دانسته نشده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:305
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:389
+msgid "The card is invalid"
+msgstr "کارت نامعتبر است"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:304
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:388
+msgid "The card password is invalid"
+msgstr "رمز عبور کارت نامعتبر است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:302
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:386
+msgid "The account balance is insufficient"
+msgstr "موجودی حساب کافی نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:301
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:385
+msgid "The bill can not be paid"
+msgstr "صورت‌حساب قابل پرداخت نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:300
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:384
+msgid "The card has been declared stolen"
+msgstr "سرقت این کارت اعلام شده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:299
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:383
+msgid "The card has been declared lost"
+msgstr "اعلام شده است که کارت مفقود شده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:298
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:382
+msgid "The requested operation is not supported"
+msgstr "عملیات درخواستی پشتیبانی نمی‌شود."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:297
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:381
+msgid "There is no credit card account"
+msgstr "هیچ حساب کارت اعتباری‌ای وجود ندارد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:294
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:303
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:378
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:387
+msgid "The card has expired"
+msgstr "تاریخ انقضای کارت تمام شده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:292
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:376
+msgid "The transaction is incompletely completed (for example, a deposit transaction that is completed from the customer's point of view, but needs to be completed)"
+msgstr "تراکنش به‌صورت ناقص تکمیل شده است (برای مثال، تراکنش واریزی که از دیدگاه مشتری تکمیل‌شده محسوب می‌شود، اما همچنان نیازمند تکمیل نهایی است)."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:291
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:375
+msgid "The merchant is not supported by the switch"
+msgstr "پذیرنده توسط سوئیچ پشتیبانی نمی‌شود."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:290
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:374
+msgid "The message format has errors"
+msgstr "فرمت پیام دارای خطا است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:288
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:372
+msgid "The transaction was suspected of malpractice (card, terminal, card holder), so it was not accepted"
+msgstr "به این تراکنش به دلیل احتمال تخلف (مربوط به کارت، پایانه یا دارنده کارت) مشکوک شد و در نتیجه پذیرفته نشد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:286
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:370
+msgid "If the response to the terminal request does not require any specific response or function, we will have this message."
+msgstr "اگر پاسخ به درخواست نهایی نیازمند هیچ‌گونه واکنش یا عملکرد خاصی نباشد، با این پیام مواجه خواهیم شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:284
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:368
+msgid "In a situation where the switch needs to query the card to accept the transaction, it may make a request from the card (terminal), this message indicates that the answer is invalid."
+msgstr "در شرایطی که سوئیچ برای پذیرش تراکنش نیاز به استعلام از کارت دارد و درخواستی را به کارت (یا پایانه) ارسال می‌کند، این پیام نشان‌دهنده نامعتبر بودن پاسخ دریافتی است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:283
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:367
+msgid "The requesting customer has been deleted"
+msgstr "مشتری درخواست‌کننده حذف شده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:282
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:366
+msgid "Card issuer is invalid (does not exist)"
+msgstr "صادرکننده کارت نامعتبر است (وجود ندارد)"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:281
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:365
+msgid "The sent card number is invalid (does not exist)"
+msgstr "شماره کارت ارسال‌شده نامعتبر است (وجود ندارد)."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:280
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:364
+msgid "The transaction amount is incorrect"
+msgstr "مبلغ تراکنش نادرست است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:279
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:363
+msgid "The transaction is invalid"
+msgstr "تراکنش نامعتبر است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:277
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:361
+msgid "The transaction with an amount lower than the requested amount (deficiency in the customer's account) has been accepted"
+msgstr "تراکنش با مبلغی کمتر از مبلغ درخواستی (به دلیل کسری موجودی حساب مشتری) پذیرفته شده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:276
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:360
+msgid "The received request is being followed up"
+msgstr "درخواست دریافتی در حال پیگیری است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:274
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:358
+msgid "By recognizing the identity of the card holder, the transaction is successful"
+msgstr "با احراز هویت دارنده کارت، تراکنش با موفقیت انجام می‌شود."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:273
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:357
+msgid "An unknown error occurred"
+msgstr "خطای ناشناخته‌ای رخ داد"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:272
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:356
+msgid "The transaction was abandoned"
+msgstr "تراکنش رها شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:271
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:355
+msgid "The store merchant is invalid"
+msgstr "فروشنده فروشگاه نامعتبر است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:269
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:353
+msgid "The confirmation operation of this transaction has already been done successfully"
+msgstr "عملیات تأیید این تراکنش با موفقیت انجام شده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:268
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:352
+msgid "The card issuer refused to complete the transaction"
+msgstr "صادرکننده کارت از تکمیل تراکنش خودداری کرد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:267
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:351
+msgid "The operation is successful"
+msgstr "عملیات با موفقیت انجام شد"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:266
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:350
+msgid "Server error"
+msgstr "خطای سرور"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:265
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:349
+msgid "The merchant is inactive"
+msgstr "مرچنت کد غیرفعال است"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:264
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:348
+msgid "The merchant could not be authenticated"
+msgstr "هویت فروشنده قابل تأیید نبود."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:263
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:347
+msgid "The transaction was successfully rolled back"
+msgstr "تراکنش با موفقیت به حالت قبل بازگردانده شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:262
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:346
+msgid "The purchase feature is disabled for the merchant"
+msgstr "قابلیت خرید برای فروشنده غیرفعال است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:260
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:344
+msgid "The ability to pay the bill is inactive for the merchant"
+msgstr "قابلیت پرداخت صورت‌حساب برای پذیرنده غیرفعال است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:259
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:343
+msgid "The top-up feature is disabled for the merchant"
+msgstr "قابلیت شارژ مجدد برای پذیرنده غیرفعال است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:258
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:342
+msgid "Charging is disabled for the merchant"
+msgstr "امکان دریافت وجه برای پذیرنده غیرفعال شده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:256
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:340
+msgid "The ability to send transaction confirmation is disabled for the merchant"
+msgstr "قابلیت ارسال تأییدیه تراکنش برای پذیرنده غیرفعال است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:254
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:338
+msgid "The ability to reverse the transaction is disabled for the merchant"
+msgstr "قابلیت برگشت تراکنش برای پذیرنده غیرفعال است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:252
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:336
+msgid "The transaction amount is more than the merchant's limit"
+msgstr "مبلغ تراکنش بیش از سقف مجاز پذیرنده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:251
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:335
+msgid "The order number is duplicate"
+msgstr "شماره سفارش تکراری است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:250
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:334
+msgid "The input parameter is empty"
+msgstr "پارامتر ورودی خالی است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:249
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:333
+msgid "The bill ID is invalid"
+msgstr "شناسه قبض نامعتبر است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:248
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:332
+msgid "The payment ID is invalid"
+msgstr "شناسه پرداخت نامعتبر است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:247
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:331
+msgid "The length of the string exceeds the allowed limit"
+msgstr "طول رشته از حد مجاز فراتر می‌رود."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:246
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:330
+msgid "The string length is less than the allowed limit"
+msgstr "طول رشته کمتر از حد مجاز است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:245
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:329
+msgid "The value sent is not a number"
+msgstr "مقدار ارسال‌شده عدد نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:244
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:328
+msgid "The organization is invalid"
+msgstr "سازمان نامعتبر است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:243
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:327
+msgid "The length of the input data is not valid"
+msgstr "طول داده‌های ورودی معتبر نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:242
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:326
+msgid "The given string is not entirely numeric"
+msgstr "رشتهٔ ارائه‌شده کاملاً عددی نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:241
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:325
+msgid "The merchant's identification code is not valid"
+msgstr "کد شناسایی پذیرنده معتبر نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:240
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:324
+msgid "The URL is not valid"
+msgstr "آدرس اینترنتی (URL) معتبر نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:239
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:323
+msgid "The IP address format is not valid"
+msgstr "فرمت آدرس IP معتبر نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:238
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:322
+msgid "Token has expired"
+msgstr "توکن منقضی شده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:237
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:321
+msgid "Token is invalid"
+msgstr "توکن نامعتبر است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:235
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:319
+msgid "The transaction amount is less than the minimum allowed"
+msgstr "مبلغ تراکنش کمتر از حداقل مجاز است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:234
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:318
+msgid "The transaction was confirmed by the merchant"
+msgstr "تراکنش توسط فروشنده تأیید شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:233
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:317
+msgid "The transaction was sent back to the switch"
+msgstr "تراکنش به سوئیچ بازگردانده شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:231
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:315
+msgid "The purchase transaction payment request operation failed"
+msgstr "عملیات درخواست پرداخت برای تراکنش خرید با شکست مواجه شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:230
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:314
+msgid "Payment information not found"
+msgstr "اطلاعات پرداخت یافت نشد"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:228
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:312
+msgid "The merchant is not authorized to confirm this transaction"
+msgstr "فروشنده مجاز به تأیید این تراکنش نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:226
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:310
+msgid "The transaction was unsuccessful due to your withdrawal from the bank"
+msgstr "تراکنش به دلیل برداشت شما از بانک، ناموفق بود."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:225
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:309
+msgid "The transaction was confirmed by the recipient"
+msgstr "تراکنش توسط گیرنده تأیید شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:224
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:308
+msgid "The transaction has already been confirmed"
+msgstr "تراکنش قبلاً تأیید شده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:223
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:307
+msgid "The top-up charge request service call failed"
+msgstr "تماس مربوط به درخواست شارژ مجدد با شکست مواجه شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:222
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:306
+msgid "Transaction confirmation is unsuccessful"
+msgstr "تأیید تراکنش ناموفق است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:221
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:305
+msgid "The bill payment request service call failed"
+msgstr "فراخوانی سرویس درخواست پرداخت قبض با خطا مواجه شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:219
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:303
+msgid "The time allowed to request a transaction reversal has expired"
+msgstr "مهلت درخواست برگشت تراکنش به پایان رسیده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:217
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:301
+msgid "It is not possible to reverse the transaction in the current state"
+msgstr "امکان برگشت دادن تراکنش در وضعیت فعلی وجود ندارد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:216
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:300
+msgid "The transaction has already been reversed"
+msgstr "تراکنش قبلاً برگشت داده شده است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:215
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:299
+msgid "Transaction reversal is not allowed"
+msgstr "برگشت تراکنش مجاز نیست."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:214
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:298
+msgid "An unexpected error has occurred"
+msgstr "خطای غیرمنتظره‌ای رخ داده است."
+
+#. translators: %s: Bank name
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:89
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:93
+msgid "Secure payment by all Shatab's cards through %s"
+msgstr "پرداخت امن با تمامی کارت‌های شبکه شتاب از طریق %s"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:295
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:379
+msgid "The number of incorrect password entries has exceeded the limit."
+msgstr "تعداد دفعات وارد کردن رمز عبور اشتباه از حد مجاز فراتر رفته است."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:410
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:411
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:419
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:495
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:496
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:504
+msgid "The order number is incorrect"
+msgstr "شماره سفارش نادرست است"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:354
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:439
+msgid "Back to checkout"
+msgstr "بازگشت به تسویه حساب"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:113
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:117
+msgid "The payment remained incomplete due to your cancellation."
+msgstr "پرداخت به دلیل لغوِ شما، ناتمام ماند."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:111
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:115
+msgid "Enter the text of the message you want to display after the user cancels the payment. This message will be displayed after returning from the bank."
+msgstr "متن پیامی را که می‌خواهید پس از لغو پرداخت توسط کاربر نمایش داده شود، وارد کنید. این پیام پس از بازگشت از درگاه بانک نمایش داده خواهد شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:109
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:113
+msgid "Payment cancellation message"
+msgstr "پیام لغو پرداخت"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:109
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:109
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:105
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:109
+msgid "Your payment has failed. Please try again or contact us in case of problems."
+msgstr "پرداخت شما ناموفق بود. لطفاً دوباره تلاش کنید یا در صورت بروز مشکل، با ما تماس بگیرید."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:107
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:107
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:103
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:107
+msgid "Enter the text of the message you want to display to the user after an unsuccessful payment."
+msgstr "متن پیامی را که می‌خواهید پس از پرداخت ناموفق به کاربر نمایش داده شود، وارد کنید."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:105
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:105
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:101
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:105
+msgid "Payment failed message"
+msgstr "پیام پرداخت ناموفق"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:97
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:101
+msgid "Thank you for your purchase. Your order has been successfully placed."
+msgstr "از خرید شما سپاسگزاریم. سفارش شما با موفقیت ثبت شد."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:95
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:99
+msgid "Enter the text of the message you want to display to the user after successful payment."
+msgstr "متن پیامی را که می‌خواهید پس از پرداخت موفق به کاربر نمایش دهید، وارد کنید."
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:93
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:97
+msgid "Successful payment message"
+msgstr "پیام پرداخت موفقیت‌آمیز"
+
+#. translators: %s: Bank name
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:101
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:101
+msgid "Secure payment by all Shetab's cards through %s"
+msgstr "پرداخت امن با تمام کارت‌های شتاب از طریق %s"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:98
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:98
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:86
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:90
+msgid "The description that will be displayed during the purchase process for the gateway"
+msgstr "توضیحی که در طول فرآیند خرید برای درگاه نمایش داده می‌شود"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:96
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:96
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:84
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:88
+msgid "Gateway description"
+msgstr "توضیحات درگاه"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:91
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:91
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:79
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:83
+msgid "This name is displayed to the customer during the purchase process"
+msgstr "این نام در طول فرآیند خرید به مشتری نمایش داده می‌شود"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:89
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:89
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:77
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:81
+msgid "Gateway title"
+msgstr "عنوان درگاه"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:83
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:72
+msgid "Gateway password"
+msgstr "رمز عبور درگاه"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:77
+msgid "Gateway user name"
+msgstr "نام کاربری درگاه"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:71
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:71
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:69
+msgid "Terminal No."
+msgstr "شماره ترمینال."
+
+#. translators: %s: Bank name
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:66
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:65
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:67
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:64
+msgid "Activate or deactivate %s gateway"
+msgstr "فعال یا غیر فعال‌سازی درگاه %s"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:63
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:62
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:64
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:61
+msgid "Enabled/Disabled"
+msgstr "فعال/غیرفعال"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:33
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:31
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:34
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:34
+msgid "payment gateway (By WP-Parsidate)"
+msgstr "درگاه پرداخت (توسط پارسی‌دیت)"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:31
+#: assets/js-admin/wc-pg-blocks/wpp-wc-mellat-pg.js:3
+msgid "Mellat Bank"
+msgstr "بانک ملت"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:32
+#: inc/App/Integration/WooCommerce/WcGateways.php:32
+#: assets/js-admin/wc-pg-blocks/wpp-wc-pasargad-pg.js:3
+msgid "Pasargad Bank"
+msgstr "بانک پاسارگاد"
+
+#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:32
+#: inc/App/Integration/WooCommerce/WcGateways.php:31
+#: assets/js-admin/wc-pg-blocks/wpp-wc-parsian-pg.js:3
+msgid "Parsian Bank"
+msgstr "بانک پارسیان"
+
+#: inc/App/Integration/WooCommerce/WcGateways.php:97
+msgid "Payment Gateways"
+msgstr "درگاه‌های پرداخت"
+
+#: inc/App/Integration/WooCommerce/WooCommerceCitySelect.php:144
+#: inc/App/Integration/WooCommerce/WooCommerceCitySelect.php:189
+msgid "Select an option&hellip;"
+msgstr "گزینه‌ای را انتخاب کنید&hellip;"
+
+#: inc/App/Integration/WooCommerce/WooCommerceCitySelect.php:100
+msgid "required"
+msgstr "الزامی"
+
+#: inc/Helper/HTML.php:747 inc/Widget/DashboardWidget.php:145
+msgid "Sponsor"
+msgstr "حامی مالی"
+
+#. translators: If a Rosetta site exists (e.g. https://es.wordpress.org/news/),
+#. then use that. Otherwise, leave untranslated.
+#: inc/Widget/DashboardWidget.php:144
+msgctxt "Sponsorship plans"
+msgid "https://wp-parsi.com/sponser/"
+msgstr "https://wp-parsi.com/sponser/"
+
+#: inc/Admin/AdminAbout.php:384 inc/Widget/DashboardWidget.php:132
+msgid "About"
+msgstr "درباره ما"
+
+#. translators: Hidden accessibility text.
+#: inc/Widget/DashboardWidget.php:122 inc/Widget/DashboardWidget.php:134
+#: inc/Widget/DashboardWidget.php:147
+msgid "(opens in a new tab)"
+msgstr "(در زبانۀ جدید باز می‌شود)"
+
+#: inc/Widget/DashboardWidget.php:120
+msgid "WordPress Parsi"
+msgstr "وردپرس پارسی"
+
+#: inc/Widget/DashboardWidget.php:96
+msgid "Loading Sponsors"
+msgstr "در حال بارگذاری حامیان مالی"
+
+#: inc/Widget/DashboardWidget.php:89
+msgid "How can I become a sponsor?"
+msgstr "چطور می‌توانم حامی مالی شوم؟"
+
+#: inc/Widget/DashboardWidget.php:83
+msgid "Why are you showing me this?"
+msgstr "چرا این را به من نشان می‌دهید؟"
+
+#: inc/Widget/DashboardWidget.php:77
+msgid "What is this?"
+msgstr "این چیست؟"
+
+#: inc/App/Core/ShamsiDate.php:105
+msgid "By enabling this option, the Vazir font will be enable in whole admin area."
+msgstr "با فعال‌کردن این گزینه، فونت وزیر در همه بخش‌های مدیریت فعال می‌شود."
+
+#: inc/App/Core/ShamsiDate.php:102
+msgid "Vazir Font"
+msgstr "فونت وزیر"
+
+#: inc/Widget/ArchiveWidget.php:60 assets/js-admin/archive-block.js:77
+msgid "How to display"
+msgstr "نحوۀ نمایش"
+
+#: inc/Widget/ArchiveWidget.php:47 assets/js-admin/archive-block.js:68
+#: assets/js-admin/calendar-block.js:59
+msgid "Title"
+msgstr "عنوان"
+
+#: inc/App/Core/Debug.php:33
+msgid "By enabling this option, the uncompressed version of the JS and CSS files will be loaded."
+msgstr "با فعال‌کردن این گزینه، نسخۀ فشرده‌نشدۀ پرونده‌های JS و CSS افزونۀ پارسی‌دیت بارگذاری می‌شوند."
+
+#: inc/App/Core/Debug.php:30
+msgid "Debug Mode"
+msgstr "حالت اشکال‌زادیی"
+
+#: inc/App/Core/ShamsiDate.php:97
+msgid "By enabling this, Widget Block Editor disabled"
+msgstr "با فعال‌کردن این گزینه، «ویرایشگر بلوک ابزارک» در بخش ابزارک‌ها غیرفعال می‌شود"
+
+#: inc/App/Core/ShamsiDate.php:94
+msgid "Disable Widget Block"
+msgstr "غیرفعال کردن ویرایشگر بلوک ابزارک"
+
+#: inc/App/Integration/WooCommerce.php:552
+msgid "Expiry date"
+msgstr "تاریخ انقضاء"
 
 #: inc/App/Integration/ACF.php:147
 msgid "Jalali Datepicker"
@@ -688,15 +1867,33 @@ msgstr "انتخاب‌گر تاریخ شمسی (جلالی)"
 msgid "Save dates in Jalali format (Not recommended)"
 msgstr "ذخیره‌سازی تاریخ بصورت شمسی (توصیه نمی‌شود)"
 
-#: inc/App/Integration/ACF.php:178 inc/App/Integration/JetEngine.php:176
-msgid "Meta"
-msgstr "متا"
+#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v5.php:49
+msgid "Display time picker in 24 or 12 hours format"
+msgstr "نمایش انتخاب‌گر زمان بصورت 24 یا 12 ساعته"
 
-#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v4.php:46
-#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v5.php:48
-#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v5.php:59
-msgid "Placeholder"
-msgstr "متن راهنما"
+#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v5.php:48
+msgid "Time Format"
+msgstr "قالب زمان"
+
+#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v5.php:33
+msgid "Error! Please select a valid time."
+msgstr "خطا! لطفاً تاریخ معتبری وارد کنید."
+
+#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v5.php:23
+msgid "Time"
+msgstr "ساعت"
+
+#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v4.php:47
+msgid "Thumbnail is advised"
+msgstr "ابعاد بندانگشتی پیشنهادی"
+
+#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v4.php:46
+msgid "Preview Size"
+msgstr "ابعاد پیش‌نمایش"
+
+#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v5.php:33
+msgid "Error! Please select a valid date."
+msgstr "خطا! لطفاً تاریخ معتبری وارد کنید."
 
 #: inc/App/Integration/ACF/class-wpp-acf-datepicker-v4.php:47
 #: inc/App/Integration/ACF/class-wpp-acf-datepicker-v5.php:49
@@ -704,1399 +1901,165 @@ msgstr "متن راهنما"
 msgid "Show custom placeholder"
 msgstr "نمایش متن راهنمای سفارشی"
 
-#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v5.php:33
-msgid "Error! Please select a valid date."
-msgstr "خطا! لطفاً تاریخ معتبری وارد کنید."
+#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v4.php:46
+#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v5.php:48
+#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v5.php:59
+msgid "Placeholder"
+msgstr "متن راهنما"
 
-#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v4.php:46
-msgid "Preview Size"
-msgstr "ابعاد پیش‌نمایش"
+#: inc/Admin/AdminPages.php:80
+#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v4.php:25
+#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v5.php:26
+#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v5.php:25
+#: inc/Widget/DashboardWidget.php:56
+msgid "Parsidate"
+msgstr "پارسی‌دیت"
 
-#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v4.php:47
-msgid "Thumbnail is advised"
-msgstr "ابعاد بندانگشتی پیشنهادی"
+#: inc/App/Core/ShamsiDate.php:32
+#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v4.php:23
+#: inc/App/Integration/ACF/class-wpp-acf-datepicker-v5.php:24
+#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v4.php:23
+#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v4.php:25
+msgid "Date"
+msgstr "تاریخ شمسی"
 
-#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v5.php:23
-msgid "Time"
-msgstr "ساعت"
-
-#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v5.php:33
-msgid "Error! Please select a valid time."
-msgstr "خطا! لطفاً تاریخ معتبری وارد کنید."
-
-#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v5.php:48
-msgid "Time Format"
-msgstr "قالب زمان"
-
-#: inc/App/Integration/ACF/class-wpp-acf-timepicker-v5.php:49
-msgid "Display time picker in 24 or 12 hours format"
-msgstr "نمایش انتخاب‌گر زمان بصورت 24 یا 12 ساعته"
-
-#: inc/App/Integration/BulkyBulkEditProductsWooCommerce.php:31
-msgid "Bulky – Bulk Edit Products for WooCommerce"
-msgstr "بالکی – ویرایش انبوه محصولات ووکامرس"
-
-#: inc/App/Integration/BulkyBulkEditProductsWooCommerce.php:32
-msgid "ParsiDate integration for Bulky (Bulk Edit Products for WooCommerce)"
-msgstr "هماهنگ‌سازی تاریخ پارسی با بالکی (ویرایش انبوه محصولات ووکامرس)"
-
-#: inc/App/Integration/BulkyBulkEditProductsWooCommerce.php:35
-#: inc/App/Integration/WooCommerce.php:800 inc/App/Integration/WooCommerce.php:895
-#: inc/App/Integration/WooCommerce.php:902
-msgid "WooCommerce"
-msgstr "ووکامرس"
-
-#: inc/App/Integration/EDD.php:49
-msgid "Iran Toman (Toman)"
-msgstr "تومان ایران (تومان)"
+#: inc/Plugin/Plugin.php:99 assets/js-admin/archive-block.js:67
+#: assets/js-admin/calendar-block.js:58
+msgid "Settings"
+msgstr "تنظیمات"
 
 #: inc/App/Integration/EDD.php:70 inc/App/Integration/EDD.php:129
 msgid "Easy Digital Downloads"
 msgstr "دانلود آسان دیجیتال"
 
-#: inc/App/Integration/EDD.php:71 inc/App/Integration/EDD.php:130
-msgid "ParsiDate integration for Easy Digital Downloads"
-msgstr "هماهنگ‌سازی تاریخ پارسی با دانلود آسان دیجیتال"
-
-#: inc/App/Integration/EDD.php:76
-msgid "Price"
-msgstr "قیمت"
-
-#: inc/App/Integration/EDD.php:81 inc/App/Integration/WooCommerce.php:811
-msgid "Fix prices"
-msgstr "تصحیح قیمت‌ها"
-
-#: inc/App/Integration/EDD.php:88
-msgid "Remove decimals"
-msgstr "حذف اعشار"
-
-#: inc/App/Integration/EDD.php:98
-msgid "Currency"
-msgstr "واحد پولی"
-
-#: inc/App/Integration/EDD.php:103
-msgid "Add \"Toman\" currency"
-msgstr "افزودن واحد پولی «تومان»"
-
-#: inc/App/Integration/EDD.php:110
-msgid "Replace currency name"
-msgstr "جایگزینی نام واحد پولی"
-
-#: inc/App/Integration/Elementor.php:39 inc/App/Integration/Elementor.php:44
-msgid "Elementor"
-msgstr "المنتور"
-
-#: inc/App/Integration/Elementor.php:40
-msgid "ParsiDate integration for Elementor"
-msgstr "هماهنگ‌سازی تاریخ پارسی با المنتور"
-
-#: inc/App/Integration/Formello.php:37
-msgid "Formello"
-msgstr "Formello"
-
-#: inc/App/Integration/Formello.php:38
-msgid "ParsiDate integration for Formello"
-msgstr "هماهنگ‌سازی تاریخ پارسی با Formello"
-
-#: inc/App/Integration/Formello.php:42
-msgid "Form"
-msgstr "فرم"
-
-#: inc/App/Integration/JetEngine.php:110 inc/App/Integration/JetEngine.php:171
-msgid "Jet Engine"
-msgstr "جت‌انجین"
-
-#: inc/App/Integration/JetEngine.php:111 inc/App/Integration/JetEngine.php:172
-msgid "ParsiDate integration for Jet Engine"
-msgstr "هماهنگ‌سازی تاریخ پارسی با جت‌انجین"
-
-#: inc/App/Integration/JetEngine.php:116
-msgid "Meta date field conversion"
-msgstr "تبدیل فیلد متای تاریخ"
-
-#: inc/App/Integration/JetEngine.php:123
-msgid "Currently only \"Dynamic Field\" is supported."
-msgstr "در حال حاضر فقط «Dynamic Field» پشتیبانی می‌شود."
-
-#: inc/App/Integration/JetEngine.php:131
-msgid "Date field to Shamsi"
-msgstr "فیلد تاریخ به خورشیدی"
-
-#: inc/App/Integration/JetEngine.php:138
-msgid "Date format"
-msgstr "قالب تاریخ"
-
-#: inc/App/Integration/JetEngine.php:145
-msgid "Datetime field to Shamsi"
-msgstr "فیلد تاریخ-زمان به خورشیدی"
-
-#: inc/App/Integration/JetEngine.php:152
-msgid "Datetime format"
-msgstr "قالب تاریخ-زمان"
-
-#: inc/App/Integration/LimitLoginAttempts.php:33
-msgid "Limit Login Attempts Security"
-msgstr "محدود کردن تلاش‌های ورود"
-
-#: inc/App/Integration/LimitLoginAttempts.php:34
-msgid "ParsiDate integration for Limit Login Attempts Security"
-msgstr "هماهنگ‌سازی تاریخ پارسی با محدود کردن تلاش‌های ورود"
-
-#: inc/App/Integration/MonsterInsights.php:33
-msgid "Monster Insights"
-msgstr "Monster Insights"
-
-#: inc/App/Integration/MonsterInsights.php:34
-msgid "ParsiDate integration for Monster Insights"
-msgstr "هماهنگ‌سازی تاریخ پارسی با Monster Insights"
-
-#: inc/App/Integration/MonsterInsights.php:38
-msgid "Google"
-msgstr "گوگل"
-
-#: inc/App/Integration/RankMath.php:166
-msgid "Rank Math"
-msgstr "رنک‌مث"
-
-#: inc/App/Integration/RankMath.php:167
-msgid "ParsiDate integration for Rank Math"
-msgstr "هماهنگ‌سازی تاریخ پارسی با رنک‌مث"
-
-#: inc/App/Integration/SchemaPro.php:33
-msgid "Schema Pro"
-msgstr "اسکیما پرو"
-
-#: inc/App/Integration/SchemaPro.php:34
-msgid "ParsiDate integration for Schema Pro"
-msgstr "هماهنگ‌سازی تاریخ پارسی با اسکیما پرو"
-
-#: inc/App/Integration/SchemaPro.php:38
-msgid "Schema"
-msgstr "اسکیما"
-
-#: inc/App/Integration/UltimateMember.php:33
-msgid "Ultimate Member"
-msgstr "مدیریت کاربران"
-
-#: inc/App/Integration/UltimateMember.php:34
-msgid "ParsiDate integration for Ultimate Member"
-msgstr "هماهنگ‌سازی تاریخ پارسی با مدیریت کاربران"
-
-#: inc/App/Integration/UltimateMember.php:38
-msgid "User"
-msgstr "کاربر"
-
-#: inc/App/Integration/WooCommerce.php:122
-msgid "<strong>Phone number</strong> is invalid."
-msgstr "<strong>شمارۀ تماس</strong> معتبر نیست."
-
-#: inc/App/Integration/WooCommerce.php:437
-msgid "Expiry date"
-msgstr "تاریخ انقضاء"
-
-#: inc/App/Integration/WooCommerce.php:801 inc/App/Integration/WooCommerce.php:896
-msgid "ParsiDate integration for WooCommerce"
-msgstr "هماهنگ‌سازی تاریخ پارسی با ووکامرس"
-
-#: inc/App/Integration/WooCommerce.php:806
-msgid "Products"
-msgstr "محصولات"
-
-#: inc/App/Integration/WooCommerce.php:812 inc/App/Integration/WooCommerce.php:875
-msgid "Convert English numbers to Farsi"
-msgstr "تبدیل اعداد به فارسی"
-
-#: inc/App/Integration/WooCommerce.php:823
-msgid "Checkout page"
-msgstr "برگه پرداخت"
-
-#: inc/App/Integration/WooCommerce.php:828
-msgid "Fix Persian postcode"
-msgstr "اصلاح کدپستی فارسی"
-
-#: inc/App/Integration/WooCommerce.php:829 inc/App/Integration/WooCommerce.php:837
-msgid "Convert Farsi numbers to English"
-msgstr "تبدیل اعداد فارسی به انگلیسی"
-
-#: inc/App/Integration/WooCommerce.php:836
-msgid "Fix Persian phone"
-msgstr "اصلاح شماره تلفن فارسی"
-
-#: inc/App/Integration/WooCommerce.php:844
-msgid "Display cities as a drop-down list"
-msgstr "نمایش شهرها به‌صورت لیست کشویی"
-
-#: inc/App/Integration/WooCommerce.php:851
-msgid "Postcode validation"
-msgstr "اعتبارسنجی کد پستی"
-
-#: inc/App/Integration/WooCommerce.php:858
-msgid "Phone number validation"
-msgstr "اعتبارسنجی شماره تماس"
-
-#: inc/App/Integration/WooCommerce.php:869
-msgid "Email"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce.php:874
-msgid "Convert numbers in email content"
-msgstr "تبدیل اعداد در محتوای ایمیل"
-
-#: inc/App/Integration/WooCommerce/WcGateways.php:33
-msgid "Mellat Bank (Behpardakht)"
-msgstr "بانک ملت (به‌پرداخت)"
-
-#: inc/App/Integration/WooCommerce/WcGateways.php:34
-msgid "Melli Bank (Sadad)"
-msgstr "بانک ملی (صداد)"
-
-#: inc/App/Integration/WooCommerce/WcGateways.php:97
-msgid "Payment Gateways"
-msgstr "درگاه‌های پرداخت"
-
-#: inc/App/Integration/WooCommerce/WooCommerceCitySelect.php:98
-msgid "required"
-msgstr "الزامی"
-
-#: inc/App/Integration/WooCommerce/WooCommerceCitySelect.php:142
-#: inc/App/Integration/WooCommerce/WooCommerceCitySelect.php:188
-msgid "Select an option&hellip;"
-msgstr "گزینه‌ای را انتخاب کنید&hellip;"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:33
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:31
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:34
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:34
-msgid "payment gateway (By WP-Parsidate)"
-msgstr "درگاه پرداخت (توسط پارسی‌دیت)"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:63
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:62
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:64
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:61
-msgid "Enabled/Disabled"
-msgstr "فعال/غیرفعال"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:66
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:65
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:67
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:64
-#, php-format
-msgid "Activate or deactivate %s gateway"
-msgstr "فعال یا غیر فعال‌سازی درگاه %s"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:71
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:71
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:69
-msgid "Terminal No."
-msgstr "شماره ترمینال."
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:77
-msgid "Gateway user name"
-msgstr "نام کاربری درگاه"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:83
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:72
-msgid "Gateway password"
-msgstr "رمز عبور درگاه"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:89
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:89
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:77
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:81
-msgid "Gateway title"
-msgstr "عنوان درگاه"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:91
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:91
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:79
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:83
-msgid "This name is displayed to the customer during the purchase process"
-msgstr "این نام در طول فرآیند خرید به مشتری نمایش داده می‌شود"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:96
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:96
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:84
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:88
-msgid "Gateway description"
-msgstr "توضیحات درگاه"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:98
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:98
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:86
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:90
-msgid ""
-"The description that will be displayed during the purchase process for the "
-"gateway"
-msgstr "توضیحی که در طول فرآیند خرید برای درگاه نمایش داده می‌شود"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:101
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:101
-#, php-format
-msgid "Secure payment by all Shetab's cards through %s"
-msgstr "پرداخت امن با تمام کارت‌های شتاب از طریق %s"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:105
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:105
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:101
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:105
-msgid "Payment failed message"
-msgstr "پیام پرداخت ناموفق"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:107
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:107
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:103
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:107
-msgid ""
-"Enter the text of the message you want to display to the user after an "
-"unsuccessful payment."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-mellat-gateway.php:109
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:109
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:105
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:109
-msgid ""
-"Your payment has failed. Please try again or contact us in case of problems."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:77
-msgid "Merchant ID"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-melli-gateway.php:83
-msgid "Gateway Key"
-msgstr "کلید درگاه"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:89
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:93
-#, php-format
-msgid "Secure payment by all Shatab's cards through %s"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:93
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:97
-msgid "Successful payment message"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:95
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:99
-msgid ""
-"Enter the text of the message you want to display to the user after successful "
-"payment."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:97
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:101
-msgid "Thank you for your purchase. Your order has been successfully placed."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:109
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:113
-msgid "Payment cancellation message"
-msgstr "پیام لغو پرداخت"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:111
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:115
-msgid ""
-"Enter the text of the message you want to display after the user cancels the "
-"payment. This message will be displayed after returning from the bank."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:113
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:117
-msgid "The payment remained incomplete due to your cancellation."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:214
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:298
-msgid "An unexpected error has occurred"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:215
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:299
-msgid "Transaction reversal is not allowed"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:216
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:300
-msgid "The transaction has already been reversed"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:217
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:301
-msgid "It is not possible to reverse the transaction in the current state"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:219
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:303
-msgid "The time allowed to request a transaction reversal has expired"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:221
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:305
-msgid "The bill payment request service call failed"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:222
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:306
-msgid "Transaction confirmation is unsuccessful"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:223
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:307
-msgid "The top-up charge request service call failed"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:224
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:308
-msgid "The transaction has already been confirmed"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:225
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:309
-msgid "The transaction was confirmed by the recipient"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:226
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:310
-msgid "The transaction was unsuccessful due to your withdrawal from the bank"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:228
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:312
-msgid "The merchant is not authorized to confirm this transaction"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:230
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:314
-msgid "Payment information not found"
-msgstr "اطلاعات پرداخت یافت نشد"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:231
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:315
-msgid "The purchase transaction payment request operation failed"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:233
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:317
-msgid "The transaction was sent back to the switch"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:234
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:318
-msgid "The transaction was confirmed by the merchant"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:235
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:319
-msgid "The transaction amount is less than the minimum allowed"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:237
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:321
-msgid "Token is invalid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:238
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:322
-msgid "Token has expired"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:239
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:323
-msgid "The IP address format is not valid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:240
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:324
-msgid "The URL is not valid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:241
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:325
-msgid "The merchant's identification code is not valid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:242
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:326
-msgid "The given string is not entirely numeric"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:243
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:327
-msgid "The length of the input data is not valid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:244
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:328
-msgid "The organization is invalid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:245
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:329
-msgid "The value sent is not a number"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:246
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:330
-msgid "The string length is less than the allowed limit"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:247
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:331
-msgid "The length of the string exceeds the allowed limit"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:248
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:332
-msgid "The payment ID is invalid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:249
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:333
-msgid "The bill ID is invalid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:250
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:334
-msgid "The input parameter is empty"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:251
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:335
-msgid "The order number is duplicate"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:252
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:336
-msgid "The transaction amount is more than the merchant's limit"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:254
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:338
-msgid "The ability to reverse the transaction is disabled for the merchant"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:256
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:340
-msgid "The ability to send transaction confirmation is disabled for the merchant"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:258
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:342
-msgid "Charging is disabled for the merchant"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:259
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:343
-msgid "The top-up feature is disabled for the merchant"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:260
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:344
-msgid "The ability to pay the bill is inactive for the merchant"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:262
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:346
-msgid "The purchase feature is disabled for the merchant"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:263
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:347
-msgid "The transaction was successfully rolled back"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:264
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:348
-msgid "The merchant could not be authenticated"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:265
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:349
-msgid "The merchant is inactive"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:266
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:350
-msgid "Server error"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:267
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:351
-msgid "The operation is successful"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:268
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:352
-msgid "The card issuer refused to complete the transaction"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:269
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:353
-msgid ""
-"The confirmation operation of this transaction has already been done successfully"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:271
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:355
-msgid "The store merchant is invalid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:272
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:356
-msgid "The transaction was abandoned"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:273
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:357
-msgid "An unknown error occurred"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:274
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:358
-msgid ""
-"By recognizing the identity of the card holder, the transaction is successful"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:276
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:360
-msgid "The received request is being followed up"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:277
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:361
-msgid ""
-"The transaction with an amount lower than the requested amount (deficiency in "
-"the customer's account) has been accepted"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:279
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:363
-msgid "The transaction is invalid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:280
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:364
-msgid "The transaction amount is incorrect"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:281
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:365
-msgid "The sent card number is invalid (does not exist)"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:282
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:366
-msgid "Card issuer is invalid (does not exist)"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:283
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:367
-msgid "The requesting customer has been deleted"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:284
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:368
-msgid ""
-"In a situation where the switch needs to query the card to accept the "
-"transaction, it may make a request from the card (terminal), this message "
-"indicates that the answer is invalid."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:286
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:370
-msgid ""
-"If the response to the terminal request does not require any specific response "
-"or function, we will have this message."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:288
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:372
-msgid ""
-"The transaction was suspected of malpractice (card, terminal, card holder), so "
-"it was not accepted"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:290
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:374
-msgid "The message format has errors"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:291
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:375
-msgid "The merchant is not supported by the switch"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:292
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:376
-msgid ""
-"The transaction is incompletely completed (for example, a deposit transaction "
-"that is completed from the customer's point of view, but needs to be completed)"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:294
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:303
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:378
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:387
-msgid "The card has expired"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:295
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:379
-msgid "The number of incorrect password entries has exceeded the limit."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:297
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:381
-msgid "There is no credit card account"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:298
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:382
-msgid "The requested operation is not supported"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:299
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:383
-msgid "The card has been declared lost"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:300
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:384
-msgid "The card has been declared stolen"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:301
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:385
-msgid "The bill can not be paid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:302
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:386
-msgid "The account balance is insufficient"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:304
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:388
-msgid "The card password is invalid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:305
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:389
-msgid "The card is invalid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:306
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:390
-msgid "The relevant transaction is not allowed by the card holder"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:308
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:392
-msgid ""
-"It is not allowed to perform the relevant transaction by the operator's terminal"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:310
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:394
-msgid "The card is suspected of fraud"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:311
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:395
-msgid "The transaction amount is over the limit"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:312
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:396
-msgid "The card is limited"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:313
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:397
-msgid "The security measures have been violated"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:314
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:398
-msgid "The number of transaction requests exceeds the limit"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:316
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:400
-msgid ""
-"The response required to complete or complete the transaction has arrived too "
-"late"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:318
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:402
-msgid "The number of times the password has been repeated has exceeded the limit"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:320
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:404
-msgid "The number of incorrect password entries has exceeded the limit"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:322
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:406
-msgid "The card is not active"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:323
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:407
-msgid "The account connected to the card is invalid or has errors"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:325
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:409
-msgid "The transaction request has been rejected"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:326
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:410
-msgid "The card was not accepted"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:327
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:411
-msgid "The switch card service provider has not accepted the transaction"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:329
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:413
-msgid ""
-"In transactions that require communication with the exporter, if the exporter is "
-"not active, this message will be sent in response."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:331
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:415
-msgid ""
-"The transaction authorization system is temporarily disabled or the time set for "
-"the authorization has expired"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:333
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:417
-msgid "The destination of the transaction was not found"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:334
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:418
-msgid "It is not possible to complete the transaction"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:337
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:421
-msgid ""
-"The payment of the transaction was unsuccessful due to cancellation on the bank "
-"page"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:354
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:439
-msgid "Back to checkout"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:358
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:361
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:443
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:446
-msgid "Temporary error in payment"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:359
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:444
-msgid ""
-"When the customer returned from the bank, the bank server did not respond, the "
-"customer was asked to refresh the page"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:363
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:448
-msgid ""
-"The server of the internet portal has temporarily encountered a problem, to "
-"complete the transaction moments later, click on the button below"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:365
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:450
-msgid "Try again"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:369
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:454
-msgid "Trying again please wait.."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:379
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:390
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:464
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:475
-msgid "Service delivery error"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:381
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:466
-#, php-format
-msgid ""
-"Your payment with the tracking number %s has been successfully processed at the "
-"bank, but there has been a problem with the service"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:383
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:394
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:468
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:479
-msgid ""
-"The order to return the money to your account has been registered in the bank, "
-"if the payment is not returned to your account within the next few hours, "
-"contact support (the maximum time to return to the account is 72 hours)"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:385
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:470
-msgid ""
-"The customer paid the amount, but when returning from the bank, there was a "
-"problem in providing the service, the order to return the money to the "
-"customer's account was registered in the bank."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:392
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:477
-#, php-format
-msgid ""
-"Your payment with the tracking number %s has been successfully made in the bank, "
-"but there is a problem in providing the service!"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:396
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:481
-msgid ""
-"The customer paid the amount, but when he returned from the bank, there was a "
-"problem in providing the service, there was an error in registering the order to "
-"return the money to the customer's account, this customer should either be "
-"provided with the service or the amount should be returned to his bank account."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:401
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:486
-msgid "The order has already been paid"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:403
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:488
-#, php-format
-msgid "Your order has already been successfully placed with tracking number %s"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:410
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:411
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:419
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:495
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:496
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:504
-msgid "The order number is incorrect"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:412
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:497
-msgid "The order number is incorrect; Call for support if needed"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:418
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:503
-msgid "Problem with placing an order"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:420
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:505
-msgid "There is a problem with placing an order, please contact support"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:439
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:524
-msgid "Error sending to the bank"
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:449
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:450
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:534
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:535
-msgid "Payment was not made"
-msgstr "پرداخت انجام نشد"
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-parsian-gateway.php:458
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:543
-msgid ""
-"If the payment has been deducted from your bank account, it will be "
-"automatically returned to your account by the bank (the final return time to the "
-"account is 72 hours) - contact support if needed."
-msgstr ""
-
-#: inc/App/Integration/WooCommerce/wc-gateways/wpp-pasargad-gateway.php:75
-msgid "Store No."
-msgstr ""
-
-#: inc/App/Tools/HookDeactivator.php:134
-msgid "Format:"
-msgstr "قالب:"
-
-#: inc/App/Tools/HookDeactivator.php:136 inc/App/Tools/HookDeactivator.php:140
-msgid "Example:"
-msgstr "نمونه:"
-
-#: inc/App/Tools/HookDeactivator.php:138
-msgid "Without class format:"
-msgstr "قالب بدون کلاس:"
-
-#: inc/App/Tools/HookDeactivator.php:145
-msgid "Hooks"
-msgstr "قلاب‌ها"
-
 #: inc/App/Tools/HookDeactivator.php:150
 msgid "Hook list"
 msgstr "لیست قلاب‌ها"
-
-#: inc/App/Tools/HookDeactivator.php:152
-msgid "Enter hook, function and class to remove Parsidate filter from it"
-msgstr "نام قلاب، تابع و کلاس موردنظر را جهت رفع فیلتر پارسی‌دیت وارد کنید"
 
 #: inc/App/Tools/HookDeactivator.php:166
 msgid "Hook deactivator"
 msgstr "غیرفعال کردن قلاب"
 
-#: inc/App/Tools/HookDeactivator.php:167
-msgid "Disable plugin hooks"
-msgstr "غیرفعال کردن قلابهای افزونه"
+#: inc/App/Integration/EDD.php:81 inc/App/Integration/WooCommerce.php:954
+msgid "Fix prices"
+msgstr "تصحیح قیمت‌ها"
 
-#: inc/App/Tools/Other.php:34
-msgid "Today:&nbsp;"
-msgstr "امروز:&nbsp;"
+#: inc/App/Integration/BulkyBulkEditProductsWooCommerce.php:35
+#: inc/App/Integration/WooCommerce.php:943
+#: inc/App/Integration/WooCommerce.php:1055
+#: inc/App/Integration/WooCommerce.php:1062
+msgid "WooCommerce"
+msgstr "ووکامرس"
 
-#: inc/App/Tools/Other.php:58
-msgid "Admin Bar"
-msgstr "نوار مدیریت"
+#: inc/Widget/CalendarWidget.php:62
+msgid "Title:"
+msgstr "عنوان:"
 
-#: inc/App/Tools/Other.php:63
-msgid "Display date in the admin bar"
-msgstr "نمایش تاریخ در نوار مدیریت"
+#: inc/Widget/ArchiveWidget.php:41 inc/Widget/CalendarWidget.php:57
+msgid "For use widget, active \"Fix permalinks dates\" option in plugin settings."
+msgstr "برای استفاده از ابزارک، گزینه \"تبدیل تاریخ در پیوندهای یکتا\" را در تنظیمات افزونه فعال کنید."
 
-#: inc/App/Tools/Other.php:66
-msgid "Display today's Jalali date in the WordPress admin bar."
-msgstr "تاریخ شمسی امروز را در نوار مدیریت وردپرس نمایش دهید."
+#: inc/Widget/ArchiveWidget.php:87 assets/js-admin/archive-block.js:82
+msgid "Display as dropdown"
+msgstr "نمايش به صورت ليست بازشو"
 
-#: inc/App/Tools/Other.php:75 inc/App/Tools/Other.php:76
-msgid "Other tools"
-msgstr "دیگر ابزارها"
+#: inc/Widget/ArchiveWidget.php:96 assets/js-admin/archive-block.js:86
+msgid "Show post counts"
+msgstr "نمايش تعداد نوشته‌ها"
 
-#: inc/Core/Calendar.php:292
-msgid "Today"
-msgstr ""
+#: inc/Widget/ArchiveWidget.php:77 assets/js-admin/archive-block.js:37
+msgid "Daily"
+msgstr "روزانه"
+
+#: inc/Widget/ArchiveWidget.php:71 assets/js-admin/archive-block.js:36
+msgid "Monthly"
+msgstr "ماهانه"
+
+#: inc/Widget/ArchiveWidget.php:65 assets/js-admin/archive-block.js:35
+msgid "Yearly"
+msgstr "سالانه"
 
 #: inc/Core/Posts.php:234
 msgid "Show All Dates"
 msgstr "نمایش همۀ تاریخ‌ها"
 
-#: inc/Helper/FeedReader.php:197
-msgid "Feed is empty."
-msgstr "خوراک خالی است."
+#: inc/App/Core/ShamsiDate.php:79
+msgid "By enabling this, dates in permalinks converted to Shamsi (Jalali) date"
+msgstr "با فعال‌کردن این گزینه، تاریخ‌ها در پیوندهای یکتا به تاریخ خورشیدی (جلالی) تبدیل می‌شوند"
 
-#: inc/Helper/FeedReader.php:223
-msgid "Untitled"
-msgstr "ناشناخته"
+#: inc/App/Core/ShamsiDate.php:76
+msgid "Fix permalinks dates"
+msgstr "تبدیل تاریخ در پیوندهای یکتا"
 
-#: inc/Helper/HTML.php:370
-msgid "Select Media(s)"
-msgstr "انتخاب رسانه(ها)"
+#: inc/App/Convert/Convert.php:98
+msgid "Fixes arabic characters caused by wrong keyboard layouts"
+msgstr "این گزینه، حروف عربی را در کل سیستم به حروف فارسی تصحیح می‌کند. برای مثال ٤/٥/٦ به ۴ / ۵ / ۶ و ك / ي به ک / ی"
 
-#: inc/Helper/HTML.php:373
-msgid "Remove all media"
-msgstr "حذف تمام رسانه‌ها"
+#: inc/App/Convert/Convert.php:95
+msgid "Fix arabic characters"
+msgstr "تصحیح حروف عربی"
 
-#: inc/Helper/HTML.php:376
-msgid "Select or Upload Media"
-msgstr "انتخاب یا آپلود رسانه"
+#: inc/App/Convert/Convert.php:79
+msgid "Categories"
+msgstr "دسته‌بندی‌ها"
 
-#: inc/Helper/HTML.php:378
-msgid "Use this media"
-msgstr "استفاده از این رسانه"
+#: inc/App/Convert/Convert.php:72
+msgid "Dates"
+msgstr "تاریخ‌ها"
 
-#: inc/Helper/HTML.php:802
-msgid "More info"
-msgstr "اطلاعات بیشتر"
+#: inc/App/Convert/Convert.php:65
+msgid "Comments count"
+msgstr "تعداد دیدگاه‌ها"
 
-#: inc/Helper/HTML.php:855
-msgid "No entries!"
-msgstr "بدون ورودی!"
+#: inc/App/Convert/Convert.php:58
+msgid "Comments text"
+msgstr "در نوشته‌ی دیدگاه‌ها"
 
-#: inc/Helper/HTML.php:972
-msgid "Color"
-msgstr "رنگ"
+#: inc/App/Convert/Convert.php:51
+msgid "Post excerpt"
+msgstr "در خلاصه‌ی نوشته‌ها"
 
-#: inc/Helper/HTML.php:980
-msgid "Type"
-msgstr "نوع"
+#: inc/App/Convert/Convert.php:44
+msgid "Post content"
+msgstr "در محتوای نوشته‌ها"
 
-#: inc/Helper/HTML.php:986
-msgid "Linear"
-msgstr "خطی"
+#: inc/App/Convert/Convert.php:37
+msgid "Post title"
+msgstr "در عنوان نوشته‌ها"
 
-#: inc/Helper/HTML.php:987
-msgid "Radial"
-msgstr "شعاعی"
+#: inc/App/Convert/Convert.php:30
+msgid "Page title"
+msgstr "در عنوان صفحه"
 
-#: inc/Helper/HTML.php:993
-msgid "Shape"
-msgstr "شکل"
+#: inc/App/Core/ShamsiDate.php:40
+msgid "By enabling this, Dates will convert to Shamsi (Jalali) dates"
+msgstr "با فعال‌کردن این گزینه، تاریخ‌ها به صورت تاریخ خورشیدی (جلالی) درمی‌آیند"
 
-#: inc/Helper/HTML.php:999
-msgid "Ellipse"
-msgstr "بیضی"
+#: inc/App/Core/ShamsiDate.php:37 inc/App/Core/ShamsiDate.php:139
+msgid "Shamsi date"
+msgstr "تاریخ خورشیدی"
 
-#: inc/Helper/HTML.php:1000
-msgid "Circle"
-msgstr "دایره"
+#. Author URI of the plugin
+#: wp-parsidate.php
+msgid "https://wp-parsi.com/"
+msgstr "https://wp-parsi.com/"
 
-#: inc/Helper/HTML.php:1006
-msgid "Rotation °"
-msgstr "چرخش °"
-
-#: inc/Helper/HTML.php:1116
-msgid "Required"
-msgstr "الزامی"
-
-#: inc/Plugin/Plugin.php:72
-#, php-format
-msgid ""
-"<div class=\"updated wpp-message\"><p>ParsiDate activated, you may need to "
-"configure it to work properly. <a href=\"%1$s\">Go to configuration page</a> "
-"&ndash; <a href=\"%2$s\">Dismiss</a></p></div>"
-msgstr ""
-"<div class=\"updated wpp-message\"><p>وردپرس پارسی فعال شد! برای کارکردن افزونه "
-"نیاز به پیکربندی آن دارید. <a href=\"%s\">برگه‌ی پیکربندی</a> &ndash; <a href=\"%s"
-"\">بی‌خیال</a></p></div>"
-
-#: inc/Widget/ArchiveWidget.php:22
-#, fuzzy
-#| msgid "Jalali Date Archives"
-msgid "Parsidate - Archive"
-msgstr "بایگانی تاریخ خورشیدی"
-
-#: inc/Widget/ArchiveWidget.php:41 inc/Widget/CalendarWidget.php:53
-msgid "For use widget, active \"Fix permalinks dates\" option in plugin settings."
-msgstr ""
-"برای استفاده از ابزارک، گزینه \"تبدیل تاریخ در پیوندهای یکتا\" را در تنظیمات "
-"افزونه فعال کنید."
-
-#: inc/Widget/CalendarWidget.php:22
-#, fuzzy
-#| msgid "Jalali Date Calender"
-msgid "Parsidate - Calendar"
-msgstr "گاه‌شمار تاریخ خورشیدی"
-
-#: inc/Widget/CalendarWidget.php:48
-msgid "Calendar"
-msgstr ""
-
-#: inc/Widget/CalendarWidget.php:58
-msgid "Title:"
-msgstr "عنوان:"
-
-#: inc/Widget/CalendarWidget.php:75
-#, fuzzy
-#| msgid "Theme color:"
-msgid "Theme:"
-msgstr "رنگ پوسته:"
-
-#: inc/Widget/CalendarWidget.php:82
-msgid "Simple"
-msgstr ""
-
-#: inc/Widget/CalendarWidget.php:85
-#, fuzzy
-#| msgid "Light Mode"
-msgid "Light"
-msgstr "حالت روشن"
-
-#: inc/Widget/CalendarWidget.php:88
-#, fuzzy
-#| msgid "Dark Mode"
-msgid "Dark"
-msgstr "حالت تاریک"
-
-#: inc/Widget/DashboardWidget.php:77
-msgid "What is this?"
-msgstr "این چیست؟"
-
-#: inc/Widget/DashboardWidget.php:83
-msgid "Why are you showing me this?"
-msgstr "چرا این را به من نشان می‌دهید؟"
-
-#: inc/Widget/DashboardWidget.php:89
-msgid "How can I become a sponsor?"
-msgstr "چطور می‌توانم حامی مالی شوم؟"
-
-#: inc/Widget/DashboardWidget.php:96
-msgid "Loading Sponsors"
-msgstr "در حال بارگذاری حامیان مالی"
-
-#: inc/Widget/DashboardWidget.php:120
-msgid "WordPress Parsi"
-msgstr "وردپرس پارسی"
-
-#: inc/Widget/DashboardWidget.php:122 inc/Widget/DashboardWidget.php:134
-#: inc/Widget/DashboardWidget.php:147
-msgid "(opens in a new tab)"
-msgstr "(در زبانۀ جدید باز می‌شود)"
-
-#: inc/Widget/DashboardWidget.php:144
-msgctxt "Sponsorship plans"
-msgid "https://wp-parsi.com/sponser/"
-msgstr "https://wp-parsi.com/sponser/"
-
-#: inc/Widget/DashboardWidget.php:145
-msgid "Sponsor"
-msgstr "حامی مالی"
-
-#: inc/Widget/DashboardWidget.php:192
-msgid "ParsiDate"
-msgstr "تاریخ پارسی"
-
-#: languages/common-strings.php:2
-msgid "WP-Parsidate"
-msgstr "بستۀ وردپرس پارسی"
-
-#: languages/common-strings.php:3
-msgid ""
-"Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: "
-"posts, comments, pages, archives, search, categories, permalinks and all admin "
-"sections and TinyMce editor, lists, quick editor. This package has Jalali "
-"archive widget."
-msgstr ""
-"بستۀ پارسی‌سازی وردپرس، اضافه‌کردن پشتیبانی کامل راست‌به‌چپ و تاریخ خورشیدی برای "
-"وردپرس. این افزونه از نوشته‌ها، دیدگاه‌ها، برگه‌ها، بایگانی‌ها، جستجو‌ها، دسته‌بندی‌ها "
-"و پیوندهای یکتا پشتیبانی می‌کند و تمام قسمت‌های مدیریت و ویرایشگر را پارسی می‌کند. "
-"این افزونه هم‌چنین یک ابزارک بایگانی شمسی نیز دارد."
-
-#: languages/common-strings.php:5
+#. Author of the plugin
+#: wp-parsidate.php languages/common-strings.php:5
 msgid "WP-Parsi Team"
 msgstr "تیم وردپرس پارسی"
 
-#~ msgid "WP Parsi news"
-#~ msgstr "خبرهای وردپرس پارسی"
+#. Description of the plugin
+#: wp-parsidate.php languages/common-strings.php:3
+msgid "Persian package for WordPress, Adds full RTL and Shamsi (Jalali) support for: posts, comments, pages, archives, search, categories, permalinks and all admin sections and TinyMce editor, lists, quick editor. This package has Jalali archive widget."
+msgstr "بستۀ پارسی‌سازی وردپرس، اضافه‌کردن پشتیبانی کامل راست‌به‌چپ و تاریخ خورشیدی برای وردپرس. این افزونه از نوشته‌ها، دیدگاه‌ها، برگه‌ها، بایگانی‌ها، جستجو‌ها، دسته‌بندی‌ها و پیوندهای یکتا پشتیبانی می‌کند و تمام قسمت‌های مدیریت و ویرایشگر را پارسی می‌کند. این افزونه هم‌چنین یک ابزارک بایگانی شمسی نیز دارد."
 
-#~ msgid "Weekly"
-#~ msgstr "هفتگی"
+#. Plugin URI of the plugin
+#: wp-parsidate.php
+msgid "https://wp-parsi.com/support/"
+msgstr "https://wp-parsi.com/support/"
 
-#~ msgid "You can enable or disable these integrations below."
-#~ msgstr "می‌توانید این ادغام‌ها را در زیر فعال یا غیرفعال کنید."
-
-#, fuzzy
-#~| msgid "Shamsi date"
-#~ msgid "Shamsi Date"
-#~ msgstr "تاریخ خورشیدی"
-
-#~ msgid "Plugin"
-#~ msgstr "افزونه"
-
-#~ msgid "Other"
-#~ msgstr "سایر"
-
-#~ msgid "Mediana"
-#~ msgstr "مدیانا"
-
-#~ msgid "Seven"
-#~ msgstr "هفت"
-
-#~ msgid "Change Locale"
-#~ msgstr "تغییر زبان"
-
-#~ msgid "Change Locale in admin"
-#~ msgstr "تغییر زبان مدیریت"
-
-#~ msgid "This option change WordPress locale to Persian in Admin"
-#~ msgstr "این گزینه باعث تغییر زبان مدیریت می‌شود"
-
-#~ msgid "Change Locale in theme"
-#~ msgstr "تغییر زبان سایت"
-
-#~ msgid "This option change WordPress locale to Persian in theme"
-#~ msgstr "این گزینه باعث تغییر زبان سایت می‌شود"
-
-#, fuzzy
-#~| msgid "Recommended"
-#~ msgid "command"
-#~ msgstr "توصیه‌شده"
-
-#, fuzzy
-#~| msgid "Recommended"
-#~ msgid "Commands:"
-#~ msgstr "توصیه‌شده"
-
-#~ msgid "EDD"
-#~ msgstr "EDD"
-
-#~ msgid "Replace ریال with RIAL"
-#~ msgstr "جایگزینی ریال با RIAL"
-
-#, fuzzy
-#~| msgid "%s Converts"
-#~ msgid "Conversion"
-#~ msgstr "%s تبدیل"
-
-#~ msgid "Disable"
-#~ msgstr "غیرفعال"
-
-#~ msgid "%s Plugins compatibility"
-#~ msgstr "%s هماهنگی با افزونه‌ها"
-
-#~ msgid "%s About"
-#~ msgstr "%s درباره"
-
-#~ msgid "Move page to submenu?"
-#~ msgstr "انتقال این برگه به زیرمنو؟"
-
-#~ msgid ""
-#~ "By enabling this option, page item will be moved to Settings menu as submenu."
-#~ msgstr ""
-#~ "با فعال‌کردن این گزینه، صفحۀ پیکربندی پارسی‌دیت به زیرفهرست «تنظیمات» منتقل "
-#~ "می‌شود."
-
-#~ msgid "Persian digits"
-#~ msgstr "رقم‌های پارسی"
-
-#~ msgid "Prevent users from copying site content"
-#~ msgstr "جلوگیری از کپی محتوا"
-
-#~ msgid "Simply protect your site's content from those who want to copy it."
-#~ msgstr "به سادگی امکان کپی محتوای سایتتان توسط دیگران را بگیرید."
-
-#~ msgid "Disable right click on website pages"
-#~ msgstr "غیرفعال کردن کلیک راست در صفحات سایت"
-
-#~ msgid ""
-#~ "Don't worry about downloading website images and other files anymore, this "
-#~ "option prevents users from right clicking"
-#~ msgstr ""
-#~ "دیگر نگران دانلود تصاویر و محتویات دیگر سایتتان نباشید، این گزینه کلیک راست "
-#~ "را غیرفعال می‌کند"
-
-#~ msgid "Upload File"
-#~ msgstr "بارگذاری پرونده"
-
-#~ msgid "Follow Us"
-#~ msgstr "ما را دنبال کنید"
-
-#~ msgid "Our Team"
-#~ msgstr "تیم ما"
-
-#~ msgid "Unable to fetch contributors."
-#~ msgstr "امکان واکشی مشارکت‌کننده‌ها وجود ندارد."
-
-#~ msgid "Use the drop-down list to select a city"
-#~ msgstr "استفاده از لیست کشویی برای انتخاب شهر"
+#. Plugin Name of the plugin
+#: wp-parsidate.php languages/common-strings.php:2
+msgid "WP-Parsidate"
+msgstr "بستۀ وردپرس پارسی"
