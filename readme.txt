@@ -4,7 +4,7 @@ Donate link: https://wp-parsi.com/support/
 Tags: Shamsi, Persian, Jalali, WooCommerce, ووکامرس
 Requires at least: 5.3
 Tested up to: 7.1
-Stable tag: 6.4
+Stable tag: 6.5
 Requires PHP: 7.4
 License: GPLv3
 
@@ -84,8 +84,10 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 * Fix: `_load_textdomain_just_in_time` notice on WordPress 6.7+. [#PR](https://github.com/wordpress-parsi/wp-parsidate/pull/353)
 * Fix: PHP warnings in the ACF date/time pickers and the "access_expires" array key. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/349)
 * Fix: Undefined WooCommerce function errors when WooCommerce is not loaded on a page.
+* Fix: Ensure admin notices can be dismissed reliably when JavaScript is unavailable or fails.
 * Perf: Build static date lookup tables once per request for faster dual-date rendering.
-* Update: Dependencies, including enshrined/svg-sanitize 1.0.0.
+* Perf: Persistently cache archive, calendar, and permalink lookups to reduce repeated database queries.
+* Update: Dependencies, including enshrined/svg-sanitize 1.1.1
 
 = 6.4 =
 * Add: Elementor addon. Jalali datepicker for Elementor form date fields and Jalali dates in "Form Submissions" screen.
