@@ -38,6 +38,38 @@ html[dir="rtl"] {
     line-height: 1.54;
   }
 
+  &.wppd-notice-dismissible {
+    position: relative;
+    padding-inline-end: 38px;
+
+    .wppd-notice-dismiss {
+      position: absolute;
+      top: 0;
+      right: 1px;
+      display: block;
+      margin: 0;
+      padding: 9px;
+      border: none;
+      background: none;
+      color: #787c82;
+      cursor: pointer;
+      text-decoration: none;
+
+      &::before {
+        content: "\f153";
+        display: block;
+        font: normal 16px/22px dashicons;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      &:hover,
+      &:focus {
+        color: #d63638;
+      }
+    }
+  }
+
   .wppd-admin-notice-actions {
     display: flex;
     gap: 20px;
@@ -87,4 +119,9 @@ html[dir="rtl"] {
       }
     }
   }
+}
+
+html[dir="rtl"] .wppd-admin-notice .wppd-notice-dismiss {
+  right: auto;
+  left: 1px;
 }

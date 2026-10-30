@@ -22,6 +22,33 @@ html[dir=rtl] body.post-php .wrap #timestampdiv .timestamp-wrap.wp-parsidate-tim
   font-size: 13px;
   line-height: 1.54;
 }
+.wppd-admin-notice.wppd-notice-dismissible {
+  position: relative;
+  padding-inline-end: 38px;
+}
+.wppd-admin-notice.wppd-notice-dismissible .wppd-notice-dismiss {
+  position: absolute;
+  top: 0;
+  right: 1px;
+  display: block;
+  margin: 0;
+  padding: 9px;
+  border: none;
+  background: none;
+  color: #787c82;
+  cursor: pointer;
+  text-decoration: none;
+}
+.wppd-admin-notice.wppd-notice-dismissible .wppd-notice-dismiss::before {
+  content: "\f153";
+  display: block;
+  font: normal 16px/22px dashicons;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+.wppd-admin-notice.wppd-notice-dismissible .wppd-notice-dismiss:hover, .wppd-admin-notice.wppd-notice-dismissible .wppd-notice-dismiss:focus {
+  color: #d63638;
+}
 .wppd-admin-notice .wppd-admin-notice-actions {
   display: flex;
   gap: 20px;
@@ -115,6 +142,11 @@ html[dir=rtl] body.post-php .wrap #timestampdiv .timestamp-wrap.wp-parsidate-tim
 .wppd-admin-notice.wppd-parsigate-install-notice .wppd-button-secondary:focus, .wppd-admin-notice.wppd-parsigate-install-notice .wppd-button-secondary:active {
   outline-color: #612cc2;
   box-shadow: none;
+}
+
+html[dir=rtl] .wppd-admin-notice .wppd-notice-dismiss {
+  right: auto;
+  left: 1px;
 }
 
 /*# sourceMappingURL=admin.css.map */
