@@ -7,6 +7,7 @@
 
 namespace WPParsidate\Core;
 
+use WPParsidate\Helper\Cache;
 use WPParsidate\Helper\Number;
 
 defined( 'ABSPATH' ) || exit;
@@ -60,35 +61,33 @@ class Calendar {
     }
 
     // Cache group and key suffix, invalidated whenever a post changes.
-    $cacheGroup  = 'wp-parsidate-calendar';
     $lastChanged = wp_cache_get_last_changed( 'posts' );
 
     if ( ! $posts ) {
       $cacheKey = 'gotsome_' . md5( $postType ) . ':' . $lastChanged;
-      $gotsome  = wp_cache_get( $cacheKey, $cacheGroup );
+      $gotSome  = Cache::get( $cacheKey );
 
-      if ( false === $gotsome ) {
+      if ( false === $gotSome ) {
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Same query as core get_calendar(), there is no WordPress API for it. Cached per posts change.
-        $gotsome = (int) $wpdb->get_var(
+        $gotSome = (int) $wpdb->get_var(
           $wpdb->prepare(
-            "
-					SELECT 1 AS test
+            "SELECT 1 AS test
 					FROM $wpdb->posts
 					WHERE post_type = %s
 					  	AND post_status = 'publish'
-					LIMIT 1
-				", $postType )
+					LIMIT 1",
+            $postType )
         );
 
-        wp_cache_set( $cacheKey, $gotsome, $cacheGroup );
+        Cache::set( $cacheKey, $gotSome, DAY_IN_SECONDS * 3 );
       }
 
-      if ( ! $gotsome ) {
+      if ( ! $gotSome ) {
         return;
       }
     }
 
-    $week_begins  = (int) get_option( 'start_of_week' );
+    $week_begins = (int) get_option( 'start_of_week' );
     // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public read-only query var, same as core get_calendar().
     $w            = (int) sanitize_text_field( wp_unslash( $_GET['w'] ?? '' ) );
     $is_gregorian = false;
@@ -97,8 +96,8 @@ class Calendar {
       $thisMonth = zeroise( (int) $jm, 2 );
       $thisYear  = '' . (int) $jy;
     } elseif ( ! empty( $w ) ) {
-      $thisYear  = '' . (int) substr( $m, 0, 4 );
-      $d         = ( ( $w - 1 ) * 7 ) + 6; //it seems MySQL's weeks disagree with PHP's
+      $thisYear = '' . (int) substr( $m, 0, 4 );
+      $d        = ( ( $w - 1 ) * 7 ) + 6; //it seems MySQL's weeks disagree with PHP's
       // Month of the day $d days after January 1st (was a MySQL DATE_ADD() query).
       $thisMonth = gmdate( 'm', gmmktime( 0, 0, 0, 1, 1 + $d, (int) $thisYear ) );
     } elseif ( ! empty( $m ) ) {
@@ -143,7 +142,7 @@ class Calendar {
       "$jnextyear-$jthismonth-" . $pd->j_days_in_month[ $jthismonth - 1 ] );
 
     $cacheKey = 'adjacent_' . md5( $start . '|' . $end . '|' . $postType ) . ':' . $lastChanged;
-    $adjacent = wp_cache_get( $cacheKey, $cacheGroup );
+    $adjacent = Cache::get( $cacheKey );
 
     if ( false === $adjacent ) {
       $adjacent = [];
@@ -158,8 +157,8 @@ class Calendar {
                   	AND post_type = %s
                       AND post_status = 'publish'
                   ORDER BY post_date DESC
-                  LIMIT 1
-                 ", $start, $postType )
+                  LIMIT 1",
+          $start, $postType )
       );
 
       // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Same query as core get_calendar(), there is no WordPress API for it. Cached per posts change.
@@ -172,11 +171,11 @@ class Calendar {
                   	AND post_type = %s
                       AND post_status = 'publish'
                   ORDER BY post_date ASC
-                  LIMIT 1
-                  ", $end, $postType )
+                  LIMIT 1",
+          $end, $postType )
       );
 
-      wp_cache_set( $cacheKey, $adjacent, $cacheGroup );
+      Cache::set( $cacheKey, $adjacent, DAY_IN_SECONDS * 3 );
     }
 
     $previous = $adjacent['previous'] ?? null;
@@ -240,11 +239,11 @@ class Calendar {
     //____________________________________________________________________________________________________________________________________
 
     $cacheKey      = 'days_' . md5( $start . '|' . $end . '|' . $postType ) . ':' . $lastChanged;
-    $dayswithposts = wp_cache_get( $cacheKey, $cacheGroup );
+    $daysWithPosts = Cache::get( $cacheKey );
 
-    if ( false === $dayswithposts ) {
+    if ( false === $daysWithPosts ) {
       // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Same query as core get_calendar(), there is no WordPress API for it. Cached per posts change.
-      $dayswithposts = $wpdb->get_results(
+      $daysWithPosts = $wpdb->get_results(
         $wpdb->prepare(
           "SELECT DISTINCT DAYOFMONTH ( post_date ),
 			  	MONTH ( post_date ),
@@ -258,13 +257,13 @@ class Calendar {
         ARRAY_N
       );
 
-      wp_cache_set( $cacheKey, $dayswithposts, $cacheGroup );
+      Cache::set( $cacheKey, $daysWithPosts, DAY_IN_SECONDS * 3 );
     }
 
-    $daywithpost = array();
-    if ( $dayswithposts ) {
-      foreach ( $dayswithposts as $daywith ) {
-        $daywithpost[] = $pd->persian_date( 'j', "$daywith[2]-$daywith[1]-$daywith[0]", 'eng' );
+    $dayWithPost = array();
+    if ( $daysWithPosts ) {
+      foreach ( $daysWithPosts as $dayWith ) {
+        $dayWithPost[] = $pd->persian_date( 'j', "$dayWith[2]-$dayWith[1]-$dayWith[0]", 'eng' );
       }
     }
 
@@ -280,7 +279,7 @@ class Calendar {
 
     $ak_titles_for_day = array();
     $cacheKey          = 'titles_' . md5( $start . '|' . $end . '|' . $postType ) . ':' . $lastChanged;
-    $ak_post_titles    = wp_cache_get( $cacheKey, $cacheGroup );
+    $ak_post_titles    = Cache::get( $cacheKey );
 
     if ( false === $ak_post_titles ) {
       // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Same query as core get_calendar(), there is no WordPress API for it. Cached per posts change.
@@ -295,11 +294,11 @@ class Calendar {
 				WHERE post_date >= %s
 				    AND post_date <= %s
 				    AND post_type = %s
-				    AND post_status = 'publish'
-				", $start, $end, $postType )
+				    AND post_status = 'publish'",
+          $start, $end, $postType )
       );
 
-      wp_cache_set( $cacheKey, $ak_post_titles, $cacheGroup );
+      Cache::set( $cacheKey, $ak_post_titles, DAY_IN_SECONDS * 3 );
     }
 
     if ( $ak_post_titles ) {
@@ -351,7 +350,7 @@ class Calendar {
 
       $p_day = Number::toPersian( $calendarDay );
 
-      if ( in_array( $calendarDay, $daywithpost ) ) {
+      if ( in_array( $calendarDay, $dayWithPost ) ) {
         $dayLinkDate = $pd->gregorian_date( 'Y,m,d', "$jthisyear-$jthismonth-$calendarDay" );
         $dayLinkDate = explode( ',', $dayLinkDate );
         $url         = get_day_link( $dayLinkDate[0], $dayLinkDate[1], $dayLinkDate[2] );

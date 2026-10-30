@@ -7,6 +7,7 @@
 
 namespace WPParsidate\Core;
 
+use WPParsidate\Helper\Cache;
 use WPParsidate\Helper\Number;
 
 defined( 'ABSPATH' ) || exit;
@@ -72,7 +73,7 @@ class Archive {
 
     /// TODO: This query need optimized base on input type (yearly,monthly,daily)
     $cacheKey = 'archive_' . md5( $r['post_type'] ) . ':' . wp_cache_get_last_changed( 'posts' );
-    $results  = wp_cache_get( $cacheKey, 'wp-parsidate-archive' );
+    $results  = Cache::get( $cacheKey );
 
     if ( false === $results ) {
       // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Grouped date counts, same approach as core wp_get_archives(). Cached per posts change.
@@ -92,7 +93,7 @@ class Archive {
         )
       );
 
-      wp_cache_set( $cacheKey, $results, 'wp-parsidate-archive' );
+      Cache::set( $cacheKey, $results, DAY_IN_SECONDS  * 3);
     }
 
     if ( ! empty( $results ) ) {

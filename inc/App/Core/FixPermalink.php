@@ -11,6 +11,7 @@ namespace WPParsidate\App\Core;
 defined( 'ABSPATH' ) || exit;
 
 use WPParsidate\Core\{Posts, WPP_ParsiDate};
+use WPParsidate\Helper\Cache;
 use WPParsidate\Settings\Settings;
 
 class FixPermalink {
@@ -110,23 +111,15 @@ class FixPermalink {
 
     if ( isset( $permalink['name'] ) ) {
       $cacheKey = 'post_date_by_name_' . md5( $permalink['name'] ) . ':' . wp_cache_get_last_changed( 'posts' );
-      $var      = wp_cache_get( $cacheKey, 'wp-parsidate-permalink' );
+      $var      = Cache::get( $cacheKey, false );
 
       if ( false === $var ) {
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Lookup by slug across all post types, no WordPress API returns it. Cached per posts change.
         $var = (string) $wpdb->get_var(
-          $wpdb->prepare(
-            "
-				SELECT post_date FROM $wpdb->posts
-				WHERE post_name = %s
-				  AND post_type != 'attachment'
-				ORDER BY ID
-				",
-            $permalink['name']
-          )
+          $wpdb->prepare( "SELECT post_date FROM $wpdb->posts WHERE post_name = %s AND post_type != 'attachment' ORDER BY ID", $permalink['name'] )
         );
 
-        wp_cache_set( $cacheKey, $var, 'wp-parsidate-permalink' );
+        Cache::set( $cacheKey, $var );
       }
 
       if ( empty( $var ) ) {
