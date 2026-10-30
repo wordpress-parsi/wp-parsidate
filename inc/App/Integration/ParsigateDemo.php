@@ -45,7 +45,7 @@ class ParsigateDemo extends Addon {
         'id'           => 'parsigate_demo_install',
         'message'      => $message,
         'dismissible'  => true,
-        'dismiss_time' => MONTH_IN_SECONDS,
+        'dismiss_time' => MONTH_IN_SECONDS * 2,
         'not_page'     => WP_PARSI_KEY_SLUG,
         'class'        => 'wppd-parsigate-install-notice',
         'inside_tag'   => 'div'
