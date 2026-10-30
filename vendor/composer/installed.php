@@ -3,7 +3,7 @@
         'name' => 'wordpress-parsi/wp-parsidate',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '6588b68c175deab748057b8b0f3f71d85eb0f9e0',
+        'reference' => '80446d8b08af79d632a85d31e15a0a3a7092d77f',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -49,7 +49,7 @@
         'wordpress-parsi/wp-parsidate' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '6588b68c175deab748057b8b0f3f71d85eb0f9e0',
+            'reference' => '80446d8b08af79d632a85d31e15a0a3a7092d77f',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
