@@ -325,6 +325,10 @@ class DashboardWidget {
     );*/
     $today = gmdate( 'Y-m-d' );
     foreach ( $allSponsors as $sponsor ) {
+      if ( ! $this->isValidSponsor( $sponsor ) ) {
+        continue;
+      }
+
       if ( strtotime( $sponsor['end_date'] ) > strtotime( $today ) ) {
         $sponsors[] = $sponsor;
       }
@@ -341,30 +345,50 @@ class DashboardWidget {
 
     $sponsors = [];
     $urls     = [
-      // GitHub contents API, returns the raw JSON file of the repository (cached for a day).
-      'https://api.github.com/repos/wordpress-parsi/wp-parsidate/contents/inc/Data/sponsors.json?ref=master'
+      // Raw file from the repository (not rate-limited like api.github.com).
+      'https://raw.githubusercontent.com/wordpress-parsi/wp-parsidate/master/inc/Data/sponsors.json'
     ];
 
     foreach ( $urls as $url ) {
-      $response = wp_remote_get( $url, [
-        'timeout' => 6,
-        'headers' => [ 'Accept' => 'application/vnd.github.raw+json' ],
-      ] );
+      $response = wp_remote_get( $url, [ 'timeout' => 6 ] );
 
-      if ( ! is_wp_error( $response ) ) {
-        $data = JSON::decode( wp_remote_retrieve_body( $response ), true );
-        $data = is_array( $data ) ? $data : [];
+      if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+        continue;
+      }
 
-        if ( ! empty( $data ) ) {
-          $sponsors = $data;
-          break;
-        }
+      $data = JSON::decode( wp_remote_retrieve_body( $response ), true );
+
+      // Only accept a list of sponsor objects, never an error object like {"message": "..."}.
+      if ( ! is_array( $data ) || array_values( $data ) !== $data ) {
+        continue;
+      }
+
+      $data = array_values( array_filter( $data, [ $this, 'isValidSponsor' ] ) );
+
+      if ( ! empty( $data ) ) {
+        $sponsors = $data;
+        break;
       }
     }
 
-    Cache::set( 'remote_dashboard_sponsors', $sponsors, DAY_IN_SECONDS );
+    // Cache failures for a shorter time so sites recover sooner.
+    Cache::set( 'remote_dashboard_sponsors', $sponsors, empty( $sponsors ) ? HOUR_IN_SECONDS : DAY_IN_SECONDS );
 
     return $sponsors;
+  }
+
+  /**
+   * Check that a sponsor item has the expected structure.
+   *
+   * @param mixed $sponsor
+   *
+   * @return bool
+   * @since 6.5.1
+   */
+  private function isValidSponsor( $sponsor ): bool {
+    return is_array( $sponsor )
+           && ! empty( $sponsor['end_date'] ) && is_string( $sponsor['end_date'] )
+           && ! empty( $sponsor['image_url'] ) && is_string( $sponsor['image_url'] );
   }
 
   private function getDataSponsors(): array {
