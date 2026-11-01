@@ -26,9 +26,10 @@ jdp-container {
   --jdp-color-5: #333;
   --jdp-primary: #569ff7;
   --jdp-red: #f44336;
+  visibility: hidden;
   position: absolute;
-  max-width: calc(var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + 0.6rem);
-  min-width: calc(var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + 0.6rem);
+  max-width: calc(var(--jdp-day-size, 43px) + var(--jdp-day-size, 43px) + var(--jdp-day-size, 43px) + var(--jdp-day-size, 43px) + var(--jdp-day-size, 43px) + var(--jdp-day-size, 43px) + var(--jdp-day-size, 43px) + 0.6rem);
+  min-width: calc(var(--jdp-day-size, 43px) + var(--jdp-day-size, 43px) + var(--jdp-day-size, 43px) + var(--jdp-day-size, 43px) + var(--jdp-day-size, 43px) + var(--jdp-day-size, 43px) + var(--jdp-day-size, 43px) + 0.6rem);
   background: var(--jdp-color-0);
   display: none;
   direction: rtl;
@@ -186,8 +187,8 @@ jdp-container .jdp-day, jdp-container .jdp-day-name {
   font-weight: 400;
   width: 14.2857143%;
   flex-basis: 14.2857143%;
-  height: calc(var(--jdp-day-size) - 11px);
-  line-height: calc(var(--jdp-day-size) - 11px);
+  height: calc(var(--jdp-day-size, 43px) - 11px);
+  line-height: calc(var(--jdp-day-size, 43px) - 11px);
   margin: 2px 0;
   display: inline-block;
   position: relative;

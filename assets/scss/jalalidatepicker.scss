@@ -3,7 +3,7 @@
 @use "sass:color";
 @use "sass:math";
 
-$daySize: var(--jdp-day-size);
+$daySize: var(--jdp-day-size, 43px);
 $radius: 4px;
 $container-padding: 0.3rem;
 $rowPadding: calc($container-padding * 2);
@@ -40,6 +40,7 @@ jdp-container {
   --jdp-primary: #569ff7;
   --jdp-red: #f44336;
 
+  visibility: hidden;
   position: absolute;
   max-width: $calendarWidth;
   min-width: $calendarWidth;
