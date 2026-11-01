@@ -7,6 +7,7 @@ class Integration {
     // Recommended
     new ParsigateDemo();
     new TapChatDemo();
+    new PLoadDemo();
 
     // E-commerce
     new WooCommerce();
