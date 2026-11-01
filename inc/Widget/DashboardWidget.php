@@ -306,23 +306,11 @@ class DashboardWidget {
   private function getMockedSponsors(): array {
     $sponsors    = array();
     $allSponsors = $this->getRemoteSponsors();
+
     if ( empty( $allSponsors ) ) {
       $allSponsors = $this->getDataSponsors();
     }
-    /*$all_sponsors = array(
-      array(
-        'image_url' => WP_PARSI_URL . 'assets/images/sponsors/files-ir.jpg',
-        'image_alt' => 'Files.ir',
-        'link'      => 'https://files.ir/?utm_source=wp-persian&utm_medium=WordPress&utm_campaign=Sponsored-Banner',
-        'end_date'  => '2026-11-21',
-      ),
-      array(
-        'image_url' => WP_PARSI_URL . 'assets/images/sponsors/hostiran-1.png',
-        'image_alt' => 'HostIran',
-        'link'      => 'https://hostiran.net/host/?utm_source=parsidate&utm_medium=banner&utm_campaign=awareness',
-        'end_date'  => '2026-11-21',
-      )
-    );*/
+
     $today = gmdate( 'Y-m-d' );
     foreach ( $allSponsors as $sponsor ) {
       if ( ! $this->isValidSponsor( $sponsor ) ) {
@@ -359,7 +347,7 @@ class DashboardWidget {
       $data = JSON::decode( wp_remote_retrieve_body( $response ), true );
 
       // Only accept a list of sponsor objects, never an error object like {"message": "..."}.
-      if ( array_values( $data ) !== $data ) {
+      if ( ! is_array( $data ) || array_values( $data ) !== $data ) {
         continue;
       }
 
