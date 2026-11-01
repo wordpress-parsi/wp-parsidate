@@ -338,10 +338,10 @@ class DashboardWidget {
   }
 
   private function getRemoteSponsors(): array {
-    $cache = Cache::get( 'remote_dashboard_sponsors' );
+    /*$cache = Cache::get( 'remote_dashboard_sponsors' );
     if ( is_array( $cache ) ) {
       return $cache;
-    }
+    }*/
 
     $sponsors = [];
     $urls     = [
@@ -359,7 +359,7 @@ class DashboardWidget {
       $data = JSON::decode( wp_remote_retrieve_body( $response ), true );
 
       // Only accept a list of sponsor objects, never an error object like {"message": "..."}.
-      if ( ! is_array( $data ) || array_values( $data ) !== $data ) {
+      if ( array_values( $data ) !== $data ) {
         continue;
       }
 
@@ -388,7 +388,7 @@ class DashboardWidget {
   private function isValidSponsor( $sponsor ): bool {
     return is_array( $sponsor )
            && ! empty( $sponsor['end_date'] ) && is_string( $sponsor['end_date'] )
-           && ! empty( $sponsor['image_url'] ) && is_string( $sponsor['image_url'] );
+           && ( ! empty( $sponsor['image'] ) && is_string( $sponsor['image'] ) || ! empty( $sponsor['image_url'] ) && is_string( $sponsor['image_url'] ) );
   }
 
   private function getDataSponsors(): array {
