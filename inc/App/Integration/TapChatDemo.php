@@ -9,8 +9,6 @@
 namespace WPParsidate\App\Integration;
 
 use WPParsidate\Addons\Addon;
-use WPParsidate\Admin\AdminPages;
-use WPParsidate\Helper\WordPress;
 
 defined( 'ABSPATH' ) || exit;
 
