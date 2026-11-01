@@ -85,6 +85,10 @@ class Param {
    * @source https://stackoverflow.com/a/5788352/3224296
    */
   public static function decodeSerialize( $queryString ): array {
+    if ( ! is_string( $queryString ) || $queryString === '' ) {
+      return [];
+    }
+
     $a     = explode( '&', $queryString );
     $i     = 0;
     $store = array();
@@ -92,7 +96,7 @@ class Param {
       $b              = explode( '=', $a[ $i ] );
       $arrayName      = htmlspecialchars( urldecode( $b[0] ) );
       $cleanArrayName = str_replace( '[]', '', $arrayName );
-      $arrayValue     = htmlspecialchars( urldecode( $b[1] ) );
+      $arrayValue     = htmlspecialchars( urldecode( $b[1] ?? '' ) );
 
       if ( strpos( $arrayName, '[]' ) !== false ) {
         $store[ $cleanArrayName ][] = $arrayValue;

@@ -205,6 +205,12 @@ class Archive {
    * @param $args
    */
   private static function printArchive( $results, $args ): void {
+    // The rows come from the database or from a cached copy of it, so anything
+    // that is not a non-empty list of row objects is treated as no archive.
+    if ( ! is_array( $results ) || ! isset( $results[0] ) || ! is_object( $results[0] ) ) {
+      return;
+    }
+
     if ( $args['type'] === 'yearly' ) {
       $year  = parsidate( 'Y', $results[0]->date, 'eng' );
       $count = $results[0]->count;

@@ -326,10 +326,10 @@ class DashboardWidget {
   }
 
   private function getRemoteSponsors(): array {
-    /*$cache = Cache::get( 'remote_dashboard_sponsors' );
+    $cache = Cache::get( 'remote_dashboard_sponsors' );
     if ( is_array( $cache ) ) {
       return $cache;
-    }*/
+    }
 
     $sponsors = [];
     $urls     = [

@@ -42,7 +42,9 @@ class WpNotice {
     $currentScreen = is_null( $screen ) ? false : $screen->id;
 
     foreach ( $notices as $notice ) {
+      // The list comes from a filter, so an entry may not be an array at all.
       if (
+        ! is_array( $notice ) ||
         ( isset( $notice['page'] ) && $notice['page'] !== $page ) ||
         ( isset( $notice['not_page'] ) && $notice['not_page'] === $page ) ||
         ( isset( $notice['screen'] ) && $notice['screen'] !== $currentScreen ) ||

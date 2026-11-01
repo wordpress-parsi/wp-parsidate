@@ -289,24 +289,42 @@ class AdminAbout {
     $ignoreContributors = array_merge( array_keys( self::getTeamMembers() ), [ 'dependabot[bot]' ] );
     $githubContributors = [];
     $response           = wp_remote_get( 'https://api.github.com/repos/wordpress-parsi/wp-parsidate/contributors' );
-    if ( is_array( $response ) && ! is_wp_error( $response ) ) {
-      $contributors = JSON::decode( wp_remote_retrieve_body( $response ) );
-      foreach ( $contributors as $contributor ) {
-        // Skip if the contributor is a team member
-        if ( in_array( $contributor->login, $ignoreContributors, true ) ) {
-          continue;
-        }
 
-        $githubContributors[] = array(
-          'username' => $contributor->login,
-          'url'      => $contributor->html_url,
-          'avatar'   => $contributor->avatar_url
-        );
+    // A failed request or an error status never carries a list of contributors.
+    if ( ! is_array( $response ) || is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+      return $githubContributors;
+    }
+
+    $contributors = JSON::decode( wp_remote_retrieve_body( $response ) );
+
+    // An error body such as {"message": "..."} decodes to an object, not a list.
+    if ( ! is_array( $contributors ) ) {
+      return $githubContributors;
+    }
+
+    foreach ( $contributors as $contributor ) {
+      if ( ! is_object( $contributor )
+           || ! isset( $contributor->login, $contributor->html_url, $contributor->avatar_url )
+           || ! is_string( $contributor->login )
+           || ! is_string( $contributor->html_url )
+           || ! is_string( $contributor->avatar_url ) ) {
+        continue;
       }
 
-      Cache::set( 'github_contributors', $githubContributors,
-        WP_PARSI_DEBUG_MODE ? MINUTE_IN_SECONDS * 10 : WEEK_IN_SECONDS );
+      // Skip if the contributor is a team member
+      if ( in_array( $contributor->login, $ignoreContributors, true ) ) {
+        continue;
+      }
+
+      $githubContributors[] = array(
+        'username' => $contributor->login,
+        'url'      => $contributor->html_url,
+        'avatar'   => $contributor->avatar_url
+      );
     }
+
+    Cache::set( 'github_contributors', $githubContributors,
+      WP_PARSI_DEBUG_MODE ? MINUTE_IN_SECONDS * 10 : WEEK_IN_SECONDS );
 
     return $githubContributors;
   }
