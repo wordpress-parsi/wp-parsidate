@@ -4,7 +4,7 @@ Donate link: https://wp-parsi.com/support/
 Tags: Shamsi, Persian, Jalali, WooCommerce, ووکامرس
 Requires at least: 5.3
 Tested up to: 7.1
-Stable tag: 6.5.1
+Stable tag: 6.5.2
 Requires PHP: 7.4
 License: GPLv3
 
@@ -67,6 +67,10 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 7. WooCommerce settings
 
 == Changelog ==
+
+= 6.5.2 =
+* Add: [PLoad](https://wordpress.org/plugins/pload/) demo addon
+* Fix: Check type of variables
 
 = 6.5.1 =
 * Fix: Visibility issue of Jalali date picker
