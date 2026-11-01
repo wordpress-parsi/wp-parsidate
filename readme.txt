@@ -1,4 +1,4 @@
-=== پارسی دیت – Parsi Date ===
+=== Parsi Date | بسته فارسی ساز وردپرس و ووکامرس پارسی دیت ===
 Contributors: lord_viper, man4toman, parselearn, yazdaniwp, saeedfard, iehsanir, wordpress-parsi
 Donate link: https://wp-parsi.com/support/
 Tags: Shamsi, Persian, Jalali, WooCommerce, ووکامرس
