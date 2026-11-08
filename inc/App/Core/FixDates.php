@@ -10,7 +10,7 @@ namespace WPParsidate\App\Core;
 use DateTimeZone;
 use WPParsidate\App\Tools\HookDeactivator;
 use WPParsidate\Core\Names;
-use WPParsidate\Helper\{Date, Number, WordPress};
+use WPParsidate\Helper\{Number, WordPress};
 use WPParsidate\Settings\Settings;
 
 class FixDates {
@@ -60,21 +60,36 @@ class FixDates {
       return $date;
     }
 
+    // The Unix timestamp format is timezone-independent. Preserve WordPress' output.
+    if ( 'U' === $format ) {
+      return $date;
+    }
+
     $adjustedTimestamp = $timestamp;
 
     try {
       $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone( $timezone ?: wp_timezone() );
 
-      // wp_date() passes a pure UTC Unix timestamp
-      // We need to add the timezone offset to convert to local time for date formatting
-      $offset = Date::getTimeZoneOffset( $timezone );
-
-      if ( ! empty( $timestamp ) && $offset !== 0 ) {
-        $tzOffset          = (int) ( $offset * HOUR_IN_SECONDS );
-        $adjustedTimestamp = $timestamp + $tzOffset;
-      }
+      // Use the offset at the requested instant, not the current offset.
+      // Historical/future dates may have different daylight-saving rules.
+      $instant           = new \DateTimeImmutable( '@' . $timestamp );
+      $offsetSeconds     = $timezone->getOffset( $instant );
+      $adjustedTimestamp = $timestamp + $offsetSeconds;
     } catch ( \DateInvalidTimeZoneException $e ) {
-      // If timezone is invalid, use original timestamp
+      // If timezone is invalid, retain the original timestamp.
+    }
+
+    // The Unix timestamp (U) is absolute even when mixed with local Jalali tokens.
+    // Inline only unescaped U specifiers before passing the format to the
+    // legacy formatter, which otherwise resets output at U and uses local time.
+    if ( false !== strpos( $format, 'U' ) ) {
+      $format = preg_replace_callback(
+        '/\\\\.|U/',
+        static function ( $token ) use ( $timestamp ) {
+          return 'U' === $token[0] ? (string) $timestamp : $token[0];
+        },
+        $format
+      );
     }
 
     return $this->formatDate( $format, $adjustedTimestamp, $date );
