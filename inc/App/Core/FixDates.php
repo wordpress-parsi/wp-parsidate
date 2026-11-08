@@ -65,6 +65,7 @@ class FixDates {
       return $date;
     }
 
+    $callerFormat       = $format;
     $adjustedTimestamp = $timestamp;
 
     try {
@@ -92,7 +93,7 @@ class FixDates {
       );
     }
 
-    return $this->formatDate( $format, $adjustedTimestamp, $date );
+    return $this->formatDate( $format, $adjustedTimestamp, $date, $callerFormat );
   }
 
   /**
@@ -283,17 +284,18 @@ class FixDates {
    * @param string $format PHP date format string.
    * @param mixed $dateTime Date/time value (timestamp, date string, or DateTimeInterface).
    * @param string $fallbackGregorianDate Fallback Gregorian date string used when timestamp cannot be resolved.
+   * @param string|null $callerFormat Unmodified caller format for public Dual Date hooks.
    *
    * @return string Jalali-formatted date string, with optional dual-date suffix.
    */
-  private function formatDate( string $format, $dateTime, string $fallbackGregorianDate = '' ): string {
+  private function formatDate( string $format, $dateTime, string $fallbackGregorianDate = '', ?string $callerFormat = null ): string {
     $jalaliDate = parsidate( $format, $dateTime, Settings::get( 'conv_dates' ) );
 
     if ( ! Settings::get( 'dual_date', false ) ) {
       return $jalaliDate;
     }
 
-    return $this->appendGregorianDate( $jalaliDate, $format, $dateTime, $fallbackGregorianDate );
+    return $this->appendGregorianDate( $jalaliDate, $format, $dateTime, $fallbackGregorianDate, $callerFormat );
   }
 
   /**
@@ -303,21 +305,23 @@ class FixDates {
    * @param string $format PHP date format string used for formatting.
    * @param mixed $dateTime Original date/time value.
    * @param string $fallbackGregorianDate Fallback Gregorian date string used when timestamp cannot be resolved.
+   * @param string|null $callerFormat Unmodified caller format for public Dual Date hooks.
    *
    * @return string Jalali date string, optionally followed by a separator and the Gregorian date.
    */
-  private function appendGregorianDate( string $jalaliDate, string $format, $dateTime, string $fallbackGregorianDate = '' ): string {
-    if ( ! $this->isDualDateFormat( $format ) ) {
+  private function appendGregorianDate( string $jalaliDate, string $format, $dateTime, string $fallbackGregorianDate = '', ?string $callerFormat = null ): string {
+    $originalFormat = $callerFormat ?? $format;
+    if ( ! $this->isDualDateFormat( $originalFormat ) ) {
       return $jalaliDate;
     }
 
-    $gregorianDate = $this->formatGregorianDate( $format, $dateTime, $fallbackGregorianDate );
+    $gregorianDate = $this->formatGregorianDate( $format, $dateTime, $fallbackGregorianDate, $originalFormat );
     if ( $gregorianDate === '' || $gregorianDate === $jalaliDate ) {
       return $jalaliDate;
     }
 
     // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
-    $separator = apply_filters( 'wp_parsidate_dual_date_separator', ' - ', $format, $dateTime );
+    $separator = apply_filters( 'wp_parsidate_dual_date_separator', ' - ', $originalFormat, $dateTime );
 
     return $jalaliDate . $separator . $gregorianDate;
   }
@@ -373,10 +377,11 @@ class FixDates {
    * @param string $format PHP date format string.
    * @param mixed $dateTime Date/time value (timestamp, date string, or DateTimeInterface).
    * @param string $fallbackGregorianDate Fallback string returned when timestamp cannot be resolved.
+   * @param string|null $callerFormat Unmodified caller format for public Dual Date hooks.
    *
    * @return string Formatted Gregorian date string.
    */
-  private function formatGregorianDate( string $format, $dateTime, string $fallbackGregorianDate = '' ): string {
+  private function formatGregorianDate( string $format, $dateTime, string $fallbackGregorianDate = '', ?string $callerFormat = null ): string {
     $timestamp = $this->getTimestamp( $dateTime );
 
     if ( is_null( $timestamp ) ) {
@@ -391,7 +396,7 @@ class FixDates {
     }
 
     // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy public hook name, kept for backward compatibility.
-    return apply_filters( 'wp_parsidate_dual_date_gregorian', $date, $format, $dateTime, $fallbackGregorianDate );
+    return apply_filters( 'wp_parsidate_dual_date_gregorian', $date, $callerFormat ?? $format, $dateTime, $fallbackGregorianDate );
   }
 
   /**
