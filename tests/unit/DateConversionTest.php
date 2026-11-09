@@ -98,6 +98,7 @@ class DateConversionTest extends WP_UnitTestCase {
       'second day of leap year'  => array( '2024-03-21', '1' ),
       'last day of Shahrivar'    => array( '2024-09-21', '185' ),
       'first day of Mehr'        => array( '2024-09-22', '186' ),
+      'first day of Esfand 1403' => array( '2025-02-19', '336' ),
       'last day of leap year'    => array( '2025-03-20', '365' ),
       'first day of common year' => array( '2025-03-21', '0' ),
       'last day of common year'  => array( '2024-03-19', '364' ),
