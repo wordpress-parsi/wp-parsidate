@@ -118,12 +118,33 @@ plugin that integrates the Solar Hijri (Persian/Shamsi/Jalali) calendar into you
 The test suite runs on top of the official WordPress test library, so tests use real WordPress functions instead of mocks.
 
 ```bash
-# 1. Install the WordPress test library (once). Needs MySQL/MariaDB and svn.
+# 1. Install PHP dependencies (includes PHPUnit and the PHPUnit Polyfills)
+composer install
+
+# 2. Install the WordPress test library (once). Needs MySQL/MariaDB and svn.
 bash bin/install-wp-tests.sh wordpress_tests root '' localhost latest
 
-# 2. Run the tests
+# 3. Make sure MySQL/MariaDB is running, then run the tests
 composer test
 ```
+
+`composer test` runs `bin/phpunit.php`, which defines `ABSPATH` before PHPUnit boots. The plugin's Composer autoloader loads `inc/Functions/*.php`, and those files stop execution when `ABSPATH` is missing, so invoking `vendor/bin/phpunit` directly exits silently.
+
+#### Windows (MAMP/XAMPP)
+
+`bin/install-wp-tests.sh` requires Bash, Subversion, and `curl`/`wget`. If those are unavailable, install the test library manually:
+
+1. Check out the `tests/phpunit` directory of `WordPress/wordpress-develop` for the WordPress version you are running. For example, for WordPress 7.1.4:
+   ```bash
+   git clone --depth 1 --branch 7.1.4 --filter=blob:none --sparse https://github.com/WordPress/wordpress-develop.git
+   cd wordpress-develop
+   git sparse-checkout set tests/phpunit
+   ```
+2. Copy `tests/phpunit` to `%TEMP%\wordpress-tests-lib`.
+3. Create `%TEMP%\wordpress-tests-lib\wp-tests-config.php` from `wp-tests-config-sample.php`. Set `ABSPATH` to your WordPress root, point `DB_NAME` at a **separate empty database** such as `wordpress_tests`, and fill in your database credentials.
+4. Make sure MySQL is running, create the test database, then run `composer test`.
+
+The bootstrap uses `WP_TESTS_DIR` when set, otherwise `%TEMP%\wordpress-tests-lib` (`sys_get_temp_dir()`).
 
 Tests live in `tests/unit`. Every pull request runs them automatically on PHP 7.4 to 8.4 via GitHub Actions (`.github/workflows/testing.yml`).
 
