@@ -4,6 +4,7 @@ namespace WPParsidate\Helper;
 
 use DateTime;
 use DateTimeZone;
+use WPParsidate\Core\WPP_ParsiDate;
 
 class Date {
   /**
@@ -86,7 +87,7 @@ class Date {
 
     $dateString = Number::toEnglish( $dateString );
     $dateParts  = date_parse_from_format( $format, $dateString );
-    if ( $dateParts['error_count'] > 0 || $dateParts['warning_count'] > 0 ) {
+    if ( $dateParts['error_count'] > 0 ) {
       return $default;
     }
 
@@ -95,7 +96,7 @@ class Date {
     $day   = $dateParts['day'];
 
     if ( $year > 1900 ) {
-      if ( checkdate( $month, $day, $year ) ) {
+      if ( $dateParts['warning_count'] === 0 && checkdate( $month, $day, $year ) ) {
         return [
           'status' => true,
           'type'   => 'gregorian',
@@ -103,11 +104,44 @@ class Date {
         ];
       }
     } elseif ( $year < 1500 ) {
-      if ( $month >= 1 && $month <= 12 && $day >= 1 && $day <= 31 ) {
-        if ( $month > 6 && $day > 30 ) {
+      // PHP checks Gregorian month lengths even for Jalali years. Only
+      // reinterpret calendar warnings for the date formats used by the plugin.
+      // Other custom formats keep their original validation behavior.
+      if ( $dateParts['warning_count'] > 0 ) {
+        if ( ! in_array( $format, [ 'Y-m-d', 'Y-m-d\TH:i', 'Y-m-d\TH:i:sP', 'Y-m-d\TH:i:sO' ], true ) ) {
           return $default;
         }
 
+        // PHP accepts malformed numeric offsets. Do not turn those previously
+        // rejected date strings into valid Jalali datetimes.
+        if ( $format === 'Y-m-d\TH:i:sP' && ! preg_match( '/[+-](?:[01][0-9]|2[0-3]):[0-5][0-9]$/D', $dateString ) ) {
+          return $default;
+        }
+        if ( $format === 'Y-m-d\TH:i:sO' && ! preg_match( '/[+-](?:[01][0-9]|2[0-3])[0-5][0-9]$/D', $dateString ) ) {
+          return $default;
+        }
+
+        $safeDate = preg_replace( '/^[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}/', '2000-01-01', $dateString, 1, $replacements );
+        if ( $replacements !== 1 ) {
+          return $default;
+        }
+        $safeParts = date_parse_from_format( $format, $safeDate );
+        if ( $safeParts['error_count'] > 0 || $safeParts['warning_count'] > 0 ) {
+          return $default;
+        }
+      }
+
+      if ( $month < 1 || $month > 12 || $day < 1 ) {
+        return $default;
+      }
+      if ( $month <= 6 ) {
+        $lastDay = 31;
+      } elseif ( $month <= 11 ) {
+        $lastDay = 30;
+      } else {
+        $lastDay = WPP_ParsiDate::getInstance()->IsPerLeapYear( $year ) ? 30 : 29;
+      }
+      if ( $day <= $lastDay ) {
         return [
           'status' => true,
           'type'   => 'jalali',
