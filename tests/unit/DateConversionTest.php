@@ -88,4 +88,27 @@ class DateConversionTest extends WP_UnitTestCase {
   public function test_is_per_leap_year( int $year, bool $expected ): void {
     $this->assertSame( $expected, WPP_ParsiDate::getInstance()->IsPerLeapYear( $year ) );
   }
+
+  /**
+   * @return array<string, array{string, string}>
+   */
+  public function jalali_day_of_year_provider(): array {
+    return array(
+      'first day of leap year'   => array( '2024-03-20', '0' ),
+      'second day of leap year'  => array( '2024-03-21', '1' ),
+      'last day of Shahrivar'    => array( '2024-09-21', '185' ),
+      'first day of Mehr'        => array( '2024-09-22', '186' ),
+      'first day of Esfand 1403' => array( '2025-02-19', '336' ),
+      'last day of leap year'    => array( '2025-03-20', '365' ),
+      'first day of common year' => array( '2025-03-21', '0' ),
+      'last day of common year'  => array( '2024-03-19', '364' ),
+    );
+  }
+
+  /**
+   * @dataProvider jalali_day_of_year_provider
+   */
+  public function test_jalali_day_of_year_format_z( string $gregorian, string $expected ): void {
+    $this->assertSame( $expected, (string) parsidate( 'z', $gregorian, 'eng' ) );
+  }
 }
