@@ -5,7 +5,7 @@ namespace WPParsidate\Addons;
 defined( 'ABSPATH' ) || exit;
 
 use WPParsidate\Admin\{AdminPages, AdminSettings};
-use WPParsidate\Helper\{Assets, Cache};
+use WPParsidate\Helper\{Assets, WordPress};
 use WPParsidate\Settings\Settings;
 
 abstract class Addon {
@@ -14,6 +14,20 @@ abstract class Addon {
   public string $currentTab = '';
 
   public string $currentSection = '';
+
+  /**
+   * Addon info of the current request, keyed by addon ID
+   *
+   * @var array<string, array>
+   */
+  private static array $addonInfo = [];
+
+  /**
+   * Number of active required plugins in the current request, keyed by addon ID and site ID.
+   *
+   * @var array<string, int>
+   */
+  private static array $requiredPluginsActive = [];
 
   public function __construct() {
     add_filter( 'wp_parsidate_addons', [ $this, 'registerAddon' ] );
@@ -228,12 +242,11 @@ abstract class Addon {
   }
 
   private function getInfo( $key = null, $default = null ) {
-    $addon = Cache::get( $this->addonID . '_internal_addon_info', false );
-
-    if ( ! is_array( $addon ) ) {
-      $addon = $this->info();
-      Cache::set( $this->addonID . '_internal_addon_info', $addon );
+    if ( ! isset( self::$addonInfo[ $this->addonID ] ) || ! is_array( self::$addonInfo[ $this->addonID ] ) ) {
+      self::$addonInfo[ $this->addonID ] = $this->info();
     }
+
+    $addon = self::$addonInfo[ $this->addonID ];
 
     if ( $key !== null ) {
       return $addon[ $key ] ?? $default;
@@ -267,14 +280,16 @@ abstract class Addon {
       return true;
     }
 
-    $requirePluginsActive = Cache::get( $this->addonID . '_required_plugins_count', false );
+    $cacheKey = $this->addonID . '_' . get_current_blog_id();
 
-    if ( $requirePluginsActive === false ) {
+    $requirePluginsActive = self::$requiredPluginsActive[ $cacheKey ] ?? null;
+
+    if ( $requirePluginsActive === null ) {
       $requirePluginsActive = 0;
 
       foreach ( $requiredPlugins as $requirePluginPath => $requirePlugin ) {
         if (
-          ( file_exists( WP_PLUGIN_DIR . '/' . $requirePluginPath ) && is_plugin_active( $requirePluginPath ) ) ||
+          ( file_exists( WP_PLUGIN_DIR . '/' . $requirePluginPath ) && WordPress::isPluginActivated( $requirePluginPath ) ) ||
           ( ! empty( $requirePlugin['function_check'] ) && function_exists( $requirePlugin['function_check'] ) ) ||
           ( ! empty( $requirePlugin['class_check'] ) && class_exists( $requirePlugin['class_check'] ) ) ||
           ( ! empty( $requirePlugin['define_check'] ) && defined( $requirePlugin['define_check'] ) )
@@ -283,7 +298,7 @@ abstract class Addon {
         }
       }
 
-      Cache::set( $this->addonID . '_required_plugins_count', $requirePluginsActive );
+      self::$requiredPluginsActive[ $cacheKey ] = $requirePluginsActive;
     }
 
     return $requirePluginsActive === count( $requiredPlugins );

@@ -136,7 +136,7 @@ class Addons {
           $fileExists = file_exists( WP_PLUGIN_DIR . '/' . $requirePluginPath );
 
           if (
-            ( $fileExists && is_plugin_active( $requirePluginPath ) ) ||
+            ( $fileExists && WordPress::isPluginActivated( $requirePluginPath ) ) ||
             ( ! empty( $requirePlugin['function_check'] ) && function_exists( $requirePlugin['function_check'] ) ) ||
             ( ! empty( $requirePlugin['class_check'] ) && class_exists( $requirePlugin['class_check'] ) ) ||
             ( ! empty( $requirePlugin['define_check'] ) && defined( $requirePlugin['define_check'] ) )
