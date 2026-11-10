@@ -3,7 +3,7 @@
         'name' => 'wordpress-parsi/wp-parsidate',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '1ebe075090a90255188fef23f27920c551a35f5b',
+        'reference' => '4afdfea7578563013528cf264878cbf075845d00',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'doctrine/instantiator' => array(
-            'pretty_version' => '2.0.0',
-            'version' => '2.0.0.0',
-            'reference' => 'c6222283fa3f4ac679f8b9ced9a4e23f163e80d0',
+            'pretty_version' => '1.5.0',
+            'version' => '1.5.0.0',
+            'reference' => '0a0fa9780f5d4e507415a065172d26a98d02047b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../doctrine/instantiator',
             'aliases' => array(),
@@ -29,9 +29,9 @@
             'dev_requirement' => false,
         ),
         'myclabs/deep-copy' => array(
-            'pretty_version' => '1.14.0',
-            'version' => '1.14.0.0',
-            'reference' => '8680aa248f8e07bc8fb43f56f0f5fc77a0c96aae',
+            'pretty_version' => '1.13.4',
+            'version' => '1.13.4.0',
+            'reference' => '07d290f0c47959fd5eed98c95ee5602db07e0b6a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../myclabs/deep-copy',
             'aliases' => array(),
@@ -301,7 +301,7 @@
         'wordpress-parsi/wp-parsidate' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '1ebe075090a90255188fef23f27920c551a35f5b',
+            'reference' => '4afdfea7578563013528cf264878cbf075845d00',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
