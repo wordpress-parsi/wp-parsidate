@@ -66,7 +66,16 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 6. Addon tab
 7. WooCommerce settings
 
+== Upgrade Notice ==
+
+= 6.6.0 =
+If you use a Parsi Date bank gateway (Parsian, Pasargad, Mellat, Melli), install ParsiGate: the gateways will be removed from Parsi Date in version 7.0. / اگر از درگاه بانکی پارسی‌دیت استفاده می‌کنید، پارسی‌گیت را نصب کنید؛ درگاه‌ها در نسخه‌ی ۷.۰ حذف می‌شوند.
+
 == Changelog ==
+
+= 6.6.0 =
+* Deprecated: The built-in bank gateways (Parsian, Pasargad, Mellat, Melli) move to [ParsiGate](https://wordpress.org/plugins/parsigate/) and will be removed in Parsi Date 7.0. Sites that use them get a notice with one-click installation of ParsiGate, which imports their gateway settings.
+* Fix: WooCommerce order date became wrong (e.g. 784-04-28) after updating the order on sites with a persistent object cache
 
 = 6.5.2 =
 * Add: [PLoad](https://wordpress.org/plugins/pload/) demo addon
