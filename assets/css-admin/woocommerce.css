@@ -28,5 +28,3 @@ body.rtl.woocommerce_page_wc-orders form#order #order_data .order_data_column:fi
 .woocommerce-pagination__page-arrows-buttons button svg {
   transform: rotate(180deg);
 }
-
-/*# sourceMappingURL=woocommerce.css.map */
