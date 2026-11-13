@@ -15,7 +15,10 @@
     ]
   },
   "config": {
-    "optimize-autoloader": true
+    "optimize-autoloader": true,
+    "platform": {
+      "php": "7.4.33"
+    }
   },
   "authors": [
     {
