@@ -25,6 +25,9 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
         // Order meta holding the order id handed to the bank in the signed request
         private const META_ORDER_ID = '_wpp_melli_order_id';
 
+        // Order meta holding the amount (Rial) handed to the bank in the signed request
+        private const META_AMOUNT = '_wpp_melli_amount';
+
         private $gateway_name;
         public $terminal_id;
         public $merchant_id;
@@ -204,7 +207,12 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
           // Remember which token was issued for this order, so the callback can be
           // tied back to it (see verify_payment()). Without this binding the callback
           // has no way to tell which order the bank confirmation belongs to.
-          $this->remember_token( $order, (string) $refId['token'], (string) ( $refId['orderId'] ?? $order->get_id() ) );
+          $this->remember_token(
+            $order,
+            (string) $refId['token'],
+            (string) ( $refId['orderId'] ?? $order->get_id() ),
+            (int) ( $refId['amount'] ?? $this->get_amount( $order ) )
+          );
 
           // Return
           return [
@@ -240,6 +248,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
 
           // Keep the values actually sent to the bank: the callback is validated against them.
           $bankOrderId = (string) ( $data['OrderId'] ?? $OrderId );
+          $bankAmount  = (int) ( $data['Amount'] ?? $Amount );
 
           $result = $this->api( 'https://sadad.shaparak.ir/vpg/api/v0/Request/PaymentRequest', $data );
 
@@ -249,6 +258,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
               'status'   => true,
               'token'    => $result->Token,
               'orderId'  => $bankOrderId,
+              'amount'   => $bankAmount,
               'redirect' => "https://sadad.shaparak.ir/VPG/Purchase?Token=" . $result->Token
             ];
           }
@@ -290,8 +300,9 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
 
         public function verify_payment( $order ) {
           // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing -- Bank callback request, it cannot carry a WordPress nonce. The payment is verified with the bank API.
-          $Token   = sanitize_text_field( wp_unslash( $_POST["token"] ?? '' ) );
-          $ResCode = sanitize_text_field( wp_unslash( $_POST["ResCode"] ?? '' ) );
+          $Token         = sanitize_text_field( wp_unslash( $_POST["token"] ?? '' ) );
+          $ResCode       = sanitize_text_field( wp_unslash( $_POST["ResCode"] ?? '' ) );
+          $postedOrderId = sanitize_text_field( wp_unslash( $_POST["OrderId"] ?? '' ) );
           // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 
           if ( $ResCode != 0 ) {
@@ -308,6 +319,11 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
             }
 
             $this->reject_payment( $order, 'order is already paid' );
+          }
+
+          // Only an order that is still waiting for its payment may be completed.
+          if ( ! $order->needs_payment() ) {
+            $this->reject_payment( $order, 'order does not need payment' );
           }
 
           /**
@@ -345,6 +361,11 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
             $expectedOrderId = (string) $order->get_id();
           }
 
+          // The order id posted back with the token has to be this order's as well.
+          if ( $postedOrderId !== '' && $postedOrderId !== $expectedOrderId ) {
+            $this->reject_payment( $order, 'posted order id does not belong to this order' );
+          }
+
           // The bank reports the order id the token was issued for, so it is the only
           // trustworthy answer to "which order did this payment confirm?".
           $bankOrderId = isset( $result->OrderId ) ? (string) $result->OrderId : '';
@@ -355,6 +376,24 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
 
           if ( $bankOrderId !== '' && $bankOrderId !== $expectedOrderId ) {
             $this->reject_payment( $order, 'bank order id does not belong to this order' );
+          }
+
+          // The amount the bank confirmed has to be the amount requested for this order.
+          $expectedAmount = (int) $order->get_meta( self::META_AMOUNT );
+
+          // Orders started before this meta existed: the order total, as sent then.
+          if ( $expectedAmount <= 0 ) {
+            $expectedAmount = (int) $this->get_amount( $order );
+          }
+
+          $bankAmount = isset( $result->Amount ) ? (int) $result->Amount : 0;
+
+          if ( ! $has_tokens && $bankAmount <= 0 ) {
+            $this->reject_payment( $order, 'no token is on record for this order and the bank did not report the amount' );
+          }
+
+          if ( $bankAmount > 0 && $bankAmount !== $expectedAmount ) {
+            $this->reject_payment( $order, 'verified amount does not match the order total' );
           }
 
           $retrieval_ref_no = isset( $result->RetrivalRefNo ) ? (string) $result->RetrivalRefNo : '';
@@ -400,10 +439,11 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
          * @param WC_Order $order
          * @param string $token
          * @param string $bank_order_id Order id handed to the bank with the token
+         * @param int $amount Amount (Rial) handed to the bank with the token
          *
          * @return void
          */
-        private function remember_token( $order, string $token, string $bank_order_id ): void {
+        private function remember_token( $order, string $token, string $bank_order_id, int $amount ): void {
           $tokens = $order->get_meta( self::META_TOKENS );
           $tokens = is_array( $tokens ) ? $tokens : array();
           $tokens = array_values( array_unique( array_merge( $tokens, array( $token ) ) ) );
@@ -411,6 +451,7 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
 
           $order->update_meta_data( self::META_TOKENS, $tokens );
           $order->update_meta_data( self::META_ORDER_ID, $bank_order_id );
+          $order->update_meta_data( self::META_AMOUNT, $amount );
           $order->save();
         }
 
@@ -429,7 +470,13 @@ if ( ! function_exists( 'wpp_melli_payment_gateway_init' ) ) {
             return false;
           }
 
-          return in_array( $token, array_map( 'strval', $tokens ), true );
+          foreach ( $tokens as $issued ) {
+            if ( is_scalar( $issued ) && hash_equals( (string) $issued, $token ) ) {
+              return true;
+            }
+          }
+
+          return false;
         }
 
         /**
