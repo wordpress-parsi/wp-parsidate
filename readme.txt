@@ -4,7 +4,7 @@ Donate link: https://wp-parsi.com/support/
 Tags: Shamsi, Persian, Jalali, WooCommerce, ووکامرس
 Requires at least: 5.3
 Tested up to: 7.1
-Stable tag: 6.5.2
+Stable tag: 6.6.0
 Requires PHP: 7.4
 License: GPLv3
 
@@ -74,8 +74,16 @@ If you use a Parsi Date bank gateway (Parsian, Pasargad, Mellat, Melli), install
 == Changelog ==
 
 = 6.6.0 =
+* Security: Melli (Sadad) gateway now also checks the amount and order id confirmed by the bank, and that the order still needs payment, before completing an order (hardens the payment-verification fix of 6.5)
 * Deprecated: The built-in bank gateways (Parsian, Pasargad, Mellat, Melli) move to [ParsiGate](https://wordpress.org/plugins/parsigate/) and will be removed in Parsi Date 7.0. Sites that use them get a notice with one-click installation of ParsiGate, which imports their gateway settings.
 * Fix: WooCommerce order date became wrong (e.g. 784-04-28) after updating the order on sites with a persistent object cache
+* Fix: Dashicons showed as boxes or letters in the block editor, admin bar, Yoast SEO and WooCommerce screens when the Vazir font was enabled (#280)
+* Fix: Numbers inside Latin names in post titles were converted to Persian digits (e.g. S22 became S۲۲) (#357)
+* Fix: wp_date() returned a wrong Unix timestamp for the "U" format and used the current daylight-saving offset for past and future dates
+* Fix: Dual-date hooks (wp_parsidate_dual_date_gregorian, wp_parsidate_dual_date_separator) received a modified format instead of the original one
+* Fix: Jalali day of the year (format "z") returned wrong values
+* Fix: Validating Jalali dates used Gregorian month lengths and caused PHP warnings (e.g. 31 Shahrivar, 30 Esfand in leap years)
+* Dev: Removed CSS source maps from the release; PHPUnit test suite added
 
 = 6.5.2 =
 * Add: [PLoad](https://wordpress.org/plugins/pload/) demo addon
