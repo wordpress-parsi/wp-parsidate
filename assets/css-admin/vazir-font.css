@@ -14,11 +14,11 @@
 }
 body,
 #order_data h2,
-.rtl #wpadminbar *:not(.ab-icon),
+.rtl #wpadminbar *:not(.ab-icon):where(:not(i, .dashicons, [class^=dashicons-], [class*=" dashicons-"])),
 .components-menu-item__item,
 .components-menu-item__info,
 .components-menu-group__label,
-.wc-addons-wrap .products li * {
+.wc-addons-wrap .products li *:where(:not(i, .dashicons, [class^=dashicons-], [class*=" dashicons-"])) {
   font-family: Vazir, tahoma, arial, serif !important;
 }
 
@@ -29,7 +29,7 @@ code {
 }
 
 .rtl .editor-styles-wrapper,
-.rtl .edit-post-visual-editor *:not(i),
+.rtl .edit-post-visual-editor *:where(:not(i, .dashicons, [class^=dashicons-], [class*=" dashicons-"])),
 .rtl .components-notice__content,
 .rtl h1,
 .rtl h2,
@@ -55,11 +55,11 @@ code {
 }
 
 body#tinymce.wp-editor,
-#wpseo_meta *,
+#wpseo_meta *:where(:not(i, .dashicons, [class^=dashicons-], [class*=" dashicons-"])),
 #wpbody,
 #tinymce,
-.edit-post-sidebar *,
-.woocommerce-layout * {
+.edit-post-sidebar *:where(:not(i, .dashicons, [class^=dashicons-], [class*=" dashicons-"])),
+.woocommerce-layout *:where(:not(i, .dashicons, [class^=dashicons-], [class*=" dashicons-"])) {
   font-family: Vazir, tahoma, arial, serif;
 }
 
@@ -81,12 +81,10 @@ body.woocommerce_page_wc-settings .nav-tab-wrapper a {
   font-size: 12px;
 }
 
-.mce-rtl .mce-text, .mce-rtl .mce-container *:not(i) {
+.mce-rtl .mce-text, .mce-rtl .mce-container *:where(:not(i, .dashicons, [class^=dashicons-], [class*=" dashicons-"])) {
   font-family: Vazir, tahoma, arial, serif;
 }
 
 .mce-tooltip * {
   font-family: Vazir, tahoma, arial, serif !important;
 }
-
-/*# sourceMappingURL=vazir-font.css.map */

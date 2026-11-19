@@ -1,5 +1,11 @@
 $vazirFont: Vazir, tahoma, arial, serif;
 
+// Icon fonts set font-family on the icon element itself (<span class="dashicons
+// dashicons-x">, <i class="fa ...">). Every "*" rule must skip them, or the icon
+// shows as a box or a letter (issue #280). :where() adds no specificity, so the
+// rules keep the weight they had before.
+$noIcons: ':where(:not(i, .dashicons, [class^="dashicons-"], [class*=" dashicons-"]))';
+
 @font-face {
   font-family: Vazir;
   src: url("../fonts/Vazirmatn-Regular.woff2") format("woff2");
@@ -18,11 +24,11 @@ $vazirFont: Vazir, tahoma, arial, serif;
 
 body,
 #order_data h2,
-.rtl #wpadminbar *:not(.ab-icon),
+.rtl #wpadminbar *:not(.ab-icon)#{$noIcons},
 .components-menu-item__item,
 .components-menu-item__info,
 .components-menu-group__label,
-.wc-addons-wrap .products li * {
+.wc-addons-wrap .products li *#{$noIcons} {
   font-family: $vazirFont !important;
 }
 
@@ -34,7 +40,7 @@ code {
 
 .rtl {
   .editor-styles-wrapper,
-  .edit-post-visual-editor *:not(i),
+  .edit-post-visual-editor *#{$noIcons},
   .components-notice__content,
   h1,
   h2,
@@ -61,11 +67,11 @@ code {
 }
 
 body#tinymce.wp-editor,
-#wpseo_meta *,
+#wpseo_meta *#{$noIcons},
 #wpbody,
 #tinymce,
-.edit-post-sidebar *,
-.woocommerce-layout *, {
+.edit-post-sidebar *#{$noIcons},
+.woocommerce-layout *#{$noIcons} {
   font-family: $vazirFont;
 }
 
@@ -91,7 +97,7 @@ body.woocommerce_page_wc-settings .nav-tab-wrapper a {
 }
 
 .mce-rtl {
-  .mce-text, .mce-container *:not(i) {
+  .mce-text, .mce-container *#{$noIcons} {
     font-family: $vazirFont;
   }
 }
