@@ -1075,6 +1075,7 @@ class ComposerStaticInit28b7438669d760234aa27dffd45581b6
         'WPParsidate\\App\\Integration\\TapChatDemo' => __DIR__ . '/../..' . '/inc/App/Integration/TapChatDemo.php',
         'WPParsidate\\App\\Integration\\UltimateMember' => __DIR__ . '/../..' . '/inc/App/Integration/UltimateMember.php',
         'WPParsidate\\App\\Integration\\WooCommerce' => __DIR__ . '/../..' . '/inc/App/Integration/WooCommerce.php',
+        'WPParsidate\\App\\Integration\\WooCommerce\\GatewayMigration' => __DIR__ . '/../..' . '/inc/App/Integration/WooCommerce/GatewayMigration.php',
         'WPParsidate\\App\\Integration\\WooCommerce\\WcGateways' => __DIR__ . '/../..' . '/inc/App/Integration/WooCommerce/WcGateways.php',
         'WPParsidate\\App\\Integration\\WooCommerce\\WooCommerceCitySelect' => __DIR__ . '/../..' . '/inc/App/Integration/WooCommerce/WooCommerceCitySelect.php',
         'WPParsidate\\App\\Tools\\HookDeactivator' => __DIR__ . '/../..' . '/inc/App/Tools/HookDeactivator.php',

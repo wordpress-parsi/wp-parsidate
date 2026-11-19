@@ -1002,6 +1002,7 @@ return array(
     'WPParsidate\\App\\Integration\\TapChatDemo' => $baseDir . '/inc/App/Integration/TapChatDemo.php',
     'WPParsidate\\App\\Integration\\UltimateMember' => $baseDir . '/inc/App/Integration/UltimateMember.php',
     'WPParsidate\\App\\Integration\\WooCommerce' => $baseDir . '/inc/App/Integration/WooCommerce.php',
+    'WPParsidate\\App\\Integration\\WooCommerce\\GatewayMigration' => $baseDir . '/inc/App/Integration/WooCommerce/GatewayMigration.php',
     'WPParsidate\\App\\Integration\\WooCommerce\\WcGateways' => $baseDir . '/inc/App/Integration/WooCommerce/WcGateways.php',
     'WPParsidate\\App\\Integration\\WooCommerce\\WooCommerceCitySelect' => $baseDir . '/inc/App/Integration/WooCommerce/WooCommerceCitySelect.php',
     'WPParsidate\\App\\Tools\\HookDeactivator' => $baseDir . '/inc/App/Tools/HookDeactivator.php',
