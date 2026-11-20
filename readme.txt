@@ -77,6 +77,7 @@ If you use a Parsi Date bank gateway (Parsian, Pasargad, Mellat, Melli), install
 * Security: Melli (Sadad) gateway now also checks the amount and order id confirmed by the bank, and that the order still needs payment, before completing an order (hardens the payment-verification fix of 6.5)
 * Deprecated: The built-in bank gateways (Parsian, Pasargad, Mellat, Melli) move to [ParsiGate](https://wordpress.org/plugins/parsigate/) and will be removed in Parsi Date 7.0. Sites that use them get a notice with one-click installation of ParsiGate, which imports their gateway settings.
 * Add: Pods integration for Jalali date and datetime fields. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/360)
+* Add: Bookly Free booking form Jalali date selection. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/326)
 * Fix: WooCommerce order date became wrong (e.g. 784-04-28) after updating the order on sites with a persistent object cache
 * Fix: Dashicons showed as boxes or letters in the block editor, admin bar, Yoast SEO and WooCommerce screens when the Vazir font was enabled (#280)
 * Fix: Numbers inside Latin names in post titles were converted to Persian digits (e.g. S22 became S۲۲) (#357)

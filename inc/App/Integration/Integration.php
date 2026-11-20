@@ -42,6 +42,7 @@ class Integration {
     new LimitLoginAttempts();
 
     // Tools
+    new Bookly();
     new Booked();
   }
 }
