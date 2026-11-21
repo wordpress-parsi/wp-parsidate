@@ -1,9 +1,55 @@
 'use strict';
 
+const MODERN_FORM_CONTAINERS = [
+  '.bookly-services-form-container',
+  '.bookly-search-form-container',
+  '.bookly-staff-form-container',
+  '.bookly-tags-form-container',
+];
+
+const CALENDAR_TITLE_SELECTOR = MODERN_FORM_CONTAINERS.map(
+  (container) => container + ' .bookly-calendar-middle-button-mark, ' + container + ' .bookly-calendar-title-mark'
+).join(', ');
+
+const SUMMARY_CONTAINER_SELECTOR = MODERN_FORM_CONTAINERS
+  .concat(['.bookly-modal-header-mark', '.bookly-modal-body-mark'])
+  .join(', ');
+
+// Bookly's Svelte components keep references to their text nodes. Replacing
+// textContent detaches those nodes, so later month re-renders update a detached
+// node and the visible label stays stale. Mutate the existing node instead.
+function setTextContent(node, text) {
+  if (!node) {
+    return;
+  }
+
+  const children = node.childNodes ? Array.from(node.childNodes) : null;
+  if (children) {
+    const textNode = children.find((child) => child.nodeType === 3);
+    if (textNode) {
+      if (textNode.nodeValue !== text) {
+        textNode.nodeValue = text;
+      }
+      return;
+    }
+
+    const element = children.find((child) => child.nodeType === 1);
+    if (element) {
+      setTextContent(element, text);
+      return;
+    }
+  }
+
+  if (node.textContent !== text) {
+    node.textContent = text;
+  }
+}
+
 class WpPdBooklyProServicesForm {
   constructor() {
     this.settings = window.BooklyL10nModernBookingForm || {};
     this.titleInputs = new WeakMap();
+    this.calendarEntries = new WeakMap();
     this.entries = new Set();
     this.scheduled = false;
     this.monthNames = this.settings.datePicker && this.settings.datePicker.monthNamesShort || [];
@@ -23,6 +69,7 @@ class WpPdBooklyProServicesForm {
       return;
     }
 
+    this.settings.moment_format_date = 'YYYY-MM-DD';
     this.process();
     this.observe();
     window.addEventListener('resize', () => {
@@ -51,16 +98,14 @@ class WpPdBooklyProServicesForm {
   }
 
   process() {
-    const titles = Array.from(
-      document.querySelectorAll(
-        '.bookly-services-form-container .bookly-calendar-middle-button-mark, ' +
-        '.bookly-services-form-container .bookly-calendar-title-mark'
-      )
-    );
+    const titles = Array.from(document.querySelectorAll(CALENDAR_TITLE_SELECTOR));
     this.entries.forEach((entry) => {
       if (!entry.title.isConnected) {
         entry.input.remove();
         this.entries.delete(entry);
+        if (entry.calendar && this.calendarEntries.get(entry.calendar) === entry) {
+          this.calendarEntries.delete(entry.calendar);
+        }
       }
     });
 
@@ -71,6 +116,7 @@ class WpPdBooklyProServicesForm {
         this.localizeCalendar(entry);
       }
     });
+    this.localizeAppointmentSummary();
   }
 
   prepareCalendarTitle(title) {
@@ -85,9 +131,31 @@ class WpPdBooklyProServicesForm {
       return null;
     }
 
+    // One calendar must only ever own one picker, even if Bookly renders more
+    // than one title mark for it (responsive duplicates).
+    const calendarEntry = this.calendarEntries.get(calendar);
+    if (calendarEntry) {
+      this.titleInputs.set(title, calendarEntry);
+      return calendarEntry;
+    }
+
     const parent = title.parentElement;
     if (window.getComputedStyle(parent).position === 'static') {
       parent.style.position = 'relative';
+    }
+
+    // Adopt a picker another instance already attached to this calendar instead
+    // of stacking a second invisible input on the same title.
+    const existingInput = parent.children && Array.from(parent.children).find(
+      (child) => child !== title && child.classList && child.classList.contains('wppd-bookly-pro-services-form-date')
+    );
+    if (existingInput) {
+      const adopted = { title, calendar, input: existingInput, lastValue: existingInput.value || '' };
+      this.titleInputs.set(title, adopted);
+      this.calendarEntries.set(calendar, adopted);
+      this.entries.add(adopted);
+      this.positionInput(title, existingInput);
+      return adopted;
     }
 
     const input = document.createElement('input');
@@ -114,12 +182,13 @@ class WpPdBooklyProServicesForm {
     input.addEventListener('jdp:change', () => {
       this.selectDate(entry).catch((error) => {
         entry.input.value = entry.lastValue;
-        window.console.error('WP-Parsidate could not select the Jalali date in the Bookly Pro services form.', error);
+        window.console.error('WP-Parsidate could not select the Jalali date in the Bookly Pro modern form.', error);
       });
     });
 
     parent.appendChild(input);
     this.titleInputs.set(title, entry);
+    this.calendarEntries.set(calendar, entry);
     this.entries.add(entry);
     this.positionInput(title, input);
     return entry;
@@ -158,7 +227,7 @@ class WpPdBooklyProServicesForm {
   open(entry) {
     const current = this.getGregorianMonth(entry.title);
     if (!current) {
-      window.console.error('WP-Parsidate could not read the Bookly Pro services-form calendar month.');
+      window.console.error('WP-Parsidate could not read the Bookly Pro modern-form calendar month.');
       return;
     }
 
@@ -194,9 +263,13 @@ class WpPdBooklyProServicesForm {
     entry.input.setAttribute('aria-busy', 'true');
 
     try {
-      if (!await this.selectNativeDate(entry, target)) {
+      const result = await this.selectNativeDate(entry, target);
+      if (result !== true) {
         entry.input.value = entry.lastValue;
-        window.console.error('WP-Parsidate could not select the Jalali date in the Bookly Pro services form.');
+        // A disabled day is Bookly saying "not available", not a failure.
+        if (result !== 'unavailable') {
+          window.console.error('WP-Parsidate could not select the Jalali date in the Bookly Pro modern form.');
+        }
         return false;
       }
 
@@ -205,7 +278,7 @@ class WpPdBooklyProServicesForm {
       return true;
     } catch (error) {
       entry.input.value = entry.lastValue;
-      window.console.error('WP-Parsidate could not select the Jalali date in the Bookly Pro services form.', error);
+      window.console.error('WP-Parsidate could not select the Jalali date in the Bookly Pro modern form.', error);
       return false;
     } finally {
       entry.input.disabled = false;
@@ -232,7 +305,7 @@ class WpPdBooklyProServicesForm {
           ? dayNode
           : dayNode.querySelector && dayNode.querySelector('button') || dayNode);
         if (!clickable || this.isDisabled(clickable)) {
-          return false;
+          return 'unavailable';
         }
 
         clickable.click();
@@ -301,8 +374,8 @@ class WpPdBooklyProServicesForm {
 
     const label = entry.title.querySelector && entry.title.querySelector('span') || entry.title;
     const localizedLabel = monthName + ' ' + this.toPersianDigits(jalaliMonth.jy);
-    if (label.textContent.trim() !== localizedLabel) {
-      label.textContent = localizedLabel;
+    if (String(label.textContent || '').trim() !== localizedLabel) {
+      setTextContent(label, localizedLabel);
     }
     entry.title.dataset.wppdLocalizedMonthLabel = localizedLabel;
 
@@ -329,8 +402,8 @@ class WpPdBooklyProServicesForm {
       const dayLabel = cell.querySelectorAll && Array.from(cell.querySelectorAll('span')).pop();
       if (dayLabel) {
         const day = this.toPersianDigits(jalali.jd);
-        if (dayLabel.textContent.trim() !== day) {
-          dayLabel.textContent = day;
+        if (String(dayLabel.textContent || '').trim() !== day) {
+          setTextContent(dayLabel, day);
         }
       }
 
@@ -338,6 +411,61 @@ class WpPdBooklyProServicesForm {
       cell.dataset.wppdGregorianMonth = gregorian.month;
       cell.dataset.wppdGregorianDay = gregorian.day;
     });
+  }
+
+  localizeAppointmentSummary() {
+    if (!document.querySelectorAll || !document.createTreeWalker || !window.NodeFilter) {
+      return;
+    }
+
+    document.querySelectorAll(SUMMARY_CONTAINER_SELECTOR).forEach((container) => {
+      const walker = document.createTreeWalker(container, window.NodeFilter.SHOW_TEXT);
+      let node = walker.nextNode();
+      while (node) {
+        const localized = String(node.nodeValue || '').replace(
+          /\b(\d{4}-\d{2}-\d{2})\b/g,
+          (date) => this.formatGregorianDate(date) || date
+        );
+        if (localized !== node.nodeValue) {
+          node.nodeValue = localized;
+        }
+        node = walker.nextNode();
+      }
+    });
+  }
+
+  formatGregorianDate(value) {
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || ''));
+    if (!match) {
+      return '';
+    }
+
+    const gregorian = { year: +match[1], month: +match[2], day: +match[3] };
+    const parsedDate = new Date(Date.UTC(gregorian.year, gregorian.month - 1, gregorian.day));
+    if (
+      gregorian.year < 1 ||
+      gregorian.month < 1 ||
+      gregorian.month > 12 ||
+      gregorian.day < 1 ||
+      gregorian.day > 31 ||
+      parsedDate.getUTCFullYear() !== gregorian.year ||
+      parsedDate.getUTCMonth() !== gregorian.month - 1 ||
+      parsedDate.getUTCDate() !== gregorian.day
+    ) {
+      return '';
+    }
+
+    let jalali;
+    try {
+      jalali = window.WpPdJalaliDate.toJalaali(gregorian.year, gregorian.month, gregorian.day);
+    } catch (error) {
+      return '';
+    }
+
+    const month = this.jalaliMonthNames[jalali.jm - 1];
+    return month
+      ? this.toPersianDigits(jalali.jd + ' ' + month + ' ' + jalali.jy)
+      : '';
   }
 
   getGregorianCellDate(cell) {
@@ -401,7 +529,15 @@ class WpPdBooklyProServicesForm {
 }
 
 window.WpPdBooklyProServicesForm = WpPdBooklyProServicesForm;
-const bootBooklyProServicesForm = () => new WpPdBooklyProServicesForm().boot();
+let booted = false;
+const bootBooklyProServicesForm = () => {
+  // Keep a second copy of this script from booting a competing instance.
+  if (booted) {
+    return;
+  }
+  booted = true;
+  new WpPdBooklyProServicesForm().boot();
+};
 if (document.readyState === 'loading') {
   window.addEventListener('DOMContentLoaded', bootBooklyProServicesForm);
 } else {

@@ -26,6 +26,7 @@ function loadAdapter() {
           monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           firstDay: 6,
         },
+        moment_format_date: 'D MMMM YYYY',
         l10n: { date: 'Date' },
       },
       WpPdBooklyProServicesFormSettings: {
@@ -189,6 +190,124 @@ test('detects the modern services-form calendar title after a service is selecte
   assert.equal(selectedTitle, title);
 });
 
+test('detects the modern search-form calendar title after search results load', () => {
+  const { adapter, context } = loadAdapter();
+  const title = {};
+  let selectedTitle = null;
+  context.document.querySelectorAll = (selector) => {
+    return selector.includes('.bookly-search-form-container .bookly-calendar-middle-button-mark')
+      ? [title]
+      : [];
+  };
+  adapter.prepareCalendarTitle = (calendarTitle) => {
+    selectedTitle = calendarTitle;
+    return null;
+  };
+
+  adapter.process();
+
+  assert.equal(selectedTitle, title);
+});
+
+test('localizes a Gregorian date in the Bookly search-form appointment summary', () => {
+  const { adapter, context } = loadAdapter();
+  const summary = {};
+  const dateText = { nodeValue: '2026-11-25' };
+  let visited = false;
+  context.document.body = {};
+  context.window.NodeFilter = { SHOW_TEXT: 4 };
+  context.document.querySelectorAll = (selector) => {
+    return selector.includes('.bookly-search-form-container')
+      ? [summary]
+      : [];
+  };
+  context.document.createTreeWalker = () => ({
+    nextNode() {
+      if (visited) {
+        return null;
+      }
+      visited = true;
+      return dateText;
+    },
+  });
+
+  adapter.boot();
+
+  assert.equal(context.window.BooklyL10nModernBookingForm.moment_format_date, 'YYYY-MM-DD');
+  assert.equal(dateText.nodeValue, '۴ آذر ۱۴۰۵');
+});
+
+test('localizes a Gregorian date in the Bookly appointment modal body outside the form container', () => {
+  const { adapter, context } = loadAdapter();
+  const formContainer = {};
+  const modal = {};
+  const dateText = { nodeValue: '2026-11-23' };
+  let modalPresent = false;
+  let mutationCallback;
+  context.document.body = {};
+  context.window.NodeFilter = { SHOW_TEXT: 4 };
+  context.MutationObserver = class {
+    constructor(callback) {
+      mutationCallback = callback;
+    }
+
+    observe() {}
+  };
+  context.window.MutationObserver = context.MutationObserver;
+  context.document.querySelectorAll = (selector) => {
+    return selector.includes('.bookly-modal-body-mark') && modalPresent
+      ? [formContainer, modal]
+      : [formContainer];
+  };
+  context.document.createTreeWalker = (root) => {
+    let visited = false;
+    return {
+      nextNode() {
+        if (root !== modal || visited) {
+          return null;
+        }
+        visited = true;
+        return dateText;
+      },
+    };
+  };
+
+  adapter.boot();
+  modalPresent = true;
+  mutationCallback();
+
+  assert.equal(dateText.nodeValue, '۲ آذر ۱۴۰۵');
+});
+
+test('localizes a Gregorian date in the Bookly modal header summary', () => {
+  const { adapter, context } = loadAdapter();
+  const header = {};
+  const dateText = { nodeValue: '2026-11-23' };
+  let scannedHeader = false;
+  context.document.body = {};
+  context.window.NodeFilter = { SHOW_TEXT: 4 };
+  context.document.querySelectorAll = (selector) => {
+    if (!selector.includes('.bookly-modal-header-mark')) {
+      return [];
+    }
+    scannedHeader = true;
+    return [header];
+  };
+  context.document.createTreeWalker = () => ({
+    nextNode() {
+      if (dateText.nodeValue.includes('آذر')) {
+        return null;
+      }
+      return dateText;
+    },
+  });
+
+  adapter.boot();
+
+  assert.equal(scannedHeader, true);
+  assert.equal(dateText.nodeValue, '۲ آذر ۱۴۰۵');
+});
+
 test('localizes the modern services-form title and grid while retaining Gregorian cell dates', () => {
   const { adapter } = loadAdapter();
   const titleLabel = { textContent: 'Nov 2026' };
@@ -251,4 +370,103 @@ test('selects a Jalali-labelled services-form cell using its retained Gregorian 
 
   assert.equal(selected, true);
   assert.equal(clicked, true);
+});
+
+test('detects the modern staff-form and tags-form calendar titles', () => {
+  const { adapter, context } = loadAdapter();
+  const selectorSeen = [];
+  let selectedTitle = null;
+  context.document.querySelectorAll = (selector) => {
+    selectorSeen.push(selector);
+    return selector.includes('.bookly-calendar-middle-button-mark') ? [{}] : [];
+  };
+  adapter.prepareCalendarTitle = (calendarTitle) => {
+    selectedTitle = calendarTitle;
+    return null;
+  };
+
+  adapter.process();
+
+  assert.equal(selectorSeen[0].includes('.bookly-staff-form-container .bookly-calendar-middle-button-mark'), true);
+  assert.equal(selectorSeen[0].includes('.bookly-tags-form-container .bookly-calendar-middle-button-mark'), true);
+  assert.ok(selectedTitle);
+});
+
+test('adopts an existing picker input instead of stacking a second one on a calendar', () => {
+  const { adapter, context } = loadAdapter();
+  const existingInput = {
+    value: '۱۴۰۵-۰۹-۰۱',
+    style: {},
+    classList: { contains: (name) => name === 'wppd-bookly-pro-services-form-date' },
+  };
+  let appended = 0;
+  const parent = {
+    children: [existingInput],
+    style: {},
+    scrollLeft: 0,
+    scrollTop: 0,
+    getBoundingClientRect: () => ({ left: 0, top: 0, width: 40, height: 20 }),
+    querySelector: () => ({}),
+    appendChild: () => { appended += 1; },
+  };
+  const title = {
+    parentElement: parent,
+    getBoundingClientRect: () => ({ left: 0, top: 0, width: 40, height: 20 }),
+  };
+  context.window.getComputedStyle = () => ({ position: 'relative' });
+  context.document.createElement = () => { throw new Error('should not create a second input'); };
+
+  const entry = adapter.prepareCalendarTitle(title);
+
+  assert.equal(entry.input, existingInput);
+  assert.equal(appended, 0);
+  assert.equal(existingInput.value, '۱۴۰۵-۰۹-۰۱');
+});
+
+test('reuses one picker when two title marks share a calendar', () => {
+  const { adapter, context } = loadAdapter();
+  const calendar = { querySelector: () => ({}) };
+  let appended = 0;
+  const makeHeader = () => {
+    const header = {
+      children: [],
+      style: {},
+      scrollLeft: 0,
+      scrollTop: 0,
+      parentElement: calendar,
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 40, height: 20 }),
+      querySelector: () => null,
+      appendChild: (input) => { appended += 1; header.children.push(input); },
+    };
+    return header;
+  };
+  const makeTitle = (header) => ({
+    parentElement: header,
+    getBoundingClientRect: () => ({ left: 0, top: 0, width: 40, height: 20 }),
+  });
+  context.window.getComputedStyle = () => ({ position: 'relative' });
+  context.document.createElement = () => ({ style: {}, setAttribute() {}, addEventListener() {}, value: '' });
+
+  const first = adapter.prepareCalendarTitle(makeTitle(makeHeader()));
+  const second = adapter.prepareCalendarTitle(makeTitle(makeHeader()));
+
+  assert.equal(first, second);
+  assert.equal(appended, 1);
+});
+
+test('updates the existing text node so Bookly month re-renders stay localizable', () => {
+  const { adapter } = loadAdapter();
+  const textNode = { nodeType: 3, nodeValue: 'Nov 2026' };
+  const label = {
+    nodeType: 1,
+    childNodes: [textNode],
+    get textContent() { return textNode.nodeValue; },
+  };
+  const title = { dataset: {}, querySelector: () => label };
+  const calendar = { querySelector: () => ({ children: [] }) };
+
+  adapter.localizeCalendar({ title, calendar });
+
+  assert.equal(label.childNodes[0], textNode);
+  assert.equal(textNode.nodeValue, 'آبان ۱۴۰۵');
 });

@@ -13,6 +13,9 @@
   text-align: start;
 }
 
-.bookly-services-form-container .wppd-bookly-pro-services-form-date {
+.bookly-services-form-container .wppd-bookly-pro-services-form-date,
+.bookly-search-form-container .wppd-bookly-pro-services-form-date,
+.bookly-staff-form-container .wppd-bookly-pro-services-form-date,
+.bookly-tags-form-container .wppd-bookly-pro-services-form-date {
   cursor: pointer;
 }
