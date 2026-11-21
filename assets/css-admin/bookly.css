@@ -12,3 +12,7 @@
   color: #b32d2e;
   text-align: start;
 }
+
+.bookly-services-form-container .wppd-bookly-pro-services-form-date {
+  cursor: pointer;
+}

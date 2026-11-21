@@ -1,4 +1,9 @@
-'use strict';
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/*!**********************************************!*\
+  !*** ./assets/js-src/bookly-pro-calendar.js ***!
+  \**********************************************/
+
 
 class WpPdBooklyProCalendar {
   constructor() {
@@ -247,3 +252,6 @@ if (document.readyState === 'loading') {
 } else {
   bootBooklyProCalendar();
 }
+
+/******/ })()
+;

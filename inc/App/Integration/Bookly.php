@@ -1,6 +1,6 @@
 <?php
 /**
- * Adds Jalali date selection to Bookly Free and the optional Pro frontend calendar.
+ * Adds Jalali date selection to Bookly Free and optional Pro calendar surfaces.
  *
  * @package WP-Parsidate
  * @subpackage Plugins/Bookly
@@ -23,11 +23,12 @@ class Bookly extends Addon {
     $hasFreeBookingForm = wp_script_is( 'bookly-bookly.min.js', 'enqueued' );
     $hasProCalendar     = wp_script_is( 'bookly-frontend-calendar.js', 'enqueued' );
     $proIsActive        = class_exists( 'Bookly\Lib\Config' ) && \Bookly\Lib\Config::proActive();
+    $hasProServicesForm = wp_script_is( 'bookly-services-form.js', 'enqueued' ) && $proIsActive;
 
     if (
       is_admin() ||
       ! $this->getSetting( 'jalali_booking_calendar', true ) ||
-      ( ! $hasFreeBookingForm && ( ! $hasProCalendar || ! $proIsActive ) )
+      ( ! $hasFreeBookingForm && ( ! $hasProCalendar || ! $proIsActive ) && ! $hasProServicesForm )
     ) {
       return;
     }
@@ -90,6 +91,29 @@ class Bookly extends Addon {
         [ 'in_footer' => true ]
       );
       wp_print_styles( WP_PARSI_KEY . '_jalali_datepicker' );
+    }
+
+    if ( $hasProServicesForm ) {
+      $servicesScriptHandle = WP_PARSI_KEY . '_bookly_pro_services_form_jalali';
+      wp_enqueue_script(
+        $servicesScriptHandle,
+        Assets::url( "js/bookly-pro-services-form$debugName.js" ),
+        [ 'bookly-modern-booking-form.js', 'bookly-services-form.js', $engineHandle, $datepickerHandle ],
+        $pluginVersion,
+        [ 'in_footer' => true ]
+      );
+      wp_enqueue_style(
+        $servicesScriptHandle,
+        Assets::url( 'css-admin/bookly.css' ),
+        [ WP_PARSI_KEY . '_jalali_datepicker' ],
+        $pluginVersion
+      );
+      wp_print_styles( $servicesScriptHandle );
+      wp_print_styles( WP_PARSI_KEY . '_jalali_datepicker' );
+      wp_localize_script( $servicesScriptHandle, 'WpPdBooklyProServicesFormSettings', [
+        'months'   => array_values( $months ),
+        'firstDay' => (int) get_option( 'start_of_week', 0 ),
+      ] );
     }
   }
 
@@ -160,7 +184,7 @@ class Bookly extends Addon {
         'jalali_booking_calendar' => [
           'id'       => 'jalali_booking_calendar',
           'title'    => esc_html__( 'Jalali booking and admin calendar', 'wp-parsidate' ),
-          'desc'     => esc_html__( 'Use Jalali date selection in the Bookly Free booking form, admin calendar, and optional Pro frontend calendar. Display appointment dates in Jalali while Bookly continues to receive Gregorian dates.', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Use Jalali date selection in the Bookly Free booking form, admin calendar, and optional Pro calendars and services form. Bookly continues to receive Gregorian dates.', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => true,
           'sanitize' => 'bool',
@@ -177,7 +201,7 @@ class Bookly extends Addon {
     return [
       'id'               => $this->addonID,
       'title'            => esc_html__( 'Bookly', 'wp-parsidate' ),
-      'desc'             => esc_html__( 'Jalali date selection for the Bookly Free booking form and admin calendar, with optional Pro frontend calendar support', 'wp-parsidate' ),
+      'desc'             => esc_html__( 'Jalali date selection for the Bookly Free booking form and admin calendar, with optional Pro calendar and services-form support', 'wp-parsidate' ),
       'force_enable'     => false,
       'icon'             => $icon,
       'image_link'       => 'https://wordpress.org/plugins/bookly-responsive-appointment-booking-tool/',
