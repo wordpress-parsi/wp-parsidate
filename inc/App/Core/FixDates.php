@@ -20,7 +20,6 @@ class FixDates {
       add_filter( 'the_time', [ $this, 'fixPostTime' ], 10, 2 );
       add_filter( 'get_the_time', [ $this, 'fixPostTime' ], 10, 3 );
 
-      add_filter( 'the_date', [ $this, 'fixPostDate' ], 10, 2 );
       add_filter( 'get_the_date', [ $this, 'fixPostDate' ], 100, 3 );
 
       add_filter( 'get_the_modified_date', [ $this, 'fixModifiedDate' ], 10, 3 );
@@ -205,14 +204,14 @@ class FixDates {
    */
   public function fixModifiedDate( $time, $format, $post ): string {
     if ( $post === null ) {
-      return $time;
+      return (string) $time;
     }
 
     if ( 'c' === $format ) {
       return gmdate( $format, strtotime( $post->post_modified ) );
     }
 
-    return $time;
+    return (string) $time;
   }
 
   /**
@@ -220,6 +219,7 @@ class FixDates {
    *
    * @param string $time Post time
    * @param string $format Date format
+   * @param \WP_Post|int|null $post Post object or post ID.
    *
    * @return          string Formatted date
    */
@@ -231,7 +231,7 @@ class FixDates {
     }
 
     if ( empty( $post ) ) {
-      return $time;
+      return (string) $time;
     }
 
     if ( empty( $format ) ) {
@@ -242,7 +242,7 @@ class FixDates {
       return gmdate( $format, strtotime( $post->post_date ) );
     }
 
-    return $this->formatDate( $format, $post->post_date, $time );
+    return $this->formatDate( $format, $post->post_date, (string) $time );
   }
 
   /**
@@ -250,6 +250,7 @@ class FixDates {
    *
    * @param string $time Post time
    * @param string $format Date format
+   * @param \WP_Post|int|null $post Post object or post ID.
    *
    * @return string Formatted date
    */
@@ -262,10 +263,10 @@ class FixDates {
 
     // It seems some plugin like acf does not exist $post.
     if ( ! $post ) {
-      return $time;
+      return (string) $time;
     }
     if ( function_exists( 'pll_current_language' ) && pll_current_language() !== "fa" ) {
-      return $time;
+      return (string) $time;
     }
     if ( empty( $format ) ) {
       $format = (string) get_option( 'date_format', 'F j, Y' );
@@ -275,7 +276,7 @@ class FixDates {
       return gmdate( $format, strtotime( $post->post_date ) );
     }
 
-    return $this->formatDate( $format, gmdate( 'Y-m-d H:i:s', strtotime( $post->post_date ) ), $time );
+    return $this->formatDate( $format, gmdate( 'Y-m-d H:i:s', strtotime( $post->post_date ) ), (string) $time );
   }
 
   /**

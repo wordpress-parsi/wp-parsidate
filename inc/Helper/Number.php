@@ -11,13 +11,13 @@ class Number {
    * restored byte-for-byte by TextProtector, so media URLs and inline code
    * keep working. Plain text is converted directly.
    *
-   * @param string $content
+   * @param ?string $content
    *
    * @return string Fixed number
    */
-  public static function fixNumber( string $content ): string {
-    if ( $content === '' ) {
-      return $content;
+  public static function fixNumber( ?string $content ): string {
+    if ( empty( $content ) ) {
+      return '';
     }
 
     // Fast bailout: no ASCII digits, nothing to convert
