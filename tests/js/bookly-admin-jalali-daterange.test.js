@@ -235,6 +235,63 @@ test('does not overwrite the field while the Jalali picker is open', () => {
   assert.equal(input.value, '1405-09-10 - 1405-09-15');
 });
 
+test('pushes a single Jalali date back as Gregorian for the appointment dialog', () => {
+  const engineSource = fs.readFileSync(path.join(pluginRoot, 'assets/js-admin/jalali-date.js'), 'utf8');
+  const engineContext = { window: {} };
+  vm.runInNewContext(engineSource, engineContext);
+  const adapterSource = fs.readFileSync(
+    path.join(pluginRoot, 'assets/js-src/bookly-admin-jalali-daterange.js'),
+    'utf8'
+  );
+  const context = {
+    window: {
+      WpPdJalaliDate: engineContext.window.WpPdJalaliDate,
+      WpPdBooklyAdminJalaliDaterange: {
+        months: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+        separator: ' - ',
+      },
+      jQuery() {
+        return { trigger() {} };
+      },
+      addEventListener() {},
+      console,
+    },
+    document: { readyState: 'loading', addEventListener() {}, body: {}, querySelectorAll() { return []; } },
+    console,
+  };
+  vm.createContext(context);
+  vm.runInContext(
+    adapterSource + '\nglobalThis.testAdapter = new WpPdBooklyAdminJalaliDaterange();',
+    context
+  );
+  const adapter = context.testAdapter;
+
+  const calls = [];
+  const picker = {
+    singleDatePicker: true,
+    startDate: { clone: () => ({ format: () => '2026-11-23' }) },
+    endDate: { clone: () => ({ format: () => '2026-11-23' }) },
+    setStartDate(date) { calls.push(['setStartDate', date]); },
+    setEndDate(date) { calls.push(['setEndDate', date]); },
+    callback() {},
+  };
+  const entry = {
+    single: true,
+    picker,
+    element: { getAttribute() { return ''; } },
+    overlay: { value: '۱۴۰۵-۰۹-۰۲', style: {} },
+  };
+  adapter.refreshText = () => {};
+  adapter.apply(entry);
+
+  assert.equal(calls.length, 2);
+  assert.equal(calls[0][0], 'setStartDate');
+  assert.equal(calls[0][1].getFullYear(), 2026);
+  assert.equal(calls[0][1].getMonth(), 10);
+  assert.equal(calls[0][1].getDate(), 23);
+  assert.deepEqual(calls[1], calls[0].map((value, i) => i === 0 ? 'setEndDate' : value));
+});
+
 test('leaves the trigger untouched when it is not a date range', () => {
   const { calendar, context } = loadRangeCalendar();
   const textNode = { nodeType: 3, nodeValue: 'Page appearance' };
