@@ -37,6 +37,10 @@ function loadAdapter() {
       requestAnimationFrame(callback) {
         callback();
       },
+      setTimeout(callback) {
+        callback();
+      },
+      clearTimeout() {},
       addEventListener() {},
       console,
     },
