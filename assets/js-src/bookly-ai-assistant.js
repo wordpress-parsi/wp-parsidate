@@ -24,6 +24,17 @@ class WpPdBooklyAiAssistant {
   }
 
   /**
+   * Called at script execution time, before DOMContentLoaded. Bookly's
+   * shortcode template calls showForm() from a DOMContentLoaded handler that
+   * is registered in the body; an adapter booting on the same event would
+   * patch too late. The adapter is printed in the footer, after Bookly's own
+   * script (it is a dependency), so patching here reaches the real call.
+   */
+  patchEarly() {
+    this.patchShowForm();
+  }
+
+  /**
    * The chat's payment card formats dates through `moment_format_date`, which
    * Bookly builds from the WordPress date format (e.g. "D MMMM YYYY"). Force
    * an ISO date there so the visible value is matchable by localizeText(), the
@@ -139,6 +150,12 @@ class WpPdBooklyAiAssistant {
 }
 
 window.WpPdBooklyAiAssistant = WpPdBooklyAiAssistant;
+
+// Patch showForm now, at footer script execution time (before the body
+// template's DOMContentLoaded handler calls it), then boot the DOM scanner on
+// the normal event. patchShowForm() is idempotent, so boot() can call it too.
+new WpPdBooklyAiAssistant().patchEarly();
+
 const bootBooklyAiAssistant = () => new WpPdBooklyAiAssistant().boot();
 if (document.readyState === 'loading') {
   window.addEventListener('DOMContentLoaded', bootBooklyAiAssistant);

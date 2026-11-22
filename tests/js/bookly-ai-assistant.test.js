@@ -45,25 +45,29 @@ function loadAdapter(assistant = null) {
   return context.testAdapter;
 }
 
-test('forces an ISO date format on the AI showForm config before mount', () => {
+test('patches showForm at script execution, before Bookly DOMContentLoaded mount', () => {
   let mountedConfig;
   const assistant = {
     showForm(id, config) {
       mountedConfig = config;
     },
   };
-  const adapter = loadAdapter(assistant);
+  // Loading the adapter runs patchEarly() at footer script execution time.
+  loadAdapter(assistant);
 
-  adapter.patchShowForm();
+  // Simulate Bookly's body template DOMContentLoaded handler calling showForm.
   assistant.showForm('widget', { moment_format_date: 'D MMMM YYYY', mode: 'embedded' });
 
   assert.equal(mountedConfig.moment_format_date, 'YYYY-MM-DD');
   assert.equal(mountedConfig.mode, 'embedded');
+});
 
-  // Idempotent: boot/patch twice must not wrap the already patched function.
+test('showForm patch is idempotent', () => {
+  const assistant = { showForm() {} };
+  const adapter = loadAdapter(assistant);
+  const patched = assistant.showForm;
   adapter.patchShowForm();
-  assistant.showForm('widget', { moment_format_date: 'D MMMM YYYY' });
-  assert.equal(mountedConfig.moment_format_date, 'YYYY-MM-DD');
+  assert.equal(assistant.showForm, patched);
 });
 
 test('localizes Gregorian dates in AI chat text while keeping time text', () => {
