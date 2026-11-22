@@ -28,6 +28,10 @@ class NumberTest extends WP_UnitTestCase {
     $this->assertSame( 'سال ۱۴۰۳', Number::fixNumber( 'سال 1403' ) );
   }
 
+  public function test_fix_number_handles_null_safely(): void {
+    $this->assertSame( '', Number::fixNumber( null ) );
+  }
+
   public function test_fix_number_keeps_html_attributes_untouched(): void {
     $html = '<a href="https://example.com/page/12" class="c1">12</a>';
 
