@@ -68,10 +68,15 @@ class WpPdBooklyJalaliCalendar {
       const nativeCalendar = input.parentElement &&
         input.parentElement.querySelector('.bookly-js-datepicker-calendar');
       const calendarContainer = nativeCalendar && nativeCalendar.parentElement;
-      if (!calendarContainer) {
+      // Bookly can render the service date as a dropdown instead of the inline
+      // calendar. There is no calendar container in that mode, so fall back to
+      // the dropdown control and keep feeding Bookly Gregorian dates.
+      const dropdown = calendarContainer ? null : this.findDateDropdown(input);
+      if (!calendarContainer && !dropdown) {
         return;
       }
 
+      const anchor = dropdown && dropdown !== input ? dropdown : input;
       const displayInput = this.createDateInput(input);
       const label = input.id && document.querySelector('label[for="' + this.escapeSelector(input.id) + '"]');
       if (label) {
@@ -79,15 +84,48 @@ class WpPdBooklyJalaliCalendar {
       }
 
       input.style.display = 'none';
-      input.parentNode.insertBefore(displayInput, input.nextSibling);
+      if (dropdown && dropdown !== input) {
+        dropdown.style.display = 'none';
+      }
+      anchor.parentNode.insertBefore(displayInput, anchor.nextSibling);
       const status = this.createStatusElement(displayInput);
-      nativeCalendar.classList.add('wppd-bookly-native-calendar');
+      if (nativeCalendar) {
+        nativeCalendar.classList.add('wppd-bookly-native-calendar');
+      }
 
-      instance = this.createInstance(input, nativeCalendar, displayInput, status, 'service');
+      instance = this.createInstance(
+        input,
+        nativeCalendar || dropdown,
+        displayInput,
+        status,
+        'service',
+        dropdown ? 'dropdown' : 'calendar'
+      );
       this.instances.set(input, instance);
     }
 
-    this.hideNativeCalendar(instance.nativeCalendar);
+    if (instance.mode === 'calendar') {
+      this.hideNativeCalendar(instance.nativeCalendar);
+    }
+  }
+
+  findDateDropdown(input) {
+    if (!input.parentNode) {
+      return null;
+    }
+
+    if (input.tagName === 'SELECT') {
+      return input;
+    }
+
+    const root = (input.closest && (
+      input.closest('.bookly-js-available-date') ||
+      input.closest('.bookly-form-group')
+    )) || input.parentElement;
+
+    // Bookly's dropdown date control is either a select next to the field or
+    // the field itself; both are written through their own change path.
+    return (root && root.querySelector('select')) || input;
   }
 
   prepareTimeCalendar(container) {
@@ -137,12 +175,13 @@ class WpPdBooklyJalaliCalendar {
     return status;
   }
 
-  createInstance(source, nativeCalendar, displayInput, status, type) {
+  createInstance(source, nativeCalendar, displayInput, status, type, mode) {
     const initialDate = this.initialDate(source);
     const initialGregorian = initialDate &&
       this.toGregorianDate(initialDate.jy, initialDate.jm, initialDate.jd);
     const instance = {
       type,
+      mode: mode || 'calendar',
       source,
       nativeCalendar,
       displayInput,
@@ -221,6 +260,10 @@ class WpPdBooklyJalaliCalendar {
   }
 
   async selectNativeDate(instance, target) {
+    if (instance.mode === 'dropdown') {
+      return this.selectDropdownDate(instance, target);
+    }
+
     if (instance.type === 'service') {
       await new Promise((resolve) => window.setTimeout(resolve, 0));
       instance.source.dispatchEvent(new Event('focus'));
@@ -266,6 +309,66 @@ class WpPdBooklyJalaliCalendar {
     }
 
     return false;
+  }
+
+  selectDropdownDate(instance, target) {
+    const dropdown = instance.nativeCalendar;
+    const iso = this.formatIso(target.gy, target.gm, target.gd);
+
+    if (dropdown.tagName === 'SELECT') {
+      const option = Array.from(dropdown.options).find((item) => {
+        return this.matchIsoDate(item.value) === iso ||
+          this.matchIsoDate(item.getAttribute('data-value')) === iso ||
+          this.matchIsoDate(item.textContent) === iso;
+      });
+
+      if (!option) {
+        return false;
+      }
+
+      dropdown.value = option.value;
+      if (dropdown.value !== option.value) {
+        return false;
+      }
+    } else {
+      dropdown.setAttribute('data-value', iso);
+      dropdown.value = this.formatGregorian(target);
+    }
+
+    this.dispatchDateChange(dropdown);
+    return true;
+  }
+
+  formatGregorian(target) {
+    const picker = window.BooklyL10nGlobal && window.BooklyL10nGlobal.datePicker;
+    const format = picker && picker.format;
+    const months = picker && (picker.monthNames || picker.months);
+
+    if (!format || !months || typeof window.moment !== 'function') {
+      return this.formatIso(target.gy, target.gm, target.gd);
+    }
+
+    return window.moment(this.formatIso(target.gy, target.gm, target.gd), 'YYYY-MM-DD').format(format);
+  }
+
+  dispatchDateChange(control) {
+    if (window.jQuery && control.tagName !== 'SELECT') {
+      const $control = window.jQuery(control);
+      $control.data('value', control.getAttribute('data-value'));
+      $control.data('changed', true);
+    }
+
+    // Bookly's own form listens with native handlers, so jQuery's
+    // trigger('change') alone would not reach it.
+    if (control.tagName !== 'SELECT') {
+      control.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    control.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  matchIsoDate(value) {
+    const match = /(\d{4})-(\d{2})-(\d{2})/.exec(this.toEnglishDigits(value || ''));
+    return match ? match[1] + '-' + match[2] + '-' + match[3] : '';
   }
 
   findBooklyCalendarTitle(container) {

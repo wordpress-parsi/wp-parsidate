@@ -17,7 +17,13 @@ const CALENDAR_TITLE_SELECTOR = MODERN_FORM_CONTAINERS.map(
 ).join(', ');
 
 const SUMMARY_CONTAINER_SELECTOR = MODERN_FORM_CONTAINERS
-  .concat(['.bookly-modal-header-mark', '.bookly-modal-body-mark'])
+  .concat([
+    '.bookly-modal-header-mark',
+    '.bookly-modal-body-mark',
+    '.bookly-summary-service-datetime-mark',
+    '.bookly-summary-row-mark',
+    '.bookly-summary-mark',
+  ])
   .join(', ');
 
 // Bookly's Svelte components keep references to their text nodes. Replacing
@@ -87,19 +93,24 @@ class WpPdBooklyProServicesForm {
       return;
     }
 
-    const observer = new MutationObserver(() => {
-      if (this.scheduled) {
+    // `requestAnimationFrame` is throttled in background tabs, and a stalled
+    // frame used to leave `scheduled` stuck and stop every later pass.
+    let timer = null;
+    const schedule = () => {
+      if (timer) {
         return;
       }
 
-      this.scheduled = true;
-      window.requestAnimationFrame(() => {
-        this.scheduled = false;
+      timer = window.setTimeout(() => {
+        timer = null;
         this.process();
-      });
-    });
+      }, 0);
+    };
+    const observer = new MutationObserver(schedule);
 
     observer.observe(document.body, { childList: true, characterData: true, subtree: true });
+    window.addEventListener('focus', schedule);
+    document.addEventListener('visibilitychange', schedule);
   }
 
   process() {

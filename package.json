@@ -19,7 +19,7 @@
     "parsidate-woocommerce-compressed-css": "sass --watch --no-source-map assets/scss/woocommerce.scss:assets/css-admin/woocommerce.min.css --style compressed",
     "parsidate-calendar-wdiget-compressed-css": "sass --watch --no-source-map assets/scss/calendar-wdiget.scss:assets/css-admin/calendar-wdiget.min.css --style compressed",
     "parsidate-build-js": "webpack --config webpack.config.js",
-    "test:bookly": "node --test tests/js/bookly-jalali-calendar.test.js tests/js/bookly-admin-jalali-calendar.test.js tests/js/bookly-pro-calendar.test.js tests/js/bookly-pro-services-form.test.js"
+    "test:bookly": "node --test tests/js/bookly-jalali-calendar.test.js tests/js/bookly-admin-jalali-calendar.test.js tests/js/bookly-admin-jalali-daterange.test.js tests/js/bookly-pro-calendar.test.js tests/js/bookly-pro-services-form.test.js"
   },
   "devDependencies": {
     "extract-loader": "^4.0.3",

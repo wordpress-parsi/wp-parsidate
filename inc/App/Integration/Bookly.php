@@ -136,13 +136,14 @@ class Bookly extends Addon {
   }
 
   public function adminFooterAction(): void {
+    $hasCalendarJs  = wp_script_is( 'bookly-calendar.js', 'enqueued' );
+    $hasCardJs      = wp_script_is( 'bookly-appointment-card.js', 'enqueued' );
+    $hasDateRangeJs = wp_script_is( 'bookly-daterangepicker.js', 'enqueued' );
+
     if (
       is_network_admin() ||
       ! $this->getSetting( 'jalali_booking_calendar', true ) ||
-      (
-        ! wp_script_is( 'bookly-calendar.js', 'enqueued' ) &&
-        ! wp_script_is( 'bookly-appointment-card.js', 'enqueued' )
-      )
+      ( ! $hasCalendarJs && ! $hasCardJs && ! $hasDateRangeJs )
     ) {
       return;
     }
@@ -166,27 +167,52 @@ class Bookly extends Addon {
       );
     }
 
-    foreach ( [ 'bookly-calendar.js', 'bookly-appointment-card.js' ] as $booklyHandle ) {
-      if ( wp_script_is( $booklyHandle, 'enqueued' ) ) {
-        $dependencies[] = $booklyHandle;
-      }
-    }
-
-    wp_enqueue_script(
-      $scriptHandle,
-      Assets::url( "js/bookly-admin-jalali-calendar$debugName.js" ),
-      $dependencies,
-      $pluginVersion,
-      [ 'in_footer' => true ]
-    );
-
-    wp_print_styles( $pickerHandle );
-
     $months = Names::getMonths();
     array_shift( $months );
-    wp_localize_script( $scriptHandle, 'WpPdBooklyAdminJalali', [
-      'months' => array_values( $months ),
-    ] );
+
+    if ( $hasCalendarJs || $hasCardJs ) {
+      foreach ( [ 'bookly-calendar.js', 'bookly-appointment-card.js' ] as $booklyHandle ) {
+        if ( wp_script_is( $booklyHandle, 'enqueued' ) ) {
+          $dependencies[] = $booklyHandle;
+        }
+      }
+
+      wp_enqueue_script(
+        $scriptHandle,
+        Assets::url( "js/bookly-admin-jalali-calendar$debugName.js" ),
+        $dependencies,
+        $pluginVersion,
+        [ 'in_footer' => true ]
+      );
+
+      wp_localize_script( $scriptHandle, 'WpPdBooklyAdminJalali', [
+        'months' => array_values( $months ),
+      ] );
+    }
+
+    // Bookly's admin date filters and the appointment dialog date field are
+    // daterangepicker instances; they are presented in Jalali here while the
+    // values Bookly receives stay Gregorian.
+    if ( $hasDateRangeJs ) {
+      $rangeHandle = WP_PARSI_KEY . '_bookly_admin_jalali_daterange';
+
+      wp_enqueue_script(
+        $rangeHandle,
+        Assets::url( "js/bookly-admin-jalali-daterange$debugName.js" ),
+        [ 'jquery', $engineHandle, $pickerHandle, 'bookly-daterangepicker.js' ],
+        $pluginVersion,
+        [ 'in_footer' => true ]
+      );
+
+      wp_localize_script( $rangeHandle, 'WpPdBooklyAdminJalaliDaterange', [
+        'months'           => array_values( $months ),
+        'separator'        => ' - ',
+        'rangePlaceholder' => esc_html__( 'Jalali range: 1405-09-01 - 1405-09-15', 'wp-parsidate' ),
+        'datePlaceholder'  => esc_html__( 'Jalali date: 1405-09-01', 'wp-parsidate' ),
+      ] );
+    }
+
+    wp_print_styles( $pickerHandle );
   }
 
   public function addSectionSettings( $sections ): array {
