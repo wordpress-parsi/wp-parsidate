@@ -152,14 +152,15 @@ class Bookly extends Addon {
   }
 
   public function adminFooterAction(): void {
-    $hasCalendarJs  = wp_script_is( 'bookly-calendar.js', 'enqueued' );
-    $hasCardJs      = wp_script_is( 'bookly-appointment-card.js', 'enqueued' );
-    $hasDateRangeJs = wp_script_is( 'bookly-daterangepicker.js', 'enqueued' );
+    $hasCalendarJs    = wp_script_is( 'bookly-calendar.js', 'enqueued' );
+    $hasCardJs        = wp_script_is( 'bookly-appointment-card.js', 'enqueued' );
+    $hasDateRangeJs   = wp_script_is( 'bookly-daterangepicker.js', 'enqueued' );
+    $hasAppearanceJs  = wp_script_is( 'bookly-appearance.js', 'enqueued' );
 
     if (
       is_network_admin() ||
       ! $this->getSetting( 'jalali_booking_calendar', true ) ||
-      ( ! $hasCalendarJs && ! $hasCardJs && ! $hasDateRangeJs )
+      ( ! $hasCalendarJs && ! $hasCardJs && ! $hasDateRangeJs && ! $hasAppearanceJs )
     ) {
       return;
     }
@@ -185,6 +186,24 @@ class Bookly extends Addon {
 
     $months = Names::getMonths();
     array_shift( $months );
+
+    // The Appearance page's step-by-step preview is a static PHP mockup: its
+    // month/weekday labels already use date_i18n(), but day numbers come from
+    // PHP DateTime::format('j'). Localize the rendered day numbers only.
+    if ( $hasAppearanceJs ) {
+      $appearanceHandle = WP_PARSI_KEY . '_bookly_appearance_preview_jalali';
+      wp_enqueue_script(
+        $appearanceHandle,
+        Assets::url( "js/bookly-appearance-preview$debugName.js" ),
+        [ $engineHandle ],
+        $pluginVersion,
+        [ 'in_footer' => true ]
+      );
+      wp_localize_script( $appearanceHandle, 'WpPdBooklyAppearancePreviewSettings', [
+        'today' => current_time( 'Y-m-d' ),
+      ] );
+      wp_print_styles( $pickerHandle );
+    }
 
     if ( $hasCalendarJs || $hasCardJs ) {
       foreach ( [ 'bookly-calendar.js', 'bookly-appointment-card.js' ] as $booklyHandle ) {

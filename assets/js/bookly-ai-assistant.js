@@ -45,7 +45,7 @@ class WpPdBooklyAiAssistant {
       });
     });
 
-    observer.observe(document.body, { childList: true, characterData: true, subtree: true });
+    observer.observe(document.body, {childList: true, characterData: true, subtree: true});
   }
 
   process() {
