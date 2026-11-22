@@ -9,7 +9,6 @@
 // text nodes. Replacing textContent detaches those nodes and later chat
 // updates stop showing, so localize the existing text nodes in place.
 const AI_CONTAINER_SELECTOR = '.bookly-ai-assistant-app';
-const AI_MESSAGE_SELECTOR = '.bookly-ai-markdown';
 
 class WpPdBooklyAiAssistant {
   constructor() {
@@ -24,8 +23,32 @@ class WpPdBooklyAiAssistant {
       return;
     }
 
+    this.patchShowForm();
     this.process();
     this.observe();
+  }
+
+  /**
+   * The chat's payment card formats dates through `moment_format_date`, which
+   * Bookly builds from the WordPress date format (e.g. "D MMMM YYYY"). Force
+   * an ISO date there so the visible value is matchable by localizeText(), the
+   * same approach used by the admin and modern-form adapters.
+   */
+  patchShowForm() {
+    const assistant = window.BooklyAiAssistant;
+    if (!assistant || typeof assistant.showForm !== 'function' || assistant.showForm.__wppdPatched) {
+      return;
+    }
+
+    const original = assistant.showForm;
+    assistant.showForm = function (...args) {
+      const config = args[1];
+      if (config && typeof config === 'object') {
+        config.moment_format_date = 'YYYY-MM-DD';
+      }
+      return original.apply(this, args);
+    };
+    assistant.showForm.__wppdPatched = true;
   }
 
   observe() {
@@ -50,11 +73,7 @@ class WpPdBooklyAiAssistant {
 
   process() {
     const containers = Array.from(document.querySelectorAll(AI_CONTAINER_SELECTOR));
-    containers.forEach((container) => {
-      const messages = container.querySelectorAll(AI_MESSAGE_SELECTOR);
-      const targets = messages.length ? messages : [container];
-      targets.forEach((target) => this.localizeDates(target));
-    });
+    containers.forEach((container) => this.localizeDates(container));
   }
 
   localizeDates(root) {
