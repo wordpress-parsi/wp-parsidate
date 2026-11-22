@@ -22,6 +22,7 @@ class Bookly extends Addon {
     global $wp_locale;
     $hasFreeBookingForm = wp_script_is( 'bookly-bookly.min.js', 'enqueued' );
     $hasProCalendar     = wp_script_is( 'bookly-frontend-calendar.js', 'enqueued' );
+    $hasAiAssistant     = wp_script_is( 'bookly-ai-assistant.js', 'enqueued' );
     $proIsActive        = class_exists( 'Bookly\Lib\Config' ) && \Bookly\Lib\Config::proActive();
     $proFormHandles     = [ 'bookly-services-form.js', 'bookly-search-form.js', 'bookly-staff-form.js', 'bookly-tags-form.js' ];
     $enqueuedProForms   = [];
@@ -37,7 +38,7 @@ class Bookly extends Addon {
     if (
       is_admin() ||
       ! $this->getSetting( 'jalali_booking_calendar', true ) ||
-      ( ! $hasFreeBookingForm && ( ! $hasProCalendar || ! $proIsActive ) && ! $hasProModernForm )
+      ( ! $hasFreeBookingForm && ( ! $hasProCalendar || ! $proIsActive ) && ! $hasProModernForm && ! $hasAiAssistant )
     ) {
       return;
     }
@@ -127,6 +128,21 @@ class Bookly extends Addon {
       wp_localize_script( $servicesScriptHandle, 'WpPdBooklyProServicesFormSettings', [
         'months'   => array_values( $months ),
         'firstDay' => (int) get_option( 'start_of_week', 0 ),
+      ] );
+    }
+
+    if ( $hasAiAssistant ) {
+      $aiScriptHandle = WP_PARSI_KEY . '_bookly_ai_assistant_jalali';
+      wp_enqueue_script(
+        $aiScriptHandle,
+        Assets::url( "js/bookly-ai-assistant$debugName.js" ),
+        [ 'bookly-ai-assistant.js', $engineHandle ],
+        $pluginVersion,
+        [ 'in_footer' => true ]
+      );
+      wp_localize_script( $aiScriptHandle, 'WpPdBooklyAiAssistantSettings', [
+        'months' => array_values( $months ),
+        'format' => 'j F Y',
       ] );
     }
   }
