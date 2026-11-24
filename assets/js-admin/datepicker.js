@@ -64,7 +64,10 @@ function wppdMarkOnlyDateInputs(root) {
   for (i = 0; i < inputs.length; i++) {
     const el = inputs[i];
 
-    if (el.getAttribute('data-jdp-only-date') || el.getAttribute('data-jdp-only-datetime') || el.getAttribute('data-jdp-only-time') || wppdIsJetEngineDateTimeInput(el)) {
+    // Markers are empty attributes, so test presence, not truthiness: a value of
+    // "" would otherwise let this watcher add data-jdp-only-date to a field that
+    // already opted into data-jdp-only-datetime or data-jdp-only-time.
+    if (el.hasAttribute('data-jdp-only-date') || el.hasAttribute('data-jdp-only-datetime') || el.hasAttribute('data-jdp-only-time') || wppdIsJetEngineDateTimeInput(el)) {
       continue;
     }
 
