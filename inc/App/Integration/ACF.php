@@ -138,7 +138,7 @@ class ACF extends Addon {
       'settings_key' => $this->addonID,
       'settings'     => [
         'acf_start_grid'    => array(
-          'id'    => 'edd_start_grid',
+          'id'    => 'acf_start_grid',
           'title' => esc_html__( 'Advanced Custom Fields', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),

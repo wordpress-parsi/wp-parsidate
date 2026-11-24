@@ -72,7 +72,7 @@ class EDD extends Addon {
       'settings_key' => $this->addonID,
       'settings'     => [
         'edd_price_start_grid'    => array(
-          'id'    => 'edd_start_grid',
+          'id'    => 'edd_price_start_grid',
           'title' => esc_html__( 'Price', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),
@@ -94,7 +94,7 @@ class EDD extends Addon {
           'type' => 'endGrid',
         ),
         'edd_currency_start_grid' => array(
-          'id'    => 'edd_start_grid',
+          'id'    => 'edd_currency_start_grid',
           'title' => esc_html__( 'Currency', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),
