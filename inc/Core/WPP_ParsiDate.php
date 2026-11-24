@@ -156,7 +156,7 @@ class WPP_ParsiDate {
           break;
         //year
         case'L':
-          $out .= ( ( $date['year'] % 4 ) === 0 ) ? 1 : 0;
+          $out .= $this->IsPerLeapYear( $date['year'] ) ? 1 : 0;
           break;
         case'o':
         case'Y':

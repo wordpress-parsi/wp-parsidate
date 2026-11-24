@@ -111,4 +111,60 @@ class DateConversionTest extends WP_UnitTestCase {
   public function test_jalali_day_of_year_format_z( string $gregorian, string $expected ): void {
     $this->assertSame( $expected, (string) parsidate( 'z', $gregorian, 'eng' ) );
   }
+
+  /**
+   * @return array<string, array{string, string, string}>
+   */
+  public function format_token_provider(): array {
+    return array(
+      'twenty-four hour time' => array( 'H:i:s', '2024-03-20 15:04:05', '15:04:05' ),
+      'twelve hour padded'    => array( 'h:i A', '2024-03-20 15:04:05', '03:04 بعد از ظهر' ),
+      'twelve hour plain'     => array( 'g:i a', '2024-03-20 09:05:00', '9:05 ق.ظ' ),
+      'month and day numbers' => array( 'j/n/Y', '2024-03-20', '1/1/1403' ),
+      'month name'            => array( 'F', '2024-03-20', 'فروردین' ),
+      'month name in date'    => array( 'd F Y', '2024-03-20', '01 فروردین 1403' ),
+      'weekday name'          => array( 'l', '2024-03-20', 'چهارشنبه' ),
+      'weekday short letter'  => array( 'D', '2024-03-20', 'چ' ),
+      'week starts on Saturday' => array( 'w N', '2024-03-20', '4 5' ),
+      'days in Mehr'          => array( 't', '2024-09-22', '30' ),
+      'days in leap Esfand'   => array( 't', '2025-02-19', '30' ),
+      'days in common Esfand' => array( 't', '2024-03-19', '29' ),
+    );
+  }
+
+  /**
+   * Themes and plugins call parsidate() with their own formats, so the tokens
+   * most of them use need their own regression coverage.
+   *
+   * @dataProvider format_token_provider
+   */
+  public function test_parsidate_supports_date_and_time_tokens( string $format, string $gregorian, string $expected ): void {
+    $this->assertSame( $expected, parsidate( $format, $gregorian, 'eng' ) );
+  }
+
+  /**
+   * @return array<string, array{string, string}>
+   */
+  public function leap_flag_provider(): array {
+    return array(
+      'leap 1399'   => array( '2020-03-20', '1' ),
+      'leap 1403'   => array( '2024-03-20', '1' ),
+      'common 1400' => array( '2021-03-21', '0' ),
+      'common 1404' => array( '2025-03-21', '0' ),
+    );
+  }
+
+  /**
+   * The L token must follow the Jalali 33-year cycle; a "year % 4" check
+   * reported 1400 as leap and 1399/1403 as common.
+   *
+   * @dataProvider leap_flag_provider
+   */
+  public function test_format_l_reports_jalali_leap_years( string $gregorian, string $expected ): void {
+    $this->assertSame( $expected, parsidate( 'L', $gregorian, 'eng' ) );
+  }
+
+  public function test_gregdate_keeps_time_components(): void {
+    $this->assertSame( '2024-03-20 15:04:05', gregdate( 'Y-m-d H:i:s', '1403-01-01 15:04:05' ) );
+  }
 }
