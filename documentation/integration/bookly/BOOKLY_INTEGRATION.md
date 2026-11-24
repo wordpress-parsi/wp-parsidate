@@ -234,16 +234,10 @@ Potential display-only limitations:
 
 ## Testing
 
-Run the JavaScript test suite:
+Run the JavaScript test suite, which covers these adapters along with the shared Jalali engine and datepicker:
 
 ```bash
-npm run test:bookly
-```
-
-Or run all JS tests directly:
-
-```bash
-node --test tests/js/*.test.js
+npm run test:js
 ```
 
 Current coverage: 58 JS tests passing.

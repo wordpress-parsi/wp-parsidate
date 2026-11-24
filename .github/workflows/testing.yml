@@ -4,7 +4,12 @@ on:
   push:
     branches:
       - master
+    # Release tags run the suite as a pre-release check; nothing is published.
+    tags:
+      - '[0-9]+.[0-9]+*'
+      - 'v[0-9]+.[0-9]+*'
   pull_request:
+  workflow_dispatch:
 
 jobs:
   phpunit:
@@ -53,6 +58,28 @@ jobs:
 
       - name: Run tests
         run: phpunit --testdox
+
+  javascript:
+    name: JavaScript tests (node:test)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # node --test needs 21+ to expand the tests/js/*.test.js glob itself.
+          node-version: '22'
+
+      # The js-admin build-freshness test needs webpack and ts-loader to rebuild
+      # assets/js-admin from assets/js-admin-src.
+      - name: Install JavaScript dependencies
+        run: npm ci
+
+      - name: Run JavaScript tests
+        run: npm run test:js
 
   lint:
     name: PHP syntax check (PHP ${{ matrix.php-version }})
