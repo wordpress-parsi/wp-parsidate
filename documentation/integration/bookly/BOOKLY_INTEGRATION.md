@@ -98,13 +98,31 @@ Compiled assets are generated in `assets/js/`.
 - Loads the shared Jalali engine only when needed.
 - Localizes month names, placeholders, today, and display format values.
 - Gates Pro assets by `Bookly\Lib\Config::proActive()` and shortcode-specific script handles.
-- Exposes the `jalali_booking_calendar` setting.
+- Resolves each surface through its own toggle, grouped in the settings UI under **Frontend** and **Admin**.
 
-**Setting:**
+**Settings:**
 
-| Setting | Default | Description |
-|---|---|---|
-| `jalali_booking_calendar` | `true` | Enable Jalali date selection for Bookly Free booking form, admin calendar, and optional Pro surfaces. |
+Activating the add-on is the global switch. `Addon::registerWpFooterAction()` and `Addon::registerAdminEnqueueScriptsAction()` both require `isActivated()`, so deactivating Bookly in the add-ons list leaves every Bookly surface on Gregorian dates without any extra configuration. Each surface is then controlled independently:
+
+| Setting | Group | Default | Description |
+|---|---|---|---|
+| `jalali_booking_form` | Frontend | `true` | Bookly Free `[bookly-form]` service and time steps, including dropdown date mode. |
+| `jalali_pro_calendar` | Frontend | `true` | Pro `[bookly-calendar]`. Requires Bookly Pro. |
+| `jalali_pro_forms` | Frontend | `true` | Pro `[bookly-services-form]`, `[bookly-search-form]`, `[bookly-staff-form]`, `[bookly-tags-form]`. Requires Bookly Pro. |
+| `jalali_ai_assistant` | Frontend | `true` | Bookly AI assistant chat and payment card dates. Requires the Bookly Cloud AI assistant. |
+| `jalali_admin_calendar` | Admin | `true` | Admin calendar headers and appointment card dates. |
+| `jalali_admin_daterange` | Admin | `true` | Admin date-range filters and appointment create/edit dialog date fields. |
+| `jalali_appearance_preview` | Admin | `true` | Appearance step-by-step preview calendar day numbers. |
+
+Gate resolution is implemented once in `isSurfaceEnabled()`:
+
+```php
+private function isSurfaceEnabled( string $key ): bool {
+  return (bool) $this->getSetting( $key, true );
+}
+```
+
+The pre-split `jalali_booking_calendar` key is no longer read or registered; a value saved by an earlier version stays in the option row and is ignored.
 
 ### JavaScript Adapters
 
@@ -159,8 +177,8 @@ Compiled assets are generated in `assets/js/`.
 
 1. Install and activate **Bookly Free** (`bookly-responsive-appointment-booking-tool`).
 2. Optionally install and activate **Bookly Pro** (`bookly-addon-pro`).
-3. Configure **WP-Parsidate → Integration → Bookly**.
-4. Enable **Jalali booking and admin calendar**.
+3. Activate the **Bookly** add-on in **WP-Parsidate → Add-ons**. Activation switches the integration on; no separate master setting exists.
+4. Configure **WP-Parsidate → Integration → Bookly** and enable only the surfaces you need under the **Frontend** and **Admin** groups.
 5. Ensure Persian date settings are enabled for `date_i18n()`-based surfaces.
 
 ### Settings
@@ -169,7 +187,8 @@ Navigate to **WordPress Admin → WP-Parsidate → Integration → Bookly**.
 
 Recommended settings:
 
-- ✅ Jalali booking and admin calendar: **Enabled**
+- ✅ Bookly add-on: **Activated**
+- ✅ The individual Frontend/Admin surfaces you actually use: **Enabled**
 - ✅ Persian date setting: **Enabled**
 - ✅ WordPress locale `fa_IR` for sites expecting Persian labels and date formats
 
@@ -260,6 +279,11 @@ Update the relevant adapter when Bookly changes:
 6. AI assistant `showForm` signature or mount timing
 
 ## Changelog
+
+### 2026-11-24
+
+- Split the single integration switch into seven per-surface toggles grouped under Frontend and Admin in the settings page.
+- Removed the `jalali_booking_calendar` setting: activating the Bookly add-on is now the only global switch, and a previously saved value for that key is ignored.
 
 ### 2026-11-23
 

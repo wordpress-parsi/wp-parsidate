@@ -76,7 +76,7 @@ The functional groups below follow the comments in `inc/App/Integration/Integrat
 
 | Addon | ID | Settings | Behavior |
 |---|---|---|---|
-| [Bookly](bookly/BOOKLY_INTEGRATION.md) | `bookly` | `jalali_booking_calendar=true` | Jalali selection and presentation across Bookly Free, Pro, admin, AI assistant, and Appearance preview. See [Bookly guide](bookly/BOOKLY_INTEGRATION.md). |
+| [Bookly](bookly/BOOKLY_INTEGRATION.md) | `bookly` | per-surface toggles (`Frontend` / `Admin`) | Jalali selection and presentation across Bookly Free, Pro, admin, AI assistant, and Appearance preview. See [Bookly guide](bookly/BOOKLY_INTEGRATION.md). |
 | [Booked](booked/BOOKED_INTEGRATION.md) | `booked` | — | Suppresses global date conversion in Booked calendar, AJAX appointment, reminder, availability, and appointment-list functions. |
 
 ## Implementation patterns

@@ -18,13 +18,33 @@ class Bookly extends Addon {
   public string $addonID = 'bookly';
   public string $currentTab = 'integration';
 
+  /**
+   * Whether a Bookly surface should receive the Jalali adapter.
+   *
+   * Add-on activation is the global switch: deactivating Bookly in the add-ons
+   * list stops the footer and admin hooks from running at all. Each surface is
+   * then controlled by its own setting.
+   *
+   * @param string $key Per-surface setting key.
+   *
+   * @return bool
+   */
+  private function isSurfaceEnabled( string $key ): bool {
+    return (bool) $this->getSetting( $key, true );
+  }
+
   public function wpFooterAction(): void {
     global $wp_locale;
     $hasFreeBookingForm = wp_script_is( 'bookly-bookly.min.js', 'enqueued' );
     $hasProCalendar     = wp_script_is( 'bookly-frontend-calendar.js', 'enqueued' );
     $hasAiAssistant     = wp_script_is( 'bookly-ai-assistant.js', 'enqueued' );
     $proIsActive        = class_exists( 'Bookly\Lib\Config' ) && \Bookly\Lib\Config::proActive();
-    $proFormHandles     = [ 'bookly-services-form.js', 'bookly-search-form.js', 'bookly-staff-form.js', 'bookly-tags-form.js' ];
+    $proFormHandles     = [
+      'bookly-services-form.js',
+      'bookly-search-form.js',
+      'bookly-staff-form.js',
+      'bookly-tags-form.js'
+    ];
     $enqueuedProForms   = [];
     if ( $proIsActive ) {
       foreach ( $proFormHandles as $proFormHandle ) {
@@ -33,13 +53,14 @@ class Bookly extends Addon {
         }
       }
     }
-    $hasProModernForm   = ! empty( $enqueuedProForms );
+    $hasProModernForm = ! empty( $enqueuedProForms );
 
-    if (
-      is_admin() ||
-      ! $this->getSetting( 'jalali_booking_calendar', true ) ||
-      ( ! $hasFreeBookingForm && ( ! $hasProCalendar || ! $proIsActive ) && ! $hasProModernForm && ! $hasAiAssistant )
-    ) {
+    $showFreeForm    = $hasFreeBookingForm && $this->isSurfaceEnabled( 'jalali_booking_form' );
+    $showProCalendar = $hasProCalendar && $proIsActive && $this->isSurfaceEnabled( 'jalali_pro_calendar' );
+    $showProForms    = $hasProModernForm && $this->isSurfaceEnabled( 'jalali_pro_forms' );
+    $showAiAssistant = $hasAiAssistant && $this->isSurfaceEnabled( 'jalali_ai_assistant' );
+
+    if ( is_admin() || ( ! $showFreeForm && ! $showProCalendar && ! $showProForms && ! $showAiAssistant ) ) {
       return;
     }
 
@@ -64,7 +85,7 @@ class Bookly extends Addon {
       );
     }
 
-    if ( $hasFreeBookingForm ) {
+    if ( $showFreeForm ) {
       wp_enqueue_script(
         $scriptHandle,
         Assets::url( "js/bookly-jalali-calendar$debugName.js" ),
@@ -91,7 +112,7 @@ class Bookly extends Addon {
       ] );
     }
 
-    if ( $hasProCalendar && $proIsActive ) {
+    if ( $showProCalendar ) {
       $proScriptHandle = WP_PARSI_KEY . '_bookly_pro_calendar_jalali';
       wp_enqueue_script(
         $proScriptHandle,
@@ -103,7 +124,7 @@ class Bookly extends Addon {
       wp_print_styles( WP_PARSI_KEY . '_jalali_datepicker' );
     }
 
-    if ( $hasProModernForm ) {
+    if ( $showProForms ) {
       $servicesScriptHandle   = WP_PARSI_KEY . '_bookly_pro_services_form_jalali';
       $modernFormDependencies = array_merge(
         [ 'bookly-modern-booking-form.js', $engineHandle, $datepickerHandle ],
@@ -131,7 +152,7 @@ class Bookly extends Addon {
       ] );
     }
 
-    if ( $hasAiAssistant ) {
+    if ( $showAiAssistant ) {
       $aiScriptHandle = WP_PARSI_KEY . '_bookly_ai_assistant_jalali';
       wp_enqueue_script(
         $aiScriptHandle,
@@ -152,16 +173,16 @@ class Bookly extends Addon {
   }
 
   public function adminFooterAction(): void {
-    $hasCalendarJs    = wp_script_is( 'bookly-calendar.js', 'enqueued' );
-    $hasCardJs        = wp_script_is( 'bookly-appointment-card.js', 'enqueued' );
-    $hasDateRangeJs   = wp_script_is( 'bookly-daterangepicker.js', 'enqueued' );
-    $hasAppearanceJs  = wp_script_is( 'bookly-appearance.js', 'enqueued' );
+    $hasCalendarJs   = wp_script_is( 'bookly-calendar.js', 'enqueued' );
+    $hasCardJs       = wp_script_is( 'bookly-appointment-card.js', 'enqueued' );
+    $hasDateRangeJs  = wp_script_is( 'bookly-daterangepicker.js', 'enqueued' );
+    $hasAppearanceJs = wp_script_is( 'bookly-appearance.js', 'enqueued' );
 
-    if (
-      is_network_admin() ||
-      ! $this->getSetting( 'jalali_booking_calendar', true ) ||
-      ( ! $hasCalendarJs && ! $hasCardJs && ! $hasDateRangeJs && ! $hasAppearanceJs )
-    ) {
+    $showCalendar   = ( $hasCalendarJs || $hasCardJs ) && $this->isSurfaceEnabled( 'jalali_admin_calendar' );
+    $showDaterange  = $hasDateRangeJs && $this->isSurfaceEnabled( 'jalali_admin_daterange' );
+    $showAppearance = $hasAppearanceJs && $this->isSurfaceEnabled( 'jalali_appearance_preview' );
+
+    if ( is_network_admin() || ( ! $showCalendar && ! $showDaterange && ! $showAppearance ) ) {
       return;
     }
 
@@ -190,7 +211,7 @@ class Bookly extends Addon {
     // The Appearance page's step-by-step preview is a static PHP mockup: its
     // month/weekday labels already use date_i18n(), but day numbers come from
     // PHP DateTime::format('j'). Localize the rendered day numbers only.
-    if ( $hasAppearanceJs ) {
+    if ( $showAppearance ) {
       $appearanceHandle = WP_PARSI_KEY . '_bookly_appearance_preview_jalali';
       wp_enqueue_script(
         $appearanceHandle,
@@ -205,7 +226,7 @@ class Bookly extends Addon {
       wp_print_styles( $pickerHandle );
     }
 
-    if ( $hasCalendarJs || $hasCardJs ) {
+    if ( $showCalendar ) {
       foreach ( [ 'bookly-calendar.js', 'bookly-appointment-card.js' ] as $booklyHandle ) {
         if ( wp_script_is( $booklyHandle, 'enqueued' ) ) {
           $dependencies[] = $booklyHandle;
@@ -228,7 +249,7 @@ class Bookly extends Addon {
     // Bookly's admin date filters and the appointment dialog date field are
     // daterangepicker instances; they are presented in Jalali here while the
     // values Bookly receives stay Gregorian.
-    if ( $hasDateRangeJs ) {
+    if ( $showDaterange ) {
       $rangeHandle = WP_PARSI_KEY . '_bookly_admin_jalali_daterange';
 
       wp_enqueue_script(
@@ -253,16 +274,80 @@ class Bookly extends Addon {
   public function addSectionSettings( $sections ): array {
     $sections[ $this->addonID ] = [
       'title'        => esc_html__( 'Bookly', 'wp-parsidate' ),
-      'desc'         => esc_html__( 'ParsiDate integration for Bookly Free', 'wp-parsidate' ),
+      'desc'         => esc_html__( 'ParsiDate integration for Bookly Free and Pro.', 'wp-parsidate' ),
       'settings_key' => $this->addonID,
       'settings'     => [
-        'jalali_booking_calendar' => [
-          'id'       => 'jalali_booking_calendar',
-          'title'    => esc_html__( 'Jalali booking and admin calendar', 'wp-parsidate' ),
-          'desc'     => esc_html__( 'Use Jalali date selection in the Bookly Free booking form, admin calendar, and optional Pro calendars, services, search, staff, and tags forms. Bookly continues to receive Gregorian dates.', 'wp-parsidate' ),
+        'bookly_start_grid_frontend' => [
+          'id'    => 'bookly_start_grid_frontend',
+          'title' => esc_html__( 'Frontend', 'wp-parsidate' ),
+          'type'  => 'startGrid',
+        ],
+        'jalali_booking_form'        => [
+          'id'       => 'jalali_booking_form',
+          'title'    => esc_html__( 'Booking form', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Jalali date selection in the Bookly Free [bookly-form] service and time steps, including dropdown date mode.', 'wp-parsidate' ),
           'type'     => 'toggle',
           'default'  => true,
           'sanitize' => 'bool',
+        ],
+        'jalali_pro_calendar'        => [
+          'id'       => 'jalali_pro_calendar',
+          'title'    => esc_html__( 'Pro event calendar', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Jalali calendar titles, day headers and date selection in the Bookly Pro [bookly-calendar] shortcode. Requires Bookly Pro.', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => true,
+          'sanitize' => 'bool',
+        ],
+        'jalali_pro_forms'           => [
+          'id'       => 'jalali_pro_forms',
+          'title'    => esc_html__( 'Pro modern forms', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Jalali calendars and appointment summaries in the Bookly Pro services, search, staff and tags forms. Requires Bookly Pro.', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => true,
+          'sanitize' => 'bool',
+        ],
+        'jalali_ai_assistant'        => [
+          'id'       => 'jalali_ai_assistant',
+          'title'    => esc_html__( 'AI assistant dates', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Show chat and payment card dates in Jalali in the Bookly AI assistant widget. Requires the Bookly Cloud AI assistant.', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => true,
+          'sanitize' => 'bool',
+        ],
+        'bookly_end_grid_frontend'   => [
+          'type' => 'endGrid',
+        ],
+        'bookly_start_grid_admin'    => [
+          'id'    => 'bookly_start_grid_admin',
+          'title' => esc_html__( 'Admin', 'wp-parsidate' ),
+          'type'  => 'startGrid',
+        ],
+        'jalali_admin_calendar'      => [
+          'id'       => 'jalali_admin_calendar',
+          'title'    => esc_html__( 'Admin calendar', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Jalali month and weekday headers and localized appointment dates in the Bookly admin calendar and appointment card.', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => true,
+          'sanitize' => 'bool',
+        ],
+        'jalali_admin_daterange'     => [
+          'id'       => 'jalali_admin_daterange',
+          'title'    => esc_html__( 'Admin date-range filters', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Jalali display for Bookly admin date-range filters and the appointment create/edit dialog date fields.', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => true,
+          'sanitize' => 'bool',
+        ],
+        'jalali_appearance_preview'  => [
+          'id'       => 'jalali_appearance_preview',
+          'title'    => esc_html__( 'Appearance preview', 'wp-parsidate' ),
+          'desc'     => esc_html__( 'Jalali day numbers in the Bookly Appearance step-by-step preview calendar.', 'wp-parsidate' ),
+          'type'     => 'toggle',
+          'default'  => true,
+          'sanitize' => 'bool',
+        ],
+        'bookly_end_grid_admin'      => [
+          'type' => 'endGrid',
         ],
       ],
     ];
