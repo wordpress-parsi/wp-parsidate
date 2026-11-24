@@ -146,11 +146,22 @@ composer test
 
 The bootstrap uses `WP_TESTS_DIR` when set, otherwise `%TEMP%\wordpress-tests-lib` (`sys_get_temp_dir()`).
 
-Tests live in `tests/unit`. Every pull request runs them automatically on PHP 7.4 to 8.4 via GitHub Actions (`.github/workflows/testing.yml`).
+Tests live in `tests/unit` and cover the core plugin and every addon in `inc/App/Integration`. Every pull request runs them automatically on PHP 7.4 to 8.4 via GitHub Actions (`.github/workflows/testing.yml`).
 
-### Releasing to WordPress.org
+JavaScript tests (Bookly adapters, the Jalali engine, the shared datepicker) need Node 21+ for the test runner's glob support: `npm install` once, then `npm run test:js`.
 
-Pushing a version tag (for example `6.4`) triggers `.github/workflows/deploy.yml`, which builds the plugin and publishes it to the WordPress.org SVN repository. Files listed in `.distignore` are left out of the release. The workflow needs the `SVN_USERNAME` and `SVN_PASSWORD` repository secrets.
+One of those tests rebuilds `assets/js-admin` from `assets/js-admin-src` with webpack and fails when the committed bundles differ, so a source edit must be followed by `npx webpack --no-watch` and a commit of the rebuilt files.
+
+### Releasing
+
+Nothing is published automatically; the release ZIP is built and uploaded by hand.
+
+1. Set `Version:` in `wp-parsidate.php` and `Stable tag:` in `readme.txt` to the new version.
+2. Add the `= x.y.z =` changelog entry to `readme.txt` — `ReleaseTest` fails without it.
+3. Run the suites: `composer test` and `npm run test:js`.
+4. Tag and push (`git tag 6.6 && git push origin 6.6`); the tag reruns both suites in GitHub Actions as a final check.
+
+Files listed in `.distignore` are left out of the ZIP.
 
 ## Contributors
 

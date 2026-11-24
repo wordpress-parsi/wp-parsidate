@@ -1,5 +1,4 @@
-# Files and directories excluded from the WordPress.org release ZIP.
-# Used by 10up/action-wordpress-plugin-deploy (see .github/workflows/deploy.yml).
+# Files and directories excluded from the release ZIP.
 
 # Version control & CI
 /.git
