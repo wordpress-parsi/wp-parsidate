@@ -240,8 +240,6 @@ Run the JavaScript test suite, which covers these adapters along with the shared
 npm run test:js
 ```
 
-Current coverage: 58 JS tests passing.
-
 ### Manual Verification Checklist
 
 - [ ] Bookly Free `[bookly-form]` service date selection
