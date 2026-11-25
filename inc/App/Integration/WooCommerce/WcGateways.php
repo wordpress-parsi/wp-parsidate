@@ -122,7 +122,7 @@ class WcGateways {
 
     $settings                          = array(
       'woo_gateways_start_grid' => array(
-        'id'    => 'woo_product_start_grid',
+        'id'    => 'woo_gateways_start_grid',
         'title' => esc_html__( 'Payment Gateways', 'wp-parsidate' ),
         'type'  => 'startGrid',
       )

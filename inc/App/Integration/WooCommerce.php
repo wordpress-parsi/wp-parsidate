@@ -1234,7 +1234,7 @@ class WooCommerce extends Addon {
         ),
 
         'woo_analytics_start_grid' => array(
-          'id'    => 'woo_product_start_grid',
+          'id'    => 'woo_analytics_start_grid',
           'title' => esc_html__( 'Analytics', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),
@@ -1251,7 +1251,7 @@ class WooCommerce extends Addon {
         ),
 
         'woo_email_start_grid'      => array(
-          'id'    => 'woo_product_start_grid',
+          'id'    => 'woo_email_start_grid',
           'title' => esc_html__( 'Email', 'wp-parsidate' ),
           'type'  => 'startGrid',
         ),
