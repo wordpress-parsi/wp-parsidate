@@ -499,11 +499,16 @@ class WooCommerce extends Addon {
 
     $value = Number::toEnglish( trim( $value ) );
 
+    // Only digits and date separators may go any further. This also keeps
+    // null bytes away from date_parse_from_format(), which throws a ValueError
+    // for them on PHP 8 and would end the request with a fatal error.
+    if ( ! preg_match( '/\A\d{4}[-\/.]\d{1,2}[-\/.]\d{1,2}\z/', $value ) ) {
+      return null;
+    }
+
     // The datepicker submits Y-m-d; the other separators a user may type are
     // normalized so the strict check below still recognizes the date.
-    if ( preg_match( '/^\d{4}[\/.]\d{1,2}[\/.]\d{1,2}$/', $value ) ) {
-      $value = str_replace( array( '/', '.' ), '-', $value );
-    }
+    $value = str_replace( array( '/', '.' ), '-', $value );
 
     $parsed = Date::isDateString( $value, 'Y-m-d' );
 
@@ -515,7 +520,7 @@ class WooCommerce extends Addon {
     // report SQL expects; gregdate() only sees a date that is known to parse.
     $date = gregdate( 'Y-m-d', $parsed['value'] );
 
-    return is_string( $date ) && preg_match( '/^\d{4}-\d{2}-\d{2}$/', $date ) ? $date : null;
+    return is_string( $date ) && preg_match( '/\A\d{4}-\d{2}-\d{2}\z/', $date ) ? $date : null;
   }
 
   /**
@@ -1160,7 +1165,7 @@ class WooCommerce extends Addon {
     }
 
     // Even though the dates are validated, only a Y-m-d string may be written to SQL.
-    if ( ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $dt ) ) {
+    if ( ! preg_match( '/\A\d{4}-\d{2}-\d{2}\z/', $dt ) ) {
       return $date[0];
     }
 

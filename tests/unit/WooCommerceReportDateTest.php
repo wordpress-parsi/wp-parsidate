@@ -65,6 +65,17 @@ class WooCommerceReportDateTest extends WP_UnitTestCase {
     $this->assertArrayNotHasKey( 'start_date', $_GET );
   }
 
+  public function test_report_date_with_a_null_byte_is_rejected_without_a_fatal_error(): void {
+    // date_parse_from_format() throws a ValueError for a null byte on PHP 8.
+    $_GET['page']       = 'wc-reports';
+    $_GET['start_date'] = "1405-10-11\0' OR 1=1 --";
+    $_GET['end_date']   = '1405-10-12';
+
+    $this->addon->changeReportDates();
+
+    $this->assertArrayNotHasKey( 'start_date', $_GET );
+  }
+
   public function test_report_dates_with_slash_separators_are_accepted(): void {
     $_GET['page']       = 'wc-reports';
     $_GET['start_date'] = '1405/10/11';
