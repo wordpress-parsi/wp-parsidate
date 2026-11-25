@@ -74,6 +74,7 @@ If you use a Parsi Date bank gateway (Parsian, Pasargad, Mellat, Melli), install
 == Changelog ==
 
 = 6.6 =
+* Security: SQL injection through the WooCommerce reports `start_date`/`end_date` query arguments. Only a valid Jalali or Gregorian date is used now; any other value is dropped before it reaches the report query.
 * Security: Melli (Sadad) gateway now also checks the amount and order id confirmed by the bank, and that the order still needs payment, before completing an order (hardens the payment-verification fix of 6.5)
 * Security: Stored XSS in post content through the number converter. It rebuilt the post with DOMDocument and libxml wrote attribute text after `&{` back unescaped, so an escaped attribute inside an element such as `<title>` could turn into live markup. Digits are now converted without re-serializing the markup.
 * Deprecated: The built-in bank gateways (Parsian, Pasargad, Mellat, Melli) move to [ParsiGate](https://wordpress.org/plugins/parsigate/) and will be removed in Parsi Date 7.0. Sites that use them get a notice with one-click installation of ParsiGate, which imports their gateway settings.

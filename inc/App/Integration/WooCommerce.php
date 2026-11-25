@@ -127,7 +127,7 @@ class WooCommerce extends Addon {
     $notices[] = array(
       'id'          => 'wc_analytics_shamsi_date',
       'message'     => sprintf(
-        /* translators: %s: URL of the plugin settings page. */
+      /* translators: %s: URL of the plugin settings page. */
         __( 'If you want the date for this section to be Shamsi, enable it in the settings. <a href="%s">Go to configuration page</a>', 'wp-parsidate' ),
         esc_url_raw( AdminPages::link( [ 'tab' => $this->addonID ] ) )
       ),
@@ -455,21 +455,67 @@ class WooCommerce extends Addon {
    * @since           4.0.0
    */
   public function changeReportDates(): void {
-    // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only report filter values of the WooCommerce reports screen, which has no nonce.
-    $page      = sanitize_text_field( wp_unslash( $_GET['page'] ?? '' ) );
-    $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
-    $endDate   = sanitize_text_field( wp_unslash( $_GET['end_date'] ?? '' ) );
-    // phpcs:enable WordPress.Security.NonceVerification.Recommended
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only report filter values of the WooCommerce reports screen, which has no nonce.
+    $page = sanitize_text_field( wp_unslash( $_GET['page'] ?? '' ) );
 
-    if ( ! empty( $page ) && 'wc-reports' === $page ) {
-      if ( ! empty( $startDate ) ) {
-        $_GET['start_date'] = gregdate( 'Y-m-d', Number::toEnglish( wc_clean( $startDate ) ) );
-      }
-
-      if ( ! empty( $endDate ) ) {
-        $_GET['end_date'] = gregdate( 'Y-m-d', Number::toEnglish( wc_clean( $endDate ) ) );
-      }
+    if ( 'wc-reports' !== $page ) {
+      return;
     }
+
+    foreach ( array( 'start_date', 'end_date' ) as $key ) {
+      $date = $this->getReportDate( $key );
+
+      if ( null === $date ) {
+        // An invalid range value is dropped instead of being left in $_GET for
+        // WooCommerce (or any other report code) to read.
+        unset( $_GET[ $key ] );
+
+        continue;
+      }
+
+      $_GET[ $key ] = $date;
+    }
+  }
+
+  /**
+   * Reads a report range date from the query string as a Gregorian Y-m-d date
+   *
+   * The report dates are attacker controlled: they are written back into $_GET
+   * and into the report SQL. Only a value that is a real Jalali or Gregorian
+   * Y-m-d may be used, so an SQL fragment can never reach either of them.
+   *
+   * @param string $key Query string key, either start_date or end_date
+   *
+   * @return string|null Gregorian Y-m-d date, null when the value is missing or invalid
+   * @since 6.6
+   */
+  private function getReportDate( string $key ): ?string {
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only report filter values of the WooCommerce reports screen, which has no nonce.
+    $value = wp_unslash( $_GET[ $key ] ?? '' );
+
+    if ( ! is_string( $value ) || '' === trim( $value ) ) {
+      return null;
+    }
+
+    $value = Number::toEnglish( trim( $value ) );
+
+    // The datepicker submits Y-m-d; the other separators a user may type are
+    // normalized so the strict check below still recognizes the date.
+    if ( preg_match( '/^\d{4}[\/.]\d{1,2}[\/.]\d{1,2}$/', $value ) ) {
+      $value = str_replace( array( '/', '.' ), '-', $value );
+    }
+
+    $parsed = Date::isDateString( $value, 'Y-m-d' );
+
+    if ( ! $parsed['status'] ) {
+      return null;
+    }
+
+    // Validated Jalali and Gregorian dates are normalized to the same format the
+    // report SQL expects; gregdate() only sees a date that is known to parse.
+    $date = gregdate( 'Y-m-d', $parsed['value'] );
+
+    return is_string( $date ) && preg_match( '/^\d{4}-\d{2}-\d{2}$/', $date ) ? $date : null;
   }
 
   /**
@@ -482,7 +528,7 @@ class WooCommerce extends Addon {
    * and an empty order_date makes it store the current time instead. The fields are
    * printed with latin digits, so the served HTML needs no JavaScript correction.
    *
-   * @param string $date   Formatted date string.
+   * @param string $date Formatted date string.
    * @param string $format Format the date was built with.
    *
    * @return string
@@ -514,7 +560,10 @@ class WooCommerce extends Addon {
 
     $screen = get_current_screen();
 
-    return $screen instanceof \WP_Screen && in_array( $screen->id, [ 'shop_order', 'woocommerce_page_wc-orders' ], true );
+    return $screen instanceof \WP_Screen && in_array( $screen->id, [
+        'shop_order',
+        'woocommerce_page_wc-orders'
+      ], true );
   }
 
   /**
@@ -529,15 +578,11 @@ class WooCommerce extends Addon {
     $current_screen = $this->getCurrentScreen();
 
     if ( 'legacy_report' === $current_screen ) {
-      // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only report filter values of the WooCommerce reports screen, which has no nonce.
-      $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
-      $endDate   = sanitize_text_field( wp_unslash( $_GET['end_date'] ?? '' ) );
-      // phpcs:enable WordPress.Security.NonceVerification.Recommended
+      $startDate = $this->getReportDate( 'start_date' );
+      $endDate   = $this->getReportDate( 'end_date' );
 
-      $jalali_start_date = ! empty( $startDate ) ? parsidate( 'Y-m-d',
-        gmdate( 'Y-m-d', strtotime( $startDate ) ), 'eng' ) : '';
-      $jalali_end_date   = ! empty( $endDate ) ? parsidate( 'Y-m-d',
-        gmdate( 'Y-m-d', strtotime( $endDate ) ), 'eng' ) : '';
+      $jalali_start_date = null !== $startDate ? parsidate( 'Y-m-d', $startDate, 'eng' ) : '';
+      $jalali_end_date   = null !== $endDate ? parsidate( 'Y-m-d', $endDate, 'eng' ) : '';
 
       wp_add_inline_script( WP_PARSI_KEY . '_datepicker', 'jQuery("input[name=start_date]").val("' . $jalali_start_date . '");jQuery("input[name=end_date]").val("' . $jalali_end_date . '");' );
 
@@ -901,9 +946,9 @@ class WooCommerce extends Addon {
       return null;
     }
 
-    $year   = (int) $matches[1];
-    $month  = (int) $matches[2];
-    $day    = (int) $matches[3];
+    $year  = (int) $matches[1];
+    $month = (int) $matches[2];
+    $day   = (int) $matches[3];
 
     if ( $year < 1 || $month < 1 || $month > 12 || $day < 1 ) {
       return null;
@@ -1084,6 +1129,10 @@ class WooCommerce extends Addon {
    * @return mixed
    */
   public function fixOrderReportQueryDate( $report_data ) {
+    if ( ! is_array( $report_data ) || ! isset( $report_data['where'] ) || ! is_string( $report_data['where'] ) ) {
+      return $report_data;
+    }
+
     $report_data['where'] = preg_replace_callback( "/posts.post_date\s.=?\s'([^']+)'/i",
       [ __CLASS__, 'fixOrderReportQueryDateCallback' ], $report_data['where'] );
 
@@ -1096,28 +1145,23 @@ class WooCommerce extends Addon {
    * @return array|mixed|string|string[]
    */
   public function fixOrderReportQueryDateCallback( $date ) {
-    // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only report filter values of the WooCommerce reports screen, which has no nonce.
-    $startDate = sanitize_text_field( wp_unslash( $_GET['start_date'] ?? '' ) );
-    $endDate   = sanitize_text_field( wp_unslash( $_GET['end_date'] ?? '' ) );
-    // phpcs:enable WordPress.Security.NonceVerification.Recommended
+    $startDate = $this->getReportDate( 'start_date' );
+    $endDate   = $this->getReportDate( 'end_date' );
 
-    if ( empty( $startDate ) || empty( $endDate ) ) {
+    // Without two real dates the report query is left exactly as WooCommerce built it.
+    if ( null === $startDate || null === $endDate ) {
       return $date[0];
     }
 
     if ( strpos( $date[0], '=' ) === false ) {
-      if ( (int) $endDate > 1900 ) {
-        return $date[0];
-      }
-
-      $dt = gregdate( 'Y-m-d', $endDate );
-      $dt = gmdate( 'Y-m-d', strtotime( "$dt +1 day" ) );
+      $dt = gmdate( 'Y-m-d', strtotime( $endDate . ' +1 day' ) );
     } else {
-      if ( (int) $startDate > 1900 ) {
-        return $date[0];
-      }
+      $dt = $startDate;
+    }
 
-      $dt = gregdate( 'Y-m-d', $startDate );
+    // Even though the dates are validated, only a Y-m-d string may be written to SQL.
+    if ( ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $dt ) ) {
+      return $date[0];
     }
 
     return substr_replace( $date[0], $dt, - 20, 10 );
@@ -1141,6 +1185,7 @@ class WooCommerce extends Addon {
       }
 
       $isEditOrder = is_admin() && 'post.php' === $pagenow && isset( $_POST['post_type'] ) && 'shop_order' === sanitize_key( wp_unslash( $_POST['post_type'] ) ) && ! empty( $_POST['order_date'] );
+
       // phpcs:enable WordPress.Security.NonceVerification.Missing
 
       return $isEditOrder ? 'edit_order' : '';
