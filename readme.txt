@@ -68,7 +68,7 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 
 == Upgrade Notice ==
 
-= 6.6.0 =
+= 6.6 =
 If you use a Parsi Date bank gateway (Parsian, Pasargad, Mellat, Melli), install ParsiGate: the gateways will be removed from Parsi Date in version 7.0. / اگر از درگاه بانکی پارسی‌دیت استفاده می‌کنید، پارسی‌گیت را نصب کنید؛ درگاه‌ها در نسخه‌ی ۷.۰ حذف می‌شوند.
 
 == Changelog ==
