@@ -3,7 +3,8 @@
   "type": "project",
   "scripts": {
     "wp-parsidate-autload": "composer dump-autoload",
-    "test": "@php bin/phpunit.php --testdox"
+    "test": "@php bin/phpunit.php --testdox",
+    "release": "@composer install --no-dev --optimize-autoloader --no-interaction"
   },
   "autoload": {
     "psr-4": {

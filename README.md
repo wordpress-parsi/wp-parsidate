@@ -160,6 +160,9 @@ Nothing is published automatically; the release ZIP is built and uploaded by han
 2. Add the `= x.y.z =` changelog entry to `readme.txt` — `ReleaseTest` fails without it.
 3. Run the suites: `composer test` and `npm run test:js`.
 4. Tag and push (`git tag 6.6 && git push origin 6.6`); the tag reruns both suites in GitHub Actions as a final check.
+5. Remove the development packages before building the ZIP: `composer release`. The committed `vendor/` holds PHPUnit and its dependencies, and its autoloader loads PHPUnit files on every request. Never leave them out with `.distignore` instead: the autoloader would still require them and every site would get a fatal error.
+6. Check the result: `vendor/phpunit` must not exist and `vendor/composer/autoload_files.php` must not mention `phpunit` or `yoast`.
+7. Build the ZIP / copy to SVN, then restore the development packages with `composer install`.
 
 Files listed in `.distignore` are left out of the ZIP.
 
