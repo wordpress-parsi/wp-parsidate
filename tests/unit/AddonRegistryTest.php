@@ -4,6 +4,9 @@ namespace WPParsidate\Tests\Unit;
 
 use WP_UnitTestCase;
 use WPParsidate\Addons\Addon;
+use WPParsidate\App\Integration\WooCommerce as WooCommerceAddon;
+use WPParsidate\App\Integration\WooCommerce\WcGateways;
+use WPParsidate\Settings\Settings;
 
 /**
  * Release smoke test across the shipped addons: every addon file must be
@@ -82,28 +85,90 @@ class AddonRegistryTest extends WP_UnitTestCase {
       $sections = $addon->addSectionSettings( array() );
 
       $this->assertArrayHasKey( $addon->addonID, $sections, $class . ' must key its settings section by its addonID' );
-      $this->assertNotEmpty(
-        $sections[ $addon->addonID ]['settings'] ?? array(),
-        $class . ' settings section must contain fields'
-      );
-
-      foreach ( $sections[ $addon->addonID ]['settings'] as $key => $field ) {
-        // endGrid is a bare closing tag with no data, so it has no id.
-        if ( ( $field['type'] ?? '' ) === 'endGrid' ) {
-          continue;
-        }
-
-        $this->assertArrayHasKey( 'id', $field, $class . ' field ' . $key . ' must declare an id' );
-        $this->assertSame(
-          $key,
-          $field['id'],
-          $class . ' field ' . $key . ' must use the same value for its id, which is what gets saved'
-        );
-      }
+      $this->assertSettingsIdsMatchKeys( $class, $sections[ $addon->addonID ]['settings'] ?? array() );
 
       $checked ++;
     }
 
     $this->assertGreaterThan( 0, $checked, 'no addon declared a settings screen' );
+  }
+
+  /**
+   * Addons without addSectionSettings() (WooCommerce) render their screen from
+   * the wp_parsidate_<id>_settings filter, which initM1Action() registers.
+   */
+  public function test_tab_settings_use_ids_that_match_their_keys(): void {
+    $checked = 0;
+
+    foreach ( $this->addonClasses() as $class ) {
+      if ( ! method_exists( $class, 'addTabSettings' ) ) {
+        continue;
+      }
+
+      $addon = new $class();
+      $hook  = 'wp_parsidate_' . $addon->addonID . '_settings';
+
+      $addon->initM1Action();
+      $section = apply_filters( $hook, array() );
+      remove_filter( $hook, [ $addon, 'addTabSettings' ] );
+
+      $this->assertSame(
+        $addon->addonID,
+        $section['settings_key'] ?? null,
+        $class . ' must save its tab settings under its addonID'
+      );
+      $this->assertSettingsIdsMatchKeys( $class, $section['settings'] ?? array() );
+
+      $checked ++;
+    }
+
+    $this->assertGreaterThan( 0, $checked, 'no addon declared tab settings' );
+  }
+
+  /**
+   * WcGateways appends its own grid to the WooCommerce tab through the
+   * wp_parsidate_woocommerce_settings_options filter, which only runs once a
+   * legacy gateway is switched on.
+   */
+  public function test_gateways_settings_use_ids_that_match_their_keys(): void {
+    Settings::save( 'parsian_gateway_enable', true, 'woocommerce' );
+
+    // A throw-away instance registers the filter without touching the singleton,
+    // whose enabled-gateway list another test may already have cached.
+    new WcGateways();
+
+    $settings = ( new WooCommerceAddon() )->addTabSettings()['settings'];
+
+    $this->assertArrayHasKey(
+      'woo_gateways_start_grid',
+      $settings,
+      'an enabled legacy gateway must append the payment gateways grid'
+    );
+    $this->assertSettingsIdsMatchKeys( WooCommerceAddon::class, $settings );
+  }
+
+  /**
+   * The field id is what the form saves, so a grid that copies another grid's
+   * id writes its value into the wrong key.
+   *
+   * @param string $class    Addon class being checked.
+   * @param array  $settings Settings fields of that addon.
+   */
+  private function assertSettingsIdsMatchKeys( string $class, array $settings ): void {
+    $this->assertNotEmpty( $settings, $class . ' settings section must contain fields' );
+
+    foreach ( $settings as $key => $field ) {
+      // endGrid is a bare closing tag with no data, so it has no id.
+      if ( ( $field['type'] ?? '' ) === 'endGrid' ) {
+        continue;
+      }
+
+      $this->assertArrayHasKey( 'id', $field, $class . ' field ' . $key . ' must declare an id' );
+      $this->assertSame(
+        $key,
+        $field['id'],
+        $class . ' field ' . $key . ' must use the same value for its id, which is what gets saved'
+      );
+    }
   }
 }
