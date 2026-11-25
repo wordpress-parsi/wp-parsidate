@@ -73,8 +73,9 @@ If you use a Parsi Date bank gateway (Parsian, Pasargad, Mellat, Melli), install
 
 == Changelog ==
 
-= 6.6.0 =
+= 6.6 =
 * Security: Melli (Sadad) gateway now also checks the amount and order id confirmed by the bank, and that the order still needs payment, before completing an order (hardens the payment-verification fix of 6.5)
+* Security: Stored XSS in post content through the number converter. It rebuilt the post with DOMDocument and libxml wrote attribute text after `&{` back unescaped, so an escaped attribute inside an element such as `<title>` could turn into live markup. Digits are now converted without re-serializing the markup.
 * Deprecated: The built-in bank gateways (Parsian, Pasargad, Mellat, Melli) move to [ParsiGate](https://wordpress.org/plugins/parsigate/) and will be removed in Parsi Date 7.0. Sites that use them get a notice with one-click installation of ParsiGate, which imports their gateway settings.
 * Add: Pods integration for Jalali date and datetime fields. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/360)
 * Add: Bookly integration. Jalali dates in the Free booking form, the Pro calendar and service forms, the AI assistant, the admin calendar and date range, and the Appearance preview, each switchable on its own under Frontend and Admin. [#issue](https://github.com/wordpress-parsi/wp-parsidate/issues/326)

@@ -11,7 +11,13 @@ namespace WPParsidate\Helper;
 
 final class TextProtector {
   /**
-   * Blocks whose content must never be converted (scripts, styles, code, ...)
+   * Blocks whose content must never be converted.
+   *
+   * Besides scripts, styles and code, this covers the raw-text and RCDATA
+   * elements a browser does not parse as markup (title, xmp, iframe,
+   * noembed, noframes, plaintext). Their content is shown verbatim or hides
+   * later markup, so leaving it untouched also keeps a converter from
+   * treating that text as document structure.
    */
   public const PROTECTED_BLOCKS = array(
     'script',
@@ -22,8 +28,33 @@ final class TextProtector {
     'samp',
     'textarea',
     'noscript',
-    'svg'
+    'svg',
+    'title',
+    'xmp',
+    'iframe',
+    'noembed',
+    'noframes',
+    'plaintext'
   );
+
+  /**
+   * A tag body: ">" closes the tag only outside a quoted attribute value.
+   */
+  private const TAG_BODY = '(?:[^>"\']|"[^"]*"|\'[^\']*\')*';
+
+  /**
+   * Comments and tags, in that order.
+   *
+   * A comment is matched as a whole, because its text is not markup. A tag
+   * ends at the first ">" outside a quoted attribute value, so
+   * <a title="a > b"> stays one fragment instead of leaving a stray
+   * b"> behind as text. "<" followed by a space or a digit is a comparison
+   * in text ("12 < 13"), not a tag, so it no longer swallows what follows it.
+   *
+   * The last two alternatives are a quote-blind fallback for malformed markup
+   * with an unbalanced quote, which a browser reads to the next ">" anyway.
+   */
+  private const TAG_PATTERN = '~<!--.*?-->|</?[a-zA-Z]' . self::TAG_BODY . '>|<[!?]' . self::TAG_BODY . '>|</?[a-zA-Z][^>]*>|<[!?][^>]*>~us';
 
   /**
    * Replace fragile blocks (script/style/...) with placeholders so their
@@ -89,7 +120,7 @@ final class TextProtector {
 
     // Protect every remaining tag (and its attributes) so only text is converted
     $result = preg_replace_callback(
-      '~<[^>]*>~us',
+      self::TAG_PATTERN,
       static function ( array $matches ) use ( &$protected ): string {
         return self::protectFragment( $matches[0], $protected );
       },
