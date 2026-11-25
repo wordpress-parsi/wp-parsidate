@@ -89,6 +89,7 @@ If you use a Parsi Date bank gateway (Parsian, Pasargad, Mellat, Melli), install
 * Fix: Validating Jalali dates used Gregorian month lengths and caused PHP warnings (e.g. 31 Shahrivar, 30 Esfand in leap years)
 * Fix: Add-ons could stay switched off after their required plugin came back, because the activation check cached the required-plugin count permanently
 * Fix: A null value reaching the number helper threw a TypeError on PHP 8
+* Fix: Internal placeholders (`%%WPPTXT_…%%`) could show up in content when a block such as `<code>` sat inside an unclosed `<title>`, `<textarea>` or `<iframe>` (digit conversion, Arabic letter conversion, Brizy)
 * Fix: `parsidate()` format `L` reported the Jalali leap flag with a Gregorian 4-year rule, so 1400 looked leap and 1399/1403 looked common
 * Fix: The shared datepicker watcher overwrote date-only markers on fields that had opted into `data-jdp-only-datetime` or `data-jdp-only-time`, dropping their time section
 * Dev: Removed CSS source maps from the release; PHPUnit (PHP 7.4-8.4) and JavaScript test suites added, run on pull requests and release tags

@@ -143,7 +143,22 @@ final class TextProtector {
       return $html;
     }
 
-    return strtr( $html, $protected );
+    // A fragment can hold placeholders of fragments protected before it (an
+    // unclosed <title> or <textarea> swallows an earlier <code> block), and
+    // strtr() does not look inside the text it has just put back. Repeat until
+    // no placeholder is left, so none can leak into the page. Each pass
+    // unwraps one level; fragments are original content, so the depth is small.
+    for ( $pass = 0; $pass < 32; $pass++ ) {
+      $restored = strtr( $html, $protected );
+
+      if ( $restored === $html ) {
+        break;
+      }
+
+      $html = $restored;
+    }
+
+    return $html;
   }
 
   /**

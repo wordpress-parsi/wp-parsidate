@@ -108,4 +108,24 @@ class NumberConverterTest extends WP_UnitTestCase {
   public function test_returns_empty_content_unchanged(): void {
     $this->assertSame( '', NumberConverter::convertContent( '' ) );
   }
+
+  public function test_restores_blocks_nested_in_an_unclosed_block(): void {
+    // The unclosed <title> swallows the <code> block protected before it.
+    $html = '<p>سال 1403</p><title><code>7</code>متن 9';
+
+    $this->assertSame(
+      '<p>سال ۱۴۰۳</p><title><code>7</code>متن 9',
+      NumberConverter::convertContent( $html )
+    );
+  }
+
+  public function test_patchstack_title_attribute_payload_stays_escaped(): void {
+    $payload = '&amp;{&lt;/title&gt;&lt;img src=x onerror=alert(1)&gt;}';
+    $html    = '<p>نظر 1</p><title><b title="' . $payload . '">x 12</b></title>';
+
+    $output = NumberConverter::convertContent( $html );
+
+    $this->assertSame( '<p>نظر ۱</p><title><b title="' . $payload . '">x 12</b></title>', $output );
+    $this->assertStringNotContainsString( '<img', $output );
+  }
 }
