@@ -38,6 +38,14 @@ final class TextProtector {
   );
 
   /**
+   * Pattern matching any token produced by makeToken().
+   *
+   * Used to split text on placeholders without building a large alternation
+   * of every registered token, which can exceed PCRE's pattern size limit.
+   */
+  public const TOKEN_PATTERN = '/(%%WPPTXT_\d+_[0-9a-f]+%%)/';
+
+  /**
    * A tag body: ">" closes the tag only outside a quoted attribute value.
    */
   private const TAG_BODY = '(?:[^>"\']|"[^"]*"|\'[^\']*\')*';

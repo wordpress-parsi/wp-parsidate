@@ -84,10 +84,10 @@ final class NumberConverter {
       return self::convertNumbersInText( $text );
     }
 
-    $pattern = '/(' . implode( '|', array_map( static function ( string $token ): string {
-      return preg_quote( $token, '/' );
-    }, array_keys( $protected ) ) ) . ')/';
-    $parts   = preg_split( $pattern, $text, -1, PREG_SPLIT_DELIM_CAPTURE );
+    // Split on placeholders using a single pattern for the token format.
+    // Building one alternation from every token can exceed PCRE's size limit
+    // on large documents ("regular expression is too large").
+    $parts = preg_split( TextProtector::TOKEN_PATTERN, $text, -1, PREG_SPLIT_DELIM_CAPTURE );
 
     if ( ! is_array( $parts ) ) {
       // Fail-safe: convert nothing rather than risk rewriting protected bytes.

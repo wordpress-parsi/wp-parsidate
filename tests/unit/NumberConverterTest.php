@@ -109,6 +109,17 @@ class NumberConverterTest extends WP_UnitTestCase {
     $this->assertSame( '', NumberConverter::convertContent( '' ) );
   }
 
+  public function test_large_document_with_many_tags_does_not_overflow_regex(): void {
+    // Enough protected fragments that joining them into one regex pattern
+    // exceeds PCRE's compiled pattern size limit.
+    $html = '<p>سال 1403</p>' . str_repeat( '<span title="x 1">foo</span>', 8000 );
+
+    $this->assertSame(
+      '<p>سال ۱۴۰۳</p>' . str_repeat( '<span title="x 1">foo</span>', 8000 ),
+      NumberConverter::convertContent( $html )
+    );
+  }
+
   public function test_restores_blocks_nested_in_an_unclosed_block(): void {
     // The unclosed <title> swallows the <code> block protected before it.
     $html = '<p>سال 1403</p><title><code>7</code>متن 9';
