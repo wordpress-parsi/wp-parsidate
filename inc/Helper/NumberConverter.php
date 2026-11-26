@@ -84,10 +84,11 @@ final class NumberConverter {
       return self::convertNumbersInText( $text );
     }
 
-    $pattern = '/(' . implode( '|', array_map( static function ( string $token ): string {
-      return preg_quote( $token, '/' );
-    }, array_keys( $protected ) ) ) . ')/';
-    $parts   = preg_split( $pattern, $text, -1, PREG_SPLIT_DELIM_CAPTURE );
+    // One fixed pattern for the placeholder format (TextProtector::makeToken()).
+    // Joining every placeholder into one alternation made the pattern grow with
+    // the number of tags, and long posts went past the PCRE pattern size limit
+    // ("regular expression is too large").
+    $parts = preg_split( '/(%%WPPTXT_\d+_[0-9a-f]+%%)/', $text, -1, PREG_SPLIT_DELIM_CAPTURE );
 
     if ( ! is_array( $parts ) ) {
       // Fail-safe: convert nothing rather than risk rewriting protected bytes.
@@ -97,7 +98,8 @@ final class NumberConverter {
     $result = '';
 
     foreach ( $parts as $index => $part ) {
-      // Odd entries are the captured placeholders.
+      // Odd entries are the captured placeholders. Text that only looks like
+      // one (not in $protected) is ordinary content; it is kept as it is too.
       if ( $index % 2 === 1 ) {
         $result .= $part;
         continue;
