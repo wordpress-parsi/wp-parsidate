@@ -2,7 +2,7 @@
 
 # شمسی‌ساز تاریخ وردپرس و ووکامرس
 
-![Version](https://img.shields.io/badge/version-6.1-blue)
+![Version](https://img.shields.io/badge/version-6.6-blue)
 ![WordPress Compatible](https://img.shields.io/badge/WordPress-5.3%2B-green)
 ![License](https://img.shields.io/badge/license-GPLv2-blue)
 [![WordPress Plugin Downloads](https://img.shields.io/wordpress/plugin/dt/wp-parsidate.svg)](https://wordpress.org/plugins/wp-parsidate/)

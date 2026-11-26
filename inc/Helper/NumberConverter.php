@@ -74,7 +74,7 @@ final class NumberConverter {
    * behavior; this is the check to remove if you want all visible numbers
    * converted everywhere.
    *
-   * @param string               $text      Content with tags replaced by placeholders.
+   * @param string $text Content with tags replaced by placeholders.
    * @param array<string,string> $protected Placeholder => original fragment.
    *
    * @return string
@@ -84,10 +84,11 @@ final class NumberConverter {
       return self::convertNumbersInText( $text );
     }
 
-    // Split on placeholders using a single pattern for the token format.
-    // Building one alternation from every token can exceed PCRE's size limit
-    // on large documents ("regular expression is too large").
-    $parts = preg_split( TextProtector::TOKEN_PATTERN, $text, -1, PREG_SPLIT_DELIM_CAPTURE );
+    // One fixed pattern for the placeholder format (TextProtector::makeToken()).
+    // Joining every placeholder into one alternation made the pattern grow with
+    // the number of tags, and long posts went past the PCRE pattern size limit
+    // ("regular expression is too large").
+    $parts = preg_split( TextProtector::TOKEN_PATTERN, $text, - 1, PREG_SPLIT_DELIM_CAPTURE );
 
     if ( ! is_array( $parts ) ) {
       // Fail-safe: convert nothing rather than risk rewriting protected bytes.

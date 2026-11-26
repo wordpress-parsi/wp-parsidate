@@ -139,4 +139,14 @@ class NumberConverterTest extends WP_UnitTestCase {
     $this->assertSame( '<p>نظر ۱</p><title><b title="' . $payload . '">x 12</b></title>', $output );
     $this->assertStringNotContainsString( '<img', $output );
   }
+
+  public function test_converts_content_with_thousands_of_tags(): void {
+    // Joining every placeholder into one regex went past the PCRE pattern
+    // size limit at about 1500 tags (page builder output) in 6.6.
+    $html = str_repeat( '<div><p>قیمت <b>کالا</b> 120 تومان</p></div>', 3000 );
+
+    $output = NumberConverter::convertContent( $html );
+
+    $this->assertSame( str_repeat( '<div><p>قیمت <b>کالا</b> ۱۲۰ تومان</p></div>', 3000 ), $output );
+  }
 }

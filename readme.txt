@@ -4,7 +4,7 @@ Donate link: https://wp-parsi.com/support/
 Tags: Shamsi, Persian, Jalali, WooCommerce, ووکامرس
 Requires at least: 5.3
 Tested up to: 7.1
-Stable tag: 6.6
+Stable tag: 6.6.1
 Requires PHP: 7.4
 License: GPLv3
 
@@ -68,10 +68,17 @@ ParsiDate is a powerful plugin developed by Persian contributors to enhance the 
 
 == Upgrade Notice ==
 
+= 6.6.1 =
+Fixes a "regular expression is too large" warning on long pages, where numbers were not converted. / رفع هشدار «regular expression is too large» در صفحه‌های طولانی.
+
 = 6.6 =
 If you use a Parsi Date bank gateway (Parsian, Pasargad, Mellat, Melli), install ParsiGate: the gateways will be removed from Parsi Date in version 7.0. / اگر از درگاه بانکی پارسی‌دیت استفاده می‌کنید، پارسی‌گیت را نصب کنید؛ درگاه‌ها در نسخه‌ی ۷.۰ حذف می‌شوند.
 
 == Changelog ==
+
+= 6.6.1 =
+* Fix: "preg_split(): Compilation failed: regular expression is too large" warning on long posts and page-builder pages (about 1500 tags or more), where digits in the content were left unconverted
+* Fix: Pods integration rejected dates in Pods' own display formats (e.g. 11/26/2026), which blocked saving items with date fields, and accepted invalid Jalali dates such as 1405-13-01
 
 = 6.6 =
 * Security: SQL injection through the WooCommerce reports `start_date`/`end_date` query arguments. Only a valid Jalali or Gregorian date is used now; any other value is dropped before it reaches the report query.
