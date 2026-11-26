@@ -78,6 +78,7 @@ If you use a Parsi Date bank gateway (Parsian, Pasargad, Mellat, Melli), install
 
 = 6.6.1 =
 * Fix: "preg_split(): Compilation failed: regular expression is too large" warning on long posts and page-builder pages (about 1500 tags or more), where digits in the content were left unconverted
+* Fix: Pods integration rejected dates in Pods' own display formats (e.g. 11/26/2026), which blocked saving items with date fields, and accepted invalid Jalali dates such as 1405-13-01
 
 = 6.6 =
 * Security: SQL injection through the WooCommerce reports `start_date`/`end_date` query arguments. Only a valid Jalali or Gregorian date is used now; any other value is dropped before it reaches the report query.

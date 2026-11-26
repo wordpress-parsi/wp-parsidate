@@ -17,6 +17,7 @@ defined( 'ABSPATH' ) || exit;
 use WPParsidate\Addons\Addon;
 use WPParsidate\Helper\{Assets, Number};
 use WPParsidate\Core\Names;
+use WPParsidate\Core\WPP_ParsiDate;
 
 class Pods extends Addon {
   public string $addonID = 'pods';
@@ -44,10 +45,27 @@ class Pods extends Addon {
 
   /**
    * Validate Gregorian and Jalali date/datetime values without changing them.
+   *
+   * Only year-first values (what the Jalali picker submits: 1405-09-05,
+   * 1405/09/05, 2026-11-26) are checked here. Pods validates its own display
+   * formats (m/d/Y, d/m/Y, ...) itself, so those are left to it, and an error
+   * that Pods or another filter already returned (false, a message, a list of
+   * messages) is passed on unchanged.
+   *
+   * @param bool|string|array $valid
+   * @param mixed             $value
+   *
+   * @return bool|string|array
    */
-  public function validateDateField( $valid, $value ): bool {
-    if ( true !== $valid || ! is_string( $value ) || '' === trim( $value ) ) {
-      return is_bool( $valid ) ? $valid : false;
+  public function validateDateField( $valid, $value ) {
+    if ( true !== $valid || ! is_string( $value ) ) {
+      return $valid;
+    }
+
+    $value = Number::toEnglish( trim( $value ) );
+
+    if ( '' === $value || ! preg_match( '/^\d{4}[-\/.]\d{1,2}[-\/.]\d{1,2}/', $value ) ) {
+      return $valid;
     }
 
     $type = current_filter() === 'pods_field_datetime_validate' ? 'datetime' : 'date';
@@ -58,11 +76,15 @@ class Pods extends Addon {
   /**
    * Normalize date/datetime values before Pods runs field pre-save handlers.
    *
-   * @param array $pieces Pieces returned by Pods for the save operation.
+   * @param mixed $pieces Pieces returned by Pods for the save operation.
    *
-   * @return array
+   * @return mixed The pieces, unchanged if another filter did not return an array.
    */
-  public function preparePodItemDates( array $pieces ): array {
+  public function preparePodItemDates( $pieces ) {
+    if ( ! is_array( $pieces ) ) {
+      return $pieces;
+    }
+
     foreach ( [ 'fields', 'object_fields', 'custom_fields', 'custom_data' ] as $pieceName ) {
       if ( empty( $pieces[ $pieceName ] ) || ! is_array( $pieces[ $pieceName ] ) ) {
         continue;
@@ -115,12 +137,18 @@ class Pods extends Addon {
     }
 
     $gregorian = self::toGregorianStorage( $value, $type );
+    $pattern   = 'datetime' === $type
+      ? '/\A(\d{4})-(\d{2})-(\d{2}) \d{2}:\d{2}:\d{2}\z/'
+      : '/\A(\d{4})-(\d{2})-(\d{2})\z/';
 
-    if ( 'datetime' === $type ) {
-      return (bool) preg_match( '/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $gregorian );
+    if ( ! preg_match( $pattern, $gregorian, $parts ) ) {
+      return false;
     }
 
-    return (bool) preg_match( '/^\d{4}-\d{2}-\d{2}$/', $gregorian );
+    // An invalid Jalali date (1405-13-01) is returned unconverted and still
+    // looks like Y-m-d; only a real Gregorian date may be stored.
+    return (int) $parts[1] >= WPP_ParsiDate::GREGORIAN_YEAR_START
+           && checkdate( (int) $parts[2], (int) $parts[3], (int) $parts[1] );
   }
 
   /**
@@ -168,8 +196,12 @@ class Pods extends Addon {
 
   /**
    * Convert a Gregorian Pods storage value to a Jalali display value.
+   *
+   * @param mixed $value
+   *
+   * @return mixed The Jalali date, or the value unchanged if it is not a date string.
    */
-  public static function toJalaliDisplay( $value, string $type = 'date' ): string {
+  public static function toJalaliDisplay( $value, string $type = 'date' ) {
     if ( ! is_string( $value ) || '' === trim( $value ) ) {
       return $value;
     }

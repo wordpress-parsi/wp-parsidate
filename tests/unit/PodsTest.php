@@ -26,4 +26,28 @@ class PodsTest extends WP_UnitTestCase {
   public function test_addon_converts_gregorian_value_to_jalali_display(): void {
     $this->assertSame( '1405-07-14', Pods::toJalaliDisplay( '2026-10-06', 'date' ) );
   }
+
+  public function test_validator_leaves_pods_display_formats_to_pods(): void {
+    $addon = ( new \ReflectionClass( Pods::class ) )->newInstanceWithoutConstructor();
+
+    // m/d/Y is the Pods default; rejecting it blocked every save with a date field.
+    $this->assertTrue( $addon->validateDateField( true, '11/26/2026' ) );
+    $this->assertTrue( $addon->validateDateField( true, '' ) );
+    $this->assertTrue( $addon->validateDateField( true, '1405/09/05' ) );
+    $this->assertFalse( $addon->validateDateField( true, '1405-13-01' ) );
+  }
+
+  public function test_validator_keeps_errors_from_other_filters(): void {
+    $addon = ( new \ReflectionClass( Pods::class ) )->newInstanceWithoutConstructor();
+
+    $this->assertSame( 'Field is required', $addon->validateDateField( 'Field is required', '1405-09-05' ) );
+    $this->assertSame( [ 'error' ], $addon->validateDateField( [ 'error' ], '1405-09-05' ) );
+  }
+
+  public function test_non_array_pieces_and_non_string_values_pass_through(): void {
+    $addon = ( new \ReflectionClass( Pods::class ) )->newInstanceWithoutConstructor();
+
+    $this->assertFalse( $addon->preparePodItemDates( false ) );
+    $this->assertNull( Pods::toJalaliDisplay( null ) );
+  }
 }
